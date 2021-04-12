@@ -1,0 +1,575 @@
+openapi: 3.0.0
+info:
+  title: Host System Service
+  description: "The Host System service supports an inquiry that retrieves the processing\
+    \ statuses of the host system.         \n"
+  contact:
+    name: Isabelle Mathon
+    email: Isabelle.Mathon@fiserv.com
+  version: 11.0.0
+servers:
+- url: /
+paths:
+  /hostSystem:
+    get:
+      tags:
+      - Host System Service
+      summary: HostSystemInqOper
+      description: This method retrieves host system status from a core.
+      operationId: hostSystemInq
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: channelName
+        in: query
+        description: Enter Channel Name
+        required: false
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/ChannelNameType'
+      - name: systemName
+        in: query
+        description: Multiple Host System Name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            maxLength: 80
+            type: string
+      responses:
+        "200":
+          description: determine the availability of the core system for processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostSystemInqRsType'
+        default:
+          description: See HTTP Status Code Standards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostSystemInqRsType'
+  /hostSystem/secured:
+    post:
+      tags:
+      - Host System Service
+      summary: HostSystemInqOperSecured
+      description: This method retrieves host system status from a core.
+      operationId: hostSystemInqSecured
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HostSystemInqRqType'
+        required: true
+      responses:
+        "200":
+          description: determine the availability of the core system for processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostSystemInqRsType'
+        default:
+          description: See HTTP Status Code Standards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostSystemInqRsType'
+components:
+  schemas:
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          type: string
+        TrnId:
+          maxLength: 30
+          type: string
+        Context:
+          $ref: '#/components/schemas/Context'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Client Application Name of the application making the service
+            request (e.g. Architect, Commercial Center, etc.).
+        Channel:
+          type: string
+          description: Indicates the channel used by the client application.
+        ClientDateTime:
+          type: string
+          description: Client date and time as reported by the client application
+            that is making the service request.
+          format: date-time
+        ClientTerminalSeqNum:
+          maxLength: 36
+          type: string
+          description: Also known as Trace Number or Sequence in some systems. Used
+            to allow the client terminal to set a unique identifier for the transaction.
+            When used by a Network defined transaction the value of this identifier
+            is typically set to narrow character of 12.
+        OriginatorType:
+          type: integer
+          description: The type of organization that the originator represents. This
+            is usually a coded value representing the industry that the organization
+            operates in. It contains the SIC code. For ISO 8583 (DE18) the element
+            is restricted to narrow character of maximum lenght of 4. Originator Type
+            codes that apply to financial institutions are:- • 6010 - Financial institution—bank,
+            savings and loan (S and L), or credit union • 6011 - Financial institution—ATM
+            • 6012 - Financial institution—merchandise sale • 6999 - Financial institution—home
+            banking
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor locatio
+            (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41)
+            the element is restricted to a narrow character with maximum length of
+            8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+        TerminalCity:
+          maxLength: 32
+          type: string
+        TerminalCounty:
+          maxLength: 32
+          type: string
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State Province. ISO 3166-2:US codes.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: Postal Code is ZipCode in the US.
+        TerminalCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - US
+          - IND
+        TerminalCountryCodeValue:
+          maxLength: 80
+          type: string
+        PhoneType:
+          type: string
+        PhoneNum:
+          type: string
+        PhoneExchange:
+          type: string
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583
+            (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in
+            identifying a transaction uniquely. The trace number remains unchanged
+            for all messages throughout the life of a transaction. This number is
+            not a terminal receipt number. The originating processor increments the
+            trace number by one for each transaction sent to the switch. For ISO 8583
+            (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The
+            transaction is applied to the specified network settlement counts and
+            balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original
+            source document and used to assist in locating that document. The acquirer
+            of a transaction assigns this number. The issuer processor must retain
+            it in the event that a chargeback is submitted for the transaction. For
+            ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifies the acquirer of the authorization or financial transaction.
+            It is a mandatory element in all authorization and financial messages
+            and does not change throughout the life of a transaction. EPOC considers
+            the acquirer as the terminal owner for reporting purposes. For ISO 8583
+            (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - US
+          - IND
+        AcquirerCountryCodeValue:
+          type: string
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Merchant Number. For ISO 8583 (DE42) the element is restricted
+            to C-15
+        SettlementDate:
+          type: string
+          description: This is the date on which the transaction will be settled.
+            Used by ISO 8583 (DE63)
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: This is the identification of the settlement account in which
+            the transaction will be settled.
+        BusinessApplIdent:
+          type: string
+          description: This is the identification of the settlement account in which
+            the transaction will be settled.
+        BranchIdent:
+          maxLength: 22
+          type: string
+        TellerIdent:
+          type: string
+        TillIdent:
+          type: string
+        AMPMCode:
+          type: string
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          enum:
+          - Manual
+          - Auto
+    ChannelNameType:
+      title: ChannelNameType
+      type: string
+      enum:
+      - NOW
+    ChannelStatusType:
+      title: ChannelStatusType
+      type: string
+      enum:
+      - Active
+      - Inactive
+      - InquiryOnly
+    HostSystemStatusCodeType:
+      title: HostSystemStatusCodeType
+      type: string
+      enum:
+      - Valid
+      - Deleted
+    SeverityType:
+      title: SeverityType
+      type: string
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path indicates which EFX element is in error. It provides either
+            the path of the element, or just the element name. If it provides the
+            path, it must use XPath absolute notation with the starting node being
+            the node of the message, and ending with the name of the element in error.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the
+            field in their schema, such as an XPath, field ID, or field name that
+            is associated with the ServerStatusCode. If this element is set, it must
+            be returned in the ServerPath element of the OvrdExceptionData aggregate
+            if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Value string representation of the EFX data value of the element
+            in error. This field is intended to provide a human readable visual hint
+            as to the value in error. It should not be provided for fields that cannot
+            be represented as a string (i.e., binary data).
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: Status Code is used to indicate the EFX Standard Status Codes
+            that tells the consumer of the service the result of the operation.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Status Description is the explanatory EFX standard text associated
+            with the EFX StatusCode.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: Service Provider Name is a globally unique identifier for a
+            service provider which indicates the location of the Service Provider
+            that gave the error.
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server Status Code is used to indicate the Service Provider’s
+            application status code that tells the consumer the result of the operation
+            call.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Server Status Description is the Service Provider’s explanatory
+            text associated with the ServerStatusCode.
+        OvrdExceptionInd:
+          type: boolean
+          description: Override Exception Indicator indicates whether the exception
+            can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Subject Element aggregate provides information about which
+            elements caused the status. The aggregate is repeating to allow for a
+            relationship between one or more elements if the combination causes the
+            status code.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    BaseKeysType:
+      title: BaseKeysType
+      type: string
+    HostChannelDataType:
+      title: HostChannelDataType
+      required:
+      - ChannelName
+      - ChannelStatus
+      type: object
+      properties:
+        ChannelName:
+          $ref: '#/components/schemas/ChannelNameType'
+        ChannelNameEnumDesc:
+          maxLength: 80
+          type: string
+          description: Channel Enumeration Description.
+        ChannelStatus:
+          $ref: '#/components/schemas/ChannelStatusType'
+        ChannelStatusEnumDesc:
+          maxLength: 80
+          type: string
+          description: Channel Status Enumeration Description.
+    HostSystemDataType:
+      title: HostSystemDataType
+      required:
+      - SystemName
+      - SystemStatus
+      type: object
+      properties:
+        SystemName:
+          type: string
+          description: System Name.
+        SystemNameEnumDesc:
+          maxLength: 80
+          type: string
+          description: Host System Name Enumeration Description
+        PrcDt:
+          type: string
+          description: '[FSVR]Processing Date.'
+          format: date
+        CutOffTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Cut Off Time
+        NextPrcDt:
+          type: string
+          description: Next Processing Date.
+          format: date
+        PreviousPrcDt:
+          type: string
+          description: Previous Processing Date.
+          format: date
+        SystemStatus:
+          type: string
+          description: System Status.
+        SystemStatusEnumDesc:
+          maxLength: 80
+          type: string
+          description: Host System Status Enumeration Description.
+    HostSystemInfoType:
+      title: HostSystemInfoType
+      type: object
+      properties:
+        HostChannelData:
+          $ref: '#/components/schemas/HostChannelDataType'
+        HostSystemData:
+          type: array
+          description: Host System Data.
+          items:
+            $ref: '#/components/schemas/HostSystemDataType'
+        EODProcessingInd:
+          type: boolean
+          description: End of Day Processing Indicator. A value of true indicates
+            that end of day processing is actively running.
+    HostSystemSelType:
+      title: HostSystemSelType
+      type: object
+      properties:
+        ChannelName:
+          $ref: '#/components/schemas/ChannelNameType'
+        SystemName:
+          type: array
+          description: System Name.
+          items:
+            type: object
+    HostSystemInqRqType:
+      title: HostSystemInqRqType
+      required:
+      - HostSystemSel
+      type: object
+      properties:
+        HostSystemSel:
+          $ref: '#/components/schemas/HostSystemSelType'
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: Status Code is used to indicate the EFX Standard Status Codes
+            that tells the consumer of the service the result of the operation.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Status Description is the explanatory EFX standard text associated
+            with the EFX StatusCode.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: Service Provider Name is a globally unique identifier for a
+            service provider which indicates the location of the Service Provider
+            that gave the error.
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server Status Code is used to indicate the Service Provider’s
+            application status code that tells the consumer the result of the operation
+            call.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Server Status Description is the Service Provider’s explanatory
+            text associated with the ServerStatusCode.
+        OvrdExceptionInd:
+          type: boolean
+          description: Override Exception Indicator indicates whether the exception
+            can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Subject Role.
+        SubjectElement:
+          type: array
+          description: Subject Element aggregate provides information about which
+            elements caused the status. The aggregate is repeating to allow for a
+            relationship between one or more elements if the combination causes the
+            status code.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Content HTML. Use to provide HTML context to some status responses.
+            In Premier, upon failure an HTML page is provided to support the maintenance
+            of failures reported. The Content HTML may be availalble to a time interval
+            which is established by the service provider.
+        AdditionalStatus:
+          type: array
+          description: Additional Status aggregate may appear once for each additional
+            status that the server intends to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+    HostSystemKeysType:
+      title: HostSystemKeysType
+      allOf:
+      - $ref: '#/components/schemas/BaseKeysType'
+      - required:
+        - HostSystemId
+        type: object
+        properties:
+          HostSystemId:
+            maxLength: 36
+            type: string
+            description: Host System Identifier. Uniquely identifies a Host System.
+    HostSystemStatusType:
+      title: HostSystemStatusType
+      required:
+      - HostSystemStatusCode
+      type: object
+      properties:
+        HostSystemStatusCode:
+          $ref: '#/components/schemas/HostSystemStatusCodeType'
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Effective Date. The date that an associated action takes effect.
+    HostSystemRecType:
+      title: HostSystemRecType
+      required:
+      - HostSystemInfo
+      - HostSystemStatus
+      type: object
+      properties:
+        HostSystemKeys:
+          $ref: '#/components/schemas/HostSystemKeysType'
+        HostSystemInfo:
+          $ref: '#/components/schemas/HostSystemInfoType'
+        HostSystemStatus:
+          $ref: '#/components/schemas/HostSystemStatusType'
+    HostSystemInqRsType:
+      title: HostSystemInqRsType
+      required:
+      - Status
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        HostSystemRec:
+          $ref: '#/components/schemas/HostSystemRecType'
