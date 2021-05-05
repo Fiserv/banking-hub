@@ -1,25 +1,28 @@
 openapi: 3.0.0
 info:
-  title: Party Account Relationship Service
-  description: |
-    "The Party Account Relationship service supports operation to manage the nature of a relationship between a Party and an Account Product. This relationship could be as an owner or non-owner, and is also used to indicate the primary contact and tax responsible parties. There may be any number of parties associated with an account and an individual party may be associated with any number of accounts"
+  title: Card Account Relationship Service
+  description: The Card Account Relationship service supports operations to manage
+    accounts associated to a card.
   contact:
-    name: Roopy Cullum
-    email: Roopam.Cullum@Fiserv.com
+    name: Tracy Dahle
+    email: Tracy.Dahle@fiserv.com
   version: 11.0.0
 servers:
 - url: /
 paths:
-  /partyacctrel:
+  /cardAccounts:
     put:
-      summary: Put Party Account Relationship
-      description: "\"This method modifies party account relationships.\"   \n"
-      operationId: PartyAcctRelMod
+      tags:
+      - Update Card Account Relationship
+      summary: Modifies an CardAcctRel Object
+      description: This service operation modifies the relationship between accounts
+        and a card.
+      operationId: CardAcctRelModOper
       parameters:
       - name: EFXHeader
         in: header
-        description: |
-          "The message header request aggregate contains common information for all request messages"
+        description: The message header request aggregate contains common information
+          for all request messages
         required: true
         style: simple
         explode: false
@@ -29,30 +32,33 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PartyAcctRelModRqType'
+              $ref: '#/components/schemas/CardAcctRelModRqType'
+        required: true
       responses:
         "200":
-          description: PartyAcctRelModRs
+          description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelModRsType'
+                $ref: '#/components/schemas/CardAcctRelModRsType'
         default:
-          description: Unexpected error
+          description: See HTTP Status Code Standards
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelModRsType'
+                $ref: '#/components/schemas/CardAcctRelModRsType'
     post:
-      summary: Post Party Account Relationship
-      description: |
-        "This method adds a relationship between a party and account."
-      operationId: PartyAcctRelAdd
+      tags:
+      - Add Card Account Relationship
+      summary: Add an CardAcctRel Object
+      description: This service operation adds a relationship between an account and
+        a card.
+      operationId: CardAcctRelAddOper
       parameters:
       - name: EFXHeader
         in: header
-        description: |
-          "The message header request aggregate contains common information for all request messages"
+        description: The message header request aggregate contains common information
+          for all request messages
         required: true
         style: simple
         explode: false
@@ -62,1082 +68,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PartyAcctRelAddRqType'
+              $ref: '#/components/schemas/CardAcctRelAddRqType'
+        required: true
       responses:
         "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelAddRsType'
+                $ref: '#/components/schemas/CardAcctRelAddRsType'
         default:
           description: See HTTP Status Code Standards
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelAddRsType'
-  /partyacctrel/byParty:
-    get:
-      summary: Get Party Account Relationship
-      description: |
-        "This method retrieves accounts related to a party but also can provide all parties related to an account."
-      operationId: PartyAcctRelInqByParty
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: |
-          "The message header request aggregate contains common information for all request messages"
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      - name: $limit
-        in: query
-        description: Maximum Record Limit. This is the maximum number of records that
-          the server should add to the result set which is available to satisfy this
-          request.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-          format: long
-      - name: cursor
-        in: query
-        description: 'Cursor. Next Record Pointer Included in the response only if
-          additional records are available. '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: C-250
-      - name: partyId
-        in: query
-        description: Party Identifier.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: partyIdent
-        in: query
-        description: Party Identification
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: partyIdentType
-        in: query
-        description: Party Identification Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: cardId
-        in: query
-        description: 'Card Identifier.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: svcProviderName
-        in: query
-        description: Service Provider Name .
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: svcNbr
-        in: query
-        description: Service Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: svcName
-        in: query
-        description: Service Name.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 32
-          type: string
-      - name: isoCode
-        in: query
-        description: ISO Code.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: cardSeqNum
-        in: query
-        description: Card Sequence Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 3
-          type: string
-      - name: cardIdentType
-        in: query
-        description: 'Card Identification Type. Valid values include: PORT'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - PORT
-      - name: cardIdentValue
-        in: query
-        description: Card Identification Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: excludeClosedAcctInd
-        in: query
-        description: Exclude Closed Accounts Indicator
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: partyAcctRelType
-        in: query
-        description: Party-to-Account Relationship Type.
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: array
-          items:
-            type: string
-      - name: incPartyInfoInd
-        in: query
-        description: Include Party Information Indicator. Includes a subset of frequently
-          used properties of Party Information in the response. The default value
-          is (false) meaning the account Party information is not provided unless
-          set to be included (true). When the selection is made by Party, the information
-          of the Party will appear once only in the first instance of a record to
-          avoid unnecessary repetition.When the selection is made by Account the Party
-          information summary is always provided.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incAddtlAcctInfoInd
-        in: query
-        description: 'Include Additional Account Information. When the value of this
-          indicator is true, additional Account Summary information is provided. '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incEDistributionInd
-        in: query
-        description: Include e-Distribution Indicator. By using this indicator only
-          accounts available for e-Distribution are returned in the response. The
-          default value is (false)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incEBankingInd
-        in: query
-        description: Include E-Banking Accounts Indicator. Use to select only accounts
-          enable for e-Banking. The default value is set to (false) meaning all channels
-          are included.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incFrequentConductorsInd
-        in: query
-        description: 'Include Frequent Conductors Indicator.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: availBalMethod
-        in: query
-        description: Available Balance Calculation Method.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: PartyAcctRelInqRs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-  /partyacctrel/byParty/byAcctSelStatus:
-    get:
-      summary: Get Party Account Relationship
-      description: |
-        "This method retrieves accounts related to a party but also can provide all parties related to an account."
-      operationId: PartyAcctRelInqByPartyByAcctSelStatus
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: |
-          "The message header request aggregate contains common information for all request messages"
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      - name: $limit
-        in: query
-        description: Maximum Record Limit. This is the maximum number of records that
-          the server should add to the result set which is available to satisfy this
-          request.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-          format: long
-      - name: cursor
-        in: query
-        description: 'Cursor. Next Record Pointer Included in the response only if
-          additional records are available. '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: C-250
-      - name: partyId
-        in: query
-        description: Party Identifier.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: partyIdent
-        in: query
-        description: Party Identification
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: partyIdentType
-        in: query
-        description: Party Identification Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: cardId
-        in: query
-        description: 'Card Identifier.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: svcProviderName
-        in: query
-        description: Service Provider Name .
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: svcNbr
-        in: query
-        description: Service Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: svcName
-        in: query
-        description: Service Name.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 32
-          type: string
-      - name: isoCode
-        in: query
-        description: ISO Code.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: cardSeqNum
-        in: query
-        description: Card Sequence Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 3
-          type: string
-      - name: cardIdentType
-        in: query
-        description: 'Card Identification Type. Valid values include: PORT'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - PORT
-      - name: cardIdentValue
-        in: query
-        description: Card Identification Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctType
-        in: query
-        description: AcctType.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - CCA
-            - RRA
-            - LEAS
-            - CDA
-            - MLN
-            - CLA
-            - CRD
-            - DDA
-            - EQU
-            - GLA
-            - ILA
-            - AdultCashISA
-            - IRA
-            - RET
-            - EXT
-            - JuniorCashISA
-            - LIP
-            - LOAN
-            - LOC
-            - CLOC
-            - MLA
-            - PBA
-            - ORT
-            - SDA
-            - SDB
-            - MMA
-            - DDL
-      - name: acctStatusSel
-        in: query
-        description: 'Account Status Selection. Select related accounts by account
-          status '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: excludeClosedAcctInd
-        in: query
-        description: Exclude Closed Accounts Indicator
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: partyAcctRelType
-        in: query
-        description: Party-to-Account Relationship Type.
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: array
-          items:
-            type: string
-      - name: incPartyInfoInd
-        in: query
-        description: Include Party Information Indicator. Includes a subset of frequently
-          used properties of Party Information in the response. The default value
-          is (false) meaning the account Party information is not provided unless
-          set to be included (true). When the selection is made by Party, the information
-          of the Party will appear once only in the first instance of a record to
-          avoid unnecessary repetition.When the selection is made by Account the Party
-          information summary is always provided.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incAddtlAcctInfoInd
-        in: query
-        description: 'Include Additional Account Information. When the value of this
-          indicator is true, additional Account Summary information is provided. '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incEDistributionInd
-        in: query
-        description: Include e-Distribution Indicator. By using this indicator only
-          accounts available for e-Distribution are returned in the response. The
-          default value is (false)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incEBankingInd
-        in: query
-        description: Include E-Banking Accounts Indicator. Use to select only accounts
-          enable for e-Banking. The default value is set to (false) meaning all channels
-          are included.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incFrequentConductorsInd
-        in: query
-        description: 'Include Frequent Conductors Indicator.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: availBalMethod
-        in: query
-        description: Available Balance Calculation Method.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: PartyAcctRelInqRs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-  /partyacctrel/byParty/byAcctExcludeInd:
-    get:
-      summary: Get Party Account Relationship
-      description: |
-        "This method retrieves accounts related to a party but also can provide all parties related to an account."
-      operationId: PartyAcctRelInqByPartyByAcctExcludeInd
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: |
-          "The message header request aggregate contains common information for all request messages"
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      - name: $limit
-        in: query
-        description: Maximum Record Limit. This is the maximum number of records that
-          the server should add to the result set which is available to satisfy this
-          request.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-          format: long
-      - name: cursor
-        in: query
-        description: 'Cursor. Next Record Pointer Included in the response only if
-          additional records are available. '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: C-250
-      - name: partyId
-        in: query
-        description: Party Identifier.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: partyIdent
-        in: query
-        description: Party Identification
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: partyIdentType
-        in: query
-        description: Party Identification Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: cardId
-        in: query
-        description: 'Card Identifier.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: svcProviderName
-        in: query
-        description: Service Provider Name .
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: svcNbr
-        in: query
-        description: Service Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: svcName
-        in: query
-        description: Service Name.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 32
-          type: string
-      - name: isoCode
-        in: query
-        description: ISO Code.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: cardSeqNum
-        in: query
-        description: Card Sequence Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 3
-          type: string
-      - name: cardIdentType
-        in: query
-        description: 'Card Identification Type. Valid values include: PORT'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - PORT
-      - name: cardIdentValue
-        in: query
-        description: Card Identification Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctType
-        in: query
-        description: AcctType.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - CCA
-            - RRA
-            - LEAS
-            - CDA
-            - MLN
-            - CLA
-            - CRD
-            - DDA
-            - EQU
-            - GLA
-            - ILA
-            - AdultCashISA
-            - IRA
-            - RET
-            - EXT
-            - JuniorCashISA
-            - LIP
-            - LOAN
-            - LOC
-            - CLOC
-            - MLA
-            - PBA
-            - ORT
-            - SDA
-            - SDB
-            - MMA
-            - DDL
-      - name: acctExcludeInd
-        in: query
-        description: 'Account Exclude Indicator. Exclude the related account type
-          specified in AcctType.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: boolean
-      - name: excludeClosedAcctInd
-        in: query
-        description: Exclude Closed Accounts Indicator
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: partyAcctRelType
-        in: query
-        description: Party-to-Account Relationship Type.
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: array
-          items:
-            type: string
-      - name: incPartyInfoInd
-        in: query
-        description: Include Party Information Indicator. Includes a subset of frequently
-          used properties of Party Information in the response. The default value
-          is (false) meaning the account Party information is not provided unless
-          set to be included (true). When the selection is made by Party, the information
-          of the Party will appear once only in the first instance of a record to
-          avoid unnecessary repetition.When the selection is made by Account the Party
-          information summary is always provided.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incAddtlAcctInfoInd
-        in: query
-        description: 'Include Additional Account Information. When the value of this
-          indicator is true, additional Account Summary information is provided. '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incEDistributionInd
-        in: query
-        description: Include e-Distribution Indicator. By using this indicator only
-          accounts available for e-Distribution are returned in the response. The
-          default value is (false)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incEBankingInd
-        in: query
-        description: Include E-Banking Accounts Indicator. Use to select only accounts
-          enable for e-Banking. The default value is set to (false) meaning all channels
-          are included.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incFrequentConductorsInd
-        in: query
-        description: 'Include Frequent Conductors Indicator.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: availBalMethod
-        in: query
-        description: Available Balance Calculation Method.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: PartyAcctRelInqRs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-  /partyacctrel/byAcct:
-    get:
-      summary: Get Party Account Relationship
-      description: |
-        "This method retrieves accounts related to a party but also can provide all parties related to an account."
-      operationId: PartyAcctRelInqByAcct
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: |
-          "The message header request aggregate contains common information for all request messages"
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      - name: $limit
-        in: query
-        description: Maximum Record Limit. This is the maximum number of records that
-          the server should add to the result set which is available to satisfy this
-          request.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-          format: long
-      - name: cursor
-        in: query
-        description: 'Cursor. Next Record Pointer Included in the response only if
-          additional records are available. '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: C-250
-      - name: acctId
-        in: query
-        description: Account Number
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: subAcctId
-        in: query
-        description: Sub Account Identifier. Also used as CostCenter for GLA Accounts.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: acctType
-        in: query
-        description: AcctType.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - CCA
-          - RRA
-          - LEAS
-          - CDA
-          - MLN
-          - CLA
-          - CRD
-          - DDA
-          - EQU
-          - GLA
-          - ILA
-          - AdultCashISA
-          - IRA
-          - RET
-          - EXT
-          - JuniorCashISA
-          - LIP
-          - LOAN
-          - LOC
-          - CLOC
-          - MLA
-          - PBA
-          - ORT
-          - SDA
-          - SDB
-          - MMA
-          - DDL
-      - name: cardId
-        in: query
-        description: 'Card Identifier.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: svcProviderName
-        in: query
-        description: Service Provider Name .
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: svcNbr
-        in: query
-        description: Service Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: svcName
-        in: query
-        description: Service Name.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 32
-          type: string
-      - name: isoCode
-        in: query
-        description: ISO Code.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: cardSeqNum
-        in: query
-        description: Card Sequence Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 3
-          type: string
-      - name: cardIdentType
-        in: query
-        description: 'Card Identification Type. Valid values include: PORT'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - PORT
-      - name: cardIdentValue
-        in: query
-        description: Card Identification Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctIdentType
-        in: query
-        description: 'Account Identification Type. Valid values include: AcctNum,
-          Port, AcctTypeCode.'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - AcctNum
-          - PORT
-          - AccessID
-          - PartyID
-          - AliasAcct
-          - AcctTypeCode
-          - CLOC
-      - name: fIIdentType
-        in: query
-        description: Financial Institution Identification Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - ABA
-          - RoutingNum
-      - name: fiIdent
-        in: query
-        description: Financial Institution Identification.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 34
-          type: string
-      - name: branchIdent
-        in: query
-        description: Branch Identifier.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 22
-          type: string
-      - name: partyAcctRelType
-        in: query
-        description: Party-to-Account Relationship Type.
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: array
-          items:
-            type: string
-      - name: incPartyInfoInd
-        in: query
-        description: Include Party Information Indicator. Includes a subset of frequently
-          used properties of Party Information in the response. The default value
-          is (false) meaning the account Party information is not provided unless
-          set to be included (true). When the selection is made by Party, the information
-          of the Party will appear once only in the first instance of a record to
-          avoid unnecessary repetition.When the selection is made by Account the Party
-          information summary is always provided.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incAddtlAcctInfoInd
-        in: query
-        description: 'Include Additional Account Information. When the value of this
-          indicator is true, additional Account Summary information is provided. '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incEDistributionInd
-        in: query
-        description: Include e-Distribution Indicator. By using this indicator only
-          accounts available for e-Distribution are returned in the response. The
-          default value is (false)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incEBankingInd
-        in: query
-        description: Include E-Banking Accounts Indicator. Use to select only accounts
-          enable for e-Banking. The default value is set to (false) meaning all channels
-          are included.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: incFrequentConductorsInd
-        in: query
-        description: 'Include Frequent Conductors Indicator.  '
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: availBalMethod
-        in: query
-        description: Available Balance Calculation Method.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: PartyAcctRelInqRs
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-  /partyacctrel/secured:
+                $ref: '#/components/schemas/CardAcctRelAddRsType'
+  /cardAccounts/secured:
     put:
-      summary: Delete Party Account Relationship
-      description: "\"This method modifies party account relationships.\"   \n"
-      operationId: PartyAcctRelDel
+      tags:
+      - Update Card Account Relationship
+      summary: Modifies an CardAcctRelDel Object Secured
+      description: This service operation deletes the relationship between accounts
+        and a card.
+      operationId: CardAcctRelDelOperSecured
       parameters:
       - name: EFXHeader
         in: header
-        description: |
-          "The message header request aggregate contains common information for all request messages"
+        description: The message header request aggregate contains common information
+          for all request messages.
         required: true
         style: simple
         explode: false
@@ -1147,53 +105,688 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PartyAcctRelDelRqType'
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelDelRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelDelRsType'
-    post:
-      summary: Get Party Account Relationship
-      description: |
-        "This method retrieves accounts related to a party but also can provide all parties related to an account."
-      operationId: PartyAcctRelInqBySecured
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: |
-          "The message header request aggregate contains common information for all request messages"
+              $ref: '#/components/schemas/CardAcctRelDelRqType'
         required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartyAcctRelInqRqType'
       responses:
         "200":
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
+                $ref: '#/components/schemas/CardAcctRelDelRsType'
         default:
           description: See HTTP Status Code Standards
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
+                $ref: '#/components/schemas/CardAcctRelDelRsType'
+    post:
+      tags:
+      - Add Card Account Relationship
+      summary: Add an CardAcctInq Object Secured
+      description: This service operation gets a relationship between an account and
+        a card.
+      operationId: CardAcctRelInqOperSecured
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardAcctRelInqRqType'
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelInqRsType'
+        default:
+          description: See HTTP Status Code Standards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelInqRsType'
+  /cardAccounts/cardKeys/cardId/{cardId}:
+    get:
+      tags:
+      - Get Card Account Relationship by Card Keys
+      summary: CardAcctRelInqOper
+      description: This service operation retrieves the relationship between accounts
+        and a card.
+      operationId: CardAcctRelInqByCardKeysByCardId
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: cardId
+        in: path
+        description: Card Identifier.
+        required: true
+        style: simple
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: $limit
+        in: query
+        description: Maximum Record Limit. This is the maximum number of records that
+          the server should add to the result set which is available to satisfy this
+          request.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Cursor. Next Record Pointer Included in the response only if
+          additional records are available.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 250
+          type: string
+      - name: svcProviderName
+        in: query
+        description: Service Provider Name .
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: svcNbr
+        in: query
+        description: Service Number.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: svcName
+        in: query
+        description: Service Name.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 32
+          type: string
+      - name: isoCode
+        in: query
+        description: ISO Code.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: cardAcctAppl
+        in: query
+        description: '"Card Account Application. Used to identify the account type
+          or group of types.  Extended Enum available string values -  CDA, DDA, LOAN,
+          SDA, All, Other, PhoneBanking"'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: incNonRelatedAcctInd
+        in: query
+        description: '"Include non related accounts indicator. When set to "True"
+          includes the accounts that are ''eligible'' to be related to the card. If
+          no provided, assume value set to ''False''."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: incAllCardStatusInd
+        in: query
+        description: '"Include All Card Status Indicator. Indicates that no edit will
+          be done in the card status and the response will provide all accounts even
+          when the account is inactive."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelInqRsType'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelInqRsType'
+    delete:
+      tags:
+      - Delete Card Account Relationship by Card Keys
+      summary: CardAcctRelDelOper
+      description: This service operation deletes an CardAcctRel object.
+      operationId: CardAcctRelDelByCardKeysByCardId
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: cardId
+        in: path
+        description: Card Identifier.
+        required: true
+        style: simple
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: svcProviderName
+        in: query
+        description: Service Provider Name.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: svcNbr
+        in: query
+        description: Service Number.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: svcName
+        in: query
+        description: Service Name.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 32
+          type: string
+      - name: isoCode
+        in: query
+        description: ISO Code.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelDelRsType'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelDelRsType'
+  /cardAccounts/cardKeys/cardNum/{cardNum}:
+    get:
+      tags:
+      - Get Card Account Relationship by Card Keys
+      summary: CardAcctRelInqOper
+      description: This service operation deletes an CardAcctRel object.
+      operationId: CardAcctRelDelByCardKeysByCardNum
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: cardNum
+        in: path
+        description: Card Number.
+        required: true
+        style: simple
+        explode: true
+        schema:
+          maxLength: 32
+          type: string
+      - name: $limit
+        in: query
+        description: Maximum Record Limit. This is the maximum number of records that
+          the server should add to the result set which is available to satisfy this
+          request.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Cursor. Next Record Pointer Included in the response only if
+          additional records are available.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 250
+          type: string
+      - name: svcProviderName
+        in: query
+        description: Service Provider Name .
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: svcNbr
+        in: query
+        description: Service Number.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: svcName
+        in: query
+        description: Service Name.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 32
+          type: string
+      - name: isoCode
+        in: query
+        description: ISO Code.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: cardSeqNum
+        in: query
+        description: Card Sequence Number.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 3
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelDelRsType'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelDelRsType'
+    delete:
+      tags:
+      - Delete Card Account Relationship by Card Keys
+      summary: CardAcctRelDelOper
+      description: This service operation retrieves the relationship between accounts
+        and a card.
+      operationId: CardAcctRelInqByCardKeysByCardNum
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: cardNum
+        in: path
+        description: Card Number.
+        required: true
+        style: simple
+        explode: true
+        schema:
+          maxLength: 32
+          type: string
+      - name: $limit
+        in: query
+        description: Maximum Record Limit. This is the maximum number of records that
+          the server should add to the result set which is available to satisfy this
+          request.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Cursor. Next Record Pointer Included in the response only if
+          additional records are available.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 250
+          type: string
+      - name: svcProviderName
+        in: query
+        description: Service Provider Name .
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: svcNbr
+        in: query
+        description: Service Number.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: svcName
+        in: query
+        description: Service Name.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 32
+          type: string
+      - name: isoCode
+        in: query
+        description: ISO Code.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: cardSeqNum
+        in: query
+        description: Card Sequence Number.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 3
+          type: string
+      - name: cardAcctAppl
+        in: query
+        description: '"Card Account Application. Used to identify the account type
+          or group of types.  Extended Enum available string values -  CDA, DDA, LOAN,
+          SDA, All, Other, PhoneBanking"'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: incNonRelatedAcctInd
+        in: query
+        description: '"Include non related accounts indicator. When set to "True"
+          includes the accounts that are ''eligible'' to be related to the card. If
+          no provided, assume value set to ''False''."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: incAllCardStatusInd
+        in: query
+        description: '"Include All Card Status Indicator. Indicates that no edit will
+          be done in the card status and the response will provide all accounts even
+          when the account is inactive."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelInqRsType'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelInqRsType'
+  /cardAccounts/cardIdent/{cardIdentValue}:
+    get:
+      tags:
+      - Get Card Account Relationship by Card Ident
+      summary: CardAcctRelInqOper
+      description: This service operation retrieves the relationship between accounts
+        and a card.
+      operationId: CardAcctRelInqByCardIdent
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: cardIdentValue
+        in: path
+        description: Card Identification Value.
+        required: true
+        style: simple
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: $limit
+        in: query
+        description: Maximum Record Limit. This is the maximum number of records that
+          the server should add to the result set which is available to satisfy this
+          request.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Cursor. Next Record Pointer Included in the response only if
+          additional records are available.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 250
+          type: string
+      - name: svcProviderName
+        in: query
+        description: Service Provider Name .
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: svcNbr
+        in: query
+        description: Service Number.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: svcName
+        in: query
+        description: Service Name.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 32
+          type: string
+      - name: cardIdentType
+        in: query
+        description: 'Card Identification Type. Valid values include: PORT'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: cardAcctAppl
+        in: query
+        description: '"Card Account Application. Used to identify the account type
+          or group of types.  Extended Enum available string values -  CDA, DDA, LOAN,
+          SDA, All, Other, PhoneBanking"'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: incNonRelatedAcctInd
+        in: query
+        description: '"Include non related accounts indicator. When set to "True"
+          includes the accounts that are ''eligible'' to be related to the card. If
+          no provided, assume value set to ''False''."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: incAllCardStatusInd
+        in: query
+        description: '"Include All Card Status Indicator. Indicates that no edit will
+          be done in the card status and the response will provide all accounts even
+          when the account is inactive."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelInqRsType'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelInqRsType'
+    delete:
+      tags:
+      - Delete Card Account Relationship by Card Ident
+      summary: CardAcctRelDelOper
+      description: This service operation retrieves the relationship between accounts
+        and a card.
+      operationId: CardAcctRelDelByCardIdent
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information
+          for all request messages
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: cardIdentValue
+        in: path
+        description: Card Identification Value.
+        required: true
+        style: simple
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: svcProviderName
+        in: query
+        description: Service Provider Name .
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: svcNbr
+        in: query
+        description: Service Number.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 36
+          type: string
+      - name: svcName
+        in: query
+        description: Service Name.
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 32
+          type: string
+      - name: cardIdentType
+        in: query
+        description: 'Card Identification Type. Valid values include: PORT'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelDelRsType'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAcctRelDelRsType'
 components:
   schemas:
     EFXHeader:
@@ -1370,29 +963,98 @@ components:
           enum:
           - Manual
           - Auto
-    AccessLevelDataType:
-      title: AccessLevelDataType
-      type: object
-      properties:
-        AccessLevelType:
-          maxLength: 80
-          type: string
-          description: Access Level Type.
-        AccessLevelCode:
-          maxLength: 80
-          type: string
-          description: Access Level Code.
-    DayOfWeekType:
-      title: DayOfWeekType
+    AddrFormatTypeType:
+      title: AddrFormatTypeType
       type: string
       enum:
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-      - Sunday
+      - Label
+      - Parsed
+    AddrTypeType:
+      title: AddrTypeType
+      type: string
+      enum:
+      - Primary
+      - PrimaryPending
+      - Secondary
+      - Seasonal
+      - Previous
+      - Physical
+    APYRecurTypeType:
+      title: APYRecurTypeType
+      type: string
+      enum:
+      - IntPmtFrequency
+      - Monthly
+      - Quarterly
+      - SemiYearly
+      - Yearly
+      - Weekly
+      - BiWeekly
+      - Maturity
+    CardAcctRelStatusCodeType:
+      title: CardAcctRelStatusCodeType
+      type: string
+      enum:
+      - Valid
+      - Deleted
+    CardAmtSourceType:
+      title: CardAmtSourceType
+      type: string
+      enum:
+      - POS
+      - ATM
+    CardAmtTypeType:
+      title: CardAmtTypeType
+      type: string
+      enum:
+      - ForeignFeeWaived
+      - ForeignFee
+      - CardFee
+      - CardUse
+      - Inquiry
+      - Deposit
+      - Credit
+      - Debit
+      - CardAccess
+      - Withdrawal
+    CardCategoryType:
+      title: CardCategoryType
+      type: string
+      enum:
+      - Personal
+      - Business
+    CardPeriodTypeType:
+      title: CardPeriodTypeType
+      type: string
+      enum:
+      - CTD
+      - LTD
+      - MTD
+      - ThisCycle
+      - PriorCycle
+      - PriorMonth
+      - PriorYr
+      - Today
+      - YTD
+    CardSurchargeOptionType:
+      title: CardSurchargeOptionType
+      type: string
+      enum:
+      - Charge
+      - DoNotCharge
+      - UseDefault
+    CardVerifyDataType:
+      title: CardVerifyDataType
+      type: string
+      enum:
+      - ValidateCard
+      - DoNotValidateCard
+    CurCodeTypeType:
+      title: CurCodeTypeType
+      type: string
+      enum:
+      - ISO4217-Alpha
+      - ISO4217-Numeric
     DayOfMonthType:
       title: DayOfMonthType
       type: integer
@@ -1429,6 +1091,329 @@ components:
       - 29
       - 30
       - 31
+    DayOfWeekType:
+      title: DayOfWeekType
+      type: string
+      enum:
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      - Sunday
+    EarlyPayoffTierTypeType:
+      title: EarlyPayoffTierTypeType
+      type: string
+      enum:
+      - Months
+      - PmtsPaid
+    EarningMethodType:
+      title: EarningMethodType
+      type: string
+      enum:
+      - StraightLine
+      - SameAsInterest
+      - Rule78th
+      - Actuarial
+      - Accrual
+      - Amortize
+      - Cash
+      - None
+      - NotUsed
+      - Discounted
+    EmbossingPrintOptionType:
+      title: EmbossingPrintOptionType
+      type: string
+      enum:
+      - FirstLine
+      - SecondLine
+      - None
+    FeeBillingOptionType:
+      title: FeeBillingOptionType
+      type: string
+      enum:
+      - Bill
+      - CompoundToBal
+    FeeCalcOptionType:
+      title: FeeCalcOptionType
+      type: string
+      enum:
+      - FlatFee
+      - None
+      - NoAssess
+      - PctNoteAmt
+      - PctPrincipalBal
+      - PctAvgBal
+      - PctAvailBal
+      - PctIntDue
+      - PctPrincipalDue
+      - PctAllPmtPastDue
+      - PctPrincipalIntPmtPastDue
+      - PctPrincipalIntEscrowPmtPastDue
+      - PctAdvanceAmt
+      - PctUnusedAvailBal
+      - PctUnusedLimit
+      - UnusedLimit360
+      - UnusedLimit365
+      - CalcProgram
+      - PctNoteAmtPlusIns
+      - PctPrincNoteAmt
+      - PctSchedAmt
+      - PctPrincipalIntOldestPmtPastDue
+      - PctPrincipalIntEscrowOldestPmtPastDue
+      - PctPrincipalIntEscrowRecentPmtPastDue
+      - AddOnRule78
+      - PctPrincipalPmtFreq
+      - PctPrincipalBalOldestPmtPastDue
+      - PctPrincipalBalRecontPmtPastDue
+      - PctPrincipalIntRecentPmtPastDue
+      - PctMaxCredit365
+      - PctAvgPrincipalBal365
+      - PctAvgAvailBal365
+      - PctMaxCredit360
+      - PctAvgPrincipalBal360
+      - FlatFeeBalGT0
+      - FlatFeeAvgBalGT0
+      - PctAvgAvailBal360-Current
+      - PctAvgAvailBal365-Original
+      - PctAvgAvailBal360-Original
+      - BalanceinExcess365
+      - BalanceTotal365
+      - BalanceinExcess360
+      - BalanceTotal360
+      - PctBalanceinExcess
+      - PctBalanceTotal
+      - FlatFeeBalanceinExcess
+      - SBARecoupment
+      - SBACurtailment
+    FinancialTrnOptionType:
+      title: FinancialTrnOptionType
+      type: string
+      enum:
+      - AllowAllTrn
+      - AllowInqOnly
+      - AllowCreditOnly
+      - BlockAllTrn
+      - BlockPOSTrn
+      - BlockDeposit
+      - BlockXferDeposit
+      - BlockXferWithdrawal
+      - BlockWithdrawal
+    GenerateCardOrderType:
+      title: GenerateCardOrderType
+      type: string
+      enum:
+      - ReplaceCard
+      - IssueCard
+      - ReIssueCard
+      - RemakeCard
+      - NewCard
+      - DoNotGenerate
+    GeneratePINMailerType:
+      title: GeneratePINMailerType
+      type: string
+      enum:
+      - GeneratePINMailer
+      - DoNotGenerate
+    HandlingCodeOptionType:
+      title: HandlingCodeOptionType
+      type: string
+      enum:
+      - StatementsNoticesChecks
+      - Statements
+      - StatementsNotices
+      - StatementsChecks
+      - Notices
+      - NoticesChecks
+      - Checks
+      - DoNotPrint
+      - UsePortfolio
+      - UseDefault
+    LimitTypeType:
+      title: LimitTypeType
+      type: string
+      enum:
+      - DailyMax
+      - ThreeDayMax
+      - TrnMax
+      - CycleMax
+    MarginTypeType:
+      title: MarginTypeType
+      type: string
+      enum:
+      - Variance
+      - Factor
+    MaturityIntRecurTypeType:
+      title: MaturityIntRecurTypeType
+      type: string
+      enum:
+      - Daily
+      - Maturity
+    PartyAcctRelOrderType:
+      title: PartyAcctRelOrderType
+      type: string
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Fifth
+      - Other
+    PartyIdentTypeType:
+      title: PartyIdentTypeType
+      type: string
+      enum:
+      - TaxIdent
+      - IBId
+      - Name
+      - MemberNum
+      - OrgNum
+      - PersonNum
+    RateChangeRecurTypeType:
+      title: RateChangeRecurTypeType
+      type: string
+      enum:
+      - Daily
+      - Maturity
+      - BiWeekly
+      - Monthly
+      - BiMonthly
+      - TwiceMonthly
+      - Renewal
+      - SemiMonthly
+      - Weekly
+      - Yearly
+      - SemiYearly
+      - Quarterly
+      - InterestCycle
+      - DepositRateChg
+      - None
+      - Debit
+      - Stmt
+      - StmtDebit
+    RegDDAPYCodeType:
+      title: RegDDAPYCodeType
+      type: string
+      enum:
+      - GreaterThan
+      - LessOrEqualTo
+      - None
+    RelationshipRoleType:
+      title: RelationshipRoleType
+      type: string
+      enum:
+      - Officer
+      - SecondOfficer
+      - ThirdOfficer
+      - FourthOfficer
+      - ReferralOfficer
+    RetentionOptionType:
+      title: RetentionOptionType
+      type: string
+      enum:
+      - None
+      - DoNotRetain
+      - Retain
+    RoundingOptionType:
+      title: RoundingOptionType
+      type: string
+      enum:
+      - RoundUp
+      - RoundDown
+      - RoundNearest
+      - None
+      - NoOverride
+    SeverityType:
+      title: SeverityType
+      type: string
+      enum:
+      - Error
+      - Warning
+      - Info
+    TaxIdentTypeType:
+      title: TaxIdentTypeType
+      type: string
+      enum:
+      - None
+      - SSN
+      - EIN
+      - Foreign
+      - ITIN
+      - ATIN
+      - Other
+    TermUnitsType:
+      title: TermUnitsType
+      type: string
+      enum:
+      - Days
+      - Weeks
+      - Months
+      - Years
+      - Indefinite
+      - Unknown
+    TranHistoryOptionType:
+      title: TranHistoryOptionType
+      type: string
+      enum:
+      - None
+      - DoNotRetain
+      - Retain
+    TrnTypeValueType:
+      title: TrnTypeValueType
+      type: string
+      enum:
+      - Debit
+      - Credit
+      - Withdrawal
+      - PreAuth
+      - Deposit
+      - Transfer
+      - DepositAvail
+      - Advances
+      - All
+      - None
+    UnitsType:
+      title: UnitsType
+      type: string
+      enum:
+      - Days
+      - Months
+    UpdateContactCodeType:
+      title: UpdateContactCodeType
+      type: string
+      enum:
+      - Party
+      - Account
+      - All
+      - None
+    VarianceFactorTypeType:
+      title: VarianceFactorTypeType
+      type: string
+      enum:
+      - None
+      - Variance
+      - Factor
+      - Factor+Variance
+      - VarianceXFactor
+    WithholdingTypeType:
+      title: WithholdingTypeType
+      type: string
+      enum:
+      - FederalTax
+      - StateTax
+    AccessLevelDataType:
+      title: AccessLevelDataType
+      type: object
+      properties:
+        AccessLevelType:
+          maxLength: 80
+          type: string
+          description: Access Level Type.
+        AccessLevelCode:
+          maxLength: 80
+          type: string
+          description: Access Level Code.
     RecurRuleType:
       title: RecurRuleType
       type: object
@@ -1494,25 +1479,11 @@ components:
           description: 'Adjustment Days Basis. Used in combination with Adjustment
             Days (AdjDays). It indicates a basis for an adjustment such as: Due Date
             (DueDt), Statement Date (StmtDt).'
-        WeekendOption:
-          type: string
-          description: Weekend Option. Describes how certain functionality, e.g. Transfers
-            are processed on the Weekend.
-        WeekendOptionEnumDesc:
-          maxLength: 80
-          type: string
-          description: WeekendOption Enumeration Description.
     AccrualFrequencyType:
       title: AccrualFrequencyType
       allOf:
       - $ref: '#/components/schemas/RecurRuleType'
       - type: object
-    CurCodeTypeType:
-      title: CurCodeTypeType
-      type: string
-      enum:
-      - ISO4217-Alpha
-      - ISO4217-Numeric
     CurCodeType:
       title: CurCodeType
       required:
@@ -1602,16 +1573,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
-    TermUnitsType:
-      title: TermUnitsType
-      type: string
-      enum:
-      - Days
-      - Weeks
-      - Months
-      - Years
-      - Indefinite
-      - Unknown
     TermType:
       title: TermType
       required:
@@ -1677,15 +1638,6 @@ components:
           description: Reference Data.
           items:
             $ref: '#/components/schemas/RefDataType'
-    RelationshipRoleType:
-      title: RelationshipRoleType
-      type: string
-      enum:
-      - Officer
-      - SecondOfficer
-      - ThirdOfficer
-      - FourthOfficer
-      - ReferralOfficer
     RelationshipMgrType:
       title: RelationshipMgrType
       required:
@@ -1732,20 +1684,6 @@ components:
           maxLength: 80
           type: string
           description: Account Title Option Enumeration Description.
-    HandlingCodeOptionType:
-      title: HandlingCodeOptionType
-      type: string
-      enum:
-      - StatementsNoticesChecks
-      - Statements
-      - StatementsNotices
-      - StatementsChecks
-      - Notices
-      - NoticesChecks
-      - Checks
-      - DoNotPrint
-      - UsePortfolio
-      - UseDefault
     ClientDefinedDataType:
       title: ClientDefinedDataType
       required:
@@ -1829,13 +1767,6 @@ components:
           AlternateStmtOption:
             type: string
             description: Alternate Statement Option.
-    RegDDAPYCodeType:
-      title: RegDDAPYCodeType
-      type: string
-      enum:
-      - GreaterThan
-      - LessOrEqualTo
-      - None
     StmtDisclosureDataType:
       title: StmtDisclosureDataType
       type: object
@@ -2043,12 +1974,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
-    MarginTypeType:
-      title: MarginTypeType
-      type: string
-      enum:
-      - Variance
-      - Factor
     RateMatrixTierType:
       title: RateMatrixTierType
       type: object
@@ -2101,18 +2026,6 @@ components:
         IntAPR:
           type: number
           description: Interest APR.
-    APYRecurTypeType:
-      title: APYRecurTypeType
-      type: string
-      enum:
-      - IntPmtFrequency
-      - Monthly
-      - Quarterly
-      - SemiYearly
-      - Yearly
-      - Weekly
-      - BiWeekly
-      - Maturity
     CapFrequencyType:
       title: CapFrequencyType
       allOf:
@@ -2262,12 +2175,6 @@ components:
           description: Interest Rate Calculation Option. Indicates whether the interest
             rate should be calculated at the time of the first disbursement or when
             the loan account is opened.
-    MaturityIntRecurTypeType:
-      title: MaturityIntRecurTypeType
-      type: string
-      enum:
-      - Daily
-      - Maturity
     MaturityIntCalcDataType:
       title: MaturityIntCalcDataType
       type: object
@@ -2339,15 +2246,6 @@ components:
         Rate:
           type: number
           description: Rate.
-    VarianceFactorTypeType:
-      title: VarianceFactorTypeType
-      type: string
-      enum:
-      - None
-      - Variance
-      - Factor
-      - Factor+Variance
-      - VarianceXFactor
     PendingRateType:
       title: PendingRateType
       type: object
@@ -2380,37 +2278,6 @@ components:
           type: number
           description: Maximum Rate Change. Maximum amount that the interest rate
             can change per review period.
-    RoundingOptionType:
-      title: RoundingOptionType
-      type: string
-      enum:
-      - RoundUp
-      - RoundDown
-      - RoundNearest
-      - None
-      - NoOverride
-    RateChangeRecurTypeType:
-      title: RateChangeRecurTypeType
-      type: string
-      enum:
-      - Daily
-      - Maturity
-      - BiWeekly
-      - Monthly
-      - BiMonthly
-      - TwiceMonthly
-      - Renewal
-      - SemiMonthly
-      - Weekly
-      - Yearly
-      - SemiYearly
-      - Quarterly
-      - InterestCycle
-      - DepositRateChg
-      - None
-      - Debit
-      - Stmt
-      - StmtDebit
     RateChangeDataType:
       title: RateChangeDataType
       type: object
@@ -2651,12 +2518,6 @@ components:
           maxLength: 80
           type: string
           description: Notice Detail Option Enumeration Description.
-    UnitsType:
-      title: UnitsType
-      type: string
-      enum:
-      - Days
-      - Months
     TotalInPeriodType:
       title: TotalInPeriodType
       required:
@@ -2766,12 +2627,6 @@ components:
     LocatorType:
       title: LocatorType
       type: string
-    AddrFormatTypeType:
-      title: AddrFormatTypeType
-      type: string
-      enum:
-      - Label
-      - Parsed
     LabelAddrType:
       title: LabelAddrType
       type: object
@@ -2837,16 +2692,6 @@ components:
           maxLength: 80
           type: string
           description: Country Code Value Enumeration Description.
-    AddrTypeType:
-      title: AddrTypeType
-      type: string
-      enum:
-      - Primary
-      - PrimaryPending
-      - Secondary
-      - Seasonal
-      - Previous
-      - Physical
     StartDayMonthType:
       title: StartDayMonthType
       type: object
@@ -2996,7 +2841,7 @@ components:
             description: Name Identifier.
             items:
               maxLength: 36
-              type: string
+              type: object
           AddressIdent:
             maxLength: 36
             type: string
@@ -3065,6 +2910,10 @@ components:
             maxLength: 15
             type: string
             description: House Number.
+          HouseName:
+            maxLength: 64
+            type: string
+            description: House Name.
           Street:
             maxLength: 64
             type: string
@@ -3076,10 +2925,6 @@ components:
             description: Address Defined Data.
             items:
               $ref: '#/components/schemas/AddrDefinedDataType'
-          HouseName:
-            maxLength: 64
-            type: string
-            description: House Name.
           City:
             maxLength: 32
             type: string
@@ -3266,17 +3111,6 @@ components:
           maxLength: 12
           type: string
           description: Tax Identification.
-    TaxIdentTypeType:
-      title: TaxIdentTypeType
-      type: string
-      enum:
-      - None
-      - SSN
-      - EIN
-      - Foreign
-      - ITIN
-      - ATIN
-      - Other
     USATaxIdCertType:
       title: USATaxIdCertType
       type: object
@@ -3295,12 +3129,6 @@ components:
             party signed the certification form OR the date that the government issued
             a non-certification.
           format: date
-    WithholdingTypeType:
-      title: WithholdingTypeType
-      type: string
-      enum:
-      - FederalTax
-      - StateTax
     WithholdingDataType:
       title: WithholdingDataType
       type: object
@@ -3369,69 +3197,11 @@ components:
           maxLength: 200
           type: string
           description: Property Description.
-    FeeCalcOptionType:
-      title: FeeCalcOptionType
-      type: string
-      enum:
-      - FlatFee
-      - None
-      - NoAssess
-      - PctNoteAmt
-      - PctPrincipalBal
-      - PctAvgBal
-      - PctAvailBal
-      - PctIntDue
-      - PctPrincipalDue
-      - PctAllPmtPastDue
-      - PctPrincipalIntPmtPastDue
-      - PctPrincipalIntEscrowPmtPastDue
-      - PctAdvanceAmt
-      - PctUnusedAvailBal
-      - PctUnusedLimit
-      - UnusedLimit360
-      - UnusedLimit365
-      - CalcProgram
-      - PctNoteAmtPlusIns
-      - PctPrincNoteAmt
-      - PctSchedAmt
-      - PctPrincipalIntOldestPmtPastDue
-      - PctPrincipalIntEscrowOldestPmtPastDue
-      - PctPrincipalIntEscrowRecentPmtPastDue
-      - AddOnRule78
-      - PctPrincipalPmtFreq
-      - PctPrincipalBalOldestPmtPastDue
-      - PctPrincipalBalRecontPmtPastDue
-      - PctPrincipalIntRecentPmtPastDue
-      - PctMaxCredit365
-      - PctAvgPrincipalBal365
-      - PctAvgAvailBal365
-      - PctMaxCredit360
-      - PctAvgPrincipalBal360
-      - FlatFeeBalGT0
-      - FlatFeeAvgBalGT0
-      - PctAvgAvailBal360-Current
-      - PctAvgAvailBal365-Original
-      - PctAvgAvailBal360-Original
-      - BalanceinExcess365
-      - BalanceTotal365
-      - BalanceinExcess360
-      - BalanceTotal360
-      - PctBalanceinExcess
-      - PctBalanceTotal
-      - FlatFeeBalanceinExcess
-      - SBARecoupment
-      - SBACurtailment
     PrePayMaxAmtType:
       title: PrePayMaxAmtType
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
-    FeeBillingOptionType:
-      title: FeeBillingOptionType
-      type: string
-      enum:
-      - Bill
-      - CompoundToBal
     FeeTierType:
       title: FeeTierType
       type: object
@@ -3459,20 +3229,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
-    EarningMethodType:
-      title: EarningMethodType
-      type: string
-      enum:
-      - StraightLine
-      - SameAsInterest
-      - Rule78th
-      - Actuarial
-      - Accrual
-      - Amortize
-      - Cash
-      - None
-      - NotUsed
-      - Discounted
     FeeEarningDataType:
       title: FeeEarningDataType
       type: object
@@ -3500,12 +3256,6 @@ components:
           type: boolean
           description: Financial Charge Indicator.Used to indicate that the amount
             is a finance charge.
-    EarlyPayoffTierTypeType:
-      title: EarlyPayoffTierTypeType
-      type: string
-      enum:
-      - Months
-      - PmtsPaid
     EarlyPayoffTierDataType:
       title: EarlyPayoffTierDataType
       required:
@@ -3781,20 +3531,6 @@ components:
           maxLength: 80
           type: string
           description: Credit Report Outcome. Also known as comment code.
-    RetentionOptionType:
-      title: RetentionOptionType
-      type: string
-      enum:
-      - None
-      - DoNotRetain
-      - Retain
-    TranHistoryOptionType:
-      title: TranHistoryOptionType
-      type: string
-      enum:
-      - None
-      - DoNotRetain
-      - Retain
     RelationshipPricingAcctDataType:
       title: RelationshipPricingAcctDataType
       type: object
@@ -3909,14 +3645,14 @@ components:
             type: array
             description: Financial Institution Identification Type.
             items:
-              type: string
+              type: object
           FIIdent:
             maxLength: 34
             type: array
             description: Financial Institution Identification.
             items:
               maxLength: 34
-              type: string
+              type: object
           BranchIdent:
             maxLength: 22
             type: array
@@ -3924,7 +3660,7 @@ components:
               of the Branch object key.
             items:
               maxLength: 22
-              type: string
+              type: object
     SweepAcctKeysType:
       title: SweepAcctKeysType
       allOf:
@@ -4008,14 +3744,6 @@ components:
           type: string
           description: Expiration Date.
           format: date
-    UpdateContactCodeType:
-      title: UpdateContactCodeType
-      type: string
-      enum:
-      - Party
-      - Account
-      - All
-      - None
     RenewalFrequencyType:
       title: RenewalFrequencyType
       allOf:
@@ -4088,16 +3816,6 @@ components:
           type: number
           description: Rate Variance. Percentage that the interest rate varies from
             its related index rate
-    PartyIdentTypeType:
-      title: PartyIdentTypeType
-      type: string
-      enum:
-      - TaxIdent
-      - IBId
-      - Name
-      - MemberNum
-      - OrgNum
-      - PersonNum
     PartyKeysType:
       title: PartyKeysType
       allOf:
@@ -4993,38 +4711,102 @@ components:
           $ref: '#/components/schemas/AcctKeysType'
         AcctSummInfo:
           $ref: '#/components/schemas/AcctSummInfoType'
-    AcctRelClassType:
-      title: AcctRelClassType
-      type: string
-      enum:
-      - Commercial
-      - Personal
-    AcctSelCriteriaType:
-      title: AcctSelCriteriaType
-      required:
-      - AcctType
+    AcctLinkDataType:
+      title: AcctLinkDataType
       type: object
       properties:
-        AcctType:
+        AcctRef:
+          $ref: '#/components/schemas/AcctRefType'
+        OtherAcctRel:
+          type: integer
+          description: Other Account Relationships.
+          format: int64
+        Desc:
+          maxLength: 200
           type: string
-          description: Account Type. Classifies the type of product with which an
-            account is associated. This element is required when adding a new account
-            and by using this value we can identify if the account is a savings, a
-            checking, a time deposit, loan account, etc.
-        AcctStatusSel:
+          description: Description.
+        PhoneBankingAcctRel:
+          type: integer
+          description: Phone Banking Account Relationships.
+          format: int64
+        AcctClass:
+          maxLength: 80
           type: string
-          description: Account Status Selection.
-        AcctExcludeInd:
+          description: Account Class.
+        AcctClassEnumDesc:
+          maxLength: 80
+          type: string
+          description: Account Classification Enum Description.
+        FinancialTrnOption:
+          $ref: '#/components/schemas/FinancialTrnOptionType'
+        FinancialTrnOptionEnumDesc:
+          maxLength: 80
+          type: string
+          description: Financial Transaction Option Enum Description.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Nickname. Used to allow a customer to assign nicknames to objects.
+        PartyAcctRelType:
+          type: string
+          description: Party-to-Account Relationship Type. Describes the relationship
+            between the Party and the Account.
+        PartyAcctRelDesc:
+          maxLength: 80
+          type: string
+          description: Party-to-Account Relationship Description.
+        PartyAcctRelOrder:
+          $ref: '#/components/schemas/PartyAcctRelOrderType'
+    AcctTrnLimitType:
+      title: AcctTrnLimitType
+      required:
+      - TrnTypeValue
+      type: object
+      properties:
+        TrnTypeValue:
+          $ref: '#/components/schemas/TrnTypeValueType'
+        TrnTypeValueEnumDesc:
+          maxLength: 80
+          type: string
+          description: Transaction Type Value Enumeration Description.
+        TrnSubType:
+          maxLength: 15
+          type: string
+          description: Transaction Sub Type Value.
+        TrnSubTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Transaction Sub Type Value Enumeration Description.
+        TrnSrc:
+          type: string
+          description: 'Transaction Source. Indicates the transaction source for example:
+            POS, ATM, etc. See list of valid enumerated values.'
+        TrnSrcEnumDesc:
+          maxLength: 80
+          type: string
+          description: Transaction Source Enumeration Description.
+        TempLimitInd:
           type: boolean
-          description: Account Exclude Indicator. Use in combination of an account
-            type to indicate if the type of account should be excluded from the response.
-    SeverityType:
-      title: SeverityType
-      type: string
-      enum:
-      - Error
-      - Warning
-      - Info
+          description: Temporary Limit Indicator.
+        LimitType:
+          $ref: '#/components/schemas/LimitTypeType'
+        LimitTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Limit Type Enumeration Description.
+        DaysInCycle:
+          type: integer
+          description: Days in Cycle.
+          format: int64
+        CurAmt:
+          $ref: '#/components/schemas/CurAmtType'
+        Percent:
+          type: number
+          description: Percent.
+        LimitCount:
+          type: integer
+          description: Limit Count.
+          format: int64
     SubjectElementType:
       title: SubjectElementType
       type: object
@@ -5095,46 +4877,6 @@ components:
             status code.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    AddtlAcctTypeType:
-      title: AddtlAcctTypeType
-      type: object
-      properties:
-        AcctTypeSource:
-          maxLength: 80
-          type: string
-          description: Account Type Surce
-        AcctTypeValue:
-          maxLength: 80
-          type: string
-          description: Account Type Value
-    AndorOrType:
-      title: AndorOrType
-      type: string
-      enum:
-      - AND
-      - OR
-      - None
-    AutoEnrollmentDataType:
-      title: AutoEnrollmentDataType
-      type: object
-      properties:
-        AutoEnrollmentType:
-          type: string
-          description: Auto Enrollment Type.
-        AutoEnrollmentInd:
-          type: boolean
-          description: Auto Enrollment Indicator. When the value is 'true' indicates
-            the account has been enrolled.
-    BeneficiaryType:
-      title: BeneficiaryType
-      type: object
-      properties:
-        BeneficiaryPercent:
-          type: number
-          description: Beneficiary Percent.
-        BeneficiaryAmt:
-          type: number
-          description: Beneficiary Amount
     EmailType:
       title: EmailType
       allOf:
@@ -5163,31 +4905,8 @@ components:
             maxLength: 10
             type: string
             description: Priority Code.
-    WebAddrType:
-      title: WebAddrType
-      type: object
-      properties:
-        WebAddrIdent:
-          type: integer
-          description: Web Address Identifier. Use when you have more than one occurrence
-            of a web address type. This element serializes the web addresses.
-          format: int64
-        WebAddrType:
-          type: string
-          description: Web Address Type.
-        WebAddrTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Web Address Type Enumeration Description.
-        WebAddrLink:
-          maxLength: 1024
-          type: string
-          description: Web Address Link.
-        PreferredWebAddr:
-          type: boolean
-          description: Preferred Web Address.
-    ContactType:
-      title: ContactType
+    AlertContactType:
+      title: AlertContactType
       type: object
       properties:
         PhoneNum:
@@ -5196,13 +4915,6 @@ components:
           $ref: '#/components/schemas/PostAddrType'
         Email:
           $ref: '#/components/schemas/EmailType'
-        WebAddr:
-          $ref: '#/components/schemas/WebAddrType'
-        ContactIdent:
-          maxLength: 36
-          type: string
-          description: Contact Identifier. Refers to a customer number if the contact
-            is a customer in the customer file.
         ContactName:
           maxLength: 40
           type: string
@@ -5211,26 +4923,35 @@ components:
           maxLength: 32
           type: string
           description: Contact Job Title.
-        DoNotSolicitInd:
-          type: boolean
-          description: Do Not Solicit Indicator. Use to determine whether contact
-            information can be used for solicitation.
-    GovIssuedIdentType:
-      title: GovIssuedIdentType
-      required:
-      - CountryCode
+    AuthLimitAmtType:
+      title: AuthLimitAmtType
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    AtmPosOverdraftType:
+      title: AtmPosOverdraftType
       type: object
       properties:
-        CountryCode:
-          $ref: '#/components/schemas/CountryCodeType'
-        StateProv:
+        AuthLimitOption:
+          type: string
+          description: Authorization Limit Option.
+        AuthLimitOptionEnumDesc:
           maxLength: 80
           type: string
-          description: State/Province. ISO 3166-2:US codes.
-        StateProvEnumDesc:
+          description: Authorization Limit Option Enumeration Description .
+        OptInOutDt:
+          type: string
+          description: Option In/Option Out Date.
+          format: date
+        AuthLimitAmt:
+          $ref: '#/components/schemas/AuthLimitAmtType'
+        NoticeOption:
+          type: string
+          description: Notice Option.
+        NoticeOptionEnumDesc:
           maxLength: 80
           type: string
-          description: State Province Enumeration Description.
+          description: Account Notice Option Enumeration Description.
     OvrdElementType:
       title: OvrdElementType
       allOf:
@@ -5264,249 +4985,70 @@ components:
           description: Override Exception.
           items:
             $ref: '#/components/schemas/OverrideExceptionType'
-    MemberDataType:
-      title: MemberDataType
-      type: object
-      properties:
-        MemberGroup:
-          maxLength: 80
-          type: string
-          description: Member Group.
-        MemberNum:
-          maxLength: 36
-          type: string
-          description: Member Number.
-      description: '[IFXR]Member Data.'
-    IssuedIdentType:
-      title: IssuedIdentType
+    MaxSurchargeWaiveAmtType:
+      title: MaxSurchargeWaiveAmtType
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    CardFeeType:
+      title: CardFeeType
       required:
-      - IssuedIdentType
+      - CardFeeType
       type: object
       properties:
-        IssuedIdentType:
+        CardFeeType:
           type: string
-          description: 'Issued Identification Type. Valid values: DrvrsLicNb, BirthCertificate,
-            HealthCard, Military, AlnRegnNb, IdntyCardNb, VoterRegistration, PsptNb,
-            MplyrIdNb, TaxIdNb,  SclSctyNb, NRAPersonal, NRABusiness, Other.'
-        IssuedIdentTypeEnumDesc:
+          description: 'Card Fee Type. Valid Values: CardFee, TrnFee, ForeignFee.'
+        CardFeeTypeEnumDesc:
           maxLength: 80
           type: string
-          description: Issued Identification Type Enumeration Description.
-        IssuedIdentId:
-          maxLength: 36
+          description: Card Fee Type Enumeration Description.
+        FeeOption:
           type: string
-          description: Issued Identification Id.
-        IssuedIdentValue:
-          maxLength: 32
-          type: string
-          description: Issued Identification Value. Identification value associated
-            with the identification type.
-        Issuer:
-          maxLength: 32
-          type: string
-          description: Issuer.
-        IssuerEnumDesc:
+          description: Fee Option. Processing option or method used for the fee type.
+        FeeOptionEnumDesc:
           maxLength: 80
           type: string
-          description: Issuer Enumeration Description.
-        IssuerLocation:
+          description: Fee Option Enumeration Description.
+        CurAmt:
+          $ref: '#/components/schemas/CurAmtType'
+        FeePlan:
           maxLength: 80
           type: string
-          description: Issuer Location.
-        IssuerLocationEnumDesc:
-          maxLength: 80
-          type: string
-          description: Issuer Location Enumeration Description.
-        IssueDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: Issue Date.
-        ExpDt:
-          type: string
-          description: Expiration Date.
-          format: date
-        IdentVerifyDt:
-          type: string
-          description: Identification Verification Date.
-          format: date
-        NextIdentVerifyDt:
-          type: string
-          description: Next Identification Verification Date.
-          format: date
-        VerificationDetailText:
-          maxLength: 255
-          type: string
-          description: Verification Detail Text.
-        GovIssuedIdent:
-          $ref: '#/components/schemas/GovIssuedIdentType'
-    SecretDataType:
-      title: SecretDataType
-      required:
-      - SecretIdent
-      type: object
-      properties:
-        SecretIdent:
-          type: string
-          description: Secret Identifier.
-        SecretIdentEnumDesc:
-          maxLength: 80
-          type: string
-          description: Secret Identifier Enumeration Description.
-        SecretValue:
-          maxLength: 80
-          type: string
-          description: Secret Value.
-    PartyListInfoType:
-      title: PartyListInfoType
-      type: object
-      properties:
-        MemberData:
-          $ref: '#/components/schemas/MemberDataType'
-        PartySelType:
-          maxLength: 80
-          type: string
-          description: Party Selection Type.
-        PartyType:
-          type: string
-          description: Party Type.Used to further specify the type of Party.
-        PartyTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Party Type Enumeration Description.
-        Contact:
-          type: array
-          description: Contact. This aggregate contains a person's or organization's
-            contact information
-          items:
-            $ref: '#/components/schemas/ContactType'
-        TaxIdentType:
-          $ref: '#/components/schemas/TaxIdentTypeType'
-        TaxIdentTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Tax Identification Type Enumeration Description.
-        TaxIdent:
-          maxLength: 12
-          type: string
-          description: Tax Identification.
-        TaxIdentApplyDt:
-          type: string
-          description: Tax Identifier Application Date.
-          format: date
-        IssuedIdent:
-          type: array
-          description: Issued Identification. Used to include issued identifications.
-            If the identification is government issued, the GovIssuedIdent aggregate
-            must be included.
-          items:
-            $ref: '#/components/schemas/IssuedIdentType'
-        OEDCode:
-          type: string
-          description: Officer, Employee, DIrector Code. Indicates if the party is
-            an employee of the Bank.
-        OEDCodeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Officer Employee Director Enumeration Description.
-        EmployeeInd:
+          description: Fee Plan. A fee plan makes reference to a predefined set to
+            values used to calculate fees.
+        WaiveFeeInd:
           type: boolean
-          description: Employee Indicator. Indicates that the account holder is employee
-            of the FI.
-        RestrictedInd:
-          type: boolean
-          description: Restricted Indicator. Indicates whether the account information
-            is restricted for view by the requester.
-        RestrictedDesc:
-          maxLength: 80
+          description: Waived Fee Indicator.
+        FeeWaiver:
+          $ref: '#/components/schemas/FeeWaiverType'
+        NextFeeDt:
           type: string
-          description: Restricted Description. Description of the reason for the account
-            to be restricted.
-        SecretData:
-          type: array
-          description: Secret Data.
-          items:
-            $ref: '#/components/schemas/SecretDataType'
-        OriginatingBranch:
-          maxLength: 32
-          type: string
-          description: Originating Branch. Branch first originated the relationship
-            with party or created the account.
-        OriginatingBranchEnumDesc:
-          maxLength: 80
-          type: string
-          description: Originating Branch Enumeration Description.
-        ServiceLevel:
-          maxLength: 80
-          type: string
-          description: Service Level. Indicates the level of service or the type of
-            pricing that the customer should receive
-        ServiceLevelEnumDesc:
-          maxLength: 80
-          type: string
-          description: Service Level Enumeration Description.
-        MarketSegment:
-          maxLength: 80
-          type: string
-          description: Party Market Segment.  Value that the institution can can use
-            to enter marketing information for this customer.
-        MarketSegmentEnumDesc:
-          maxLength: 80
-          type: string
-          description: Party Market Segment Enumeration Description.
-        TelebancPswd:
-          maxLength: 255
-          type: string
-          description: Telebanc Password. The Electronic Banking Password is the number
-            used for personal identification when accessing information in Connect3.
-        SocioEconomicCode:
-          maxLength: 10
-          type: string
-          description: Socio Economic Code.
-        SocioEconomicCodeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Socio Economic Code Enumeration Description.
-      description: '[IFXR]Party Information.'
-    NameTypeType:
-      title: NameTypeType
-      type: string
-      enum:
-      - Primary
-      - Secondary
-      - Legal
-    NameFormatType:
-      title: NameFormatType
-      type: string
-      enum:
-      - None
-      - NonPersonal
-      - FirstLastSuffix
-      - FirstMiddleInitialLastSuffix
-      - FirstMiddleLastSuffix
-      - PrintedMailingSeasonal
-      - PrintedMailingSeasonalTax
-      - PrintedSeasonalOnly
-      - PrintedAddressOnly
-    PersonNameType:
-      title: PersonNameType
+          description: Next Fee Date.
+          format: date
+        TimeFrame:
+          $ref: '#/components/schemas/TimeFrameType'
+    ChargeFeeAcctType:
+      title: ChargeFeeAcctType
       required:
-      - NameType
+      - AcctId
       type: object
       properties:
-        NameType:
-          $ref: '#/components/schemas/NameTypeType'
-        NameTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Name Type Enumeration Description.
-        NameIdent:
+        AcctId:
           maxLength: 36
           type: string
-          description: Name Identifier.
-        FullName:
-          maxLength: 96
+          description: Account Identifier. Uniquely identifies an account held at
+            a financial institution.
+        AcctType:
           type: string
-          description: Full Name.
+          description: Account Type. Classifies the type of product with which an
+            account is associated. This element is required when adding a new account
+            and by using this value we can identify if the account is a savings, a
+            checking, a time deposit, loan account, etc.
+    PersonEmbossingNameType:
+      title: PersonEmbossingNameType
+      type: object
+      properties:
         FamilyName:
           maxLength: 40
           type: string
@@ -5525,271 +5067,646 @@ components:
         NameSuffix:
           type: string
           description: Name Suffix. For example, “Ms.”, or “Dr.”
-        PreferredName:
-          maxLength: 96
-          type: string
-          description: Preferred Name or Nickname.  For example, person is requesting
-            to be called "Tony" instead of "Anthony".
-        LegalName:
-          maxLength: 96
-          type: string
-          description: Legal Name. Legal Name of the Organization.
-        NameFormat:
-          $ref: '#/components/schemas/NameFormatType'
-        NameFormatEnumDesc:
-          maxLength: 80
-          type: string
-          description: Name Format Enumeration Description.
-        NameInUseInd:
-          type: boolean
-          description: Name In Use Indicator.
-    PersonPartyListInfoType:
-      title: PersonPartyListInfoType
+    CardTrnLimitType:
+      title: CardTrnLimitType
       allOf:
-      - $ref: '#/components/schemas/PartyListInfoType'
+      - $ref: '#/components/schemas/AcctTrnLimitType'
       - type: object
         properties:
-          PersonName:
-            $ref: '#/components/schemas/PersonNameType'
-          BirthDt:
+          TempTrnLimitExpDt:
             type: string
-            description: Birth Date.
+            description: Temporary Transaction Limit Expiration Date.
             format: date
-    OrgNameType:
-      title: OrgNameType
-      required:
-      - NameType
+    MaxCreditLimitAmtType:
+      title: MaxCreditLimitAmtType
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    CardPrefType:
+      title: CardPrefType
       type: object
       properties:
-        NameType:
-          $ref: '#/components/schemas/NameTypeType'
-        NameTypeEnumDesc:
+        Language:
+          maxLength: 17
+          type: string
+          description: Language. The value of Language follows the definition of language
+            identifiers in ISO-639-1
+        LanguageEnumDesc:
           maxLength: 80
           type: string
-          description: Name Type Enumeration Description.
-        NameIdent:
+          description: Language Enumeration Description.
+    PreviousCardDataType:
+      title: PreviousCardDataType
+      type: object
+      properties:
+        ISOCode:
+          maxLength: 80
+          type: string
+          description: ISO Card Code. Some systems like Precision instead of ISO Number
+            they use a code to refer to the ISO Number of the card.
+        CardNum:
+          maxLength: 32
+          type: string
+          description: Card Number. This number does not include the ISO component
+            of the card identification.
+    CardPeriodDataType:
+      title: CardPeriodDataType
+      type: object
+      properties:
+        CardAmtType:
+          $ref: '#/components/schemas/CardAmtTypeType'
+        CardAmtSource:
+          $ref: '#/components/schemas/CardAmtSourceType'
+        CardPeriodType:
+          $ref: '#/components/schemas/CardPeriodTypeType'
+        Month:
+          type: integer
+          description: 'Month. Numeric value representing the month of recurrence.
+            Valid values: integers between 1 and 12 inclusive.'
+          format: int64
+        LastOccurInd:
+          type: boolean
+          description: Last Occurrence Indicator.
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Effective Date. The date that an associated action takes effect.
+        Amt:
+          type: number
+          description: Amount.
+        Count:
+          type: integer
+          description: Count. Sometimes specifies the duration of the time frame base
+            on the units specified.
+          format: int64
+    TextAlertDataType:
+      title: TextAlertDataType
+      type: object
+      properties:
+        AlertIdent:
           maxLength: 36
           type: string
-          description: Name Identifier.
-        Name:
-          maxLength: 80
+          description: '[FSVR]Alert Identifer.'
+        AlertText:
+          maxLength: 255
           type: string
-          description: Name.
-        PreferredName:
-          maxLength: 96
-          type: string
-          description: Preferred Name or Nickname.  For example, person is requesting
-            to be called "Tony" instead of "Anthony".
-        LegalName:
-          maxLength: 96
-          type: string
-          description: Legal Name. Legal Name of the Organization.
-        NameFormat:
-          $ref: '#/components/schemas/NameFormatType'
-        NameFormatEnumDesc:
-          maxLength: 80
-          type: string
-          description: Name Format Enumeration Description.
-        NameInUseInd:
-          type: boolean
-          description: Name In Use Indicator.
-    OrgPartyListInfoType:
-      title: OrgPartyListInfoType
-      allOf:
-      - $ref: '#/components/schemas/PartyListInfoType'
-      - type: object
-        properties:
-          OrgName:
-            $ref: '#/components/schemas/OrgNameType'
-          RecipientGIIN:
-            maxLength: 19
-            type: string
-            description: RecipientGlobal Intermediary Identification Number. IRS assigns
-              to a Participating Foreign Financial Institution (PFFI) or Registered
-              Deemed Compliant FFI after a financial institution’s FATCA registration
-              is submitted and approved.
-          LegalForm:
-            type: string
-            description: Legal Form. PublicLimitedCompany, PrivateLimitedCompany,
-              SoleTraders, Partnership, LimitedLiabilityPartnership, Club, Society.
-          BeneficialOwnerReqInd:
-            type: boolean
-            description: Beneficial Owner Required Indicator.
-    PartyRefType:
-      title: PartyRefType
-      required:
-      - PartyKeys
+          description: Alert Text.
+        AlertContact:
+          type: array
+          description: Alert Contact.
+          items:
+            $ref: '#/components/schemas/AlertContactType'
+    CardInfoType:
+      title: CardInfoType
       type: object
       properties:
+        Brand:
+          maxLength: 80
+          type: string
+          description: '[FSVR]Brand.'
+        RewardsProgramInd:
+          type: boolean
+          description: Rewards Program Indicator.
+        CardNum:
+          maxLength: 32
+          type: string
+          description: Card Number. This number does not include the ISO component
+            of the card identification.
+        CardEmbossNum:
+          maxLength: 32
+          type: string
+          description: Card Embossing Number. Card Embossing Number as it appears
+            on the card
+        CardSeqNum:
+          maxLength: 3
+          type: string
+          description: Card Sequence Number. Typically refers to the member number
+            (if applicable).
+        CardType:
+          maxLength: 80
+          type: string
+          description: Card Type. Classification that identifies the type of card.
+        ISOCode:
+          maxLength: 80
+          type: string
+          description: ISO Card Code. Some systems like Precision instead of ISO Number
+            they use a code to refer to the ISO Number of the card.
+        CardTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Card Type Enum Description.
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: Product Identifier. Identifies the processing parameters of
+            the account or card.
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description.
+        InstantIssuedInd:
+          type: boolean
+          description: Instant Issued Card Indicator.
+        RelationshipMgr:
+          type: array
+          description: Relationship Manager. Stores information about the FI officers
+            that have management responsibility of the Party, the Account or the Card.
+          items:
+            $ref: '#/components/schemas/RelationshipMgrType'
+        CardDtlStatus:
+          type: string
+          description: Card Detail Status. Indicates the current status of the Card.
+        CardDtlStatusEnumDesc:
+          maxLength: 80
+          type: string
+          description: Card Detail Status Enum Description.
+        CardDtlStatusDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Card Detail Status Date. Indicates date of the current status
+            of the Card.
+        CardStatusReason:
+          type: string
+          description: Card Status Reason.
+        CardStatusReasonEnumDesc:
+          maxLength: 80
+          type: string
+          description: Card Status Reason  Enumeration Description .
+        CardStatusReasonAddtlDesc:
+          maxLength: 256
+          type: string
+          description: Card Status Additional Description .
+        CardStatusMaintBy:
+          maxLength: 80
+          type: string
+          description: Card Status Maintained By.
+        CardStatusMaintByEnumDesc:
+          maxLength: 80
+          type: string
+          description: Card Status Maintained By Enumeration Description.
+        CardStatusMaintFrom:
+          maxLength: 80
+          type: string
+          description: Card Status Maintained From. Workstation or device used to
+            maintain the status.
+        CardStatusMaintFromEnumDesc:
+          maxLength: 80
+          type: string
+          description: Card Status Maintained From Enumeration Description.
+        CardSurchargeOption:
+          $ref: '#/components/schemas/CardSurchargeOptionType'
+        CardSurchargeOptionEnumDesc:
+          maxLength: 80
+          type: string
+          description: Surcharge Option Enumeration Description
+        MaxSurchargeWaiveCount:
+          type: integer
+          description: Maximum Number surcharges that may be waived in a calendar
+            month.
+          format: int64
+        MaxSurchargeWaiveAmt:
+          $ref: '#/components/schemas/MaxSurchargeWaiveAmtType'
+        CardFee:
+          type: array
+          description: Card Fee. Contains information on charges and fees that apply
+            to the card.
+          items:
+            $ref: '#/components/schemas/CardFeeType'
+        ChargeFeeAcct:
+          $ref: '#/components/schemas/ChargeFeeAcctType'
+        OpenDt:
+          type: string
+          description: Open Date.
+          format: date
+        LastContactDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Last Contact Date. Date the FI contacted the customer on regards
+            to this account.
+        IssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Issue Date.
+        ExpDt:
+          type: string
+          description: Expiration Date.
+          format: date
+        ExpDay:
+          $ref: '#/components/schemas/DayOfMonthType'
+        OrigIssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Original Issue Date.
+        NextIssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Next Issue Date.
+        CardCategory:
+          $ref: '#/components/schemas/CardCategoryType'
+        CardCategoryEnumDesc:
+          maxLength: 80
+          type: string
+          description: Card Category Enumeration Description.
+        PersonEmbossingName:
+          $ref: '#/components/schemas/PersonEmbossingNameType'
+        EmbossingName:
+          maxLength: 80
+          type: string
+          description: Embossing Name. Name as it appears in the card.
+        SecondaryEmbossingName:
+          maxLength: 80
+          type: string
+          description: Secondary Embossing Name. Additional description line that
+            appears on the card.
+        SecondaryEmbossingNameId:
+          maxLength: 36
+          type: string
+          description: Secondary Embossing Name Identifier. This is a key that points
+            to the customer identification of the secondary embossing name.
+        EmbossingPrintOption:
+          $ref: '#/components/schemas/EmbossingPrintOptionType'
+        EmbossingPrintOptionEnumDesc:
+          maxLength: 80
+          type: string
+          description: Embossing Print Option Enumeration Description.
+        PostAddr:
+          type: array
+          description: Postal Address.
+          items:
+            $ref: '#/components/schemas/PostAddrType'
+        UseSecondaryOwnerAddrInd:
+          type: array
+          description: Use Secondary Address Inidicator.
+          items:
+            type: boolean
+        CardTrnLimitInd:
+          type: boolean
+          description: Card Transaction Limit Indicator. Identifies whether to use
+            the the card limit configurations settings (VIP Class) or transaction
+            limits created at the card level.
+        CardTrnLimitCode:
+          maxLength: 80
+          type: string
+          description: Card Transaction Limit.
+        CardTrnLimitCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Card Transaction Limit Code Enumeration Description.
+        CardTrnLimit:
+          type: array
+          description: Card Transaction Limit Code. Identifies the card limit configuration
+            settings that apply to this card (VIP Class).
+          items:
+            $ref: '#/components/schemas/CardTrnLimitType'
+        MaxCreditLimitAmt:
+          $ref: '#/components/schemas/MaxCreditLimitAmtType'
+        DenyThresholdScore:
+          type: integer
+          description: Deny Threshold Score. If the transaction score is greather
+            or equal to this threshold all subsequent transactions are denied.
+          format: int64
+        FasCashAmt:
+          type: number
+          description: Fast Cash Amount. Indicates the amount dispensed by ATMS when
+            the option of fast cash selected by the customer.
+        AllowWithdrawalDailyLimitInd:
+          type: boolean
+          description: Allow Withdrawal of the Daily Limit. Indicates whether the
+            customer can withdraw up to the daily withdrawal limit.
+        AtmPosOverdraft:
+          $ref: '#/components/schemas/AtmPosOverdraftType'
+        AllowThirdPartyXferInd:
+          type: boolean
+          description: Allow Third Party Transfers Indicator. Indicates whether to
+            perform transfers of funds to third parties is permitted.
+        AllowInternetInd:
+          type: boolean
+          description: Allow Internet Indicator. Indicates whether to perform internet
+            activity (remote banking) is permitted.
+        SwitchCardStatus:
+          maxLength: 80
+          type: string
+          description: Switch Card Status.  Code that identifies the status of the
+            EFT card as it currently resides on a third party vendor’s (network switch,
+            ATM driver company, and so on) card information file used for off-line
+            processing.
+        SwitchCardStatusEnumDesc:
+          maxLength: 80
+          type: string
+          description: Switch Card Status Enum Description.
+        SwitchCardStatusRequest:
+          maxLength: 80
+          type: string
+          description: Switch Card Status Request. Code that indicates the new card
+            status you want to send to third-party vendors.
+        SwitchCardStatusRequestEnumDesc:
+          maxLength: 80
+          type: string
+          description: Switch Card Status Request Enum Description.
+        CardsInUseNum:
+          type: integer
+          description: Cards in Use Number.
+          format: int64
+        GenerateCardNum:
+          maxLength: 1
+          type: string
+          description: Generate Card Number. Indicates number of plastic cards that
+            need to be generated. Valid value are 0 or 1.
+        GenerateCardOrder:
+          $ref: '#/components/schemas/GenerateCardOrderType'
+        GeneratePINMailer:
+          $ref: '#/components/schemas/GeneratePINMailerType'
+        CardPref:
+          $ref: '#/components/schemas/CardPrefType'
+        FirstUseDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: First Use Date.
+        OrigFirstUseDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Original First Use Date.
+        DateData:
+          type: array
+          description: Date Data. Use to contain dates associated to the object.
+          items:
+            $ref: '#/components/schemas/DateDataType'
+        CardVerifyData:
+          $ref: '#/components/schemas/CardVerifyDataType'
+        PreviousIssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Previous Issue Date.
+        PreviousExpDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Previous Expiration Date.
+        PreviousCardData:
+          $ref: '#/components/schemas/PreviousCardDataType'
+        UpdaterSvcOptOutInd:
+          type: boolean
+          description: Updater Service Opt Out Indicator.
+        ExpediteInd:
+          type: boolean
+          description: Expedite Indicator.
+        ReissueCardStatus:
+          maxLength: 80
+          type: string
+          description: Reissue Card Status. Identifies the status of the reissued
+            card.
+        ReissueCardStatusEnumDesc:
+          maxLength: 80
+          type: string
+          description: Reissue Card Status Enumeration Description.
+        ReissueExpDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Reissue Expiration Date. Date of expiration of the reissued
+            card.
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: Originating Branch. Branch first originated the relationship
+            with party or created the account.
+        OriginatingBranchEnumDesc:
+          maxLength: 80
+          type: string
+          description: Originating Branch Enumeration Description.
+        PreferredBranch:
+          maxLength: 32
+          type: string
+          description: Preferred Branch. The branch preferred by the customer to conduct
+            business.
+        PreferredBranchEnumDesc:
+          maxLength: 80
+          type: string
+          description: Preferred Branch Enumeration Description.
+        ResponsibleBranch:
+          maxLength: 32
+          type: string
+          description: Responsible Branch. Branch responsible for the relationship.
+        ResponsibleBranchEnumDesc:
+          maxLength: 80
+          type: string
+          description: Responsible Branch Enumeration Description.
+        ClassCode:
+          maxLength: 80
+          type: string
+          description: Class Code. Used to group accounts. The Class Code controls
+            the method of processing and reporting accounts.
+        ClassCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Class Code Enumeration Description.
+        ClientDefinedData:
+          type: array
+          description: Client Defined Data.Data whose definition, type and values
+            are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/ClientDefinedDataType'
+        CardPeriodData:
+          type: array
+          description: Card Period Data.
+          items:
+            $ref: '#/components/schemas/CardPeriodDataType'
+        DocDistributionOption:
+          maxLength: 80
+          type: string
+          description: Document Distribution Option. Indicates the distribution method
+            when processing statements and notices.
+        DocDistributionOptionEnumDesc:
+          maxLength: 80
+          type: string
+          description: Document Distribution Option Enumeration Description.
+        NicknameOption:
+          type: string
+          description: Nickname Option. Indicates printing options for the account
+            Nickname.
+        NicknameOptionEnumDesc:
+          maxLength: 80
+          type: string
+          description: Nickname Option Enumeration Description.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Nickname. Used to allow a customer to assign nicknames to objects.
+        ReportGroupCode:
+          maxLength: 80
+          type: string
+          description: Report Group Code. Indicates a user defined code used to group
+            accounts fro reporting purposes.
+        ReportGroupCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Report Group Code Enumeration Description.
+        HandlingCode:
+          maxLength: 80
+          type: string
+          description: Handling Code .Indicates special handling of notification and
+            statement forms.
+        HandlingCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Handling Code Enumeration Description.
+        PINOffset:
+          maxLength: 10
+          type: string
+          description: PIN Offset. Offset number of the PIN assigned to this card,
+            not the actual PIN.
+        PINOffsetResetInd:
+          type: boolean
+          description: PIN Offset Reset Indicator. Used to reset the PIN Offset value.
+        PINInvalidEntryNum:
+          type: integer
+          description: PIN Invalid Entry Number. Number of invalid PIN entry attempts.
+          format: int64
+        PINInvalidEntryAllowedNum:
+          type: integer
+          description: PIN Invalid Entry Allowed Number. Number of invalid PIN entry
+            attempts allowed.
+          format: int64
+        PINInvalidEntryResetInd:
+          type: boolean
+          description: PIN Invalid Entry Reset Indicator. Resets the PIN entry attempts.
+        PINLastFailureDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: PIN Last Failure Date. Date of the last PIN entry failure.
+        PINLastGenerationDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: PIN Last Generation Date. Date when the PIN was last generated.
+        PINNextGenerationDt:
+          type: string
+          description: PIN Next Generation Date. Date when the PIN is next generated.
+          format: date
+        RefData:
+          type: array
+          description: Reference Data.
+          items:
+            $ref: '#/components/schemas/RefDataType'
+        MaintDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Maintenance Date.
+        MaintBy:
+          maxLength: 80
+          type: string
+          description: Maintained By.
+        MaintByEnumDesc:
+          maxLength: 80
+          type: string
+          description: Maintained By Enumeration Description.
+        MaintFrom:
+          maxLength: 80
+          type: string
+          description: Maintained From. Workstation or device used to maintain the
+            object.
+        MaintFromEnumDesc:
+          maxLength: 80
+          type: string
+          description: Maintained From Enum Description.
+        AccessLevelData:
+          type: array
+          description: Access Level Data.
+          items:
+            $ref: '#/components/schemas/AccessLevelDataType'
+        AgreementData:
+          $ref: '#/components/schemas/AgreementDataType'
+        TextAlertData:
+          $ref: '#/components/schemas/TextAlertDataType'
+        AcctLinkData:
+          type: array
+          description: Account Link Data. Indicates accounts to be linked to a debit
+            card.
+          items:
+            $ref: '#/components/schemas/AcctLinkDataType'
+        EmployeeInd:
+          type: boolean
+          description: Employee Indicator. Indicates that the account holder is employee
+            of the FI.
+        RestrictedInd:
+          type: boolean
+          description: Restricted Indicator. Indicates whether the account information
+            is restricted for view by the requester.
+        RestrictedDesc:
+          maxLength: 80
+          type: string
+          description: Restricted Description. Description of the reason for the account
+            to be restricted.
+    CardRefType:
+      title: CardRefType
+      required:
+      - CardKeys
+      type: object
+      properties:
+        CardKeys:
+          $ref: '#/components/schemas/CardKeysType'
+        CardInfo:
+          $ref: '#/components/schemas/CardInfoType'
+    CardAcctRelInfoType:
+      title: CardAcctRelInfoType
+      type: object
+      properties:
+        CardRef:
+          $ref: '#/components/schemas/CardRefType'
+        AcctRef:
+          $ref: '#/components/schemas/AcctRefType'
+        OtherAcctRel:
+          type: integer
+          description: Other Account Relationships.
+          format: int64
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description.
+        PhoneBankingAcctRel:
+          type: integer
+          description: Phone Banking Account Relationships.
+          format: int64
+        AcctClass:
+          maxLength: 80
+          type: string
+          description: Account Class.
+        AcctClassEnumDesc:
+          maxLength: 80
+          type: string
+          description: Account Classification Enum Description.
+        FinancialTrnOption:
+          $ref: '#/components/schemas/FinancialTrnOptionType'
+        FinancialTrnOptionEnumDesc:
+          maxLength: 80
+          type: string
+          description: Financial Transaction Option Enum Description.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Nickname. Used to allow a customer to assign nicknames to objects.
         PartyKeys:
           $ref: '#/components/schemas/PartyKeysType'
-        PersonPartyListInfo:
-          $ref: '#/components/schemas/PersonPartyListInfoType'
-        OrgPartyListInfo:
-          $ref: '#/components/schemas/OrgPartyListInfoType'
-    PartyAcctRelOrderType:
-      title: PartyAcctRelOrderType
-      type: string
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Fifth
-      - Other
-    PartyAcctRelDataType:
-      title: PartyAcctRelDataType
-      required:
-      - PartyAcctRelType
-      type: object
-      properties:
         PartyAcctRelType:
-          maxLength: 36
-          type: array
+          type: string
           description: Party-to-Account Relationship Type. Describes the relationship
             between the Party and the Account.
-          items:
-            maxLength: 36
-            type: string
         PartyAcctRelDesc:
           maxLength: 80
           type: string
           description: Party-to-Account Relationship Description.
         PartyAcctRelOrder:
           $ref: '#/components/schemas/PartyAcctRelOrderType'
-        OwnershipType:
-          type: string
-          description: Ownership Type.
-        OwnershipTypeEnumDesc:
+        RestrictedInd:
+          type: boolean
+          description: Restricted Indicator. Indicates whether the account information
+            is restricted for view by the requester.
+        RestrictedDesc:
           maxLength: 80
           type: string
-          description: Ownership Type Enumeration Description.
-    LiabilityType:
-      title: LiabilityType
-      type: object
-      properties:
-        LiabilityPercent:
-          type: number
-          description: Liability Percent. Percentage for which the party is responsible.
-        LiabilityAmt:
-          type: number
-          description: Liability Amount
-    PartyRelInfoType:
-      title: PartyRelInfoType
-      type: object
-      properties:
-        PartyRef:
-          $ref: '#/components/schemas/PartyRefType'
-        PartyAcctRelData:
-          type: array
-          description: Party Account Relation Data.
-          items:
-            $ref: '#/components/schemas/PartyAcctRelDataType'
-        OwnerPercent:
-          type: number
-          description: Owner Percent.
-        OwnerInd:
-          type: boolean
-          description: Owner Indicator.
-        PrimaryOwnerInd:
-          type: boolean
-          description: Primary Owner Indicator.
-        Beneficiary:
-          $ref: '#/components/schemas/BeneficiaryType'
-        Liability:
-          $ref: '#/components/schemas/LiabilityType'
-        TaxReportingOwnerInd:
-          type: boolean
-          description: Tax Reporting Owner Indicator.
-        TaxReportingSignerInd:
-          type: boolean
-          description: Tax Reporting Owner Signer.
-        Nickname:
-          maxLength: 80
-          type: string
-          description: Nickname. Used to allow a customer to assign nicknames to objects.
-        AddtlAcctType:
-          type: array
-          description: Additional Account Type Designations.
-          items:
-            $ref: '#/components/schemas/AddtlAcctTypeType'
-        AcctTitle:
-          maxLength: 255
-          type: string
-          description: Account Title.Title on account typically identifies ownership
-            or responsibility for account and manner in which ownership/responsibility
-            is assigned.
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        AcctRelClass:
-          $ref: '#/components/schemas/AcctRelClassType'
-        AcctRelClassEnumDesc:
-          maxLength: 80
-          type: string
-          description: Account Relationship Class Enumeration Description.
-        PortHasCreditLineInd:
-          type: boolean
-          description: Port Has Credit Line Indicator. Value indicates the presence
-            of a credit line associated to the Port. For Premier use.
-    PartyAcctRelInfoType:
-      title: PartyAcctRelInfoType
-      allOf:
-      - $ref: '#/components/schemas/PartyRelInfoType'
-      - type: object
-        properties:
-          FDICOwnership:
-            maxLength: 80
-            type: string
-            description: FDIC Ownership.
-          FDICOwnershipEnumDesc:
-            maxLength: 80
-            type: string
-            description: FDIC Ownership Enumeration Description.
-          FDICOwnershipPrintOption:
-            type: string
-            description: FDIC Ownership Print Option.
-          NamePrintOption:
-            maxLength: 80
-            type: string
-            description: Print Option. Indicates where the secondary name or title
-              displays on the account or if a separate notice or statement is printed.
-          AndorOr:
-            $ref: '#/components/schemas/AndorOrType'
-          AlternateNameIdent:
-            maxLength: 36
-            type: string
-            description: Alternate Name Identifier.
-          AlternateFullName:
-            maxLength: 96
-            type: string
-            description: Alternate Full Name.
-          SendNotificationInd:
-            type: boolean
-            description: Send Notification Indicator.
-          DocDistributionOption:
-            maxLength: 80
-            type: string
-            description: Document Distribution Option. Indicates the distribution
-              method when processing statements and notices.
-          StmtType:
-            maxLength: 80
-            type: string
-            description: Statement Type.
-          CreditBureauInd:
-            type: boolean
-            description: Credit Bureau Indicator.
-          AcctRef:
-            $ref: '#/components/schemas/AcctRefType'
-          UpdateContactCode:
-            $ref: '#/components/schemas/UpdateContactCodeType'
-          AutoEnrollmentData:
-            $ref: '#/components/schemas/AutoEnrollmentDataType'
-    PartyAcctRelAddRqType:
-      title: PartyAcctRelAddRqType
+          description: Restricted Description. Description of the reason for the account
+            to be restricted.
+    CardAcctRelAddRqType:
+      title: CardAcctRelAddRqType
       required:
-      - PartyAcctRelInfo
+      - CardAcctRelInfo
       type: object
       properties:
         OvrdAutoAckInd:
@@ -5798,129 +5715,8 @@ components:
             is in charge of  auto-acknowledgement of exceptions.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
-        PartyAcctRelInfo:
-          $ref: '#/components/schemas/PartyAcctRelInfoType'
-    PartyAcctRelKeysType:
-      title: PartyAcctRelKeysType
-      allOf:
-      - $ref: '#/components/schemas/BaseKeysType'
-      - type: object
-        properties:
-          SvcIdent:
-            $ref: '#/components/schemas/SvcIdentType'
-          PartyAcctRelId:
-            maxLength: 36
-            type: string
-            description: Party-to-Account Relationship Identifier.
-          PartyKeys:
-            $ref: '#/components/schemas/PartyKeysType'
-          AcctKeys:
-            $ref: '#/components/schemas/AcctKeysType'
-    PartyAcctRelDelRqType:
-      title: PartyAcctRelDelRqType
-      required:
-      - PartyAcctRelKeys
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Override AutoAcknowledge Indicator. Used when the midleware
-            is in charge of  auto-acknowledgement of exceptions.
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        PartyAcctRelKeys:
-          $ref: '#/components/schemas/PartyAcctRelKeysType'
-    RecCtrlInType:
-      title: RecCtrlInType
-      type: object
-      properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum Record Limit. This is the maximum number of records
-            that the server should add to the result set which is available to satisfy
-            this request.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: Cursor. Next Record Pointer Included in the response only if
-            additional records are available.
-    PartyAcctRelSelType:
-      title: PartyAcctRelSelType
-      type: object
-      properties:
-        PartyKeys:
-          $ref: '#/components/schemas/PartyKeysType'
-        CardKeys:
-          $ref: '#/components/schemas/CardKeysType'
-        AcctKeys:
-          $ref: '#/components/schemas/AcctKeysType'
-        AcctSelCriteria:
-          type: array
-          description: Account Selection Criteria.
-          items:
-            $ref: '#/components/schemas/AcctSelCriteriaType'
-        ExcludeClosedAcctInd:
-          type: boolean
-          description: Exclude Closed Accounts Indicator.
-        PartyAcctRelType:
-          type: array
-          description: Party-to-Account Relationship Type. Describes the relationship
-            between the Party and the Account.
-          items:
-            type: string
-        IncPartyInfoInd:
-          type: boolean
-          description: Include Party Information Indicator.
-        IncAddtlAcctInfoInd:
-          type: boolean
-          description: Include Additional Account Summary Information.
-        IncEDistributionInd:
-          type: boolean
-          description: Include e-Distribution Indicator. By using this indicator only
-            accounts available for e-Distribution are returned in the response.
-        IncEBankingInd:
-          type: boolean
-          description: Include E-Banking Indicator. Provides accounts enabled for
-            internet banking use.
-        IncFrequentConductorsInd:
-          type: boolean
-          description: Include Frequent Conductors Indicator.
-        AvailBalMethod:
-          maxLength: 80
-          type: string
-          description: Available Balance Calculation Method.
-    PartyAcctRelInqRqType:
-      title: PartyAcctRelInqRqType
-      required:
-      - PartyAcctRelSel
-      type: object
-      properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/RecCtrlInType'
-        PartyAcctRelSel:
-          $ref: '#/components/schemas/PartyAcctRelSelType'
-    PartyAcctRelModRqType:
-      title: PartyAcctRelModRqType
-      required:
-      - PartyAcctRelInfo
-      - PartyAcctRelKeys
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Override AutoAcknowledge Indicator. Used when the midleware
-            is in charge of  auto-acknowledgement of exceptions.
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        PartyAcctRelKeys:
-          $ref: '#/components/schemas/PartyAcctRelKeysType'
-        PartyAcctRelInfo:
-          type: array
-          description: Party-to-Account Relationship Information. Identifies the Parties
-            and their relationships to the the Account.
-          items:
-            $ref: '#/components/schemas/PartyAcctRelInfoType'
+        CardAcctRelInfo:
+          $ref: '#/components/schemas/CardAcctRelInfoType'
     StatusType:
       title: StatusType
       required:
@@ -5988,57 +5784,132 @@ components:
             status that the server intends to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
-    PartyAcctRelStatusCodeType:
-      title: PartyAcctRelStatusCodeType
-      type: string
-      enum:
-      - Valid
-      - Deleted
-    PartyAcctRelStatusType:
-      title: PartyAcctRelStatusType
+    CardAcctRelKeysType:
+      title: CardAcctRelKeysType
+      allOf:
+      - $ref: '#/components/schemas/BaseKeysType'
+      - type: object
+        properties:
+          SvcIdent:
+            $ref: '#/components/schemas/SvcIdentType'
+          CardAcctRelId:
+            maxLength: 36
+            type: string
+            description: Card Account Relationship Identity.
+          CardKeys:
+            $ref: '#/components/schemas/CardKeysType'
+          AcctKeys:
+            $ref: '#/components/schemas/AcctKeysType'
+          CardAcctRelIdent:
+            maxLength: 36
+            type: string
+            description: Card Account Relationship Identifier.
+          CardAcctAppl:
+            type: string
+            description: Card Account Application. Use for selection of the account
+              types or major account group to be returned when requesting accounts
+              related to a card.
+    CardAcctRelStatusType:
+      title: CardAcctRelStatusType
       required:
-      - PartyAcctRelStatusCode
+      - CardAcctRelStatusCode
       type: object
       properties:
-        PartyAcctRelStatusCode:
-          $ref: '#/components/schemas/PartyAcctRelStatusCodeType'
+        CardAcctRelStatusCode:
+          $ref: '#/components/schemas/CardAcctRelStatusCodeType'
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: Effective Date. The date that an associated action takes effect.
-    PartyAcctRelStatusRecType:
-      title: PartyAcctRelStatusRecType
+    CardAcctRelStatusRecType:
+      title: CardAcctRelStatusRecType
       required:
-      - PartyAcctRelKeys
-      - PartyAcctRelStatus
+      - CardAcctRelKeys
+      - CardAcctRelStatus
       type: object
       properties:
         SvcIdent:
           $ref: '#/components/schemas/SvcIdentType'
-        PartyAcctRelKeys:
-          $ref: '#/components/schemas/PartyAcctRelKeysType'
-        PartyAcctRelStatus:
-          $ref: '#/components/schemas/PartyAcctRelStatusType'
-    PartyAcctRelAddRsType:
-      title: PartyAcctRelAddRsType
+        CardAcctRelKeys:
+          $ref: '#/components/schemas/CardAcctRelKeysType'
+        CardAcctRelStatus:
+          $ref: '#/components/schemas/CardAcctRelStatusType'
+    CardAcctRelAddRsType:
+      title: CardAcctRelAddRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        PartyAcctRelStatusRec:
-          $ref: '#/components/schemas/PartyAcctRelStatusRecType'
-    PartyAcctRelDelRsType:
-      title: PartyAcctRelDelRsType
+        CardAcctRelStatusRec:
+          $ref: '#/components/schemas/CardAcctRelStatusRecType'
+    CardAcctRelDelRqType:
+      title: CardAcctRelDelRqType
+      required:
+      - CardAcctRelKeys
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Override AutoAcknowledge Indicator. Used when the midleware
+            is in charge of  auto-acknowledgement of exceptions.
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        CardAcctRelKeys:
+          $ref: '#/components/schemas/CardAcctRelKeysType'
+    CardAcctRelDelRsType:
+      title: CardAcctRelDelRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        PartyAcctRelStatusRec:
-          $ref: '#/components/schemas/PartyAcctRelStatusRecType'
+        CardAcctRelStatusRec:
+          $ref: '#/components/schemas/CardAcctRelStatusRecType'
+    RecCtrlInType:
+      title: RecCtrlInType
+      type: object
+      properties:
+        MaxRecLimit:
+          type: integer
+          description: Maximum Record Limit. This is the maximum number of records
+            that the server should add to the result set which is available to satisfy
+            this request.
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: Cursor. Next Record Pointer Included in the response only if
+            additional records are available.
+    CardAcctRelSelType:
+      title: CardAcctRelSelType
+      type: object
+      properties:
+        CardKeys:
+          $ref: '#/components/schemas/CardKeysType'
+        CardAcctAppl:
+          type: string
+          description: Card Account Application. Use for selection of the account
+            types or major account group to be returned when requesting accounts related
+            to a card.
+        IncNonRelatedAcctInd:
+          type: boolean
+          description: Include Non Related Accounts.
+        IncAllCardStatusInd:
+          type: boolean
+          description: Include All Card Status Indicator.
+    CardAcctRelInqRqType:
+      title: CardAcctRelInqRqType
+      required:
+      - CardAcctRelSel
+      type: object
+      properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/RecCtrlInType'
+        CardAcctRelSel:
+          $ref: '#/components/schemas/CardAcctRelSelType'
     RecCtrlOutType:
       title: RecCtrlOutType
       required:
@@ -6065,23 +5936,22 @@ components:
           type: string
           description: Cursor. Next Record Pointer Included in the response only if
             additional records are available.
-    PartyAcctRelRecType:
-      title: PartyAcctRelRecType
+    CardAcctRelRecType:
+      title: CardAcctRelRecType
       required:
-      - PartyAcctRelInfo
-      - PartyAcctRelKeys
-      - PartyAcctRelStatus
+      - CardAcctRelInfo
+      - CardAcctRelKeys
+      - CardAcctRelStatus
       type: object
       properties:
-        PartyAcctRelKeys:
-          $ref: '#/components/schemas/PartyAcctRelKeysType'
-        PartyAcctRelInfo:
-          $ref: '#/components/schemas/PartyAcctRelInfoType'
-        PartyAcctRelStatus:
-          $ref: '#/components/schemas/PartyAcctRelStatusType'
-      description: '[IFX]Party Acount Relationship Add Response.'
-    PartyAcctRelInqRsType:
-      title: PartyAcctRelInqRsType
+        CardAcctRelKeys:
+          $ref: '#/components/schemas/CardAcctRelKeysType'
+        CardAcctRelInfo:
+          $ref: '#/components/schemas/CardAcctRelInfoType'
+        CardAcctRelStatus:
+          $ref: '#/components/schemas/CardAcctRelStatusType'
+    CardAcctRelInqRsType:
+      title: CardAcctRelInqRsType
       required:
       - Status
       type: object
@@ -6090,18 +5960,38 @@ components:
           $ref: '#/components/schemas/StatusType'
         RecCtrlOut:
           $ref: '#/components/schemas/RecCtrlOutType'
-        PartyAcctRelRec:
+        CardAcctRelRec:
           type: array
-          description: Party-to-Account Relationship Record.
+          description: Card Account Relationship Record.
           items:
-            $ref: '#/components/schemas/PartyAcctRelRecType'
-    PartyAcctRelModRsType:
-      title: PartyAcctRelModRsType
+            $ref: '#/components/schemas/CardAcctRelRecType'
+    CardAcctRelModRqType:
+      title: CardAcctRelModRqType
+      required:
+      - CardAcctRelInfo
+      - CardAcctRelKeys
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Override AutoAcknowledge Indicator. Used when the midleware
+            is in charge of  auto-acknowledgement of exceptions.
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        CardAcctRelKeys:
+          $ref: '#/components/schemas/CardAcctRelKeysType'
+        CardAcctRelInfo:
+          type: array
+          description: Card Account Relationship Information.
+          items:
+            $ref: '#/components/schemas/CardAcctRelInfoType'
+    CardAcctRelModRsType:
+      title: CardAcctRelModRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        PartyAcctRelStatusRec:
-          $ref: '#/components/schemas/PartyAcctRelStatusRecType'
+        CardAcctRelStatusRec:
+          $ref: '#/components/schemas/CardAcctRelStatusRecType'
