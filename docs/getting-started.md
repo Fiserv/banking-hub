@@ -1,6 +1,6 @@
 # Getting Started
 
-Welcome to the Fiserv Banking Developer Portal. This quick guide will help you to get  started with our APIs and allow you to begin integrating our services into your applications.
+Cards APIs support the creation, maintenance and retrieval of card records. This guide provides quick steps to use our Cards APIs during integration with your applications.
 
 Following topics are covered in this guide:
 * Registration
@@ -11,14 +11,14 @@ Following topics are covered in this guide:
 
 ## Registration
 
-To validate and deploy Fiserv banking APIs into production, you are required to create an account on the Fiserv Developer Portal. This registration helps to create a development environment to get credentials for sandbox testing and live environments. However, registration is not required to learn about our API integration process and test the APIs.
+To validate and deploy Fiserv banking APIs into production, you are required to create an account on the Fiserv Developer Studio. This registration helps to create a development environment to get credentials for sandbox testing and live environments. However, registration is not required to learn about our API integration process and test the APIs.
 
 ### Setting up an Account
 
-To set up an account on the Fiserv Developer Portal, follow the steps below:
-1.	Go to the Fiserv Developer Portal registration page
+To set up an account on the Fiserv Developer Studio, follow the steps below:
+1.	Go to the Fiserv Developer Studio registration page
 2.	Follow the instructions on the screen to set up your account according to your integration requirements
-3.	Sign into your Fiserv Developer Portal account after it is activated.
+3.	Sign into your Fiserv Developer Studio account after it is activated
 
 ## Authentication
 
@@ -31,9 +31,9 @@ To authenticate your application, you will need test and live API authentication
 ### Steps for Authentication 
 
 Follow these steps to authenticate your API build:
-1.	Obtain the API authentication keys in the Account Setup process through a certified connection.
-2.	Consent to using the API endpoints.
-3.	Authenticate your user account with the acquired keys and retrieve the authorization code.
+1.	Obtain the API authentication keys in the Account Setup process through a certified connection
+2.	Consent to using the API endpoints
+3.	Authenticate your user account with the acquired keys and retrieve the authorization code
 4.	Use the provided authorization code to access the API and Sandbox resources
 
 ## Sandbox
@@ -41,11 +41,12 @@ Follow these steps to authenticate your API build:
 The Sandbox allows you to simulate a production environment with mock users and transactions to test the application. Using the simulated environment, you can also view the HTTP requests and responses to gain an understanding of the behavior and capabilities of the APIs. 
 
 Follow these steps to test your application in the Sandbox environment:
-1.	Choose the Application: Access the Sandbox environment and choose an application to use for testing.
-2.	Create a mock user database: Create user accounts—a personal account that simulates a customer and a business account that simulates a merchant.
-3.	Create mock transactions: In the Sandbox environment, add transactions between the customer and the merchant.
-4.	Test the environment: With the mock data setup, you can now make API calls and test your application.
-Note: Use the Sandbox authorization code while making the API calls.
+1.	**Choose the Application:** Access the Sandbox environment and choose an application to use for testing
+2.	**Create a mock user database:** Create user accounts that reflect the sorts of banking accounts your application will be accessing
+3.	**Create mock transactions:** In the Sandbox environment, add transactions to simulate the kinds of transactions that occur on the banking accounts your application will be accessing
+4.	**Test the environment:** With the mock data setup, you can now make API calls and test your application
+
+> Note: Use the Sandbox authorization code while making the API calls.
 
 ## Certification
 
@@ -59,16 +60,19 @@ To get a certification for test environment, you are required to register for an
 
 Upon successful application validation, your application will be ready for production.  Fiserv will issue you the endpoints available for your application.  
 
+
 ## Resources
 
 Refer to the following links for more information on the Fiserv Open Banking API integration:
+
 * [Open Baking Docs](https://dev.fiserv.com/openBanking/docs)
-* [API Docs](https://dev.fiserv.com/openBanking/docs/api)
+* [API Docs](https://dev.fiserv.com/openBanking/docs/api) 
 * [Open Banking JS](https://dev.fiserv.com/openBanking/docs/js)
-* [GitHub repository](https://github.com/openBanking)
-* [Product demos and dev tools](https://openBanking.dev/)
-* [Open Banking CLI](https://dev.fiserv.com/openBanking/docs/openBanking-cli)
+* [GitHub repository](https://github.com/openBanking) 
+* [Product demos and dev tools](https://openBanking.dev/) 
+* [Open Banking CLI](https://dev.fiserv.com/openBanking/docs/openBanking-cli) 
 * [API libraries](http://swaggerhub.onefiserv.net/)
+
 
 ## Feedback and Support
 
