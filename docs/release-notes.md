@@ -4,7 +4,7 @@ This section provides information about the changes to the Open Banking APIs or 
 
 <details>
 <summary>
-  <span span style="color:blue"> Release 2021.01 <span style="font-size: 80%; color:#eee"> June 2021 </span> </span>
+  <span span style="color: #ff6600; font-size: 150%; font-weight: bold;"> Release 2021.01 <span style="font-size: 80%; color:#eee"> June 2021 </span> </span>
 </summary>
 <br>
   <table style="width: 100%;margin-left: 0;margin-right: auto;">
