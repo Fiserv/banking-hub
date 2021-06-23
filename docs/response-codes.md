@@ -1,6 +1,6 @@
 # Response Codes
 
-Fiser Open Banking API returns standard HTTP status code along with the EFX and Service Providers status codes.
+Fiserv Open Banking API returns standard HTTP status code along with the EFX and Service Provider status codes.
 
 ## HTTP Status Codes
 
