@@ -34,10 +34,10 @@ This section provides information about the latest improvements to the Cards API
                     <td>Added following new parameters to allow {reason and impact of adding new parameters}
                                 <ul>
                                     <li>
-                                        <p>test.testA.test</p>
+                                        test.testA.test
                                     </li>
                                     <li>
-                                        <p>	test.test.test</p>
+                                        test.test.test
                                     </li>
                                 </ul>                           
                 </tr>
