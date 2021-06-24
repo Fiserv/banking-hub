@@ -11,14 +11,14 @@ Following topics are covered in this guide:
 
 ## Registration
 
-To validate and deploy Fiserv banking APIs into production, you are required to create an account on the Fiserv Developer Studio. This registration helps to create a development environment to get credentials for sandbox testing and live environments. However, registration is not required to learn about our API integration process and test the APIs.
+To validate and deploy Fiserv banking APIs into production, you are required to create an account on Fiserv Developer Studio. This registration helps to create a development environment to get credentials for sandbox testing and live environments. However, registration is not required to learn about our API integration process and test the APIs.
 
 ### Setting up an Account
 
-To set up an account on the Fiserv Developer Studio, follow the steps below:
-1.	Go to the Fiserv Developer Studio registration page
+To set up an account on Fiserv Developer Studio, follow the steps below:
+1.	Go to Fiserv Developer Studio registration page
 2.	Follow the instructions on the screen to set up your account according to your integration requirements
-3.	Sign into your Fiserv Developer Studio account after it is activated
+3.	Sign on to your Fiserv Developer Studio account after it is activated
 
 ## Authentication
 
@@ -26,12 +26,12 @@ Once the account setup process is complete, you need to authenticate your API bu
 
 ### Authentication Keys
 
-To authenticate your application, you will need test and live API authentication keys, which are obtained in the Account Setup process. Authentication keys may expire after a certain period. You may reuse the authentication keys until they expire. Once a key expires, you will need to get a new key.
+To authenticate your application, you need *test* and *live* API authentication keys, which are obtained in the account setup process. You may reuse the authentication keys until they expire. If a key expires, you need to get a new key.
 
 ### Steps for Authentication 
 
 Follow these steps to authenticate your API build:
-1.	Obtain the API authentication keys in the Account Setup process through a certified connection
+1.	Obtain the API authentication keys in the account setup process through a certified connection
 2.	Consent to using the API endpoints
 3.	Authenticate your user account with the acquired keys and retrieve the authorization code
 4.	Use the provided authorization code to access the API and Sandbox resources
@@ -65,14 +65,10 @@ Upon successful application validation, your application will be ready for produ
 
 Refer to the following links for more information on the Fiserv Open Banking API integration:
 
-* [Open Baking Docs](https://dev.fiserv.com/openBanking/docs)
-* [API Docs](https://dev.fiserv.com/openBanking/docs/api) 
-* [Open Banking JS](https://dev.fiserv.com/openBanking/docs/js)
 * [GitHub repository](https://github.com/openBanking) 
-* [Product demos and dev tools](https://openBanking.dev/) 
-* [Open Banking CLI](https://dev.fiserv.com/openBanking/docs/openBanking-cli) 
 * [API libraries](http://swaggerhub.onefiserv.net/)
 
+> Note: Registration is required to access the Fiserv Open Banking API libraries.
 
 ## Feedback and Support
 
