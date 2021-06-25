@@ -56,5 +56,3 @@ This section provides information about the latest improvements to the Cards API
             </tbody>
         </table>
  </details>
- 
-
