@@ -25,10 +25,10 @@ The following table lists EFX status codes and their descriptions related to the
             <col />
             <thead>
                 <tr>
-                    <th> HTTP status Code </th>
+                    <th> HTTP Status Code </th>
                     <th> EFX Status Code </th>
                     <th> EFX Severity</th>
-                    <th> EFX Status Discription</t>
+                    <th> EFX Status Description</t>
                 </tr>
             </thead>
             <tbody>
@@ -161,7 +161,7 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td><code>2150</code></td>
                     <td>Error</td>
-                    <td>Date-time value is grater than the accepted limit</td>
+                    <td>Date-time value is greater than the accepted limit</td>
                 </tr>
                 <tr>
                     <td><code>2350</code></td>
