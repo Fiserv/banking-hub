@@ -33,7 +33,7 @@ The following table lists EFX status codes and their descriptions related to the
             </thead>
             <tbody>
                 <tr>
-                    <td rowspan="2"><code>200 OK</code></td>
+                    <td style="background-color: #fff;" rowspan="2"><code>200 OK</code></td>
                     <td><code>1080</code></td>
                     <td>Warning</td>
                     <td>Unchanged</td>
@@ -46,7 +46,7 @@ The following table lists EFX status codes and their descriptions related to the
 </td>
                 </tr>
                 <tr>
-                    <td rowspan="2"><code>201 Created
+                    <td style="background-color: #fff;" rowspan="2"><code>201 Created
                     </code></td>
                     <td><code>0</code></td>
                     <td>Info</td>
@@ -58,10 +58,20 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>General warning</td>
                 </tr>
                 <tr>
-                    <td rowspan="2"><code>401 Unauthorized</code></td>
+                    <td rowspan="4"><code>401 Unauthorized</code></td>
                     <td><code>1700</code></td>
                     <td>Error</td>
                     <td>Security violation</td>
+                </tr>
+                <tr>
+                    <td><code>1740</code></td>
+                    <td>Error</td>
+                    <td>Authentication failed</td>
+                </tr>
+                <tr>
+                    <td><code>1970</code></td>
+                    <td>Error</td>
+                    <td>General data error</td>
                 </tr>
                 <tr>
                     <td><code>2380</code></td>
@@ -69,7 +79,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Unauthorized account</td>
                 </tr>
                 <tr>
-                    <td rowspan="31"><code>422 Un-processable Entity</code></td>
+                    <td style="background-color: #fff;" rowspan="31"><code>422 Un-processable Entity</code></td>
                     <td><code>50</code></td>
                     <td>
                         <p>Warning</p>
@@ -229,7 +239,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Duplicate value</td>
                 </tr>
                 <tr>
-                    <td rowspan="19"><code>500 Internal Server Error</code></td>
+                    <td style="background-color: #fff;" rowspan="19"><code>500 Internal Server Error</code></td>
                     <td><code>10</code></td>
                     <td>Error</td>
                     <td>Additional action needed</td>
