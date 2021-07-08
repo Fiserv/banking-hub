@@ -33,7 +33,7 @@ The following table lists EFX status codes and their descriptions related to the
             </thead>
             <tbody>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="2"><code>200 OK</code></td>
+                    <td style="background-color: #fff;" rowspan="3"><code>200 OK</code></td>
                     <td><code>1080</code></td>
                     <td>Warning</td>
                     <td>Unchanged</td>
@@ -49,7 +49,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Details not available</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="2"><code>201 Created
+                    <td rowspan="2" style="background-color: #fff;" ><code>201 Created
                     </code></td>
                     <td><code>0</code></td>
                     <td>Info</td>
@@ -61,7 +61,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>General warning</td>
                 </tr>
                 <tr>
-                    <td rowspan="7"><code>401 Unauthorized</code></td>
+                    <td rowspan="8" style="background-color: #fff;"><code>401 Unauthorized</code></td>
                     <td><code>1700</code></td>
                     <td>Error</td>
                     <td>Security violation</td>
@@ -75,6 +75,11 @@ The following table lists EFX status codes and their descriptions related to the
                     <td><code>1760</code></td>
                     <td>Error</td>
                     <td>Authentication failed</td>
+                </tr>
+                <tr>
+                    <td><code>1910</code></td>
+                    <td>Error</td>
+                    <td>Password expired</td>
                 </tr>
                 <tr>
                     <td><code>1970</code></td>
@@ -97,7 +102,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Invalid object type</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="35"><code>422 Un-processable Entity</code></td>
+                    <td rowspan="39" style="background-color: #fff;" ><code>422 Un-processable Entity</code></td>
                     <td><code>50</code></td>
                     <td>
                         <p>Warning</p>
@@ -237,9 +242,19 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Invalid account type to process the transaction</td>
                 </tr>
                 <tr>
+                    <td><code>2600</code></td>
+                    <td>Error</td>
+                    <td>Invalid check number</td>
+                </tr>
+                <tr>
                     <td><code>2610</code></td>
                     <td>Error</td>
                     <td>Request is too late - check has been paid</td>
+                </tr>
+                <tr>
+                    <td><code>2740</code></td>
+                    <td>Error</td>
+                    <td>Invalid currency code</td>
                 </tr>
                 <tr>
                     <td><code>2940</code></td>
@@ -257,9 +272,19 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Withdrawal limit exceeded</td>
                 </tr>
                 <tr>
+                    <td><code>3380</code></td>
+                    <td>Error</td>
+                    <td>Expired card</td>
+                </tr>
+                <tr>
                     <td><code>3960</code></td>
                     <td>Error</td>
                     <td>Stop payment match</td>
+                </tr>
+                <tr>
+                    <td><code>5130</code></td>
+                    <td>Error</td>
+                    <td>Card not linked to the account</td>
                 </tr>
                 <tr>
                     <td><code>6335</code></td>
