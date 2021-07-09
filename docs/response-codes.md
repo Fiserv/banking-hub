@@ -4,7 +4,7 @@ Fiserv Open Banking API returns standard HTTP status code along with the EFX sta
 
 ## HTTP Status Codes
 
-For every API request, one of the following HTTP status code returns in the response.
+For every API request, one of the following HTTP status codes is returned with the response.
 
 | HTTP Status Code          | Description   |
 |-------------------|-----------|
@@ -13,7 +13,7 @@ For every API request, one of the following HTTP status code returns in the resp
 | `401  Unauthorized` | Invalid authentication credentials  |
 | `422  Un-processable Entity`  | Server is unable to process the request due to semantic errors |
 | `500  Internal Server Error ` | Server encountered an unexpected error while processing the request  |
-| `503  Service Unavailable  `        | Service is temporarily unavailable due to overloaded or maintenance activity    |
+| `503  Service Unavailable  `        | Service is temporarily unavailable due to overload or maintenance activity    |
 
 ## EFX Status Codes
 
@@ -164,7 +164,7 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td><code>1726</code></td>
                     <td>Error</td>
-                    <td>Error occurred due to included override exceptions in AdditionalStatus field</td>
+                    <td>Error occurred due to included override exceptions in the <code>AdditionalStatus</code> field</td>
                 </tr>
                 <tr>
                     <td><code>2020</code></td>
