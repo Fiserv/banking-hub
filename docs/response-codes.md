@@ -49,8 +49,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Details not available</td>
                 </tr>
                 <tr>
-                    <td rowspan="2" style="background-color: #fff;" ><code>201 Created
-                    </code></td>
+                    <td rowspan="2" style="background-color: #fff;" ><code>201 Created</code></td>
                     <td><code>0</code></td>
                     <td>Info</td>
                     <td>Success</td>
@@ -104,9 +103,7 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td rowspan="39" style="background-color: #fff;" ><code>422 Un-processable Entity</code></td>
                     <td><code>50</code></td>
-                    <td>
-                        <p>Warning</p>
-                    </td>
+                    <td>Warning</td>
                     <td>General warning</td>
                 </tr>
                 <tr>
@@ -423,7 +420,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Function not available to user</td>
                 </tr>
                 <tr>
-                    <td><code>503 Service Unavailable</code></td>
+                    <td style="background-color: #fff;"><code>503 Service Unavailable</code></td>
                     <td><code>300</code></td>
                     <td>Error</td>
                     <td>System not available</td>
