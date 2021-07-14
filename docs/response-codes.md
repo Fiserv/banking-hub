@@ -201,7 +201,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Date-time value is greater than the accepted limit</td>
                 </tr>
                 <tr>
-                    <td>`2180`</code></td>
+                    <td>`2180`</td>
                     <td>Error</td>
                     <td>Request is too late to process the ACH transaction for the current day</td>
                 </tr>
@@ -211,7 +211,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Account not for party</td>
                 </tr>
                 <tr>
-                    <td><code>2350</code></td>
+                    <td>`2350`</td>
                     <td>Error</td>
                     <td>Account closed</td>
                 </tr>
