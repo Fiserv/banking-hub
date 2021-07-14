@@ -1,7 +1,7 @@
 # API Glossary
 
 | Term      | Description |
-| :---        |    :----:   | 
+| :---        | :----     | 
 | Access Token | A cryptographically secure credential that allows merchants to access the API.|
 | Account   | A system record tied to a customer, which contains balance, history, and other monetary information.|
 | Alien     | A foreign-born, non-U.S. citizen who lives in the U.S.|
