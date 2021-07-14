@@ -33,7 +33,7 @@ The following table lists EFX status codes and their descriptions related to the
             </thead>
             <tbody>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="3"><code>200 OK</code></td>
+                    <td style="background-color: #fff;" rowspan="3">`200  OK `</td>
                     <td><code>1080</code></td>
                     <td>Warning</td>
                     <td>Unchanged</td>
@@ -49,8 +49,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Details not available</td>
                 </tr>
                 <tr>
-                    <td rowspan="2" style="background-color: #fff;" ><code>201 Created
-                    </code></td>
+                    <td rowspan="2" style="background-color: #fff;" >`201  Created `</td>
                     <td><code>0</code></td>
                     <td>Info</td>
                     <td>Success</td>
@@ -61,113 +60,113 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>General warning</td>
                 </tr>
                 <tr>
-                    <td rowspan="8" style="background-color: #fff;"><code>401 Unauthorized</code></td>
-                    <td><code>1700</code></td>
+                    <td rowspan="8" style="background-color: #fff;">`401  Unauthorized`</td>
+                    <td>`1700`</td>
                     <td>Error</td>
                     <td>Security violation</td>
                 </tr>
                 <tr>
-                    <td><code>1740</code></td>
+                    <td>`1740`</td>
                     <td>Error</td>
                     <td>Authentication failed</td>
                 </tr>
                 <tr>
-                    <td><code>1760</code></td>
+                    <td>`1760`</td>
                     <td>Error</td>
                     <td>Authentication failed</td>
                 </tr>
                 <tr>
-                    <td><code>1910</code></td>
+                    <td>`1910`</td>
                     <td>Error</td>
                     <td>Password expired</td>
                 </tr>
                 <tr>
-                    <td><code>1970</code></td>
+                    <td>`1970`</td>
                     <td>Error</td>
                     <td>General data error</td>
                 </tr>
                  <tr>
-                    <td><code>2380</code></td>
+                    <td>`2380`</td>
                     <td>Error</td>
                     <td>Unauthorized account</td>
                 </tr>
                  <tr>
-                    <td><code>2395</code></td>
+                    <td>`2395`</td>
                     <td>Error</td>
                     <td>Party not permitted to perform the action</td>
                 </tr>
                 <tr>
-                    <td><code>3700</code></td>
+                    <td>`3700`</td>
                     <td>Error</td>
                     <td>Invalid object type</td>
                 </tr>
                 <tr>
                     <td rowspan="39" style="background-color: #fff;" ><code>422 Un-processable Entity</code></td>
-                    <td><code>50</code></td>
+                    <td>`50`</td>
                     <td>
                         <p>Warning</p>
                     </td>
                     <td>General warning</td>
                 </tr>
                 <tr>
-                    <td><code>200</code></td>
+                    <td>`200`</td>
                     <td>Error</td>
                     <td>General data error</td>
                 </tr>
                 <tr>
-                    <td><code>1020</code></td>
+                    <td>`1020`</td>
                     <td>Error</td>
                     <td>Required Element Not Included
 </td>
                 </tr>
                 <tr>
-                    <td><code>1030</code></td>
+                    <td>`1030`</td>
                     <td>Error</td>
                     <td>Value out of range</td>
                 </tr>
                 <tr>
-                    <td><code>1045</code></td>
+                    <td>`1045`</td>
                     <td>Error</td>
                     <td>Request denied</td>
                 </tr>
                 <tr>
-                    <td><code>1070</code></td>
+                    <td>`1070`</td>
                     <td>Error</td>
                     <td>Invalid Format
 </td>
                 </tr>
                 <tr>
-                    <td><code>1080</code></td>
+                    <td>`1080`</td>
                     <td>Error</td>
                     <td>Invalid field size</td>
                 </tr>
                 <tr>
-                    <td><code>1090</code></td>
+                    <td>`1090`</td>
                     <td>Error</td>
                     <td>Invalid value</td>
                 </tr>
                 <tr>
-                    <td><code>1121</code></td>
+                    <td>`1121`</td>
                     <td>Error</td>
                     <td>No records found</td>
                 </tr>
                 <tr>
-                    <td><code>1421</code></td>
+                    <td>`1421`</td>
                     <td>Error</td>
                     <td>Invalid party reference</td>
                 </tr>
                 <tr>
-                    <td><code>1500</code></td>
+                    <td>`1500`</td>
                     <td>Error</td>
                     <td>Invalid address</td>
                 </tr>
                 <tr>
-                    <td><code>1726</code></td>
+                    <td>`1726`</td>
                     <td>Error</td>
-                    <td>Error occurred due to included override exceptions in the <code>AdditionalStatus</code> field</td>
+                    <td>Error occurred due to included override exceptions in the `AdditionalStatus` field</td>
                 </tr>
                 <tr>
-                    <td><code>2020</code></td>
+                    <td>`2020`</td>
                     <td>Error</td>
                     <td>Amount too small</td>
                 </tr>
@@ -182,32 +181,32 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Invalid amount value</td>
                 </tr>
                 <tr>
-                    <td><code>2120</code></td>
+                    <td>`2120`</td>
                     <td>Error</td>
                     <td>Invalid date-time range</td>
                 </tr>
                 <tr>
-                    <td><code>2130</code></td>
+                    <td>`2130`</td>
                     <td>Error</td>
                     <td>Date expired</td>
                 </tr>
                 <tr>
-                    <td><code>2140</code></td>
+                    <td>`2140`</td>
                     <td>Error</td>
                     <td>Date-time value is less than the accepted limit</td>
                 </tr>
                 <tr>
-                    <td><code>2150</code></td>
+                    <td>`2150`</td>
                     <td>Error</td>
                     <td>Date-time value is greater than the accepted limit</td>
                 </tr>
                 <tr>
-                    <td><code>2180</code></td>
+                    <td>`2180`</code></td>
                     <td>Error</td>
                     <td>Request is too late to process the ACH transaction for the current day</td>
                 </tr>
                 <tr>
-                    <td><code>2320</code></td>
+                    <td>`2320`</td>
                     <td>Error</td>
                     <td>Account not for party</td>
                 </tr>
