@@ -60,7 +60,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>General warning</td>
                 </tr>
                 <tr>
-                    <td rowspan="8" style="background-color: #fff;">`401  Unauthorized`</td>
+                    <td rowspan="8" style="background-color: #fff;">`401  Unauthorized `</td>
                     <td>`1700`</td>
                     <td>Error</td>
                     <td>Security violation</td>
@@ -101,7 +101,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Invalid object type</td>
                 </tr>
                 <tr>
-                    <td rowspan="39" style="background-color: #fff;" >`422 Un-processable Entity`</td>
+                    <td rowspan="39" style="background-color: #fff;" >`422 Un-processable Entity `</td>
                     <td>`50`</td>
                     <td>
                         <p>Warning</p>
@@ -163,7 +163,7 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td>`1726`</td>
                     <td>Error</td>
-                    <td>Error occurred due to included override exceptions in the `AdditionalStatus` field</td>
+                    <td>Error occurred due to included override exceptions in the `AdditionalStatus ` field</td>
                 </tr>
                 <tr>
                     <td>`2020`</td>
@@ -301,7 +301,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Duplicate value</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="24"><code>500 Internal Server Error</code></td>
+                    <td style="background-color: #fff;" rowspan="24">`500 Internal Server Error `</td>
                     <td><code>10</code></td>
                     <td>Error</td>
                     <td>Additional action needed</td>
