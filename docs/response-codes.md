@@ -34,28 +34,28 @@ The following table lists EFX status codes and their descriptions related to the
             <tbody>
                 <tr>
                     <td style="background-color: #fff;" rowspan="3">`200  OK `</td>
-                    <td><code>1080</code></td>
+                    <td>`1080`</td>
                     <td>Warning</td>
                     <td>Unchanged</td>
                 </tr>
                 <tr>
-                    <td><code>1120</code></td>
+                    <td>`1120`</td>
                     <td>Info</td>
                     <td>No records match the selection criteria</td>
                 </tr>
                 <tr>
-                    <td><code>1140</code></td>
+                    <td>`1140`</td>
                     <td>Warning</td>
                     <td>Details not available</td>
                 </tr>
                 <tr>
                     <td rowspan="2" style="background-color: #fff;" >`201  Created `</td>
-                    <td><code>0</code></td>
+                    <td>`0`</td>
                     <td>Info</td>
                     <td>Success</td>
                 </tr>
                 <tr>
-                    <td><code>50</code></td>
+                    <td>`50`</td>
                     <td>Warning</td>
                     <td>General warning</td>
                 </tr>
@@ -101,7 +101,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Invalid object type</td>
                 </tr>
                 <tr>
-                    <td rowspan="39" style="background-color: #fff;" ><code>422 Un-processable Entity</code></td>
+                    <td rowspan="39" style="background-color: #fff;" >`422 Un-processable Entity`</td>
                     <td>`50`</td>
                     <td>
                         <p>Warning</p>
@@ -171,12 +171,12 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Amount too small</td>
                 </tr>
                 <tr>
-                    <td><code>2030</code></td>
+                    <td>`2030`</td>
                     <td>Error</td>
                     <td>Amount too large</td>
                 </tr>
                 <tr>
-                    <td><code>2050</code></td>
+                    <td>`2050`</td>
                     <td>Error</td>
                     <td>Invalid amount value</td>
                 </tr>
