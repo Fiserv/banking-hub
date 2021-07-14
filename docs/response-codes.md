@@ -101,7 +101,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Invalid object type</td>
                 </tr>
                 <tr>
-                    <td rowspan="39" style="background-color: #fff;" >`422 Un-processable Entity `</td>
+                    <td rowspan="39" style="background-color: #fff;" >`422 Un-processable Entity`</td>
                     <td>`50`</td>
                     <td>
                         <p>Warning</p>
@@ -301,7 +301,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Duplicate value</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="24">`500 Internal Server Error `</td>
+                    <td style="background-color: #fff;" rowspan="24">`500 Internal Server Error`</td>
                     <td><code>10</code></td>
                     <td>Error</td>
                     <td>Additional action needed</td>
@@ -392,38 +392,38 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Customer session already in progress</td>
                 </tr>
                 <tr>
-                    <td><code>2380</code></td>
+                    <td>`2380`</td>
                     <td>Error</td>
                     <td>Unauthorized account</td>
                 </tr>
                 <tr>
-                    <td><code>2400</code></td>
+                    <td>`2400`</td>
                     <td>Error</td>
                     <td>Account unavailable</td>
                 </tr>
                 <tr>
-                    <td><code>3060</code></td>
+                    <td>`3060`</td>
                     <td>Error</td>
                     <td>Usage limit exceeded</td>
                 </tr>
                 <tr>
-                    <td><code>6000</code></td>
+                    <td>`6000`</td>
                     <td>Error</td>
                     <td>Terminal not configured</td>
                 </tr>
                 <tr>
-                    <td><code>6100</code></td>
+                    <td>`6100`</td>
                     <td>Error</td>
                     <td>Message not permitted from terminal</td>
                 </tr>
                 <tr>
-                    <td><code>6130</code></td>
+                    <td>`6130`</td>
                     <td>Error</td>
                     <td>Function not available to user</td>
                 </tr>
                 <tr>
-                    <td><code>503 Service Unavailable</code></td>
-                    <td><code>300</code></td>
+                    <td>`503 Service Unavailable`</td>
+                    <td>`300`</td>
                     <td>Error</td>
                     <td>System not available</td>
                 </tr>
