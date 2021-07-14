@@ -163,7 +163,7 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td>`1726`</td>
                     <td>Error</td>
-                    <td>Error occurred due to included override exceptions in the `AdditionalStatus ` field</td>
+                    <td>Error occurred due to included override exceptions in the `AdditionalStatus` field</td>
                 </tr>
                 <tr>
                     <td>`2020`</td>
