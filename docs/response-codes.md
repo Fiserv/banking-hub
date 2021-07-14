@@ -114,8 +114,7 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td>`1020`</td>
                     <td>Error</td>
-                    <td>Required Element Not Included
-</td>
+                    <td>Required Element Not Included</td>
                 </tr>
                 <tr>
                     <td>`1030`</td>
@@ -130,8 +129,7 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td>`1070`</td>
                     <td>Error</td>
-                    <td>Invalid Format
-</td>
+                    <td>Invalid Format</td>
                 </tr>
                 <tr>
                     <td>`1080`</td>
