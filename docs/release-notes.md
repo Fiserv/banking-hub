@@ -5,7 +5,11 @@ This section provides information about the latest improvements to the Cards API
 <details>
  
 <summary>
-  <h2> <span span style="color: #ff6600;"> Release 2021.02 <span style="font-size: 70%; color:#666"> June 2021 </span> </span> </h2>
+ 
+ 
+  ## <span span style="color: #ff6600;"> Release 2021.02 <span style="font-size: 70%; color:#666"> June 2021 </span> </span> 
+ 
+ 
 </summary>
 
   
