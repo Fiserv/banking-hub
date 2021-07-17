@@ -35,9 +35,9 @@ info:
   contact:
     name: Tracy Dahle
     email: Tracy.Dahle@fiserv.com
-  version: 11.0.0
+  version: 11.0.0_Secured
 servers:
-- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/CardService/11.0.0
+- url: http://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/CardService/11.0.0
   description: SwaggerHub API Auto Mocking
 - url: https://{core}.{environment}.efx.banksol.onefiserv.net/cards
   variables:
@@ -58,9 +58,8 @@ servers:
 paths:
   /cards:
     put:
-      tags: [Update Card]
-      x-group-name: Card Service
-      x-proxy-name: Update Card
+      tags:
+      - Update Card
       summary: Modifies a Card Object
       description: This service operation modifies a card account.
       operationId: CardModOper
@@ -132,11 +131,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CardModRsType'
+      x-group-name: Card Service
+      x-proxy-name: Update Card
     post:
       tags:
-        - Add Card
-      x-group-name: Card Service
-      x-proxy-name: Add Card
+      - Add Card
       summary: Add a Card Object
       description: Creates a new EFT card account. EFT Cards are plastic cards used
         for electronic transactions.
@@ -209,12 +208,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CardAddRsType'
+      x-group-name: Card Service
+      x-proxy-name: Add Card
   /cards/secured:
     put:
       tags:
       - Delete Card
-      x-group-name: Card Service
-      x-proxy-name: Delete Card
       summary: Delete a Card Object Secured
       description: This service operation deletes a card account.
       operationId: CardDelOperSecured
@@ -286,11 +285,11 @@ paths:
                 Signature:
                   $ref: '#/components/examples/SignatureCardDelResponseExample'
       deprecated: false
+      x-group-name: Card Service
+      x-proxy-name: Delete Card
     post:
       tags:
       - Get Card
-      x-group-name: Card Service
-      x-proxy-name: Get Card
       summary: Get a Card Object Secured
       description: This service operation retrieves a card account.
       operationId: CardInqOperSecured
@@ -363,6 +362,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/CardInqRsType'
       deprecated: false
+      x-group-name: Card Service
+      x-proxy-name: Get Card
 components:
   schemas:
     EFXHeader:
@@ -456,7 +457,9 @@ components:
         TerminalCountryCodeSource:
           type: string
           description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum: [ISO3166Numeric, ISO3166Alpha3, Retriever, Shepherd]
+          enum:
+          - ISO3166Numeric
+          - ISO3166Alpha3
         TerminalCountryCodeValue:
           maxLength: 80
           type: string
@@ -561,6 +564,7 @@ components:
     DayOfWeekType:
       title: DayOfWeekType
       type: string
+      description: Day of the week.
       enum:
       - Monday
       - Tuesday
@@ -611,11 +615,11 @@ components:
       properties:
         RecurType:
           type: string
-          description: Recurrence Type. Indicates the pattern of recurrence.
+          description: Recurrence Type indicates the pattern of recurrence.
         RecurTypeEnumDesc:
           maxLength: 80
           type: string
-          description: Recurrence Type Enumeration Description.
+          description: Description of the Recurrence Type enumeration value.
         RecurInterval:
           type: integer
           description: 'Recurrence Interval. Number of units between occurrences.
@@ -686,36 +690,36 @@ components:
     CurCodeTypeType:
       title: CurCodeTypeType
       type: string
-      enum: 
-        - ISO4217-Alpha
-        - ISO4217-Numeric
+      description: 'Type of a currency code. Valid values are: * ISO4217-Alpha * ISO4217-Numeric'
+      enum:
+      - ISO4217-Alpha
+      - ISO4217-Numeric
     CurCodeType:
       title: CurCodeType
       type: object
       properties:
         CurCodeType:
-          title: CurCodeTypeType
-          type: string
-          enum:
-          - ISO4217-Alpha
+          $ref: '#/components/schemas/CurCodeTypeType'
         CurCodeTypeEnumDesc:
           maxLength: 80
           type: string
-          description: Currency Code Type Enumeration Description.
+          description: Description of the Currency Code Type enumeration value.
         CurCodeValue:
           maxLength: 80
           type: string
           description: Currency Code Value. Indicates the Currency Code Value within
             the CurCodeType table specified.
+      description: Details of the currency code value.
     CurAmtType:
       title: CurAmtType
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Maximum surcharge waiver amount.
         CurCode:
           $ref: '#/components/schemas/CurCodeType'
+      description: Details of the currency amount.
     AcctBalType:
       title: AcctBalType
       required:
@@ -857,6 +861,7 @@ components:
     RelationshipRoleType:
       title: RelationshipRoleType
       type: string
+      description: Role of a relationship manager.
       enum:
       - Officer
       - SecondOfficer
@@ -877,13 +882,16 @@ components:
         RelationshipMgrIdentEnumDesc:
           maxLength: 80
           type: string
-          description: Relationship Manager Identifier Enumeration Description.
+          description: Description of the Relationship Manager Identifier enumeration
+            value.
         RelationshipRole:
           $ref: '#/components/schemas/RelationshipRoleType'
         RelationshipRoleEnumDesc:
           maxLength: 80
           type: string
-          description: Relationship Role Enumeration Description.
+          description: Description of the Relationship Role enum value.
+      description: Information about financial institution officers who have management-related
+        responsibilities of the Party, Account or Card.
     AddtlTitlesType:
       title: AddtlTitlesType
       type: object
@@ -2036,8 +2044,11 @@ components:
         Month:
           type: integer
           description: 'Month. Numeric value representing the month of recurrence.
-            Valid values: integers between 1 and 12 inclusive.'
+            Valid values: integers between 1 and 12 inclusive. #Month number of the
+            year. Can be any number between 1 to 12, whereas 1 for the month of January,
+            2 for February, and so on.'
           format: int64
+      description: Date and month for the applicable fee.
     DurationType:
       title: DurationType
       type: object
@@ -2053,20 +2064,23 @@ components:
         UnitEnumDesc:
           maxLength: 80
           type: string
-          description: Unit Enumeration Description.
+          description: Description of the Unit enumeration value.
+      description: Details of the duration.
     TimeFrameType:
       title: TimeFrameType
       type: object
       properties:
         StartDt:
           type: string
-          description: 'Start Date. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'''
+          description: 'Start Date. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'' #Start date
+            in date-time format as per ISO 8601 standards.'
           format: date-time
         StartDayMonth:
           $ref: '#/components/schemas/StartDayMonthType'
         EndDt:
           type: string
-          description: 'End Date. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'''
+          description: 'End Date. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'' #End date in
+            date-time format as per ISO 8601 standards.'
           format: date-time
         EndDayMonth:
           $ref: '#/components/schemas/StartDayMonthType'
@@ -2074,9 +2088,10 @@ components:
           $ref: '#/components/schemas/DurationType'
         RecurRule:
           type: array
-          description: Recurrence Rule.
+          description: Details of the recurrent rule.
           items:
             $ref: '#/components/schemas/RecurRuleType'
+      description: Details of the time frame for the applicable fee.
     PhoneNumType:
       title: PhoneNumType
       allOf:
@@ -2135,7 +2150,7 @@ components:
         properties:
           OpenDt:
             type: string
-            description: Open Date.
+            description: Open date is the date on which the account is created.
             format: date
           RelationshipMgr:
             type: array
@@ -2744,6 +2759,7 @@ components:
           maxLength: 80
           type: string
           description: Waiver Code Enumeration Description.
+      description: Details of the fee waiver
     FaceValueAmtType:
       title: FaceValueAmtType
       allOf:
@@ -3012,12 +3028,12 @@ components:
       properties:
         CardIdentType:
           type: string
-          description: 'Card Identification Type. Valid values include: PORT.'
+          description: 'Identification type of a card. Valid values include: PORT.'
         CardIdentValue:
           maxLength: 36
           type: string
           description: Identification value of a card.
-      description: Card identification details.
+      description: Card identification details to identify the card record.
     CardKeysType:
       title: CardKeysType
       description: The Card Key object contains unique information about the card
@@ -3314,6 +3330,7 @@ components:
           description: Agreement Identifier.
         PartyKeys:
           $ref: '#/components/schemas/PartyKeysType'
+      description: Agreement Data.
     RewardAcctType:
       title: RewardAcctType
       allOf:
@@ -4178,9 +4195,12 @@ components:
           $ref: '#/components/schemas/AcctKeysType'
         AcctSummInfo:
           $ref: '#/components/schemas/AcctSummInfoType'
+      description: Account Reference Data.
     FinancialTrnOptionType:
       title: FinancialTrnOptionType
       type: string
+      description: Code that identifies the type of transactions this card can perform
+        on the account.
       enum:
       - AllowAllTrn
       - AllowInqOnly
@@ -4194,6 +4214,8 @@ components:
     PartyAcctRelOrderType:
       title: PartyAcctRelOrderType
       type: string
+      description: 'Indicates the relationship order for JointTenancy or JointTenantsInCommon.
+        Values are: First, Second, Third, Fourth, Fifth or Other.'
       enum:
       - First
       - Second
@@ -4475,6 +4497,7 @@ components:
           maxLength: 80
           type: string
           description: Account Notice Option Enumeration Description.
+      description: Contains information about how to process overdraft transactions.
     OvrdElementType:
       title: OvrdElementType
       description: Provides information about the elements corresponding to the override
@@ -4950,12 +4973,15 @@ components:
     CardSurchargeOptionType:
       title: CardSurchargeOptionType
       type: string
+      description: Card surcharge option that indicates if surcharges are applicable
+        on the card.
       enum:
       - Charge
       - DoNotCharge
       - UseDefault
     MaxSurchargeWaiveAmtType:
       title: MaxSurchargeWaiveAmtType
+      description: Details of the maximum surcharge waiver amount in a calendar month.
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -5014,9 +5040,15 @@ components:
             account is associated. This element is required when adding a new account
             and by using this value we can identify if the account is a savings, a
             checking, a time deposit, loan account, etc.
+      description: Details of the Charge Fee Account which is designated to pay the
+        fee charges.
     CardCategoryType:
       title: CardCategoryType
       type: string
+      description: |-
+        Category of a card.  Valid values are:
+          - Business
+          - Personal
       enum:
       - Personal
       - Business
@@ -5027,24 +5059,26 @@ components:
         FamilyName:
           maxLength: 40
           type: string
-          description: Family Name.
+          description: Family name or last name of the person.
         GivenName:
           maxLength: 40
           type: string
-          description: Given Name. Person's first name.
+          description: First name of the person.
         MiddleName:
           maxLength: 40
           type: string
-          description: Middle Name. Person's middle name.
+          description: Middle name of the person.
         NamePrefix:
           type: string
           description: Name Prefix. Identifies a title before a person's name.
         NameSuffix:
           type: string
-          description: Name Suffix. For example, “Ms.”, or “Dr.”
+          description: Name Suffix.
+      description: Details of the name that is to be printed on the card.
     EmbossingPrintOptionType:
       title: EmbossingPrintOptionType
       type: string
+      description: Print order for the secondary embossing name.
       enum:
       - FirstLine
       - SecondLine
@@ -5067,6 +5101,7 @@ components:
     GenerateCardOrderType:
       title: GenerateCardOrderType
       type: string
+      description: Used to force the the ordering of a card to replace a card.
       enum:
       - ReplaceCard
       - IssueCard
@@ -5077,6 +5112,7 @@ components:
     GeneratePINMailerType:
       title: GeneratePINMailerType
       type: string
+      description: Used for indicate the generation of a PIN mailer.
       enum:
       - GeneratePINMailer
       - DoNotGenerate
@@ -5093,9 +5129,12 @@ components:
           maxLength: 80
           type: string
           description: Language Enumeration Description.
+      description: Contains preferences on the use of the card.
     CardVerifyDataType:
       title: CardVerifyDataType
       type: string
+      description: Indicates whether a new debit card has been ordered and special
+        verification process needs to be done on the card.
       enum:
       - ValidateCard
       - DoNotValidateCard
@@ -5122,6 +5161,7 @@ components:
           maxLength: 80
           type: string
           description: Card Type. Classification that identifies the type of card.
+      description: Previous Card Data.
     ReplacementCardDataType:
       title: ReplacementCardDataType
       type: object
@@ -5145,9 +5185,12 @@ components:
           maxLength: 80
           type: string
           description: Card Type. Classification that identifies the type of card.
+      description: Replacement Card Data.
     CardAmtTypeType:
       title: CardAmtTypeType
       type: string
+      description: 'Indicates the type of amount being reported in the period for
+        example: ForeignFeeWaived, ForeignFee. See list of enumerations accepted.'
       enum:
       - ForeignFeeWaived
       - ForeignFee
@@ -5162,12 +5205,16 @@ components:
     CardAmtSourceType:
       title: CardAmtSourceType
       type: string
+      description: 'Further classifies the amount in the period by source type such
+        as: ATM, POS, etc. See list of enumerations accepted. '
       enum:
       - POS
       - ATM
     CardPeriodTypeType:
       title: CardPeriodTypeType
       type: string
+      description: 'Indicates the period in which the data is reported for example:
+        month to date (MTD), life to date (LTD), etc. See list of enumerations accepted. '
       enum:
       - CTD
       - LTD
@@ -5226,6 +5273,7 @@ components:
           description: Alert Contact.
           items:
             $ref: '#/components/schemas/AlertContactType'
+      description: Text Alert Data.
     CardInfoType:
       title: CardInfoType
       type: object
@@ -5236,7 +5284,7 @@ components:
           description: '[FSVR]Brand.'
         RewardsProgramInd:
           type: boolean
-          description: Rewards Program Indicator.
+          description: Flag to indicate if the card has any rewards program.
         CardNum:
           maxLength: 32
           type: string
@@ -5245,8 +5293,8 @@ components:
         CardEmbossNum:
           maxLength: 32
           type: string
-          description: Card Embossing Number. Card Embossing Number as it appears
-            on the card.
+          description: Card embossing number that appears on the front side of the
+            card.
         CardSeqNum:
           maxLength: 3
           type: string
@@ -5255,7 +5303,7 @@ components:
         CardType:
           maxLength: 80
           type: string
-          description: Card Type. Classification that identifies the type of card.
+          description: Type of a card.
         ISOCode:
           maxLength: 80
           type: string
@@ -5264,38 +5312,38 @@ components:
         CardTypeEnumDesc:
           maxLength: 80
           type: string
-          description: Card Type Enum Description.
+          description: Description of the Card Type enumeration value.
         ProductIdent:
           maxLength: 42
           type: string
-          description: Product Identifier. Identifies the processing parameters of
-            the account or card.
+          description: Product identification number. This value is used to identify
+            the processing parameters of the card.
         Desc:
           maxLength: 200
           type: string
-          description: Description.
+          description: Description of the product identifier.
         CardIdent:
           $ref: '#/components/schemas/CardIdentType'
         InstantIssuedInd:
           type: boolean
-          description: Instant Issued Card Indicator.
+          description: Flag to indicate if the card is to be issued instantly.
         RelationshipMgr:
           type: array
-          description: Relationship Manager. Stores information about the FI officers
-            that have management responsibility of the Party, the Account or the Card.
+          description: Information about financial institution officers who have management-related
+            responsibilities of the Party, Account or Card.
           items:
             $ref: '#/components/schemas/RelationshipMgrType'
         CardDtlStatus:
           type: string
-          description: Card Detail Status. Indicates the current status of the Card.
+          description: Current status of the card.
         CardDtlStatusEnumDesc:
           maxLength: 80
           type: string
-          description: Card Detail Status Enum Description.
+          description: Description of the CardDtlStatus enum value.
         CardDtlStatusDt:
           type: string
-          description: 'Card Detail Status Date. Indicates date of the current status
-            of the Card. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'''
+          description: 'Card Detail Status Date that indicates the current status
+            date of the card. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'''
           format: date-time
         CardStatusReason:
           type: string
@@ -5330,10 +5378,10 @@ components:
         CardSurchargeOptionEnumDesc:
           maxLength: 80
           type: string
-          description: Surcharge Option Enumeration Description
+          description: Description of the Card Surcharge Option enumeration value.
         MaxSurchargeWaiveCount:
           type: integer
-          description: Maximum Number surcharges that may be waived in a calendar
+          description: Maximum Number of surcharges that can be waived in a calendar
             month.
           format: int64
         MaxSurchargeWaiveAmt:
@@ -5353,11 +5401,13 @@ components:
         LastContactDt:
           type: string
           description: 'Last Contact Date. Date the FI contacted the customer on regards
-            to this account. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'''
+            to this account. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'' # Card issuing date
+            on which the current card was issued.'
           format: date-time
         IssueDt:
           type: string
-          description: 'Issue Date. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'''
+          description: 'Issue Date. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'' #Card issuing
+            date when the current card was issued.'
           format: date-time
         ExpDt:
           type: string
@@ -5367,7 +5417,9 @@ components:
           $ref: '#/components/schemas/DayOfMonthType'
         OrigIssueDt:
           type: string
-          description: 'Original Issue Date. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ'''
+          description: 'Original Issue Date. pattern: ''YYYY-MM-DDTHH:MM:SS.SSZ''
+            # Original card issuing date when the current card record was originally
+            issued.'
           format: date-time
         NextIssueDt:
           type: string
@@ -5378,7 +5430,7 @@ components:
         CardCategoryEnumDesc:
           maxLength: 80
           type: string
-          description: Card Category Enumeration Description.
+          description: Description of the Card Category enumeration value.
         PersonEmbossingName:
           $ref: '#/components/schemas/PersonEmbossingNameType'
         EmbossingName:
@@ -5400,7 +5452,7 @@ components:
         EmbossingPrintOptionEnumDesc:
           maxLength: 80
           type: string
-          description: Embossing Print Option Enumeration Description.
+          description: Description of the Embossing Print Option enumeration value.
         PostAddr:
           type: array
           description: Postal Address.
@@ -5710,6 +5762,7 @@ components:
           type: string
           description: Restricted Description. Description of the reason for the account
             to be restricted.
+      description: Detailed information of a card.
     CardRefType:
       title: CardRefType
       required:
@@ -6376,50 +6429,50 @@ components:
             EffDt: 2020-07-20T06:13:09.290
     PremierCardAddRequestExample:
       value:
-        ovrdAutoAckInd: true
-        partyCardRelInfo:
-        - partyRef:
-            partyKeys:
-              partyId: "3134"
-          partyCardRelType: Owner
-          ownerInd: true
-          taxReportingOwnerInd: true
-        cardInfo:
-          cardSeqNum: "0"
-          cardType: "4"
-          productIdent: "10804"
-          relationshipMgr:
-          - relationshipMgrIdent: "200"
-            relationshipRole: OFFICER
-          - relationshipMgrIdent: "0"
-            relationshipRole: REFERRAL_OFFICER
-          cardDtlStatus: Active
-          cardFee:
-          - cardFeeType: CardFee
-            feePlan: "1"
-            timeFrame:
-              recurRule:
-              - recurType: Cycle
-                recurInterval: 1
-          chargeFeeAcct:
-            acctId: "13005731"
-            acctType: DDA
-          openDt: 2018-08-25
-          issueDt: 2021-05-19
-          expDt: 2023-02-03
-          nextIssueDt: 2023-07-31
-          embossingName: Akilah Senger O'Hara
-          postAddr:
-          - addr1: 14653 Hagenes Throughway, Kohlermouth, RI 92983-9604
-            addr2: McCullough Locks
-            addr3: 094 Kshlerin Valley
-            city: North Leonoreton
-            stateProv: FL
-            postalCode: 59855-0470
-            country: US
-            addrType: PRIMARY
-          originatingBranch: "1"
-          responsibleBranch: "1"
+        OvrdAutoAckInd: true
+        PartyCardRelInfo:
+        - PartyRef:
+            PartyKeys:
+              PartyId: "3134"
+          PartyCardRelType: Owner
+          OwnerInd: true
+          TaxReportingOwnerInd: true
+        CardInfo:
+          CardSeqNum: "0"
+          CardType: "4"
+          ProductIdent: "10804"
+          RelationshipMgr:
+          - RelationshipMgrIdent: "200"
+            RelationshipRole: OFFICER
+          - RelationshipMgrIdent: "0"
+            RelationshipRole: REFERRAL_OFFICER
+          CardDtlStatus: Active
+          CardFee:
+          - CardFeeType: CardFee
+            FeePlan: "1"
+            TimeFrame:
+              RecurRule:
+              - RecurType: Cycle
+                RecurInterval: 1
+          ChargeFeeAcct:
+            AcctId: "13005731"
+            AcctType: DDA
+          OpenDt: 2018-08-25
+          IssueDt: 2021-05-19
+          ExpDt: 2023-02-03
+          NextIssueDt: 2023-07-31
+          EmbossingName: Akilah Senger O'Hara
+          PostAddr:
+          - Addr1: 14653 Hagenes Throughway, Kohlermouth, RI 92983-9604
+            Addr2: McCullough Locks
+            Addr3: 094 Kshlerin Valley
+            City: North Leonoreton
+            StateProv: FL
+            PostalCode: 59855-0470
+            Country: US
+            AddrType: PRIMARY
+          OriginatingBranch: "1"
+          ResponsibleBranch: "1"
     PremierCardAddResponseExample:
       value:
         Status:
@@ -6429,7 +6482,8 @@ components:
           SvcProviderName: Premier
         CardStatusRec:
           CardKeys:
-            CardId: 600205
+            CardNum: "600205"
+            CardId: 9494A11AF0A32B16ED6F5595F0E7F991C80
           CardStatus:
             CardStatusCode: Valid
             EffDt: 2021-06-07T23:38:36.292
@@ -6886,8 +6940,8 @@ components:
     SignatureCardDelRequestExample:
       value:
         CardKeys:
-          CardId: 1122331111000000000
-          CardSeqNum: 1
+          CardId: "1122331111000000000"
+          CardSeqNum: "1"
     SignatureCardDelResponseExample:
       value:
         Status:
