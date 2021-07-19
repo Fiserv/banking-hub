@@ -28,7 +28,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <th> HTTP Status Code </th>
                     <th> EFX Status Code </th>
                     <th> EFX Severity</th>
-                    <th> EFX Status Description</t>
+                    <th> EFX Status Description</th>
                 </tr>
             </thead>
             <tbody>
