@@ -18,53 +18,10 @@ For every API request, one of the following HTTP status codes is returned with t
 ## EFX Status Codes
 
 The following table lists EFX status codes and their descriptions related to the HTTP status codes:
-        <table style="width: 100%;">
-            <col />
-            <col />
-            <col />
-            <col />
-            <thead>
-                <tr>
-                    <th> HTTP Status Code </th>
-                    <th> EFX Status Code </th>
-                    <th> EFX Severity</th>
-                    <th> EFX Status Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="background-color: #fff;" rowspan="3">`200 OK`</td>
-                    <td>`1080`</td>
-                    <td>Warning</td>
-                    <td>Unchanged</td>
-                </tr>
-                <tr>
-                    <td>`1120`</td>
-                    <td>Info</td>
-                    <td>No records match the selection criteria</td>
-                </tr>
-                <tr>
-                    <td>`1140`</td>
-                    <td>Warning</td>
-                    <td>Details not available</td>
-                </tr>
-               </tbody>
-               <tbody>
-                <tr>
-                    <td style="background-color: #fff;" rowspan="3">`200 OK`</td>
-                    <td>`1080`</td>
-                    <td>Warning</td>
-                    <td>Unchanged</td>
-                </tr>
-                <tr>
-                    <td>`1120`</td>
-                    <td>Info</td>
-                    <td>No records match the selection criteria</td>
-                </tr>
-                <tr>
-                    <td>`1140`</td>
-                    <td>Warning</td>
-                    <td>Details not available</td>
-                </tr>              
-            </tbody>
-        </table>
+|HTTP Status Code|EFX Status Code|EFX Severity|EFX Status Description|
+|--- |--- |--- |--- |
+|`200 OK`|`1080`|Warning|Unchanged|
+||`1120`|Info|No records match the selection criteria|
+||`1140`|Warning|Details not available|
+|`201 Created`|`0`|Info|Success|
+||`50`|Warning|General warning|
