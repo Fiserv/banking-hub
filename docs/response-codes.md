@@ -48,6 +48,8 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Warning</td>
                     <td>Details not available</td>
                 </tr>
+               </tbody>
+               <tbody>
                 <tr>
                     <td style="background-color: #fff;" rowspan="3">`200 OK`</td>
                     <td>`1080`</td>
