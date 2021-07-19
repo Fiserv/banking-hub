@@ -50,12 +50,12 @@ The following table lists EFX status codes and their descriptions related to the
                 </tr>
                 <tr>
                     <td style="background-color: #fff;" rowspan="2" >`201 Created`</td>
-                    <td><code>0</code></td>
+                    <td>`0`</td>
                     <td>Info</td>
                     <td>Success</td>
                 </tr>
                 <tr>
-                    <td><code>50</code></td>
+                    <td>`50`</td>
                     <td>Warning</td>
                     <td>General warning</td>
                 </tr>                
