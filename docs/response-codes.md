@@ -49,15 +49,20 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Details not available</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="2" >`201 Created`</td>
-                    <td>`0`</td>
-                    <td>Info</td>
-                    <td>Success</td>
+                    <td style="background-color: #fff;" rowspan="3">`200 OK`</td>
+                    <td>`1080`</td>
+                    <td>Warning</td>
+                    <td>Unchanged</td>
                 </tr>
                 <tr>
-                    <td>`50`</td>
+                    <td>`1120`</td>
+                    <td>Info</td>
+                    <td>No records match the selection criteria</td>
+                </tr>
+                <tr>
+                    <td>`1140`</td>
                     <td>Warning</td>
-                    <td>General warning</td>
-                </tr>                
+                    <td>Details not available</td>
+                </tr>              
             </tbody>
         </table>
