@@ -33,7 +33,7 @@ The following table lists EFX status codes and their descriptions related to the
             </thead>
             <tbody>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="3">`200 OK`</td>
+                    <td style="background-color: #fff;" rowspan="3">`200  OK `</td>
                     <td>`1080`</td>
                     <td>Warning</td>
                     <td>Unchanged</td>
@@ -49,7 +49,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Details not available</td>
                 </tr>
                 <tr>
-                    <td rowspan="2" style="background-color: #fff;" >`201 Created`</td>
+                    <td style="background-color: #fff;" >`201  Created `</td>
                     <td>`0`</td>
                     <td>Info</td>
                     <td>Success</td>
@@ -60,7 +60,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>General warning</td>
                 </tr>
                 <tr>
-                    <td rowspan="8" style="background-color: #fff;">`401 Unauthorized`</td>
+                    <td rowspan="8" style="background-color: #fff;">`401  Unauthorized `</td>
                     <td>`1700`</td>
                     <td>Error</td>
                     <td>Security violation</td>
@@ -101,9 +101,11 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Invalid object type</td>
                 </tr>
                 <tr>
-                    <td rowspan="39" style="background-color: #fff;" >`422 Un-processable Entity`</td>
+                    <td rowspan="39" style="background-color: #fff;" >`422 Un-processable Entity `</td>
                     <td>`50`</td>
-                    <td>Warning</td>
+                    <td>
+                        <p>Warning</p>
+                    </td>
                     <td>General warning</td>
                 </tr>
                 <tr>
@@ -114,7 +116,8 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td>`1020`</td>
                     <td>Error</td>
-                    <td>Required Element Not Included</td>
+                    <td>Required Element Not Included
+</td>
                 </tr>
                 <tr>
                     <td>`1030`</td>
@@ -129,7 +132,8 @@ The following table lists EFX status codes and their descriptions related to the
                 <tr>
                     <td>`1070`</td>
                     <td>Error</td>
-                    <td>Invalid Format</td>
+                    <td>Invalid Format
+</td>
                 </tr>
                 <tr>
                     <td>`1080`</td>
@@ -212,214 +216,214 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Account closed</td>
                 </tr>
                 <tr>
-                    <td>`2360`</td>
+                    <td><code>2360</code></td>
                     <td>Error</td>
                     <td>Restricted access</td>
                 </tr>
                 <tr>
-                    <td>`2365`</td>
+                    <td><code>2365</code></td>
                     <td>Error</td>
                     <td>Request denied due to Account Status</td>
                 </tr>
                 <tr>
-                    <td>`2380`</td>
+                    <td><code>2380</code></td>
                     <td>Error</td>
                     <td>Unauthorized account</td>
                 </tr>
                 <tr>
-                    <td>`2421`</td>
+                    <td><code>2421</code></td>
                     <td>Error</td>
                     <td>Account not eligible for the transaction</td>
                 </tr>
                 <tr>
-                    <td>`2441`</td>
+                    <td><code>2441</code></td>
                     <td>Error</td>
                     <td>Invalid account type to process the transaction</td>
                 </tr>
                 <tr>
-                    <td>`2600`</td>
+                    <td><code>2600</code></td>
                     <td>Error</td>
                     <td>Invalid check number</td>
                 </tr>
                 <tr>
-                    <td>`2610`</td>
+                    <td><code>2610</code></td>
                     <td>Error</td>
                     <td>Request is too late - check has been paid</td>
                 </tr>
                 <tr>
-                    <td>`2740`</td>
+                    <td><code>2740</code></td>
                     <td>Error</td>
                     <td>Invalid currency code</td>
                 </tr>
                 <tr>
-                    <td>`2940`</td>
+                    <td><code>2940</code></td>
                     <td>Error</td>
                     <td>Insufficient funds</td>
                 </tr>
                 <tr>
-                    <td>`3060`</td>
+                    <td><code>3060</code></td>
                     <td>Error</td>
                     <td>Usage limit exceeded</td>
                 </tr>
                 <tr>
-                    <td>`3080`</td>
+                    <td><code>3080</code></td>
                     <td>Error</td>
                     <td>Withdrawal limit exceeded</td>
                 </tr>
                 <tr>
-                    <td>`3380`</td>
+                    <td><code>3380</code></td>
                     <td>Error</td>
                     <td>Expired card</td>
                 </tr>
                 <tr>
-                    <td>`3960`</td>
+                    <td><code>3960</code></td>
                     <td>Error</td>
                     <td>Stop payment match</td>
                 </tr>
                 <tr>
-                    <td>`5130`</td>
+                    <td><code>5130</code></td>
                     <td>Error</td>
                     <td>Card not linked to the account</td>
                 </tr>
                 <tr>
-                    <td>`6335`</td>
+                    <td><code>6335</code></td>
                     <td>Warning</td>
                     <td>Original transaction has been reversed</td>
                 </tr>
                 <tr>
-                    <td>`6350`</td>
+                    <td><code>6350</code></td>
                     <td>Error</td>
                     <td>Posting session cannot be back-dated.</td>
                 </tr>
                 <tr>
-                    <td>`6410`</td>
+                    <td><code>6410</code></td>
                     <td>Error</td>
                     <td>Duplicate value</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="24">`500 Internal Server Error`</td>
-                    <td>`10`</td>
+                    <td style="background-color: #fff;" rowspan="24">`500 Internal Server Error `</td>
+                    <td><code>10</code></td>
                     <td>Error</td>
                     <td>Additional action needed</td>
                 </tr>
                 <tr>
-                    <td>`50`</td>
+                    <td><code>50</code></td>
                     <td>Warning</td>
                     <td>General warning</td>
                 </tr>
                 <tr>
-                    <td>`100`</td>
+                    <td><code>100</code></td>
                     <td>Error</td>
                     <td>General error</td>
                 </tr>
                 <tr>
-                    <td>`200`</td>
+                    <td><code>200</code></td>
                     <td>Error</td>
                     <td>General data error</td>
                 </tr>
                 <tr>
-                    <td>`300`</td>
+                    <td><code>300</code></td>
                     <td>Error</td>
                     <td>System not available</td>
                 </tr>
                 <tr>
-                    <td>`400`</td>
+                    <td><code>400</code></td>
                     <td>Error</td>
                     <td>Unavailable function</td>
                 </tr>
                 <tr>
-                    <td>`500`</td>
+                    <td><code>500</code></td>
                     <td>Error</td>
                     <td>Unsupported service</td>
                 </tr>
                 <tr>
-                    <td>`600`</td>
+                    <td><code>600</code></td>
                     <td>Error</td>
                     <td>Unsupported message</td>
                 </tr>
                 <tr>
-                    <td>`700`</td>
+                    <td><code>700</code></td>
                     <td>Error</td>
                     <td>Unsupported function</td>
                 </tr>
                 <tr>
-                    <td>`810`</td>
+                    <td><code>810</code></td>
                     <td>Error</td>
                     <td>Message cannot be reversed</td>
                 </tr>
                 <tr>
-                    <td>`999`</td>
+                    <td><code>999</code></td>
                     <td>Error</td>
                     <td>Unspecified error</td>
                 </tr>
                 <tr>
-                    <td>`1020`</td>
+                    <td><code>1020</code></td>
                     <td>Error</td>
                     <td>Required element not included</td>
                 </tr>
                 <tr>
-                    <td>`1060`</td>
+                    <td><code>1060</code></td>
                     <td>Error</td>
                     <td>Element cannot be modified</td>
                 </tr>
                 <tr>
-                    <td>`1070`</td>
+                    <td><code>1070</code></td>
                     <td>Error</td>
                     <td>Invalid format</td>
                 </tr>
                 <tr>
-                    <td>`1090`</td>
+                    <td><code>1090</code></td>
                     <td>Error</td>
                     <td>Invalid value</td>
                 </tr>
                 <tr>
-                    <td>`1220`</td>
+                    <td><code>1220</code></td>
                     <td>Error</td>
                     <td>Invalid identifier</td>
                 </tr>
                 <tr>
-                    <td>`1800`</td>
+                    <td><code>1800</code></td>
                     <td>Error</td>
                     <td>Service not enabled</td>
                 </tr>
                 <tr>
-                    <td>`1820`</td>
+                    <td><code>1820</code></td>
                     <td>Error</td>
                     <td>Customer session already in progress</td>
                 </tr>
                 <tr>
-                    <td>`2380`</td>
+                    <td><code>2380</code></td>
                     <td>Error</td>
                     <td>Unauthorized account</td>
                 </tr>
                 <tr>
-                    <td>`2400`</td>
+                    <td><code>2400</code></td>
                     <td>Error</td>
                     <td>Account unavailable</td>
                 </tr>
                 <tr>
-                    <td>`3060`</td>
+                    <td><code>3060</code></td>
                     <td>Error</td>
                     <td>Usage limit exceeded</td>
                 </tr>
                 <tr>
-                    <td>`6000`</td>
+                    <td><code>6000</code></td>
                     <td>Error</td>
                     <td>Terminal not configured</td>
                 </tr>
                 <tr>
-                    <td>`6100`</td>
+                    <td><code>6100</code></td>
                     <td>Error</td>
                     <td>Message not permitted from terminal</td>
                 </tr>
                 <tr>
-                    <td>`6130`</td>
+                    <td><code>6130</code></td>
                     <td>Error</td>
                     <td>Function not available to user</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;">`503 Service Unavailable`</td>
-                    <td>`300`</td>
+                    <td><code>503 Service Unavailable</code></td>
+                    <td><code>300</code></td>
                     <td>Error</td>
                     <td>System not available</td>
                 </tr>
