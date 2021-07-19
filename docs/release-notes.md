@@ -2,7 +2,7 @@
 
 This section provides information about the latest improvements to the Cards API Domain.
 
-##  <span span style="color: #ff6600;"> Release 2021.02 <span style="font-size: 80%; color:#666"> June 2021 </span> </span>
+##  Release 2021.02 <span style="font-size: 80%; color:#666"> June 2021 </span> 
   
  <html> 
   <table style="width: 100%;margin-left: 0;margin-right: auto;">
