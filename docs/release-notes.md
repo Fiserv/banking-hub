@@ -2,20 +2,9 @@
 
 This section provides information about the latest improvements to the Cards API Domain.
 
-<details>
- 
-<summary>
- 
- 
-  ## <span span style="color: #ff6600;"> Release 2021.02 <span style="font-size: 70%; color:#666"> June 2021 </span> </span> 
- 
- 
-</summary>
-
+##  <span span style="color: #ff6600;"> Release 2021.02 <span style="font-size: 80%; color:#666"> June 2021 </span> </span>
   
- > Please note that information listed in below table is just a placeholder and very soon we will update this information.
-  
-  
+ <html> 
   <table style="width: 100%;margin-left: 0;margin-right: auto;">
             <col />
             <col />
@@ -29,35 +18,65 @@ This section provides information about the latest improvements to the Cards API
             </thead>
             <tbody>                
                 <tr>
-                  <td>POST /cards  <br> <br> <span style="font-size: 80%; color: #666;">Add Card</span></td>
-                    <td>MAINT</td>
-                    <td>Updated the description of test.test1.test2  parameter to include {reason and impact of updating} </td>
+                  <td>POST /Credit  <br> <br> <span style="font-size: 80%; color: #666;">CreditAdd</span></td>
+                    <td>ENH</td>
+                    <td>Updated the <code>CreditAdd</code> service implementation of Cleartouch core to enable a service provider to process the debit card transactions. ESF can configure the environment to activate or deactivate the debit card transactions. <br/> To process the debit card transactions, a service provider needs to pass the Debit Card Identifier value in the following field:
+                        <ul>
+                          <li> PmtData.AcctKeys.CardKeys.CardId </li>
+                        </ul> 
+                  </td>
                 </tr>
                 <tr>
-                    <td>POST /cards <br> <br> <span style="font-size: 80%; color: #666;">Add Card</span></td>
-                    <td>ENH</td>
-                    <td>Added following new parameters to allow {reason and impact of adding new parameters}
-                                <ul>
-                                    <li>
-                                        test.testA.test
-                                    </li>
-                                    <li>
-                                        test.test.test
-                                    </li>
-                                </ul>                           
-                </tr>
+                    <td>POST /Credit  <br> <br> <span style="font-size: 80%; color: #666;">CreditRev</span></td>
+                      <td>ENH</td>
+                      <td>Updated the <code>CreditRev</code> service implementation of Cleartouch core to enable a service provider to process the debit card transactions. ESF can configure the environment to activate or deactivate the debit card transactions. <br/> To process the debit card transactions, a service provider needs to pass the Debit Card Identifier value in the following field:
+                          <ul>
+                              <li>PmtData.AcctKeys.CardKeys.CardId</li>
+                          </ul> 
+                    </td>
+                 </tr>
+                  <tr>
+                    <td>POST /Party  <br> <br> <span style="font-size: 80%; color: #666;">PartyAdd</span></td>
+                      <td>MAINT</td>
+                      <td>Updated the <code>PartyAdd</code> service implementation for Precision core to support foreign country codes for identifying a party. This update transforms the issue identifier country code to the standard country code provided in the ESF transfer rule (Xref) to match with the country code records of a financial institution. <br/> Following fields have been updated in order to execute this change:
+                          <ul>
+                              <li>PersonPartyInfo.PersonData.IssuedIdent.GovIssuedIdent.CountryCode</li>
+                              <li>PersonPartyInfo.PersonData.IssuedIdent.GovIssuedIdent.CountryCode.CountryCodeSource</li>
+                              <li>PersonPartyInfo.PersonData.IssuedIdent.GovIssuedIdent.CountryCode.CountryCodeValue</li>
+                              <li>OrgPartyInfo.OrgData.IssuedIdent.GovIssuedIdent.CountryCode</li>
+                              <li>OrgPartyInfo.OrgData.IssuedIdent.GovIssuedIdent.CountryCode.CountryCodeSource</li>
+                              <li>OrgPartyInfo.OrgData.IssuedIdent.GovIssuedIdent.CountryCode.CountryCodeValue</li>
+                          </ul> 
+                    </td>
+                 </tr>
+                 <tr>
+                    <td>POST /Party  <br> <br> <span style="font-size: 80%; color: #666;">PartyAdd</span></td>
+                      <td>MAINT</td>
+                      <td>Added <code>IsAlienInd</code> as a new field to indicate whether the status of a party is alien  or not.<br/> Added fields:
+                          <ul>
+                              <li>PersonPartyInfo/IsAlienInd</li>
+                              <li>OrgPartyInfo/IsAlienInd</li>
+                          </ul> 
+                    </td>
+                 </tr>
                 <tr>
-                    <td>GET /cards/{accountID}  <br> <br> <span style="font-size: 80%; color: #666;">Get Card</span></td>
-                    <td>ENH</td>
-                    <td>Deleted the deprecated parameter test.test.test to {reason and impact of deletion} <br><br>
-                      Added TestEnum as a new enumeration value in test.testtest.test parameter. {reason and impact}</td>
-                </tr>
+                    <td>POST /CardList  <br> <br> <span style="font-size: 80%; color: #666;">CardListInq</span></td>
+                      <td>MAINT</td>
+                      <td>Updated the transformation of the <code>ProductIdent</code> field to send the ISO number in a new field in place of sending it within the <code>ProdId</code> tag of the AcctListInq message.<br/> Updated field:
+                          <ul>
+                              <li>CardListRec.CardListInfo.ProductIdent</li>                              
+                          </ul> 
+                    </td>
+                 </tr> 
                 <tr>
-                    <td>POST /cards/{accountID}  <br> <br> <span style="font-size: 80%; color: #666;">Add Card by Account ID</span></td>
-                    <td>ENH</td>
-                    <td>New API added to retrieve the card information by account ID using POST operation.
-{Additional description if needed}</td>
-                </tr>
+                    <td>POST /Party  <br> <br> <span style="font-size: 80%; color: #666;">PartyPartyRelInq</span></td>
+                      <td>MAINT</td>
+                      <td>Deleted the <code>ReversePartyRelType</code> field due to inaccurate reverse relationship transformation and unavailability of ESF to find the correct relationship between the parties. <br/> Deleted field:
+                          <ul>
+                              <li>PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.ReversePartyRelType</li>                              
+                          </ul> 
+                    </td>
+                 </tr> 
             </tbody>
         </table>
- </details>
+ </html> 
