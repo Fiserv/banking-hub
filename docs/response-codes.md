@@ -49,7 +49,7 @@ The following table lists EFX status codes and their descriptions related to the
                     <td>Details not available</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;" >`201  Created `</td>
+                    <td style="background-color: #fff;" rowspan="2">`201  Created `</td>
                     <td>`0`</td>
                     <td>Info</td>
                     <td>Success</td>
