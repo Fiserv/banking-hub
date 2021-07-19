@@ -18,414 +18,83 @@ For every API request, one of the following HTTP status codes is returned with t
 ## EFX Status Codes
 
 The following table lists EFX status codes and their descriptions related to the HTTP status codes:
-        <table style="width: 100%;">
-            <col />
-            <col />
-            <col />
-            <col />
-            <thead>
-                <tr>
-                    <th> HTTP Status Code </th>
-                    <th> EFX Status Code </th>
-                    <th> EFX Severity</th>
-                    <th> EFX Status Description</t>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="background-color: #fff;" rowspan="3">`200  OK `</td>
-                    <td>`1080`</td>
-                    <td>Warning</td>
-                    <td>Unchanged</td>
-                </tr>
-                <tr>
-                    <td>`1120`</td>
-                    <td>Info</td>
-                    <td>No records match the selection criteria</td>
-                </tr>
-                <tr>
-                    <td>`1140`</td>
-                    <td>Warning</td>
-                    <td>Details not available</td>
-                </tr>
-                <tr>
-                    <td style="background-color: #fff;" rowspan="2">`201  Created `</td>
-                    <td>`0`</td>
-                    <td>Info</td>
-                    <td>Success</td>
-                </tr>
-                <tr>
-                    <td>`50`</td>
-                    <td>Warning</td>
-                    <td>General warning</td>
-                </tr>
-                <tr>
-                    <td rowspan="8" style="background-color: #fff;">`401  Unauthorized `</td>
-                    <td>`1700`</td>
-                    <td>Error</td>
-                    <td>Security violation</td>
-                </tr>
-                <tr>
-                    <td>`1740`</td>
-                    <td>Error</td>
-                    <td>Authentication failed</td>
-                </tr>
-                <tr>
-                    <td>`1760`</td>
-                    <td>Error</td>
-                    <td>Authentication failed</td>
-                </tr>
-                <tr>
-                    <td>`1910`</td>
-                    <td>Error</td>
-                    <td>Password expired</td>
-                </tr>
-                <tr>
-                    <td>`1970`</td>
-                    <td>Error</td>
-                    <td>General data error</td>
-                </tr>
-                 <tr>
-                    <td>`2380`</td>
-                    <td>Error</td>
-                    <td>Unauthorized account</td>
-                </tr>
-                 <tr>
-                    <td>`2395`</td>
-                    <td>Error</td>
-                    <td>Party not permitted to perform the action</td>
-                </tr>
-                <tr>
-                    <td>`3700`</td>
-                    <td>Error</td>
-                    <td>Invalid object type</td>
-                </tr>
-                <tr>
-                    <td rowspan="39" style="background-color: #fff;" >`422 Un-processable Entity `</td>
-                    <td>`50`</td>
-                    <td>
-                        <p>Warning</p>
-                    </td>
-                    <td>General warning</td>
-                </tr>
-                <tr>
-                    <td>`200`</td>
-                    <td>Error</td>
-                    <td>General data error</td>
-                </tr>
-                <tr>
-                    <td>`1020`</td>
-                    <td>Error</td>
-                    <td>Required Element Not Included
-</td>
-                </tr>
-                <tr>
-                    <td>`1030`</td>
-                    <td>Error</td>
-                    <td>Value out of range</td>
-                </tr>
-                <tr>
-                    <td>`1045`</td>
-                    <td>Error</td>
-                    <td>Request denied</td>
-                </tr>
-                <tr>
-                    <td>`1070`</td>
-                    <td>Error</td>
-                    <td>Invalid Format
-</td>
-                </tr>
-                <tr>
-                    <td>`1080`</td>
-                    <td>Error</td>
-                    <td>Invalid field size</td>
-                </tr>
-                <tr>
-                    <td>`1090`</td>
-                    <td>Error</td>
-                    <td>Invalid value</td>
-                </tr>
-                <tr>
-                    <td>`1121`</td>
-                    <td>Error</td>
-                    <td>No records found</td>
-                </tr>
-                <tr>
-                    <td>`1421`</td>
-                    <td>Error</td>
-                    <td>Invalid party reference</td>
-                </tr>
-                <tr>
-                    <td>`1500`</td>
-                    <td>Error</td>
-                    <td>Invalid address</td>
-                </tr>
-                <tr>
-                    <td>`1726`</td>
-                    <td>Error</td>
-                    <td>Error occurred due to included override exceptions in the `AdditionalStatus` field</td>
-                </tr>
-                <tr>
-                    <td>`2020`</td>
-                    <td>Error</td>
-                    <td>Amount too small</td>
-                </tr>
-                <tr>
-                    <td>`2030`</td>
-                    <td>Error</td>
-                    <td>Amount too large</td>
-                </tr>
-                <tr>
-                    <td>`2050`</td>
-                    <td>Error</td>
-                    <td>Invalid amount value</td>
-                </tr>
-                <tr>
-                    <td>`2120`</td>
-                    <td>Error</td>
-                    <td>Invalid date-time range</td>
-                </tr>
-                <tr>
-                    <td>`2130`</td>
-                    <td>Error</td>
-                    <td>Date expired</td>
-                </tr>
-                <tr>
-                    <td>`2140`</td>
-                    <td>Error</td>
-                    <td>Date-time value is less than the accepted limit</td>
-                </tr>
-                <tr>
-                    <td>`2150`</td>
-                    <td>Error</td>
-                    <td>Date-time value is greater than the accepted limit</td>
-                </tr>
-                <tr>
-                    <td>`2180`</td>
-                    <td>Error</td>
-                    <td>Request is too late to process the ACH transaction for the current day</td>
-                </tr>
-                <tr>
-                    <td>`2320`</td>
-                    <td>Error</td>
-                    <td>Account not for party</td>
-                </tr>
-                <tr>
-                    <td>`2350`</td>
-                    <td>Error</td>
-                    <td>Account closed</td>
-                </tr>
-                <tr>
-                    <td><code>2360</code></td>
-                    <td>Error</td>
-                    <td>Restricted access</td>
-                </tr>
-                <tr>
-                    <td><code>2365</code></td>
-                    <td>Error</td>
-                    <td>Request denied due to Account Status</td>
-                </tr>
-                <tr>
-                    <td><code>2380</code></td>
-                    <td>Error</td>
-                    <td>Unauthorized account</td>
-                </tr>
-                <tr>
-                    <td><code>2421</code></td>
-                    <td>Error</td>
-                    <td>Account not eligible for the transaction</td>
-                </tr>
-                <tr>
-                    <td><code>2441</code></td>
-                    <td>Error</td>
-                    <td>Invalid account type to process the transaction</td>
-                </tr>
-                <tr>
-                    <td><code>2600</code></td>
-                    <td>Error</td>
-                    <td>Invalid check number</td>
-                </tr>
-                <tr>
-                    <td><code>2610</code></td>
-                    <td>Error</td>
-                    <td>Request is too late - check has been paid</td>
-                </tr>
-                <tr>
-                    <td><code>2740</code></td>
-                    <td>Error</td>
-                    <td>Invalid currency code</td>
-                </tr>
-                <tr>
-                    <td><code>2940</code></td>
-                    <td>Error</td>
-                    <td>Insufficient funds</td>
-                </tr>
-                <tr>
-                    <td><code>3060</code></td>
-                    <td>Error</td>
-                    <td>Usage limit exceeded</td>
-                </tr>
-                <tr>
-                    <td><code>3080</code></td>
-                    <td>Error</td>
-                    <td>Withdrawal limit exceeded</td>
-                </tr>
-                <tr>
-                    <td><code>3380</code></td>
-                    <td>Error</td>
-                    <td>Expired card</td>
-                </tr>
-                <tr>
-                    <td><code>3960</code></td>
-                    <td>Error</td>
-                    <td>Stop payment match</td>
-                </tr>
-                <tr>
-                    <td><code>5130</code></td>
-                    <td>Error</td>
-                    <td>Card not linked to the account</td>
-                </tr>
-                <tr>
-                    <td><code>6335</code></td>
-                    <td>Warning</td>
-                    <td>Original transaction has been reversed</td>
-                </tr>
-                <tr>
-                    <td><code>6350</code></td>
-                    <td>Error</td>
-                    <td>Posting session cannot be back-dated.</td>
-                </tr>
-                <tr>
-                    <td><code>6410</code></td>
-                    <td>Error</td>
-                    <td>Duplicate value</td>
-                </tr>
-                <tr>
-                    <td style="background-color: #fff;" rowspan="24">`500 Internal Server Error `</td>
-                    <td><code>10</code></td>
-                    <td>Error</td>
-                    <td>Additional action needed</td>
-                </tr>
-                <tr>
-                    <td><code>50</code></td>
-                    <td>Warning</td>
-                    <td>General warning</td>
-                </tr>
-                <tr>
-                    <td><code>100</code></td>
-                    <td>Error</td>
-                    <td>General error</td>
-                </tr>
-                <tr>
-                    <td><code>200</code></td>
-                    <td>Error</td>
-                    <td>General data error</td>
-                </tr>
-                <tr>
-                    <td><code>300</code></td>
-                    <td>Error</td>
-                    <td>System not available</td>
-                </tr>
-                <tr>
-                    <td><code>400</code></td>
-                    <td>Error</td>
-                    <td>Unavailable function</td>
-                </tr>
-                <tr>
-                    <td><code>500</code></td>
-                    <td>Error</td>
-                    <td>Unsupported service</td>
-                </tr>
-                <tr>
-                    <td><code>600</code></td>
-                    <td>Error</td>
-                    <td>Unsupported message</td>
-                </tr>
-                <tr>
-                    <td><code>700</code></td>
-                    <td>Error</td>
-                    <td>Unsupported function</td>
-                </tr>
-                <tr>
-                    <td><code>810</code></td>
-                    <td>Error</td>
-                    <td>Message cannot be reversed</td>
-                </tr>
-                <tr>
-                    <td><code>999</code></td>
-                    <td>Error</td>
-                    <td>Unspecified error</td>
-                </tr>
-                <tr>
-                    <td><code>1020</code></td>
-                    <td>Error</td>
-                    <td>Required element not included</td>
-                </tr>
-                <tr>
-                    <td><code>1060</code></td>
-                    <td>Error</td>
-                    <td>Element cannot be modified</td>
-                </tr>
-                <tr>
-                    <td><code>1070</code></td>
-                    <td>Error</td>
-                    <td>Invalid format</td>
-                </tr>
-                <tr>
-                    <td><code>1090</code></td>
-                    <td>Error</td>
-                    <td>Invalid value</td>
-                </tr>
-                <tr>
-                    <td><code>1220</code></td>
-                    <td>Error</td>
-                    <td>Invalid identifier</td>
-                </tr>
-                <tr>
-                    <td><code>1800</code></td>
-                    <td>Error</td>
-                    <td>Service not enabled</td>
-                </tr>
-                <tr>
-                    <td><code>1820</code></td>
-                    <td>Error</td>
-                    <td>Customer session already in progress</td>
-                </tr>
-                <tr>
-                    <td><code>2380</code></td>
-                    <td>Error</td>
-                    <td>Unauthorized account</td>
-                </tr>
-                <tr>
-                    <td><code>2400</code></td>
-                    <td>Error</td>
-                    <td>Account unavailable</td>
-                </tr>
-                <tr>
-                    <td><code>3060</code></td>
-                    <td>Error</td>
-                    <td>Usage limit exceeded</td>
-                </tr>
-                <tr>
-                    <td><code>6000</code></td>
-                    <td>Error</td>
-                    <td>Terminal not configured</td>
-                </tr>
-                <tr>
-                    <td><code>6100</code></td>
-                    <td>Error</td>
-                    <td>Message not permitted from terminal</td>
-                </tr>
-                <tr>
-                    <td><code>6130</code></td>
-                    <td>Error</td>
-                    <td>Function not available to user</td>
-                </tr>
-                <tr>
-                    <td><code>503 Service Unavailable</code></td>
-                    <td><code>300</code></td>
-                    <td>Error</td>
-                    <td>System not available</td>
-                </tr>
-            </tbody>
-        </table>
+
+| HTTP Status Code            | EFX Status Code | EFX Severity                                                                       | EFX Status Description   |
+|-----------------------------|-----------------|------------------------------------------------------------------------------------|--------------------------|
+| `200 OK`                    | `1080`          | Warning                                                                            | Unchanged                |
+| `1120`                      | Info            | No records match the selection criteria                                            |
+| `1140`                      | Warning         | Details not available                                                              |
+| `201 Created`               | `0`             | Info                                                                               | Success                  |
+| `50`                        | Warning         | General warning                                                                    |
+| `401 Unauthorized`          | `1700`          | Error                                                                              | Security violation       |
+| `1740`                      | Error           | Authentication failed                                                              |
+| `1760`                      | Error           | Authentication failed                                                              |
+| `1910`                      | Error           | Password expired                                                                   |
+| `1970`                      | Error           | General data error                                                                 |
+| `2380`                      | Error           | Unauthorized account                                                               |
+| `2395`                      | Error           | Party not permitted to perform the action                                          |
+| `3700`                      | Error           | Invalid object type                                                                |
+| `422 Un-processable Entity` | `50`            | Warning                                                                            | General warning          |
+| `200`                       | Error           | General data error                                                                 |
+| `1020`                      | Error           | Required Element Not Included                                                      |
+| `1030`                      | Error           | Value out of range                                                                 |
+| `1045`                      | Error           | Request denied                                                                     |
+| `1070`                      | Error           | Invalid Format                                                                     |
+| `1080`                      | Error           | Invalid field size                                                                 |
+| `1090`                      | Error           | Invalid value                                                                      |
+| `1121`                      | Error           | No records found                                                                   |
+| `1421`                      | Error           | Invalid party reference                                                            |
+| `1500`                      | Error           | Invalid address                                                                    |
+| `1726`                      | Error           | Error occurred due to included override exceptions in the `AdditionalStatus` field |
+| `2020`                      | Error           | Amount too small                                                                   |
+| `2030`                      | Error           | Amount too large                                                                   |
+| `2050`                      | Error           | Invalid amount value                                                               |
+| `2120`                      | Error           | Invalid date-time range                                                            |
+| `2130`                      | Error           | Date expired                                                                       |
+| `2140`                      | Error           | Date-time value is less than the accepted limit                                    |
+| `2150`                      | Error           | Date-time value is greater than the accepted limit                                 |
+| `2180`                      | Error           | Request is too late to process the ACH transaction for the current day             |
+| `2320`                      | Error           | Account not for party                                                              |
+| `2350`                      | Error           | Account closed                                                                     |
+| `2360`                      | Error           | Restricted access                                                                  |
+| `2365`                      | Error           | Request denied due to Account Status                                               |
+| `2380`                      | Error           | Unauthorized account                                                               |
+| `2421`                      | Error           | Account not eligible for the transaction                                           |
+| `2441`                      | Error           | Invalid account type to process the transaction                                    |
+| `2600`                      | Error           | Invalid check number                                                               |
+| `2610`                      | Error           | Request is too late - check has been paid                                          |
+| `2740`                      | Error           | Invalid currency code                                                              |
+| `2940`                      | Error           | Insufficient funds                                                                 |
+| `3060`                      | Error           | Usage limit exceeded                                                               |
+| `3080`                      | Error           | Withdrawal limit exceeded                                                          |
+| `3380`                      | Error           | Expired card                                                                       |
+| `3960`                      | Error           | Stop payment match                                                                 |
+| `5130`                      | Error           | Card not linked to the account                                                     |
+| `6335`                      | Warning         | Original transaction has been reversed                                             |
+| `6350`                      | Error           | Posting session cannot be back-dated.                                              |
+| `6410`                      | Error           | Duplicate value                                                                    |
+| `500 Internal Server Error` | `10`            | Error                                                                              | Additional action needed |
+| `50`                        | Warning         | General warning                                                                    |
+| `100`                       | Error           | General error                                                                      |
+| `200`                       | Error           | General data error                                                                 |
+| `300`                       | Error           | System not available                                                               |
+| `400`                       | Error           | Unavailable function                                                               |
+| `500`                       | Error           | Unsupported service                                                                |
+| `600`                       | Error           | Unsupported message                                                                |
+| `700`                       | Error           | Unsupported function                                                               |
+| `810`                       | Error           | Message cannot be reversed                                                         |
+| `999`                       | Error           | Unspecified error                                                                  |
+| `1020`                      | Error           | Required element not included                                                      |
+| `1060`                      | Error           | Element cannot be modified                                                         |
+| `1070`                      | Error           | Invalid format                                                                     |
+| `1090`                      | Error           | Invalid value                                                                      |
+| `1220`                      | Error           | Invalid identifier                                                                 |
+| `1800`                      | Error           | Service not enabled                                                                |
+| `1820`                      | Error           | Customer session already in progress                                               |
+| `2380`                      | Error           | Unauthorized account                                                               |
+| `2400`                      | Error           | Account unavailable                                                                |
+| `3060`                      | Error           | Usage limit exceeded                                                               |
+| `6000`                      | Error           | Terminal not configured                                                            |
+| `6100`                      | Error           | Message not permitted from terminal                                                |
+| `6130`                      | Error           | Function not available to user                                                     |
+| `503 Service Unavailable`   | `300`           | Error                                                                              | System not available     |
