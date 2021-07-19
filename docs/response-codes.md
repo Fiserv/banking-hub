@@ -18,10 +18,20 @@ For every API request, one of the following HTTP status codes is returned with t
 ## EFX Status Codes
 
 The following table lists EFX status codes and their descriptions related to the HTTP status codes:
+
 |HTTP Status Code|EFX Status Code|EFX Severity|EFX Status Description|
 |--- |--- |--- |--- |
-|`200 OK`|`1080`|Warning|Unchanged|
-||`1120`|Info|No records match the selection criteria|
-||`1140`|Warning|Details not available|
+|`200 OK`|`1080`|Warning|Unchanged| 
+|^|`1120`|Info|No records match the selection criteria|
+|^|`1140`|Warning|Details not available|
 |`201 Created`|`0`|Info|Success|
-||`50`|Warning|General warning|
+|^|`50`|Warning|General warning|
+
+
+
+
+
+
+
+
+
