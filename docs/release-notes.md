@@ -4,7 +4,7 @@ This section provides information about the latest improvements made in Fiserv O
 
 ##  Release 2021.02
 
-<span style="color: #666; font-weight: bold; font-size: 75%; "> Release Date: June 2021 </span>
+<span style="color: #666; font-weight: normal; font-size: 75%; "> Release Date: June 2021 </span>
   
  <html> 
   <table style="width: 100%;margin-left: 0;margin-right: auto;">
@@ -36,8 +36,7 @@ This section provides information about the latest improvements made in Fiserv O
                               <li>PmtData.AcctKeys.CardKeys.CardId</li>
                           </ul> 
                     </td>
-                 </tr>
-                <tr>
+              </tr>
                 <tr>
                     <td>POST /Card  <br> <br> <span style="font-size: 80%; color: #666;">CardListInq</span></td>
                       <td>MAINT</td>
