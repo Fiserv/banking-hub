@@ -35,6 +35,30 @@ This section provides information about the latest improvements made in Fiserv O
                           </ul> 
                     </td>
                  </tr>
+                <tr>
+                <tr>
+                    <td>POST /Card  <br> <br> <span style="font-size: 80%; color: #666;">CardListInq</span></td>
+                      <td>MAINT</td>
+                      <td>Updated the transformation of the <code>ProductIdent</code> field to send the ISO number in a new field in place of sending it within the <code>ProdId</code> tag of the AcctListInq message.<br/> Updated field:
+                          <ul>
+                              <li>CardListRec.CardListInfo.ProductIdent</li>                              
+                          </ul> 
+                    </td>
+                 </tr>                   
+               <td>POST /Deposit  <br> <br> <span style="font-size: 80%; color: #666;">DepositApplAdd</span></td>
+                    <td>ENH</td>
+                    <td>Updated the <code>PersonName</code> aggregate to remove the dependency on  submitting PostAddr field in the request. </td>
+               </tr>
+              <tr>
+                    <td>POST /Party  <br> <br> <span style="font-size: 80%; color: #666;">PartyAdd</span></td>
+                      <td>MAINT</td>
+                      <td>Added <code>IsAlienInd</code> as a new field to indicate whether the status of a party is alien  or not.<br/> Added fields:
+                          <ul>
+                              <li>PersonPartyInfo/IsAlienInd</li>
+                              <li>OrgPartyInfo/IsAlienInd</li>
+                          </ul> 
+                    </td>
+                 </tr>
                   <tr>
                     <td>POST /Party  <br> <br> <span style="font-size: 80%; color: #666;">PartyAdd</span></td>
                       <td>MAINT</td>
@@ -49,25 +73,6 @@ This section provides information about the latest improvements made in Fiserv O
                           </ul> 
                     </td>
                  </tr>
-                 <tr>
-                    <td>POST /Party  <br> <br> <span style="font-size: 80%; color: #666;">PartyAdd</span></td>
-                      <td>MAINT</td>
-                      <td>Added <code>IsAlienInd</code> as a new field to indicate whether the status of a party is alien  or not.<br/> Added fields:
-                          <ul>
-                              <li>PersonPartyInfo/IsAlienInd</li>
-                              <li>OrgPartyInfo/IsAlienInd</li>
-                          </ul> 
-                    </td>
-                 </tr>
-                <tr>
-                    <td>POST /CardList  <br> <br> <span style="font-size: 80%; color: #666;">CardListInq</span></td>
-                      <td>MAINT</td>
-                      <td>Updated the transformation of the <code>ProductIdent</code> field to send the ISO number in a new field in place of sending it within the <code>ProdId</code> tag of the AcctListInq message.<br/> Updated field:
-                          <ul>
-                              <li>CardListRec.CardListInfo.ProductIdent</li>                              
-                          </ul> 
-                    </td>
-                 </tr> 
                 <tr>
                     <td>POST /Party  <br> <br> <span style="font-size: 80%; color: #666;">PartyPartyRelInq</span></td>
                       <td>MAINT</td>
@@ -76,6 +81,11 @@ This section provides information about the latest improvements made in Fiserv O
                               <li>PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.ReversePartyRelType</li>                              
                           </ul> 
                     </td>
+                 </tr> 
+                <tr>
+                    <td>POST /Party  <br> <br> <span style="font-size: 80%; color: #666;">PartyMod</span></td>
+                      <td>MAINT</td>
+                      <td>Updated the <code>PersonName</code> aggregate to remove the dependency on  submitting <code>PostAddr</code> field in the request. </td>
                  </tr> 
             </tbody>
         </table>
