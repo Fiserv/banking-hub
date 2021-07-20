@@ -16,9 +16,11 @@ To validate and deploy Fiserv banking APIs into production, you are required to 
 ### Setting up an Account
 
 To set up an account on Fiserv Developer Studio, follow the steps below:
-1.	Go to Fiserv Developer Studio registration page
-2.	Follow the instructions on the screen to set up your account according to your integration requirements
-3.	Sign on to your Fiserv Developer Studio account after it is activated
+1.	Go to [Fiserv Developer Studio](https://dev-developer.fiserv.com/)
+2.	From the top-right corner of the screen, Click **Create Account** 
+3.	Populate the required fields and click **Create Account** 
+4.	Follow the instructions on the screen to set up your account based on integration requirements
+5.	Sign on to your Fiserv Developer Studio account after it is activated
 
 ## Authentication
 
@@ -26,15 +28,14 @@ Once the account setup process is complete, you need to authenticate your API bu
 
 ### Authentication Keys
 
-To authenticate your application, you need *test* and *live* API authentication keys, which are obtained in the account setup process. You may reuse the authentication keys until they expire. If a key expires, you need to get a new key.
+To authenticate your application, you need *test* and *live* API authentication keys, which can be obtained  from the dashboard of Developer Studio. You may reuse the authentication keys until they expire. If a key expires, you can create a new key from the **Credentials** section of the dashboard.
 
 ### Steps for Authentication 
 
 Follow these steps to authenticate your API build:
-1.	Obtain the API authentication keys in the account setup process through a certified connection
-2.	Consent to using the API endpoints
-3.	Authenticate your user account with the acquired keys and retrieve the authorization code
-4.	Use the provided authorization code to access the API and Sandbox resources
+1.	Obtain the API authentication keys from the **Credentials** section of the Developer Studio dashboard
+2.	Authenticate your user account with the acquired keys and retrieve the authorization code
+3.	Use the provided authorization code to access the API and Sandbox resources
 
 ## Sandbox
 
