@@ -1,6 +1,6 @@
 # Release Notes
 
-This section provides information about the latest improvements to the Cards API Domain.
+This section provides information about the latest improvements made in Fiserv Open Banking APIs in the course of product support and development.
 
 ##  Release 2021.02
   
