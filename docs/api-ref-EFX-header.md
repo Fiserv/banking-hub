@@ -1,7 +1,26 @@
-# EFX Header
+# EFX Header Parameters
 
 
-EFX Header contains the common parameters that are required to send in the request parameters as a JSON object. 
+The EFXHeader parameters listed in the given table are required to send as a JSON object in the request. 
+
+Sample EFX Header JSON object:
+
+```json
+{
+  "TestExample": {
+    "value": {
+      "Context": {
+        "Channel": "WEB"
+      },
+      "TrnId": "622182",
+      "OrganizationId": "CTOrg",
+      "VendorId": "112233"
+    }
+  }
+}
+
+```
+
 
 
 |Parameter | Description | Data Type | Required|
@@ -16,7 +35,7 @@ EFX Header contains the common parameters that are required to send in the reque
 | Context.TrnIdent| Transaction identification number. | string| |
 | Context.ClientDateTime| Client date and time value in {yyyy-MM-ddTHH:mm:ss.SSS} format as reported by the client application that is making the service request. |string | |
 | Context.ClientTerminalSeqNum| Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12. <br> maxLength: 36|string | |
-| Context.OriginatorType| Type of the originator.This is usually a coded value representing the industry of the organization. |int64 | |
+| Context.OriginatorType| Type of the originator. This is usually a coded value representing the industry of the organization. |int64 | |
 | Context.TerminalIdent| Unique code to identify a terminal at the card acceptor location, such as terminal code or terminal number of ATM. <br> maxLength: 36 |string | |
 | Context.TerminalAddr1| Terminal Address 1. <br> maxLength: 64| string| |
 | Context.TerminalAddr2| Terminal Address 2. <br> maxLength: 64| string| |
