@@ -5,7 +5,7 @@ The EFXHeader parameters listed in the given table are required to send as a JSO
 
 Sample EFX Header JSON object:
 
-```json
+```
 {
   "TestExample": {
     "value": {
