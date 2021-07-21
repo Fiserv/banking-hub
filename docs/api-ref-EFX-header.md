@@ -7,7 +7,7 @@ Sample EFX Header JSON object:
 
 ```
 {
-  "TestExample": {    
+  "EFXHeader": {    
     "Context": {
       "Channel": "WEB"
     },
