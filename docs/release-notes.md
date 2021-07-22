@@ -2,15 +2,12 @@
 
 This section provides information about the latest improvements made in Fiserv Open Banking APIs in the course of product support and development.
 
-##  Release 2021.02
+## Release 2021.02
 
 <span style="color: #666; font-weight: normal; font-size: 75%; "> Release Date: June 2021 </span>
-  
+  <br/>
  <html> 
   <table style="width: 100%;margin-left: 0;margin-right: auto;">
-            <col />
-            <col />
-            <col />
             <thead>
                 <tr>
                     <th>API</th>
@@ -90,4 +87,4 @@ This section provides information about the latest improvements made in Fiserv O
                  </tr> 
             </tbody>
         </table>
- </html> 
+ </html>
