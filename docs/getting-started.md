@@ -16,7 +16,7 @@ To validate and deploy Fiserv banking APIs into production, you are required to 
 ### Setting up an Account
 
 To set up an account on Fiserv Developer Studio, follow the steps below:
-1.	Go to [Fiserv Developer Studio](https://dev-developer.fiserv.com/)
+1.	Go to [Fiserv Developer Studio](?path=docs/getting-started.md) 
 2.	From the top-right corner of the screen, Click **Create Account** 
 3.	Populate the required fields and click **Create Account** 
 4.	Follow the instructions on the screen to set up your account based on integration requirements
@@ -66,7 +66,7 @@ Upon successful application validation, your application will be ready for produ
 
 Refer to the following links for more information on the Fiserv Open Banking API integration:
 
-* [GitHub repository](https://github.com/openBanking) 
+* [GitHub repository](https://github.com/Fiserv/Banking-Product-Cards) 
 * [API libraries](http://swaggerhub.onefiserv.net/)
 
 > Note: Registration is required to access the Fiserv Open Banking API libraries.
