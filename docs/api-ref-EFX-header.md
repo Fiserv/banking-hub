@@ -1,19 +1,19 @@
 # EFX Header Parameters
 
 
-The EFX Header parameters listed in the table below are required to send as a JSON object in the request. 
+EFX Header parameters listed in the table below are required to send as a JSON object in the request. 
 
 Sample EFX Header JSON object:
 
 ```
 {
-  "EFXHeader": {    
+  "EFXHeader": {
+    "OrganizationId": "CTOrg",
+    "TrnId": "622182",
+    "VendorId": "112233",
     "Context": {
       "Channel": "WEB"
-    },
-    "TrnId": "622182",
-    "OrganizationId": "CTOrg",
-    "VendorId": "112233"
+    }
     }
 }
 
