@@ -6,15 +6,13 @@ EFX Header parameters listed in the table below are required to send as a JSON o
 Sample EFX Header JSON object:
 
 ```
-{
-  "EFXHeader": {
-    "OrganizationId": "CTOrg",
-    "TrnId": "622182",
-    "VendorId": "112233",
-    "Context": {
-      "Channel": "WEB"
-    }
-    }
+"EFXHeader": {
+  "OrganizationId": "CTOrg",
+  "TrnId": "622182",
+  "VendorId": "112233",
+  "Context": {
+    "Channel": "WEB"
+  }
 }
 
 ```
@@ -27,11 +25,11 @@ Sample EFX Header JSON object:
 | TrnId | Transaction identification number. <br> maxLength: 30| string | Optional|
 | VendorId | Unique identification number provided by Fiserv to identify the vendor.| string| Optional |
 | Context  | Details of the context object. | object  | Optional |
-| Context.ClientAppName| Name of the client application making the service request, such as Architect, Commercial Center and others. | string| Optional|
+| Context.ClientAppName| Name of the client application making the service request. For example, Architect, Commercial Center and others.| string| Optional|
 |Context.NoConductorReason|No Conductor Reason. Used when a conductor cannot be identified. |String |Optional |
-| Context.Channel|Channel name used by the client application. |string | Optional|
+| Context.Channel|Channel name used by the client application. For Example, WEB |string | Optional|
 | Context.TrnIdent| Transaction identification number. | string| Optional|
-| Context.ClientDateTime| Client date and time value in {yyyy-MM-ddTHH:mm:ss.SSS} format as reported by the client application that is making the service request. <br> example: 2021-01-31T23:59:59.999 |string | Optional|
+| Context.ClientDateTime| Client date and time value as reported by the client application that is making the service request. <br> Format: yyyy-MM-ddTHH:mm:ss.SSS <br> Example: 2021-01-31T23:59:59.999 |string | Optional|
 | Context.ClientTerminalSeqNum| Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12. <br> maxLength: 36|string | Optional|
 | Context.OriginatorType| Type of the originator. This is usually a coded value representing the industry of the organization. |int64 | Optional|
 | Context.TerminalIdent| Unique code to identify a terminal at the card acceptor location, such as terminal code or terminal number of ATM. <br> maxLength: 36 |string | Optional|
@@ -60,9 +58,9 @@ Sample EFX Header JSON object:
 | Context.SettlementIdent| Identification of the settlement account in which the transaction will be settled.| string| Optional|
 | Context.BusinessApplIdent| Business application identification.| string| Optional|
 | Context.BranchIdent| Branch identification number. <br> maxLength: 22| string|Optional |
-| Context.TellerIdent| Teller identification number| string| Optional|
+| Context.TellerIdent| Teller identification number.| string| Optional|
 | Context.AMPMCode| AMPM code| string| Optional|
-| Context.ReentryType| Reentry type <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul>| string| Optional|
+| Context.ReentryType| Reentry type. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul>| string| Optional|
 
 
 ## Jump To
