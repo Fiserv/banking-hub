@@ -11,7 +11,7 @@ Following topics are covered in this guide:
 
 ## Registration
 
-To validate and deploy Fiserv banking APIs into production, you are required to create an account on Fiserv Developer Studio. This registration helps to create a development environment to get credentials for sandbox testing and live environments. However, registration is not required to learn about our API integration process and test the APIs.
+To validate and deploy Fiserv banking APIs into production, you are required to create an account on Fiserv Developer Studio. This registration helps to get credentials for sandbox testing and live environments. However, registration is not required to learn about our API integration process and test the APIs.
 
 ### Setting up an Account
 
