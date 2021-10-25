@@ -1,4 +1,4 @@
-# Build Your API
+# Build Your Application
 
 > Note: This section is under development.
 
