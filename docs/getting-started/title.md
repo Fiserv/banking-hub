@@ -33,5 +33,6 @@ Topics covered:
 [**Build Your Application**](?path=docs/getting-started/build-your-api.md "Click to read full article")
 
 Topics covered:
--	How to send an API request to Fiserv 
--	How to test APIs using inbuilt API testing feature and using third-party API testing tools
+-	How to use Sandbox environment to test the application
+-	How to develop and launch an application using Integrated Banking APIs 
+
