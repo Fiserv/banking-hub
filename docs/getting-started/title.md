@@ -33,6 +33,7 @@ Topics covered:
 [**Build Your Application**](?path=docs/getting-started/build-your-api.md "Click to read full article")
 
 Topics covered:
+- How to get test and production environment certificates 
 -	How to use Sandbox environment to test the application
 -	How to develop and launch an application using Integrated Banking APIs 
 
