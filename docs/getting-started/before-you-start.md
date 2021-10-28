@@ -8,9 +8,9 @@ Setting up an Account
 
 
 To set up an account on Fiserv Developer Studio, follow the steps below:
-1.	Go to Fiserv Developer Studio 
-2.	From the top-right corner of the screen, click Create Account
-3.	Populate the required fields and click Create Account
+1.	Go to [Fiserv Developer Studio](https://dev-developerstudio.fiserv.com/financial-institutions) 
+2.	From the top-right corner of the screen, click **Create Account**
+3.	Populate the required fields and click **Create Account**
 4.	Follow the instructions on the screen to set up your account based on integration requirements
 5.	Sign on to your Fiserv Developer Studio account after it is activated
 
@@ -20,7 +20,7 @@ Once the account setup process is complete, you need to authenticate your API bu
 Authentication Keys
 
 
-To authenticate your application, you need test and live API authentication keys, which can be obtained from the dashboard of Developer Studio. You may reuse the authentication keys until they expire. If a key expires, you can create a new key from the Credentials section of the dashboard.
+To authenticate your application, you need *test* and *live* API authentication keys, which can be obtained from the dashboard of Developer Studio. You may reuse the authentication keys until they expire. If a key expires, you can create a new key from the **Credentials** section of the dashboard.
 Steps for Authentication
 
 Follow these steps to authenticate your API build:
