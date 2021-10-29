@@ -30,6 +30,11 @@ Follow these steps to authenticate your API build:
 
 
 ## Know Our Standard API structure 
+<!-- theme: info -->
+> #### Information
+>
+> This section is under development and you may expect some changes in the final version of documentation.
+
 All API requests must contain the following components:
 
 *	Host URL  https://api.abc.com/v3/
