@@ -1,4 +1,9 @@
 # Risk and Performance Management
 
+Fiserv offers a wide range of solutions that support compliance, help to mitigate fraud risk, and provide insights into financial performance. 
 
-![website-work-in-progress](https://user-images.githubusercontent.com/81968767/138723063-952392ad-807d-4f0a-9ca5-4ed9556eb173.png)
+
+These solutions support the detection, reporting and mitigation of financial crime such as money laundering and payments and card fraud. They optimize budgeting and planning, financial accounting, funds transfer pricing, asset and liability management, as well as management of credit, profitability, and market and liquidity risk. Other capabilities enhance cybersecurity and help to prevent account takeover and identity theft. 
+
+*API domains related to Risk and Performance: Coming soon*
+
