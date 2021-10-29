@@ -7,12 +7,12 @@ Functions supported include account reconciliation, account aggregation, transfe
 
 
 API domains related to Cash Management: 
-- [Accountholder]()
-- [Accounts and Transactions]()
-- [Servicing]()
-- [Notifications and Preferences]()
-- [Payments]()
+- [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
+- [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
+- [Servicing](?path=docs/fintechs/servicing.md "Click to open")
+- [Notifications and Preferences](?path=docs/fintechs/notifi.md "Click to open")
+- [Payments](?path=docs/fintechs/payments.md "Click to open")
 
 
-Begin integration with these APIs by going to [API Explorer]()
+Begin integration with these APIs by going to [API Explorer](?path=docs//)
 
