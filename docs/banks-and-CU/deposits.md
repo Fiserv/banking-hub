@@ -9,10 +9,10 @@ Our solutions enable users to set up and maintain deposit accounts in a manner t
 Our account processing solutions accommodate deposit accounts for individuals, small business and large enterprises. To accommodate the special needs of business accounts, they offer functionality such as nightly sweeps and repurchase agreements.
 
 API domains related to Deposits: 
-- [Accountholder](link)
-- [Accounts and Transactions]()
-- [Servicing]()
-- [Cards]()
+- [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
+- [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
+- [Servicing](?path=docs/fintechs/servicing.md "Click to open")
+- [Cards](?path=docs/fintechs/cards.md "Click to open")
 
 
-Begin integration with these APIs by going to [API Explorer]() 
+Begin integration with these APIs by going to [API Explorer](?path=docs//) 
