@@ -6,12 +6,11 @@ Functions supported include retrieval of information about transactions and bala
 
 
 API domains related to Bank Servicing: 
-- [Accountholder]()
-- [Accounts and Transactions]()
-- [Servicing]()
+- [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
+- [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
+- [Servicing](?path=docs/fintechs/servicing.md "Click to open")
 
-
-Begin integration with these APIs by going to [API Explorer]()
+Begin integration with these APIs by going to [API Explorer](?path=docs//)
 
 
 
