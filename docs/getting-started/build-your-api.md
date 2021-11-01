@@ -1,6 +1,8 @@
 # Build Your Application
 
-> Note: This section is under development.
+> #### Information
+> 
+> This section is under development.
 
 ## Certification
 
@@ -31,7 +33,9 @@ Follow these steps to test your application in the Sandbox environment:
 3.	**Create mock transactions:** In the Sandbox environment, add transactions to simulate the kinds of transactions that occur on the banking accounts your application will be accessing
 4.	**Test the environment:** With the mock data setup, you can now make API calls and test your application
 
-> Note: Use the Sandbox authorization code while making the API calls.
+> #### Note
+> 
+> Use the Sandbox authorization code while making the API calls.
 
 
 ### Development Environment
