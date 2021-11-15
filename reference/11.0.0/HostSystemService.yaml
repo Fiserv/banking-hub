@@ -1,22 +1,23 @@
 ---
 openapi: 3.0.0
 info:
-  title: Account Transaction Response Service
-  description: The Account Transaction Response service supports inquiry request to retrieve history of monetary transactions associated with the product accounts, namely- Deposit or Loan Account.
+  title: Host System Service
+  description: "The Host System service supports an inquiry that retrieves the processing statuses of the host system.         \n"
   contact:
-    name: Vaida Dadla
-    email: Vaida.Dadla@Fiserv.com
+    name: Isabelle Mathon
+    email: Isabelle.Mathon@fiserv.com
   version: 11.0.0
 servers:
 - url: /
 paths:
-  /accttrnresponse/secured:
+  /hostSystem: {}
+  /hostSystem/secured:
     post:
       tags:
-      - Account Transaction Response Inquiry
-      summary: Retrieves a Account Transaction Response Object Secured
-      description: "<ul>\n  <li>Retrieves information about the previously completed monetary transactions associated with the product accounts based on specified selection criteria.</li>\n  <li>Retrieves the status details of the transactions regarding successful completion or errors.</li>\n</ul> <b>Applies to:</b>\n  <ul> \n    <li>Deposits</li>\n    <li>Bank Servicing</li>\n  </ul>"
-      operationId: AcctTrnResponseInqOperSecured
+      - Get Host System Status
+      summary: Retrieves host system status secured.
+      description: This method retrieves host system status from a core. <br><br> <b>Applies to:</b> <ul> <li>Deposits</li> <li>Loans</li> <li>Bank Servicing</li> </ul>
+      operationId: hostSystemInqSecured
       parameters:
       - name: EFXHeader
         in: header
@@ -33,27 +34,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AcctTrnResponseInqRqType'
+              $ref: '#/components/schemas/HostSystemInqRqType'
             examples:
               Premier:
-                $ref: '#/components/examples/PremierAcctTrnResponseRequest'
+                $ref: '#/components/examples/HostSystemInqRequest-Premier'
         required: true
       responses:
         "200":
-          description: Created
+          description: determine the availability of the core system for processing
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+                $ref: '#/components/schemas/HostSystemInqRsType'
               examples:
                 Premier:
-                  $ref: '#/components/examples/PremierAcctTrnResponseResponse'
+                  $ref: '#/components/examples/HostSystemInqResponse-Premier'
         "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+                $ref: '#/components/schemas/HostSystemInqRsType'
               examples:
                 "401":
                   $ref: '#/components/examples/401-Premier'
@@ -62,7 +63,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+                $ref: '#/components/schemas/HostSystemInqRsType'
               examples:
                 "422":
                   $ref: '#/components/examples/422-Premier'
@@ -71,7 +72,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+                $ref: '#/components/schemas/HostSystemInqRsType'
               examples:
                 "500":
                   $ref: '#/components/examples/500-Premier'
@@ -80,7 +81,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+                $ref: '#/components/schemas/HostSystemInqRsType'
               examples:
                 "503":
                   $ref: '#/components/examples/503-Premier'
@@ -89,9 +90,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
-      x-group-name: Account Transaction Response Service
-      x-proxy-name: Account Transaction Response Inquiry
+                $ref: '#/components/schemas/HostSystemInqRsType'
 components:
   schemas:
     EFXHeader:
@@ -130,7 +129,7 @@ components:
           description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
         OriginatorType:
           type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\"\n"
+          description: The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum lenght of 4. Originator Type codes that apply to financial institutions are:- • 6010 - Financial institution—bank, savings and loan (S and L), or credit union • 6011 - Financial institution—ATM • 6012 - Financial institution—merchandise sale • 6999 - Financial institution—home banking
           format: int64
         TerminalIdent:
           maxLength: 36
@@ -237,124 +236,31 @@ components:
           enum:
           - Manual
           - Auto
-    AcctTrnResponseStatusCodeType:
-      title: AcctTrnResponseStatusCodeType
-      type: string
-      description: Response status code of a transaction.
-      enum:
-      - Posted
-      - Invalid
-      - Rejected
-    CurCodeTypeType:
-      title: CurCodeTypeType
+    ChannelNameType:
+      title: ChannelNameType
       type: string
       enum:
-      - ISO4217-Alpha
-      - ISO4217-Numeric
+      - NOW
+    ChannelStatusType:
+      title: ChannelStatusType
+      type: string
+      enum:
+      - Active
+      - Inactive
+      - InquiryOnly
+    HostSystemStatusCodeType:
+      title: HostSystemStatusCodeType
+      type: string
+      enum:
+      - Valid
+      - Deleted
     SeverityType:
       title: SeverityType
       type: string
-      description: Severity of the EFX status code.
       enum:
       - Error
       - Warning
       - Info
-    AcctIdentType:
-      title: AcctIdentType
-      type: object
-      properties:
-        AcctIdentType:
-          type: string
-          description: 'Account Identification Type. Valid values include: AcctNum, AliasAcct, PORT, etc.'
-        AcctIdentValue:
-          maxLength: 36
-          type: string
-          description: Account Identification Value. Contains the value of the Account Identifier.
-    BaseKeysType:
-      title: BaseKeysType
-      type: string
-    SvcIdentType:
-      title: SvcIdentType
-      type: object
-      properties:
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: Service Provider Name is a globally unique identifier for a service provider which indicates the location of the Service Provider that gave the error.
-        SvcNbr:
-          maxLength: 36
-          type: string
-          description: Service Number.
-        SvcName:
-          maxLength: 32
-          type: string
-          description: Service Name.
-    CardIdentType:
-      title: CardIdentType
-      type: object
-      properties:
-        CardIdentType:
-          type: string
-          description: 'Card Identification Type. Valid values include: PORT.'
-        CardIdentValue:
-          maxLength: 36
-          type: string
-          description: Card Identification Value.
-    CardKeysType:
-      title: CardKeysType
-      allOf:
-      - $ref: '#/components/schemas/BaseKeysType'
-      - type: object
-        properties:
-          SvcIdent:
-            $ref: '#/components/schemas/SvcIdentType'
-          ISOCode:
-            maxLength: 80
-            type: string
-            description: ISO Card Code. Some systems like Precision instead of ISO Number they use a code to refer to the ISO Number of the card.
-          CardNum:
-            maxLength: 32
-            type: string
-            description: Card Number. This number does not include the ISO component of the card identification.
-          CardId:
-            maxLength: 36
-            type: string
-            description: Card Identifier. Uniquely identifies a card held at a financial institution (this is the card number as it appears on the card).
-          CardSeqNum:
-            maxLength: 3
-            type: string
-            description: Card Sequence Number. Typically refers to the member number (if applicable).
-          CardIdent:
-            $ref: '#/components/schemas/CardIdentType'
-    CurCodeType:
-      title: CurCodeType
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          $ref: '#/components/schemas/CurCodeTypeType'
-        CurCodeTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Currency Code Type Enumeration Description.
-        CurCodeValue:
-          maxLength: 80
-          type: string
-          description: Currency Code Value. Indicates the Currency Code Value within the CurCodeType table specified.
-    AcctKeysType:
-      title: AcctKeysType
-      description: Account keys details to identify an account record.
-      allOf:
-      - type: object
-        properties:
-          AcctId:
-            maxLength: 36
-            type: string
-            description: 'Unique account identification number as per financial institution records.  '
-          AcctType:
-            type: string
-            description: "Type of an account. <br> Valid values are:\n  - DDA\n  - SDA\n\n<br>   Refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open\"> Glossary</a> to view the descriptions of account types.  \n<br> <blockquote> Note: This element is required when adding a new account and by using this value we can identify if the account is a savings, a checking, a time deposit, loan account, etc. </blockquote>"
     SubjectElementType:
       title: SubjectElementType
       type: object
@@ -404,108 +310,99 @@ components:
           description: Subject Element aggregate provides information about which elements caused the status. The aggregate is repeating to allow for a relationship between one or more elements if the combination causes the status code.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    OriginalTrnStatusType:
-      title: OriginalTrnStatusType
+    BaseKeysType:
+      title: BaseKeysType
+      type: string
+    HostChannelDataType:
+      title: HostChannelDataType
       required:
-      - Severity
-      - StatusCode
-      - StatusDesc
-      - SvcProviderName
+      - ChannelName
+      - ChannelStatus
       type: object
       properties:
-        StatusCode:
-          maxLength: 20
+        ChannelName:
+          $ref: '#/components/schemas/ChannelNameType'
+        ChannelNameEnumDesc:
+          maxLength: 80
           type: string
-          description: EFX standard status code of the transaction to inform the result of the operation.
-        StatusDesc:
-          maxLength: 255
+          description: Channel Enumeration Description.
+        ChannelStatus:
+          $ref: '#/components/schemas/ChannelStatusType'
+        ChannelStatusEnumDesc:
+          maxLength: 80
           type: string
-          description: Description corresponding to the transaction EFX status code.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: 'Status code returned by the service provider for the original transaction.  '
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: 'Description of the Service Provider''s status code. '
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: Name of the service provider.
-      description: Transaction status that includes information, such as status code, status description, service provider name and other relevant details.
-    AcctTrnResponseInfoType:
-      title: AcctTrnResponseInfoType
+          description: Channel Status Enumeration Description.
+    HostSystemDataType:
+      title: HostSystemDataType
       required:
-      - OriginalTrnStatus
+      - SystemName
+      - SystemStatus
       type: object
       properties:
-        OriginalTrnStatus:
-          $ref: '#/components/schemas/OriginalTrnStatusType'
-        TrnIdent:
-          maxLength: 36
+        SystemName:
           type: string
-          description: Unique identification number of a transaction. Also known as Trace Number or Sequence in some systems.
-      description: Details of the transaction response information that contains information, such as status of the account transaction and the transaction identification number.
-    AcctTrnResponseKeysType:
-      title: AcctTrnResponseKeysType
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/AcctKeysType'
-      description: Details of account transaction to retrieve account-related information.
-    AcctTrnResponseKeysTypeRs:
-      title: AcctTrnResponseKeysType
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/AcctKeysType'
-      description: Details of the account information, returned as part of the response, that contains account keys to uniquely identify an account..
-    CurAmtType:
-      title: CurAmtType
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Transaction amount in decimal format.
-          example: 10
-      description: Details of the currency amount
-    TrnAmtType:
-      title: TrnAmtType
-      description: Details of the transaction amount.
-      allOf:
-      - $ref: '#/components/schemas/CurAmtType'
-      - type: object
-    NetworkRefDataType:
-      title: NetworkRefDataType
-      type: object
-      properties:
-        TrnIdent:
-          maxLength: 36
+          description: System Name.
+        SystemNameEnumDesc:
+          maxLength: 80
           type: string
-          description: Client transaction identification used to reference a previous transaction.
-      description: Details of the network reference data to uniquely identify the previously posted transaction.
-    AcctTrnResponseSelType:
-      title: AcctTrnResponseSelType
+          description: Host System Name Enumeration Description
+        PrcDt:
+          type: string
+          description: '[FSVR]Processing Date.'
+          format: date
+        CutOffTime:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: Cut Off Time
+          format: date-time
+        NextPrcDt:
+          type: string
+          description: Next Processing Date.
+          format: date
+        PreviousPrcDt:
+          type: string
+          description: Previous Processing Date.
+          format: date
+        SystemStatus:
+          type: string
+          description: System Status.
+        SystemStatusEnumDesc:
+          maxLength: 80
+          type: string
+          description: Host System Status Enumeration Description.
+    HostSystemInfoType:
+      title: HostSystemInfoType
       type: object
       properties:
-        AcctTrnResponseKeys:
-          $ref: '#/components/schemas/AcctTrnResponseKeysType'
-        TrnAmt:
-          $ref: '#/components/schemas/TrnAmtType'
-        NetworkRefData:
-          $ref: '#/components/schemas/NetworkRefDataType'
-      description: Details of the requested transaction data that contains information, such as account keys, amount and client identification number.
-    AcctTrnResponseInqRqType:
-      title: AcctTrnResponseInqRqType
+        HostChannelData:
+          $ref: '#/components/schemas/HostChannelDataType'
+        HostSystemData:
+          type: array
+          description: Host System Data.
+          items:
+            $ref: '#/components/schemas/HostSystemDataType'
+        EODProcessingInd:
+          type: boolean
+          description: End of Day Processing Indicator. A value of true indicates that end of day processing is actively running.
+    HostSystemSelType:
+      title: HostSystemSelType
+      type: object
+      properties:
+        ChannelName:
+          $ref: '#/components/schemas/ChannelNameType'
+        SystemName:
+          type: array
+          description: System Name.
+          items:
+            type: object
+    HostSystemInqRqType:
+      title: HostSystemInqRqType
       required:
-      - AcctTrnResponseSel
+      - HostSystemSel
       type: object
       properties:
-        AcctTrnResponseSel:
-          $ref: '#/components/schemas/AcctTrnResponseSelType'
+        HostSystemSel:
+          $ref: '#/components/schemas/HostSystemSelType'
     StatusType:
       title: StatusType
       required:
@@ -558,43 +455,54 @@ components:
           description: Additional Status aggregate may appear once for each additional status that the server intends to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
-    AcctTrnResponseStatusType:
-      title: AcctTrnResponseStatusType
+    HostSystemKeysType:
+      title: HostSystemKeysType
+      allOf:
+      - $ref: '#/components/schemas/BaseKeysType'
+      - required:
+        - HostSystemId
+        type: object
+        properties:
+          HostSystemId:
+            maxLength: 36
+            type: string
+            description: Host System Identifier. Uniquely identifies a Host System.
+    HostSystemStatusType:
+      title: HostSystemStatusType
+      required:
+      - HostSystemStatusCode
       type: object
       properties:
-        AcctTrnResponseStatusCode:
-          $ref: '#/components/schemas/AcctTrnResponseStatusCodeType'
+        HostSystemStatusCode:
+          $ref: '#/components/schemas/HostSystemStatusCodeType'
         EffDt:
           pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
-          description: 'Effective date and time when the transaction status is last changed. <br> Format: yyyy-MM-ddTHH:mm:ss.SSS '
+          description: Effective Date. The date that an associated action takes effect.
           format: date-time
-      description: Details of the account transaction response status code that contains transaction status and its effective date.
-    AcctTrnResponseRecType:
-      title: AcctTrnResponseRecType
+    HostSystemRecType:
+      title: HostSystemRecType
       required:
-      - AcctTrnResponseInfo
-      - AcctTrnResponseKeys
-      - AcctTrnResponseStatus
+      - HostSystemInfo
+      - HostSystemStatus
       type: object
       properties:
-        AcctTrnResponseKeys:
-          $ref: '#/components/schemas/AcctTrnResponseKeysTypeRs'
-        AcctTrnResponseInfo:
-          $ref: '#/components/schemas/AcctTrnResponseInfoType'
-        AcctTrnResponseStatus:
-          $ref: '#/components/schemas/AcctTrnResponseStatusType'
-      description: Details of the account transaction response that contains information, such as response keys, response status and response information.
-    AcctTrnResponseInqRsType:
-      title: AcctTrnResponseInqRsType
+        HostSystemKeys:
+          $ref: '#/components/schemas/HostSystemKeysType'
+        HostSystemInfo:
+          $ref: '#/components/schemas/HostSystemInfoType'
+        HostSystemStatus:
+          $ref: '#/components/schemas/HostSystemStatusType'
+    HostSystemInqRsType:
+      title: HostSystemInqRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        AcctTrnResponseRec:
-          $ref: '#/components/schemas/AcctTrnResponseRecType'
+        HostSystemRec:
+          $ref: '#/components/schemas/HostSystemRecType'
   examples:
     PremierHeaderExample:
       value:
@@ -639,38 +547,33 @@ components:
           SvcProviderName: Premier
           ServerStatusCode: "503"
           ServerStatusDesc: Service Unavailable
-    PremierAcctTrnResponseRequest:
+    HostSystemInqRequest-Premier:
       value:
-        AcctTrnResponseSel:
-          AcctTrnResponseKeys:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: DDA
-          NetworkRefData:
-            TrnIdent: "1"
-          TrnAmt:
-            Amt: 100
-    PremierAcctTrnResponseResponse:
+        HostSystemSel:
+          SystemName:
+          - type: All
+    HostSystemInqResponse-Premier:
       value:
         Status:
           StatusCode: "0"
           StatusDesc: Success
           Severity: Info
           SvcProviderName: Premier
-        AcctTrnResponseRec:
-          AcctTrnResponseKeys:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: DDA
-          AcctTrnResponseInfo:
-            OriginalTrnStatus:
-              StatusCode: "0"
-              StatusDesc: Success
-              Severity: Info
-              ServerStatusCode: "9"
-              ServerStatusDesc: Reversal
-              SvcProviderName: Premier
-            TrnIdent: "1"
-          AcctTrnResponseStatus:
-            AcctTrnResponseStatusCode: Posted
-            EffDt: 2021-08-03T15:58:38.381
+        HostSystemRec:
+          HostSystemKeys:
+            HostSystemId: Premier
+          HostSystemInfo:
+            HostSystemData:
+            - SystemName: AMS
+              SystemStatus: Active
+            - SystemName: InquirySystem
+              SystemStatus: Active
+            - SystemName: MemoPostSystem
+              SystemStatus: Active
+            - SystemName: MaintenanceSystem
+              SystemStatus: Active
+            - SystemName: All
+              SystemStatus: Active
+          HostSystemStatus:
+            HostSystemStatusCode: Valid
+            EffDt: 2021-10-01T22:08:21.538
