@@ -1,4 +1,4 @@
-# Operations Servicing
+# Operations and Servicing
 
 Operations and Servicing is an API domain consisting of APIs that support customer service-related functions and enable the adding of information to account or accountholder records residing on Fiserv core account processing platforms. These APIs make it possible to initiate, monitor, analyze and resolve cases related to customer requests or issues. More specifically, these APIs enable users to add, retrieve or modify memos and ticklers and to create, retrieve and modify custom fields within account and accountholder records.
 
