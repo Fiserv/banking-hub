@@ -13,11 +13,9 @@ paths:
     get:
       tags:
       - History
-      summary: Retrieve an enrolled users alert history within a specified date range
-      description: Retrieves alert history of an enrolled user within a given date range. Here, users is referred as the customer enrolled by financial institution for alerts service offered under Notifi.
+      summary: Retrieves alert history of an enrolled user for the specified date range
+      description: Alert History allows the admin to view a record of Notifi alerts that were delivered for an individual user. The record contains date/time, type of alert and the delivery end point the alert was sent to. The admin also has an option to resend the alert to user.
       operationId: RetrieveHistory
-      x-group-name: Notifi
-      x-proxy-name: Get History
       parameters:
       - name: userId
         in: path
@@ -83,6 +81,8 @@ paths:
           description: Server Error
         "504":
           description: Server Error
+      x-group-name: Notifi
+      x-proxy-name: Get History
   /openbanking/api/v{version}/tenants/{organizationId}:
     get:
       tags:
@@ -90,8 +90,6 @@ paths:
       summary: Retrieve the organization tenant
       description: Retrieves the organization tenant details.
       operationId: RetrieveOrganization
-      x-group-name: Notifi
-      x-proxy-name: Get Tenant
       parameters:
       - name: organizationId
         in: path
@@ -142,17 +140,18 @@ paths:
           description: Server Error
         "504":
           description: Server Error
+      x-group-name: Notifi
+      x-proxy-name: Get Tenant
   /openbanking/api/v{version}/token:
     post:
       tags:
       - Token
-      summary: Generate a token using a clientId and secret for a scoped organization
+      summary: Generates a taken for a scoped organization using *clientId* and *secret*
       operationId: GenerateToken
-      x-group-name: Notifi
-      x-proxy-name: Generate Token
       parameters:
       - name: clientId
         in: query
+        description: Unique identification of client for which a token is to be generated
         required: false
         style: form
         explode: true
@@ -160,6 +159,7 @@ paths:
           type: string
       - name: clientSecret
         in: query
+        description: Client secret
         required: false
         style: form
         explode: true
@@ -167,6 +167,7 @@ paths:
           type: string
       - name: organizationId
         in: query
+        description: Identification of an organization
         required: false
         style: form
         explode: true
@@ -174,7 +175,7 @@ paths:
           type: string
       - name: version
         in: path
-        description: The requested API version
+        description: Version of API
         required: true
         style: simple
         explode: false
@@ -204,14 +205,14 @@ paths:
           description: Server Error
         "504":
           description: Server Error
+      x-group-name: Notifi
+      x-proxy-name: Generate Token
   /openbanking/api/v{version}/users/{userId}:
     get:
       tags:
       - Users
       summary: Retrieve an enrolled user within Notifi
       operationId: RetrieveUser
-      x-group-name: Notifi
-      x-proxy-name: Get User 
       parameters:
       - name: userId
         in: path
@@ -262,13 +263,13 @@ paths:
           description: Server Error
         "504":
           description: Server Error
+      x-group-name: Notifi
+      x-proxy-name: Get User
     put:
       tags:
       - Users
       summary: "Update the user enrollment.\r\n\r\nOmit any fields on the user that you wish to be ignored during update\r\n\r\nAny change to the user will be updated.\r\nAny endpoints supplied will be added or updated. Only Email and SMS endpoints can have their delivery details modified\r\nAny subscriptions supplied will be either added or updated."
       operationId: UpdateUser
-      x-group-name: Notifi
-      x-proxy-name: Update User
       parameters:
       - name: userId
         in: path
@@ -343,13 +344,13 @@ paths:
           description: Server Error
         "504":
           description: Server Error
+      x-group-name: Notifi
+      x-proxy-name: Update User
     delete:
       tags:
       - Users
       summary: Deletes the user enrollment.
       operationId: Delete
-      x-group-name: Notifi
-      x-proxy-name: Delete User
       parameters:
       - name: userId
         in: path
@@ -390,14 +391,14 @@ paths:
           description: Server Error
         "504":
           description: Server Error
+      x-group-name: Notifi
+      x-proxy-name: Delete User
   /openbanking/api/v{version}/users/search:
     post:
       tags:
       - Users
       summary: "Search for an enrolled user within Notifi based on the specified properties\r\n\r\nSearchable properties are:\r\nBankingUserId\r\nRelationship\r\nEventUserId"
       operationId: SearchUser
-      x-group-name: Notifi
-      x-proxy-name: Search User
       parameters:
       - name: version
         in: path
@@ -463,14 +464,14 @@ paths:
           description: Server Error
         "504":
           description: Server Error
+      x-group-name: Notifi
+      x-proxy-name: Search User
   /openbanking/api/v{version}/users:
     post:
       tags:
       - Users
       summary: Creates a new User Enrollment. Optionally, Endpoints can be added during enrollment. They will automatically be in an enabled and activated state.
       operationId: CreateUser
-      x-group-name: Notifi
-      x-proxy-name: Add User
       parameters:
       - name: version
         in: path
@@ -536,6 +537,8 @@ paths:
           description: Server Error
         "504":
           description: Server Error
+      x-group-name: Notifi
+      x-proxy-name: Add User
 components:
   schemas:
     History:
@@ -553,7 +556,7 @@ components:
       properties:
         userId:
           type: integer
-          description: Identification number of a user receiving the alert
+          description: Identification number of a user
           format: int64
         subscriptionId:
           type: integer
@@ -571,7 +574,13 @@ components:
           description: Payload identifier that triggered the alert
         alertType:
           type: string
-          description: "Type of the generated alert. <br> Valid values are:\n  - DEBITTRANS (Debit transaction was posted)\n  - TXNGREATERTHAN (Transaction over threshold amount)\n  - BELOWBALTHRESH (Account balance below threshold)\n  - DEPOSITTRANS\t(Credit transaction was posted)\n  - DEPOSITPOSTED (Deposit was credited to an account)"
+          description: |-
+            Type of the generated alert. <br> Valid values are:
+              - DEBITTRANS (Debit transaction was posted)
+              - TXNGREATERTHAN (Transaction over threshold amount)
+              - BELOWBALTHRESH (Account balance below threshold)
+              - DEPOSITTRANS  (Credit transaction was posted)
+              - DEPOSITPOSTED (Deposit was credited to an account)
         description:
           type: string
           description: Description of the alert type
@@ -698,7 +707,7 @@ components:
       properties:
         name:
           type: string
-          description: "Name of the endpoint type. <br>\n  Valid values are:\n  -\tEmail\n  -\tSMS\n  -\tPush          "
+          description: "Name of the endpoint type. <br>\n  Valid values are:\n  -  Email\n  -  SMS\n  -  Push          "
         enabled:
           type: boolean
           description: Flag to indicate if the endpoint type is enable
