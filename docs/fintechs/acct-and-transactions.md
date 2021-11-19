@@ -1,3 +1,11 @@
 # Accounts and Transactions
 
-![website-work-in-progress](https://user-images.githubusercontent.com/81968767/138723063-952392ad-807d-4f0a-9ca5-4ed9556eb173.png)
+Accounts and Transactions is an API domain consisting of APIs that are specific to Fiserv core account processing platforms and enable users to create, maintain and retrieve information about accounts within a financial institution, as well as transactions and balances related to those accounts. 
+
+Supporting the creation and maintenance of a full range of deposit, savings and loan accounts,  these APIs can be used to access account lists, transaction data and balance information. 
+
+**Who is it for:** Any developer creating or integrating apps that need to interact with account and transaction data maintained on Fiserv core account processing platforms
+
+**How is it used:** Employ these APIs to develop apps that offer unique experiences or novel channels through which users can originate, access or modify deposit, savings or loan accounts, and view and manage transactions on those accounts.
+
+
