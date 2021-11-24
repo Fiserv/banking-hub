@@ -18,7 +18,7 @@ This guide provides quick steps to use Integrated Banking  APIs during integrati
 [**Before You Start**](?path=docs/getting-started/before-you-start.md "Click to read full article")
 
 Topics covered:
--	How to register yourself on Developer Studio
+-	How to create an account on Fiserv Developer Studio
 -	How to get Authentication keys 
 -	Understand the structure of Integrating Banking APIs
 
