@@ -1,8 +1,8 @@
 ---
 openapi: 3.0.0
 info:
-  title: Stop Check Service
-  description: "Stop check is a request made to a financial institution to cancel a check or payment that is not being processed yet. <br> The Stop Check service manages stop-check payments associated with the following product accounts: \n  -  Demand Deposit Account (DDA)\n  -  Saving Deposit Account (SDA)\n  -  Certificate of Deposit Account (CDA)\n  -  Loan Account (LOAN)"
+  title: Transfer Service
+  description: The Transfer service supports operations related to managing the transfer of money between accounts. The service includes the description of the FROM and TO accounts, amount of the transfer, transfer fees and frequency of the transfer as it can be a one-time transfer or a recurring transfer.
   contact:
     name: Isabelle Mathon
     email: Isabelle.Mathon@fiserv.com
@@ -10,13 +10,13 @@ info:
 servers:
 - url: /
 paths:
-  /stopChecks:
+  /transfers:
     post:
       tags:
-      - Add Stop Check
-      summary: Add a stop check payment
-      description: "Creates a stop check payment request, to stop the payment associated with product accounts. <br><br> <b>Applies to:</b>\n  <ul> \n    <li>Deposits</li>\n    <li>Bank Servicing</li>\n    <li>Treasury Services</li>\n  </ul>"
-      operationId: stopChkAdd
+      - Add Transfer
+      summary: Add a one time or recurrent transfer of funds instruction
+      description: This method adds a one time or recurrent transfer of funds instruction.
+      operationId: XferAddOper
       parameters:
       - name: EFXHeader
         in: header
@@ -33,26 +33,32 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StopChkAddRqType'
+              $ref: '#/components/schemas/XferAddRqType'
             examples:
               Premier:
-                $ref: '#/components/examples/PremierStopCheckAddRequest'
+                $ref: '#/components/examples/PremierXferAddRequest-TMS'
+              Premier-Recurrent:
+                $ref: '#/components/examples/PremierXferAddRecurringRq-TMS'
+        required: true
+        x-send-file-in-body: false
       responses:
         "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/XferAddRsType'
               examples:
                 Premier:
-                  $ref: '#/components/examples/PremierStopCheckAddResponse'
+                  $ref: '#/components/examples/PremierXferAddResponse-TMS'
+                Premier-Recurrent:
+                  $ref: '#/components/examples/PremierXferAddRecurringRs-TMS'
         "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/XferAddRsType'
               examples:
                 "401":
                   $ref: '#/components/examples/401-Premier'
@@ -61,7 +67,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/XferAddRsType'
               examples:
                 "422":
                   $ref: '#/components/examples/422-Premier'
@@ -70,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/XferAddRsType'
               examples:
                 "500":
                   $ref: '#/components/examples/500-Premier'
@@ -79,181 +85,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/XferAddRsType'
               examples:
                 "503":
                   $ref: '#/components/examples/503-Premier'
         default:
-          description: Unexpected error
+          description: See HTTP Status Code Standards
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
-      x-group-name: Stop Check Service
-      x-proxy-name: Add Stop Check
-  /stopChecks/secured:
-    put:
-      tags:
-      - Delete Stop Check
-      summary: Delete a stop check payment
-      description: Cancels a stop-check payment request that has been placed with the associated product accounts.<br><br> <b>Applies to:</b> <ul> <li>Deposits</li> <li>Bank Servicing</li> <li>Treasury Services</li> </ul>
-      operationId: stopChkCanSecured
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md"> EFX Header Parameters </a> are required to send as a JSON object in the request message.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-        examples:
-          Premier:
-            $ref: '#/components/examples/PremierHeaderExample'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/StopChkCanRqType'
-            examples:
-              Premier:
-                $ref: '#/components/examples/PremierStopCheckCanRequest'
-        required: true
-      responses:
-        "200":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                Premier:
-                  $ref: '#/components/examples/PremierStopCheckCanResponse'
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                "401":
-                  $ref: '#/components/examples/401-Premier'
-        "422":
-          description: Un-processable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                "422":
-                  $ref: '#/components/examples/422-Premier'
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                "500":
-                  $ref: '#/components/examples/500-Premier'
-        "503":
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                "503":
-                  $ref: '#/components/examples/503-Premier'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-      x-group-name: Stop Check Service
-      x-proxy-name: Delete Stop Check
-    post:
-      tags:
-      - Get Stop Check
-      summary: Retrieves a stop check payment
-      description: "Retrieves the list of stop-checks or a single stop check associated with product account.<br><br> <b>Applies to:</b>\n  <ul> \n    <li>Deposits</li>\n    <li>Bank Servicing</li>\n    <li>Treasury Services</li>\n  </ul>"
-      operationId: stopCheckInqSecured
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md"> EFX Header Parameters </a> are required to send as a JSON object in the request message.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-        examples:
-          Premier:
-            $ref: '#/components/examples/PremierHeaderExample'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/StopChkInqRqType'
-            examples:
-              Premier:
-                $ref: '#/components/examples/PremierStopCheckInqRequest'
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                Premier:
-                  $ref: '#/components/examples/PremierStopCheckInqResponse'
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                "401":
-                  $ref: '#/components/examples/401-Premier'
-        "422":
-          description: Un-processable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                "422":
-                  $ref: '#/components/examples/422-Premier'
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                "500":
-                  $ref: '#/components/examples/500-Premier'
-        "503":
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                "503":
-                  $ref: '#/components/examples/503-Premier'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-      x-group-name: Stop Check Service
-      x-proxy-name: Get Stop Check
+                $ref: '#/components/schemas/XferAddRsType'
+      x-group-name: Transfer Service
+      x-proxy-name: Add Transfer
 components:
   schemas:
     EFXHeader:
@@ -268,7 +111,7 @@ components:
           type: string
         VendorId:
           type: string
-          description: 'An identifier, supplied by Fiserv, that represents the vendor using  this API service. '
+          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
         Context:
           $ref: '#/components/schemas/Context'
     Context:
@@ -399,6 +242,378 @@ components:
           enum:
           - Manual
           - Auto
+    AccountingMethodType:
+      title: AccountingMethodType
+      type: string
+      enum:
+      - Class
+      - CostCenter
+      - AcctType
+    AccrualMethodType:
+      title: AccrualMethodType
+      type: string
+      enum:
+      - None
+      - Simple
+      - AddOn
+      - TrueSimple
+      - Daily
+      - Continuous
+      - Rule78th
+      - SimpleMonthly
+      - Amortized
+      - Rule78thFirstPeriodSimple
+      - Actuarial
+      - Rule78th_15DayDelay
+      - SimpleMonthlyFirstPmtDt
+      - AmortizedFirstPmtDt
+      - AmortizedBalance
+      - SimpleAvg
+      - DailyAvg
+      - ContinuousAvg
+      - PrincipalAndInterest
+      - PrincipalPlusInterest
+      - NegativeAmortization
+    AccrualOnBalanceType:
+      title: AccrualOnBalanceType
+      type: string
+      enum:
+      - Ledger
+      - Avail
+      - MinAvail
+      - AvgAvail
+      - AvgMinLedger
+      - AvgLedger
+      - MinLedger
+      - None
+    AcctAmtTypeType:
+      title: AcctAmtTypeType
+      type: string
+      enum:
+      - NonIntFinanceCharge
+      - NonAccrualInt
+      - IntDue
+      - AddtlIntDue
+      - AccidentPaid
+      - Transactions
+      - AccrueOnBalance
+      - AdvAmt
+      - ForfeitureAmt
+      - AvgAvail
+      - AvgChkDebit
+      - AvgDeposit
+      - AvgLedger
+      - AvgCollected
+      - AggLedger
+      - ACHCredit
+      - Credit
+      - CashIn
+      - IntAccrued
+      - CashOut
+      - ChargeOff
+      - ChkDebit
+      - ChkCredit
+      - ClosingFees
+      - DaysAvailOverdraft
+      - DaysNSF
+      - DaysOverdraft
+      - DealerIntEarned
+      - DealerIntPaid
+      - Debit
+      - DeferredCostEarned
+      - DeferredCostEarnedTotal
+      - DeferredFeeEarned
+      - DeferredFeeEarnedTotal
+      - Deposit
+      - EscrowDisb
+      - EscrowInterest
+      - EscrowPaid
+      - EscrowPMIPaid
+      - EscrowTaxesPaid
+      - FederalWithhold
+      - FeeAccrued
+      - FeeAssessed
+      - FeeEarned
+      - FeePaid
+      - FeeUnearned
+      - FeeWaived
+      - Hold
+      - HSA
+      - InsuranceEarned
+      - InsurancePaid
+      - InsuranceWaived
+      - IntEarned
+      - IntCarryOver
+      - IntEscEarned
+      - IntEscPaid
+      - IntOtherEscEarned
+      - IntOtherEscPaid
+      - IntPaid
+      - IntPaidOut
+      - IntReported
+      - OIDIntReported
+      - IntPrepaid
+      - IntWaived
+      - LateFeeEarned
+      - LateFeePaid
+      - LateFeeWaived
+      - LifePaid
+      - LoanPmt
+      - MinLedger
+      - NegAmorPaid
+      - NegAmorAssessed
+      - MinPmt
+      - MMAThirdParty
+      - MMAThirdPartyAllow
+      - MMAWithdrawal
+      - MMAWithdrawalAllow
+      - NegativeAvail
+      - NegativeLedger
+      - NSFFeePaid
+      - NSFFeeRefunded
+      - NSFFeeReturned
+      - NSFFeeWaived
+      - NSFPaid
+      - NSFPresented
+      - NSFReturned
+      - ExceptionItemFeePaid
+      - ExceptionItemFeeWaived
+      - OpenStatement
+      - CloseStatement
+      - OtherChargePaid
+      - OtherChargeWaived
+      - OtherFeeEarned
+      - OtherInsPaid
+      - OtherMiscFee
+      - Overdraft
+      - OverdraftFee
+      - PositiveAvail
+      - PositiveLedger
+      - PrincipalCurtailment
+      - PrincipalPaid
+      - PmtDue
+      - ReappliedCurtailment
+      - RegDType
+      - Statement
+      - StateWithhold
+      - StopCheck
+      - SubscriptionLimit
+      - Subscription
+      - SvcCharge
+      - SvcChargeEarned
+      - SvcChargePaid
+      - SvcChargeWaived
+      - Transfer
+      - TemporaryOverdraftLimit
+      - UnusedLimit
+      - Withhold
+      - EmployerContribution
+      - ExcessContribution
+      - RefundedContribution
+      - RefundedEmployerContribution
+      - NonReportableDistribution
+      - DisabilityDistribution
+      - DeathDistribution
+      - QualifiedDistribution
+      - ExcessDistribution
+      - EarningExcessContribution
+      - Contribution
+      - RentPaid
+      - PenaltyPaid
+      - BelowBalanceThreshold
+    AcctDtlStatusType:
+      title: AcctDtlStatusType
+      type: string
+      enum:
+      - Active
+      - ActiveNoRenew
+      - Approved
+      - Assumed
+      - Bankruptcy
+      - BankUse
+      - ChargedOff
+      - ClientControlled
+      - Closed
+      - ClosedReopenDeposit
+      - ClosedToAdvances
+      - ClosedToday
+      - ClosedToPosting
+      - ClosedWithBalances
+      - CoolingOff
+      - Decease
+      - Delinquent
+      - Denied
+      - Dormant
+      - Drill
+      - EarlyCollection
+      - Escheated
+      - Foreclosure
+      - Hold
+      - HotCard
+      - Inactive
+      - Matured
+      - New
+      - NewThisMonth
+      - NoCreditPost
+      - NoDebitPost
+      - NonAccrual
+      - NoWithdrawal
+      - Originating
+      - Other
+      - PastDue
+      - PendingClosed
+      - Probate
+      - Purge
+      - Rented
+      - Repossession
+      - Surrendered
+      - TransferredOut
+      - Unusable
+      - Vacant
+      - Void
+    AcctHoldOptionType:
+      title: AcctHoldOptionType
+      type: string
+      enum:
+      - FixedAmt
+      - CurrentBal
+      - AvailBal
+      - LedgerBal
+      - PayOff
+      - HoldAll
+    AcctIdentTypeType:
+      title: AcctIdentTypeType
+      type: string
+      description: |-
+        Account identification type to identify the external transfer account.
+        <br>
+        Valid value is:
+          - AcctTypeCode
+      enum:
+      - AcctNum
+      - PORT
+      - AccessId
+      - PartyId
+      - AliasAcct
+      - AcctTypeCode
+      - CLOC
+    AcctMajorTypeType:
+      title: AcctMajorTypeType
+      type: string
+      enum:
+      - Mortgage
+      - Student
+      - FloorPlan
+      - Commercial
+      - LetterOfCredit
+      - Lease
+      - MasterLine
+      - Consumer
+      - CreditLine
+      - PersonalLineOfCredit
+      - CheckCredit
+    AcctMemoTypeType:
+      title: AcctMemoTypeType
+      type: string
+      enum:
+      - Teller
+      - Warning
+      - LockOut
+    AcctPeriodTypeType:
+      title: AcctPeriodTypeType
+      type: string
+      enum:
+      - CTD
+      - LTD
+      - MTD
+      - NextCycle
+      - PriorCycle
+      - PriorTwoCycle
+      - PriorMonth
+      - PriorYr
+      - PrevToPriorYr
+      - Today
+      - YTD
+      - Anniversary
+      - AnniversaryTD
+      - RollingYTD
+    AcctTitleOptionType:
+      title: AcctTitleOptionType
+      type: string
+      enum:
+      - SecondLine
+      - FirstAvailAddrLine
+      - ReplaceNameAddrLine
+      - None
+      - OnlyforInquiry
+    AcctTitleTypeType:
+      title: AcctTitleTypeType
+      type: string
+      enum:
+      - FirstTitle
+      - SecondTitle
+      - ThirdTitle
+    AcctTypeType:
+      title: AcctTypeType
+      type: string
+      description: |-
+        Type of an account.<br>
+        Valid values are:
+          - DDA
+          - SDA
+          - CDA
+
+        <br> For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary </a>
+      enum:
+      - CCA
+      - RRA
+      - LEAS
+      - CDA
+      - MLN
+      - CLA
+      - CRD
+      - DDA
+      - EQU
+      - GLA
+      - ILA
+      - AdultCashISA
+      - IRA
+      - RET
+      - EXT
+      - JuniorCashISA
+      - LIP
+      - LOAN
+      - LOC
+      - CLOC
+      - MLA
+      - PBA
+      - PORT
+      - SDA
+      - SDB
+      - MMA
+      - DDL
+    AcctUseType:
+      title: AcctUseType
+      type: string
+      enum:
+      - Business
+      - Retail
+      - Both
+    ACHEntryClassType:
+      title: ACHEntryClassType
+      type: string
+      description: Code used to identify the NACHA payment type (standard entry class)
+      enum:
+      - PPD
+      - CCD
+      - WEB
+      - CIE
+    ACHReceivingTypeType:
+      title: ACHReceivingTypeType
+      type: string
+      enum:
+      - Person
+      - Organization
     AddrFormatTypeType:
       title: AddrFormatTypeType
       type: string
@@ -415,6 +630,112 @@ components:
       - Seasonal
       - Previous
       - Physical
+    AddrUseType:
+      title: AddrUseType
+      type: string
+      enum:
+      - Business
+      - Home
+      - Personal
+      - Government
+      - LegalTitle
+      - StmtPrimary
+      - StmtAddtl
+      - Inquiry
+      - Mailing
+      - Check
+      - Dividend
+      - Physical
+      - Tax
+      - Stmt
+      - Beneficiary
+      - MultipleMailer
+      - Miscellaneous
+      - Tickler
+      - Indirect
+      - Closed
+      - 1098Tax
+      - 1099ATax
+      - 1099BTax
+      - 1099Tax
+      - 1099DIVTax
+      - 1099INTTax
+      - 1099MISCTax
+      - 1099OIDTax
+      - 1099RTax
+      - 1099STax
+      - 5498Tax
+      - TaxBNotice
+      - 1099CTax
+      - 1099ETax
+      - 1042STax
+      - NoteCollateral
+      - NoteCosigner
+      - NoteEscrow
+      - NoteTaxEscrow
+      - NoteInsuranceEscrow
+      - LineCollateral
+      - FinancialPropertyStmt
+      - LineCosigner
+      - LineCommitment
+      - PaidNote
+      - Property
+      - Appraiser
+      - Broker
+      - Builder
+      - InsuranceAgency
+      - InsuranceCompany
+      - Landlord
+      - LienHolder
+      - CollateralLocation
+      - PolicyHolder
+      - Seller
+      - Trustee
+      - Issuer
+    AdjDaysBasisType:
+      title: AdjDaysBasisType
+      type: string
+      enum:
+      - DueDt
+      - EndOfMonth
+      - StmtDt
+    AgreementTypeType:
+      title: AgreementTypeType
+      type: string
+      enum:
+      - VRU
+      - CARD
+      - eAgreement
+    AlternateStmtOptionType:
+      title: AlternateStmtOptionType
+      type: string
+      enum:
+      - None
+      - Stmt
+      - StmtAndInt
+      - StmtAndSvcChg
+      - StmtAndIntAndSvcChg
+    ApartmentNumTypeType:
+      title: ApartmentNumTypeType
+      type: string
+      enum:
+      - APT
+      - BLDG
+      - DEPT
+      - FL
+      - HNGR
+      - KEY
+      - LOT
+      - OFC
+      - PH
+      - PIER
+      - RM
+      - SLIP
+      - SPC
+      - STOP
+      - STE
+      - TRLR
+      - UNIT
     APYRecurTypeType:
       title: APYRecurTypeType
       type: string
@@ -427,47 +748,348 @@ components:
       - Weekly
       - BiWeekly
       - Maturity
-    BillingMethodType:
-      title: BillingMethodType
+    BalanceVerificationType:
+      title: BalanceVerificationType
       type: string
-      description: Type of billing.
       enum:
-      - BillingNotice
-      - DebitToAccount
+      - Avail
+      - Current
+      - Ledger
+      - Collected
+      - Sweep
+    BalCutOffTypeType:
+      title: BalCutOffTypeType
+      type: string
+      enum:
+      - Avail
+      - AvgAvail
+      - AvgLedger
+      - AvgMinLedger
+      - Ledger
+      - MinLedger
       - None
-      - NoCharge
-      - CouponWithAnalysis
-      - BillingByStmt
-      - Coupon
-      - DirectDebit
-      - DirectDebitDDA
-      - DirectDebitSDA
-      - DirectDebitDDAStmt
-      - DirectDebitSDAStmt
-      - DirectDebitDDAWithAnalysis
-      - ACHInfo
-      - ACHXfer
-      - ACHXferNoBill
-      - ACHXferDDA
-      - ACHXferSDA
-      - ACHXferDDAStmt
-      - ACHXferSDAStmt
-      - NoBillingNotice
-      - PartialDirectDebit
-      - LoanAdvance
-      - NoNotice
+    BalTypeType:
+      title: BalTypeType
+      type: string
+      enum:
+      - Accident
+      - Avail
+      - AvailChk
+      - AvailCredit
+      - AvailTomorrow
+      - AvgCollected
+      - ChargeOff
+      - PartChargeOff
+      - Closing
+      - ClosingLedger
+      - ClosingOutstanding
+      - CreditLimit
+      - Current
+      - CustCollected
+      - DealerInterest
+      - BalanceLastStatement
+      - DeferredFee
+      - DeferredLateFee
+      - Escrow
+      - EscrowDue
+      - EscrowInterest
+      - ExternalFund
+      - ExternalAcctBal
+      - Fee
+      - Hold
+      - Float
+      - InterestAccrued
+      - InterestDue
+      - PartInterestDue
+      - IndirectLiability
+      - DirectLiability
+      - Guaranteed
+      - LateFee
+      - Ledger
+      - Life
+      - LIP
+      - LoanExposure
+      - Memo
+      - MemoAvailODP
+      - MemoLedger
+      - MMDAExcess
+      - OpeningOutstanding
+      - Orig
+      - OtherIns
+      - OtherTransfers
+      - OverdraftBanking
+      - OverdraftLimit
+      - PastDue
+      - PayOffAmt
+      - Paydown
+      - PendAuthAmt
+      - PmtDue
+      - PrevAvail
+      - PrevAvailCash
+      - PrevAvailChk
+      - PrevInterestAccrued
+      - PrevLedger
+      - PrevSvcChg
+      - Principal
+      - PartPrincipal
+      - PrincipalPmtDue
+      - SvcChg
+      - Sweep
+      - Secured
+      - Unsecured
+      - Unapplied
+      - RentDue
+      - Passbook
+      - PledgedAmount
+      - Tax
+    BillLastPmtCodeType:
+      title: BillLastPmtCodeType
+      type: string
+      enum:
+      - Bill
+      - NoBillDraftTotalDue
+      - NoBillExcludePrincipal
+    BillStatusCodeType:
+      title: BillStatusCodeType
+      type: string
+      enum:
+      - Billed
+      - Projected
+    CardIdentTypeType:
+      title: CardIdentTypeType
+      type: string
+      enum:
+      - PORT
+    CashMgmtRelTypeType:
+      title: CashMgmtRelTypeType
+      type: string
+      enum:
+      - EntityConcentration
+      - InvestmentFinalFunding
+      - Master
+      - ZBA
+    CombinedStmtCodeType:
+      title: CombinedStmtCodeType
+      type: string
+      enum:
+      - Primary
+      - Secondary
+      - SecondaryDDA
+      - SecondarySDA
+      - DoNotCombine
+    CompositeCurAmtTypeType:
+      title: CompositeCurAmtTypeType
+      type: string
+      enum:
+      - AccidentIns
+      - PmtDue
+      - ActivationFee
+      - AccruedInt
+      - AdjustmentFee
+      - ATMFee
+      - BuyerFee
+      - CardReplacementFee
+      - CapitalizedFee
+      - CashAdvFee
+      - CheckFee
+      - ClientDefFee
+      - ClosingFee
+      - CollateralIns
+      - ChargeOff
+      - CollectionFee
+      - Current
+      - DealerDisability
+      - DealerInterest
+      - DealerLife
+      - DealerMiscellaneous
+      - DelinquentFee
+      - Deduction
+      - DeferredFee
+      - DeferredLateFee
+      - DisabilityIns
+      - Disbursement
+      - Escrow
+      - EscrowInterest
+      - EscrowVariance
+      - ExtensionFee
+      - FASBCost
+      - FASBFee
+      - FASBOriginalFee
+      - Fee
+      - OriginalFee
+      - FeePaid
+      - FeeWaived
+      - FeeAssessed
+      - InactivityFee
+      - Interest
+      - IntWaive
+      - Insurance
+      - LateFee
+      - LegalFee
+      - LoanFee
+      - LoanPayment
+      - LifeIns
+      - LostStolenFee
+      - MaintenanceFee
+      - MiscellaneousIns
+      - MiscellaneousFee
+      - NegBalFee
+      - NSFFee
+      - NSFAttemptFee
+      - OverdraftFee
+      - OverlimitFee
+      - Penalty
+      - OtherIns
+      - OtherEscrow
+      - Passbook
+      - PrepaymentFee
+      - Principal
+      - PurchaseFee
+      - ReturnedChkFee
+      - ReturnedPaymentFee
+      - StatementFee
+      - StopChkFee
+      - SellerFee
+      - ServiceFee
+      - TellerFee
+      - Rent
+      - Tax
+      - TransactionFee
+      - UnavailAttemptFee
+      - UnemploymentIns
+      - Unapplied
+      - Withholding
+      - Total
+      - LastPmt
+    CountryCodeSourceType:
+      title: CountryCodeSourceType
+      type: string
+      enum:
+      - FIPS-10
+      - ISO3166-Numeric
+      - ISO3166-Alpha-3
+      - ISO3166-Alpha-2
+      - IRS
+      - SPCountryCode
     CurCodeTypeType:
       title: CurCodeTypeType
       type: string
-      description: |-
-        Standard ISO currency code format.  <br> Valid value is:
-          - ISO4217-Alpha
-
-        <br> Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4217 codes </a> to view the list of all currency codes.
-      example: ISO4217-Alpha
+      description: "Standard ISO currency code format. \n<br>\nValid value is:\n  - ISO4217-Alpha<br>\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
       enum:
       - ISO4217-Alpha
       - ISO4217-Numeric
+    DailyAccrualType:
+      title: DailyAccrualType
+      type: string
+      enum:
+      - Standard360
+      - Standard361
+      - Standard365
+      - Standard366
+      - Standard364
+      - Actual364
+      - Actual365
+      - Actual360
+      - Actual366
+      - Daily365
+      - Daily360
+      - Current365
+      - Current360
+      - Equal365
+      - Equal360
+    DataClassTypeType:
+      title: DataClassTypeType
+      type: string
+      enum:
+      - Portfolio
+      - Contact
+      - Name
+    DataTypeType:
+      title: DataTypeType
+      type: string
+      enum:
+      - Alpha
+      - Boolean
+      - Currency
+      - CurrencySymbol
+      - Date
+      - Numeric
+      - NumericSymbol
+      - Rate
+      - RateSymbol
+      - BCD
+      - BIN
+      - BLOB
+      - BMP
+      - CLOB
+      - DRVD
+      - DTTM
+      - EXPR
+      - FDTA
+      - GDT
+      - GIF
+      - HHMM
+      - HTM
+      - HTML
+      - INTG
+      - JDAY
+      - JDT
+      - JPEG
+      - JPG
+      - JSON
+      - MIX
+      - MMDD
+      - MMYY
+      - MULT
+      - OBJ
+      - OCUR
+      - OTYL
+      - OTYP
+      - PDF
+      - SDT
+      - STR
+      - TIF
+      - TIFF
+      - TIME
+      - TXT
+      - VC
+      - null
+    DateTypeType:
+      title: DateTypeType
+      type: string
+      enum:
+      - LastTrn
+      - RewardsExpDt
+      - Dormant
+      - LastActivity
+      - LastLoanActivity
+      - Anniversary
+      - LastAccess
+      - LastOverdraft
+      - OverdraftEnroll
+      - LastPrc
+      - eStmt
+      - PreviousStmt
+      - CurrentPrc
+      - NextPrc
+      - IRALastStmt
+      - System
+      - LastPrcThru
+      - LastFileMaint
+      - ChargeOff
+      - NonAccrual
+      - BankruptcyFiling
+      - Foreclosure
+      - OriginalIssued
+      - OldestHold
+      - Disbursement
+      - Accrual
+      - Contract
+      - DateFirstPmt
+      - FirstAccess
+      - SafeDepositKeyPaid
+      - AnticipatedPayoff
+      - Recorded
     DayOfMonthType:
       title: DayOfMonthType
       type: integer
@@ -515,12 +1137,65 @@ components:
       - Friday
       - Saturday
       - Sunday
-    DebitCreditType:
-      title: DebitCreditType
+    DischargeEventCodeType:
+      title: DischargeEventCodeType
       type: string
       enum:
-      - Debit
-      - Credit
+      - None
+      - Bankruptcy
+      - OtherLegalDebtRelief
+      - OtherJudicialLegal
+      - StatuteOfLimitations
+      - Foreclosure
+      - FromProbate
+      - ByAgreement
+      - DebtCollection
+      - DiscountinuedCollection
+      - OtherDischarge
+    DistributionTypeType:
+      title: DistributionTypeType
+      type: string
+      enum:
+      - 1035Exchange
+      - CoverdellESADeath
+      - CoverdellESADisability
+      - CoverdellESADistr
+      - CoverdellESAExcessDistr
+      - CoverdellESAProhibited
+      - CoverdellESATrusteeXfer
+      - CurrLifeInsCost
+      - Death
+      - DeathNonSpouse
+      - DirectRollover
+      - DirectRolloverRothIRA
+      - Disability
+      - EarlyDistrException
+      - EarlyDistrExceptionDivorce
+      - EarlyDistrExceptionRothIRA
+      - EarlyDistrNoException
+      - EarlyDistrNoExceptionDivorce
+      - EarlyDistrNoExceptionRothIRA
+      - ESOPDividends
+      - ExcessAnnualAdditions
+      - ExcessContribution
+      - ExcessContributionEarnings
+      - ExcessContributionEmployer
+      - FederalTax
+      - Fee
+      - NonDeductible
+      - NonReportable
+      - Normal
+      - Other
+      - Prohibited
+      - QualifiedRothIRA
+      - QualifyTenAveraging
+      - Recharacterized
+      - Reinvest
+      - Simple
+      - StateTax
+      - Xfer
+      - XferDivorce
+      - XferSource
     EarlyPayoffTierTypeType:
       title: EarlyPayoffTierTypeType
       type: string
@@ -541,6 +1216,26 @@ components:
       - None
       - NotUsed
       - Discounted
+    ElectronicBankingOptType:
+      title: ElectronicBankingOptType
+      type: string
+      enum:
+      - InquiryOnly
+      - Enabled
+      - Disable
+    ExcessAmtCodeType:
+      title: ExcessAmtCodeType
+      type: string
+      enum:
+      - ProductDefaults
+      - ApplyToBalance
+    FeeAggregationOptionType:
+      title: FeeAggregationOptionType
+      type: string
+      enum:
+      - None
+      - FeeBal
+      - PrincipalBal
     FeeBillingOptionType:
       title: FeeBillingOptionType
       type: string
@@ -599,6 +1294,56 @@ components:
       - FlatFeeBalanceinExcess
       - SBARecoupment
       - SBACurtailment
+    FeeOptionType:
+      title: FeeOptionType
+      type: string
+      enum:
+      - Analysis
+      - Charge
+      - DoNotCharge
+      - SvcChg
+      - SvcChgCreditBack
+      - Waive
+      - Rebatable
+    FeePriorityOptionType:
+      title: FeePriorityOptionType
+      type: string
+      enum:
+      - HigherAmt
+      - LowerAmt
+      - Combine
+    FeeTypeType:
+      title: FeeTypeType
+      type: string
+      enum:
+      - AnalysisSvcChg
+      - ATMFee
+      - BillPmt
+      - DormantFee
+      - EIM
+      - FDIC
+      - FeeCharge
+      - Other
+      - OtherNonTax
+      - OverdraftFee
+      - OverdraftInt
+      - Recurring
+      - Payoff
+      - FASB
+      - FASBCost
+      - UnusedLimit
+      - Prepayment
+      - LateFee
+      - Deduction
+      - NSFFee
+      - CustomerFee
+      - NonCustomerFee
+    FIIdentTypeType:
+      title: FIIdentTypeType
+      type: string
+      enum:
+      - ABA
+      - RoutingNum
     HandlingCodeOptionType:
       title: HandlingCodeOptionType
       type: string
@@ -613,18 +1358,185 @@ components:
       - DoNotPrint
       - UsePortfolio
       - UseDefault
+    HoldTypeType:
+      title: HoldTypeType
+      type: string
+      enum:
+      - Auth
+      - POS
+      - Hold
+      - Mgmt
+      - Extended
+      - Credit
+      - NoChkHold
+      - NoMgmtHold
+      - Caution
+      - ACH
+    IntRateCalcOptionType:
+      title: IntRateCalcOptionType
+      type: string
+      enum:
+      - FirstDisbursement
+      - NewAccountOpen
+    IntReportingCodeType:
+      title: IntReportingCodeType
+      type: string
+      enum:
+      - None
+      - 1099-INT
+      - 1099-OID
+      - 1099-A
+      - 1099-C
+      - 1099-AC-Combined
+      - 1042-S
+    IRSReportOptionType:
+      title: IRSReportOptionType
+      type: string
+      enum:
+      - Primary
+      - Secondary
+      - Both
+    LeadDaysOptionType:
+      title: LeadDaysOptionType
+      type: string
+      enum:
+      - Business
+      - Calendar
     MarginTypeType:
       title: MarginTypeType
       type: string
       enum:
       - Variance
       - Factor
+    MaturityIntRateTypeType:
+      title: MaturityIntRateTypeType
+      type: string
+      enum:
+      - CurrentRate
+      - CurrentRateInPeriod
+      - MaturityIntRate
+      - RateAdjuster
+      - RatePlusAdjuster
+      - RatePlusAdjusterPct
+      - RateAdjusterOverrideFloorCeiling
+      - RatePlusAdjusterOverrideFloorCeiling
+      - RatePlusAdjusterPctOverrideFloorCeiling
     MaturityIntRecurTypeType:
       title: MaturityIntRecurTypeType
       type: string
       enum:
       - Daily
       - Maturity
+    MemoPostProcessOptOvrdType:
+      title: MemoPostProcessOptOvrdType
+      type: string
+      enum:
+      - Detail
+      - DetailEnhanced
+      - Summary
+      - None
+    MilitaryRegionType:
+      title: MilitaryRegionType
+      type: string
+      enum:
+      - APO AA
+      - APO AE
+      - APO AP
+      - FPO AA
+      - FPO AE
+      - FPO AP
+    NextEarningDateOptionType:
+      title: NextEarningDateOptionType
+      type: string
+      enum:
+      - LastEarning
+      - OpenDate
+      - LastDateOfPeriod
+    NextRenewalDateOptionType:
+      title: NextRenewalDateOptionType
+      type: string
+      enum:
+      - LastMaturity
+      - LastEarning
+    NicknameOptionType:
+      title: NicknameOptionType
+      type: string
+      enum:
+      - Printed
+      - NotPrinted
+    NoticeOptionType:
+      title: NoticeOptionType
+      type: string
+      description: Notification code that indicates whether the notification of the tranfer is applicable for the account
+      enum:
+      - NoNotice
+      - GenerateNotice
+      - NoticeSent
+      - NoOverride
+    NoticeTypeType:
+      title: NoticeTypeType
+      type: string
+      description: "Information used to identify the type of notice. <br>\nValid values are: \n  - RegularNotice\n  - ACHNotice"
+      enum:
+      - RegularNotice
+      - ACHNotice
+      - ChargeBack
+      - PayeeChanges
+      - BalanceOnReceipt
+      - IntNotice
+      - MaturityNotice
+      - RateChangeNotice
+      - RegCCNotice
+      - DrillNotice
+      - PmtChgNotice
+      - NSFNotice
+      - PastDueNotice
+      - BillingNotice
+      - LoanAdvanceNotice
+      - RatePmtChangeNotice
+      - TicklerNotice
+      - PastDueNotice1
+      - PastDueNotice2
+      - PastDueNoticeGuarantor
+      - HUDNotice
+      - CreditBureauNotice
+      - AutoPmtNotice
+    OEDCodeType:
+      title: OEDCodeType
+      type: string
+      enum:
+      - Director
+      - Employee
+      - ExecutiveOfficer
+      - FamilyMember
+      - FiservOfficerOrEmployee
+      - MainShareHolder
+      - Officer
+      - RelInterest
+      - SubsidaryEmployee
+      - SvcCorpEmployee
+      - Other
+      - NoRelationship
+      - OfficerOtherBank
+    OpenMethodType:
+      title: OpenMethodType
+      type: string
+      enum:
+      - InPerson
+      - Internet
+      - Mail
+      - Phone
+      - Mobile
+      - Email
+      - Fax
+      - PostOffice
+    OwnershipType:
+      title: OwnershipType
+      type: string
+      enum:
+      - Individual
+      - JointAnd
+      - JointOr
     PartyIdentTypeType:
       title: PartyIdentTypeType
       type: string
@@ -635,13 +1547,91 @@ components:
       - MemberNum
       - OrgNum
       - PersonNum
-    PassbkTrnTypeType:
-      title: PassbkTrnTypeType
+    PhoneTypeType:
+      title: PhoneTypeType
       type: string
       enum:
-      - Debit
-      - Credit
-      - Interest
+      - Fax-Foreign
+      - Work-Foreign
+      - Mobile-Foreign
+      - EvePhone
+      - DayPhone
+      - EveFax
+      - DayFax
+      - Home
+      - Work
+      - Mobile
+      - Fax
+      - Pager
+      - Modem
+      - Other
+    PostingPriorityType:
+      title: PostingPriorityType
+      type: string
+      enum:
+      - First
+      - Last
+    PostingStatusType:
+      title: PostingStatusType
+      type: string
+      enum:
+      - NoHold
+      - AcceptNoPmt
+      - AllowNoAdvance
+      - NoPmtNoAdvance
+    PriorityMethodType:
+      title: PriorityMethodType
+      type: string
+      enum:
+      - UseGreatestAmt
+      - UseSmallestAmt
+      - UseAmt
+      - UsePercent
+    RateCalcMethodType:
+      title: RateCalcMethodType
+      type: string
+      enum:
+      - Comparison
+      - PreviousIndex
+      - VarianceFactor
+    RateCarryOverOptionType:
+      title: RateCarryOverOptionType
+      type: string
+      enum:
+      - None
+      - Shortage
+      - Excess
+      - ExcessAndShortage
+    RateChangeControlType:
+      title: RateChangeControlType
+      type: string
+      enum:
+      - Fixed
+      - RateIndex
+      - BaseIndexRate
+      - IndexFreq
+      - StepFreq
+      - Renewal
+      - BalanceTableReview
+      - PeriodReview
+      - AtMaturity
+      - Manual
+      - BalanceRateTable
+      - OnSchedule
+      - None
+    RateChangeIntervalOptionType:
+      title: RateChangeIntervalOptionType
+      type: string
+      enum:
+      - FirstTermOnly
+      - EachTerm
+      - RateTerm
+    RateChangeRangeType:
+      title: RateChangeRangeType
+      type: string
+      enum:
+      - Down
+      - Up
     RateChangeRecurTypeType:
       title: RateChangeRecurTypeType
       type: string
@@ -664,6 +1654,73 @@ components:
       - Debit
       - Stmt
       - StmtDebit
+    RatePricingMethodType:
+      title: RatePricingMethodType
+      type: string
+      enum:
+      - Step
+      - TermBalance
+      - TermBalanceVariance
+      - IndexRate
+    RecurTypeType:
+      title: RecurTypeType
+      type: string
+      description: |-
+        Type of payment cycle.<br>
+        Valid values are:
+          - Cycle
+          - Monthly
+          - TwiceMonthly
+          - Quarterly
+          - Yearly
+          - Weekly
+          - Once
+          - Maturity
+      enum:
+      - Daily
+      - Maturity
+      - InterestCycle
+      - Monthly
+      - BiMonthly
+      - Once
+      - SemiMonthly
+      - TwiceMonthly
+      - Weekly
+      - BiWeekly
+      - Yearly
+      - SemiYearly
+      - Cycle
+      - None
+      - PayOff
+      - Anniversary
+      - PmtRecalculation
+      - Quarterly
+      - CycleAndQuarterly
+      - SvcChgCycle
+    RefTypeType:
+      title: RefTypeType
+      type: string
+      description: |-
+        Identify the type of reference information used.
+        Valid values are:
+          - PayeeDesc
+          - PayorDesc
+      enum:
+      - PayeeDesc
+      - ReceivingAcctName
+      - PayorDesc
+      - GLAccount
+      - XferDesc
+      - PmtRef
+      - InsuranceCompany
+      - CardStock
+      - CardImage
+      - IVRRefNum
+      - ATMRefNum
+      - Photo
+      - Signature
+      - SerialNum
+      - TranCode
     RegDDAPYCodeType:
       title: RegDDAPYCodeType
       type: string
@@ -680,6 +1737,30 @@ components:
       - ThirdOfficer
       - FourthOfficer
       - ReferralOfficer
+    ReminderCategoryType:
+      title: ReminderCategoryType
+      type: string
+      enum:
+      - Memo
+      - MemoRequired
+      - Tickler
+      - TicklerRequired
+    RenewalOptionType:
+      title: RenewalOptionType
+      type: string
+      enum:
+      - AutomaticRenewal
+      - NoRenewalAllowed
+      - Reinvest
+      - None
+    ReportAmtTypeType:
+      title: ReportAmtTypeType
+      type: string
+      enum:
+      - DebtDischarge
+      - IntCanceled
+      - FairMarketValue
+      - Principal
     RetentionOptionType:
       title: RetentionOptionType
       type: string
@@ -687,6 +1768,31 @@ components:
       - None
       - DoNotRetain
       - Retain
+    RewardDispositionTypeType:
+      title: RewardDispositionTypeType
+      type: string
+      enum:
+      - TransferToAcct
+      - Check
+      - Capitalize
+      - None
+    RewardTypeType:
+      title: RewardTypeType
+      type: string
+      enum:
+      - TranferCents
+      - CashBack
+    RiskCategoryType:
+      title: RiskCategoryType
+      type: string
+      enum:
+      - RiskScore1
+      - RiskScore2
+      - CreditScore
+      - RiskCode
+      - RatingCode1
+      - RatingCode2
+      - RatingCode3
     RoundingOptionType:
       title: RoundingOptionType
       type: string
@@ -703,14 +1809,118 @@ components:
       - Error
       - Warning
       - Info
-    StopChkStatusCodeType:
-      title: StopChkStatusCodeType
+    SpecialHandlingType:
+      title: SpecialHandlingType
       type: string
-      description: Type of the stop check status.
-      example: valid
       enum:
-      - Valid
-      - Deleted
+      - ACH
+      - ATM
+      - AssessFee
+      - AdditionalFunds
+      - Advance
+      - Automatic
+      - AvailAmt
+      - BillAmt
+      - Capitalize
+      - ChargeOff
+      - CloseAcct
+      - CollectFee
+      - Dealer
+      - Domestic
+      - DecreaseOriginal
+      - DecreaseAccrued
+      - ExcessToEsc
+      - ExcessToPrin
+      - Extension
+      - FederalTax
+      - ForceDistribution
+      - ForceOD
+      - FromBalAmt
+      - FromWdAmt
+      - IgnoreBillingSplit
+      - IgnoreOriginal
+      - IncreaseAccrued
+      - IncreaseOriginal
+      - IncreasePrinDue
+      - International
+      - IRS
+      - Irregular
+      - Journal
+      - Manual
+      - Memo
+      - NegAm
+      - NoCurtailment
+      - NoDLA
+      - NoFASBFee
+      - NonRebatable
+      - NoPenalty
+      - NoStmtYTD
+      - PayFee
+      - PayFirst
+      - PayLast
+      - Penalty
+      - PostCalcInterest
+      - Premature
+      - Prepaid
+      - Prepetition
+      - Rebatable
+      - Recovery
+      - Refund
+      - ReOpen
+      - Replacement
+      - RepaidLoan
+      - ReturnedItem
+      - SalesTax
+      - Shortage
+      - SplitSchedule
+      - StateTax
+      - UnappliedFunds
+      - Unpaid
+      - Unscheduled
+      - VerifyAccrued
+      - WaiveFee
+      - WaiveInt
+      - WaiveIns
+      - FedWire
+      - SWIFT
+      - RTP
+      - YTDOnly
+      - CustomerRequestedRefund
+      - UnclaimedFundsRefund
+    SpecialStmtCodeType:
+      title: SpecialStmtCodeType
+      type: string
+      enum:
+      - Transcript
+      - FinalStmt
+      - None
+      - DropTransactions
+    StmtOptionTypeType:
+      title: StmtOptionTypeType
+      type: string
+      enum:
+      - DailyEndingBal
+      - OverdraftReturnCharge
+    StmtOptionValueType:
+      title: StmtOptionValueType
+      type: string
+      enum:
+      - Print
+      - DoNotPrint
+    SubjectRoleType:
+      title: SubjectRoleType
+      type: string
+      enum:
+      - Teller
+      - Supervisor
+    TaxExemptType:
+      title: TaxExemptType
+      type: string
+      enum:
+      - NotTaxExempt
+      - NonProfit
+      - Government
+      - TaxExempt
     TaxIdentTypeType:
       title: TaxIdentTypeType
       type: string
@@ -722,6 +1932,31 @@ components:
       - ITIN
       - ATIN
       - Other
+    TaxIncentiveTypeType:
+      title: TaxIncentiveTypeType
+      type: string
+      enum:
+      - HSAFamily
+      - HSAIndividual
+      - HSA
+      - MQP
+      - QP
+      - MSA
+      - Keogh
+      - IRA
+      - None
+      - RothIRA
+      - SepIRA
+      - CoverdeIIESA
+      - DeferComp
+    TaxTypeType:
+      title: TaxTypeType
+      type: string
+      enum:
+      - StateTax
+      - FederalTax
+      - StateFederalTax
+      - SalesTax
     TermUnitsType:
       title: TermUnitsType
       type: string
@@ -731,6 +1966,34 @@ components:
       - Months
       - Years
       - Indefinite
+      - Unknown
+    TierAmtTypeType:
+      title: TierAmtTypeType
+      type: string
+      enum:
+      - Ledger
+      - Avail
+      - MinAvail
+      - AvgAvail
+      - AvgMinLedger
+      - AvgLedger
+      - MinLedger
+      - None
+    TierTypeType:
+      title: TierTypeType
+      type: string
+      enum:
+      - Whole
+      - Split
+      - Dynamic
+      - Compare
+    TranCounterTypeType:
+      title: TranCounterTypeType
+      type: string
+      enum:
+      - RegD3
+      - RegD6
+      - TranMTD
     TranHistoryOptionType:
       title: TranHistoryOptionType
       type: string
@@ -738,6 +2001,46 @@ components:
       - None
       - DoNotRetain
       - Retain
+    TransferBalTypeType:
+      title: TransferBalTypeType
+      type: string
+      enum:
+      - Principal
+      - Escrow
+      - Note
+      - Interest
+    TransferTypeType:
+      title: TransferTypeType
+      type: string
+      description: |-
+        Information used to specify the type of transfer.<br>
+        Valid values are:
+          - FundsTransfer
+          - RegularPayment
+          - PrincipalPayment
+          - InterestPayment
+          - EscrowPayment
+          - LoanAdvance
+      enum:
+      - EscrowPayment
+      - InsurancePayment
+      - InterestPayment
+      - PrincipalPayment
+      - RegularPayment
+      - LateChargePayment
+      - FundsTransfer
+      - LoanAdvance
+    UnitType:
+      title: UnitType
+      type: string
+      enum:
+      - Seconds
+      - Minutes
+      - Hours
+      - Days
+      - Weeks
+      - Months
+      - Years
     UnitsType:
       title: UnitsType
       type: string
@@ -752,6 +2055,22 @@ components:
       - Account
       - All
       - None
+    USATaxIdCertCodeType:
+      title: USATaxIdCertCodeType
+      type: string
+      enum:
+      - CertNotOnFile
+      - CertOnFile
+      - AccountOpenedAfter1987
+      - AccountOpened1984-1987
+      - AccountOpenBefore1984
+      - Certified
+      - Uncertified
+      - CertifiedPending
+      - Notice1
+      - Notice2
+      - CertNotRequired[
+      - IRSMandatedWithholding
     VarianceFactorTypeType:
       title: VarianceFactorTypeType
       type: string
@@ -761,12 +2080,59 @@ components:
       - Factor
       - Factor+Variance
       - VarianceXFactor
+    WarningTypeType:
+      title: WarningTypeType
+      type: string
+      enum:
+      - Warning
+      - Lockout
+      - LOCLockout
+    WeekendOptionType:
+      title: WeekendOptionType
+      type: string
+      enum:
+      - BuildOnFriday
+      - BuildOnSaturday
+      - BuildOnMonday
+      - BuildOnFridayAndMonday
+      - BuildOnSaturdayAndMonday
+    WithholdingOptionType:
+      title: WithholdingOptionType
+      type: string
+      enum:
+      - None
+      - StateTax
+      - FederalTax
+      - StateFederalTax
     WithholdingTypeType:
       title: WithholdingTypeType
       type: string
       enum:
       - FederalTax
       - StateTax
+    XferAmtCodeType:
+      title: XferAmtCodeType
+      type: string
+      description: Code that indicates whether the next transfer amount is fixed or variable
+      enum:
+      - Fixed
+      - Variable
+      - IntPlusDistribution
+      - BalanceMinusDistribution
+    XferStatusCodeType:
+      title: XferStatusCodeType
+      type: string
+      enum:
+      - Valid
+      - Rejected
+    XferStatusTypeType:
+      title: XferStatusTypeType
+      type: string
+      enum:
+      - New
+      - Active
+      - Inactive
+      - Expired
     AccessLevelDataType:
       title: AccessLevelDataType
       type: object
@@ -784,53 +2150,30 @@ components:
       type: object
       properties:
         RecurType:
-          type: string
-          description: Recurrence Type. Indicates the pattern of recurrence.
-        RecurTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Recurrence Type Enumeration Description.
+          $ref: '#/components/schemas/RecurTypeType'
         RecurInterval:
           type: integer
-          description: 'Recurrence Interval. Number of units between occurrences. Should be an integer. If  ‘Daily’: Number of days between occurrences. If   ‘Weekly’: Number of weeks between occurrences. If   ''Monthly’: Number of months between occurrences. If   ‘Yearly’: Number of years between occurrences. If not provided, assume default value of 1, i.e. every day, every week, every month, or every year. If ''Cycle'' : Number of the designated cycle.'
-          format: int64
-        RecurInstance:
-          type: integer
-          description: Recurrent Instance. Numeric value representing the instance of the days(s) of the week of recurrence, i.e. Second Wednesday of the month, First Monday of the year. DayOfWeek must also be provided.
-          format: int64
-        DayOfWeek:
-          $ref: '#/components/schemas/DayOfWeekType'
-        DayOfMonth:
-          $ref: '#/components/schemas/DayOfMonthType'
-        SecondDayOfMonth:
-          $ref: '#/components/schemas/DayOfMonthType'
-        Month:
-          type: integer
-          description: 'Month. Numeric value representing the month of recurrence. Valid values: integers between 1 and 12 inclusive.'
+          description: |-
+            It is the integer value refering to the time interval between the recuuring transfer of funds. <br>
+            If  ‘Daily’: Number of days between occurrences. If   ‘Weekly’: Number of weeks between occurrences. If   'Monthly’: Number of months between occurrences. If   ‘Yearly’: Number of years between occurrences. If 'Cycle' : Number of the designated cycle. <br> The default value is : 1
           format: int64
         RecurStartDate:
           type: string
-          description: Recurrence Start Date.
+          description: |-
+            Staring date for the tranfer.<br>
+            Format: yyyy-mm-dd
           format: date
+          example: 2021-10-20
         Occurrences:
           type: integer
           description: Occurrences.
           format: int64
         RecurEndDate:
           type: string
-          description: Recurrence End Date.
+          description: |-
+            Ending date or expiry date for the tranfer.<br>
+            Format: yyyy-mm-dd
           format: date
-        LeadDays:
-          type: integer
-          description: Lead Days. Number of days prior to a specified date.
-          format: int64
-        AdjDays:
-          type: integer
-          description: Adjustment Days. Indicates the number of days to adjust a value (review a rate or perform interest accrual) after an event occurs (see AdjDaysBasis).
-          format: int64
-        AdjDaysBasis:
-          type: string
-          description: 'Adjustment Days Basis. Used in combination with Adjustment Days (AdjDays). It indicates a basis for an adjustment such as: Due Date (DueDt), Statement Date (StmtDt).'
     AccrualFrequencyType:
       title: AccrualFrequencyType
       allOf:
@@ -847,20 +2190,20 @@ components:
         CurCodeValue:
           maxLength: 80
           type: string
-          description: Currency code value as per the ISO4217-Alpha format. <br>Please note that presently only USD currency code is suppoerted.
-          example: USD
-      description: Details of the currency code.
+          description: |-
+            Currency code value as per the ISO4217-Alpha format. <br>
+            Please note that presently only USD currency code is supported.
+      description: Details of the currency code
     CurAmtType:
       title: CurAmtType
       type: object
       properties:
         Amt:
           type: number
-          description: Amount in decimal.
-          example: 10
+          description: Amount to be transferred is in decimal
         CurCode:
           $ref: '#/components/schemas/CurCodeType'
-      description: Details of the currency amount.
+      description: Details of the currency amount to be transferred
     AcctBalType:
       title: AcctBalType
       required:
@@ -869,8 +2212,7 @@ components:
       type: object
       properties:
         BalType:
-          type: string
-          description: Balance Type.
+          $ref: '#/components/schemas/BalTypeType'
         BalTypeEnumDesc:
           maxLength: 80
           type: string
@@ -882,7 +2224,7 @@ components:
           description: Expiration Date.
           format: date
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
     BaseKeysType:
@@ -909,8 +2251,7 @@ components:
       type: object
       properties:
         CardIdentType:
-          type: string
-          description: 'Card Identification Type. Valid values include: PORT.'
+          $ref: '#/components/schemas/CardIdentTypeType'
         CardIdentValue:
           maxLength: 36
           type: string
@@ -946,34 +2287,53 @@ components:
       type: object
       properties:
         AcctIdentType:
-          type: string
-          description: 'Account Identification Type. Valid values include: AcctNum, AliasAcct, PORT, etc.'
+          $ref: '#/components/schemas/AcctIdentTypeType'
         AcctIdentValue:
           maxLength: 36
           type: string
-          description: Account Identification Value. Contains the value of the Account Identifier.
+          description: |-
+            Value to identify the type of the external tranfer account type.
+            <br>
+            Valid values are:
+              - None
+              - DDA
+              - SDA
+              - LOAN
+              - Vendor
+              - Check
     AcctKeysType:
       title: AcctKeysType
-      description: Details of the account keys to identify an account record.
+      description: Unique account information used to identify the account record
       allOf:
+      - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
           AcctId:
             maxLength: 36
             type: string
-            description: Unique account identification number.
-            example: "2000"
+            description: Unique identification number of an account
           AcctType:
-            type: string
-            description: "Type of an account. <br> Valid values are:\n  - DDA\n  - SDA\n  - CDA\n  - LOAN\n  \n<br> For more information on account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open\"> Glossary </a>."
-            example: CDA
-          BranchIdent:
-            maxLength: 22
+            $ref: '#/components/schemas/AcctTypeType'
+          AcctIdent:
             type: array
-            description: Branch identification code.
-            example: 1234
+            description: Alternative account identifiers used in case of external tranfers
             items:
-              maxLength: 22
+              $ref: '#/components/schemas/AcctIdentType'
+          FIIdentType:
+            type: array
+            description: |-
+              Identification type to identify financial institution.
+              <br>
+              Valid value is:
+                - RoutingNum
+            items:
+              $ref: '#/components/schemas/FIIdentTypeType'
+          FIIdent:
+            maxLength: 34
+            type: array
+            description: 'Unique identification number of a financial institution '
+            items:
+              maxLength: 34
               type: string
     AcctPrefType:
       title: AcctPrefType
@@ -1028,27 +2388,17 @@ components:
       type: object
       properties:
         RefType:
-          type: string
-          description: Reference Type. Type of reference information used.
-        RefTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Reference Type Enumeration Description.
+          $ref: '#/components/schemas/RefTypeType'
         RefIdent:
           maxLength: 36
           type: string
-          description: Reference Identifier.  In combination with the reference type identifies the reference data.
-        RefDesc:
-          maxLength: 1024
-          type: string
-          description: Reference Description.
+          description: Unique Identification code for reference information
     DateDataType:
       title: DateDataType
       type: object
       properties:
         DateType:
-          type: string
-          description: Date Type. Indicates the type of date contained in the Date Value.
+          $ref: '#/components/schemas/DateTypeType'
         DateTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1072,33 +2422,21 @@ components:
         RelationshipMgrIdent:
           maxLength: 36
           type: string
-          description: Relationship Manager Identifier. Identifies officer/employee of financial institution.
-        RelationshipMgrIdentEnumDesc:
-          maxLength: 80
-          type: string
-          description: Relationship Manager Identifier Enumeration Description.
+          description: Unique identfier for a relationship manager
         RelationshipRole:
           $ref: '#/components/schemas/RelationshipRoleType'
-        RelationshipRoleEnumDesc:
-          maxLength: 80
-          type: string
-          description: Relationship Role Enumeration Description.
     AddtlTitlesType:
       title: AddtlTitlesType
       type: object
       properties:
         AcctTitleType:
-          maxLength: 80
-          type: string
-          description: Account Title Type.
+          $ref: '#/components/schemas/AcctTitleTypeType'
         AcctTitle:
           maxLength: 255
           type: string
           description: Account Title.Title on account typically identifies ownership or responsibility for account and manner in which ownership/responsibility is assigned.
         AcctTitleOption:
-          maxLength: 80
-          type: string
-          description: Account Title Option. Indicates printing options for the Account Title.
+          $ref: '#/components/schemas/AcctTitleOptionType'
         DBAInd:
           type: boolean
           description: Doing Business As Indicator. Adds prefix DBA to the title when selected.
@@ -1113,8 +2451,7 @@ components:
       type: object
       properties:
         DataClassType:
-          type: string
-          description: Data Class Type. Application the data belongs, this is client defined value.
+          $ref: '#/components/schemas/DataClassTypeType'
         DataClassTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1128,8 +2465,7 @@ components:
           type: string
           description: Data Identifier Enumeration Description.
         DataType:
-          type: string
-          description: Data Type. Indicates the type of client defined data.
+          $ref: '#/components/schemas/DataTypeType'
         DataTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1147,7 +2483,7 @@ components:
           description: Expiration Date.
           format: date
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
         RequiredFlag:
@@ -1177,8 +2513,7 @@ components:
             type: boolean
             description: Alternate Statement Indicator. If the information of the statement time frame refers to the alternate statement cycle  the value is set to true.
           AlternateStmtOption:
-            type: string
-            description: Alternate Statement Option.
+            $ref: '#/components/schemas/AlternateStmtOptionType'
     StmtDisclosureDataType:
       title: StmtDisclosureDataType
       type: object
@@ -1199,11 +2534,9 @@ components:
       type: object
       properties:
         StmtOptionType:
-          type: string
-          description: Statement Option Type.
+          $ref: '#/components/schemas/StmtOptionTypeType'
         StmtOptionValue:
-          type: string
-          description: Statement Option Value.
+          $ref: '#/components/schemas/StmtOptionValueType'
     AcctStmtDataType:
       title: AcctStmtDataType
       type: object
@@ -1237,8 +2570,7 @@ components:
           type: boolean
           description: Use Shared Account for Combined Statement. For Credit Unions indicates whether the primary statement lead account should be set to the tax owner share account. In DNA the Combined Statement Ident is the primary statement lead account.
         CombinedStmtCode:
-          type: string
-          description: Combined Statement Code. Primary and Secondary.
+          $ref: '#/components/schemas/CombinedStmtCodeType'
         CombinedStmtCodeEnumDesc:
           maxLength: 80
           type: string
@@ -1248,8 +2580,7 @@ components:
           description: Additional Statement Count.
           format: int64
         SpecialStmtCode:
-          type: string
-          description: 'Special Statement Code. Used to indicate a special statement drop. Valid values: FinalStmt, Transcript, None.'
+          $ref: '#/components/schemas/SpecialStmtCodeType'
         SpecialStmtCodeEnumDesc:
           maxLength: 80
           type: string
@@ -1328,47 +2659,16 @@ components:
       type: object
       properties:
         NoticeType:
-          type: string
-          description: Account Notice Type.
-        NoticeTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Account Notice Type Enumeration Description.
+          $ref: '#/components/schemas/NoticeTypeType'
         NoticeOption:
-          type: string
-          description: Notice Option.
-        NoticeOptionEnumDesc:
-          maxLength: 80
-          type: string
-          description: Account Notice Option Enumeration Description.
-        NoticeFormat:
-          maxLength: 80
-          type: string
-          description: Notice Format.
-        HandlingCode:
-          maxLength: 80
-          type: string
-          description: Handling Code .Indicates special handling of notification and statement forms.
-        LeadDays:
-          type: integer
-          description: Lead Days. Number of days prior to a specified date.
-          format: int64
-        NoticeRemarks:
-          maxLength: 50
-          type: string
-          description: Notice Remarks. User-defined text to appear on a user-defined notice.
-        GenLastUpDtInd:
-          type: boolean
-          description: Generated Last Update Indicator.
+          $ref: '#/components/schemas/NoticeOptionType'
     LowCurAmtType:
       title: LowCurAmtType
-      description: Details of the minimum amount range that contains the amount value and currency code information.
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
     HighCurAmtType:
       title: HighCurAmtType
-      description: Details of the maximum amount range that contains the amount value and currency code information.
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -1406,6 +2706,11 @@ components:
         Margin:
           type: number
           description: Margin. Percentage applied to BasedOnValue to calculate interest rate. For example, the BasedOnValue is the Prime rate, a percentage is added to/subtracted from the prime rate.
+        EffDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         IntAPY:
           type: number
           description: Interest APY.
@@ -1428,8 +2733,7 @@ components:
       type: object
       properties:
         BalCutOffType:
-          type: string
-          description: Balance CutOff Balance Type.  The Balance Cutoff Type indicates the account balance that is compared with the Balance CutOff Amount.
+          $ref: '#/components/schemas/BalCutOffTypeType'
         BalCutOffTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1480,8 +2784,7 @@ components:
         APYRecurType:
           $ref: '#/components/schemas/APYRecurTypeType'
         AccrualMethod:
-          type: string
-          description: 'Accrual Method. For example: Daily, Simple, Continuous.'
+          $ref: '#/components/schemas/AccrualMethodType'
         AccrualMethodEnumDesc:
           maxLength: 80
           type: string
@@ -1495,15 +2798,13 @@ components:
           type: string
           description: Accrual Code Enumeration Description.
         AccrualOnBalance:
-          type: string
-          description: Accrual On Balance. Identifies the type of amount used for calculate interest.
+          $ref: '#/components/schemas/AccrualOnBalanceType'
         AccrualOnBalanceEnumDesc:
           maxLength: 80
           type: string
           description: Accrual On Balance Enumeration Description.
         DailyAccrual:
-          type: string
-          description: 'Daily Accrual. Indicates how ''daily'' is determined when interest is accrued on a daily basis. Valid values: Standard360, Actual365, Actual366.'
+          $ref: '#/components/schemas/DailyAccrualType'
         DailyAccrualEnumDesc:
           maxLength: 80
           type: string
@@ -1529,15 +2830,13 @@ components:
           description: Expiration Date.
           format: date
         TierType:
-          type: string
-          description: Tier Types. Indicates if the tier uses whole tier balance, split tier balance or dynamic tier balance methods.
+          $ref: '#/components/schemas/TierTypeType'
         TierTypeEnumDesc:
           maxLength: 80
           type: string
           description: Tier Types Enumeration Description.
         TierAmtType:
-          type: string
-          description: Tier Amount Type.Identifies the type of amount used in the tier.
+          $ref: '#/components/schemas/TierAmtTypeType'
         TierAmtTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1547,15 +2846,13 @@ components:
         SplitRateData:
           $ref: '#/components/schemas/SplitRateDataType'
         IntRateCalcOption:
-          type: string
-          description: Interest Rate Calculation Option. Indicates whether the interest rate should be calculated at the time of the first disbursement or when the loan account is opened.
+          $ref: '#/components/schemas/IntRateCalcOptionType'
     MaturityIntCalcDataType:
       title: MaturityIntCalcDataType
       type: object
       properties:
         MaturityIntRateType:
-          type: string
-          description: Maturity Interest Rate Type. Indicates the type of rate to use to accrue interest after maturity.
+          $ref: '#/components/schemas/MaturityIntRateTypeType'
         MaturityIntRateTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1636,8 +2933,7 @@ components:
       type: object
       properties:
         RateChangeRange:
-          type: string
-          description: Change Range Maximum and Minimum. Used for systems that define min and maxium up and down rate changes.
+          $ref: '#/components/schemas/RateChangeRangeType'
         MinRateChange:
           type: number
           description: Minimum Range Change. Minimum amount that the interest rate must change per review period before a rate change is allowed.
@@ -1653,22 +2949,19 @@ components:
           type: string
           description: Rate Change Identifier.
         RateChangeControl:
-          type: string
-          description: 'Interest Rate Change Control. Used to indicate the type of interest rate for example: Fixed, Index, IndexReview, StepReview, etc.'
+          $ref: '#/components/schemas/RateChangeControlType'
         RateChangeControlEnumDesc:
           maxLength: 80
           type: string
           description: Interest Change Control Enumeration Description.
         RateCalcMethod:
-          type: string
-          description: Rate Calculation Method. Code that indicates how the system calculates the interest rate when the rate changes with Index at Review.
+          $ref: '#/components/schemas/RateCalcMethodType'
         RateCalcMethodEnumDesc:
           maxLength: 80
           type: string
           description: Rate Calculation Method Enumeration Description.
         RatePricingMethod:
-          type: string
-          description: Rate Pricing Method. Indicates whether accounts within this product type use a step table, term/balance table, term/balance/variance matrix, balance/rate table or it uses an interest plan to determine initial rate and rate at renewal.
+          $ref: '#/components/schemas/RatePricingMethodType'
         RatePricingMethodEnumDesc:
           maxLength: 80
           type: string
@@ -1691,8 +2984,7 @@ components:
           description: Number of Rate Changes per term.
           format: int64
         RateChangeIntervalOption:
-          type: string
-          description: Number of Rate Changes Interval Option. Indicates if the number of rate changes applies to the first term only, to each term or is limited to what is specified in the Step Rate Table.
+          $ref: '#/components/schemas/RateChangeIntervalOptionType'
         BasedOnCode:
           maxLength: 80
           type: string
@@ -1768,8 +3060,7 @@ components:
           type: number
           description: Rounding Factor. Used with the RoundingOption to establish the rounding percentage.
         RateCarryOverOption:
-          type: string
-          description: Carry Over Option. Indicates the method used to handle the interest rate excess or shortage carryover from previous rate review periods.
+          $ref: '#/components/schemas/RateCarryOverOptionType'
         RateCarryOverOptionEnumDesc:
           maxLength: 80
           type: string
@@ -1808,8 +3099,7 @@ components:
           description: Lead Days. Number of days prior to a specified date.
           format: int64
         LeadDaysOption:
-          type: string
-          description: Lead Days Option.
+          $ref: '#/components/schemas/LeadDaysOptionType'
         RecurStartDate:
           type: string
           description: Recurrence Start Date.
@@ -1887,8 +3177,7 @@ components:
       type: object
       properties:
         AcctAmtType:
-          type: string
-          description: Account Amount Type.
+          $ref: '#/components/schemas/AcctAmtTypeType'
         AmtSeqId:
           maxLength: 10
           type: string
@@ -1898,8 +3187,7 @@ components:
           type: string
           description: Account Amount Type Enumeration Description.
         AcctPeriodType:
-          type: string
-          description: Account Period Type. Indicates the time period for example CTD- Cycle to Date, LTD- Life to Day, PriorMonth, etc.
+          $ref: '#/components/schemas/AcctPeriodTypeType'
         AcctPeriodTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1946,8 +3234,7 @@ components:
           description: Count. Sometimes specifies the duration of the time frame base on the units specified.
           format: int64
         TranCounterType:
-          type: string
-          description: Transaction Counter Type. Used for Regulation D transaction counter.
+          $ref: '#/components/schemas/TranCounterTypeType'
     LocatorType:
       title: LocatorType
       type: string
@@ -2000,8 +3287,7 @@ components:
       type: object
       properties:
         CountryCodeSource:
-          type: string
-          description: Country Code Source. Used with CountryCodeValue to indicate the Country Code Source table.
+          $ref: '#/components/schemas/CountryCodeSourceType'
         CountryCodeValue:
           maxLength: 80
           type: string
@@ -2029,8 +3315,7 @@ components:
           description: Count. Sometimes specifies the duration of the time frame base on the units specified.
           format: int64
         Unit:
-          type: string
-          description: Unit.
+          $ref: '#/components/schemas/UnitType'
         UnitEnumDesc:
           maxLength: 80
           type: string
@@ -2069,8 +3354,7 @@ components:
         type: object
         properties:
           PhoneType:
-            type: string
-            description: Phone Type.
+            $ref: '#/components/schemas/PhoneTypeType'
           PhoneTypeEnumDesc:
             maxLength: 80
             type: string
@@ -2089,6 +3373,10 @@ components:
           PreferredPhone:
             type: boolean
             description: Preferred Phone.
+          Priority:
+            maxLength: 10
+            type: string
+            description: Priority Code.
           DoNotContactInd:
             type: boolean
             description: Do Not Contact Indicator.
@@ -2154,10 +3442,9 @@ components:
           AddressIdent:
             maxLength: 36
             type: string
-            description: Address Identification. Used as pointer to a reference of an address. Other identification used as part of the Address string key.
+            description: Address Identification. Used as pointer to a reference of an address. Other identification used as part of the Address object key.
           AddrUse:
-            type: string
-            description: Address Use. Indicates the use of the address for example Business or Home, Statement, Check, Government, etc.
+            $ref: '#/components/schemas/AddrUseType'
           AddrUseEnumDesc:
             maxLength: 80
             type: string
@@ -2168,6 +3455,18 @@ components:
             maxLength: 80
             type: string
             description: Address Format Type Enumeration Description.
+          FullName1:
+            maxLength: 96
+            type: string
+            description: Full Name Line 1.
+          FullName2:
+            maxLength: 96
+            type: string
+            description: Full Name Line 2.
+          FullName3:
+            maxLength: 96
+            type: string
+            description: Full Name Line 3.
           Addr1:
             maxLength: 64
             type: string
@@ -2197,8 +3496,7 @@ components:
             type: string
             description: Apartment Number.
           ApartmentNumType:
-            type: string
-            description: Apartment Number Type. This is an identifier of the type of number provided in the Apartment Number field.
+            $ref: '#/components/schemas/ApartmentNumTypeType'
           HouseNum:
             maxLength: 15
             type: string
@@ -2211,13 +3509,6 @@ components:
             maxLength: 64
             type: string
             description: Street.
-          District:
-            maxLength: 32
-            type: string
-            description: District.
-          MilitaryRegion:
-            type: string
-            description: Military Region. Identifier that replaces State and City for military addresses
           LabelAddr:
             $ref: '#/components/schemas/LabelAddrType'
           AddrDefinedData:
@@ -2233,6 +3524,10 @@ components:
             maxLength: 32
             type: string
             description: County.
+          District:
+            maxLength: 32
+            type: string
+            description: District.
           StateProv:
             maxLength: 80
             type: string
@@ -2241,6 +3536,8 @@ components:
             maxLength: 80
             type: string
             description: State Province Enumeration Description.
+          MilitaryRegion:
+            $ref: '#/components/schemas/MilitaryRegionType'
           PostalCode:
             maxLength: 11
             type: string
@@ -2248,7 +3545,7 @@ components:
           Country:
             maxLength: 64
             type: string
-            description: County.
+            description: Country.
           CountryCode:
             $ref: '#/components/schemas/CountryCodeType'
           POBox:
@@ -2286,8 +3583,7 @@ components:
             description: Move In Date.
             format: date
           ContactMethod:
-            type: string
-            description: Contact Method.
+            $ref: '#/components/schemas/OpenMethodType'
           UpDt:
             pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
@@ -2362,8 +3658,7 @@ components:
           type: string
           description: Organization.
         TaxType:
-          type: string
-          description: Tax Type.
+          $ref: '#/components/schemas/TaxTypeType'
         TaxTypeEnumDesc:
           maxLength: 80
           type: string
@@ -2401,8 +3696,7 @@ components:
       type: object
       properties:
         USATaxIdCertCode:
-          type: string
-          description: USA Tax Identification Certification Code.Certification Code for a tax identification number.
+          $ref: '#/components/schemas/USATaxIdCertCodeType'
         USATaxIdCertCodeEnumDesc:
           maxLength: 80
           type: string
@@ -2437,8 +3731,7 @@ components:
       type: object
       properties:
         ReportAmtType:
-          type: string
-          description: Report Amount Type.
+          $ref: '#/components/schemas/ReportAmtTypeType'
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
     IntReporting1099DataType:
@@ -2446,11 +3739,9 @@ components:
       type: object
       properties:
         IRSReportOption:
-          type: string
-          description: 'IRS Report Option. Indicates the people must be included in the report: Primary, Secondary and Both.'
+          $ref: '#/components/schemas/IRSReportOptionType'
         DischargeEventCode:
-          type: string
-          description: Discharge Event Code. Indicates why the debt was discharged. This field is only available when the Report 1099-C or Report Combined 1099-CA.
+          $ref: '#/components/schemas/DischargeEventCodeType'
         EventDt:
           type: string
           description: Event Date.
@@ -2468,11 +3759,11 @@ components:
           description: Acquisition Date.
           format: date
         DebtDesc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Debt Description.
         PropertyDesc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Property Description.
     PrePayMaxAmtType:
@@ -2575,7 +3866,7 @@ components:
         WaiverReasonCode:
           maxLength: 80
           type: string
-          description: '[FSVR]Waiver Reason Code. Code that provides the reason the waive of the fee took place.'
+          description: Waiver Reason Code. Code that provides the reason the waive of the fee took place.
         WaiverReason:
           maxLength: 40
           type: string
@@ -2614,26 +3905,23 @@ components:
           type: string
           description: Fee Plan. A fee plan makes reference to a predefined set to values used to calculate fees.
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
         FeeType:
-          type: string
-          description: Fee Type.
+          $ref: '#/components/schemas/FeeTypeType'
         FeeTypeEnumDesc:
           maxLength: 80
           type: string
           description: Fee Type Enumeration Description.
         FeeOption:
-          type: string
-          description: Fee Option. Processing option or method used for the fee type.
+          $ref: '#/components/schemas/FeeOptionType'
         FeeOptionEnumDesc:
           maxLength: 80
           type: string
           description: Fee Option Enumeration Description.
         FeePriorityOption:
-          type: string
-          description: Fee Priority Option. Processing option used for the fee type.
+          $ref: '#/components/schemas/FeePriorityOptionType'
         FeeCalcOption:
           $ref: '#/components/schemas/FeeCalcOptionType'
         FeeCalcOptionEnumDesc:
@@ -2649,8 +3937,7 @@ components:
           type: string
           description: Fee Calculation Balance Enumeration Description.
         FeeAggregationOption:
-          type: string
-          description: Fee Aggregation Option. Indicates how the fee amount is applied in the loan account.
+          $ref: '#/components/schemas/FeeAggregationOptionType'
         FeeAggregationOptionEnumDesc:
           maxLength: 80
           type: string
@@ -2685,7 +3972,7 @@ components:
         MaxCurAmt:
           $ref: '#/components/schemas/MaxCurAmtType'
         DailyAccrual:
-          type: string
+          type: object
           description: 'Daily Accrual. Indicates how ''daily'' is determined when interest is accrued on a daily basis. Valid values: Standard360, Actual365, Actual366.'
         DailyAccrualEnumDesc:
           maxLength: 80
@@ -2734,7 +4021,7 @@ components:
         Company:
           maxLength: 60
           type: string
-          description: Company. Name of the insurance company.
+          description: Company. Name of the company.
         FaceValueAmt:
           $ref: '#/components/schemas/FaceValueAmtType'
         ReportingOptionCode:
@@ -2759,8 +4046,7 @@ components:
           description: Sequence Number.
           format: int64
         RiskCategory:
-          type: string
-          description: Risk Category. Indicates the credit Risk category for party.
+          $ref: '#/components/schemas/RiskCategoryType'
         RiskCategoryEnumDesc:
           maxLength: 80
           type: string
@@ -2822,8 +4108,7 @@ components:
       type: object
       properties:
         CashMgmtRelType:
-          type: string
-          description: Cash Management Relationship Type Code. Indicates the relationship of the account within a Cash Management Relationship (CMR) Structure. The account can be a Master Account, Zero Balance Account, a Concentration Account or a Final Investment Account.
+          $ref: '#/components/schemas/CashMgmtRelTypeType'
         CashMgmtRelTypeEnumDesc:
           maxLength: 80
           type: string
@@ -2849,8 +4134,7 @@ components:
       type: object
       properties:
         ReminderCategory:
-          type: string
-          description: Reminder Category.
+          $ref: '#/components/schemas/ReminderCategoryType'
         ReminderCategoryEnumDesc:
           maxLength: 80
           type: string
@@ -2867,8 +4151,7 @@ components:
           type: string
           description: Account Memo Identifier.
         AcctMemoType:
-          type: string
-          description: Account Memo Type.
+          $ref: '#/components/schemas/AcctMemoTypeType'
         AcctMemoCode:
           maxLength: 80
           type: string
@@ -2909,11 +4192,9 @@ components:
           type: number
           description: Original Issue  Rate.
         RenewalOption:
-          type: string
-          description: Renewal Option.
+          $ref: '#/components/schemas/RenewalOptionType'
         NextRenewalDateOption:
-          type: string
-          description: Next Renewal Date Option.
+          $ref: '#/components/schemas/NextRenewalDateOptionType'
         GraceDays:
           type: integer
           description: Grace Days.Number of days by which a debtor or acceptor of a draft may exceed the due date before being in default.
@@ -2927,8 +4208,7 @@ components:
           type: string
           description: Renewal Option Enumeration Description.
         NextEarningDateOption:
-          type: string
-          description: Next Earning Date Option.
+          $ref: '#/components/schemas/NextEarningDateOptionType'
         RenewalFrequency:
           $ref: '#/components/schemas/RenewalFrequencyType'
         LastRenewalDt:
@@ -2972,8 +4252,7 @@ components:
       type: object
       properties:
         AgreementType:
-          type: string
-          description: Agreement Type.
+          $ref: '#/components/schemas/AgreementTypeType'
         AgreementIdent:
           maxLength: 36
           type: string
@@ -2990,11 +4269,9 @@ components:
       type: object
       properties:
         RewardType:
-          type: string
-          description: Reward Type.
+          $ref: '#/components/schemas/RewardTypeType'
         RewardDispositionType:
-          type: string
-          description: Reward Disposition Type. Indicates how the reward is cashed.
+          $ref: '#/components/schemas/RewardDispositionTypeType'
         RewardAcct:
           $ref: '#/components/schemas/RewardAcctType'
         PromoPeriods:
@@ -3014,8 +4291,7 @@ components:
           description: Good Thru Date. Indicates the processing date of the system.
           format: date
         AcctDtlStatus:
-          type: string
-          description: Account Detail Status. Indicates the current status of the account.
+          $ref: '#/components/schemas/AcctDtlStatusType'
         AcctDtlStatusEnumDesc:
           maxLength: 80
           type: string
@@ -3037,8 +4313,7 @@ components:
           type: string
           description: Campaign Identifier. Indicates sales campaign from which correspondence was generated.
         Ownership:
-          type: string
-          description: '[IFX]Ownership. Valid values: Individual, JointAnd, JointOr.'
+          $ref: '#/components/schemas/OwnershipType'
         OwnershipEnumDesc:
           maxLength: 80
           type: string
@@ -3053,15 +4328,15 @@ components:
           type: string
           description: Product Identifier. Identifies the processing parameters of the account or card.
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
         AlternateProductDesc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Alternate Product Description.
         AcctType:
-          type: string
+          type: object
           description: Account Type. Classifies the type of product with which an account is associated. This element is required when adding a new account and by using this value we can identify if the account is a savings, a checking, a time deposit, loan account, etc.
         AcctSubType:
           maxLength: 80
@@ -3072,8 +4347,7 @@ components:
           type: string
           description: Account Sub Type Value Enum Description.
         TaxIncentiveType:
-          type: string
-          description: Tax Incentive Type. Indicates if the account is a tax incentive account such as a Health Savings Account.
+          $ref: '#/components/schemas/TaxIncentiveTypeType'
         TaxIncentiveTypeEnumDesc:
           maxLength: 80
           type: string
@@ -3085,10 +4359,9 @@ components:
         PromoCodeEnumDesc:
           maxLength: 80
           type: string
-          description: '[FSVR]Promotional Code Enumeration Description.'
+          description: Promotional Code Enumeration Description.
         AcctUse:
-          type: string
-          description: 'Account Use. U.S. Institutions should use this for Regulation D reporting purposes. Valid values include: Business, Retail'
+          $ref: '#/components/schemas/AcctUseType'
         AcctUseEnumDesc:
           maxLength: 80
           type: string
@@ -3167,8 +4440,7 @@ components:
           type: string
           description: Responsible Branch Enumeration Description.
         NicknameOption:
-          type: string
-          description: Nickname Option. Indicates printing options for the account Nickname.
+          $ref: '#/components/schemas/NicknameOptionType'
         NicknameOptionEnumDesc:
           maxLength: 80
           type: string
@@ -3178,9 +4450,7 @@ components:
           type: string
           description: Nickname. Used to allow a customer to assign nicknames to objects.
         AcctTitleOption:
-          maxLength: 80
-          type: string
-          description: Account Title Option. Indicates printing options for the Account Title.
+          $ref: '#/components/schemas/AcctTitleOptionType'
         AcctTitleOptionEnumDesc:
           maxLength: 80
           type: string
@@ -3209,8 +4479,7 @@ components:
           type: string
           description: Handling Code Enumeration Description.
         OEDCode:
-          type: string
-          description: Officer, Employee, DIrector Code. Indicates if the party is an employee of the Bank.
+          $ref: '#/components/schemas/OEDCodeType'
         OEDCodeEnumDesc:
           maxLength: 80
           type: string
@@ -3219,8 +4488,7 @@ components:
           type: boolean
           description: Employee Indicator. Indicates that the account holder is employee of the FI.
         AccountingMethod:
-          type: string
-          description: Accounting Method. The Accounting Method indicates the method by which accounts are integrated into the general ledger.
+          $ref: '#/components/schemas/AccountingMethodType'
         AccountingMethodEnumDesc:
           maxLength: 80
           type: string
@@ -3246,8 +4514,7 @@ components:
           type: string
           description: Account Type Enumeration Description.
         AcctOpenMethod:
-          type: string
-          description: Account Open Method. The method used to open the account.
+          $ref: '#/components/schemas/OpenMethodType'
         AcctOpenMethodEnumDesc:
           maxLength: 80
           type: string
@@ -3345,8 +4612,7 @@ components:
           description: Tax Identifier Application Date.
           format: date
         TaxExempt:
-          type: string
-          description: Tax Exempt. Indicates the party  owner of the account is Tax Exempt.
+          $ref: '#/components/schemas/TaxExemptType'
         TaxExemptEnumDesc:
           maxLength: 80
           type: string
@@ -3354,8 +4620,7 @@ components:
         USATaxIdCert:
           $ref: '#/components/schemas/USATaxIdCertType'
         WithholdingOption:
-          type: string
-          description: Withholding Option.Identifies what tax should be withheld for the Party.
+          $ref: '#/components/schemas/WithholdingOptionType'
         WithholdingOptionEnumDesc:
           maxLength: 80
           type: string
@@ -3369,8 +4634,7 @@ components:
           type: boolean
           description: Interest Reporting Indicator. Identifies what tax should be reported for the Party.
         IntReportingCode:
-          type: string
-          description: Interest Reporting Code.
+          $ref: '#/components/schemas/IntReportingCodeType'
         IntReportingCodeEnumDesc:
           maxLength: 80
           type: string
@@ -3418,15 +4682,13 @@ components:
           type: boolean
           description: No Credit Post Indicator.
         MemoPostProcessOptOvrd:
-          type: string
-          description: Memo Post Process Option Override. Indicates whether memo post transactions are posted as summary or detailed transactions.
+          $ref: '#/components/schemas/MemoPostProcessOptOvrdType'
         MemoPostProcessOptOvrdEnumDesc:
           maxLength: 80
           type: string
           description: Memo Post Process Option Override Enum Description.
         ElectronicBankingOpt:
-          type: string
-          description: Electronic Banking Option. Used to indicate services available via Electronic Banking.
+          $ref: '#/components/schemas/ElectronicBankingOptType'
         ElectronicBankingOptEnumDesc:
           maxLength: 80
           type: string
@@ -3526,8 +4788,7 @@ components:
         RenewalData:
           $ref: '#/components/schemas/RenewalDataType'
         AcctMajorType:
-          type: string
-          description: Account Major Type.
+          $ref: '#/components/schemas/AcctMajorTypeType'
         AcctMajorTypeEnumDesc:
           maxLength: 80
           type: string
@@ -3562,25 +4823,31 @@ components:
       type: object
       properties:
         PostingStatus:
+          $ref: '#/components/schemas/PostingStatusType'
+        PostingStatusEnumDesc:
+          maxLength: 80
           type: string
-          description: Posting Status. Indicates that account will be booked but will be restricted from posting until reviewed by bank officer. No hold, accept no payment, allow no advance and accept no payment and allow no advance.
+          description: Posting Payment Status Enumeration Description.
         RestrictionReasonCode:
           maxLength: 80
           type: string
           description: Restriction Reason Code. Code corresponding to the posting restriction reason.
+        RestrictionReasonCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Posting Restriction Reason Code Enumeration Description.
         RestrictionOvrdInd:
           type: boolean
-          description: '[FSVR]Posting Payment Restrictions Override Indicator.'
+          description: Posting Payment Restrictions Override Indicator.
     AdvPostingRestrictionsType:
       title: AdvPostingRestrictionsType
       type: object
       properties:
         PostingStatus:
-          type: string
-          description: Posting Status. Indicates that account will be booked but will be restricted from posting until reviewed by bank officer. No hold, accept no payment, allow no advance and accept no payment and allow no advance.
+          $ref: '#/components/schemas/PostingStatusType'
         RestrictionOvrdInd:
           type: boolean
-          description: '[FSVR]Posting Payment Restrictions Override Indicator.'
+          description: Posting Payment Restrictions Override Indicator.
         RestrictionReasonCode:
           maxLength: 80
           type: string
@@ -3600,8 +4867,7 @@ components:
       type: object
       properties:
         CompositeCurAmtType:
-          type: string
-          description: Composite Currency Amount Type. Composite Currency Amount Type to apply the transaction amount to.
+          $ref: '#/components/schemas/CompositeCurAmtTypeType'
         CompositeCurAmtTypeEnumDesc:
           maxLength: 80
           type: string
@@ -3635,8 +4901,7 @@ components:
       type: object
       properties:
         BillStatusCode:
-          type: string
-          description: Bill Status code.
+          $ref: '#/components/schemas/BillStatusCodeType'
         BillStatusCodeEnumDesc:
           maxLength: 80
           type: string
@@ -3764,8 +5029,6 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/AcctKeysType'
-        AcctSummInfo:
-          $ref: '#/components/schemas/AcctSummInfoType'
     SecuredAcctRefType:
       title: SecuredAcctRefType
       allOf:
@@ -3796,8 +5059,7 @@ components:
         AcctRef:
           $ref: '#/components/schemas/AcctRefType'
         HoldType:
-          type: string
-          description: Hold Type. Identifies the type of hold.
+          $ref: '#/components/schemas/HoldTypeType'
         HoldTypeEnumDesc:
           maxLength: 80
           type: string
@@ -3860,8 +5122,7 @@ components:
           type: boolean
           description: Waived Fee Indicator.
         AcctHoldOption:
-          type: string
-          description: Account Hold Option. Indicates how the hold amount is determined.
+          $ref: '#/components/schemas/AcctHoldOptionType'
         AcctHoldOptionEnumDesc:
           maxLength: 80
           type: string
@@ -3892,8 +5153,7 @@ components:
       type: object
       properties:
         WarningType:
-          type: string
-          description: Warning Type.
+          $ref: '#/components/schemas/WarningTypeType'
         WarningCode:
           maxLength: 80
           type: string
@@ -3905,7 +5165,7 @@ components:
       type: object
       properties:
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
         Value:
@@ -3958,7 +5218,7 @@ components:
       properties:
         Path:
           type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+          description: Path indicates which EFX element is in error. It provides either the path of the element, or just the element name. If it provides the path, it must use XPath absolute notation with the starting node being the node of the message, and ending with the name of the element in error.
         ServerPath:
           maxLength: 256
           type: string
@@ -3966,8 +5226,7 @@ components:
         Value:
           maxLength: 256
           type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
+          description: Value string representation of the EFX data value of the element in error. This field is intended to provide a human readable visual hint as to the value in error. It should not be provided for fields that cannot be represented as a string (i.e., binary data).
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -4002,48 +5261,6 @@ components:
           description: Subject Element aggregate provides information about which elements caused the status. The aggregate is repeating to allow for a relationship between one or more elements if the combination causes the status code.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    BalAmtType:
-      title: BalAmtType
-      allOf:
-      - $ref: '#/components/schemas/CurAmtType'
-      - type: object
-    BillingFrequencyType:
-      title: BillingFrequencyType
-      allOf:
-      - $ref: '#/components/schemas/RecurRuleType'
-      - type: object
-    FromAcctKeysType:
-      title: FromAcctKeysType
-      description: From Account Keys.
-      allOf:
-      - $ref: '#/components/schemas/AcctKeysType'
-      - type: object
-    BillingInstructionType:
-      title: BillingInstructionType
-      required:
-      - BillingMethod
-      type: object
-      properties:
-        BillingMethod:
-          $ref: '#/components/schemas/BillingMethodType'
-        FromAcctKeys:
-          $ref: '#/components/schemas/FromAcctKeysType'
-      description: Billing instruction details.
-    ChkNumRangeType:
-      title: ChkNumRangeType
-      type: object
-      properties:
-        ChkNumStart:
-          maxLength: 22
-          type: string
-          description: 'Starting check number value to consider the check records for stop check. <blockquote>Note: If only start check number is provided, then the transactions with check number equal/higher are considered for stop check.</blockquote>'
-          example: "4350"
-        ChkNumEnd:
-          maxLength: 22
-          type: string
-          description: 'Ending check number value to consider the check records for stop check. <blockquote>Note: If only end check number is provided, then the transactions with check number equal/lower are considered for stop check.</blockquote>'
-          example: "4352"
-      description: 'Details of the check range that contains the start check number (ChkNumStart) and the end check number (ChkNumEnd) information to consider the check records for stop check. <blockquote>Note: If the start check number and the end check number range is provided, then the transactions within the check number range are considered for stop check.</blockquote>'
     FeeChargeAllocType:
       title: FeeChargeAllocType
       type: object
@@ -4061,8 +5278,7 @@ components:
           type: string
           description: Composite Current Amount Identification.
         CompositeCurAmtType:
-          type: string
-          description: Composite Currency Amount Type. Composite Currency Amount Type to apply the transaction amount to.
+          $ref: '#/components/schemas/CompositeCurAmtTypeType'
         CompositeCurAmtTypeEnumDesc:
           maxLength: 80
           type: string
@@ -4079,7 +5295,7 @@ components:
           type: array
           description: Special Handling. Used to define any special instructions that should occur for the Transaction Amount.
           items:
-            type: object
+            $ref: '#/components/schemas/SpecialHandlingType'
         Memo:
           maxLength: 255
           type: string
@@ -4089,42 +5305,45 @@ components:
           description: Financial Charge Indicator.Used to indicate that the amount is a finance charge.
         RefData:
           $ref: '#/components/schemas/RefDataType'
-    CurAmtRangeType:
-      title: CurAmtRangeType
-      type: object
-      properties:
-        LowCurAmt:
-          $ref: '#/components/schemas/LowCurAmtType'
-        HighCurAmt:
-          $ref: '#/components/schemas/HighCurAmtType'
-      description: Details of the amount range that contains the minimum and maximum currency amount to consider the transaction for stop check.
-    DtRangeType:
-      title: DtRangeType
-      type: object
-      properties:
-        DateType:
-          type: string
-          description: Date Type. Indicates the type of date contained in the Date Value.
-        StartDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: Start Date.
-          format: date-time
-        EndDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: End Date.
-          format: date-time
-    FeeAmtType:
-      title: FeeAmtType
-      description: Stop check transaction processing fee amount.
+    ExcessAmtType:
+      title: ExcessAmtType
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
+    ExtendedXferDataType:
+      title: ExtendedXferDataType
+      type: object
+      properties:
+        XferAmtCode:
+          $ref: '#/components/schemas/XferAmtCodeType'
+        ACHEntryClass:
+          $ref: '#/components/schemas/ACHEntryClassType'
+        NoticeData:
+          type: array
+          description: Details used for notice generation each time when a transfer take place
+          items:
+            $ref: '#/components/schemas/NoticeDataType'
+        ForcePostInd:
+          type: boolean
+          description: Flag to indicate when to use the force pay transaction code  to process the transfer
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: Indentification code used to identify fee applicable for a transfer
+      description: Details of additional information used to add instructions for the fund transfer
+    FinalCurAmtType:
+      title: FinalCurAmtType
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    FromAcctRefType:
+      title: FromAcctRefType
+      description: Reference account information from where the funds are transferred
+      allOf:
+      - $ref: '#/components/schemas/AcctRefType'
+      - type: object
     OvrdElementType:
       title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
       allOf:
       - $ref: '#/components/schemas/SubjectElementType'
       - type: object
@@ -4133,16 +5352,15 @@ components:
       type: object
       properties:
         SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
+          $ref: '#/components/schemas/SubjectRoleType'
         SubjectIdent:
           maxLength: 36
           type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
+          description: Subject Identifier.
         OvrdExceptionCode:
           maxLength: 40
           type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
+          description: Overrride Exception Code.Identifies an exception code that is to be overridden. This would be the ServerStatusCode from the Status response.
         OvrdElement:
           $ref: '#/components/schemas/OvrdElementType'
     OvrdExceptionDataType:
@@ -4151,118 +5369,143 @@ components:
       properties:
         OverrideException:
           type: array
-          description: List of the exceptions that can be overridden.
+          description: Override Exception.
           items:
             $ref: '#/components/schemas/OverrideExceptionType'
-      description: Details of the exceptions that can be manually acknowledged by the client.
-    VarianceAmtType:
-      title: VarianceAmtType
-      description: Variance Amount.
+    ToAcctRefType:
+      title: ToAcctRefType
+      description: Reference account information to where the funds are transferred
+      allOf:
+      - $ref: '#/components/schemas/AcctRefType'
+      - type: object
+        properties:
+          TrnCode:
+            maxLength: 80
+            type: string
+            description: External transaction code used by Premier for type of transfer and the type of account
+    RecurModelType:
+      title: RecurModelType
+      type: object
+      properties:
+        RecurRule:
+          type: array
+          description: Details of the occurrence pattern
+          items:
+            $ref: '#/components/schemas/RecurRuleType'
+      description: Details of recurring time-based payment module for an automatic transfer of funds
+    InitialCurAmtType:
+      title: InitialCurAmtType
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
-    TranFeeType:
-      title: TranFeeType
+    LastXferAmtType:
+      title: LastXferAmtType
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    XferInfoType:
+      title: XferInfoType
       type: object
       properties:
-        FeeAmt:
-          $ref: '#/components/schemas/FeeAmtType'
-        BillingInstruction:
-          $ref: '#/components/schemas/BillingInstructionType'
-      description: Stop check transaction processing fee and payment type details.
-    StopChkInfoType:
-      title: StopChkInfoType
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/AcctKeysType'
-        ChkNum:
-          maxLength: 22
-          type: string
-          description: Check number associated with the transaction.
-          example: "3223"
-        ChkNumRange:
-          $ref: '#/components/schemas/ChkNumRangeType'
-        Name:
-          maxLength: 80
-          type: string
-          description: Name of the payee.
-          example: John Doe
+        TransferType:
+          $ref: '#/components/schemas/TransferTypeType'
+        FromAcctRef:
+          $ref: '#/components/schemas/FromAcctRefType'
+        ToAcctRef:
+          $ref: '#/components/schemas/ToAcctRefType'
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
-        CurAmtRange:
-          $ref: '#/components/schemas/CurAmtRangeType'
-        OrigDt:
+        EffDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
-          description: Check origination date on which the customer initiated the check.
-          format: date
-          example: 2021-01-31
-        StopChkDt:
-          type: string
-          description: Date on which the stop check was initiated.
-          format: date
-          example: 2021-01-31
-        ExpDt:
-          type: string
-          description: "Stop check expiration date after which the stop check payment becomes inactive.\n  "
-          format: date
-          example: 2021-01-31
-        Desc:
-          maxLength: 100
-          type: string
-          description: Additional description to mention the reason of stop check.
-          example: Check missing
-        OtherDesc:
+          description: Effective Date. The date that an associated action takes effect.
+          format: date-time
+        RecurModel:
+          $ref: '#/components/schemas/RecurModelType'
+        RelationshipMgr:
+          type: array
+          description: Details of the relationship manager of a financial institution responsible for Memo Tickler
+          items:
+            $ref: '#/components/schemas/RelationshipMgrType'
+        ReportGroupCode:
           maxLength: 80
           type: string
-          description: Other Description.
-        TranFee:
-          $ref: '#/components/schemas/TranFeeType'
-        PrintReceiptCode:
+          description: Client-defined code to group the accounts for reporting purposes
+        ExpediteInd:
+          type: boolean
+          description: |-
+            Flag to indicate the fund tranfer execution subject to service profile. If the indicator  is 'true' the transfer is an immediate transfer and by default the value is set to false.
+            <br> Note: In Premier, immediate transfers are excecuted by the TMS services and the recurring transfers are executed by PRM services. This indicator will determine which services are used.
+        ExtendedXferData:
+          $ref: '#/components/schemas/ExtendedXferDataType'
+        XferFromDesc:
           maxLength: 80
+          type: array
+          description: |-
+            Mandatory description used for a transfer posted by the account from where the funds are transferred.<br>
+            Example: Amount being debited from A/c Number 0000 12345678
+          items:
+            maxLength: 80
+            type: string
+        XferToDesc:
+          maxLength: 80
+          type: array
+          description: |-
+            Mandatory description used for a transfer posted for the account to where the funds are transferred.<br>
+            Example: Amount being credited to A/c Number 0000 44448888
+          items:
+            maxLength: 80
+            type: string
+        RefData:
+          type: array
+          description: Details of reference information used to correlate to transactions provided in bank statements
+          items:
+            $ref: '#/components/schemas/RefDataType'
+        CreateDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
-          description: Print Receipt Code.
-          example: "2"
-      description: Stop check information.
-    StopChkAddRqType:
-      title: StopChkAddRqType
+          description: Create Date.
+          format: date-time
+      description: Details of an automatic fund transfer
+    XferAddRqType:
+      title: XferAddRqType
       required:
-      - StopChkInfo
+      - XferInfo
       type: object
       properties:
         OvrdAutoAckInd:
           type: boolean
-          description: 'Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.  '
+          description: Override AutoAcknowledge Indicator. Used when the midleware is in charge of  auto-acknowledgement of exceptions.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
-        StopChkInfo:
-          $ref: '#/components/schemas/StopChkInfoType'
-    StopChkKeysType:
-      title: StopChkKeysType
-      description: Details of the stop check keys to identify the stop check record.
+        XferInfo:
+          $ref: '#/components/schemas/XferInfoType'
+    XferKeysType:
+      title: XferKeysType
+      description: Details used for transfer of funds
       allOf:
+      - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
-          AcctKeys:
-            $ref: '#/components/schemas/AcctKeysType'
-          StopChkIdent:
+          XferId:
             maxLength: 36
             type: string
-            description: Stop check identifier in combination with account number and type to identify the stop record.
-            example: "11"
-    StopChkCanRqType:
-      title: StopChkCanRqType
+            description: 'Identifier used for tranfer '
+          AcctKeys:
+            $ref: '#/components/schemas/AcctKeysType'
+    XferDelRqType:
+      title: XferDelRqType
       required:
-      - StopChkKeys
+      - XferKeys
       type: object
       properties:
         OvrdAutoAckInd:
           type: boolean
-          description: 'Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.  '
+          description: Override AutoAcknowledge Indicator. Used when the midleware is in charge of  auto-acknowledgement of exceptions.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
     RecCtrlInType:
       title: RecCtrlInType
       type: object
@@ -4275,28 +5518,48 @@ components:
           maxLength: 250
           type: string
           description: Cursor. Next Record Pointer Included in the response only if additional records are available.
-    StopChkSelType:
-      title: StopChkSelType
+    XferSelType:
+      title: XferSelType
       type: object
       properties:
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
         AcctKeys:
           $ref: '#/components/schemas/AcctKeysType'
-      description: Stop check selection criteria to allow the client to specify a selection criteria for stop checks.
-    StopChkInqRqType:
-      title: StopChkInqRqType
+        TransferType:
+          type: object
+          description: Transfer Type. Use to specify the type of transfer transaction.
+    XferInqRqType:
+      title: XferInqRqType
       required:
-      - StopChkSel
+      - XferSel
       type: object
       properties:
-        StopChkSel:
-          $ref: '#/components/schemas/StopChkSelType'
-    StopChkModRqType:
-      title: StopChkModRqType
+        RecCtrlIn:
+          $ref: '#/components/schemas/RecCtrlInType'
+        XferSel:
+          $ref: '#/components/schemas/XferSelType'
+    XferListSelType:
+      title: XferListSelType
+      type: object
+      properties:
+        AcctRef:
+          $ref: '#/components/schemas/AcctRefType'
+    XferListInqRqType:
+      title: XferListInqRqType
       required:
-      - StopChkInfo
-      - StopChkKeys
+      - XferListSel
+      type: object
+      properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/RecCtrlInType'
+        XferListSel:
+          $ref: '#/components/schemas/XferListSelType'
+    XferModRqType:
+      title: XferModRqType
+      required:
+      - XferInfo
+      - XferKeys
       type: object
       properties:
         OvrdAutoAckInd:
@@ -4304,10 +5567,10 @@ components:
           description: Override AutoAcknowledge Indicator. Used when the midleware is in charge of  auto-acknowledgement of exceptions.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
-        StopChkInfo:
-          $ref: '#/components/schemas/StopChkInfoType'
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        XferInfo:
+          $ref: '#/components/schemas/XferInfoType'
     StatusType:
       title: StatusType
       required:
@@ -4317,6 +5580,8 @@ components:
       - SvcProviderName
       type: object
       properties:
+        Id:
+          type: string
         StatusCode:
           maxLength: 20
           type: string
@@ -4343,8 +5608,7 @@ components:
           type: boolean
           description: Override Exception Indicator indicates whether the exception can be overridden by resubmitting the request message.
         SubjectRole:
-          type: string
-          description: Subject Role.
+          $ref: '#/components/schemas/SubjectRoleType'
         SubjectElement:
           type: array
           description: Subject Element aggregate provides information about which elements caused the status. The aggregate is repeating to allow for a relationship between one or more elements if the combination causes the status code.
@@ -4358,165 +5622,55 @@ components:
           description: Additional Status aggregate may appear once for each additional status that the server intends to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
-      description: Details of the API response messages.
-    StopChkStatusType:
-      title: StopChkStatusType
+    XferStatusType:
+      title: XferStatusType
       required:
-      - StopChkStatusCode
+      - XferStatusCode
       type: object
       properties:
-        StopChkStatusCode:
-          $ref: '#/components/schemas/StopChkStatusCodeType'
+        XferStatusCode:
+          $ref: '#/components/schemas/XferStatusCodeType'
         EffDt:
           pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
-          description: 'Effective date and time when the stop check status is changed. <br>Format: yyyy-mm-ddThh:mm:ss.sss'
+          description: |-
+            Effective date and time of the transfer status is changed.
+            <br> Format: yyyy-MM-ddTHH:mm:ss.SSS<br>
+            Example: 2021-01-31T23:59:59.999
           format: date-time
-      description: Current status of the stop check object.
-    StopChkStatusRecType:
-      title: StopChkStatusRecType
+      description: Current status of the tranfer
+    XferStatusRecType:
+      title: XferStatusRecType
       required:
-      - StopChkKeys
-      - StopChkStatus
+      - XferKeys
+      - XferStatus
       type: object
       properties:
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
-        StopChkStatus:
-          $ref: '#/components/schemas/StopChkStatusType'
-    TrnAmtType:
-      title: TrnAmtType
-      allOf:
-      - $ref: '#/components/schemas/CurAmtType'
-      - type: object
-    ImmediateCreditAmtType:
-      title: ImmediateCreditAmtType
-      allOf:
-      - $ref: '#/components/schemas/CurAmtType'
-      - type: object
-    ReceiptDtlType:
-      title: ReceiptDtlType
-      type: object
-      properties:
-        CompositeCurAmt:
-          type: array
-          description: Composite Currency Amount.
-          items:
-            $ref: '#/components/schemas/CompositeCurAmtType'
-    PassbkItemDetailType:
-      title: PassbkItemDetailType
-      type: object
-      properties:
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        PostedDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: Posted Date.
-          format: date-time
-        EffDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: Effective Date. The date that an associated action takes effect.
-          format: date-time
-        ReversalInd:
-          type: boolean
-          description: Reversal Indicator. Indicates if the transaction was reversed or corrected.
-        PassbkTrnType:
-          $ref: '#/components/schemas/PassbkTrnTypeType'
-        CompositeCurAmt:
-          type: array
-          description: Composite Currency Amount.
-          items:
-            $ref: '#/components/schemas/CompositeCurAmtType'
-        BalAmt:
-          $ref: '#/components/schemas/BalAmtType'
-        Memo:
-          maxLength: 255
-          type: array
-          description: Memo.
-          items:
-            maxLength: 255
-            type: string
-    ReceiptType:
-      title: ReceiptType
-      type: object
-      properties:
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        TellerIdent:
-          maxLength: 80
-          type: string
-          description: Teller Identification.
-        OpenDt:
-          type: string
-          description: Open Date.
-          format: date
-        MaturityDt:
-          type: string
-          description: Maturity Date.
-          format: date
-        Rate:
-          type: number
-          description: Rate.
-        TrnAmt:
-          $ref: '#/components/schemas/TrnAmtType'
-        TrnIdent:
-          maxLength: 36
-          type: string
-          description: Transaction Identification. Also known as Trace Number or Sequence in some systems.
-        PostedDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: Posted Date.
-          format: date-time
-        AcctWarning:
-          $ref: '#/components/schemas/AcctWarningType'
-        AcctBal:
-          type: array
-          description: 'Account Balance. Defines balances a financial institution account may carry (ex: ledger, available, collected, etc.).'
-          items:
-            $ref: '#/components/schemas/AcctBalType'
-        ImmediateCreditAmt:
-          $ref: '#/components/schemas/ImmediateCreditAmtType'
-        ReceiptDtl:
-          $ref: '#/components/schemas/ReceiptDtlType'
-        AcctHoldInfo:
-          type: array
-          description: Account Hold Information.
-          items:
-            $ref: '#/components/schemas/AcctHoldInfoType'
-        PassbkItemDetail:
-          type: array
-          description: Passbook Item Detail. Details (e.g. line information) for this passbook item
-          items:
-            $ref: '#/components/schemas/PassbkItemDetailType'
-    StopChkAddRsType:
-      title: StopChkAddRsType
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        XferStatus:
+          $ref: '#/components/schemas/XferStatusType'
+      description: Fund transfer status details used in a response message
+    XferAddRsType:
+      title: XferAddRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        StopChkStatusRec:
-          $ref: '#/components/schemas/StopChkStatusRecType'
-    StopChkCanRsType:
-      title: StopChkCanRsType
+        XferStatusRec:
+          $ref: '#/components/schemas/XferStatusRecType'
+    XferDelRsType:
+      title: XferDelRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        StopChkStatusRec:
-          $ref: '#/components/schemas/StopChkStatusRecType'
-        Receipt:
-          $ref: '#/components/schemas/ReceiptType'
+        XferStatusRec:
+          $ref: '#/components/schemas/XferStatusRecType'
     RecCtrlOutType:
       title: RecCtrlOutType
       required:
@@ -4525,25 +5679,36 @@ components:
       properties:
         SentRecCount:
           type: integer
-          description: Total number of records that match the selection criteria and are returned in the response message.
+          description: Sent Record Count. Number of records matching the selection criteria that are included in this message.
           format: int64
-      description: 'Details of the information required to retrieve additional records that matched the specified selection criteria. Applicable only when a client uses the RecCtrlIn aggregate field in the request. '
-    StopChkRecType:
-      title: StopChkRecType
+        MatchedRecCount:
+          type: integer
+          description: Matched Record Count. Total number of records matching the selection criteria.
+          format: int64
+        RemainRecCount:
+          type: integer
+          description: Remain Record Count.  Total number of records matching the selection criteria that have not been sent yet.
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: Cursor. Next Record Pointer Included in the response only if additional records are available.
+    XferRecType:
+      title: XferRecType
       required:
-      - StopChkInfo
-      - StopChkKeys
-      - StopChkStatus
+      - XferInfo
+      - XferKeys
+      - XferStatus
       type: object
       properties:
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
-        StopChkInfo:
-          $ref: '#/components/schemas/StopChkInfoType'
-        StopChkStatus:
-          $ref: '#/components/schemas/StopChkStatusType'
-    StopChkInqRsType:
-      title: StopChkInqRsType
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        XferInfo:
+          $ref: '#/components/schemas/XferInfoType'
+        XferStatus:
+          $ref: '#/components/schemas/XferStatusType'
+    XferInqRsType:
+      title: XferInqRsType
       required:
       - Status
       type: object
@@ -4552,23 +5717,86 @@ components:
           $ref: '#/components/schemas/StatusType'
         RecCtrlOut:
           $ref: '#/components/schemas/RecCtrlOutType'
-        StopChkRec:
+        XferRec:
           type: array
-          description: Stop Check Record.
+          description: Transfer Record.
           items:
-            $ref: '#/components/schemas/StopChkRecType'
-    StopChkModRsType:
-      title: StopChkModRsType
+            $ref: '#/components/schemas/XferRecType'
+    XferListInfoType:
+      title: XferListInfoType
+      required:
+      - CurAmt
+      type: object
+      properties:
+        FromAcctRef:
+          $ref: '#/components/schemas/FromAcctRefType'
+        ToAcctRef:
+          $ref: '#/components/schemas/ToAcctRefType'
+        CurAmt:
+          $ref: '#/components/schemas/CurAmtType'
+        StartDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: Start Date.
+          format: date-time
+        EndDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: End Date.
+          format: date-time
+        RecurModel:
+          $ref: '#/components/schemas/RecurModelType'
+        XferAmtCode:
+          $ref: '#/components/schemas/XferAmtCodeType'
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Nickname. Used to allow a customer to assign nicknames to objects.
+        Category:
+          maxLength: 40
+          type: string
+          description: Category. Modified by the client.
+        XferStatusType:
+          $ref: '#/components/schemas/XferStatusTypeType'
+    XferListRecType:
+      title: XferListRecType
+      required:
+      - XferKeys
+      - XferListInfo
+      - XferStatus
+      type: object
+      properties:
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        XferListInfo:
+          $ref: '#/components/schemas/XferListInfoType'
+        XferStatus:
+          $ref: '#/components/schemas/XferStatusType'
+    XferListInqRsType:
+      title: XferListInqRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        StopChkStatusRec:
-          $ref: '#/components/schemas/StopChkStatusRecType'
-        Receipt:
-          $ref: '#/components/schemas/ReceiptType'
+        RecCtrlOut:
+          $ref: '#/components/schemas/RecCtrlOutType'
+        XferListRec:
+          type: array
+          description: Transfer List Record.
+          items:
+            $ref: '#/components/schemas/XferListRecType'
+    XferModRsType:
+      title: XferModRsType
+      required:
+      - Status
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        XferStatusRec:
+          $ref: '#/components/schemas/XferStatusRecType'
   examples:
     PremierHeaderExample:
       value:
@@ -4613,183 +5841,104 @@ components:
           SvcProviderName: Premier
           ServerStatusCode: "503"
           ServerStatusDesc: Service Unavailable
-    PremierStopCheckAddRequest:
+    PremierXferAddRequest-TMS:
       value:
-        StopChkInfo:
-          AcctKeys:
-            AcctId: "2000"
-            AcctType: DDA
-            BranchIdent:
-              - "4"
-          ChkNumRange:
-            ChkNumStart: "4350"
-            ChkNumEnd: "4352"
-          Name: John Doe
-          CurAmtRange:
-            LowCurAmt:
-              Amt: 50
-              CurCode:
-                CurCodeType: ISO4217-Alpha
-                CurCodeValue: USD
-            HighCurAmt:
-              Amt: 60
-              CurCode:
-                CurCodeType: ISO4217-Alpha
-                CurCodeValue: USD
-          OrigDt: 2021-06-10
-          StopChkDt: 2021-06-10
-          ExpDt: 2021-12-10
-          Desc: Check Missing
-          OtherDesc: StopPay-Loss
-          TranFee:
-            BillingInstruction:
-              BillingMethod: DirectDebitDDA
-              FromAcctKeys:
-                AcctId: "2525"
-                AcctType: DDA
-            FeeAmt:
-              Amt: 5
-              CurCode:
-                CurCodeType: ISO4217-Alpha
-                CurCodeValue: USD
-          PrintReceiptCode: "2"
-    PremierStopCheckAddResponse:
-      value:
-        Status:
-          StatusCode: "0"
-          StatusDesc: Success
-          Severity: Info
-          SvcProviderName: Premier
-        StopChkStatusRec:
-          StopChkKeys:
-            AcctKeys:
-              AcctId: "2000"
-              AcctType: DDA
-            StopChkIdent: "4"
-          StopChkStatus:
-            StopChkStatusCode: Valid
-            EffDt: 2021-08-17T15:12:12.717
-    PremierStopCheckInqRequest:
-      value:
-        StopChkSel:
-          StopChkKeys:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-    PremierStopCheckInqResponse:
-      value:
-        Status:
-          StatusCode: "0"
-          StatusDesc: Success
-          Severity: Info
-          SvcProviderName: Premier
-        RecCtrlOut:
-          SentRecCount: 2
-        StopChkRec:
-        - StopChkKeys:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-            StopChkIdent: "46"
-          StopChkInfo:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-            ChkNum: "1000"
-            Name: John Peterson
-            CurAmtRange:
-              LowCurAmt:
-                Amt: 70
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-              HighCurAmt:
-                Amt: 90
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-            OrigDt: 2021-09-20
-            StopChkDt: 2021-09-22
-            ExpDt: 2022-03-22
-            Desc: Check Lost
-            OtherDesc: StopPay-Loss
-            TranFee:
-              FeeAmt:
-                Amt: 0
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-              BillingInstruction:
-                BillingMethod: None
-                FromAcctKeys:
-                  AcctId: "0"
-            PrintReceiptCode: "3"
-          StopChkStatus:
-            StopChkStatusCode: Valid
-            EffDt: 2021-09-30T15:14:42.472
-        - StopChkKeys:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-            StopChkIdent: "45"
-          StopChkInfo:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-            ChkNumRange:
-              ChkNumStart: "1001"
-              ChkNumEnd: "1002"
-            Name: Jeff Warner
-            CurAmtRange:
-              LowCurAmt:
-                Amt: 50
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-              HighCurAmt:
-                Amt: 60
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-            OrigDt: 2021-09-20
-            StopChkDt: 2021-09-22
-            ExpDt: 2022-03-22
-            Desc: Check Lost
-            OtherDesc: StopPay-Loss
-            TranFee:
-              FeeAmt:
-                Amt: 0
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-              BillingInstruction:
-                BillingMethod: None
-                FromAcctKeys:
-                  AcctId: "0"
-            PrintReceiptCode: "3"
-          StopChkStatus:
-            StopChkStatusCode: Valid
-            EffDt: 2021-09-30T15:14:42.473
-    PremierStopCheckCanRequest:
-      value:
-        StopChkKeys:
-          AcctKeys:
-            AcctId: "200000"
-            AcctType: DDA
-          StopChkIdent: "93"
-    PremierStopCheckCanResponse:
-      value:
-        Status:
-          StatusCode: "0"
-          StatusDesc: Success
-          Severity: Info
-          SvcProviderName: Premier
-        StopChkStatusRec:
-          StopChkKeys:
+        OvrdAutoAckInd: false
+        XferInfo:
+          TransferType: FundsTransfer
+          FromAcctRef:
             AcctKeys:
               AcctId: "200000"
               AcctType: DDA
-            StopChkIdent: "93"
-          StopChkStatus:
-            StopChkStatusCode: Deleted
-            EffDt: 2021-10-01T21:07:40.556
+            TrnCode: "137"
+          ToAcctRef:
+            AcctKeys:
+              AcctId: "1010000306"
+              AcctType: GLA
+            TrnCode: "209"
+          CurAmt:
+            Amt: 200
+            CurCode:
+              CurCodeType: ISO_4217_ALPHA
+              CurCodeValue: USD
+          EffDt: 2021-08-17
+          ExpediteInd: true
+          XferFromDesc:
+          - Transfer from DDA to GLA
+          XferToDesc:
+          - Transfer to GLA from DDA
+          CreateDt: 2021-08-17T21:23
+    PremierXferAddResponse-TMS:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        XferStatusRec:
+          XferKeys:
+            AcctKeys:
+              AcctId: "200000"
+              AcctType: DDA
+          XferStatus:
+            XferStatusCode: Valid
+            EffDt: 2021-10-01T15:46:43.066
+    PremierXferAddRecurringRq-TMS:
+      value:
+        XferInfo:
+          TransferType: RegularPayment
+          FromAcctRef:
+            AcctKeys:
+              AcctId: "200000"
+              AcctType: DDA
+          ToAcctRef:
+            AcctKeys:
+              AcctId: "1000"
+              AcctType: EXT
+              AcctIdent:
+              - AcctIdentType: AcctTypeCode
+                AcctIdentValue: DDA
+              FIIdent:
+              - "123456789"
+              FIIdentType:
+              - RoutingNum
+          CurAmt:
+            Amt: 500
+            CurCode:
+              CurCodeType: ISO4217-Alpha
+              CurCodeValue: USD
+          RecurModel:
+            RecurRule:
+            - RecurType: Monthly
+              RecurInterval: 6
+              RecurStartDate: 2021-10-10
+              RecurEndDate: 2022-10-10
+          RelationshipMgr:
+          - RelationshipMgrIdent: "201"
+            RelationshipRole: Officer
+          ReportGroupCode: "1"
+          ExpediteInd: false
+          ExtendedXferData:
+            NoticeData:
+            - NoticeType: RegularNotice
+              NoticeOption: GenerateNotice
+          XferFromDesc:
+          - Withdrawal From Customer Account
+          XferToDesc:
+          - Deposit Into External Account
+          RefData:
+          - RefType: PayorDesc
+            RefIdent: "1"
+    PremierXferAddRecurringRs-TMS:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        XferStatusRec:
+          XferKeys:
+            XferId: "3"
+          XferStatus:
+            XferStatusCode: Valid
+            EffDt: 2021-10-01T16:11:31.961

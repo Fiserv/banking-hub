@@ -6,11 +6,94 @@ info:
   contact:
     name: Roopy Cullum
     email: Roopam.Cullum@Fiserv.com
-  version: 11.0.0
+  version: 11.0.0_Secured
 servers:
 - url: /
 paths:
   /address:
+    put:
+      tags:
+      - Update Address
+      summary: Modifies address associated with a party or account
+      description: This service operation modifies address associated with a party or account
+      operationId: modifyAddr
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md"> EFX Header Parameters </a> are required to send as a JSON object in the request message.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+        examples:
+          Premier:
+            $ref: '#/components/examples/PremierHeaderExample'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddrModRqType'
+            examples:
+              Premier:
+                $ref: '#/components/examples/PremierAddressModRq'
+        required: true
+        x-send-file-in-body: false
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddrModRsType'
+              examples:
+                Premier:
+                  $ref: '#/components/examples/PremierAddressModRs'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddrModRsType'
+      deprecated: false
+      x-group-name: Address Service
+      x-proxy-name: Update Address
     post:
       tags:
       - Add Address
@@ -35,7 +118,7 @@ paths:
               $ref: '#/components/schemas/AddrAddRqType'
             examples:
               Premier:
-                $ref: '#/components/examples/PremierAddAddressRq'
+                $ref: '#/components/examples/PremierAddressAddRq'
         required: true
         x-send-file-in-body: false
       responses:
@@ -47,13 +130,13 @@ paths:
                 $ref: '#/components/schemas/AddrAddRsType'
               examples:
                 Premier:
-                  $ref: '#/components/examples/PremierAddAddressRs'
+                  $ref: '#/components/examples/PremierAddressAddRs'
         "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AddrAddRsType'
+                $ref: '#/components/schemas/StatusType'
               examples:
                 "401":
                   $ref: '#/components/examples/401-Premier'
@@ -62,7 +145,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AddrAddRsType'
+                $ref: '#/components/schemas/StatusType'
               examples:
                 "422":
                   $ref: '#/components/examples/422-Premier'
@@ -71,7 +154,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AddrAddRsType'
+                $ref: '#/components/schemas/StatusType'
               examples:
                 "500":
                   $ref: '#/components/examples/500-Premier'
@@ -80,7 +163,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AddrAddRsType'
+                $ref: '#/components/schemas/StatusType'
               examples:
                 "503":
                   $ref: '#/components/examples/503-Premier'
@@ -1950,8 +2033,8 @@ components:
         properties:
           OpenDt:
             type: string
-            description: Open Date.
-            format: Date on which the account is created.
+            description: Open Date. Date on which the account is created.
+            format: date
           RelationshipMgr:
             type: array
             description: Information about financial institution officers who have management-related responsibilities of the Party, Account or Card.
@@ -4286,7 +4369,7 @@ components:
           SvcProviderName: Premier
           ServerStatusCode: "503"
           ServerStatusDesc: Service Unavailable
-    PremierAddAddressRq:
+    PremierAddressAddRq:
       value:
         AddrInfo:
           PostAddr:
@@ -4330,7 +4413,7 @@ components:
             HandlingCode: "3"
             HandlingCodeOption: StatementsNoticesChecks
             MSACode: "5"
-    PremierAddAddressRs:
+    PremierAddressAddRs:
       value:
         Status:
           StatusCode: "0"
@@ -4343,3 +4426,76 @@ components:
           AddrStatus:
             AddrStatusCode: Valid
             EffDt: 2020-05-21T02:28:16.471
+    PremierAddressModRq:
+      value:
+        AddrKeys:
+          AddrId: "2277"
+        AddrInfo:
+          PostAddr:
+          - OpenDt: 2021-07-05
+            RelationshipMgr:
+            - RelationshipMgrIdent: "10"
+              RelationshipRole: Officer
+            - RelationshipMgrIdent: "1"
+              RelationshipRole: ReferralOfficer
+            OriginatingBranch: "2"
+            ResponsibleBranch: "3"
+            AddrFormatType: Parsed
+            Addr1: Anil Tanakala Society
+            Addr2: Tanakala 4
+            City: AnilTanakala 4
+            StateProv: MO
+            PostalCode: 63366-1234
+            CountryCode:
+              CountryCodeSource: SPCountryCode
+              CountryCodeValue: "52"
+            AddrType: Seasonal
+            TimeFrame:
+              StartDt: 2017-06-06
+              EndDt: 2019-05-05
+            Retention: false
+            CensusTract: "20"
+            CensusBlock: "10"
+            ForeignFlag: false
+            HandlingCode: "1"
+            MSACode: 21
+          - OpenDt: 2021-07-05
+            RelationshipMgr:
+            - RelationshipMgrIdent: "10"
+              RelationshipRole: Officer
+            - RelationshipMgrIdent: "1"
+              RelationshipRole: ReferralOfficer
+            OriginatingBranch: "2"
+            ResponsibleBranch: "3"
+            AddrFormatType: Parsed
+            Addr1: Anil Tanakala Society
+            Addr2: Tanakala 4
+            City: AnilTanakala 4
+            StateProv: MO
+            PostalCode: 63366-1234
+            CountryCode:
+              CountryCodeSource: SPCountryCode
+              CountryCodeValue: "52"
+            AddrType: Primary
+            TimeFrame:
+              StartDt: 2017-06-06
+              EndDt: 2019-05-05
+            Retention: false
+            CensusTract: "20"
+            CensusBlock: "10"
+            ForeignFlag: false
+            HandlingCode: "1"
+            MSACode: 21
+    PremierAddressModRs:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        AddrStatusRec:
+          AddrKeys:
+            AddrId: "2277"
+          AddrStatus:
+            AddrStatusCode: Valid
+            EffDt: 2021-12-31T23:59:59.999

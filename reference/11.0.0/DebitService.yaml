@@ -1,8 +1,9 @@
 ---
 openapi: 3.0.0
 info:
-  title: Stop Check Service
-  description: "Stop check is a request made to a financial institution to cancel a check or payment that is not being processed yet. <br> The Stop Check service manages stop-check payments associated with the following product accounts: \n  -  Demand Deposit Account (DDA)\n  -  Saving Deposit Account (SDA)\n  -  Certificate of Deposit Account (CDA)\n  -  Loan Account (LOAN)"
+  title: Debit Service
+  description: |
+    "This service domain is the debit facility for Accounts. A debit is performed with the use of a DebitAdd message. \_The client \_can use the DebitRev message to reverse the previous Debit request."
   contact:
     name: Isabelle Mathon
     email: Isabelle.Mathon@fiserv.com
@@ -10,13 +11,12 @@ info:
 servers:
 - url: /
 paths:
-  /stopChecks:
-    post:
+  /debits:
+    put:
       tags:
-      - Add Stop Check
-      summary: Add a stop check payment
-      description: "Creates a stop check payment request, to stop the payment associated with product accounts. <br><br> <b>Applies to:</b>\n  <ul> \n    <li>Deposits</li>\n    <li>Bank Servicing</li>\n    <li>Treasury Services</li>\n  </ul>"
-      operationId: stopChkAdd
+      - Update Debit
+      summary: Modifies a Debit Object
+      operationId: DebitRevOper
       parameters:
       - name: EFXHeader
         in: header
@@ -33,26 +33,105 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StopChkAddRqType'
+              $ref: '#/components/schemas/DebitRevRqType'
             examples:
               Premier:
-                $ref: '#/components/examples/PremierStopCheckAddRequest'
+                $ref: '#/components/examples/PremierDebitRevRequest'
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitRevRsType'
+              examples:
+                Premier:
+                  $ref: '#/components/examples/PremierDebitRevResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitRevRsType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitRevRsType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitRevRsType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitRevRsType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-group-name: Debit Service
+      x-proxy-name: Update Debit
+    post:
+      tags:
+      - Add Debit
+      summary: Add a Debit Object
+      operationId: DebitAddOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: The message header request aggregate contains common information for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md"> EFX Header Parameters </a> are required to send as a JSON object in the request message.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+        examples:
+          Premier:
+            $ref: '#/components/examples/PremierHeaderExample'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DebitAddRqType'
+            examples:
+              Premier:
+                $ref: '#/components/examples/PremierDebitAddRequest'
       responses:
         "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/DebitAddRsType'
               examples:
                 Premier:
-                  $ref: '#/components/examples/PremierStopCheckAddResponse'
+                  $ref: '#/components/examples/PremierDebitAddResponse'
         "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/DebitAddRsType'
               examples:
                 "401":
                   $ref: '#/components/examples/401-Premier'
@@ -61,7 +140,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/DebitAddRsType'
               examples:
                 "422":
                   $ref: '#/components/examples/422-Premier'
@@ -70,7 +149,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/DebitAddRsType'
               examples:
                 "500":
                   $ref: '#/components/examples/500-Premier'
@@ -79,7 +158,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
+                $ref: '#/components/schemas/DebitAddRsType'
               examples:
                 "503":
                   $ref: '#/components/examples/503-Premier'
@@ -88,174 +167,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StopChkAddRsType'
-      x-group-name: Stop Check Service
-      x-proxy-name: Add Stop Check
-  /stopChecks/secured:
-    put:
-      tags:
-      - Delete Stop Check
-      summary: Delete a stop check payment
-      description: Cancels a stop-check payment request that has been placed with the associated product accounts.<br><br> <b>Applies to:</b> <ul> <li>Deposits</li> <li>Bank Servicing</li> <li>Treasury Services</li> </ul>
-      operationId: stopChkCanSecured
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md"> EFX Header Parameters </a> are required to send as a JSON object in the request message.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-        examples:
-          Premier:
-            $ref: '#/components/examples/PremierHeaderExample'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/StopChkCanRqType'
-            examples:
-              Premier:
-                $ref: '#/components/examples/PremierStopCheckCanRequest'
-        required: true
-      responses:
-        "200":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                Premier:
-                  $ref: '#/components/examples/PremierStopCheckCanResponse'
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                "401":
-                  $ref: '#/components/examples/401-Premier'
-        "422":
-          description: Un-processable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                "422":
-                  $ref: '#/components/examples/422-Premier'
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                "500":
-                  $ref: '#/components/examples/500-Premier'
-        "503":
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-              examples:
-                "503":
-                  $ref: '#/components/examples/503-Premier'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkCanRsType'
-      x-group-name: Stop Check Service
-      x-proxy-name: Delete Stop Check
-    post:
-      tags:
-      - Get Stop Check
-      summary: Retrieves a stop check payment
-      description: "Retrieves the list of stop-checks or a single stop check associated with product account.<br><br> <b>Applies to:</b>\n  <ul> \n    <li>Deposits</li>\n    <li>Bank Servicing</li>\n    <li>Treasury Services</li>\n  </ul>"
-      operationId: stopCheckInqSecured
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md"> EFX Header Parameters </a> are required to send as a JSON object in the request message.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-        examples:
-          Premier:
-            $ref: '#/components/examples/PremierHeaderExample'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/StopChkInqRqType'
-            examples:
-              Premier:
-                $ref: '#/components/examples/PremierStopCheckInqRequest'
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                Premier:
-                  $ref: '#/components/examples/PremierStopCheckInqResponse'
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                "401":
-                  $ref: '#/components/examples/401-Premier'
-        "422":
-          description: Un-processable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                "422":
-                  $ref: '#/components/examples/422-Premier'
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                "500":
-                  $ref: '#/components/examples/500-Premier'
-        "503":
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-              examples:
-                "503":
-                  $ref: '#/components/examples/503-Premier'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StopChkInqRsType'
-      x-group-name: Stop Check Service
-      x-proxy-name: Get Stop Check
+                $ref: '#/components/schemas/Error'
+      x-group-name: Debit Service
+      x-proxy-name: Add Debit
+  /debits/secured: {}
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        fields:
+          type: string
     EFXHeader:
       required:
       - OrganizationId
@@ -268,7 +195,7 @@ components:
           type: string
         VendorId:
           type: string
-          description: 'An identifier, supplied by Fiserv, that represents the vendor using  this API service. '
+          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
         Context:
           $ref: '#/components/schemas/Context'
     Context:
@@ -389,6 +316,8 @@ components:
           type: string
         TillIdent:
           type: string
+        TrnGroupIdent:
+          type: string
         AMPMCode:
           type: string
           enum:
@@ -408,6 +337,7 @@ components:
     AddrTypeType:
       title: AddrTypeType
       type: string
+      description: "Type of the address. <br>\nValid value is: \n  - Primary"
       enum:
       - Primary
       - PrimaryPending
@@ -427,44 +357,16 @@ components:
       - Weekly
       - BiWeekly
       - Maturity
-    BillingMethodType:
-      title: BillingMethodType
-      type: string
-      description: Type of billing.
-      enum:
-      - BillingNotice
-      - DebitToAccount
-      - None
-      - NoCharge
-      - CouponWithAnalysis
-      - BillingByStmt
-      - Coupon
-      - DirectDebit
-      - DirectDebitDDA
-      - DirectDebitSDA
-      - DirectDebitDDAStmt
-      - DirectDebitSDAStmt
-      - DirectDebitDDAWithAnalysis
-      - ACHInfo
-      - ACHXfer
-      - ACHXferNoBill
-      - ACHXferDDA
-      - ACHXferSDA
-      - ACHXferDDAStmt
-      - ACHXferSDAStmt
-      - NoBillingNotice
-      - PartialDirectDebit
-      - LoanAdvance
-      - NoNotice
     CurCodeTypeType:
       title: CurCodeTypeType
       type: string
       description: |-
-        Standard ISO currency code format.  <br> Valid value is:
+        Standard ISO currency code format.  <br>
+        Valid value is:
           - ISO4217-Alpha
 
-        <br> Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4217 codes </a> to view the list of all currency codes.
-      example: ISO4217-Alpha
+        <br>
+        Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank" title="Click to open in a new tab">ISO 4217 codes </a> to view the list of all currency codes.
       enum:
       - ISO4217-Alpha
       - ISO4217-Numeric
@@ -515,12 +417,24 @@ components:
       - Friday
       - Saturday
       - Sunday
-    DebitCreditType:
-      title: DebitCreditType
+    DebitStatusCodeType:
+      title: DebitStatusCodeType
       type: string
+      description: |-
+        Code to identify the debit status. <br>
+        Valid value is:
+          - Posted
       enum:
-      - Debit
-      - Credit
+      - Reversed
+      - Posted
+      - Valid
+    DistributionYrType:
+      title: DistributionYrType
+      type: string
+      description: Indicates the year of the distribution for Health Savings and Retirement accounts.
+      enum:
+      - ThisYr
+      - PriorYr
     EarlyPayoffTierTypeType:
       title: EarlyPayoffTierTypeType
       type: string
@@ -613,6 +527,13 @@ components:
       - DoNotPrint
       - UsePortfolio
       - UseDefault
+    LoanPmtOptionType:
+      title: LoanPmtOptionType
+      type: string
+      enum:
+      - PrincipalOnly
+      - PayOff
+      - SystemPriority
     MarginTypeType:
       title: MarginTypeType
       type: string
@@ -703,14 +624,6 @@ components:
       - Error
       - Warning
       - Info
-    StopChkStatusCodeType:
-      title: StopChkStatusCodeType
-      type: string
-      description: Type of the stop check status.
-      example: valid
-      enum:
-      - Valid
-      - Deleted
     TaxIdentTypeType:
       title: TaxIdentTypeType
       type: string
@@ -847,8 +760,9 @@ components:
         CurCodeValue:
           maxLength: 80
           type: string
-          description: Currency code value as per the ISO4217-Alpha format. <br>Please note that presently only USD currency code is suppoerted.
-          example: USD
+          description: |-
+            Currency code value as per the ISO4217-Alpha format. <br>
+            Please note that presently only USD currency code is supported.
       description: Details of the currency code.
     CurAmtType:
       title: CurAmtType
@@ -856,11 +770,10 @@ components:
       properties:
         Amt:
           type: number
-          description: Amount in decimal.
-          example: 10
+          description: Amount in decimal
         CurCode:
           $ref: '#/components/schemas/CurCodeType'
-      description: Details of the currency amount.
+      description: Details of the currency amount
     AcctBalType:
       title: AcctBalType
       required:
@@ -870,21 +783,15 @@ components:
       properties:
         BalType:
           type: string
-          description: Balance Type.
-        BalTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Balance Type Enumeration Description.
+          description: |-
+            Type of account balance. <br>
+            Valid values are:
+              - Avail
+              - PrevLedger
+              - PrevAvail
+              - MemoLedger
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
-        ExpDt:
-          type: string
-          description: Expiration Date.
-          format: date
-        Desc:
-          maxLength: 100
-          type: string
-          description: Description.
     BaseKeysType:
       title: BaseKeysType
       type: string
@@ -921,26 +828,10 @@ components:
       - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
-          SvcIdent:
-            $ref: '#/components/schemas/SvcIdentType'
-          ISOCode:
-            maxLength: 80
-            type: string
-            description: ISO Card Code. Some systems like Precision instead of ISO Number they use a code to refer to the ISO Number of the card.
-          CardNum:
-            maxLength: 32
-            type: string
-            description: Card Number. This number does not include the ISO component of the card identification.
           CardId:
             maxLength: 36
             type: string
-            description: Card Identifier. Uniquely identifies a card held at a financial institution (this is the card number as it appears on the card).
-          CardSeqNum:
-            maxLength: 3
-            type: string
-            description: Card Sequence Number. Typically refers to the member number (if applicable).
-          CardIdent:
-            $ref: '#/components/schemas/CardIdentType'
+            description: Unique indentification number of a card
     AcctIdentType:
       title: AcctIdentType
       type: object
@@ -954,27 +845,36 @@ components:
           description: Account Identification Value. Contains the value of the Account Identifier.
     AcctKeysType:
       title: AcctKeysType
-      description: Details of the account keys to identify an account record.
+      description: Unique account information to identify the account record
       allOf:
       - type: object
         properties:
           AcctId:
             maxLength: 36
             type: string
-            description: Unique account identification number.
-            example: "2000"
+            description: Unique identification number of an account
           AcctType:
             type: string
-            description: "Type of an account. <br> Valid values are:\n  - DDA\n  - SDA\n  - CDA\n  - LOAN\n  \n<br> For more information on account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open\"> Glossary </a>."
-            example: CDA
-          BranchIdent:
-            maxLength: 22
+            description: |-
+              Type of an account. <br>
+              Valid values are:
+                - DDA
+                - SDA
+                - CDA
+                - LOAN
+                <br>
+
+              For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary </a>.
+          CardKeys:
             type: array
-            description: Branch identification code.
-            example: 1234
+            description: Details to identify the card record
             items:
-              maxLength: 22
-              type: string
+              $ref: '#/components/schemas/CardKeysType'
+          CurCode:
+            type: array
+            description: Details of the currency code
+            items:
+              $ref: '#/components/schemas/CurCodeType'
     AcctPrefType:
       title: AcctPrefType
       type: object
@@ -1029,19 +929,15 @@ components:
       properties:
         RefType:
           type: string
-          description: Reference Type. Type of reference information used.
-        RefTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Reference Type Enumeration Description.
+          description: |-
+            Value that specifies the type of reference used. <br>
+            Valid value is:
+              - PmtRef
         RefIdent:
           maxLength: 36
           type: string
-          description: Reference Identifier.  In combination with the reference type identifies the reference data.
-        RefDesc:
-          maxLength: 1024
-          type: string
-          description: Reference Description.
+          description: Identifier for reference data when used in combination with reference type
+      description: Reference details of the composition of currency amount to further identify the amount in debit transaction
     DateDataType:
       title: DateDataType
       type: object
@@ -1362,13 +1258,11 @@ components:
           description: Generated Last Update Indicator.
     LowCurAmtType:
       title: LowCurAmtType
-      description: Details of the minimum amount range that contains the amount value and currency code information.
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
     HighCurAmtType:
       title: HighCurAmtType
-      description: Details of the maximum amount range that contains the amount value and currency code information.
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -2105,254 +1999,35 @@ components:
             format: date-time
     PostAddrType:
       title: PostAddrType
+      description: Postal address details of the accountholder
       allOf:
       - $ref: '#/components/schemas/LocatorType'
       - required:
         - AddrType
         type: object
         properties:
-          OpenDt:
-            type: string
-            description: Open Date.
-            format: date
-          RelationshipMgr:
-            type: array
-            description: Relationship Manager. Stores information about the FI officers that have management responsibility of the Party, the Account or the Card.
-            items:
-              $ref: '#/components/schemas/RelationshipMgrType'
-          OriginatingBranch:
-            maxLength: 32
-            type: string
-            description: Originating Branch. Branch first originated the relationship with party or created the account.
-          OriginatingBranchEnumDesc:
-            maxLength: 80
-            type: string
-            description: Originating Branch Enumeration Description.
-          PreferredBranch:
-            maxLength: 32
-            type: string
-            description: Preferred Branch. The branch preferred by the customer to conduct business.
-          PreferredBranchEnumDesc:
-            maxLength: 80
-            type: string
-            description: Preferred Branch Enumeration Description.
-          ResponsibleBranch:
-            maxLength: 32
-            type: string
-            description: Responsible Branch. Branch responsible for the relationship.
-          ResponsibleBranchEnumDesc:
-            maxLength: 80
-            type: string
-            description: Responsible Branch Enumeration Description.
-          NameIdent:
-            maxLength: 36
-            type: array
-            description: Name Identifier.
-            items:
-              maxLength: 36
-              type: string
-          AddressIdent:
-            maxLength: 36
-            type: string
-            description: Address Identification. Used as pointer to a reference of an address. Other identification used as part of the Address string key.
-          AddrUse:
-            type: string
-            description: Address Use. Indicates the use of the address for example Business or Home, Statement, Check, Government, etc.
-          AddrUseEnumDesc:
-            maxLength: 80
-            type: string
-            description: Address Use  Enumeration Description.
-          AddrFormatType:
-            $ref: '#/components/schemas/AddrFormatTypeType'
-          AddrFormatTypeEnumDesc:
-            maxLength: 80
-            type: string
-            description: Address Format Type Enumeration Description.
           Addr1:
             maxLength: 64
             type: string
-            description: Address Line 1.
-          Addr2:
-            maxLength: 64
-            type: string
-            description: Address Line 2.
-          Addr3:
-            maxLength: 64
-            type: string
-            description: Address Line 3.
-          Addr4:
-            maxLength: 64
-            type: string
-            description: Address Line 4.
-          Addr5:
-            maxLength: 64
-            type: string
-            description: Address Line 5.
-          Addr6:
-            maxLength: 64
-            type: string
-            description: Address Line 6.
-          ApartmentNum:
-            maxLength: 15
-            type: string
-            description: Apartment Number.
-          ApartmentNumType:
-            type: string
-            description: Apartment Number Type. This is an identifier of the type of number provided in the Apartment Number field.
-          HouseNum:
-            maxLength: 15
-            type: string
-            description: House Number.
-          HouseName:
-            maxLength: 64
-            type: string
-            description: House Name.
-          Street:
-            maxLength: 64
-            type: string
-            description: Street.
-          District:
-            maxLength: 32
-            type: string
-            description: District.
-          MilitaryRegion:
-            type: string
-            description: Military Region. Identifier that replaces State and City for military addresses
-          LabelAddr:
-            $ref: '#/components/schemas/LabelAddrType'
-          AddrDefinedData:
-            type: array
-            description: Address Defined Data.
-            items:
-              $ref: '#/components/schemas/AddrDefinedDataType'
+            description: Address line 1
           City:
             maxLength: 32
             type: string
-            description: City.
-          County:
-            maxLength: 32
-            type: string
-            description: County.
+            description: City name
           StateProv:
             maxLength: 80
             type: string
-            description: State/Province. ISO 3166-2:US codes.
-          StateProvEnumDesc:
-            maxLength: 80
-            type: string
-            description: State Province Enumeration Description.
+            description: State province name as per ISO 3166-2:US codes
           PostalCode:
             maxLength: 11
             type: string
-            description: Postal Code. ZipCode in the US.
-          Country:
-            maxLength: 64
-            type: string
-            description: County.
-          CountryCode:
-            $ref: '#/components/schemas/CountryCodeType'
-          POBox:
-            maxLength: 16
-            type: string
-            description: PO Box.
+            description: Postal code or Zip code
           AddrType:
             $ref: '#/components/schemas/AddrTypeType'
-          AddrTypeEnumDesc:
-            maxLength: 80
-            type: string
-            description: Address Type Enumeration Description.
           AddrLocation:
             maxLength: 255
             type: string
             description: Address Location. Indicates if the address location is a Business or Home.
-          AddrLocationEnumDesc:
-            maxLength: 80
-            type: string
-            description: Address Location Enumeration Description.
-          TimeFrame:
-            $ref: '#/components/schemas/TimeFrameType'
-          ExpDt:
-            type: string
-            description: Expiration Date.
-            format: date
-          Retention:
-            type: boolean
-            description: Retention. Indicates whether the records are to be retained or deleted based on Service Provider criteria.
-          RevertToPartyAddr:
-            type: boolean
-            description: Revert to Party Address. Indicates for account alternate addresses if the address must be reverted to the Party name and address.
-          MoveInDt:
-            type: string
-            description: Move In Date.
-            format: date
-          ContactMethod:
-            type: string
-            description: Contact Method.
-          UpDt:
-            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-            type: string
-            description: Update Date.
-            format: date-time
-          Comment:
-            maxLength: 300
-            type: string
-            description: Comment. A comment entered in history.
-          CensusTract:
-            maxLength: 20
-            type: string
-            description: Census Track. Contains the census tract number assigned to the address.
-          CensusBlock:
-            maxLength: 20
-            type: string
-            description: Census Block. Contains the census block group designation for the block where the address is within a census tract.
-          ForeignFlag:
-            type: boolean
-            description: Foreign Flag. Indicator that tells if an item (an address for example) is foreign or not.
-          HandlingCode:
-            maxLength: 80
-            type: string
-            description: Handling Code .Indicates special handling of notification and statement forms.
-          HandlingCodeEnumDesc:
-            maxLength: 80
-            type: string
-            description: Handling Code Enumeration Description.
-          HandlingCodeOption:
-            $ref: '#/components/schemas/HandlingCodeOptionType'
-          HandlingCodeOptionEnumDesc:
-            maxLength: 80
-            type: string
-            description: Handling Code Option Enumeration Description.
-          MSACode:
-            type: integer
-            description: MSA Code. MSAs are defined by the U.S. Office of Management and Budget (OMB), and used by the U.S. Census Bureau and other federal government agencies for statistical purposes
-            format: int64
-          MSACodeEnumDesc:
-            maxLength: 80
-            type: string
-            description: MSA Code Enumeration Description.
-          MaintDt:
-            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-            type: string
-            description: Maintenance Date.
-            format: date-time
-          MaintBy:
-            maxLength: 80
-            type: string
-            description: Maintained By.
-          MaintByEnumDesc:
-            maxLength: 80
-            type: string
-            description: Maintained By Enumeration Description.
-          AddrInUseInd:
-            type: boolean
-            description: Address In Use.
-          PhoneNum:
-            type: array
-            description: Phone Number.
-            items:
-              $ref: '#/components/schemas/PhoneNumType'
-          IncAddrFormat:
-            type: boolean
     TaxDataType:
       title: TaxDataType
       type: object
@@ -3764,8 +3439,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/AcctKeysType'
-        AcctSummInfo:
-          $ref: '#/components/schemas/AcctSummInfoType'
+      description: Reference details of an account on which the debit transaction is performed
     SecuredAcctRefType:
       title: SecuredAcctRefType
       allOf:
@@ -3827,7 +3501,7 @@ components:
           description: Hold Reason. Description of the reason of the hold.
           items:
             maxLength: 80
-            type: string
+            type: object
         BankAuth:
           maxLength: 80
           type: string
@@ -3958,7 +3632,7 @@ components:
       properties:
         Path:
           type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+          description: Path indicates which EFX element is in error. It provides either the path of the element, or just the element name. If it provides the path, it must use XPath absolute notation with the starting node being the node of the message, and ending with the name of the element in error.
         ServerPath:
           maxLength: 256
           type: string
@@ -3966,8 +3640,7 @@ components:
         Value:
           maxLength: 256
           type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
+          description: Value string representation of the EFX data value of the element in error. This field is intended to provide a human readable visual hint as to the value in error. It should not be provided for fields that cannot be represented as a string (i.e., binary data).
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -4007,43 +3680,45 @@ components:
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
-    BillingFrequencyType:
-      title: BillingFrequencyType
+    CashAmtType:
+      title: CashAmtType
       allOf:
-      - $ref: '#/components/schemas/RecurRuleType'
+      - $ref: '#/components/schemas/CurAmtType'
       - type: object
-    FromAcctKeysType:
-      title: FromAcctKeysType
-      description: From Account Keys.
-      allOf:
-      - $ref: '#/components/schemas/AcctKeysType'
-      - type: object
-    BillingInstructionType:
-      title: BillingInstructionType
+    CashInDataType:
+      title: CashInDataType
       required:
-      - BillingMethod
+      - CashAmt
       type: object
       properties:
-        BillingMethod:
-          $ref: '#/components/schemas/BillingMethodType'
-        FromAcctKeys:
-          $ref: '#/components/schemas/FromAcctKeysType'
-      description: Billing instruction details.
-    ChkNumRangeType:
-      title: ChkNumRangeType
+        CashAmt:
+          $ref: '#/components/schemas/CashAmtType'
+    CashOutDataType:
+      title: CashOutDataType
+      required:
+      - CashAmt
       type: object
       properties:
-        ChkNumStart:
+        CashAmt:
+          $ref: '#/components/schemas/CashAmtType'
+    ChkEnteredAmtType:
+      title: ChkEnteredAmtType
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    ChkOutDataType:
+      title: ChkOutDataType
+      type: object
+      properties:
+        ChkEnteredAmt:
+          $ref: '#/components/schemas/ChkEnteredAmtType'
+        ChkNum:
           maxLength: 22
           type: string
-          description: 'Starting check number value to consider the check records for stop check. <blockquote>Note: If only start check number is provided, then the transactions with check number equal/higher are considered for stop check.</blockquote>'
-          example: "4350"
-        ChkNumEnd:
-          maxLength: 22
+          description: Check Number.
+        ChkType:
           type: string
-          description: 'Ending check number value to consider the check records for stop check. <blockquote>Note: If only end check number is provided, then the transactions with check number equal/lower are considered for stop check.</blockquote>'
-          example: "4352"
-      description: 'Details of the check range that contains the start check number (ChkNumStart) and the end check number (ChkNumEnd) information to consider the check records for stop check. <blockquote>Note: If the start check number and the end check number range is provided, then the transactions within the check number range are considered for stop check.</blockquote>'
+          description: Check Type.
     FeeChargeAllocType:
       title: FeeChargeAllocType
       type: object
@@ -4056,75 +3731,31 @@ components:
       - CurAmt
       type: object
       properties:
-        CompositeCurAmtIdent:
-          maxLength: 36
-          type: string
-          description: Composite Current Amount Identification.
         CompositeCurAmtType:
           type: string
-          description: Composite Currency Amount Type. Composite Currency Amount Type to apply the transaction amount to.
-        CompositeCurAmtTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Composite Currency Amount Type Enumeration Description.
-        CompositeSeqId:
-          maxLength: 10
-          type: string
-          description: Composite Sequence Identifier. Used to sequence multiple occurrences of the same Composite Currency Amount Type. For example if multiple CompositeCurAmtType = “Fee” this element would sequence the Fee. E.g. Fee1, Fee2, etc.
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
-        FeeChargeAlloc:
-          $ref: '#/components/schemas/FeeChargeAllocType'
         SpecialHandling:
           type: array
-          description: Special Handling. Used to define any special instructions that should occur for the Transaction Amount.
+          description: |-
+            Special instructions for processing the transaction amount.  <br>
+            Valid values are:
+              - Fedwire
+              - SWIFT
+              - ACH
+              - RTP
+              - Domestic
+              - International
           items:
             type: object
-        Memo:
-          maxLength: 255
-          type: string
-          description: Memo.
-        FinancialChargeInd:
-          type: boolean
-          description: Financial Charge Indicator.Used to indicate that the amount is a finance charge.
         RefData:
           $ref: '#/components/schemas/RefDataType'
-    CurAmtRangeType:
-      title: CurAmtRangeType
-      type: object
-      properties:
-        LowCurAmt:
-          $ref: '#/components/schemas/LowCurAmtType'
-        HighCurAmt:
-          $ref: '#/components/schemas/HighCurAmtType'
-      description: Details of the amount range that contains the minimum and maximum currency amount to consider the transaction for stop check.
-    DtRangeType:
-      title: DtRangeType
-      type: object
-      properties:
-        DateType:
-          type: string
-          description: Date Type. Indicates the type of date contained in the Date Value.
-        StartDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: Start Date.
-          format: date-time
-        EndDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: End Date.
-          format: date-time
-    FeeAmtType:
-      title: FeeAmtType
-      description: Stop check transaction processing fee amount.
-      allOf:
-      - $ref: '#/components/schemas/CurAmtType'
-      - type: object
+      description: |-
+        Identifies the type of composite currency amount. <br>
+        Valid value is:
+          - Fee
     OvrdElementType:
       title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
       allOf:
       - $ref: '#/components/schemas/SubjectElementType'
       - type: object
@@ -4134,15 +3765,15 @@ components:
       properties:
         SubjectRole:
           type: string
-          description: Role of the subject who is overriding the exception.
+          description: Subject Role.
         SubjectIdent:
           maxLength: 36
           type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
+          description: Subject Identifier.
         OvrdExceptionCode:
           maxLength: 40
           type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
+          description: Overrride Exception Code.Identifies an exception code that is to be overridden. This would be the ServerStatusCode from the Status response.
         OvrdElement:
           $ref: '#/components/schemas/OvrdElementType'
     OvrdExceptionDataType:
@@ -4151,152 +3782,234 @@ components:
       properties:
         OverrideException:
           type: array
-          description: List of the exceptions that can be overridden.
+          description: Override Exception.
           items:
             $ref: '#/components/schemas/OverrideExceptionType'
-      description: Details of the exceptions that can be manually acknowledged by the client.
-    VarianceAmtType:
-      title: VarianceAmtType
-      description: Variance Amount.
+    FeeDataType:
+      title: FeeDataType
+      type: object
+      properties:
+        FeeType:
+          type: string
+          description: Fee Type.
+        FeeTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Fee Type Enumeration Description.
+        WaiverReason:
+          maxLength: 40
+          type: string
+          description: Waiver Reason.
+        WaiverCode:
+          maxLength: 80
+          type: string
+          description: Waiver Code.
+        WaiverCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Waiver Code Enumeration Description.
+    MonetaryInstrAmtType:
+      title: MonetaryInstrAmtType
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
-    TranFeeType:
-      title: TranFeeType
+    MonetaryInstrDataType:
+      title: MonetaryInstrDataType
       type: object
       properties:
-        FeeAmt:
-          $ref: '#/components/schemas/FeeAmtType'
-        BillingInstruction:
-          $ref: '#/components/schemas/BillingInstructionType'
-      description: Stop check transaction processing fee and payment type details.
-    StopChkInfoType:
-      title: StopChkInfoType
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/AcctKeysType'
-        ChkNum:
-          maxLength: 22
+        MonetaryInstrType:
           type: string
-          description: Check number associated with the transaction.
-          example: "3223"
-        ChkNumRange:
-          $ref: '#/components/schemas/ChkNumRangeType'
+          description: Issued Check Type. Used to itemize Bank Checks that are issued as part of a transaction.
+        MonetaryInstrNum:
+          maxLength: 17
+          type: string
+          description: Monetary Instrument Number.
+        MonetaryInstrAmt:
+          $ref: '#/components/schemas/MonetaryInstrAmtType'
+        OrigDt:
+          type: string
+          description: Original Date.
+          format: date
+        Memo:
+          maxLength: 255
+          type: string
+          description: Memo.
+    OtherFundsInAmtType:
+      title: OtherFundsInAmtType
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    OtherFundsOutAmtType:
+      title: OtherFundsOutAmtType
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    ToAcctRefType:
+      title: ToAcctRefType
+      allOf:
+      - $ref: '#/components/schemas/AcctRefType'
+      - type: object
+        properties:
+          TrnCode:
+            maxLength: 80
+            type: string
+            description: Transaction Code. The Service Provider Transaction Code posted to the account.
+    XferToAcctType:
+      title: XferToAcctType
+      required:
+      - ToAcctRef
+      type: object
+      properties:
+        ToAcctRef:
+          $ref: '#/components/schemas/ToAcctRefType'
+        CurAmt:
+          $ref: '#/components/schemas/CurAmtType'
+        CompositeCurAmt:
+          type: array
+          description: Composite Currency Amount.
+          items:
+            $ref: '#/components/schemas/CompositeCurAmtType'
+        Desc:
+          maxLength: 100
+          type: array
+          description: Description.
+          items:
+            maxLength: 100
+            type: object
+        LoanPmtOption:
+          $ref: '#/components/schemas/LoanPmtOptionType'
+        LoanCloseAcctInd:
+          type: boolean
+          description: Loan Close Account Indicator. Indicates to close the account after posting the transfer.
+    FASBDisbDataType:
+      title: FASBDisbDataType
+      type: object
+      properties:
+        EarningMethod:
+          $ref: '#/components/schemas/EarningMethodType'
+        EarningMethodEnumDesc:
+          maxLength: 80
+          type: string
+          description: Earning Method Enumeration Description
+        Term:
+          $ref: '#/components/schemas/TermType'
+        FinancialChargeInd:
+          type: boolean
+          description: Financial Charge Indicator.Used to indicate that the amount is a finance charge.
+    PayeeDataType:
+      title: PayeeDataType
+      type: object
+      properties:
+        TaxIdentType:
+          $ref: '#/components/schemas/TaxIdentTypeType'
+        TaxIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Tax Identification Type Enumeration Description.
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: Tax Identification.
         Name:
           maxLength: 80
           type: string
-          description: Name of the payee.
-          example: John Doe
-        CurAmt:
-          $ref: '#/components/schemas/CurAmtType'
-        CurAmtRange:
-          $ref: '#/components/schemas/CurAmtRangeType'
-        OrigDt:
-          type: string
-          description: Check origination date on which the customer initiated the check.
-          format: date
-          example: 2021-01-31
-        StopChkDt:
-          type: string
-          description: Date on which the stop check was initiated.
-          format: date
-          example: 2021-01-31
-        ExpDt:
-          type: string
-          description: "Stop check expiration date after which the stop check payment becomes inactive.\n  "
-          format: date
-          example: 2021-01-31
-        Desc:
-          maxLength: 100
-          type: string
-          description: Additional description to mention the reason of stop check.
-          example: Check missing
-        OtherDesc:
+          description: Name.
+    RemitterDataType:
+      title: RemitterDataType
+      type: object
+      properties:
+        Name:
           maxLength: 80
           type: string
-          description: Other Description.
-        TranFee:
-          $ref: '#/components/schemas/TranFeeType'
-        PrintReceiptCode:
+          description: Name.
+    NetworkRefDataType:
+      title: NetworkRefDataType
+      type: object
+      properties:
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier for the previous transaction that need to be reversed
+      description: Reference details used to identify the previous transaction for refund or reverse
+    PersonNameShortType:
+      title: PersonNameShortType
+      type: object
+      properties:
+        FamilyName:
+          maxLength: 40
+          type: string
+          description: Family name or last name of the accountholder
+    PmtDataType:
+      title: PmtDataType
+      type: object
+      properties:
+        PersonNameShort:
+          $ref: '#/components/schemas/PersonNameShortType'
+        Name:
           maxLength: 80
           type: string
-          description: Print Receipt Code.
-          example: "2"
-      description: Stop check information.
-    StopChkAddRqType:
-      title: StopChkAddRqType
-      required:
-      - StopChkInfo
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: 'Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.  '
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        StopChkInfo:
-          $ref: '#/components/schemas/StopChkInfoType'
-    StopChkKeysType:
-      title: StopChkKeysType
-      description: Details of the stop check keys to identify the stop check record.
-      allOf:
-      - type: object
-        properties:
-          AcctKeys:
-            $ref: '#/components/schemas/AcctKeysType'
-          StopChkIdent:
-            maxLength: 36
-            type: string
-            description: Stop check identifier in combination with account number and type to identify the stop record.
-            example: "11"
-    StopChkCanRqType:
-      title: StopChkCanRqType
-      required:
-      - StopChkKeys
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: 'Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.  '
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
-    RecCtrlInType:
-      title: RecCtrlInType
-      type: object
-      properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum Record Limit. This is the maximum number of records that the server should add to the result set which is available to satisfy this request.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: Cursor. Next Record Pointer Included in the response only if additional records are available.
-    StopChkSelType:
-      title: StopChkSelType
-      type: object
-      properties:
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
+          description: Name.
+        PostAddr:
+          $ref: '#/components/schemas/PostAddrType'
         AcctKeys:
           $ref: '#/components/schemas/AcctKeysType'
-      description: Stop check selection criteria to allow the client to specify a selection criteria for stop checks.
-    StopChkInqRqType:
-      title: StopChkInqRqType
-      required:
-      - StopChkSel
+    DebtorDataType:
+      title: DebtorDataType
       type: object
       properties:
-        StopChkSel:
-          $ref: '#/components/schemas/StopChkSelType'
-    StopChkModRqType:
-      title: StopChkModRqType
+        PersonNameShort:
+          $ref: '#/components/schemas/PersonNameShortType'
+        Name:
+          maxLength: 80
+          type: string
+          description: Name.
+        PostAddr:
+          $ref: '#/components/schemas/PostAddrType'
+        AcctKeys:
+          $ref: '#/components/schemas/AcctKeysType'
+    DebitInfoType:
+      title: DebitInfoType
       required:
-      - StopChkInfo
-      - StopChkKeys
+      - CompositeCurAmt
+      - DebitType
+      type: object
+      properties:
+        DebitType:
+          type: string
+          description: |-
+            Value that indicates type of debit transaction. <br> Valid value is:
+              - Debit
+        PostedDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: |-
+            Date and time value when the transaction is posted in the system.  <br>
+            Format: yyyy-MM-ddTHH:mm:ss.SSS <br>
+            Example: 2021-12-31T23:59:59.999
+          format: date-time
+        Desc:
+          maxLength: 100
+          type: array
+          description: Description of debit transaction performed on an account
+          items:
+            maxLength: 100
+            type: object
+        AcctRef:
+          $ref: '#/components/schemas/AcctRefType'
+        CompositeCurAmt:
+          type: array
+          description: 'Details of the composition of debited amount value '
+          items:
+            $ref: '#/components/schemas/CompositeCurAmtType'
+        NetworkRefData:
+          $ref: '#/components/schemas/NetworkRefDataType'
+        PmtData:
+          $ref: '#/components/schemas/PmtDataType'
+      description: Details of debit transaction performed on a customer account
+    DebitAddRqType:
+      title: DebitAddRqType
+      required:
+      - DebitInfo
       type: object
       properties:
         OvrdAutoAckInd:
@@ -4304,10 +4017,8 @@ components:
           description: Override AutoAcknowledge Indicator. Used when the midleware is in charge of  auto-acknowledgement of exceptions.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
-        StopChkInfo:
-          $ref: '#/components/schemas/StopChkInfoType'
+        DebitInfo:
+          $ref: '#/components/schemas/DebitInfoType'
     StatusType:
       title: StatusType
       required:
@@ -4317,6 +4028,8 @@ components:
       - SvcProviderName
       type: object
       properties:
+        Id:
+          type: string
         StatusCode:
           maxLength: 20
           type: string
@@ -4358,32 +4071,49 @@ components:
           description: Additional Status aggregate may appear once for each additional status that the server intends to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
-      description: Details of the API response messages.
-    StopChkStatusType:
-      title: StopChkStatusType
+    DebitKeysType:
+      title: DebitKeysType
+      description: Details to identify the debit record
+      allOf:
+      - $ref: '#/components/schemas/BaseKeysType'
+      - type: object
+        properties:
+          DebitId:
+            maxLength: 36
+            type: string
+            description: Unique identifier for the debit record
+          AcctKeys:
+            $ref: '#/components/schemas/AcctKeysType'
+    DebitStatusType:
+      title: DebitStatusType
       required:
-      - StopChkStatusCode
+      - DebitStatusCode
       type: object
       properties:
-        StopChkStatusCode:
-          $ref: '#/components/schemas/StopChkStatusCodeType'
+        DebitStatusCode:
+          $ref: '#/components/schemas/DebitStatusCodeType'
         EffDt:
           pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
-          description: 'Effective date and time when the stop check status is changed. <br>Format: yyyy-mm-ddThh:mm:ss.sss'
+          description: |-
+            Effective date on which the status of debit transaction is updated. <br>
+            Format: yyyy-MM-ddTHH:mm:ss.SSS<br>
+            Example: 2021-12-31T23:59:59.999
           format: date-time
-      description: Current status of the stop check object.
-    StopChkStatusRecType:
-      title: StopChkStatusRecType
+      description: Information on current status of debit transaction
+    DebitStatusRecType:
+      title: DebitStatusRecType
       required:
-      - StopChkKeys
-      - StopChkStatus
+      - DebitStatus
       type: object
       properties:
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
-        StopChkStatus:
-          $ref: '#/components/schemas/StopChkStatusType'
+        SvcIdent:
+          $ref: '#/components/schemas/SvcIdentType'
+        DebitKeys:
+          $ref: '#/components/schemas/DebitKeysType'
+        DebitStatus:
+          $ref: '#/components/schemas/DebitStatusType'
+      description: Information on the status of the debit transaction
     TrnAmtType:
       title: TrnAmtType
       allOf:
@@ -4439,134 +4169,123 @@ components:
           description: Memo.
           items:
             maxLength: 255
-            type: string
+            type: object
     ReceiptType:
       title: ReceiptType
       type: object
       properties:
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        TellerIdent:
-          maxLength: 80
-          type: string
-          description: Teller Identification.
-        OpenDt:
-          type: string
-          description: Open Date.
-          format: date
-        MaturityDt:
-          type: string
-          description: Maturity Date.
-          format: date
-        Rate:
-          type: number
-          description: Rate.
-        TrnAmt:
-          $ref: '#/components/schemas/TrnAmtType'
-        TrnIdent:
-          maxLength: 36
-          type: string
-          description: Transaction Identification. Also known as Trace Number or Sequence in some systems.
-        PostedDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: Posted Date.
-          format: date-time
-        AcctWarning:
-          $ref: '#/components/schemas/AcctWarningType'
         AcctBal:
           type: array
-          description: 'Account Balance. Defines balances a financial institution account may carry (ex: ledger, available, collected, etc.).'
+          description: Balance available in an account
           items:
             $ref: '#/components/schemas/AcctBalType'
-        ImmediateCreditAmt:
-          $ref: '#/components/schemas/ImmediateCreditAmtType'
-        ReceiptDtl:
-          $ref: '#/components/schemas/ReceiptDtlType'
-        AcctHoldInfo:
-          type: array
-          description: Account Hold Information.
-          items:
-            $ref: '#/components/schemas/AcctHoldInfoType'
-        PassbkItemDetail:
-          type: array
-          description: Passbook Item Detail. Details (e.g. line information) for this passbook item
-          items:
-            $ref: '#/components/schemas/PassbkItemDetailType'
-    StopChkAddRsType:
-      title: StopChkAddRsType
+      description: Receipt details of the debit transaction
+    DebitAddRsType:
+      title: DebitAddRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        StopChkStatusRec:
-          $ref: '#/components/schemas/StopChkStatusRecType'
-    StopChkCanRsType:
-      title: StopChkCanRsType
-      required:
-      - Status
-      type: object
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
-        StopChkStatusRec:
-          $ref: '#/components/schemas/StopChkStatusRecType'
+        AcctInfoDtl:
+          $ref: '#/components/schemas/AcctInfoDtlType'
+        DebitStatusRec:
+          $ref: '#/components/schemas/DebitStatusRecType'
         Receipt:
           $ref: '#/components/schemas/ReceiptType'
-    RecCtrlOutType:
-      title: RecCtrlOutType
+    DebitSelType:
+      title: DebitSelType
       required:
-      - SentRecCount
+      - DebitKeys
       type: object
       properties:
-        SentRecCount:
-          type: integer
-          description: Total number of records that match the selection criteria and are returned in the response message.
-          format: int64
-      description: 'Details of the information required to retrieve additional records that matched the specified selection criteria. Applicable only when a client uses the RecCtrlIn aggregate field in the request. '
-    StopChkRecType:
-      title: StopChkRecType
-      required:
-      - StopChkInfo
-      - StopChkKeys
-      - StopChkStatus
-      type: object
-      properties:
-        StopChkKeys:
-          $ref: '#/components/schemas/StopChkKeysType'
-        StopChkInfo:
-          $ref: '#/components/schemas/StopChkInfoType'
-        StopChkStatus:
-          $ref: '#/components/schemas/StopChkStatusType'
-    StopChkInqRsType:
-      title: StopChkInqRsType
-      required:
-      - Status
-      type: object
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/RecCtrlOutType'
-        StopChkRec:
+        DebitKeys:
+          $ref: '#/components/schemas/DebitKeysType'
+        DebitType:
+          type: string
+          description: Debit Type. Indicates the type of debit transaction to be performed.
+        EffDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: Effective Date. The date that an associated action takes effect.
+          format: date-time
+        DistributionType:
+          type: string
+          description: Distribution Type. Indicates the type of distribution for Health Savings and Retirement accounts.
+        DistributionYr:
+          $ref: '#/components/schemas/DistributionYrType'
+        CompositeCurAmt:
           type: array
-          description: Stop Check Record.
+          description: Composite Currency Amount.
           items:
-            $ref: '#/components/schemas/StopChkRecType'
-    StopChkModRsType:
-      title: StopChkModRsType
+            $ref: '#/components/schemas/CompositeCurAmtType'
+    DebitInqRqType:
+      title: DebitInqRqType
+      required:
+      - DebitSel
+      type: object
+      properties:
+        DebitSel:
+          $ref: '#/components/schemas/DebitSelType'
+    DebitRecType:
+      title: DebitRecType
+      required:
+      - DebitInfo
+      - DebitKeys
+      - DebitStatus
+      type: object
+      properties:
+        DebitKeys:
+          $ref: '#/components/schemas/DebitKeysType'
+        DebitInfo:
+          $ref: '#/components/schemas/DebitInfoType'
+        DebitStatus:
+          $ref: '#/components/schemas/DebitStatusType'
+    DebitInqRsType:
+      title: DebitInqRsType
       required:
       - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        StopChkStatusRec:
-          $ref: '#/components/schemas/StopChkStatusRecType'
+        DebitRec:
+          $ref: '#/components/schemas/DebitRecType'
+    DebitRevRqType:
+      title: DebitRevRqType
+      required:
+      - DebitInfo
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Override AutoAcknowledge Indicator. Used when the midleware is in charge of  auto-acknowledgement of exceptions.
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        RevReasonCode:
+          type: string
+          description: Reversal Reason Code. Used to specify a reversal reason code. A value in this element indicates this is a previous-day reversal.
+        Desc:
+          maxLength: 100
+          type: string
+          description: Description.
+        DebitKeys:
+          $ref: '#/components/schemas/DebitKeysType'
+        DebitInfo:
+          $ref: '#/components/schemas/DebitInfoType'
+    DebitRevRsType:
+      title: DebitRevRsType
+      required:
+      - Status
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        AcctInfoDtl:
+          $ref: '#/components/schemas/AcctInfoDtlType'
+        DebitStatusRec:
+          $ref: '#/components/schemas/DebitStatusRecType'
         Receipt:
           $ref: '#/components/schemas/ReceiptType'
   examples:
@@ -4613,183 +4332,117 @@ components:
           SvcProviderName: Premier
           ServerStatusCode: "503"
           ServerStatusDesc: Service Unavailable
-    PremierStopCheckAddRequest:
+    PremierDebitAddRequest:
       value:
-        StopChkInfo:
-          AcctKeys:
-            AcctId: "2000"
-            AcctType: DDA
-            BranchIdent:
-              - "4"
-          ChkNumRange:
-            ChkNumStart: "4350"
-            ChkNumEnd: "4352"
-          Name: John Doe
-          CurAmtRange:
-            LowCurAmt:
-              Amt: 50
-              CurCode:
-                CurCodeType: ISO4217-Alpha
-                CurCodeValue: USD
-            HighCurAmt:
-              Amt: 60
-              CurCode:
-                CurCodeType: ISO4217-Alpha
-                CurCodeValue: USD
-          OrigDt: 2021-06-10
-          StopChkDt: 2021-06-10
-          ExpDt: 2021-12-10
-          Desc: Check Missing
-          OtherDesc: StopPay-Loss
-          TranFee:
-            BillingInstruction:
-              BillingMethod: DirectDebitDDA
-              FromAcctKeys:
-                AcctId: "2525"
-                AcctType: DDA
-            FeeAmt:
-              Amt: 5
-              CurCode:
-                CurCodeType: ISO4217-Alpha
-                CurCodeValue: USD
-          PrintReceiptCode: "2"
-    PremierStopCheckAddResponse:
-      value:
-        Status:
-          StatusCode: "0"
-          StatusDesc: Success
-          Severity: Info
-          SvcProviderName: Premier
-        StopChkStatusRec:
-          StopChkKeys:
+        DebitInfo:
+          DebitType: Debit
+          Desc:
+          - Checking Withdrawal
+          AcctRef:
             AcctKeys:
-              AcctId: "2000"
+              AcctId: "1220"
               AcctType: DDA
-            StopChkIdent: "4"
-          StopChkStatus:
-            StopChkStatusCode: Valid
-            EffDt: 2021-08-17T15:12:12.717
-    PremierStopCheckInqRequest:
-      value:
-        StopChkSel:
-          StopChkKeys:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-    PremierStopCheckInqResponse:
+          CompositeCurAmt:
+          - CurAmt:
+              Amt: 15.55
+            CurCode:
+              CurCodeType: ISO4217-Alpha
+              CurCodeValue: USD
+    PremierDebitAddResponse:
       value:
         Status:
           StatusCode: "0"
           StatusDesc: Success
           Severity: Info
           SvcProviderName: Premier
-        RecCtrlOut:
-          SentRecCount: 2
-        StopChkRec:
-        - StopChkKeys:
+        DebitStatusRec:
+          DebitKeys:
             AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-            StopChkIdent: "46"
-          StopChkInfo:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-            ChkNum: "1000"
-            Name: John Peterson
-            CurAmtRange:
-              LowCurAmt:
-                Amt: 70
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-              HighCurAmt:
-                Amt: 90
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-            OrigDt: 2021-09-20
-            StopChkDt: 2021-09-22
-            ExpDt: 2022-03-22
-            Desc: Check Lost
-            OtherDesc: StopPay-Loss
-            TranFee:
-              FeeAmt:
-                Amt: 0
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-              BillingInstruction:
-                BillingMethod: None
-                FromAcctKeys:
-                  AcctId: "0"
-            PrintReceiptCode: "3"
-          StopChkStatus:
-            StopChkStatusCode: Valid
-            EffDt: 2021-09-30T15:14:42.472
-        - StopChkKeys:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-            StopChkIdent: "45"
-          StopChkInfo:
-            AcctKeys:
-              AcctId: "1000"
-              AcctType: SDA
-            ChkNumRange:
-              ChkNumStart: "1001"
-              ChkNumEnd: "1002"
-            Name: Jeff Warner
-            CurAmtRange:
-              LowCurAmt:
-                Amt: 50
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-              HighCurAmt:
-                Amt: 60
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-            OrigDt: 2021-09-20
-            StopChkDt: 2021-09-22
-            ExpDt: 2022-03-22
-            Desc: Check Lost
-            OtherDesc: StopPay-Loss
-            TranFee:
-              FeeAmt:
-                Amt: 0
-                CurCode:
-                  CurCodeType: ISO4217-Alpha
-                  CurCodeValue: USD
-              BillingInstruction:
-                BillingMethod: None
-                FromAcctKeys:
-                  AcctId: "0"
-            PrintReceiptCode: "3"
-          StopChkStatus:
-            StopChkStatusCode: Valid
-            EffDt: 2021-09-30T15:14:42.473
-    PremierStopCheckCanRequest:
-      value:
-        StopChkKeys:
-          AcctKeys:
-            AcctId: "200000"
-            AcctType: DDA
-          StopChkIdent: "93"
-    PremierStopCheckCanResponse:
-      value:
-        Status:
-          StatusCode: "0"
-          StatusDesc: Success
-          Severity: Info
-          SvcProviderName: Premier
-        StopChkStatusRec:
-          StopChkKeys:
-            AcctKeys:
-              AcctId: "200000"
+              AcctId: "1220"
               AcctType: DDA
-            StopChkIdent: "93"
-          StopChkStatus:
-            StopChkStatusCode: Deleted
-            EffDt: 2021-10-01T21:07:40.556
+          DebitStatus:
+            DebitStatusCode: Posted
+            EffDt: 2021-10-14T18:39:52.288
+        Receipt:
+          AcctBal:
+          - BalType: PrevLedger
+            CurAmt:
+              Amt: 95
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: PrevAvail
+            CurAmt:
+              Amt: 95
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: MemoLedger
+            CurAmt:
+              Amt: 79.45
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: Avail
+            CurAmt:
+              Amt: 79.45
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+    PremierDebitRevRequest:
+      value:
+        DebitKeys:
+          DebitId: 1925.0
+          AcctKeys:
+            AcctId: "1220"
+            AcctType: DDA
+        DebitInfo:
+          DebitType: Debit
+          CompositeCurAmt:
+          - CurAmt:
+              Amt: 15.55
+            CurCode:
+              CurCodeType: ISO4217-Alpha
+              CurCodeValue: USD
+    PremierDebitRevResponse:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        DebitStatusRec:
+          DebitKeys:
+            DebitId: 1925.0
+            AcctKeys:
+              AcctId: "1220"
+              AcctType: DDA
+          DebitStatus:
+            DebitStatusCode: Reversed
+            EffDt: 2021-10-15T15:41:29.000
+        Receipt:
+          AcctBal:
+          - BalType: PrevLedger
+            CurAmt:
+              Amt: 79.45
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: PrevAvail
+            CurAmt:
+              Amt: 79.45
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: MemoLedger
+            CurAmt:
+              Amt: 95
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: Avail
+            CurAmt:
+              Amt: 95
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
