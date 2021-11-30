@@ -56,11 +56,3 @@ List of parameters that can be sent under the EFXHeader:
 | Context.AMPMCode| Transaction Posting Code. <br> <table><thead><td>Value</td>	<td>Description</td></thead><tbody><tr><td>AM</td>	<td>Transactions are processed on the same day</td></tr><tr><td>PM</td>	<td>Transactions are memo posted on the posting day and permanently posted next business day.</td></tr> </tbody></table> | string| Optional|
 | Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul>| string| Optional|
 
-## Jump To
-Click the links below to refer the API documentation of respective services.
-
-- [Add Card](../api/?type=post&path=/cards)
-- [Delete Card](../api/?type=put&path=/cards/secured)
-- [Get Card](../api/?type=post&path=/cards/secured)
-- [Update Card](../api/?type=put&path=/cards)
-- [Get Card Account Relationship](../api/?type=post&path=/cardAccounts/secured)
