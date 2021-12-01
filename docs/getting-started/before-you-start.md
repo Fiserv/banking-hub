@@ -1,32 +1,27 @@
 # Before You Start
-Registration and authentication to the Fiserv Developer studio are required to test the APIs in Sandbox and live environments. 
-However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
+Registration to the Fiserv Developer Studio is required to test the APIs in test and live environments. However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
 
 ## Register to Fiserv Developer Studio
-To validate and deploy Fiserv banking APIs into production, you are required to create an account with Fiserv Developer Studio. This registration helps to get credentials for sandbox testing and live environments. 
-Setting up an Account
+To validate and deploy Fiserv banking APIs into production, you are required to create an account with Fiserv Developer Studio. This registration helps to get credentials for sandbox testing and live environments.
 
+
+### Setting up an Account
 
 To set up an account on Fiserv Developer Studio, follow the steps below:
-1.	Go to [Fiserv Developer Studio](https://dev-developerstudio.fiserv.com/financial-institutions) 
-2.	From the top-right corner of the screen, click **Create Account**
-3.	Populate the required fields and click **Create Account**
-4.	Follow the instructions on the screen to set up your account based on integration requirements
-5.	Sign on to your Fiserv Developer Studio account after it is activated
+1.	From the top-right corner of the screen, click **Create Account**
+2.	Populate the required fields and click **Create Account**
+3.	Follow the instructions on the screen to set up your account based on integration requirements
+4.	Sign in to your Fiserv Developer Studio account after it is activated
 
 
-## Get Authentication Keys
-Once the account setup process is complete, you need to authenticate your API build. Authentication is required for the secure testing or integration of Integrated Banking APIs.
-Authentication Keys
+After a successful registration, you will receive the following credentials via email:
+- API Key
+- Username/Password
+- OrgId 
+- AppId
+- VendorId 
+- ChannelId
 
-
-To authenticate your application, you need *test* and *live* API authentication keys, which can be obtained from the dashboard of Developer Studio. You may reuse the authentication keys until they expire. If a key expires, you can create a new key from the **Credentials** section of the dashboard.
-Steps for Authentication
-
-Follow these steps to authenticate your API build:
-1.	Obtain the API authentication keys from the Credentials section of the Developer Studio dashboard
-2.	Authenticate your user account with the acquired keys and retrieve the authorization code
-3.	Use the provided authorization code to access the API and Sandbox resources
 
 
 ## Know Our Standard API structure 
@@ -35,21 +30,23 @@ Follow these steps to authenticate your API build:
 >
 > This section is under development and you may expect some changes in the final version of documentation.
 
+<Introduction>
+
+### Request Message
+
 All API requests must contain the following components:
 
-*	Host URL  https://api.abc.com/v3/
-*	Request Header parameters (API Key)
-*	Request Body
-
-API request consists of following two elements:
-* Request Header
+*	API Method: POST or PUT
+* Host URL  https://api.abc.com/v3/
+*	Request Header
 *	Request Body
 
 For every API request you will receive a response payload mentioning the status of API request.
 
-### Request Header
-Header parameters are consistent for all API requests of Fiserv Banking RESTful APIs and these parameters are generally used to authenticate the user credentials to access the APIs. Header parameters of Fiserv Banking APIs should be sent as a JSON object under EFXHeader header parameter.
+#### Request Header
+Header parameters are common for all API requests of Integrated Banking APIs and these parameters are generally used to authenticate the user credentials to access the APIs. Header parameters of Fiserv Banking APIs should be sent as a JSON object under EFXHeader header parameter.
 
+Sample header parameters:
 ```
 "EFXHeader": {
     "OrganizationId": "CTOrg",
@@ -62,8 +59,10 @@ Header parameters are consistent for all API requests of Fiserv Banking RESTful 
 ```
 To view the documentation of all header parameters, click <a href="../docs?path=docs/api-ref-EFX-header.md"> EFX Header Parameters </a>.
 
-### Request Body
+#### Request Body
 Request body of an API changes based on the type of transaction being processed. Request body contains the detailed information that is required to perform the given transaction.
+
+**Request Payload:** 
 
 
 Following example shows the sample request body for AcctHoldInq API request.
@@ -90,8 +89,14 @@ Following example shows the sample request body for AcctHoldInq API request.
 }
 ```
 
-### Response Payload
+
+## Response Message
+
+
 Upon a successful API request you will receive response payload. The response payload contains the returned parameter and value details of the requested API. The default response format is JSON (JavaScript Object Notation). 
+
+
+**Response Payload:**
 
 
 Following example shows the sample response payload for AcctHoldInq API request.
@@ -205,8 +210,4 @@ Following example shows the sample response payload for AcctHoldInq API request.
 ```
 
 View the complete documentation of AcctHoldInq service in <a href="#" >Developer Studio portal</a>.
-   
-   
-   
-   
    
