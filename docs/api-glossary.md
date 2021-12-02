@@ -40,4 +40,3 @@
 | RRA | Retiree Reimbursement Account. A retiree reimbursement arrangement (RRA) helps pay for health care costs in retirement, including health plan premiums. Available to public and private sector employers, RRAs allow you to sustain a valued benefit on your financial terms. |
 | RET | Retirement account (IRA). This account allows you to save money for retirement in a tax-advantaged way. An IRA is an account set up at a financial institution that allows an individual to save for retirement with tax-free growth or on a tax-deferred basis. |
 | SDA | Savings Deposit Account. An interest-bearing deposit account without a stated maturity, as opposed to a time deposit. |
-| SDB | Safe Deposit Box. Also known as a safety deposit box, is an individually secured container, usually held within a larger safe or bank vault. Safe deposit boxes are generally located in banks, post offices or other institutions. |
