@@ -36,7 +36,7 @@
 | LOAN | Loan Account. The loan account is used to track transactions related to the loan, which include interest, repayment, and any applicable charges. The loan account is a specific instance of a loan product, with a specified interest rate and an account number, and it is owned by a specified financial institution customer. |
 | LOC | Line of Credit. A line of credit is a preset amount of money that a bank or credit union has agreed to lend a customer. Customers can draw from the line of credit when they need it, up to the maximum amount. |
 | MLA | Mortgage Loan Account. An extension of real estate credit, usually on a long-term basis. The real estate is the lenders security. This is a loan type account. |
+| SDA | Savings Deposit Account. An interest-bearing deposit account without a stated maturity, as opposed to a time deposit. |
 | SDB | Safe Deposit Box. Also known as a safety deposit box, is an individually secured container, usually held within a larger safe or bank vault. Safe deposit boxes are generally located in banks, post offices or other institutions. |
 | RRA | Retiree Reimbursement Account. A retiree reimbursement arrangement (RRA) helps pay for health care costs in retirement, including health plan premiums. Available to public and private sector employers, RRAs allow you to sustain a valued benefit on your financial terms. |
 | RET | Retirement account (IRA). This account allows you to save money for retirement in a tax-advantaged way. An IRA is an account set up at a financial institution that allows an individual to save for retirement with tax-free growth or on a tax-deferred basis. |
-| SDA | Savings Deposit Account. An interest-bearing deposit account without a stated maturity, as opposed to a time deposit. |
