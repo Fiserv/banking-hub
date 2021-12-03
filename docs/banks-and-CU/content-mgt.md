@@ -6,7 +6,7 @@ Fiserv enterprise content management (ECM) solutions enable financial institutio
 Users can also easily retrieve documents from the central repository for research purposes and create workflows for document-based processes to enhance efficiency. Other features ensure that documents are stored securely and in compliance with applicable regulations. These solutions also support implementation of retention policies for stored documents and executive reporting.
 
 
-API domains related to Loans: 
+API domains related to Content Management: 
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
 - [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
 - [Servicing](?path=docs/fintechs/servicing.md "Click to open")
