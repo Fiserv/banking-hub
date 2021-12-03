@@ -5,3 +5,17 @@ Operations and Servicing is an API domain consisting of APIs that support custom
 **Who is it for:** Developers creating or integrating apps that leverage memos, tickles or custom fields on Fiserv core account processing platforms.
 
 **How is it used:** These APIs can be used to create or integrate applications that leverage the information and capabilities delivered through these APIs in order to enhance customer service or improve other daily operations within the financial institution.
+
+
+Begin the integration with following service of Operations and Servicing domian in API Explorer:
+* [Host System Service](../api/?type=post&path=/hostSystem/secured)
+
+
+## See Also
+
+- [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
+- [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
+- [Cards](?path=docs/fintechs/cards.md "Click to open")
+- [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
+- [Notifications and Preferences](?path=docs/fintechs/notifi.md "Click to open")
+- [Payments](?path=docs/fintechs/payments.md "Click to open")
