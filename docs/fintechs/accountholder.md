@@ -8,5 +8,16 @@ Specific to Fiserv core account processing platforms, these APIs make it possibl
 
 **How is it used:** Employ these APIs to create or integrate applications that require the ability to define relationships between individual parties and accounts and determine which accounts an individual party can access. 
 
+Begin the integration with following services in API Explorer:
+* [Address Service](../api/?type=post&path=/address)
+* [Party Service](../api/?type=post&path=/parties)
+* [Party Account Relationship Service](../api/?type=post&path=/partyacctrel/secured)
+* [Party Parties Service](../api/?type=post&path=/partyparties/secured)
 
 
+## See Also
+- [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
+- [Cards](?path=docs/fintechs/cards.md "Click to open")
+- [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
+- [Notifications and Preferences](?path=docs/fintechs/notifi.md "Click to open")
+- [Payments](?path=docs/fintechs/payments.md "Click to open")
