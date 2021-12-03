@@ -65,7 +65,7 @@ Request body of an API changes based on the type of transaction being processed.
 **Request Payload:** 
 
 
-Following example shows the sample request body for AcctHoldInq API request.
+Following example shows the sample request body for Get Account Hold API request.
 
 ```
 {
@@ -99,7 +99,7 @@ Upon a successful API request you will receive response payload. The response pa
 **Response Payload:**
 
 
-Following example shows the sample response payload for AcctHoldInq API request.
+Following example shows the sample response payload for Get Account Hold API request.
 
 ```
 {
@@ -209,5 +209,5 @@ Following example shows the sample response payload for AcctHoldInq API request.
 }
 ```
 
-View the complete documentation of AcctHoldInq service in <a href="#" >Developer Studio portal</a>.
+View the complete documentation of Get Account Hold API in [API Explorer](../api/?type=post&path=/accountHolds/secured).
    
