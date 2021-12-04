@@ -10,14 +10,14 @@ Supporting the creation and maintenance of a full range of deposit, savings and 
 
 
 Begin the integration with following services of Accounts and Transactions domian in API Explorer:
-* [Account Service](../api/?)
-* [Account Hold Service](../api/?)
-* [Collateral Service](../api/?)
-* [Stop Check Service](../api/?)
-* [Account Transaction Service](../api/?)
-* [Document Service](../api/?)
-* [Multi Account Service](../api/?)
-* [Safe Deposit Box Service](../api/?)
+* [Account Service](../api/?type=post&path=/accounts)
+* [Account Hold Service](../api/?type=post&path=/accountHolds)
+* [Collateral Service](../api/?type=post&path=/collateral)
+* [Stop Check Service](../api/?type=post&path=/stopChecks)
+* [Account Transaction Service](../api/?type=post&path=/acctTrn/secured)
+* [Document Service](../api/?type=post&path=/document/secured)
+* [Multi Account Service](../api/?type=post&path=/accounts/list/secured)
+* [Safe Deposit Box Service](../api/?type=post&path=/safedepositbox/secured)
 
 ## See Also
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
