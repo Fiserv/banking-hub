@@ -13,5 +13,5 @@ Among the events and alerts that can be accessed through these APIs are online b
 **How is it used:** By leveraging these APIs, developers can deliver real-time actionable information to end users. 
 
 
-Begin the integration with following services of Payments domian in API Explorer:
+Begin the integration with following services of Notfications and Preferences domian in API Explorer:
 * [Notifications Preferences Service](../api/?)
