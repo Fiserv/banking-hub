@@ -11,3 +11,7 @@ Among the events and alerts that can be accessed through these APIs are online b
 **Who is it for:** Developers creating or integrating apps that need to access real-time event data streams from Fiserv solutions, as well as customer preference subscription capabilities
 
 **How is it used:** By leveraging these APIs, developers can deliver real-time actionable information to end users. 
+
+
+Begin the integration with following services of Payments domian in API Explorer:
+* [Notifications Preferences Service](../api/?)
