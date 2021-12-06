@@ -95,7 +95,7 @@ Following example shows the sample request body for Get Account Hold API request
 ```
 
 
-## Response Message
+### Response Message
 
 
 Upon a successful API request you will receive response payload. The response payload contains the returned parameter and value details of the requested API. The default response format is JSON (JavaScript Object Notation). 
