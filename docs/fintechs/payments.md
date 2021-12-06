@@ -19,4 +19,3 @@ Begin the integration with following services of Payments domian in API Explorer
 - [Cards](?path=docs/fintechs/cards.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
 - [Notifications and Preferences](?path=docs/fintechs/notifi.md "Click to open")
-- [Payments](?path=docs/fintechs/payments.md "Click to open")
