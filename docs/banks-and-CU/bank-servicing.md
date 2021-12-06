@@ -13,7 +13,6 @@ API domains related to Bank Servicing:
 ## See Also
 - [Deposits](?path=docs/banks-and-CU/deposits.md "Click to open")
 - [Loans](?path=docs/banks-and-CU/loans.md "Click to open")
-- [Bank Servicing](?path=docs/banks-and-CU/bank-servicing.md "Click to open")
 - [Cash Management](?path=docs/banks-and-CU/cash-mgt.md "Click to open")
 - [Content Management](?path=docs/banks-and-CU/content-mgt.md "Click to open")
 - [Risk & Performance Management](?path=docs/banks-and-CU/riskMgt.md "Click to open")
