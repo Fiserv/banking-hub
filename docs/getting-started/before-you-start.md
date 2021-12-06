@@ -1,4 +1,9 @@
 # Before You Start
+> #### Note to Unregistered Users
+>
+> The unregistered user journey enables an excellent introduction to the range of functions developers can access using our Integrated Banking APIs, but not all nuances regarding how those APIs connect to our different platforms are available. <br><br> By contrast, the registered user journey (a work in progress) will enable developers to understand how to use our Integrated Banking APIs to integrate with any or all of our banking platforms.
+
+
 Registration to the Fiserv Developer Studio is required to test the APIs in test and live environments. However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
 
 ## Register to Fiserv Developer Studio
