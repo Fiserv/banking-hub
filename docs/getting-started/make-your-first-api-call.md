@@ -6,7 +6,7 @@ This section describes the process to send an API request to server and receive 
 > 
 > Registration is required to test the APIs using third-party API testing tools.
 
-## Using API Explorer:
+## Using the Inbuilt API Explorer:
 
 To test our APIs in Sandbox environment, no API Keys or Access Token is required. The advanced Developer Studio of Fiserv is connected to our Sandbox environment that lets you test the APIs you want without configuring your system or installing any tool. 
 
@@ -66,7 +66,7 @@ To generate the access token, follow the steps below:
 
 This section describes how to test Fiserv APIs in Postman application.
 
-## Example:
+### Example:
   
 Following example illustrates the process to test an API using Postman application.
   
