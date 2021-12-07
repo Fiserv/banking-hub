@@ -15,7 +15,11 @@ To test an API, do the following:
 2.	Enter the values that you want to test under the Parameters and Request Schema tab
 3.	Click Run. Response payload of API request will display under the Response tab
 
-![API-Explorer](https://user-images.githubusercontent.com/81968767/144227101-5db72316-f533-4557-8c8e-360f3465371a.gif)
+<kbd>
+  <img src="https://user-images.githubusercontent.com/81968767/144227101-5db72316-f533-4557-8c8e-360f3465371a.gif" alt="API Explorer">
+</kbd> <br><br>
+
+
 
 > #### Note
 > 
