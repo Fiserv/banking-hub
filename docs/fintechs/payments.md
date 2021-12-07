@@ -6,7 +6,7 @@ Payments is an API domain consisting of payment transaction-related APIs that su
 
 **How is it used:** These APIs can be used to create or integrate applications that deliver frictionless money movement through novel channels.
 
-Begin the integration with following services of Payments domian in API Explorer:
+Begin the integration with following services of Payments domain in API Explorer:
 * [Account Transaction Response Service](../api/?type=post&path=/accttrnresponse/secured)
 * [Credit Service](../api/?type=post&path=/credits)
 * [Debit Service](../api/?type=post&path=/debits)
