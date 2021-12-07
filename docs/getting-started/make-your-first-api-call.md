@@ -62,10 +62,6 @@ To generate the access token, follow the steps below:
 > Once generated, the access token is valid for 15 mins. You can reuse the access token until it expires.
 
 
-#### API testing in Postman
-
-This section describes how to test Fiserv APIs in Postman application.
-
 ### Example:
   
 Following example illustrates the process to test an API using Postman application.
