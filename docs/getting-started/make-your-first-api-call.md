@@ -6,7 +6,7 @@ This section describes the process to send an API request to server and receive 
 > 
 > Registration is required to test the APIs using third-party API testing tools.
 
-## Using the Inbuilt API Explorer:
+## Using the Inbuilt API Explorer
 
 To test our APIs in Sandbox environment, no API Keys or Access Token is required. The advanced Developer Studio of Fiserv is connected to our Sandbox environment that lets you test the APIs you want without configuring your system or installing any tool. 
 
@@ -23,7 +23,7 @@ To test an API, do the following:
 > 
 > Standard API requests are added under the drop-down, and you can select the drop-down options to view the response for such requests.
 
-## Using Third-party API Testing Tools:
+## Using Third-party API Testing Tools
 
 You can also test our APIs in Sandbox environment using third-party API testing tools, for example, Postman, Apigee, JMeter and others.
 
@@ -32,13 +32,15 @@ You can also test our APIs in Sandbox environment using third-party API testing 
 > We recommend you to refer the [Know Our Standard API Structure](path=docs/getting-started/before-you-start.md#know-our-standard-api-structure) section to understand the API structure prior to test the APIs in any third-party tool.
 
 
-### Prerequisites:
+### Prerequisites
 To make an API call, you need the following:
 - An active user account on Fiserv Dev Studio
 - Access Token
 
 
-**Creating an account on Dev Studio:**
+**Creating an account on Dev Studio**
+
+
 To create an account on Fiserv Developer Studio, refer to the [Register to Fiserv Developer Studio](?path=docs/getting-started/before-you-start.md#register-to-fiserv-developer-studio) section. After successful registration, following credentials are obtained via email:
 - API Key
 - Username/Password
@@ -49,7 +51,8 @@ To create an account on Fiserv Developer Studio, refer to the [Register to Fiser
 
 These credentials are required to passed as header parameters under the [EFXHeader](?path=docs/api-ref-EFX-header.md) parameter. For more information, refer to the <EFXHeader> section.
 
-**Generating an Access Token:**
+**Generating an Access Token**
+   
 An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. 
 
 To generate the access token, follow the steps below:
@@ -62,7 +65,7 @@ To generate the access token, follow the steps below:
 > Once generated, the access token is valid for 15 mins. You can reuse the access token until it expires.
 
 
-### Example:
+### Example
   
 Following example illustrates the process to test an API using Postman application.
   
