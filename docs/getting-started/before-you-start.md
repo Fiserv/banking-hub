@@ -4,10 +4,10 @@
 > The unregistered user journey enables an excellent introduction to the range of functions developers can access using our Integrated Banking APIs, but not all nuances regarding how those APIs connect to our different platforms are available. <br><br> By contrast, the registered user journey (a work in progress) will enable developers to understand how to use our Integrated Banking APIs to integrate with any or all of our banking platforms.
 
 
-Registration to the Fiserv Developer Studio is required to test the APIs in test and live environments. However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
+Register to the Fiserv Developer Studio to test the APIs in test and live environments. However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
 
 ## Register to Fiserv Developer Studio
-To validate and deploy Fiserv banking APIs into production, you are required to create an account with Fiserv Developer Studio. This registration helps to get credentials for sandbox testing and live environments.
+To validate and deploy Fiserv banking APIs into production, create an account with Fiserv Developer Studio to obtain credentials for sandbox testing and live environments.
 
 
 ### Setting up an Account
@@ -16,10 +16,10 @@ To set up an account on Fiserv Developer Studio, follow the steps below:
 1.	From the top-right corner of the screen, click **Create Account**
 2.	Populate the required fields and click **Create Account**
 3.	Follow the instructions on the screen to set up your account based on integration requirements
-4.	Sign in to your Fiserv Developer Studio account after it is activated
+4.	Sign on to your Fiserv Developer Studio account once it is activated
 
 
-After a successful registration, you will receive the following credentials via email:
+After successful registration, following credentials are sent via email:
 - API Key
 - Username/Password
 - OrgId 
@@ -27,31 +27,28 @@ After a successful registration, you will receive the following credentials via 
 - VendorId 
 - ChannelId
 
-
+These credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the [EFXHeader](?path=docs/getting-started/before-you-start.md#register-to-fiserv-developer-studio) section.
 
 ## Know Our Standard API structure 
-<!-- theme: info -->
-> #### Information
->
-> This section is under development and you may expect some changes in the final version of documentation.
 
-<Introduction>
+This section describes a standard structure of request and response message of Integrated Banking RESTful APIs. 
 
 ### Request Message
 
 All API requests must contain the following components:
 
 *	API Method: POST or PUT
-* Host URL  https://api.abc.com/v3/
+*   Host URL  https://api.abc.com/v3/
 *	Request Header
 *	Request Body
 
-For every API request you will receive a response payload mentioning the status of API request.
-
+For every API request, a response message is obtained that contains a response payload and status of the API request.
 #### Request Header
-Header parameters are common for all API requests of Integrated Banking APIs and these parameters are generally used to authenticate the user credentials to access the APIs. Header parameters of Fiserv Banking APIs should be sent as a JSON object under EFXHeader header parameter.
+Header parameters are common for all API requests of Integrated Banking APIs. Header parameters are sent as a JSON object under EFXHeader header parameter.
 
-Sample header parameters:
+For more information on EFXHeader and to view the list of all header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to view the list of EFX header parameters" target="_blank"> click here.</a>
+
+Sample Header Example:
 ```
 "EFXHeader": {
     "OrganizationId": "CTOrg",
@@ -62,13 +59,11 @@ Sample header parameters:
     }
     }
 ```
-To view the documentation of all header parameters, click <a href="../docs?path=docs/api-ref-EFX-header.md"> EFX Header Parameters </a>.
 
 #### Request Body
-Request body of an API changes based on the type of transaction being processed. Request body contains the detailed information that is required to perform the given transaction.
+Request body of an API that changes based on the type of transaction being processed. Request body contains the detailed information that is required to perform a particular transaction.
 
 **Request Payload:** 
-
 
 Following example shows the sample request body for Get Account Hold API request.
 
@@ -98,13 +93,12 @@ Following example shows the sample request body for Get Account Hold API request
 ### Response Message
 
 
-Upon a successful API request you will receive response payload. The response payload contains the returned parameter and value details of the requested API. The default response format is JSON (JavaScript Object Notation). 
+Upon a successful API request, a response payload is received. The response payload contains the status and the returned details of the requested API in key-value pairs. The default response format is JSON (JavaScript Object Notation). 
 
 
 **Response Payload:**
 
-
-Following example shows the sample response payload for Get Account Hold API request.
+Following example shows the sample response payload for **Get Account Hold** API request.
 
 ```
 {
@@ -214,5 +208,5 @@ Following example shows the sample response payload for Get Account Hold API req
 }
 ```
 
-View the complete documentation of Get Account Hold API in [API Explorer](../api/?type=post&path=/accountHolds/secured).
+To view the API documentation of **Get Account Hold** API in API Explorer, [click here.](../api/?type=post&path=/accountHolds/secured)
    
