@@ -1,6 +1,6 @@
 # Response Codes
 
-For API request to Integrated Banking server, a standard HTTP status code along with the EFX status code is returned in the response message.
+An API request to Integrated Banking server returns a standard HTTP status code along with the EFX status code in the response message.
 
 ## HTTP Status Codes
 
@@ -20,7 +20,7 @@ For every successful or unsuccessful API call, one of the following HTTP Status 
 ## EFX Status Codes
 EFX status codes are the service-specific status codes and provides additional information to the returned HTTP status or error code. 
 
-The following table lists EFX status codes and their descriptions related to the HTTP status codes:
+The following table lists the EFX status codes and their descriptions related to the HTTP status codes:
 
 <html>
   <table style="width: 100%;">
