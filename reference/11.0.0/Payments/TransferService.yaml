@@ -14,7 +14,7 @@ paths:
     post:
       tags:
       - Add Transfer
-      description: "Adds a one-time or recurrence transfer of funds instruction. The details of FROM and TO accounts, transfer amount, transfer fees and frequency of transfer are required to be provided.<br><br> For more information about the Payments domain <a href=\"../docs/?path=docs/fintechs/payments.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\">Bank Servicing</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\">Cash Management</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\">Treasury Services</a></li>\n  </ul>"
+      description: "Adds a one-time or recurrence transfer of funds instruction. The details of FROM and TO accounts, transfer amount, transfer fees and frequency of transfer are required to be provided.<br> For more information about the Payments domain, <a href=\"../docs/?path=docs/fintechs/payments.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\">Bank Servicing</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\">Cash Management</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\">Treasury Services</a></li>\n  </ul>"
       operationId: XferAddOper
       parameters:
       - name: EFXHeader
@@ -1805,6 +1805,7 @@ components:
     SeverityType:
       title: SeverityType
       type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
       enum:
       - Error
       - Warning
@@ -2153,9 +2154,7 @@ components:
           $ref: '#/components/schemas/RecurTypeType'
         RecurInterval:
           type: integer
-          description: |-
-            It is the integer value refering to the time interval between the recuuring transfer of funds. <br>
-            If  ‘Daily’: Number of days between occurrences. If   ‘Weekly’: Number of weeks between occurrences. If   'Monthly’: Number of months between occurrences. If   ‘Yearly’: Number of years between occurrences. If 'Cycle' : Number of the designated cycle. <br> The default value is : 1
+          description: 'The account statement recurrence interval. This value defines the interval between two successive occurrences statement generation. For example, if the recurrence type value is set to ''Monthly'' and the recurrence interval set to set to ''1'', then there will be 1 month interval between the next statement. <br> The default value is : 1'
           format: int64
         RecurStartDate:
           type: string
@@ -5219,7 +5218,7 @@ components:
       properties:
         Path:
           type: string
-          description: Path indicates which EFX element is in error. It provides either the path of the element, or just the element name. If it provides the path, it must use XPath absolute notation with the starting node being the node of the message, and ending with the name of the element in error.
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
         ServerPath:
           maxLength: 256
           type: string
@@ -5227,7 +5226,8 @@ components:
         Value:
           maxLength: 256
           type: string
-          description: Value string representation of the EFX data value of the element in error. This field is intended to provide a human readable visual hint as to the value in error. It should not be provided for fields that cannot be represented as a string (i.e., binary data).
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -5235,7 +5235,7 @@ components:
         StatusCode:
           maxLength: 20
           type: string
-          description: EFX Standard Status code for the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
@@ -5245,21 +5245,27 @@ components:
         SvcProviderName:
           maxLength: 1024
           type: string
-          description: Service Provider Name is a globally unique identifier for a service provider which indicates the location of the Service Provider that gave the error.
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
         ServerStatusCode:
           maxLength: 20
           type: string
-          description: Server Status Code is used to indicate the Service Provider’s application status code that tells the consumer the result of the operation call.
+          description: 'Server status code of the service provider''s application.  '
         ServerStatusDesc:
           maxLength: 255
           type: string
-          description: Server Status Description is the Service Provider’s explanatory text associated with the ServerStatusCode.
+          description: Description of the server status code of the service provider's application.
         OvrdExceptionInd:
           type: boolean
-          description: Override Exception Indicator indicates whether the exception can be overridden by resubmitting the request message.
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
         SubjectElement:
           type: array
-          description: Subject Element aggregate provides information about which elements caused the status. The aggregate is repeating to allow for a relationship between one or more elements if the combination causes the status code.
+          description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
     FeeChargeAllocType:
@@ -5345,6 +5351,8 @@ components:
       - type: object
     OvrdElementType:
       title: OvrdElementType
+      type: object
+      description: Information about the elements that corresponds to the override exception code.
       allOf:
       - $ref: '#/components/schemas/SubjectElementType'
       - type: object
@@ -5353,15 +5361,16 @@ components:
       type: object
       properties:
         SubjectRole:
-          $ref: '#/components/schemas/SubjectRoleType'
+          type: string
+          description: Role of the subject who is overriding the exception.
         SubjectIdent:
           maxLength: 36
           type: string
-          description: Subject Identifier.
+          description: Subject identification value to identify the subject who is overriding the exception.
         OvrdExceptionCode:
           maxLength: 40
           type: string
-          description: Overrride Exception Code.Identifies an exception code that is to be overridden. This would be the ServerStatusCode from the Status response.
+          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
         OvrdElement:
           $ref: '#/components/schemas/OvrdElementType'
     OvrdExceptionDataType:
@@ -5370,9 +5379,10 @@ components:
       properties:
         OverrideException:
           type: array
-          description: Override Exception.
+          description: List of the exceptions that can be overridden.
           items:
             $ref: '#/components/schemas/OverrideExceptionType'
+      description: Details of the exceptions that can be manually acknowledged by the client.
     ToAcctRefType:
       title: ToAcctRefType
       description: Reference account information to where the funds are transferred
@@ -5438,7 +5448,7 @@ components:
           type: boolean
           description: |-
             Flag to indicate the fund tranfer execution subject to service profile. If the indicator  is 'true' the transfer is an immediate transfer and by default the value is set to false.
-            <br> Note: In Premier, immediate transfers are excecuted by the TMS services and the recurring transfers are executed by PRM services. This indicator will determine which services are used.
+            <br> <b>Note:</b> In Premier, immediate transfers are excecuted by the TMS services and the recurring transfers are executed by PRM services. This indicator will determine which services are used.
         ExtendedXferData:
           $ref: '#/components/schemas/ExtendedXferDataType'
         XferFromDesc:
@@ -5478,7 +5488,7 @@ components:
       properties:
         OvrdAutoAckInd:
           type: boolean
-          description: Override AutoAcknowledge Indicator. Used when the midleware is in charge of  auto-acknowledgement of exceptions.
+          description: 'Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.  '
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
         XferInfo:
@@ -5585,46 +5595,55 @@ components:
       properties:
         Id:
           type: string
+          description: Status identification number.
         StatusCode:
           maxLength: 20
           type: string
-          description: EFX Standard Status code for the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: EFX Standard Status code for the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
           maxLength: 1024
           type: string
-          description: Service Provider Name is a globally unique identifier for a service provider which indicates the location of the Service Provider that gave the error.
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
         ServerStatusCode:
           maxLength: 20
           type: string
-          description: Server Status Code is used to indicate the Service Provider’s application status code that tells the consumer the result of the operation call.
+          description: Server status code of the service provider's application.
         ServerStatusDesc:
           maxLength: 255
           type: string
-          description: Server Status Description is the Service Provider’s explanatory text associated with the ServerStatusCode.
+          description: Description of the server status code of the service provider's application.
         OvrdExceptionInd:
           type: boolean
-          description: Override Exception Indicator indicates whether the exception can be overridden by resubmitting the request message.
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
         SubjectRole:
-          $ref: '#/components/schemas/SubjectRoleType'
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
         SubjectElement:
           type: array
-          description: Subject Element aggregate provides information about which elements caused the status. The aggregate is repeating to allow for a relationship between one or more elements if the combination causes the status code.
+          description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
         ContentHTML:
           type: string
-          description: Content HTML. Use to provide HTML context to some status responses. In Premier, upon failure an HTML page is provided to support the maintenance of failures reported. The Content HTML may be availalble to a time interval which is established by the service provider.
+          description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Additional Status aggregate may appear once for each additional status that the server intends to provide.
+          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
     XferStatusType:
       title: XferStatusType
       required:
