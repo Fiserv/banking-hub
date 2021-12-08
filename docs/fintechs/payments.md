@@ -4,7 +4,10 @@ Payments is an API domain consisting of payment transaction-related APIs that su
 
 **Who is it for:** Developers creating or integrating apps that need to access payments-related APIs and integrate their applications to Fiserv core account processing platforms
 
-**How is it used:** These APIs can be used to create or integrate applications that deliver frictionless money movement through novel channels.
+**How is it used:** These APIs can be used to create or integrate applications that deliver frictionless money movement through novel channels
+
+**Potential uses:** App that facilitate enterprise disbursements such as insurance claims payments, merchant rebates, loyalty rewards, employee bonuses, expense reimbursements, loan payouts, refunds and so forth or on-demand service apps that serve fast-growing services markets such as ride share, grocery or food delivery, digital insurers, travel, vacation and other industries that require the ability to move money
+
 
 Begin the integration with following services of Payments domain in API Explorer:
 * [Account Transaction Response Service](../api/?type=post&path=/accttrnresponse/secured)
