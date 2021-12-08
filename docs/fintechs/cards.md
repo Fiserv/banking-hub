@@ -6,8 +6,11 @@ Cards is an API domain consisting of APIs that support the creation, maintenance
 
 **How is it used:** These APIs can be used to create or integrate applications that include the ability to monitor card accounts or facilitate cards-based money movement.
 
+**Potential uses:** Cards-based money management tool to meet the specific needs of the growing ranks of gig and contract workers, or an auto-save app that automatically deposits a set amount or percentage of a card transaction into a linked account, or a recurring payment tracker that helps accountholders track all recurring payments and subscriptions charged to their cards
 
-Begin the integration with following services of Cards domian in API Explorer:
+
+
+Begin the integration with following services of Cards domain in API Explorer:
 * [Card Service](../api/?type=post&path=/cards)
 * [Card Account Relationship Service](../api/?type=post&path=/cardAccounts/secured)
 
