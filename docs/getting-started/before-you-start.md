@@ -14,7 +14,7 @@ To validate and deploy Fiserv banking APIs into production, create an account wi
 
 To set up an account on Fiserv Developer Studio, follow the steps below:
 1.	From the top-right corner of the screen, click **Create Account**
-2.	Populate the required fields and click **Create Account**
+2.	Populate the required fields and click **Next**
 3.	Follow the instructions on the screen to set up your account based on integration requirements
 4.	Sign on to your Fiserv Developer Studio account once it is activated
 
@@ -65,7 +65,7 @@ Request body of an API that changes based on the type of transaction being proce
 
 **Request Payload:** 
 
-Following example shows the sample request body for Get Account Hold API request.
+Following example shows the sample request payload for Get Account Hold API request.
 
 ```
 {
