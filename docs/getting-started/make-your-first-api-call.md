@@ -1,6 +1,6 @@
 # Make Your First API Call
 
-This section describes the process to send an API request to server and receive a response payload. To test the APIs, use the inbuilt API Explorer in Fiserv Developer Studio or any third-party API testing tool.
+This section describes the process to send an API request to the server and receive a response payload. To test the APIs, use the inbuilt API Explorer in Fiserv Developer Studio or any third-party API testing tool.
 
 > #### Note
 > 
@@ -16,7 +16,7 @@ To test an API, do the following:
 3.	Click **Run**. Response payload of API request displays under the **Response** tab
 
 <kbd>
-  <img src="https://user-images.githubusercontent.com/81968767/144993021-1d4a7bbc-7ae5-477e-937b-9ace379e6142.gif" alt="API Explorer" />
+  <img src="https://user-images.githubusercontent.com/81968767/145146944-6285dfe4-898a-4b9c-bda4-d351a6a9568f.gif" alt="API Explorer" />
 </kbd> <br><br>
 
 > #### Note
@@ -29,7 +29,7 @@ You can also test our APIs in Sandbox environment using third-party API testing 
 
 > #### Tip
 >
-> We recommend you to refer the [Know Our Standard API Structure](path=docs/getting-started/before-you-start.md#know-our-standard-api-structure) section to understand the API structure prior to test the APIs in any third-party tool.
+> We recommend you to refer the <a href="path=docs/getting-started/before-you-start.md#know-our-standard-api-structure" title="Click to open in a new tab" target="_blank">Know Our Standard API Structure</a> section to understand the API structure prior to test the APIs in any third-party tool.
 
 
 ### Prerequisites
@@ -49,7 +49,7 @@ To create an account on Fiserv Developer Studio, refer to the [Register to Fiser
 - VendorId 
 - ChannelId
 
-These credentials are required to passed as header parameters under the [EFXHeader](?path=docs/api-ref-EFX-header.md) parameter. For more information, refer to the <EFXHeader> section.
+These credentials are required to be passed as header parameters under the EFXHeader parameter. For more information, refer to the [EFXHeader](?path=docs/api-ref-EFX-header.md) section.
 
 **Generating an Access Token**
    
@@ -85,9 +85,11 @@ Open a web or desktop application of Postman and follow the steps below:
 3.	Insert the host URL 
 4.	Add EFXHeader and Authorization as new parameters under the **Headers** section and insert the {EFXHeader} and {token} values in the respective fields
 5.	Insert the request-payload under the **Body** tab. Make sure that the **raw** button activated, and text format is set to **JSON** (refer the screenshot)<br> <kbd><img src="https://user-images.githubusercontent.com/81968767/145019152-399b813e-61a6-41c1-9e79-2e3cfd10015f.png" width="70%" /></kbd><br> **Note:** *Default request-payload can be copied form the API Explorer documentation and you may modify certain fields as mentioned in the documentation*
-6.	Click Send. API Response is generated in the Response section
+6.	Modify the field values in JSON code that you want to test 
+7.	Click **Send**. API Response is generated in the Response section
 
   
 <kbd>
-  <img src="https://user-images.githubusercontent.com/81968767/145018795-9d83eaac-0606-4469-b6d0-bec2d3aa9d96.gif" />
+  <img src="https://user-images.githubusercontent.com/81968767/145146913-16d54888-1e48-46b7-99f5-64827a78e21f.gif" />
 </kbd> <br><br>
+
