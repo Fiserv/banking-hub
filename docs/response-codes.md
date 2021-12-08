@@ -1,10 +1,12 @@
 # Response Codes
 
-Fiserv Open Banking API returns standard HTTP status code along with the EFX status code.
+For API request to Integrated Banking server, a standard HTTP status code along with the EFX status code is returned in the response message.
 
 ## HTTP Status Codes
 
-For every API request, one of the following HTTP status codes is returned with the response.
+HTTP status codes indicates the result of an API call. 
+
+For every successful or unsuccessful API call, one of the following HTTP Status Code is returned in the response message:
 
 | HTTP Status Code          | Description   |
 |-------------------|-----------|
@@ -16,6 +18,7 @@ For every API request, one of the following HTTP status codes is returned with t
 | `503  Service Unavailable  `        | Service is temporarily unavailable due to overload or maintenance activity    |
 
 ## EFX Status Codes
+EFX status codes are the service-specific status codes and provides additional information to the returned HTTP status or error code. 
 
 The following table lists EFX status codes and their descriptions related to the HTTP status codes:
 
