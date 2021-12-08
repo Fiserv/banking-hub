@@ -1,12 +1,12 @@
 # Make Your First API Call
 
-This section describes the process to send an API request to the server and receive a response payload. To test the APIs, use the inbuilt API Explorer in Fiserv Developer Studio or any third-party API testing tool.
+This section describes the process to send an API request to the server and receive a response payload. To test the APIs, use the built-in API Explorer in Fiserv Developer Studio or any third-party API testing tool.
 
 > #### Note
 > 
 > Registration is required to test the APIs using third-party API testing tools.
 
-## Using the Inbuilt API Explorer
+## Using the Built-in API Explorer
 
 To test our APIs in Sandbox environment, no API Keys or Access Token is required. The advanced Developer Studio of Fiserv is connected to our Sandbox environment that lets you test the APIs you want without configuring your system or installing any tool. 
 
