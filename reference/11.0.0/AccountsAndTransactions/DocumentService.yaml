@@ -7,7 +7,6 @@ info:
     name: Tracy Dahle
     email: Tracy.Dahle@fiserv.com
   version: 11.0.0
-servers:
 - url: /
 tags:
 - name: Document Service
@@ -370,6 +369,7 @@ components:
     SeverityType:
       title: SeverityType
       type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
       enum:
       - Error
       - Warning
@@ -380,7 +380,7 @@ components:
       properties:
         Path:
           type: string
-          description: Path indicates which EFX element is in error. It provides either the path of the element, or just the element name. If it provides the path, it must use XPath absolute notation with the starting node being the node of the message, and ending with the name of the element in error.
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
         ServerPath:
           maxLength: 256
           type: string
@@ -388,7 +388,8 @@ components:
         Value:
           maxLength: 256
           type: string
-          description: Value string representation of the EFX data value of the element in error. This field is intended to provide a human readable visual hint as to the value in error. It should not be provided for fields that cannot be represented as a string (i.e., binary data).
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -396,31 +397,37 @@ components:
         StatusCode:
           maxLength: 20
           type: string
-          description: Status Code is used to indicate the EFX Standard Status Codes that tells the consumer of the service the result of the operation.
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: Status Description is the explanatory EFX standard text associated with the EFX StatusCode.
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
           maxLength: 1024
           type: string
-          description: Service Provider Name is a globally unique identifier for a service provider which indicates the location of the Service Provider that gave the error.
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
         ServerStatusCode:
           maxLength: 20
           type: string
-          description: Server Status Code is used to indicate the Service Provider’s application status code that tells the consumer the result of the operation call.
+          description: 'Server status code of the service provider''s application.  '
         ServerStatusDesc:
           maxLength: 255
           type: string
-          description: Server Status Description is the Service Provider’s explanatory text associated with the ServerStatusCode.
+          description: Description of the server status code of the service provider's application.
         OvrdExceptionInd:
           type: boolean
-          description: Override Exception Indicator indicates whether the exception can be overridden by resubmitting the request message.
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
         SubjectElement:
           type: array
-          description: Subject Element aggregate provides information about which elements caused the status. The aggregate is repeating to allow for a relationship between one or more elements if the combination causes the status code.
+          description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
     BaseKeysType:
@@ -668,47 +675,55 @@ components:
       properties:
         Id:
           type: string
+          description: Status identification number.
         StatusCode:
           maxLength: 20
           type: string
-          description: Status Code is used to indicate the EFX Standard Status Codes that tells the consumer of the service the result of the operation.
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: Status Description is the explanatory EFX standard text associated with the EFX StatusCode.
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
           maxLength: 1024
           type: string
-          description: Service Provider Name is a globally unique identifier for a service provider which indicates the location of the Service Provider that gave the error.
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
         ServerStatusCode:
           maxLength: 20
           type: string
-          description: Server Status Code is used to indicate the Service Provider’s application status code that tells the consumer the result of the operation call.
+          description: Server status code of the service provider's application.
         ServerStatusDesc:
           maxLength: 255
           type: string
-          description: Server Status Description is the Service Provider’s explanatory text associated with the ServerStatusCode.
+          description: Description of the server status code of the service provider's application.
         OvrdExceptionInd:
           type: boolean
-          description: Override Exception Indicator indicates whether the exception can be overridden by resubmitting the request message.
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
         SubjectRole:
           type: string
-          description: Subject Role.
+          description: Authorization level required to override, such as Teller and Supervisor.
         SubjectElement:
           type: array
-          description: Subject Element aggregate provides information about which elements caused the status. The aggregate is repeating to allow for a relationship between one or more elements if the combination causes the status code.
+          description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
         ContentHTML:
           type: string
-          description: Content HTML. Use to provide HTML context to some status responses. In Premier, upon failure an HTML page is provided to support the maintenance of failures reported. The Content HTML may be availalble to a time interval which is established by the service provider.
+          description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Additional Status aggregate may appear once for each additional status that the server intends to provide.
+          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
     SvcIdentType:
       title: SvcIdentType
       type: object
