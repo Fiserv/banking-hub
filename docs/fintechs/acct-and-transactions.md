@@ -6,10 +6,12 @@ Supporting the creation and maintenance of a full range of deposit, savings and 
 
 **Who is it for:** Any developer creating or integrating apps that need to interact with account and transaction data maintained on Fiserv core account processing platforms
 
-**How is it used:** Employ these APIs to develop apps that offer unique experiences or novel channels through which users can originate, access or modify deposit, savings or loan accounts, and view and manage transactions on those accounts.
+**How is it used:** Employ these APIs to develop apps that offer unique experiences or novel channels through which users can originate, access or modify deposit, savings or loan accounts, and view and manage transactions on those accounts
+
+**Potential uses:** Apps that tailor the digital account opening or loan origination experience to meet the distinct needs of specific markets such as generational segments, sole proprietors, small businesses and particular communities or industries, or apps that enable consumers and businesses to monitor and manage their accounts and transactions through channels they access in everyday life
 
 
-Begin the integration with following services of Accounts and Transactions domian in API Explorer:
+Begin the integration with following services of Accounts and Transactions domain in API Explorer:
 * [Account Service](../api/?type=post&path=/accounts)
 * [Account Hold Service](../api/?type=post&path=/accountHolds)
 * [Collateral Service](../api/?type=post&path=/collateral)
