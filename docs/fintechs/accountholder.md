@@ -6,7 +6,9 @@ Specific to Fiserv core account processing platforms, these APIs make it possibl
 
 **Who is it for:** Developers creating or integrating apps that need to tap into information about the financial institution accountholders that resides on Fiserv core account processing platforms
 
-**How is it used:** Employ these APIs to create or integrate applications that require the ability to define relationships between individual parties and accounts and determine which accounts an individual party can access. 
+**How is it used:** Employ these APIs to create or integrate applications that require the ability to define relationships between individual parties and accounts and determine which accounts an individual party can access
+
+**Potential uses:** Apps that provide customized account access or consolidated views of accounts or family finance apps that help young people pursue their financial goals with oversight from trusted adults
 
 Begin the integration with following services of Accountholder domian in API Explorer:
 * [Address Service](../api/?type=post&path=/address)
