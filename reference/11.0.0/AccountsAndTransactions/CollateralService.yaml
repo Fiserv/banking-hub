@@ -14,7 +14,7 @@ paths:
     post:
       tags:
       - Add Collateral
-      description: "Creates a new collateral record for a party. <br><br> For more information about the Accounts and Transactions domain <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\">Bank Servicing</a></li>\n  </ul>"
+      description: "Creates a new collateral record for a party. <br> For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\">Bank Servicing</a></li>\n  </ul>"
       operationId: addCollateral
       parameters:
       - name: EFXHeader
@@ -1213,6 +1213,7 @@ components:
     SeverityType:
       title: SeverityType
       type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
       enum:
       - Error
       - Warning
@@ -1410,7 +1411,7 @@ components:
       properties:
         Path:
           type: string
-          description: Path indicates which EFX element is in error. It provides either the path of the element, or just the element name. If it provides the path, it must use XPath absolute notation with the starting node being the node of the message, and ending with the name of the element in error.
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
         ServerPath:
           maxLength: 256
           type: string
@@ -1418,7 +1419,8 @@ components:
         Value:
           maxLength: 256
           type: string
-          description: Value string representation of the EFX data value of the element in error. This field is intended to provide a human readable visual hint as to the value in error. It should not be provided for fields that cannot be represented as a string (i.e., binary data).
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -2035,6 +2037,8 @@ components:
           description: Value string representation of the EFX data value of the element in error. This field is intended to provide a human readable visual hint as to the value in error. It should not be provided for fields that cannot be represented as a string (i.e., binary data).
     OvrdElementType:
       title: OvrdElementType
+      type: object
+      description: Information about the elements that corresponds to the override exception code.
       allOf:
       - $ref: '#/components/schemas/SubjectElementType'
       - type: object
@@ -2044,15 +2048,15 @@ components:
       properties:
         SubjectRole:
           type: string
-          description: Subject Role.
+          description: Role of the subject who is overriding the exception.
         SubjectIdent:
           maxLength: 36
           type: string
-          description: Subject Identifier.
+          description: Subject identification value to identify the subject who is overriding the exception.
         OvrdExceptionCode:
           maxLength: 40
           type: string
-          description: Overrride Exception Code.Identifies an exception code that is to be overridden. This would be the ServerStatusCode from the Status response.
+          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
         OvrdElement:
           $ref: '#/components/schemas/OvrdElementType'
     OvrdExceptionDataType:
@@ -2061,9 +2065,10 @@ components:
       properties:
         OverrideException:
           type: array
-          description: Override Exception.
+          description: List of the exceptions that can be overridden.
           items:
             $ref: '#/components/schemas/OverrideExceptionType'
+      description: Details of the exceptions that can be manually acknowledged by the client.
     MemberDataType:
       title: MemberDataType
       type: object
@@ -2554,6 +2559,7 @@ components:
       - type: object
     ImpairedAmtType:
       title: ImpairedAmtType
+      description: Details of collateral value amount that is not eligible for pledging
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -2592,6 +2598,7 @@ components:
           $ref: '#/components/schemas/ImpairedAmtType'
     MarginAmtType:
       title: MarginAmtType
+      description: 'Margin amount which is determined  by multiplying margin percent by the collateral value. <br> Note: Either the MarginPercent  or the MarginAmt field should be defined, not both.'
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -2767,6 +2774,7 @@ components:
       - type: object
     MinimumLimitsAmtType:
       title: MinimumLimitsAmtType
+      description: Minimum Limits Amount.
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -4197,11 +4205,12 @@ components:
       properties:
         OvrdAutoAckInd:
           type: boolean
-          description: Override AutoAcknowledge Indicator. Used when the midleware is in charge of  auto-acknowledgement of exceptions.
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
         PartyCollateralRelInfo:
           type: array
+          description: Details of relationship between parties and collateral item
           items:
             $ref: '#/components/schemas/PartyCollateralRelInfoType'
         CollateralInfo:
@@ -4215,8 +4224,6 @@ components:
       - SvcProviderName
       type: object
       properties:
-        Id:
-          type: string
         StatusCode:
           maxLength: 20
           type: string
@@ -4243,7 +4250,7 @@ components:
           type: boolean
           description: Override Exception Indicator indicates whether the exception can be overridden by resubmitting the request message.
         SubjectRole:
-          type: object
+          type: string
           description: Subject Role.
         SubjectElement:
           type: array
@@ -4258,6 +4265,7 @@ components:
           description: Additional Status aggregate may appear once for each additional status that the server intends to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
     CollateralStatusType:
       title: CollateralStatusType
       required:
