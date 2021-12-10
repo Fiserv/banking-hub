@@ -10,7 +10,7 @@ Specific to Fiserv core account processing platforms, these APIs make it possibl
 
 **Potential uses:** Apps that provide customized account access or consolidated views of accounts or family finance apps that help young people pursue their financial goals with oversight from trusted adults
 
-Begin the integration with following services of Accountholder domian in API Explorer:
+Begin the integration with following services of Accountholder domain in API Explorer:
 * [Address Service](../api/?type=post&path=/address)
 * [Party Service](../api/?type=post&path=/parties)
 * [Party Account Relationship Service](../api/?type=post&path=/partyacctrel/secured)
