@@ -16,7 +16,7 @@ Among the events and alerts that can be accessed through these APIs are online b
 
 
 Begin the integration with following services of Notfications and Preferences domain in API Explorer:
-* [Notifications Preferences Service](../api/?)
+* [Notifications Preferences Service](../api/?type=post&path=/openbanking/api/v{version}/users)
 
 
 ## See Also
