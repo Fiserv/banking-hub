@@ -9,7 +9,7 @@ Operations and Servicing is an API domain consisting of APIs that support custom
 **Potential uses:** Apps that offer enhanced case management, creating a better customer experience and reducing time and effort for call center, branch or back office employees, or customized data mining apps that access custom data fields and turn the data stored there into actionable insights
 
 
-Begin the integration with following service of Operations and Servicing domian in API Explorer:
+Begin the integration with following service of Operations and Servicing domain in API Explorer:
 * [Host System Service](../api/?type=post&path=/hostSystem/secured)
 
 
