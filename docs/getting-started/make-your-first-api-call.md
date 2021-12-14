@@ -4,7 +4,7 @@ This section describes the process to send an API request to the server and rece
 
 > #### Note
 > 
-> Registration to Fiserv Developer Studio is required to test the APIs using third-party API testing tools. However, we have not enabled the registration process yet as we are working on enhancing the registered user workflow.  Stay tuned for more updates.
+> Registration to Fiserv Developer Studio is required to test the APIs using third-party API testing tools. Currently we are working on enhancing the registered user experience. Please stay tuned for updates.
 
 ## Using the Built-in API Explorer
 
