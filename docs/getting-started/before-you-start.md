@@ -38,7 +38,7 @@ This section describes a standard structure of request and response message of I
 All API requests must contain the following components:
 
 *	API Method: POST or PUT
-*   Host URL  https://api.abc.com/v3/
+*   Host URL:  https://{_url_}/v{_version_}/
 *	Request Header
 *	Request Body
 
