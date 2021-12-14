@@ -4,7 +4,7 @@ This section describes the process to send an API request to the server and rece
 
 > #### Note
 > 
-> Registration is required to test the APIs using third-party API testing tools.
+> Registration to Fiserv Developer Studio is required to test the APIs using third-party API testing tools. However, we have not enabled the registration process yet as we are working on enhancing the registered user workflow.  Stay tuned for more updates.
 
 ## Using the Built-in API Explorer
 
@@ -57,8 +57,9 @@ An access token is used to authenticate your API build and allows you to use the
 
 To generate the access token, follow the steps below:
 1.	Sign on to your Fiserv Developer Studio account
-2.	Click **Credentials**
-3.	Click **Generate Access Token**
+2.	Go to the Dashboard
+3.	From the top-right corner of the screen, click **Credentials**
+4.	Click **Generate Access Token**
 
 > #### Note
 >
