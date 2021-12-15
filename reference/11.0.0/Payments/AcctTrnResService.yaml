@@ -1,0 +1,688 @@
+---
+openapi: 3.0.0
+info:
+  title: Account Transaction Response Service
+  description: The Account Transaction Response service supports inquiry request to retrieve history of monetary transactions associated with the product accounts, namely- Deposit or Loan Account.
+  contact:
+    name: Vaida Dadla
+    email: Vaida.Dadla@Fiserv.com
+  version: 11.0.0
+servers:
+- url: /
+paths:
+  /accttrnresponse/secured:
+    post:
+      tags:
+      - Account Transaction Response Inquiry
+      description: "Retrieves information about the previously completed monetary transactions associated with the product accounts based on specified selection criteria.<br> Retrieves the status details of the transactions regarding successful completion or errors.<br> For more information about the Payments domain, <a href=\"../docs/?path=docs/fintechs/payments.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\">Bank Servicing</a></li>\n  </ul>"
+      operationId: AcctTrnResponseInqOperSecured
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains authentication and client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to view the list of EFX header parameters" target="_blank"> click here.</a>
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcctTrnResponseInqRqType'
+            examples:
+              Premier:
+                $ref: '#/components/examples/PremierAcctTrnResponseRequest'
+        required: true
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                Premier:
+                  $ref: '#/components/examples/PremierAcctTrnResponseResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
+        default:
+          description: See HTTP Status Code Standards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+      x-group-name: Account Transaction Response Service
+      x-proxy-name: Account Transaction Response Inquiry
+      x-child-product-name: Payments
+components:
+  schemas:
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          type: string
+        TrnId:
+          maxLength: 30
+          type: string
+        VendorId:
+          type: string
+          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+        Channel:
+          type: string
+          description: Indicates the channel used by the client application.
+        ClientDateTime:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          type: string
+          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+        OriginatorType:
+          type: integer
+          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\"\n"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+        TerminalCity:
+          maxLength: 32
+          type: string
+        TerminalCounty:
+          maxLength: 32
+          type: string
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State Province. ISO 3166-2:US codes.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: Postal Code is ZipCode in the US.
+        TerminalCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - ISO3166Numeric
+          - ISO3166Alpha3
+        TerminalCountryCodeValue:
+          maxLength: 80
+          type: string
+        PhoneType:
+          type: string
+        PhoneNum:
+          type: string
+        PhoneExchange:
+          type: string
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - US
+          - IND
+        AcquirerCountryCodeValue:
+          type: string
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        BranchIdent:
+          maxLength: 22
+          type: string
+        TellerIdent:
+          type: string
+        TillIdent:
+          type: string
+        AMPMCode:
+          type: string
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          enum:
+          - Manual
+          - Auto
+    AcctTrnResponseStatusCodeType:
+      title: AcctTrnResponseStatusCodeType
+      type: string
+      description: Response status code of a transaction.
+      enum:
+      - Posted
+      - Invalid
+      - Rejected
+    CurCodeTypeType:
+      title: CurCodeTypeType
+      type: string
+      enum:
+      - ISO4217-Alpha
+      - ISO4217-Numeric
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    AcctIdentType:
+      title: AcctIdentType
+      type: object
+      properties:
+        AcctIdentType:
+          type: string
+          description: 'Account Identification Type. Valid values include: AcctNum, AliasAcct, PORT, etc.'
+        AcctIdentValue:
+          maxLength: 36
+          type: string
+          description: Account Identification Value. Contains the value of the Account Identifier.
+    BaseKeysType:
+      title: BaseKeysType
+      type: string
+    SvcIdentType:
+      title: SvcIdentType
+      type: object
+      properties:
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: Service Provider Name is a globally unique identifier for a service provider which indicates the location of the Service Provider that gave the error.
+        SvcNbr:
+          maxLength: 36
+          type: string
+          description: Service Number.
+        SvcName:
+          maxLength: 32
+          type: string
+          description: Service Name.
+    CardIdentType:
+      title: CardIdentType
+      type: object
+      properties:
+        CardIdentType:
+          type: string
+          description: 'Card Identification Type. Valid values include: PORT.'
+        CardIdentValue:
+          maxLength: 36
+          type: string
+          description: Card Identification Value.
+    CardKeysType:
+      title: CardKeysType
+      allOf:
+      - $ref: '#/components/schemas/BaseKeysType'
+      - type: object
+        properties:
+          SvcIdent:
+            $ref: '#/components/schemas/SvcIdentType'
+          ISOCode:
+            maxLength: 80
+            type: string
+            description: ISO Card Code. Some systems like Precision instead of ISO Number they use a code to refer to the ISO Number of the card.
+          CardNum:
+            maxLength: 32
+            type: string
+            description: Card Number. This number does not include the ISO component of the card identification.
+          CardId:
+            maxLength: 36
+            type: string
+            description: Card Identifier. Uniquely identifies a card held at a financial institution (this is the card number as it appears on the card).
+          CardSeqNum:
+            maxLength: 3
+            type: string
+            description: Card Sequence Number. Typically refers to the member number (if applicable).
+          CardIdent:
+            $ref: '#/components/schemas/CardIdentType'
+    CurCodeType:
+      title: CurCodeType
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          $ref: '#/components/schemas/CurCodeTypeType'
+        CurCodeTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Currency Code Type Enumeration Description.
+        CurCodeValue:
+          maxLength: 80
+          type: string
+          description: Currency Code Value. Indicates the Currency Code Value within the CurCodeType table specified.
+    AcctKeysType:
+      title: AcctKeysType
+      description: Account keys details to identify an account record.
+      allOf:
+      - type: object
+        properties:
+          AcctId:
+            maxLength: 36
+            type: string
+            description: 'Unique account identification number as per financial institution records.  '
+          AcctType:
+            type: string
+            description: "Type of an account. <br> Valid values are:\n  - DDA\n  - SDA\n\n<br>   Refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open\"> Glossary</a> to view the descriptions of account types.  \n<br> <blockquote> Note: This element is required when adding a new account and by using this value we can identify if the account is a savings, a checking, a time deposit, loan account, etc. </blockquote>"
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    OriginalTrnStatusType:
+      title: OriginalTrnStatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX standard status code of the transaction to inform the result of the operation.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Description corresponding to the transaction EFX status code.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Status code returned by the service provider for the original transaction.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: 'Description of the Service Provider''s status code. '
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: Name of the service provider.
+      description: Transaction status that includes information, such as status code, status description, service provider name and other relevant details.
+    AcctTrnResponseInfoType:
+      title: AcctTrnResponseInfoType
+      required:
+      - OriginalTrnStatus
+      type: object
+      properties:
+        OriginalTrnStatus:
+          $ref: '#/components/schemas/OriginalTrnStatusType'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification number of a transaction. Also known as Trace Number or Sequence in some systems.
+      description: Details of the transaction response information that contains information, such as status of the account transaction and the transaction identification number.
+    AcctTrnResponseKeysType:
+      title: AcctTrnResponseKeysType
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/AcctKeysType'
+      description: Details of account transaction to retrieve account-related information.
+    AcctTrnResponseKeysTypeRs:
+      title: AcctTrnResponseKeysType
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/AcctKeysType'
+      description: Details of the account information, returned as part of the response, that contains account keys to uniquely identify an account..
+    CurAmtType:
+      title: CurAmtType
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Transaction amount in decimal format.
+          example: 10
+      description: Details of the currency amount
+    TrnAmtType:
+      title: TrnAmtType
+      description: Details of the transaction amount.
+      allOf:
+      - $ref: '#/components/schemas/CurAmtType'
+      - type: object
+    NetworkRefDataType:
+      title: NetworkRefDataType
+      type: object
+      properties:
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Client transaction identification used to reference a previous transaction.
+      description: Details of the network reference data to uniquely identify the previously posted transaction.
+    AcctTrnResponseSelType:
+      title: AcctTrnResponseSelType
+      type: object
+      properties:
+        AcctTrnResponseKeys:
+          $ref: '#/components/schemas/AcctTrnResponseKeysType'
+        TrnAmt:
+          $ref: '#/components/schemas/TrnAmtType'
+        NetworkRefData:
+          $ref: '#/components/schemas/NetworkRefDataType'
+      description: Details of the requested transaction data that contains information, such as account keys, amount and client identification number.
+    AcctTrnResponseInqRqType:
+      title: AcctTrnResponseInqRqType
+      required:
+      - AcctTrnResponseSel
+      type: object
+      properties:
+        AcctTrnResponseSel:
+          $ref: '#/components/schemas/AcctTrnResponseSelType'
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    AcctTrnResponseStatusType:
+      title: AcctTrnResponseStatusType
+      type: object
+      properties:
+        AcctTrnResponseStatusCode:
+          $ref: '#/components/schemas/AcctTrnResponseStatusCodeType'
+        EffDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: 'Effective date and time when the transaction status is last changed. <br> Format: yyyy-MM-ddTHH:mm:ss.SSS '
+          example: 2021-01-31T23:59:59.999
+      description: Details of the account transaction response status code that contains transaction status and its effective date.
+    AcctTrnResponseRecType:
+      title: AcctTrnResponseRecType
+      required:
+      - AcctTrnResponseInfo
+      - AcctTrnResponseKeys
+      - AcctTrnResponseStatus
+      type: object
+      properties:
+        AcctTrnResponseKeys:
+          $ref: '#/components/schemas/AcctTrnResponseKeysTypeRs'
+        AcctTrnResponseInfo:
+          $ref: '#/components/schemas/AcctTrnResponseInfoType'
+        AcctTrnResponseStatus:
+          $ref: '#/components/schemas/AcctTrnResponseStatusType'
+      description: Details of the account transaction response that contains information, such as response keys, response status and response information.
+    AcctTrnResponseInqRsType:
+      title: AcctTrnResponseInqRsType
+      required:
+      - Status
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        AcctTrnResponseRec:
+          $ref: '#/components/schemas/AcctTrnResponseRecType'
+  examples:
+    PremierHeaderExample:
+      value:
+        Context:
+          Channel: WEB
+        TrnId: "622182"
+        OrganizationId: PRMOrg10
+        VendorId: "112233"
+    "401-Premier":
+      value:
+        Status:
+          StatusCode: "1740"
+          StatusDesc: Authentication Failed
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "401"
+          ServerStatusDesc: Unauthorized
+    "422-Premier":
+      value:
+        Status:
+          StatusCode: "1090"
+          StatusDesc: Invalid Value
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "422"
+          ServerStatusDesc: Unprocessable Entity
+    "500-Premier":
+      value:
+        Status:
+          StatusCode: "100"
+          StatusDesc: General Error
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "500"
+          ServerStatusDesc: Internal Server Error
+    "503-Premier":
+      value:
+        Status:
+          StatusCode: "300"
+          StatusDesc: System Not Available
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "503"
+          ServerStatusDesc: Service Unavailable
+    PremierAcctTrnResponseRequest:
+      value:
+        AcctTrnResponseSel:
+          AcctTrnResponseKeys:
+            AcctKeys:
+              AcctId: "1000"
+              AcctType: DDA
+          NetworkRefData:
+            TrnIdent: "1"
+          TrnAmt:
+            Amt: 100
+    PremierAcctTrnResponseResponse:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        AcctTrnResponseRec:
+          AcctTrnResponseKeys:
+            AcctKeys:
+              AcctId: "1000"
+              AcctType: DDA
+          AcctTrnResponseInfo:
+            OriginalTrnStatus:
+              StatusCode: "0"
+              StatusDesc: Success
+              Severity: Info
+              ServerStatusCode: "9"
+              ServerStatusDesc: Reversal
+              SvcProviderName: Premier
+            TrnIdent: "1"
+          AcctTrnResponseStatus:
+            AcctTrnResponseStatusCode: Posted
+            EffDt: 2021-08-03T15:58:38.381
