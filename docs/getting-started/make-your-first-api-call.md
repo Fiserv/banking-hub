@@ -29,7 +29,7 @@ You can also test our APIs in Sandbox environment using third-party API testing 
 
 > #### Tip
 >
-> We recommend you to refer the <a href="path=docs/getting-started/before-you-start.md#know-our-standard-api-structure" title="Click to open in a new tab" target="_blank">Know Our Standard API Structure</a> section to understand the API structure prior to test the APIs in any third-party tool.
+> We recommend you to refer the <a href="?path=docs/getting-started/before-you-start.md#know-our-standard-api-structure" title="Click to open in a new tab" target="_blank">Know Our Standard API Structure</a> section to understand the API structure prior to test the APIs in any third-party tool.
 
 
 ### Prerequisites
