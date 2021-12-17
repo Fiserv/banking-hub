@@ -27,8 +27,7 @@ After successful registration, following credentials are sent via email:
 - VendorId 
 - ChannelId
 
-These credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the [EFXHeader](?path=docs/getting-started/before-you-start.md#register-to-fiserv-developer-studio) section.
-
+These credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the <a href="?path=docs/api-ref-EFX-header.md" title="Click to open in a new tab" target="_blank">EFXHeader</a>.
 ## Know Our Standard API structure 
 
 This section describes a standard structure of request and response message of Integrated Banking RESTful APIs. 
@@ -46,7 +45,7 @@ For every API request, a response message is obtained that contains a response p
 #### Request Header
 Header parameters are common for all API requests of Integrated Banking APIs. Header parameters are sent as a JSON object under EFXHeader header parameter.
 
-For more information on EFXHeader and to view the list of all header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to view the list of EFX header parameters" target="_blank"> click here.</a>
+For more information on EFXHeader and to view the list of all header parameters, <a href="?path=docs/api-ref-EFX-header.md" title="Click to view the list of EFX header parameters" target="_blank"> click here.</a>
 
 Sample Header Example:
 ```
