@@ -6,7 +6,7 @@
 > This section is under development and you may expect some changes in the final version of documentation.
 
 
-This guide provides quick steps to use Integrated Banking  APIs during integration with your applications.
+This guide provides quick steps to use Banking Hub APIs during integration with your applications.
 
 > #### Note
 >
@@ -35,5 +35,5 @@ Topics covered:
 Topics covered:
 - How to get test and production environment certificates 
 -	How to use Sandbox environment to test the application
--	How to develop and launch an application using Integrated Banking APIs 
+-	How to develop and launch an application using Banking Hub APIs 
 
