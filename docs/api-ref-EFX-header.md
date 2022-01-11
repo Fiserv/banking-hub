@@ -1,6 +1,6 @@
 # EFX Header Parameters
 
-EFXHeader is a mandatory parameter that needs to be sent in the request message of every API call of Integrated Banking. EFX header parameter contains authentication and client-related information. Header parameters should be sent as a JSON object under the EFXHeader header parameter, refer the sample EFXHeader example below:
+EFXHeader is a mandatory parameter that needs to be sent in the request message of every API call of Banking Hub. EFX header parameter contains authentication and client-related information. Header parameters should be sent as a JSON object under the EFXHeader header parameter, refer the sample EFXHeader example below:
 
 ```
 "EFXHeader": {
