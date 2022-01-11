@@ -1,6 +1,6 @@
 # Response Codes
 
-Every API request to Integrated Banking server returns a standard HTTP status code along with the EFX status code in the response message.
+Every API request to Banking Hub server returns a standard HTTP status code along with the EFX status code in the response message.
 
 ## HTTP Status Codes
 
