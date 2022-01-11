@@ -1,7 +1,7 @@
 # Before You Start
 > #### Note to Unregistered Users
 >
-> The unregistered user journey enables an introduction to the range of functions developers can access using our Integrated Banking APIs, but not all nuances regarding how those APIs connect to our different platforms are available. <br> By contrast, the registered user journey (a work in progress) will enable developers to understand how to use our Integrated Banking APIs to integrate with any or all of our banking platforms.
+> The unregistered user journey enables an introduction to the range of functions developers can access using our Banking Hub APIs, but not all nuances regarding how those APIs connect to our different platforms are available. <br> By contrast, the registered user journey (a work in progress) will enable developers to understand how to use our Banking Hub APIs to integrate with any or all of our banking platforms.
 
 
 Register to the Fiserv Developer Studio to test the APIs in test and live environments. However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
@@ -30,7 +30,7 @@ After successful registration, following credentials are sent via email:
 These credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the <a href="?path=docs/api-ref-EFX-header.md" title="Click to open in a new tab" target="_blank">EFXHeader</a>.
 ## Know Our Standard API structure 
 
-This section describes a standard structure of request and response message of Integrated Banking RESTful APIs. 
+This section describes a standard structure of request and response message of Banking Hub RESTful APIs. 
 
 ### Request Message
 
@@ -43,7 +43,7 @@ All API requests must contain the following components:
 
 For every API request, a response message is obtained that contains a response payload and status of the API request.
 #### Request Header
-Header parameters are common for all API requests of Integrated Banking APIs. Header parameters are sent as a JSON object under EFXHeader header parameter.
+Header parameters are common for all API requests of Banking Hub APIs. Header parameters are sent as a JSON object under EFXHeader header parameter.
 
 For more information on EFXHeader and to view the list of all header parameters, <a href="?path=docs/api-ref-EFX-header.md" title="Click to view the list of EFX header parameters" target="_blank"> click here.</a>
 
