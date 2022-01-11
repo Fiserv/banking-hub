@@ -1,10 +1,10 @@
 # API Domains
 
-Our Integrated Banking APIs provide easy access to a comprehensive range of banking functions, including frequently used banking functions such as account opening, funds transfer and loan boarding.
+Our Banking Hub APIs provide easy access to a comprehensive range of banking functions, including frequently used banking functions such as account opening, funds transfer and loan boarding.
 
 These APIs are normalized, which means that developers can integrate once and gain access to the capabilities within many Fiserv banking solutions rather than having to integrate to each solution separately. 
 
-The Integrated Banking APIs are categorized as follows: 
+The Banking Hub APIs are categorized as follows: 
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
 - [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
 - [Cards](?path=docs/fintechs/cards.md "Click to open")
