@@ -102,7 +102,7 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Invalid object type</td>
                 </tr>
                 <tr>
-                    <td rowspan="39" style="background-color: #fff;" ><code>422 Un-processable Entity<code></td>
+                    <td rowspan="39" style="background-color: #fff;" ><code>422 Un-processable Entity</code></td>
                     <td><code>50</code></td>
                     <td>Warning</td>
                     <td>General warning</td>
@@ -160,7 +160,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>1726</code></td>
                     <td>Error</td>
-                    <td>Error occurred due to included override exceptions in the <code>AdditionalStatus<code> field</td>
+                    <td>Error occurred due to included override exceptions in the <code>AdditionalStatus</code> field</td>
                 </tr>
                 <tr>
                     <td><code>2020</code></td>
