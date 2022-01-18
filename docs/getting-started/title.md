@@ -38,3 +38,4 @@ Topics covered:
 -	How to develop and launch an application using Banking Hub APIs 
 
 check
+sample commit
