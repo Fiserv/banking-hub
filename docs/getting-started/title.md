@@ -1,7 +1,7 @@
 # Getting Started
 
 <!-- theme: info -->
-> #### Information
+> #### Information 
 >
 > This section is under development and you may expect some changes in the final version of documentation.
 
@@ -37,3 +37,4 @@ Topics covered:
 -	How to use Sandbox environment to test the application
 -	How to develop and launch an application using Banking Hub APIs 
 
+check
