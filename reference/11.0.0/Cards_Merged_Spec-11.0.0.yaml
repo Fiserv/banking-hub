@@ -349,7 +349,7 @@ paths:
     post:
       tags:
         - Add Account
-      summary: Add Account
+      summary: Add Account.
       description: >-
         Creates a new Checking, Savings, CD or Loan Account for one or multiple
         parties. Account is a product serviced by a financial institution (FI)
@@ -460,7 +460,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AcctAddRsType'
       x-group-name: Account Service
-      x-proxy-name: Add Account.
+      x-proxy-name: Add Account
       x-child-product-name: Accounts and Transactions
   /accounts/secured:
     post:
@@ -3031,9 +3031,96 @@ paths:
       x-proxy-name: Add Debit
       x-child-product-name: Payments
   /collateral:
+    put:
+      tags:
+        - Update Collateral
+      summary: Update Collateral.
+      description: This method modifies collateral records.
+      operationId: ModCollateral
+      parameters:
+        - name: EFXHeader
+          in: header
+          description: >-
+            EFX Header is a common and required component for all API calls, it
+            contains authentication and client-related parameters. Please note
+            that the header parameters should be sent as a JSON object under the
+            EFXHeader parameter. To view the list of header parameters, <a
+            href="../docs?path=docs/api-ref-EFX-header.md" title="Click to
+            open"> click here.</a>
+          required: true
+          style: simple
+          explode: false
+          schema:
+            $ref: '#/components/schemas/EFXHeader13'
+      requestBody:
+        description: Collateral info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollateralModRqType'
+            examples:
+              Sample Banking:
+                $ref: '#/components/examples/CollateralModRequest-Premier'
+        required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollateralModRsType'
+              examples:
+                Sample Banking:
+                  $ref: '#/components/examples/CollateralModResponse-Premier'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollateralAddRsType'
+              examples:
+                '401':
+                  $ref: '#/components/examples/401-Premier'
+        '422':
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollateralAddRsType'
+              examples:
+                '422':
+                  $ref: '#/components/examples/422-Premier'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollateralAddRsType'
+              examples:
+                '500':
+                  $ref: '#/components/examples/500-Premier'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollateralAddRsType'
+              examples:
+                '503':
+                  $ref: '#/components/examples/503-Premier'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollateralModRsType'
+      x-group-name: Collateral Service
+      x-proxy-name: Update Collateral
+      x-child-product-name: Accounts and Transactions
     post:
       tags:
         - Add Collateral
+      summary: Add Collateral.
       description: >-
         Creates a new collateral record for a party. <br> For more information
         about the Accounts and Transactions domain, <a
@@ -3124,6 +3211,43 @@ paths:
       x-group-name: Collateral Service
       x-proxy-name: Add Collateral
       x-child-product-name: Accounts and Transactions
+  /collateral/secured:
+    post:
+      tags:
+        - Get Collateral
+      summary: Get Collateral.
+      description: This method retrieves collateral records.
+      operationId: CollateralInqSecured
+      parameters:
+        - name: EFXHeader
+          in: header
+          description: >-
+            The message header request aggregate contains common information for
+            all request messages
+          required: true
+          style: simple
+          explode: false
+          schema:
+            $ref: '#/components/schemas/EFXHeader13'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollateralInqRqType'
+        required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollateralInqRsType'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollateralInqRsType'
   /document/secured:
     post:
       tags:
@@ -45745,31 +45869,8 @@ components:
       title: SafeDepositBoxKeysType
       description: Key that uniquely identifies a safe deposit box.
       allOf:
+        - $ref: '#/components/schemas/AcctKeysType10'
         - type: object
-          properties:
-            AcctId:
-              maxLength: 36
-              type: string
-              description: Unique account identification number.
-            AcctType:
-              type: string
-              description: >-
-                Type of an account. <br> Valid value is:
-                  - SDB
-                  
-                <br> To view the list of all valid account types and their
-                description, refer to the Account Types section in <a
-                href="../docs?path=docs/api-glossary.md" title="Click to
-                open">Glossary</a>.
-            FIIdent:
-              maxLength: 34
-              type: array
-              description: >-
-                Unique identification number of the related financial
-                institution.
-              items:
-                maxLength: 34
-                type: string
     SafeDepositBoxModRqType:
       title: SafeDepositBoxModRqType
       required:
@@ -108776,6 +108877,9 @@ components:
               CurCode:
                 CurCodeType: ISO4217-Alpha
                 CurCodeValue: USD
+          OrigDt: '2021-06-10'
+          StopChkDt: '2021-06-10'
+          ExpDt: '2021-12-10'
           Desc: Check Missing
           OtherDesc: StopPay-Loss
           TranFee:
@@ -109208,6 +109312,51 @@ components:
           CollateralStatus:
             CollateralStatusCode: Valid
             EffDt: '2021-11-23T01:37:36.274'
+    CollateralModRequest-Premier:
+      value:
+        OvrdAutoAckInd: 'true'
+        CollateralKeys:
+          CollateralId: 301
+        CollateralInfo:
+          Name: ''
+          CollateralValueAmt:
+            Amt: 5000
+          OriginatingBranch: 1
+          PropertyData:
+            MarketValueAmt:
+              Amt: 342
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+            MarketPricingCode: ''
+            PurchasePriceAmt:
+              Amt: 876
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+            PropertyType: 4
+            PrimaryResidenceInd: 'true'
+            BuildingStat: Existing
+            NumberOfUnits: 7
+            LegalData:
+              LegalDesc: Testing to Check For Property Data
+              Parcel: Monica
+              Block: F
+              Lot: abdhshgc
+              Subdivision: Mundhwa
+    CollateralModResponse-Premier:
+      value:
+        Status:
+          StatusCode: 0
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        CollateralStatusRec:
+          CollateralKeys:
+            CollateralId: 301
+          CollateralStatus:
+            CollateralStatusCode: Valid
+            EffDt: '2019-04-11T01:54:23.451'
     PremierDocumentInqRequest:
       value:
         RecCtrlIn:
