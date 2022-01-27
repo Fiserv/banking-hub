@@ -13,6 +13,7 @@ Specific to Fiserv core account processing platforms, these APIs make it possibl
 Begin the integration with following services of Accountholder domain in API Explorer:
 * [Address Service](../api/?type=post&path=/address)
 * [Party Service](../api/?type=post&path=/parties)
+* [Client Defined Field Service](../api/?type=post&path=/clientDefinedFields/secured)
 * [Party Account Relationship Service](../api/?type=post&path=/partyacctrel/secured)
 * [Party Parties Service](../api/?type=post&path=/partyparties/secured)
 
