@@ -17,7 +17,7 @@ Begin the integration with following services of Accounts and Transactions domai
 * [Account Hold Service](../api/?type=post&path=/accountHolds)
 * [Collateral Service](../api/?type=post&path=/collateral)
 * [Credit Line Service](../api/?type=post&path=/creditLines)
-* [ePreference Service](../api/?type=post&path=/ePreferences)
+* [Document Preferences Service](../api/?type=post&path=/ePreferences)
 * [Escrow Service](../api/?type=post&path=/escrow)
 * [Loan Indirect Liability Service](../api/?type=post&path=/indirectLiability)
 * [Memo Tickler Service](../api/?type=post&path=/memotickler)
