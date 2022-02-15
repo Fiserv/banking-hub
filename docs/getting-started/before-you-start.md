@@ -1,7 +1,8 @@
 # Before You Start
+<!-- theme: info -->
 > #### Note to Unregistered Users
 >
-> The unregistered user journey enables an introduction to the range of functions developers can access using our Banking Hub APIs, but not all nuances regarding how those APIs connect to our different platforms are available. <br> By contrast, the registered user journey (a work in progress) will enable developers to understand how to use our Banking Hub APIs to integrate with any or all of our banking platforms.
+> The unregistered user journey enables developers to access a range of Standard Bank Platform APIs on Banking Hub. Currently we are working on developing a registered user journey, therefore all nuances regarding using Banking Hub APIs to our different platforms may not be available on this portal. <br> Once the registration is enabled on Banking Hub, you can sign up and obtain the credentials along with the instructions to integrate Banking Hub APIs with our banking platforms. Additionally, you also get an access to our Sandbox environment to test the APIs; or you may choose to test the APIs <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" > Using Third-party API Testing Tools</a>.
 
 
 Register to the Fiserv Developer Studio to test the APIs in test and live environments. However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
@@ -11,6 +12,10 @@ To validate and deploy Fiserv banking APIs into production, create an account wi
 
 
 ### Setting up an Account
+<!-- theme: info -->
+> #### Note
+>
+> Registration to Fiserv Developer Studio is not enabled yet, meanwhile for manual onboarding you may coordinate with your Fiserv contact personnel.
 
 To set up an account on Fiserv Developer Studio, follow the steps below:
 1.	From the top-right corner of the screen, click **Create Account**
@@ -27,7 +32,7 @@ After successful registration, following credentials are sent via email:
 - VendorId 
 - ChannelId
 
-These credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the <a href="?path=docs/api-ref-EFX-header.md" title="Click to open" >EFXHeader</a>.
+Some of these credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the <a href="?path=docs/api-ref-EFX-header.md" title="Click to open" >EFXHeader</a> section.
 ## Know Our Standard API structure 
 
 This section describes a standard structure of request and response message of Banking Hub RESTful APIs. 
