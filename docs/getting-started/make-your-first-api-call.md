@@ -2,9 +2,6 @@
 
 This section describes the process to send an API request to the server and receive a response payload. To test the APIs, use the built-in API Explorer in Fiserv Developer Studio or any third-party API testing tool.
 
-> #### Note
-> 
-> Registration to Fiserv Developer Studio is required to test the APIs using third-party API testing tools. Currently we are working on enhancing the registered user experience. Please stay tuned for updates.
 
 ## Using the Built-in API Explorer
 
@@ -19,14 +16,21 @@ To test an API, do the following:
   <img src="https://user-images.githubusercontent.com/81968767/145146944-6285dfe4-898a-4b9c-bda4-d351a6a9568f.gif" alt="API Explorer" />
 </kbd> <br><br>
 
-> #### Note
+<!-- theme: success -->
+> #### Tip
 > 
-> Standard API requests are added under the drop-down, and you can select the drop-down options to view the response for such requests.
+> Sample API request payloads are added under the drop-down, and you can select the drop-down options to view the response for such requests.
 
 ## Using Third-party API Testing Tools
 
 You can also test our APIs in Sandbox environment using third-party API testing tools, for example, Postman, Apigee, JMeter and others.
 
+<!-- theme: info -->
+> #### Note
+> 
+> Registration to Fiserv Developer Studio (a work in progress) is required to test the APIs using third-party API testing tools. Currently we are working on enhancing the registered user experience. Please stay tuned for updates.
+
+<!-- theme: success -->
 > #### Tip
 >
 > We recommend you to refer the <a href="?path=docs/getting-started/before-you-start.md#know-our-standard-api-structure" title="Click to open">Know Our Standard API Structure</a> section to understand the API structure prior to test the APIs in any third-party tool.
@@ -49,7 +53,7 @@ To create an account on Fiserv Developer Studio, refer to the [Register to Fiser
 - VendorId 
 - ChannelId
 
-These credentials are required to be passed as header parameters under the EFXHeader parameter. For more information, refer to the [EFXHeader](?path=docs/api-ref-EFX-header.md) section.
+Some of these credentials are required to be passed as header parameters under the EFXHeader parameter. For more information, refer to the [EFXHeader](?path=docs/api-ref-EFX-header.md) section.
 
 **Generating an Access Token**
    
@@ -57,10 +61,13 @@ An access token is used to authenticate your API build and allows you to use the
 
 To generate the access token, follow the steps below:
 1.	Sign on to your Fiserv Developer Studio account
+  	<!-- theme: info -->
+  	> Registration to Fiserv Developer Studio is not enabled yet, meanwhile for manual onboarding you may coordinate with your Fiserv contact personnel.
 2.	Go to the Dashboard
 3.	From the top-right corner of the screen, click **Credentials**
 4.	Click **Generate Access Token**
 
+<!-- theme: info -->
 > #### Note
 >
 > Once generated, the access token is valid for 15 mins. You can reuse the access token until it expires.
@@ -73,7 +80,7 @@ Following example illustrates the process to test an API using Postman applicati
   
 Postman is a REST API GUI client that lets you test RESTful APIs. If you are familiar with the Postman tool, you may want to refer this section to test Fiserv APIs in the test environment. 
   
-  
+<!-- theme: success -->  
 > #### Tip
 >
 > We recommend you have the API documentation accessible to refer the default request-payload for the request message.
