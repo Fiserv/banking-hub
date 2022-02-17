@@ -61,6 +61,11 @@ An access token is used to authenticate your API build and allows you to use the
 
 To generate the access token, follow the steps below:
 1.	Sign on to your Fiserv Developer Studio account
+<!-- theme: info -->
+> #### Note
+>
+> TESTING...
+
 2.	Go to the Dashboard
 3.	From the top-right corner of the screen, click **Credentials**
 4.	Click **Generate Access Token**
