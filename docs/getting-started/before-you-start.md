@@ -56,7 +56,7 @@ Sample Header Example:
 ```
 "EFXHeader": {
     "OrganizationId": "CTOrg",
-    "TrnId": "622182",
+    "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c",
     "VendorId": "112233",
     "Context": {
       "Channel": "WEB"
