@@ -5,7 +5,7 @@ EFXHeader is a mandatory parameter that needs to be sent in the request message 
 ```
 "EFXHeader": {
   "OrganizationId": "CTOrg",
-  "TrnId": "622182",
+  "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c",
   "VendorId": "112233",
   "Context": {
     "Channel": "WEB"
@@ -17,7 +17,7 @@ List of parameters that can be sent under the EFXHeader:
 |Parameter | Description | Data Type | Required|
 |---------|----------|---------|-----------|
 |OrganizationId | Unique identification value to represent the financial institution or holding company. <br><br>*Example: PRMOrg* | string | Required |
-| TrnId | Transaction UUID (Universal Unique Identifier) of the current message. This ID is usually used for tracking messages.<br><br> *maxLength: 30*| string | Optional|
+| TrnId | Transaction UUID (Universal Unique Identifier) of the current message. This ID is usually used for tracking messages.<br><br> *maxLength: 36*| string | Optional|
 | VendorId | Unique vendor identification number provided by Fiserv to identify the vendor.| string| Optional |
 | Context  | Additional information related to the specific channels used by the client application. | object  | Optional |
 | Context.ClientAppName| Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.| string| Optional|
