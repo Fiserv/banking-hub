@@ -97,7 +97,7 @@ Open a web or desktop application of Postman and follow the steps below:
 4.	Add EFXHeader and Authorization as new parameters under the **Headers** section and insert the {EFXHeader} and {token} values in the respective fields
 5.	Insert the request-payload under the **Body** tab. Make sure that the **raw** button activated, and text format is set to **JSON** (refer the screenshot)<br> <kbd><img src="https://user-images.githubusercontent.com/81968767/145019152-399b813e-61a6-41c1-9e79-2e3cfd10015f.png" width="70%" /></kbd><br> **Note:** *Default request-payload can be copied from the API Explorer documentation and you may modify certain fields as mentioned in the documentation*
 6.	Modify the field values in JSON code that you want to test 
-7.	Click **Send**. API Response is generated in the Response section
+7.	Click **Send**. API Response is generated in the Response section.
 
   
 <kbd>
