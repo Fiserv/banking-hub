@@ -386,7 +386,7 @@ components:
         OrganizationId:
           type: string
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
         VendorId:
           type: string
@@ -756,14 +756,14 @@ components:
           description: Currency Code Value. Indicates the Currency Code Value within the CurCodeType table specified.
     AcctKeysType:
       title: AcctKeysType
-      description: Account key details to identify an account record
+      description: Unique information to identify the account record
       allOf:
       - type: object
         properties:
           AcctId:
             maxLength: 36
             type: string
-            description: Unique account identification number
+            description: Unique identification number of an account record
           AcctType:
             type: string
             description: |-
@@ -977,7 +977,7 @@ components:
         RecurType:
           type: string
           description: |-
-            Recurrence type indicates the pattern of recurrence. <br> Valid values are:
+            Type of recurrence. <br> Valid values are:
               - Daily
               - Monthly
               - Quarterly
@@ -986,9 +986,7 @@ components:
               - Once
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval for a memo tickler. This value defines the interval between two successive occurrences. For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to set to '1', then there will be 1 month interval between the next payment.
-              The default value is set to 1.
+          description: Recurrence interval between two, successive occurrences of memo or tickler. <br> For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to set to '1', then there will be 1 month interval between the next payment. The default value is set to 1.
           format: int64
       description: Details of recurrence rule
     TimeFrameType:
@@ -1411,18 +1409,17 @@ components:
             Indicates whether a record is a memo or tickler. <br> Valid values are:
               - Memo
               - Tickler
-            <br> <b>Note:  </b>Customers do not have Tickler records.
         MemoTicklerText:
           maxLength: 100
           type: array
-          description: 'Description of memo tickler. <br> <b>Note:  </b>One description line (40 Char and 60 Char for Loan account) is accepted for Ticklers whereas, 5 descrtiption lines (60 Char) is accepted for memo.'
+          description: Description of memo tickler
           items:
             maxLength: 100
             type: string
         MemoTicklerExtendedText:
           maxLength: 80
           type: array
-          description: 'Description printed in addition to the standard message included in notification specifications. <br> <b>Note: </b>Additional message line of 60 Char is accepted for Ticklers.'
+          description: Description printed in addition to the standard message included in notification specifications
           items:
             maxLength: 80
             type: string
@@ -1444,12 +1441,12 @@ components:
           $ref: '#/components/schemas/RecurRuleType'
         NextMemoTicklerDt:
           type: string
-          description: 'Date at which next tickler will be reported. <br> <b>Note: </b>Next date is automatically advanced if, tickler frequency is one month or greater, whereas the date is to be manually advanced if, tickler frequency is one-time. <br> Format: yyyy-mm-dd '
+          description: 'Date on which next memo tickler is reported. <br> <b>Note: </b>This field is mandatory if the RecurType is not defined or set to "Once". <br> Format: yyyy-mm-dd '
           format: date
           example: 2021-11-20
         ExpDt:
           type: string
-          description: 'Date at which ticklers and memo become inactive. <br> Format: yyyy-mm-dd '
+          description: 'Date after which a memo and tickler becomes inactive. <br> Format: yyyy-mm-dd '
           format: date
           example: 2021-11-20
       description: Details of memo tickler
@@ -1480,7 +1477,7 @@ components:
           description: Cursor. Next Record Pointer Included in the response only if additional records are available.
     MemoTicklerKeysType:
       title: MemoTicklerKeysType
-      description: Keys to identify a memo tickler record
+      description: Unique information to identify a memo tickler record
       allOf:
       - type: object
         properties:
@@ -1488,18 +1485,21 @@ components:
             $ref: '#/components/schemas/AcctKeysType'
           MemoTicklerUse:
             type: string
-            description: 'Indicates whether a record is a memo or tickler. <br> <b>Note:  </b>Customers do not have Tickler records.'
+            description: |-
+              Indicates whether a record is a memo or tickler. <br> Valid values are:
+                - Memo
+                - Tickler
           MemoTicklerIdent:
             maxLength: 36
             type: string
-            description: Identification code for a memo tickler
+            description: Unique identification code to identify a memo tickler
     MemoTicklerSelType:
       title: MemoTicklerSelType
       type: object
       properties:
         MemoTicklerKeys:
           type: array
-          description: Keys to identify a memo tickler record
+          description: Unique information to identify a memo tickler record
           items:
             $ref: '#/components/schemas/MemoTicklerKeysType'
         AcctKeys:
@@ -1657,9 +1657,9 @@ components:
       properties:
         SentRecCount:
           type: integer
-          description: 'Total number of records that matched the selection criteria and are returned in the response message .  Total Number of Records = Number of posted transactions that completed the nightly processing + Number of memo posted transactions. <br> <b>Note: </b>Premier supports up to 99 memos and ticklers.'
+          description: Total number of records that matched the selection criteria and returned in the response message
           format: int64
-      description: Details of the information required to retrieve additional records that matched the specified selection criteria. Applicable only when a client uses the RecCtrlIn aggregate field in the request.
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message
     MemoTicklerRecType:
       title: MemoTicklerRecType
       required:
@@ -1766,6 +1766,8 @@ components:
           RecurRule:
             RecurType: Yearly
             RecurInterval: 3
+          NextMemoTicklerDt: "2022-12-01"
+          ExpDt: "2022-12-15"
     MemoTicklerAddResponseCDA-Premier:
       value:
         Status:
@@ -1802,6 +1804,8 @@ components:
           RecurRule:
             RecurType: Yearly
             RecurInterval: 3
+          NextMemoTicklerDt: "2022-12-01"
+          ExpDt: "2022-12-15"
     MemoTicklerAddResponseDDA-Premier:
       value:
         Status:
@@ -1838,6 +1842,8 @@ components:
           RecurRule:
             RecurType: Yearly
             RecurInterval: 3
+          NextMemoTicklerDt: "2022-12-01"
+          ExpDt: "2022-12-15"
     MemoTicklerAddResponseSDA-Premier:
       value:
         Status:
@@ -1888,7 +1894,7 @@ components:
             DeliveryInstruction:
               DeliveryMethod: Notice
             ReportGroupCode: "0"
-            ExpDt: 2022-12-15
+            ExpDt: "2022-12-15"
           MemoTicklerStatus:
             MemoTicklerStatusCode: Valid
             EffDt: 2022-01-21T08:30:03.956
@@ -1909,7 +1915,7 @@ components:
             DeliveryInstruction:
               DeliveryMethod: Notice
             ReportGroupCode: "0"
-            ExpDt: 2022-12-15
+            ExpDt: "2022-12-15"
           MemoTicklerStatus:
             MemoTicklerStatusCode: Valid
             EffDt: 2022-01-21T08:30:03.959
@@ -1946,7 +1952,7 @@ components:
             DeliveryInstruction:
               DeliveryMethod: Notice
             ReportGroupCode: "0"
-            ExpDt: 2022-12-15
+            ExpDt: "2022-12-15"
           MemoTicklerStatus:
             MemoTicklerStatusCode: Valid
             EffDt: 2022-01-21T08:12:50.759
@@ -1967,7 +1973,7 @@ components:
             DeliveryInstruction:
               DeliveryMethod: Notice
             ReportGroupCode: "0"
-            ExpDt: 2022-12-15
+            ExpDt: "2022-12-15"
           MemoTicklerStatus:
             MemoTicklerStatusCode: Valid
             EffDt: 2022-01-21T08:12:50.761
@@ -2004,7 +2010,7 @@ components:
             DeliveryInstruction:
               DeliveryMethod: Notice
             ReportGroupCode: "0"
-            ExpDt: 2022-12-15
+            ExpDt: "2022-12-15"
           MemoTicklerStatus:
             MemoTicklerStatusCode: Valid
             EffDt: 2022-01-21T07:59:33.563
@@ -2025,7 +2031,7 @@ components:
             DeliveryInstruction:
               DeliveryMethod: Notice
             ReportGroupCode: "0"
-            ExpDt: 2022-12-15
+            ExpDt: "2022-12-15"
           MemoTicklerStatus:
             MemoTicklerStatusCode: Valid
             EffDt: 2022-01-21T07:59:33.662
@@ -2127,6 +2133,8 @@ components:
           RecurRule:
             RecurType: Yearly
             RecurInterval: 3
+          NextMemoTicklerDt: "2022-12-01"
+          ExpDt: "2022-12-15"
     MemoTicklerModResponseCDA-Premier:
       value:
         SStatus:
@@ -2167,6 +2175,8 @@ components:
           RecurRule:
             RecurType: Yearly
             RecurInterval: 3
+          NextMemoTicklerDt: "2022-12-01"
+          ExpDt: "2022-12-15"
     MemoTicklerModResponseDDA-Premier:
       value:
         SStatus:
@@ -2207,6 +2217,8 @@ components:
           RecurRule:
             RecurType: Yearly
             RecurInterval: 3
+          NextMemoTicklerDt: "2022-12-01"
+          ExpDt: "2022-12-15"
     MemoTicklerModResponseSDA-Premier:
       value:
         SStatus:
