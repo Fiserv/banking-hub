@@ -3,13 +3,92 @@ openapi: 3.0.0
 info:
   title: Safe Deposit Box Service
   description: The Safe Deposit Box service manages creation, modification and inquiry requests for a safe deposit box.
-  contact:
-    name: Isabelle Mathon
-    email: Isabelle.Mathon@Fiserv.com
   version: 11.0.0
 servers:
 - url: /
 paths:
+  /safedepositbox:
+    post:
+      tags:
+      - Add Safe Deposit Box
+      summary: Add Safe Deposit Box.
+      description: "Creates a safe deposit box account. A safe deposit box (or safety deposit box) is an individually secured container that stays in the safe or vault of a federally insured bank or credit union. <br> For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n  </ul>"
+      operationId: addSafeDepositBox
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains authentication and client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open">click here.</a>
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SafeDepositBoxAddRqType'
+            examples:
+              Sample Banking:
+                $ref: '#/components/examples/SafeDepositBoxAddRequest_PRM'
+        required: true
+        x-send-file-in-body: false
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SafeDepositBoxAddRsType'
+              examples:
+                Sample Banking:
+                  $ref: '#/components/examples/SafeDepositBoxAddResponse_PRM'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusType1'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusType1'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusType1'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusType1'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SafeDepositBoxAddRsType'
+      deprecated: false
+      x-group-name: Safe Deposit Box Service
+      x-proxy-name: Add Safe Deposit Box
+      x-child-product-name: Accounts and Transactions
   /safedepositbox/secured:
     post:
       tags:
@@ -497,6 +576,7 @@ components:
     PartyAcctRelOrderType:
       title: PartyAcctRelOrderType
       type: string
+      description: Relationship order of party with an account in case of JointTenancy or JointTenantsInComman
       enum:
       - First
       - Second
@@ -1778,6 +1858,19 @@ components:
         - AddrType
         type: object
         properties:
+          RelationshipMgr:
+            type: array
+            description: Information about the financial institution officers who have management-related responsibilities of the account
+            items:
+              $ref: '#/components/schemas/RelationshipMgrType'
+          OriginatingBranch:
+            maxLength: 32
+            type: string
+            description: Branch that primarily created the account with the party
+          ResponsibleBranch:
+            maxLength: 32
+            type: string
+            description: Branch responsible for the relationship
           NameIdent:
             maxLength: 36
             type: array
@@ -1849,6 +1942,12 @@ components:
           ForeignFlag:
             type: boolean
             description: Flag to indicate the given postal address is foreign address
+          HandlingCode:
+            maxLength: 80
+            type: string
+            description: Handling code to specify the handling process of the notification and statement forms
+          HandlingCodeOption:
+            $ref: '#/components/schemas/HandlingCodeOptionType'
           MSACode:
             type: integer
             description: Code that identifies a Metropolitan Statistical Area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
@@ -2085,7 +2184,7 @@ components:
         FeeType:
           type: string
           description: |-
-            Type of the fee charged to the account. Valid value is:
+            Type of the fee charged to the account. <br> Valid value is:
               - LateFee
         FeeWaiver:
           $ref: '#/components/schemas/FeeWaiverType'
@@ -2341,22 +2440,15 @@ components:
           description: Rate Variance. Percentage that the interest rate varies from its related index rate
     PartyKeysType:
       title: PartyKeysType
+      description: Unique information to identify the party record
       allOf:
       - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
-          SvcIdent:
-            $ref: '#/components/schemas/SvcIdentType'
           PartyId:
             maxLength: 36
             type: string
-            description: Party Identifier. Used to uniquely identify a Party record.
-          PartyIdentType:
-            $ref: '#/components/schemas/PartyIdentTypeType'
-          PartyIdent:
-            maxLength: 60
-            type: string
-            description: Party Identification.
+            description: Unique identification number of a party record
     AgreementDataType:
       title: AgreementDataType
       type: object
@@ -3410,6 +3502,8 @@ components:
           description: State Province Enumeration Description.
     OvrdElementType:
       title: OvrdElementType
+      type: object
+      description: Information about the elements that corresponds to the override exception code.
       allOf:
       - $ref: '#/components/schemas/SubjectElementType'
       - type: object
@@ -3419,15 +3513,15 @@ components:
       properties:
         SubjectRole:
           type: string
-          description: Subject Role.
+          description: Role of the subject who is overriding the exception.
         SubjectIdent:
           maxLength: 36
           type: string
-          description: Subject Identifier.
+          description: Subject identification value to identify the subject who is overriding the exception.
         OvrdExceptionCode:
           maxLength: 40
           type: string
-          description: Overrride Exception Code.Identifies an exception code that is to be overridden. This would be the ServerStatusCode from the Status response.
+          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
         OvrdElement:
           $ref: '#/components/schemas/OvrdElementType'
     OvrdExceptionDataType:
@@ -3436,9 +3530,10 @@ components:
       properties:
         OverrideException:
           type: array
-          description: Override Exception.
+          description: List of the exceptions that can be overridden.
           items:
             $ref: '#/components/schemas/OverrideExceptionType'
+      description: Details of the exceptions that can be manually acknowledged by the client.
     MemberDataType:
       title: MemberDataType
       type: object
@@ -3758,10 +3853,7 @@ components:
       properties:
         PartyKeys:
           $ref: '#/components/schemas/PartyKeysType'
-        PersonPartyListInfo:
-          $ref: '#/components/schemas/PersonPartyListInfoType'
-        OrgPartyListInfo:
-          $ref: '#/components/schemas/OrgPartyListInfoType'
+      description: Reference details of a party object that is part of the relationship with the safe deposit box
     PartyAcctRelDataType:
       title: PartyAcctRelDataType
       required:
@@ -3770,20 +3862,9 @@ components:
       properties:
         PartyAcctRelType:
           type: string
-          description: Party-to-Account Relationship Type. Describes the relationship between the Party and the Account.
-        PartyAcctRelDesc:
-          maxLength: 80
-          type: string
-          description: Party-to-Account Relationship Description.
+          description: Type of party relationship to account
         PartyAcctRelOrder:
           $ref: '#/components/schemas/PartyAcctRelOrderType'
-        OwnershipType:
-          type: string
-          description: Ownership Type.
-        OwnershipTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Ownership Type Enumeration Description.
     LiabilityType:
       title: LiabilityType
       type: object
@@ -3802,105 +3883,19 @@ components:
           $ref: '#/components/schemas/PartyRefType'
         PartyAcctRelData:
           type: array
-          description: Party Account Relation Data.
+          description: Details of the relationship of the party to the account
           items:
             $ref: '#/components/schemas/PartyAcctRelDataType'
-        OwnerPercent:
-          type: number
-          description: Owner Percent.
         OwnerInd:
           type: boolean
-          description: Owner Indicator.
-        PrimaryOwnerInd:
-          type: boolean
-          description: Primary Owner Indicator.
-        Beneficiary:
-          $ref: '#/components/schemas/BeneficiaryType'
-        Liability:
-          $ref: '#/components/schemas/LiabilityType'
+          description: Flag to indicate the party is the owner of the safe deposit box account
         TaxReportingOwnerInd:
           type: boolean
-          description: Tax Reporting Owner Indicator.
-        TaxReportingSignerInd:
-          type: boolean
-          description: Tax Reporting Owner Signer.
-        Nickname:
-          maxLength: 80
-          type: string
-          description: Nickname. Used to allow a customer to assign nicknames to objects.
-        AddtlAcctType:
-          type: array
-          description: Additional Account Type Designations.
-          items:
-            $ref: '#/components/schemas/AddtlAcctTypeType'
-        AcctTitle:
-          maxLength: 255
-          type: string
-          description: Account Title.Title on account typically identifies ownership or responsibility for account and manner in which ownership/responsibility is assigned.
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        AcctRelClass:
-          $ref: '#/components/schemas/AcctRelClassType'
-        AcctRelClassEnumDesc:
-          maxLength: 80
-          type: string
-          description: Account Relationship Class Enumeration Description.
-        PortHasCreditLineInd:
-          type: boolean
-          description: Port Has Credit Line Indicator. Value indicates the presence of a credit line associated to the Port. For Premier use.
+          description: Flag to indicate the party has tax responsibility on the safe deposit box account
     PartyAcctRelInfoType:
       title: PartyAcctRelInfoType
       allOf:
       - $ref: '#/components/schemas/PartyRelInfoType'
-      - type: object
-        properties:
-          FDICOwnership:
-            maxLength: 80
-            type: string
-            description: FDIC Ownership.
-          FDICOwnershipEnumDesc:
-            maxLength: 80
-            type: string
-            description: FDIC Ownership Enumeration Description.
-          FDICOwnershipPrintOption:
-            type: string
-            description: FDIC Ownership Print Option.
-          NamePrintOption:
-            maxLength: 80
-            type: string
-            description: Print Option. Indicates where the secondary name or title displays on the account or if a separate notice or statement is printed.
-          AndorOr:
-            $ref: '#/components/schemas/AndorOrType'
-          AlternateNameIdent:
-            maxLength: 36
-            type: string
-            description: Alternate Name Identifier.
-          AlternateFullName:
-            maxLength: 96
-            type: string
-            description: Alternate Full Name.
-          SendNotificationInd:
-            type: boolean
-            description: Send Notification Indicator.
-          DocDistributionOption:
-            maxLength: 80
-            type: string
-            description: Document Distribution Option. Indicates the distribution method when processing statements and notices.
-          StmtType:
-            maxLength: 80
-            type: string
-            description: Statement Type.
-          CreditBureauInd:
-            type: boolean
-            description: Credit Bureau Indicator.
-          AcctRef:
-            $ref: '#/components/schemas/AcctRefType'
-          UpdateContactCode:
-            $ref: '#/components/schemas/UpdateContactCodeType'
-          AutoEnrollmentData:
-            $ref: '#/components/schemas/AutoEnrollmentDataType'
     SafeDepositBoxInfoType:
       title: SafeDepositBoxInfoType
       type: object
@@ -4127,12 +4122,12 @@ components:
       properties:
         OvrdAutoAckInd:
           type: boolean
-          description: Override AutoAcknowledge Indicator. Used when the midleware is in charge of  auto-acknowledgement of exceptions.
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
         PartyAcctRelInfo:
           type: array
-          description: Party-to-Account Relationship Information. Identifies the Parties and their relationships to the the Account.
+          description: 'Details of a relationship between party and account '
           items:
             $ref: '#/components/schemas/PartyAcctRelInfoType'
         SafeDepositBoxInfo:
@@ -4260,7 +4255,7 @@ components:
           pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: 'Effective date and time when the safe deposit box status is changed. <br> Format: yyyy-MM-ddTHH:mm:ss.SSS <br> Example: 2021-01-31T23:59:59.999'
-      description: Status of the safe deposit box
+      description: Status details of the safe deposit box
     SafeDepositBoxStatusRecType:
       title: SafeDepositBoxStatusRecType
       required:
@@ -4268,12 +4263,11 @@ components:
       - SafeDepositBoxStatus
       type: object
       properties:
-        SvcIdent:
-          $ref: '#/components/schemas/SvcIdentType'
         SafeDepositBoxKeys:
           $ref: '#/components/schemas/SafeDepositBoxKeysType'
         SafeDepositBoxStatus:
           $ref: '#/components/schemas/SafeDepositBoxStatusType'
+      description: Details of the safe deposit box status used in response to return results from add, modify or delete safe deposit box record
     SafeDepositBoxAddRsType:
       title: SafeDepositBoxAddRsType
       required:
@@ -4409,7 +4403,7 @@ components:
             BoxNum: "1001"
             BoxSizeCode: "1"
             BoxRentTypeCode: "1"
-            OpenDt: "2015-03-04"
+            OpenDt: '''"2015-03-04"'''
             BoxRentAmt:
               Amt: 200
               CurCode:
@@ -4431,10 +4425,10 @@ components:
               BillingFrequency:
                 RecurType: Yearly
                 RecurInterval: 1
-              NextBillingDt: "2021-10-01"
+              NextBillingDt: '''"2021-10-01"'''
             DateData:
             - DateType: LastFileMaint
-              DateValue: "2021-01-27"
+              DateValue: '''"2021-01-27"'''
             OriginatingBranch: "1"
             OriginatingBranchEnumDesc: SOUTHSIDE VALLEY BANK
             ResponsibleBranch: "1"
@@ -4596,7 +4590,7 @@ components:
                   CurCode:
                     CurCodeType: ISO4217-Alpha
                     CurCodeValue: USD
-              DueDt: "2021-11-01"
+              DueDt: '''"2021-11-01"'''
               PaidInd: false
             - PmtCompositeAmt:
               - CompositeCurAmtType: Tax
@@ -4606,7 +4600,7 @@ components:
                   CurCode:
                     CurCodeType: ISO4217-Alpha
                     CurCodeValue: USD
-              DueDt: "2021-11-01"
+              DueDt: '''"2021-11-01"'''
               PaidInd: false
             LastPmt:
               PmtCompositeAmt:
@@ -4615,7 +4609,7 @@ components:
                   CurCode:
                     CurCodeType: ISO4217-Alpha
                     CurCodeValue: USD
-              PmtDt: "2020-11-01"
+              PmtDt: '''"2020-11-01"'''
             NumSignatureReq: 1
             AcctTaxData:
               TaxType: SalesTax
@@ -4649,7 +4643,7 @@ components:
           BoxNum: SAU15
           BoxSizeCode: "1"
           BoxRentTypeCode: "5"
-          OpenDt: "2019-03-28"
+          OpenDt: '''"2019-03-28"'''
           RelationshipMgr:
           - RelationshipMgrIdent: "80"
             RelationshipRole: SecondOfficer
@@ -4678,9 +4672,9 @@ components:
             BillingFrequency:
               RecurType: Monthly
               RecurInterval: 1
-            NextBillingDt: "2021-11-30"
-          LastContactDt: "2019-08-01"
-          EscheatDt: "2019-08-01"
+            NextBillingDt: '''"2021-11-30"'''
+          LastContactDt: '''"2019-08-01"'''
+          EscheatDt: '''"2019-08-01"'''
           OriginatingBranch: "1"
           ResponsibleBranch: "1"
           NicknameOption: Printed
@@ -4694,7 +4688,7 @@ components:
           ClassCode: "1"
           AcctOpenMethod: InPerson
           PostAddr:
-          - OpenDt: "2019-03-28"
+          - OpenDt: '''"2019-03-28"'''
             RelationshipMgr:
             - RelationshipMgrIdent: "87"
               RelationshipRole: Officer
@@ -4736,8 +4730,8 @@ components:
               CountryCodeValue: "11"
             AddrType: Seasonal
             TimeFrame:
-              StartDt: "9999-11-30"
-              EndDt: "9999-03-30"
+              StartDt: '''"9999-11-30"'''
+              EndDt: '''"9999-03-30"'''
             CensusTract: "3"
             CensusBlock: "4"
             ForeignFlag: false
@@ -4766,7 +4760,7 @@ components:
                 CurCode:
                   CurCodeType: ISO4217-Alpha
                   CurCodeValue: USD
-            DueDt: "2021-12-20"
+            DueDt: '''"2021-12-20"'''
             PaidInd: false
           NumSignatureReq: 2
           AcctTaxData:
