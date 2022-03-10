@@ -13,7 +13,7 @@
 | Core  | Core banking product of Fiserv.|
 | Credit Line  | Flexible loan option offered by financial institution which consists of defined amount of money that can be accessed whenever needed by customer.|
 | Customer   |A person who does business with a bank and has a customer information file (CIF) and/or account record in the system.|
-| EFT Card   | Electronic Fund Transfer card (EFT card) is a plastic card that is used to transfer funds ectronically.|
+| EFT Card   | Electronic Fund Transfer card (EFT card) is a plastic card that is used to transfer funds electronically.|
 | EFX   | A web service message framework used for exchange of information between service-providers21, clients and vendors.|z
 | Escrow Account   | A third-party account used to manage and disburse the funds to an ultimate party or an account.|
 | ESF  | Enterprise Service Framework (ESF) is designed to enable multiple Fiserv products/systems to communicate with one another.|
