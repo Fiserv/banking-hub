@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   title: Product Service
   description: Product service supports an inquiry operation to retrieve the list of card, deposit and loan products offered by the financial institution.
-  version: 11.0.0
+  version: 11.0.0_Secured
 servers:
 - url: /
 paths:
@@ -11,8 +11,8 @@ paths:
     post:
       tags:
       - Get Product List
-      summary: Retrieves a Product List Object Secured
-      description: Retrieves the list of products offered by the financial institution.
+      summary: Get Product List.
+      description: "Retrieves the list of products offered by the financial institution. <br> For more information about the Operations and Servicing domain <a href=\"../docs/?path=docs/fintechs/servicing.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n  </ul>"
       operationId: ProductListInqOperByPathSecured
       parameters:
       - name: EFXHeader
@@ -28,6 +28,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ProductListInqRqType'
+            examples:
+              Sample Banking:
+                $ref: '#/components/examples/ProductListInqRequest-Premier'
         required: true
       responses:
         "200":
@@ -36,12 +39,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductListInqRsType'
+              examples:
+                Sample Banking:
+                  $ref: '#/components/examples/ProductListInqResponse-Premier'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductListInqRsType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductListInqRsType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductListInqRsType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductListInqRsType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
         default:
           description: Unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductListInqRsType'
+      x-group-name: Product Service
+      x-proxy-name: Get Product List
+      x-child-product-name: Operations and Servicing
 components:
   schemas:
     EFXHeader:
@@ -52,7 +97,7 @@ components:
         OrganizationId:
           type: string
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
         VendorId:
           type: string
@@ -71,9 +116,9 @@ components:
           type: string
           description: Indicates the channel used by the client application.
         ClientDateTime:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
         ClientTerminalSeqNum:
           maxLength: 36
           type: string
@@ -436,7 +481,7 @@ components:
         ProductStatusCode:
           $ref: '#/components/schemas/ProductStatusCodeType'
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: 'Effective date and time when the product status is changed. <br> Format: yyyy-MM-ddTHH:mm:ss.SSS'
           example: 2021-01-31T23:59:59.999
@@ -471,3 +516,127 @@ components:
           description: Details of the product list record
           items:
             $ref: '#/components/schemas/ProductListRecType'
+  examples:
+    "401-Premier":
+      value:
+        Status:
+          StatusCode: "1740"
+          StatusDesc: Authentication Failed
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "401"
+          ServerStatusDesc: Unauthorized
+    "422-Premier":
+      value:
+        Status:
+          StatusCode: "1090"
+          StatusDesc: Invalid Value
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "422"
+          ServerStatusDesc: Unprocessable Entity
+    "500-Premier":
+      value:
+        Status:
+          StatusCode: "100"
+          StatusDesc: General Error
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "500"
+          ServerStatusDesc: Internal Server Error
+    "503-Premier":
+      value:
+        Status:
+          StatusCode: "300"
+          StatusDesc: System Not Available
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "503"
+          ServerStatusDesc: Service Unavailable
+    ProductListInqRequest-Premier:
+      value:
+        ProductListSel:
+          AcctType: DDA
+    ProductListInqResponse-Premier:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        RecCtrlOut:
+          SentRecCount: 6
+        ProductListRec:
+        - ProductKeys:
+            AcctType: DDA
+            ProductIdent: "10100"
+          ProductListInfo:
+            AcctType: DDA
+            ProductIdent: "10100"
+            Desc: REGULAR
+            ProductDtlStatus: Active
+            OfferStartDt: 2020-09-24
+            OfferEndDt: 2022-12-31
+          ProductStatus:
+            ProductStatusCode: Valid
+            EffDt: 2022-01-20T16:19:50.335
+        - ProductKeys:
+            AcctType: DDA
+            ProductIdent: "10103"
+          ProductListInfo:
+            AcctType: DDA
+            ProductIdent: "10103"
+            Desc: MONEY MARKET
+            ProductDtlStatus: Active
+            OfferStartDt: 2020-09-24
+          ProductStatus:
+            ProductStatusCode: Valid
+            EffDt: 2022-01-20T16:19:50.335
+        - ProductKeys:
+            AcctType: DDA
+            ProductIdent: "10105"
+          ProductListInfo:
+            AcctType: DDA
+            ProductIdent: "10105"
+            Desc: BUSINESS
+            ProductDtlStatus: Active
+            OfferStartDt: 2020-09-24
+          ProductStatus:
+            ProductStatusCode: Valid
+            EffDt: 2022-01-20T16:19:50.336
+        - ProductKeys:
+            AcctType: DDA
+            ProductIdent: "10107"
+          ProductListInfo:
+            AcctType: DDA
+            ProductIdent: "10107"
+            Desc: THRIFT
+            ProductDtlStatus: Active
+            OfferStartDt: 2020-09-24
+          ProductStatus:
+            ProductStatusCode: Valid
+            EffDt: 2022-01-20T16:19:50.336
+        - ProductKeys:
+            AcctType: DDA
+            ProductIdent: "10115"
+          ProductListInfo:
+            AcctType: DDA
+            ProductIdent: "10115"
+            Desc: FIFTY FIVE PLUS
+            ProductDtlStatus: Active
+            OfferStartDt: 2020-09-24
+          ProductStatus:
+            ProductStatusCode: Valid
+            EffDt: 2022-01-20T16:19:50.337
+        - ProductKeys:
+            AcctType: DDA
+            ProductIdent: "10199"
+          ProductListInfo:
+            AcctType: DDA
+            ProductIdent: "10199"
+            Desc: PUBLIC FUND
+            ProductDtlStatus: Active
+            OfferStartDt: 2020-09-24
+          ProductStatus:
+            ProductStatusCode: Valid
+            EffDt: 2022-01-20T16:19:50.434
