@@ -12,6 +12,8 @@ Operations and Servicing is an API domain consisting of APIs that support custom
 Begin the integration with following service of Operations and Servicing domain in API Explorer:
 * [Enumeration Table Service](../api/?type=post&path=/enumtable/secured)
 * [Host System Service](../api/?type=post&path=/hostSystem/secured)
+* [Host Logon Service](../api/?type=post&path=/hostlogon)
+* [Product Service](../api/?type=post&path=/productList/secured)
 
 
 ## See Also
