@@ -26,6 +26,7 @@ Begin the integration with following services of Accounts and Transactions domai
 * [Document Service](../api/?type=post&path=/document/secured)
 * [Multi Account Service](../api/?type=post&path=/accounts/list/secured)
 * [Safe Deposit Box Service](../api/?type=post&path=/safedepositbox/secured)
+* [Client Field Specification Service](../api/?type=post&path=/clientFieldSpec/secured)
 
 ## See Also
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")

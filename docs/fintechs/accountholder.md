@@ -16,6 +16,7 @@ Begin the integration with following services of Accountholder domain in API Exp
 * [Client Defined Field Service](../api/?type=post&path=/clientDefinedFields/secured)
 * [Party Account Relationship Service](../api/?type=post&path=/partyacctrel/secured)
 * [Party Parties Service](../api/?type=post&path=/partyparties/secured)
+* [Beneficiary Service](../api/?type=post&path=/beneficiaries)
 
 
 ## See Also
