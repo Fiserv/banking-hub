@@ -32,7 +32,7 @@ After successful registration, following credentials are sent via email:
 - VendorId 
 - ChannelId
 
-Some of these credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the <a href="?path=docs/api-ref-EFX-header.md" title="Click to open" >EFXHeader</a> section.
+Some of these credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the <a href="?path=docs/api-ref-EFX-header.md" target="_blank" title="Click to open" >EFXHeader</a> section.
 ## Know Our Standard API structure 
 
 This section describes a standard structure of request and response message of Banking Hub RESTful APIs. 
