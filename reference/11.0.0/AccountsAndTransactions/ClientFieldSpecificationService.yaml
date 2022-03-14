@@ -8,15 +8,13 @@ info:
 servers:
 - url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/ClientFieldSpecificationService/11.0.0_Secured
   description: SwaggerHub API Auto Mocking
-- url: http://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/ClientFieldSpecificationService/11.0.0
-  description: SwaggerHub API Auto Mocking
 paths:
-  /clientFieldSpec: {}
-  /clientFieldSpec/{dataApplType}: {}
   /clientFieldSpec/secured:
     post:
-      summary: Retrieves Client Field Specifications Secured
-      description: Retrieves the client-defined field specifications such as field label, field data type, field length etc.
+      tags:
+      - Update Party Account Relationship
+      summary: Get Client Field Specifications.
+      description: "Retrieves the client-defined field specifications such as field label, field data type, field length etc. <br> For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n  </ul>"
       operationId: ClientFieldSpecInfoSecured
       parameters:
       - name: EFXHeader
@@ -32,6 +30,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ClientFieldSpecInqRqType'
+            examples:
+              Sample Banking:
+                $ref: '#/components/examples/ClientFieldSpecInqRq-PRM'
         required: true
       responses:
         "200":
@@ -40,12 +41,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientFieldSpecInqRsType'
+              examples:
+                Sample Banking:
+                  $ref: '#/components/examples/ClientFieldSpecInqRs-PRM'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientFieldSpecInqRsType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientFieldSpecInqRsType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientFieldSpecInqRsType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientFieldSpecInqRsType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
         default:
           description: Unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientFieldSpecInqRsType'
+      x-group-name: Client Field Specification Service
+      x-proxy-name: Get Client Field Specifications
+      x-child-product-name: Accounts and Transactions
 components:
   schemas:
     EFXHeader:
@@ -56,7 +99,7 @@ components:
         OrganizationId:
           type: string
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
         VendorId:
           type: string
@@ -75,9 +118,9 @@ components:
           type: string
           description: Indicates the channel used by the client application.
         ClientDateTime:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
         ClientTerminalSeqNum:
           maxLength: 36
           type: string
@@ -346,7 +389,7 @@ components:
           description: Maximum allowed length of the client-defined data entered in the Value field
           format: int64
         LastUpdateDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: 'Date and time when the client field specification was updated. <br> Format: yyyy-MM-ddTHH:mm:ss.SSS'
           example: 2021-01-31T23:59:59.999
@@ -507,7 +550,7 @@ components:
         ClientFieldSpecStatusCode:
           $ref: '#/components/schemas/ClientFieldSpecStatusCodeType'
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: 'Effective date and time when the client field specification status is changed. <br> Format: yyyy-MM-ddTHH:mm:ss.SSS'
           example: 2021-01-31T23:59:59.999
@@ -542,3 +585,1058 @@ components:
           description: Details of the client field specification record returned in the response for the specified search criteria
           items:
             $ref: '#/components/schemas/ClientFieldSpecRecType'
+  examples:
+    PremierHeaderExample:
+      value:
+        Context:
+          Channel: WEB
+        TrnId: "622182"
+        OrganizationId: PRMOrg10
+        VendorId: "112233"
+    "401-Premier":
+      value:
+        Status:
+          StatusCode: "1740"
+          StatusDesc: Authentication Failed
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "401"
+          ServerStatusDesc: Unauthorized
+    "422-Premier":
+      value:
+        Status:
+          StatusCode: "1090"
+          StatusDesc: Invalid Value
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "422"
+          ServerStatusDesc: Unprocessable Entity
+    "500-Premier":
+      value:
+        Status:
+          StatusCode: "100"
+          StatusDesc: General Error
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "500"
+          ServerStatusDesc: Internal Server Error
+    "503-Premier":
+      value:
+        Status:
+          StatusCode: "300"
+          StatusDesc: System Not Available
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "503"
+          ServerStatusDesc: Service Unavailable
+    ClientFieldSpecInqRq-PRM:
+      value:
+        RecCtrlIn:
+          MaxRecLimit: 2
+        ClientFieldSpecSel:
+          DataApplType: DDA
+    ClientFieldSpecInqRs-PRM:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        RecCtrlOut:
+          SentRecCount: 69
+        ClientFieldSpecRec:
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "0"
+          ClientFieldSpecInfo:
+            DataGroupType: "1"
+            DataType: Alpha
+            DataLength: 0
+            Desc: FIELDS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:40.345
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "1"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ERN
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:40.845
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "2"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: CHECK PRINT TYPE
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:40.954
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "3"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Numeric
+            DataLength: 15
+            Desc: '# OF CHECKS/ORDER'
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:40.960
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "4"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Date
+            DataLength: 10
+            Desc: NEXT ACCOUNT REVIEW
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.106
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "5"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.205
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "6"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.209
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "7"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.244
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "1"
+          ClientFieldSpecInfo:
+            DataGroupType: "1"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ERN
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.338
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "2"
+          ClientFieldSpecInfo:
+            DataGroupType: "1"
+            DataType: Alpha
+            DataLength: 16
+            Desc: CHECK PRINT TYPE
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.342
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "3"
+          ClientFieldSpecInfo:
+            DataGroupType: "1"
+            DataType: Numeric
+            DataLength: 15
+            Desc: '# OF CHECKS/ORDER'
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.345
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "4"
+          ClientFieldSpecInfo:
+            DataGroupType: "1"
+            DataType: Date
+            DataLength: 10
+            Desc: NEXT ACCOUNT REVIEW
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.347
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "5"
+          ClientFieldSpecInfo:
+            DataGroupType: "1"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.442
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "6"
+          ClientFieldSpecInfo:
+            DataGroupType: "1"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.445
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "7"
+          ClientFieldSpecInfo:
+            DataGroupType: "1"
+            DataType: Rate
+            DataLength: 4
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.447
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "1"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: PRIOR BANK OF DEP
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.449
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "2"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Currency
+            DataLength: 5
+            Desc: INITIAL FEES
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.451
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "3"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 7
+            Desc: INITIAL RATE
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.622
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "4"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Numeric
+            DataLength: 2
+            Desc: HOLDER CODE
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.624
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "5"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Numeric
+            DataLength: 3
+            Desc: MISCELLANEOUS REPORTING CODE
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.642
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "1"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ERN
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.645
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "2"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: CHECK PRINT TYPE
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.647
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "3"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Numeric
+            DataLength: 15
+            Desc: '# OF CHECKS/ORDER'
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.648
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "4"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Date
+            DataLength: 10
+            Desc: NEXT ACCOUNT REVIEW
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.650
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "5"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.652
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "6"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 16
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.654
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "7"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ACCT HISTORY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.655
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "8"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.742
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "9"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.744
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "10"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.746
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "11"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.748
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "12"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.842
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "13"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.844
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "14"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.845
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "15"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.847
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "16"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.848
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "17"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.850
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "18"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.851
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "19"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.852
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "20"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Rate
+            DataLength: 4
+            Desc: ""
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.947
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "111"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 7
+            LastUpdateDt: 2021-06-18
+            Desc: Promo Code
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:41.954
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "112"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 7
+            LastUpdateDt: 2021-06-18
+            Desc: Group Banking ID
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.052
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "99"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-06-22
+            Desc: Income_Range
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.054
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "97"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-06-22
+            Desc: Income_Range
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.055
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "819"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: ACH TXN INTEND
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.141
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "820"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: ACH TXN MONTHLY AVG DEPOSITS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.143
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "821"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: ACH TXN MONTHLY AVG WITHDRAWLS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.144
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "822"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: ATM TXN INTEND
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.145
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "824"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: ATM TXN MONTHLY AVG DEPOSITS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.146
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "823"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: ATM TXN MONTHLY AVG WITHDRAWLS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.147
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "825"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: CASH TXN INTEND
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.148
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "826"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: CASH TXN MONTHLY AVG DEPOSITS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.242
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "827"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: CASH TXN MONTHLY AVG WITHDRAWLS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.244
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "828"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: CHECK TXN INTEND
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.245
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "829"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: CHECK TXN MONTHLY AVG DEPOSITS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.246
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "830"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: CHECK TXN MONTHLY AVG WITHDRAWLS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.247
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "831"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: DOMESTIC WIRE TXN MONTHLY AVG DEPOSITS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.248
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "833"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: DOMESTIC WIRE TXN MONTHLY AVG WITHDRAWLS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.249
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "832"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: DOMESTIC WIRE TXN INTEND
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.250
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "834"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: INTERNATIONAL WIRE TXN INTEND
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.342
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "835"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: INTERNATIONAL WIRE TXN MONTHLY AVG DEPOS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.343
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "836"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: INTERNATIONAL WIRE TXN MONTHLY AVG WITHD
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.344
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "837"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: REMOTE ACTIVITY TXN INTEND
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.345
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "838"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: REMOTE ACTIVITY TXN MONTHLY AVG DEPOSITS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.346
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "839"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: REMOTE ACTIVITY TXN MONTHLY AVG WITHDRAW
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.347
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "840"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Date
+            DataLength: 10
+            LastUpdateDt: 2021-08-20
+            Desc: PRIMARY APPLICANT CONSENT DATE
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.348
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "841"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: PRIMARY PRODUCT ALIAS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.349
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "842"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: OWNED BY OTHER ENTITY
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.350
+        - ClientFieldSpecKeys:
+            DataApplType: DDA
+            DataClassType: "0"
+            ClientFieldSpecId: "927"
+          ClientFieldSpecInfo:
+            DataGroupType: "0"
+            DataType: Alpha
+            DataLength: 40
+            LastUpdateDt: 2021-08-25
+            Desc: INTERNATIONAL WIRE TXN MONTHLY AVG DEPOS
+            RequiredFlag: false
+            SearchFlag: false
+          ClientFieldSpecStatus:
+            ClientFieldSpecStatusCode: Valid
+            EffDt: 2021-11-30T04:25:42.351
