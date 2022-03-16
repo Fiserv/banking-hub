@@ -13,7 +13,7 @@ type: tab
 titles: DDA, CDA, SDA
 -->
 
-### Implementation Notes Premier - DDA
+### DDA Account Type Specifications
 
 |Field Name   |Core Usage  |Core Field Length   |Implementation Note   | 
 |---|---|---|---|
@@ -26,7 +26,7 @@ titles: DDA, CDA, SDA
 
 <!-- type: tab -->
 
-### Implementation Notes Premier - CDA
+### CDA Account Type Specifications
 
 |Field Name   |Core Usage  |Core Field Length   |Implementation Note   | 
 |---|---|---|---|
@@ -39,7 +39,7 @@ titles: DDA, CDA, SDA
 
 <!-- type: tab -->
 
-### Implementation Notes Premier - SDA
+### SDA Account Type Specifications
 
 |Field Name   |Core Usage  |Core Field Length   |Implementation Note   | 
 |---|---|---|---|
