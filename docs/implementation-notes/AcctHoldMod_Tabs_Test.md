@@ -52,8 +52,6 @@ titles: DDA, CDA, SDA
 
 <!-- type: tab -->
 
-<!-- type: tab -->
-
 ## Implementation Notes Signature
 
 |Field Name   |Core Usage  |Core Field Length   |Implementation Note   | 
