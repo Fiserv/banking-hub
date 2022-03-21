@@ -54,9 +54,7 @@ titles: DDA, CDA, SDA
 
 <!-- type: tab -->
 
-
 <!-- type: tab -->
-
 
 ## Implementation Notes Signature
 
