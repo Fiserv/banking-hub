@@ -1,5 +1,5 @@
-# Update Account Hold API
-This section describes the service provider implementation notes applicable for the Update Account Hold API.
+# Add Account Hold Implementation Notes
+This section describes the service provider implementation notes applicable for the Add Account Hold API per Core.
 
 <!--
 type: tab
@@ -7,6 +7,8 @@ titles: Premier, Signature, Cleartouch, DNA, Precision
 -->
 
 ## Implementation Notes Premier
+
+This section describes the service provider implementation notes applicable for the Add Account Hold API for Premier Core.
 
 <!--
 type: tab
