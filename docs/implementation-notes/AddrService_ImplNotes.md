@@ -1,6 +1,6 @@
-# Address Service - Implementation Notes
+# Update Address - Implementation Notes
 
-This section describes the service provider implementation notes applicable for the Update Account Hold API.
+This section describes the service provider implementation notes applicable for the Update Address API.
 
 
 <!--
