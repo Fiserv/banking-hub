@@ -1,5 +1,5 @@
-# Add Account Hold Implementation Notes
-This section describes the service provider implementation notes applicable for the Add Account Hold API.
+# Update Account Hold API
+This section describes the service provider implementation notes applicable for the Update Account Hold API.
 
 <!--
 type: tab
