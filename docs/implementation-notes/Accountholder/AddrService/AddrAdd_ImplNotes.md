@@ -199,7 +199,9 @@ If Census Block Is provided. ZipCode is expected to be provided in XXXXX-XXXX fo
             </tbody>
         </table>
 
+
 <!-- type: tab -->
+
 ## Implementation Notes Signature
 
  <table >
@@ -429,7 +431,9 @@ For Party, this field does not apply.
             </tbody>
         </table>
 
+
 <!-- type: tab -->
+
 ## Implementation Notes Cleartouch
 
  <table>
@@ -504,10 +508,8 @@ E.g.
         </table>
 
 
-
-
-
 <!-- type: tab -->
+
 ## Implementation Notes Precision
 
  <table>
