@@ -8,6 +8,7 @@ titles: Premier, Precision
 -->
 
 ## Implementation Notes Premier
+
   <table cellspacing="0">
             <col style="width : 426px;" />
             <col style="width : 69.75px;" />
@@ -268,7 +269,6 @@ If both Addr1 and Street are populated both will be sent to Premier.However, Pre
                 </tr>
             </tbody>
         </table>
-
 <!-- type: tab -->
 
 ## Implementation Notes Precision
@@ -465,6 +465,6 @@ If both Addr1 and Street are populated both will be sent to Premier.However, Pre
             </tbody>
         </table>
 
-
-
 <!-- type: tab-end -->
+
+---
