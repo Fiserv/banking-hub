@@ -1,6 +1,6 @@
 # Add Address - Implementation Notes
 
-This section describes the service provider implementation notes applicable for the Add Address API.
+This section provides the provider-specific request schema and implementation notes applicable for Add Address API.
 
 
 <!--
@@ -8,7 +8,9 @@ type: tab
 titles: Premier, Signature, Cleartouch, Precision
 -->
 
-## Implementation Notes Premier
+## Request Body
+
+ The following table lists the provider-specific fields and describes the implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
  <table >
             <col  />
@@ -202,7 +204,10 @@ If Census Block Is provided. ZipCode is expected to be provided in XXXXX-XXXX fo
 
 <!-- type: tab -->
 
-## Implementation Notes Signature
+
+## Request Body
+
+ The following table lists the provider-specific fields and describes the implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
  <table >
             <col />
@@ -434,7 +439,9 @@ For Party, this field does not apply.
 
 <!-- type: tab -->
 
-## Implementation Notes Cleartouch
+## Request Body
+
+ The following table lists the provider-specific fields and describes the implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
  <table>
             <col />
@@ -510,7 +517,9 @@ E.g.
 
 <!-- type: tab -->
 
-## Implementation Notes Precision
+## Request Body
+
+ The following table lists the provider-specific fields and describes the implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
  <table>
             <col />
