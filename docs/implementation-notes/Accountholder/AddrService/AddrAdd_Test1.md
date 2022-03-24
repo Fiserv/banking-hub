@@ -305,26 +305,20 @@ If Census Block Is provided. ZipCode is expected to be provided in XXXXX-XXXX fo
 
 The following table lists the provider-specific fields and describes the implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
- <table cellspacing="0">
+  <table cellspacing="0">
             <col style="width : 213.75px;" />
             <col style="width : 57px;" />
             <col style="width : 59.25px;" />
-            <col style="width : 378px;" />
-            <col style="width : 164.25px;" />
-            <col />
+            <col style="width: 315px;" />
             <tbody>
                 <tr>
                     <td>Field Name</td>
                     <td>Core Usage</td>
                     <td>Core length</td>
                     <td>Implementation Note</td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr>
                     <td>AcctAddrRelInfo</td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
@@ -334,24 +328,18 @@ The following table lists the provider-specific fields and describes the impleme
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr>
                     <td>AcctAddrRelInfo.AcctRef.AcctKeys</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>Either the party keys or the account keys  (not both) should be included in the request. </td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr style="height : 30px;">
                     <td>AcctAddrRelInfo.AcctRef.AcctKeys.AcctId</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>First occurrence will be for Primary Account and additional occurence will be for other Linked Accounts.</td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr style="height : 45px;">
                     <td>AcctAddrRelInfo.AcctRef.AcctKeys.AcctType</td>
@@ -359,8 +347,6 @@ The following table lists the provider-specific fields and describes the impleme
                     <td>&#160;</td>
                     <td>First occurrence will be for Primary Account and additional occurence will be for other Linked Accounts. 
 Commercial loans are not supported for this service. </td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr style="height : 30px;">
                     <td>AddrInfo.PostAddr.AddrUse</td>
@@ -368,16 +354,12 @@ Commercial loans are not supported for this service. </td>
                     <td>&#160;</td>
                     <td>Address Use is not required for Seasonal addresses. 
 </td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr>
                     <td>AddrInfo.PostAddr.County</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>Refers to 3 digit County code in Cleartouch. </td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr style="height : 45px;">
                     <td>AddrInfo.PostAddr.PhoneNum</td>
@@ -385,13 +367,9 @@ Commercial loans are not supported for this service. </td>
                     <td>&#160;</td>
                     <td>The Phone number aggregate is only applicable to Seasonal addresses and is required by Cleartouch when the address type is Seasonal. 
 </td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr>
                     <td>AddrInfo/PostAddr/PhoneNum/PhoneType</td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
@@ -410,13 +388,9 @@ E.g.
 +1-800-5551212
 
 </td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr>
                     <td>AddrStatusRec/AddrKeys/AcctKeys</td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
@@ -426,19 +400,15 @@ E.g.
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
                 <tr>
                     <td>AddrStatusRec/AddrKeys/AcctKeys/AcctType</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
                     <td>&#160;</td>
-                    <td>&#160;</td>
-                    <td>&#160;</td>
                 </tr>
             </tbody>
-        </table>
+        </table> 
 
 ---        
 
