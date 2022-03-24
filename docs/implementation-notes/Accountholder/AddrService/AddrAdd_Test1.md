@@ -14,7 +14,7 @@ The following table lists the provider-specific fields and describes the impleme
             <col style="width : 283.5px;" />
             <col style="width : 55.5px;" />
             <col style="width : 57px;" />
-            <col style="width : 108.75px;" />
+            <col style="width : 500px;" />
             <tbody>
                 <tr>
                     <td>Field Name</td>
