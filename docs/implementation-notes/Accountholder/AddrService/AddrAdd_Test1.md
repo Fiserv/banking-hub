@@ -5,9 +5,118 @@ This section provides the provider-specific request schema and implementation no
 
 <!--
 type: tab
-titles: Premier, Cleartouch
+titles: Premier, Cleartouch, test1
 -->
+# Test Code
+test code here
 
+<table cellspacing="0">
+    <col style="width : 216.75px;" />
+    <col style="width : 63.75px;" />
+    <col style="width : 62.25px;" />
+    <col style="width : 239.25px;" />
+    <thead>
+        <tr>
+            <th>Field Name</th>
+            <th>Core Usage</th>
+            <th>Core Field Length</th>
+            <th>Implementation Note</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="height : 30px;">
+            <td><code>CreditInfo.<b>PostedDt</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>Premier do not provide the Posted Date for current date processing credits</td>
+        </tr>
+        <tr>
+            <td><code>CreditInfo.<b>Desc</b></code>
+            </td>
+            <td>Required</td>
+            <td>Default</td>
+            <td>&#160;</td>
+        </tr>
+        <tr style="height : 45px;">
+            <td><code>CreditInfo.CompositeCurAmt.CurAmt.<b>Amt</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>In Premier, if multiple checks are deposited, the total of the ChecksIn and CashIn should equal to the CurAmt/Amt.</td>
+        </tr>
+        <tr style="height : 30px;">
+            <td><code>CreditInfo.CompositeCurAmt.CurAmt.CurCode.<b>CurCodeValue</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>&#160;</td>
+        </tr>
+        <tr style="height : 60px;">
+            <td><code>CreditInfo.CashInData.CashAmt.<b>Amt</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>CashIn is not supported for account types CDA and LOAN.   The total of CashIn and CheckIn for account types CDA and LOAN is expected to be sent in CompositeCurAmt/CurAmt/Amt.</td>
+        </tr>
+        <tr style="height : 30px;">
+            <td><code>CreditInfo.CashInData.CashAmt.CurCode.<b>CurCodeValue</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>&#160;</td>
+        </tr>
+        <tr style="height : 60px;">
+            <td><code>CreditInfo.<b>ChkInData</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>Applicable for account types : DDA and CDA .
+            The total of Cash in and Check In for account types CDA and LOAN is expected to be sent in CompositeCurAmt/CurAmt/Amt.</td>
+        </tr>
+        <tr style="height : 90px;">
+            <td><code>CreditInfo.ChkInData.<b>ChkType</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>Chk type is used to determine the availability of funds. The different type indicate the following:
+                NoFloat : indicate immediate availability of funds 
+            NonLocal &amp; Local: indicate funds are not available for immediate withdrawls.</td>
+        </tr>
+        <tr style="height : 30px;">
+            <td><code>CreditInfo.ChkInData.FloatData.FloatDetails.CheckFloatAmt.<b>Amt</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>Amount of funds available for withdrawal depending upon the chktype</td>
+        </tr>
+        <tr style="height : 45px;">
+            <td><code>CreditInfo.ChkInData.FloatData.FloatDetails.CheckFloatAmt.CurCode.<b>CurCodeValue</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>&#160;</td>
+        </tr>
+        <tr style="height : 75px;">
+            <td><code>Receipt.AcctBal.<b>BalType</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>In Premier,the balance types:
+                PrevLedger and PrevAvail are the current values on the core at the time of the request.
+            MemoLeger and Avail reflect the new balance after applying the transaction.</td>
+        </tr>
+        <tr style="height : 30px;">
+            <td><code>Receipt.AcctBal.CurAmt.CurCode.<b>CurCodeValue</b></code>
+            </td>
+            <td>Default</td>
+            <td>Default</td>
+            <td>&#160;</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- type: tab -->
 The following table lists the provider-specific fields and describes the implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
 <table cellspacing="0">
