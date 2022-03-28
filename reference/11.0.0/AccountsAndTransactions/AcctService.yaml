@@ -3,9 +3,6 @@ openapi: 3.0.0
 info:
   title: Account Service
   description: The Account service helps to create and manage product accounts serviced by the financial institutions. It is also used to retrieve information about the existing accounts and maintain information of new accounts.
-  contact:
-    name: Tracy Dahle
-    email: Tracy.Dahle@Fiserv.com
   version: 11.0.0
 servers:
 - url: /
@@ -63,7 +60,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctModRsType'
               examples:
                 "401":
                   $ref: '#/components/examples/401-Premier'
@@ -72,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctModRsType'
               examples:
                 "422":
                   $ref: '#/components/examples/422-Premier'
@@ -81,7 +78,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctModRsType'
               examples:
                 "500":
                   $ref: '#/components/examples/500-Premier'
@@ -90,7 +87,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctModRsType'
               examples:
                 "503":
                   $ref: '#/components/examples/503-Premier'
@@ -155,7 +152,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctAddRsType'
               examples:
                 "401":
                   $ref: '#/components/examples/401-Premier'
@@ -164,7 +161,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctAddRsType'
               examples:
                 "422":
                   $ref: '#/components/examples/422-Premier'
@@ -173,7 +170,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctAddRsType'
               examples:
                 "500":
                   $ref: '#/components/examples/500-Premier'
@@ -182,7 +179,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctAddRsType'
               examples:
                 "503":
                   $ref: '#/components/examples/503-Premier'
@@ -252,7 +249,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctInqRsType'
               examples:
                 "401":
                   $ref: '#/components/examples/401-Premier'
@@ -261,7 +258,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctInqRsType'
               examples:
                 "422":
                   $ref: '#/components/examples/422-Premier'
@@ -270,7 +267,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctInqRsType'
               examples:
                 "500":
                   $ref: '#/components/examples/500-Premier'
@@ -279,7 +276,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusType1'
+                $ref: '#/components/schemas/AcctInqRsType'
               examples:
                 "503":
                   $ref: '#/components/examples/503-Premier'
@@ -867,6 +864,11 @@ components:
             End date and time value.<br>
             Format: yyyy-MM-ddTHH:mm:ss.SSS
           example: 2021-01-31T23:59:59.999
+        RecurRule:
+          type: array
+          description: Details of the recurrence rule
+          items:
+            $ref: '#/components/schemas/RecurRuleType'
       description: Details of the time frame when the address is active
     HandlingCodeOptionType:
       title: HandlingCodeOptionType
@@ -1611,6 +1613,14 @@ components:
                 - CDA
 
               <br> For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" title="Click to open">Glossary </a>.
+          BranchIdent:
+            maxLength: 22
+            type: array
+            description: Unique identifier of a branch
+            example: "1234"
+            items:
+              maxLength: 22
+              type: string
     AcctPrefType:
       title: AcctPrefType
       type: object
@@ -1855,6 +1865,18 @@ components:
               - FinalStmt
               - None
               - DropTransactions
+        StmtFormat:
+          maxLength: 80
+          type: string
+          description: Format for statement detail and balance options, daily summary and other values.
+        StmtTruncationOption:
+          maxLength: 80
+          type: string
+          description: Option for statement truncation to indicate whether physical items are enclosed with an account statement
+        StmtGroup:
+          maxLength: 80
+          type: string
+          description: Statement group
       description: Details of the account statement processing data
     NoticeDataType:
       title: NoticeDataType
@@ -1887,6 +1909,7 @@ components:
       - type: object
     HighCurAmtType:
       title: HighCurAmtType
+      description: Details of the highest currency amount in the currency range
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -1900,16 +1923,15 @@ components:
       title: RateMatrixTierType
       type: object
       properties:
-        Term:
-          $ref: '#/components/schemas/TermType'
-        MarginType:
-          $ref: '#/components/schemas/MarginTypeType'
-        Margin:
+        Tier:
+          maxLength: 32
+          type: string
+          description: "Matrix tier or the rate structure for the number of interest rates applicable for the account. Values range from 0-6. <br> Valid values are: \n  - 0\n  - 1\n  - 2\n  - 3\n  - 4\n  - 5\n  - 6"
+        HighCurAmt:
+          $ref: '#/components/schemas/HighCurAmtType'
+        Rate:
           type: number
-          description: Margin. Percentage applied to BasedOnValue to calculate interest rate. For example, the BasedOnValue is the Prime rate, a percentage is added to/subtracted from the prime rate.
-        IntAPY:
-          type: number
-          description: Interest APY.
+          description: Current rate of interest applicable for the account
     APYRecurTypeType:
       title: APYRecurTypeType
       type: string
@@ -1943,14 +1965,19 @@ components:
       properties:
         BalCutOffType:
           type: string
-          description: Balance CutOff Balance Type.  The Balance Cutoff Type indicates the account balance that is compared with the Balance CutOff Amount.
-        BalCutOffTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Balance CutOff Balance Type Enumeration Description.
+          description: |-
+            Type of cut off balance which indicates the comparison of the account balance with the cut off amount. <br> Valid values are:
+              - Avail
+              - AvgAvail
+              - AvgLedger
+              - AvgMinLedger
+              - Ledger
+              - MinLedger
+              - None
         BalCutOffAmt:
           type: number
-          description: Balance CutOff Amount. The Balance Cutoff Amount indicates the balance an account must attain on its interest cycle date to be paid interest for the period.
+          description: Amount of cut off balance to be attained on the interest cycle date for the payment of interest
+      description: Details of the cut off balance on which the intrest is paid for the period
     SplitRateDataType:
       title: SplitRateDataType
       type: object
@@ -1969,6 +1996,11 @@ components:
       title: IntRateDataType
       type: object
       properties:
+        RateMatrixTier:
+          type: array
+          description: Details of the matrix tier for the number of interest rate applicbale for the account
+          items:
+            $ref: '#/components/schemas/RateMatrixTierType'
         APYRecurType:
           $ref: '#/components/schemas/APYRecurTypeType'
         AccrualMethod:
@@ -2004,6 +2036,8 @@ components:
           type: string
           description: 'Effective date and time when the account interest rate is changed for the account.<br>  Format: yyyy-MM-ddTHH:mm:ss.SSS'
           example: 2021-01-31T23:59:59.999
+        BalCutOffData:
+          $ref: '#/components/schemas/BalCutOffDataType'
       description: Details of the interest rate processing for the account
     MaturityIntRecurTypeType:
       title: MaturityIntRecurTypeType
@@ -2259,14 +2293,11 @@ components:
       properties:
         Count:
           type: integer
-          description: Count. Sometimes specifies the duration of the time frame base on the units specified.
+          description: Count refers to the total number of transactions of a period
           format: int64
         Units:
           $ref: '#/components/schemas/UnitsType'
-        UnitsEnumDesc:
-          maxLength: 80
-          type: string
-          description: Units Enumeration Description.
+      description: Details of the total number of days or months in an accounting period
     InPeriodType:
       title: InPeriodType
       required:
@@ -2319,6 +2350,8 @@ components:
               - PriorMonth
               - TotalInCycle
               - Anniversary
+        TotalInPeriod:
+          $ref: '#/components/schemas/TotalInPeriodType'
         InPeriod:
           $ref: '#/components/schemas/InPeriodType'
         LastOccurInd:
@@ -2346,11 +2379,11 @@ components:
       properties:
         Count:
           type: integer
-          description: Count. Sometimes specifies the duration of the time frame base on the units specified.
+          description: Count refers to the number of transactions
           format: int64
         TranCounterType:
           type: string
-          description: Transaction Counter Type. Used for Regulation D transaction counter.
+          description: "Type of transaction counter. <br> Valid values are: \n  - RegD6\n  - TranLastCurrStmt"
     TaxDataType:
       title: TaxDataType
       type: object
@@ -2646,22 +2679,11 @@ components:
       title: FeeWaiverType
       type: object
       properties:
-        WaiverReasonCode:
-          maxLength: 80
-          type: string
-          description: Waiver Reason Code. Code that provides the reason the waive of the fee took place.
-        WaiverReason:
-          maxLength: 40
-          type: string
-          description: Waiver Reason.
         WaiverCode:
           maxLength: 80
           type: string
-          description: Waiver Code.
-        WaiverCodeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Waiver Code Enumeration Description.
+          description: Client defined waiver code indicates whether the account is subject to the applicable fee charged
+      description: Details of the method to waive the fee
     FaceValueAmtType:
       title: FaceValueAmtType
       allOf:
@@ -2676,13 +2698,39 @@ components:
         FeeIdent:
           maxLength: 36
           type: string
-          description: Fee Identification.
+          description: Fee identification used for identifying recurring charges applicable on the account
+        FeePlan:
+          maxLength: 80
+          type: string
+          description: Plan for fee charges applicable on the account
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description of the fee charged to the account
         FeeType:
           type: string
-          description: Fee Type.
+          description: |-
+            Type of fee charged. <br> Valid values are:
+              - DormantFee
+              - EIM
+              - ATMFee
+              - BillPmt
+              - FDIC
+              - FeeCharge
+              - Other
+              - OtherNonTax
+              - OverdraftFee
+              - OverdraftInt
+              - Recurring
         FeeOption:
           type: string
-          description: Fee Option. Processing option or method used for the fee type.
+          description: "Option for processing the fee charged to the account. <br> Valid values are: \n  - Charge\n  - Waive\n  - Analysis\n  - SvcChg\n  - SvcChgCreditBack"
+        CurAmt:
+          $ref: '#/components/schemas/CurAmtType'
+        TimeFrame:
+          $ref: '#/components/schemas/TimeFrameType'
+        FeeWaiver:
+          $ref: '#/components/schemas/FeeWaiverType'
     LoanAmtType:
       title: LoanAmtType
       allOf:
@@ -2708,6 +2756,7 @@ components:
     RetentionOptionType:
       title: RetentionOptionType
       type: string
+      description: "Option to indicate the account proccessing when the account balance is zero <br> Valid values are: \n  - None\n  - DoNotRetain\n  - Retain"
       enum:
       - None
       - DoNotRetain
@@ -3000,6 +3049,10 @@ components:
           maxLength: 32
           type: string
           description: Branch responsible for the relationship.
+        ResponsibleBranchEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in ResponsibleBranch  field
         NicknameOption:
           type: string
           description: "Printing option for the account nickname. <br> Valid values are:\n - Printed \n - NotPrinted"
@@ -3110,6 +3163,11 @@ components:
           description: Accounting period details data such as last interest payment, non sufficient funds, overdraft activity year to date, current month and cycle to date
           items:
             $ref: '#/components/schemas/AcctPeriodDataType'
+        TranCounter:
+          type: array
+          description: Details of the transaction counter
+          items:
+            $ref: '#/components/schemas/TranCounterType'
         PostAddr:
           type: array
           description: Postal address details of the accountholder
@@ -3156,6 +3214,11 @@ components:
               - None
               - 1099_INT
               - 1099_OID
+        Fee:
+          type: array
+          description: Details of the fee charged
+          items:
+            $ref: '#/components/schemas/FeeType'
         CreditRisk:
           type: array
           description: Credit risk details related to the account
@@ -3173,6 +3236,13 @@ components:
           maxLength: 80
           type: string
           description: Details to override the restrictions applied to the account during transaction posting.
+        MemoPostProcessOptOvrd:
+          type: string
+          description: |-
+            Override option to indicate whether memo post transactions are posted as summary or detailed transactions. <br> Valid values are:
+              - Detail
+              - Summary
+              - None
         ElectronicBankingOpt:
           type: string
           description: |-
@@ -3200,6 +3270,8 @@ components:
           maxLength: 80
           type: string
           description: Cost center where activity of this account is reported
+        RetentionOption:
+          $ref: '#/components/schemas/RetentionOptionType'
         AcctMemoData:
           type: array
           description: Details of the important alerts set to an account to view during account inquiry
@@ -3602,28 +3674,9 @@ components:
       description: Details of the retirement account
     ClubPayoffAcctRefType:
       title: ClubPayoffAcctRefType
+      description: Reference information of the account where the payoff of a club savings account are being distributed
       allOf:
       - $ref: '#/components/schemas/AcctRefType'
-      - type: object
-        properties:
-          TrnCode:
-            maxLength: 80
-            type: string
-            description: Transaction Code. The Service Provider Transaction Code posted to the account.
-          ACHTrnCode:
-            maxLength: 80
-            type: string
-            description: ACH Transaction Code.
-          ACHReceivingType:
-            type: string
-            description: ACH Receiving Type.
-          ACHCompanyEntryDesc:
-            maxLength: 30
-            type: string
-            description: ACH Company Entry Description.
-          SameDayInd:
-            type: boolean
-            description: Same Day Indicator.
     PayoffTimeFrameType:
       title: PayoffTimeFrameType
       allOf:
@@ -3637,15 +3690,10 @@ components:
       properties:
         ClubPayoffOption:
           type: string
-          description: Club Payoff Option. Indicates how the payoff is performed.
-        ClubPayoffOptionEnumDesc:
-          maxLength: 80
-          type: string
-          description: Club Payoff Option Enum Description.
+          description: "Option for processing club payoff  <br> Valid values are: \n  - TransferToAcct\n  - Check\n  - None"
         ClubPayoffAcctRef:
           $ref: '#/components/schemas/ClubPayoffAcctRefType'
-        PayoffTimeFrame:
-          $ref: '#/components/schemas/PayoffTimeFrameType'
+      description: Information for processing club payoff
     SweepBalTypeType:
       title: SweepBalTypeType
       type: string
@@ -3659,17 +3707,8 @@ components:
         SweepGroupId:
           maxLength: 36
           type: string
-          description: Sweep Group Identifier. Sweep group the account belongs.
-        SweepBalType:
-          $ref: '#/components/schemas/SweepBalTypeType'
-        SweepBalTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Sweep Balance Type Enumeration Description.
-        MinCurAmt:
-          $ref: '#/components/schemas/MinCurAmtType'
-        MaxCurAmt:
-          $ref: '#/components/schemas/MaxCurAmtType'
+          description: Unique identifier for sweep group to which the account belong
+      description: Information to process sweeps
     OverdraftLimitAmtType:
       title: OverdraftLimitAmtType
       allOf:
@@ -3677,6 +3716,7 @@ components:
       - type: object
     AuthLimitAmtType:
       title: AuthLimitAmtType
+      description: Details of the amount set for the authorization limit
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -3686,11 +3726,11 @@ components:
       properties:
         AuthLimitOption:
           type: string
-          description: Authorization Limit Option.
+          description: "Option for authorization limit of the ATM and POS transactions  <br> Valid values are: \n  - NoAuthorized\n  - OptInAtmAuthLimit\n  - OptInAtmODLimit\n  - OptInAtmPosAuthLimit\n  - OptInAtmPosODLimit\n  - OptInPosAuthLimit\n  - OptInPosODLimit\n  - OptOut\n  - OptOutCourtesy\n  - OptOutNoReply"
         AuthLimitOptionEnumDesc:
           maxLength: 80
           type: string
-          description: Authorization Limit Option Enumeration Description .
+          description: Description of the enumeration value in the AuthLimitOption field
         OptInOutDt:
           type: string
           description: Option In/Option Out Date.
@@ -3699,92 +3739,55 @@ components:
           $ref: '#/components/schemas/AuthLimitAmtType'
         NoticeOption:
           type: string
-          description: Notice Option.
+          description: "Notice option applicable for the account <br> Valid values are: \n  - NoNotice\n  - GenerateNotice"
         NoticeOptionEnumDesc:
           maxLength: 80
           type: string
           description: Account Notice Option Enumeration Description.
+      description: Details of the ATM POS overdraft
     OverdraftDataType:
       title: OverdraftDataType
       type: object
       properties:
         OverdraftEnrollOpt:
           type: string
-          description: Overdraft Enroll Option.
-        OverdraftEnrollOptEnumDesc:
-          maxLength: 80
-          type: string
-          description: Overdraft Enroll Option Enum Description.
+          description: "Option to enroll account for the overdraft  <br> Valid values are: \n  -  NoODPAccount\n  - ODPAccount\n  - OptIn\n  - OptOut\n  - InstitutionOptOut"
         OverdraftEnrollOptDt:
           type: string
-          description: Overdraft Enroll Option Date.
+          description: 'Date on which enrollment for overdraft is availed for the account. <br> Format: yyyy-mm-dd '
           format: date
+          example: 2021-11-20
         OverdraftAutoTrnInd:
           type: boolean
-          description: Overdraft Auto Transaction Indicator. Indicates whether automatic transactions (e.g., automatic loan payments) access the overdraft limit.
+          description: Flag to indicate the automatic transactions access the overdraft limit
         OverdraftLimitPriority:
           type: string
-          description: 'Overdraft Limit Priority. Indicates whether the Overdraft Limit is accessed prior to or after automatic transfers. Extended Enum: PriorXfer, AfterXfer.'
-        OverdraftLimitPriorityEnumDesc:
-          maxLength: 80
-          type: string
-          description: Overdraft Limit Priority Enum Description.
-        BalanceVerification:
-          type: string
-          description: 'Balance Verification. Indicates the type of balance to use for verification. Valid example of valid values are: "Book"; "Collected"; "Avail".'
+          description: "Option to indicate whether the overdraft limit is accessed prior to or after automatic transfers. <br> Valid values are: \n  - PriorXfer\n  - AfterXfer"
         OverdraftLimitAmt:
           $ref: '#/components/schemas/OverdraftLimitAmtType'
-        OverdraftLimitType:
-          maxLength: 80
-          type: string
-          description: Overdraft Limit Type.
-        OverdraftLimitTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Overdraft Limit Type Enum Description.
-        OverdraftLimitReviewOption:
-          type: string
-          description: Overdraft Limit Review Option.
         OverdraftReviewDt:
           type: string
-          description: Overdraft Review Date. Date the overdraft limit is reviewed.
+          description: 'Date on which overdraft limit is reviewed. <br> Format: yyyy-mm-dd '
           format: date
+          example: 2021-11-20
         OverdraftRatingCode:
           maxLength: 80
           type: string
-          description: Overdraft Rating Code.
-        OverdraftRatingCodeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Overdraft Rating Code Enum Description.
+          description: Client defined code for rating the overdraft
         OverdraftTypeCode:
           maxLength: 80
           type: string
-          description: Overdraft Type Code.
-        OverdraftTypeCodeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Overdraft Type Code Enum Description.
+          description: Client defined code for overdraft type
         OverdraftNotificationOpt:
           type: string
-          description: Overdraft Notification Option.
-        OverdraftNotificationOptEnumDesc:
-          maxLength: 80
-          type: string
-          description: Overdraft Notification Option Enum Description.
+          description: Option for overdarft notification which include generation of notice/statement for the account
         ContactType:
           maxLength: 80
           type: string
-          description: '[FSVR]Contact Type.'
-        ContactTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Contact Type Enum Description.
-        WaiveOverdraftInd:
-          type: boolean
-          description: Waive Overdraft Indicator.
+          description: "Type of contact maintained with the acountholder <br> Valid values are: \n  - None\n  - Phone\n  - InPerson\n  - Email\n  - Text\n  - Notice\n  - Statement\n  - Other\n  - NoFurtherContact"
         AtmPosOverdraft:
           $ref: '#/components/schemas/AtmPosOverdraftType'
+      description: Overdraft details of the account
     ImmediateCreditAmtType:
       title: ImmediateCreditAmtType
       allOf:
@@ -3792,11 +3795,13 @@ components:
       - type: object
     CheckFloatAmtType:
       title: CheckFloatAmtType
+      description: Details of the check float amount
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
     CashFloatAmtType:
       title: CashFloatAmtType
+      description: Details of the cash float amount
       allOf:
       - $ref: '#/components/schemas/CurAmtType'
       - type: object
@@ -3806,7 +3811,7 @@ components:
       properties:
         FloatDays:
           type: integer
-          description: Float Days.
+          description: Number of days between submitting the check and clearing the check.
           format: int64
         CheckFloatAmt:
           $ref: '#/components/schemas/CheckFloatAmtType'
@@ -3818,22 +3823,10 @@ components:
       properties:
         FloatType:
           type: string
-          description: Float Type.
-        FloatTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Float Type Enumeration Description.
-        ExceptionFloatInd:
-          type: boolean
-          description: Exception Float Indicator.
-        FundsAvailInd:
-          type: boolean
-          description: Funds Available Indicator.
-        ImmediateCreditAmt:
-          $ref: '#/components/schemas/ImmediateCreditAmtType'
+          description: "Type of float. <br> Valid value is: \n  - RegCC"
         FloatDetails:
           type: array
-          description: Float Details.
+          description: Details of float days and check amount
           items:
             $ref: '#/components/schemas/FloatDetailsType'
     SvcChgMethodType:
@@ -3842,14 +3835,13 @@ components:
       properties:
         SvcChgMethodType:
           type: string
-          description: Service Charge Method Type.
-        SvcChgMethodTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Service Charge Method Type Enumeration Description.
+          description: |-
+            Type of method used for service charge. <br> Valid values are :
+              - Activity
+              - Maintenance
         SvcChgMethodOpt:
           type: integer
-          description: Service Charge Method Option.
+          description: Option to indicate the method used for service charge
           format: int64
     CreditBackAcctType:
       title: CreditBackAcctType
@@ -3861,6 +3853,13 @@ components:
           maxLength: 36
           type: string
           description: Unique identifier of credit back amount
+        CreditBackType:
+          type: string
+          description: "Type of credit back. <br> Valid values are: \n  - AllPrimarySecondaryDeposit\n  - AllPrimaryDepositLoan\n  - AllPrimarySecondaryDepositLoan\n  - PrimaryLoan\n  - AllPrimaryLoan\n  - AllPrimarySecondaryLoan"
+        CreditBackAcctId:
+          maxLength: 36
+          type: string
+          description: 'Unique Identification number of the credit back account which is used to calculate the credit back against accrued service charges '
     SvcChgRelatedAcctType:
       title: SvcChgRelatedAcctType
       allOf:
@@ -3877,25 +3876,25 @@ components:
       properties:
         SvcChgFlatFeeType:
           type: string
-          description: Service Charge Flat Fee Type.
-        SvcChgFlatFeeTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Service Charge Flat Fee Type Enumeration Description.
+          description: |-
+            Type of the flat service fee  <br> Valid values are:
+              - ActivityItem
+              - DepositItem
         SvcChgFlatFeeIdent:
           maxLength: 36
           type: array
-          description: Service Charge Flat Fee Identifier.
+          description: 'Unique identifier for the flat service fee type. Values ranges from 1-18 depending upon the type. <br> <b>Note : Value range from 1-9 is for ActivityItem and 10-18 for DepositItem.</b>'
           items:
             maxLength: 36
             type: string
         SvcChgFlatFeeAmt:
           type: array
-          description: Service Charge Flat Fee Amount.
+          description: Details of the amount of flat service charge
           items:
             $ref: '#/components/schemas/SvcChgFlatFeeAmtType'
     SvcChgAcctRefType:
       title: SvcChgAcctRefType
+      description: Reference information of the service charge account
       allOf:
       - $ref: '#/components/schemas/AcctRefType'
       - type: object
@@ -3908,6 +3907,15 @@ components:
       title: SvcChgDataType
       type: object
       properties:
+        SvcChgMethod:
+          type: array
+          description: Details of the method used for the calculation of the automatic service charges
+          items:
+            $ref: '#/components/schemas/SvcChgMethodType'
+        CreditBackMethod:
+          maxLength: 80
+          type: string
+          description: 'Client- defined method that specifies how the  credit back portion of an automatic service charge is calculated '
         CreditBackAcct:
           type: array
           description: Details to identify the account used to calculate credit back against accrued service charges.
@@ -3917,9 +3925,34 @@ components:
           maxLength: 36
           type: string
           description: Unique identifier of a credit back group to identify client defined credit back matches the credit back on the DDA account to include that account in calculation of the credit back
-      description: Service charge Data
+        SvcChgFlatFee:
+          type: array
+          description: 'Details of the  flat service fee charged to the account '
+          items:
+            $ref: '#/components/schemas/SvcChgFlatFeeType'
+        SvcChgAcctRef:
+          $ref: '#/components/schemas/SvcChgAcctRefType'
+        SvcChgWaiveCode:
+          type: integer
+          description: Client defined code for waving the service charge
+          format: int64
+        SvcChgWaiveTaxInd:
+          type: boolean
+          description: Flag to indicate to waive the sales tax on service charges
+        LastSvcChgDt:
+          type: string
+          description: 'Date on which last service charge was charged to the account. <br> Format: yyyy-mm-dd '
+          format: date
+          example: 2021-11-20
+        SvcChgTimeFrame:
+          type: array
+          description: Time frame details of the service charge applicable on the account
+          items:
+            $ref: '#/components/schemas/SvcChgTimeFrameType'
+      description: 'Details of the service charge applicable on the account '
     AnalysisChargeAcctType:
       title: AnalysisChargeAcctType
+      description: Details of the analysis charge account to identify another account debited for analysis charges
       allOf:
       - $ref: '#/components/schemas/AcctRefType'
       - type: object
@@ -3930,17 +3963,14 @@ components:
         AnalysisCode:
           maxLength: 80
           type: string
-          description: Analysis Code. Determines whether an account is analyzed for profitability, and methods of handling analysis charges and customer reporting.
-        AnalysisCodeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Analysis Code Enumeration Description.
+          description: Code to specify whether an account is analyzed for profitability, and methods of handling analysis charges and customer reporting
         AnalysisGroup:
           type: integer
-          description: Analysis Group. Used to combine a customer's accounts for analysis reporting purposes.
+          description: Group to combine a customer's accounts for analysis reporting purposes
           format: int64
         AnalysisChargeAcct:
           $ref: '#/components/schemas/AnalysisChargeAcctType'
+      description: Details of the commercial analysis performed for an account
     CorrespondingPoolDataType:
       title: CorrespondingPoolDataType
       type: object
@@ -3969,13 +3999,13 @@ components:
         NSFIdent:
           maxLength: 36
           type: string
-          description: NSF Identification. Identifies the NSF Entry.
+          description: 'Unique identification code for NSF entry '
         RegCC_NSFType:
           type: string
-          description: Regulation CC NSF. Summary of last NSF months activity.
+          description: "Type of NSF to identify the regular and large items totals. <br> Valid values are: \n  - LargeItems\n  - RegularItems"
         Count:
           type: integer
-          description: Count. Sometimes specifies the duration of the time frame base on the units specified.
+          description: Count refers to the total number of NSF transactions
           format: int64
     RegCCDataType:
       title: RegCCDataType
@@ -3983,31 +4013,31 @@ components:
       properties:
         RegCCStatus:
           type: string
-          description: Regulation CC Status.
-        RegCCStatusEnumDesc:
-          maxLength: 80
-          type: string
-          description: Regulation CC Status Enumeration Description.
+          description: "Account status in relation to Federal Reserve Regulation CC. <br> Valid values are: \n  - NewAccount\n  - NormalAuto\n  - NormalManual\n  - OverdrafterManual\n  - OverdrafterAuto"
         RegCCStatusDt:
           type: string
-          description: Regulation CC Status Date.
+          description: 'Regulation CC Status Date is the date on which the Reg CC Status Code will automatically change from a value of ''0'', ''2'' or ''3'', to a value of ''1'' (normal). <br> Format: yyyy-mm-dd '
           format: date
+          example: 2021-11-20
         RegCCException:
           maxLength: 80
           type: string
-          description: Regulation CC Exception.
+          description: Regulation CC Exception indicates the reason for delay of funds deposited into the new account defined under IES float specifications
         RegCCExceptionExpDt:
           type: string
-          description: Regulation CC Exception Expiration Date.
+          description: 'Date on which Regulation CC Exception expires. <br> Format: yyyy-mm-dd '
           format: date
+          example: 2021-11-20
         RegCC_NSF:
           type: array
-          description: REgulation CC NSF Type. Used to identify regular and large items totals.
+          description: Details of the list of NSF ( Not Sufficient Funds) over the last six months
           items:
             $ref: '#/components/schemas/RegCC_NSFType'
+      description: Details of the Regulation CC processing data related to the account
     EIM_NSFInstructionType:
       title: EIM_NSFInstructionType
       type: string
+      description: Instructions for the action to be undertaken in case of NSF ( Not Sufficient Funds) leading to dishonor of an instrument and for EIM charges levied against NSF.
       enum:
       - Specification
       - Post
@@ -4022,14 +4052,14 @@ components:
         NSFIdent:
           maxLength: 36
           type: string
-          description: NSF Identification. Identifies the NSF Entry.
+          description: Unique identification code for NSF entry
         NSFDt:
           type: string
-          description: NSF Date. Identifies the NSF Date.
+          description: 'Date of NSF entry. <br> Format: yyyy-mm-dd  Example: 2021-11-20'
           format: date
         Count:
           type: integer
-          description: Count. Sometimes specifies the duration of the time frame base on the units specified.
+          description: Count refers to the NSF items
           format: int64
     UserDefinedDataType:
       title: UserDefinedDataType
@@ -4180,7 +4210,7 @@ components:
               - Companion
         BeneficiaryPercent:
           type: number
-          description: Percent value allocated to the beneficiary.
+          description: Percent value allocated to the beneficiary
     DepositAcctInfoType:
       title: DepositAcctInfoType
       description: Details of the deposit account.
@@ -4195,17 +4225,43 @@ components:
             $ref: '#/components/schemas/IntDispDataType'
           RetirementAcctData:
             $ref: '#/components/schemas/RetirementAcctDataType'
+          ClubPayoffData:
+            $ref: '#/components/schemas/ClubPayoffDataType'
+          SweepData:
+            $ref: '#/components/schemas/SweepDataType'
+          OverdraftData:
+            $ref: '#/components/schemas/OverdraftDataType'
+          FloatData:
+            type: array
+            description: Details of the foat data applicable for the account
+            items:
+              $ref: '#/components/schemas/FloatDataType'
           SvcChgData:
             $ref: '#/components/schemas/SvcChgDataType'
+          CommercialAnalysisData:
+            $ref: '#/components/schemas/CommercialAnalysisDataType'
           EscheatDt:
             type: string
-            description: 'Date at which unclaimed funds of an account are turned over to financial institution.<br> Format: yyyy-mm-dd '
+            description: 'Date on which unclaimed funds of an account are turned over to financial institution.<br> Format: yyyy-mm-dd '
             format: date
             example: 2021-11-20
+          RegCCData:
+            $ref: '#/components/schemas/RegCCDataType'
           CollateralPledgeCode:
             maxLength: 80
             type: string
             description: Unique identification code for amount pledged as collateral
+          EIM_NSFInstruction:
+            $ref: '#/components/schemas/EIM_NSFInstructionType'
+          AutoNSFDecision:
+            maxLength: 80
+            type: string
+            description: Option for auto NSF decision
+          NSFEntry:
+            type: array
+            description: Details of the NSF entry dates
+            items:
+              $ref: '#/components/schemas/NSFEntryType'
           HoldInd:
             type: boolean
             description: Hold Indicator
@@ -6730,14 +6786,6 @@ components:
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
-    StatusType1:
-      title: Status Type for Error messages
-      required:
-      - Status
-      type: object
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
     AcctStatusType:
       title: AcctStatusType
       required:
