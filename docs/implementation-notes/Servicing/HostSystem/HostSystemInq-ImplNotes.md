@@ -13,10 +13,10 @@ titles: Premier
  The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
  <table cellspacing="0">
-    <col style="width : 126px;" />
-    <col style="width : 57px;" />
-    <col style="width : 85.5px;" />
-    <col style="width : 108px;" />
+    <col  />
+    <col  />
+    <col  />
+    <col  />
     <tbody>
         <tr>
             <td>Field Name</td>
