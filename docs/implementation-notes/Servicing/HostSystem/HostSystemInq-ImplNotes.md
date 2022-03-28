@@ -13,10 +13,10 @@ titles: Premier
  The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
  <table cellspacing="0">
-    <col  />
-    <col  />
-    <col  />
-    <col  />
+    <col style="width : 126px;" />
+    <col style="width : 57px;" />
+    <col style="width : 85.5px;" />
+    <col style="width : 108px;" />
     <tbody>
         <tr>
             <td>Field Name</td>
@@ -37,7 +37,7 @@ titles: Premier
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemSel/SystemName</td>
+            <td>HostSystemSel.SystemName</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
@@ -49,55 +49,55 @@ titles: Premier
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemKeys</td>
+            <td>HostSystemRec.HostSystemKeys</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemKeys/HostSystemId</td>
+            <td>HostSystemRec.HostSystemKeys.HostSystemId</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemInfo</td>
+            <td>HostSystemRec.HostSystemInfo</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemInfo/HostSystemData</td>
+            <td>HostSystemRec.HostSystemInfo.HostSystemData</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemInfo/HostSystemData/SystemName</td>
+            <td>HostSystemRec.HostSystemInfo.HostSystemData.SystemName</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>If all system statuses are requested and all systems in Premier are in Active status, ESF returns HostSystemData aggregate for each system and additional HostSystemData aggregate with "All" as the System Name.</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemInfo/HostSystemData/SystemStatus</td>
+            <td>HostSystemRec.HostSystemInfo.HostSystemData.SystemStatus</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemStatus</td>
+            <td>HostSystemRec.HostSystemStatus</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemStatus/HostSystemStatusCode</td>
+            <td>HostSystemRec.HostSystemStatus.HostSystemStatusCode</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
         </tr>
         <tr>
-            <td>HostSystemRec/HostSystemStatus/EffDt</td>
+            <td>HostSystemRec.HostSystemStatus.EffDt</td>
             <td>Default</td>
             <td>Defaut</td>
             <td>&#160;</td>
