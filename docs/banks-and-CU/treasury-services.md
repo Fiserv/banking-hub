@@ -10,7 +10,6 @@ API domains related to Treasury:
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
 - [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
-- [Notifications and Preferences](?path=docs/fintechs/notifi.md "Click to open")
 - [Payments](?path=docs/fintechs/payments.md "Click to open")
 
 
