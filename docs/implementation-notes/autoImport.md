@@ -2,7 +2,7 @@
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: PRM, PRC, DNA,  
+titles: PRM, PRC, DNA  
 -->
 # Request Schema
 |Field Name|Allowed Values|Implementation Note|
