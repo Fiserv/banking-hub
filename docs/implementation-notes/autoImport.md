@@ -1,4 +1,4 @@
-# Implementation Note for EnumTable Add 1
+# Implementation Note for EnumTable Add
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
