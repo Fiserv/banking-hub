@@ -21,8 +21,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`OvrdExceptionData`|||
 |`DebitInfo`|||
 |`DebitInfo.DebitType`|Debit||
-|`DebitInfo.PostedDt`||Core do not provide the Posted Date for current date processing debits.|
-|`DebitInfo.Desc`|| *Required|
+|`DebitInfo.PostedDt`||Core do not provide posted date for current date processing debits.<br><br>Refers to the expiration date in the Core. For current date processing debits, PostedDate is not required to be provided.<br><br>|
+|`DebitInfo.Desc`|| ***Required**|
 |`DebitInfo.AcctRef`|||
 |`DebitInfo.AcctRef.AcctKeys`|||
 |`DebitInfo.AcctRef.AcctKeys.AcctId`|||
@@ -32,7 +32,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`DebitInfo.CompositeCurAmt.CurAmt.Amt`|||
 |`DebitInfo.CompositeCurAmt.CurAmt.CurCode`|||
 |`DebitInfo.CompositeCurAmt.CurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
-|`DebitInfo.CompositeCurAmt.CurAmt.CurCode.CurCodeValue`|| |
+|`DebitInfo.CompositeCurAmt.CurAmt.CurCode.CurCodeValue`||Only USD is accepted as a currency code.|
 # Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
@@ -47,10 +47,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`DebitStatusRec.DebitStatus.EffDt`|||
 |`Receipt`|||
 |`Receipt.AcctBal`|||
-|`Receipt.AcctBal.BalType`|Avail<br>PrevLedger<br>PrevAvail<br>MemoLedger <br>|In the core, the balance types PrevLedger and PrevAvail are the current values on the core at the time of the request while MemoLeger and Avail reflect the new balance after applying the transaction.|
+|`Receipt.AcctBal.BalType`|Avail<br>PrevLedger<br>PrevAvail<br>MemoLedger <br>|The balance types PrevLedger and PrevAvail are the current values on the core at the time of the request while MemoLeger and Avail reflect the new balance after applying the transaction.<br><br>|
 |`Receipt.AcctBal.CurAmt`|||
 |`Receipt.AcctBal.CurAmt.Amt`|||
 |`Receipt.AcctBal.CurAmt.CurCode`|||
 |`Receipt.AcctBal.CurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
-|`Receipt.AcctBal.CurAmt.CurCode.CurCodeValue`||  |
+|`Receipt.AcctBal.CurAmt.CurCode.CurCodeValue`||Only USD is accepted as a currency code.|
 <!-- type: tab-end -->
