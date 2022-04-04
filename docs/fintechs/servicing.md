@@ -21,5 +21,4 @@ Begin the integration with following service of Operations and Servicing domain 
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
 - [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
 - [Cards](?path=docs/fintechs/cards.md "Click to open")
-- [Notifications and Preferences](?path=docs/fintechs/notifi.md "Click to open")
 - [Payments](?path=docs/fintechs/payments.md "Click to open")
