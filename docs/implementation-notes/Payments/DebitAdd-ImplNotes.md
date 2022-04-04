@@ -21,7 +21,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`OvrdExceptionData`|||
 |`DebitInfo`|||
 |`DebitInfo.DebitType`|Debit||
-|`DebitInfo.PostedDt`||Core do not provide posted date for current date processing debits.<br><br>Refers to the expiration date in the Core. For current date processing debits, PostedDate is not required to be provided.<br><br>|
+|`DebitInfo.PostedDt`||Refers to the expiration date in the Core. For current date processing debits, PostedDate is not required to be provided.<br><br>|
 |`DebitInfo.Desc`|| ***Required**|
 |`DebitInfo.AcctRef`|||
 |`DebitInfo.AcctRef.AcctKeys`|||
