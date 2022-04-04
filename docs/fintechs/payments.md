@@ -20,4 +20,3 @@ Begin the integration with following services of Payments domain in API Explorer
 - [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
 - [Cards](?path=docs/fintechs/cards.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
-- [Notifications and Preferences](?path=docs/fintechs/notifi.md "Click to open")
