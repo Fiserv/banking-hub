@@ -1,7 +1,7 @@
 # Implementation Note for EnumTable Add
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 
-<a href="www.google.com" target="_blank" title="Click to open in a new tab">test link </a>
+<a href="../docs/?path=docs/implementation-notes/Accounts-and-transactions/SafeDepositBoxAdd-ImplNotes.md" target="_blank" title="Click to open in a new tab">test link </a>
 
 <!-- 
 type: tab 
