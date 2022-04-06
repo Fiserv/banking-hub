@@ -12,5 +12,6 @@ titles: Premier
 
  The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
+### Coming soon! We’re working on developing content for this section. Stay tuned for more updates.
 
  <!-- type: tab-end -->
