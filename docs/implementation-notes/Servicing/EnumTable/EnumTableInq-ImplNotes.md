@@ -1,447 +1,122 @@
-# Implementation Notes for Enum Table inquiry
+# Implementation Notes for EnumTable Add
+This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 
-This section provides the provider-specific request schema and implementation notes applicable for Enum Table inquiry API.
 
-
-<!--
-type: tab
-titles: Premier
+<!-- 
+type: tab 
+titles: Premier 
 -->
 
-## Premier - Implementation Notes
-
- 
-
- <!--
-type: tab
-titles: By Branch, By DataDesc, By RelSpec
+<!-- 
+type: tab 
+titles: By Party, By DataDesc, By RelSpec, 
 -->
 
 
-The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
-   <table cellspacing="0">
-        <col  />
-        <col  />
-        <col  />
-        <col  />
-        <tbody>
-            <tr>
-                <td>Field Name</td>
-                <td>Core Usage</td>
-                <td>Core Field length</td>
-                <td>Implementation Note</td>
-            </tr>
-            <tr>
-                <td><code>Status</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>RecCtrlIn</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>RecCtrlIn.MaxRecLimit</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>RecCtrlIn.Cursor</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>RecCtrlOut</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>RecCtrlOut.SentRecCount</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>RecCtrlOut.Cursor</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableSel</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableSel.EnumTableKeys</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr style="height : 60px;">
-                <td><code>EnumTableSel.EnumTableKeys.EnumTableIdent</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>"Region" refers to a Branch Region, also known as Originating Branch.
-    "Branch" refers to Accounting Branch/Group also known as Responsible Branch.  </td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableKeys</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableKeys.EnumTableIdent</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableInfo</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableInfo.EnumTableData</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableInfo.EnumTableData.EnumValue</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableInfo.EnumTableData.EnumValueDesc</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableStatus</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableStatus.EnumTableStatusCode</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td><code>EnumTableRec.EnumTableStatus.EffDt</code>
-                </td>
-                <td>Default</td>
-                <td>Default</td>
-                <td>&#160;</td>
-            </tr>
-        </tbody>
-</table>
 
----
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
 
-<!--type: tab --> 
 
-The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
+# Request Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`RecCtrlIn`|||
+|`RecCtrlIn.MaxRecLimit`|||
+|`RecCtrlIn.Cursor`|||
+|`EnumTableSel`|||
+|`EnumTableSel.EnumTableKeys`|ABC<br>PQR||
+|`EnumTableSel.EnumTableKeys.EnumTableIdent`|Region<br>Branch|"Region" refers to a Branch Region, also known as Originating Branch.<br>"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  |
+# Response Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`Status`|||
+|`RecCtrlOut`|||
+|`RecCtrlOut.SentRecCount`|||
+|`RecCtrlOut.Cursor`|||
+|`EnumTableRec`|||
+|`EnumTableRec.EnumTableKeys`|||
+|`EnumTableRec.EnumTableKeys.EnumTableIdent`|Region<br>Branch||
+|`EnumTableRec.EnumTableInfo`|||
+|`EnumTableRec.EnumTableInfo.EnumTableData`|||
+|`EnumTableRec.EnumTableStatus`|||
+|`EnumTableRec.EnumTableStatus.EnumTableStatusCode`|Valid||
+|`EnumTableRec.EnumTableStatus.EffDt`|||
+<!-- type: tab -->
 
-<table cellspacing="0">
-           
-<col  />
-<col />
-<col />
-<col />
-<tbody>
-    <tr>
-        <td>Field Name</td>
-        <td>Core Usage</td>
-        <td>Core Field length</td>
-        <td>Implementation Note</td>
-    </tr>
-    <tr>
-        <td><code>Status</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>RecCtrlOut</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>RecCtrlOut.SentRecCount</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableSel</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableSel.EnumTableKeys</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableSel.EnumTableKeys.BranchIdent</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>If no branch is input, Premier searches using the default branch name.</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableSel.EnumTableKeys.DataApplType</code></td>
-        <td>Required</td>
-        <td>Default</td>
-        <td>Required only if the BranchIdent value is sent in the request.</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableSel.EnumTableKeys.EnumTableIdent</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>"Region" refers to a Branch Region, also known as Originating Branch.
-"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  </td>
-    </tr>
-    <tr>
-        <td><code>EnumTableSel.EnumFilter</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableKeys</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableKeys.BranchIdent</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableKeys.DataApplType</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableKeys.EnumTableIdent</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableInfo</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableInfo.EnumTableData</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableInfo.EnumTableData.EnumValue</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableInfo.EnumTableData.EnumValueDesc</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableStatus</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableStatus.EnumTableStatusCode</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-    <tr>
-        <td><code>EnumTableRec.EnumTableStatus.EffDt</code></td>
-        <td>Default</td>
-        <td>Default</td>
-        <td>&#160;</td>
-    </tr>
-</tbody>
-</table>
 
----
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
-<!--type: tab --> 
-The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
 
- <table cellspacing="0">           
-    <col />
-    <col />
-    <col />
-    <col />
-    <tbody>
-        <tr>
-            <td>Field Name</td>
-            <td>Core Usage</td>
-            <td>Core Field length</td>
-            <td>Implementation Note</td>
-        </tr>
-        <tr>
-            <td><code>Status</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>RecCtrlOut</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>RecCtrlOut.SentRecCount</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableSel</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableSel.EnumTableKeys</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableSel.EnumTableKeys.EnumTableIdent</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableKeys</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableKeys.EnumTableIdent</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableInfo</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableInfo.EnumTableData</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableInfo.EnumTableData.EnumValue</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableInfo.EnumTableData.EnumValueDesc</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableStatus</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableStatus.EnumTableStatusCode</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-        <tr>
-            <td><code>EnumTableRec.EnumTableStatus.EffDt</code></td>
-            <td>Default</td>
-            <td>Default</td>
-            <td>&#160;</td>
-        </tr>
-    </tbody>
-</table>
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
 
----
 
-<!--type: tab-end -->
-<!--type: tab-end -->
+# Request Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`EnumTableSel`|||
+|`EnumTableSel.EnumTableKeys`|||
+|`EnumTableSel.EnumTableKeys.BranchIdent`||If no branch is input, Premier searches using the default branch name.|
+|`EnumTableSel.EnumTableKeys.DataApplType`|ALL<br>CDA<br>CRD<br>DDA<br>LOAN<br>LOC<br>Party<br>SDA<br>SDB<br>DDL|Required only if the BranchIdent value is sent in the request.|
+|`EnumTableSel.EnumTableKeys.EnumTableIdent`||"Region" refers to a Branch Region, also known as Originating Branch.<br>"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  |
+|`EnumTableSel.EnumFilter`||N/A|
+# Response Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`Status`|||
+|`RecCtrlOut`|||
+|`RecCtrlOut.SentRecCount`|||
+|`EnumTableRec`|||
+|`EnumTableRec.EnumTableKeys`|||
+|`EnumTableRec.EnumTableKeys.BranchIdent`|||
+|`EnumTableRec.EnumTableKeys.DataApplType`|||
+|`EnumTableRec.EnumTableKeys.EnumTableIdent`|||
+|`EnumTableRec.EnumTableInfo`|||
+|`EnumTableRec.EnumTableInfo.EnumTableData`|||
+|`EnumTableRec.EnumTableStatus`|||
+|`EnumTableRec.EnumTableStatus.EnumTableStatusCode`|Valid||
+|`EnumTableRec.EnumTableStatus.EffDt`|||
+<!-- type: tab -->
+
+
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
+
+
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+
+
+# Request Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`EnumTableSel`|||
+|`EnumTableSel.EnumTableKeys`|||
+|`EnumTableSel.EnumTableKeys.EnumTableIdent`||"Region" refers to a Branch Region, also known as Originating Branch.<br>"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  |
+# Response Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`Status`|||
+|`RecCtrlOut`|||
+|`RecCtrlOut.SentRecCount`|||
+|`EnumTableRec`|||
+|`EnumTableRec.EnumTableKeys`|||
+|`EnumTableRec.EnumTableKeys.EnumTableIdent`|||
+|`EnumTableRec.EnumTableInfo`|||
+|`EnumTableRec.EnumTableInfo.EnumTableData`|||
+|`EnumTableRec.EnumTableInfo.EnumTableData.EnumValue`|||
+|`EnumTableRec.EnumTableInfo.EnumTableData.EnumValueDesc`|||
+|`EnumTableRec.EnumTableStatus`|||
+|`EnumTableRec.EnumTableStatus.EnumTableStatusCode`|Valid||
+|`EnumTableRec.EnumTableStatus.EffDt`|||
+<!-- type: tab-end -->
+
+<!-- type: tab-end -->
