@@ -10,9 +10,10 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Note
+> #### Notes
 > 
-> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
+> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
 
 
 # Request Schema
@@ -47,7 +48,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineInfo.AccountingMethod`|Class<br>CostCenter||
 |`CreditLineInfo.ClassCode`|||
 |`CreditLineInfo.AcctTypeCode`|||
-|`CreditLineInfo.ClientDefinedData`||*Required<br>It is required to send the Flex Data metadata (such as field size) along with the user-entered account data.|
+|`CreditLineInfo.ClientDefinedData`||***Required**<br>It is required to send the Flex Data metadata (such as field size) along with the user-entered account data.|
 |`CreditLineInfo.ClientDefinedData.DataClassType`|Portfolio||
 |`CreditLineInfo.ClientDefinedData.DataIdent`||This field refers to the client-defined field code used for reference and reporting. Valid values are between 0-90000.|
 |`CreditLineInfo.ClientDefinedData.DataType`|Alpha<br>Boolean<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol||
