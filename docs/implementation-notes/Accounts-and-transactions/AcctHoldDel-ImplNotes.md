@@ -1,16 +1,39 @@
-# Implementation Notes 
-
-This section provides the provider-specific request schema and implementation notes applicable for *{Service Name}*.
-
-
-<!--
-type: tab
-titles: Premier
+# Implementation Notes for AcctHold Del
+This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
+<!-- 
+type: tab 
+titles: Premier, 
 -->
 
-## Premier - Implementation Notes
 
- The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
 
- <!-- type: tab-end -->
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+
+
+# Request Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`AcctHoldKeys`|||
+|`AcctHoldKeys.AcctKeys`|||
+|`AcctHoldKeys.AcctKeys.AcctId`|||
+|`AcctHoldKeys.AcctKeys.AcctType`|CDA<br>DDA<br>SDA||
+|`AcctHoldKeys.AcctHoldIdent`|||
+# Response Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`Status`|| |
+|`AcctHoldStatusRec`|||
+|`AcctHoldStatusRec.AcctHoldKeys`|||
+|`AcctHoldStatusRec.AcctHoldKeys.AcctKeys`|||
+|`AcctHoldStatusRec.AcctHoldKeys.AcctKeys.AcctId`|||
+|`AcctHoldStatusRec.AcctHoldKeys.AcctKeys.AcctType`|CDA<br>DDA<br>SDA||
+|`AcctHoldStatusRec.AcctHoldKeys.AcctHoldIdent`|||
+|`AcctHoldStatusRec.AcctHoldStatus`|||
+|`AcctHoldStatusRec.AcctHoldStatus.AcctHoldStatusCode`|Deleted||
+|`AcctHoldStatusRec.AcctHoldStatus.EffDt`|||
+<!-- type: tab-end -->

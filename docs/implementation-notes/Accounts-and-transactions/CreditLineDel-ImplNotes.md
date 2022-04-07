@@ -1,16 +1,37 @@
-# Implementation Notes 
-
-This section provides the provider-specific request schema and implementation notes applicable for *{Service Name}*.
-
-
-<!--
-type: tab
-titles: Premier
+# Implementation Notes for CreditLine Del
+This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
+<!-- 
+type: tab 
+titles: Premier, 
 -->
 
-## Premier - Implementation Notes
 
- The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
 
- <!-- type: tab-end -->
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+
+
+# Request Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`CreditLineKeys`|||
+|`CreditLineKeys.AcctKeys`|||
+|`CreditLineKeys.AcctKeys.AcctId`||This field refers to the account number of line record.<br>|
+|`CreditLineKeys.AcctKeys.AcctType`|CLOC||
+# Response Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`Status`|||
+|`CreditLineStatusRec`|||
+|`CreditLineStatusRec.CreditLineKeys`|||
+|`CreditLineStatusRec.CreditLineKeys.AcctKeys`|||
+|`CreditLineStatusRec.CreditLineKeys.AcctKeys.AcctId`||This field refers to the account number of the line entered by the user.<br>|
+|`CreditLineStatusRec.CreditLineKeys.AcctKeys.AcctType`|CLOC||
+|`CreditLineStatusRec.CreditLineStatus`|||
+|`CreditLineStatusRec.CreditLineStatus.CreditLineStatusCode`|Valid||
+|`CreditLineStatusRec.CreditLineStatus.EffDt`|||
+<!-- type: tab-end -->

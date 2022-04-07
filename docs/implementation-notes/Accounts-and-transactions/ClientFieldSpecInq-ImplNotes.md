@@ -1,16 +1,45 @@
-# Implementation Notes 
-
-This section provides the provider-specific request schema and implementation notes applicable for *{Service Name}*.
-
-
-<!--
-type: tab
-titles: Premier
+# Implementation Notes for ClientFieldSpec Inq
+This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
+<!-- 
+type: tab 
+titles: Premier, 
 -->
 
-## Premier - Implementation Notes
 
- The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
 
- <!-- type: tab-end -->
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+
+
+# Request Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`ClientFieldSpecSel`|||
+|`ClientFieldSpecSel.DataApplType`|CDA<br>DDA<br>LOAN<br>Party<br>SDA<br>||
+# Response Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`Status`|| |
+|`RecCtrlOut`|||
+|`RecCtrlOut.SentRecCount`|||
+|`ClientFieldSpecRec`|||
+|`ClientFieldSpecRec.ClientFieldSpecKeys`|||
+|`ClientFieldSpecRec.ClientFieldSpecKeys.DataApplType`|CDA<br>DDA<br>LOAN<br>Party<br>SDA<br>||
+|`ClientFieldSpecRec.ClientFieldSpecKeys.DataClassType`|||
+|`ClientFieldSpecRec.ClientFieldSpecKeys.ClientFieldSpecId`|||
+|`ClientFieldSpecRec.ClientFieldSpecInfo`|||
+|`ClientFieldSpecRec.ClientFieldSpecInfo.DataGroupType`|||
+|`ClientFieldSpecRec.ClientFieldSpecInfo.DataType`|Alpha<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol||
+|`ClientFieldSpecRec.ClientFieldSpecInfo.DataLength`|||
+|`ClientFieldSpecRec.ClientFieldSpecInfo.LastUpdateDt`|||
+|`ClientFieldSpecRec.ClientFieldSpecInfo.Desc`|||
+|`ClientFieldSpecRec.ClientFieldSpecInfo.RequiredFlag`|||
+|`ClientFieldSpecRec.ClientFieldSpecInfo.SearchFlag`|||
+|`ClientFieldSpecRec.ClientFieldSpecStatus`|||
+|`ClientFieldSpecRec.ClientFieldSpecStatus.ClientFieldSpecStatusCode`|||
+|`ClientFieldSpecRec.ClientFieldSpecStatus.EffDt`|||
+<!-- type: tab-end -->
