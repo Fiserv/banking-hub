@@ -7,7 +7,11 @@ This section provides the provider-specific request schema and implementation no
 type: tab
 titles: Premier
 -->
-
+<!-- theme: info -->
+> #### Notes
+> 
+> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
+> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
 ## Premier - Implementation Notes
 
 <table cellspacing="0">
