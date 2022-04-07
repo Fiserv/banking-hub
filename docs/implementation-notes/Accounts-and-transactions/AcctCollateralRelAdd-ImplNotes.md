@@ -10,9 +10,10 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Note
+> #### Notes
 > 
-> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+> -	To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API.
+> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API.
 
 
 # Request Schema
@@ -22,11 +23,11 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelInfo`||Only one collateral can be linked to an account per request.|
 |`AcctCollateralRelInfo.CollateralRef`|||
 |`AcctCollateralRelInfo.CollateralRef.CollateralKeys`|||
-|`AcctCollateralRelInfo.CollateralRef.CollateralKeys.CollateralId`||*Required<br>This field is required by service provider and hence must be sent in request by client application.|
+|`AcctCollateralRelInfo.CollateralRef.CollateralKeys.CollateralId`||***Required**<br>This field is required by service provider and hence must be sent in request by client application.|
 |`AcctCollateralRelInfo.AcctRef`|||
 |`AcctCollateralRelInfo.AcctRef.AcctKeys`||This aggregate indicates an account for which the collateral is pledged.|
-|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctId`||*Required<br>This field is required by service provider and hence must be sent in request by client application.|
-|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctType`|LOAN|*Required<br>This field is required to be sent in request by client application. Only loan accounts are supported in this service.|
+|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctId`||***Required**<br>This field is required by service provider and hence must be sent in request by client application.|
+|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctType`|LOAN|***Required**<br>This field is required to be sent in request by client application. Only loan accounts are supported in this service.|
 |`AcctCollateralRelInfo.AcctRef.AcctKeys.BranchIdent`||This field refers to the branch number.|
 |`AcctCollateralRelInfo.PledgeRule`|None<br>Principal<br>AvailCreditPlusPrincipal<br>OriginalNoteAmount<br>||
 |`AcctCollateralRelInfo.PledgeType`|Amount<br>Percent|This field is applicable if the pledge rule is 'None'.|
@@ -42,11 +43,11 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelInfo`||Only one collateral can be linked to an account per request.|
 |`AcctCollateralRelInfo.CollateralRef`|||
 |`AcctCollateralRelInfo.CollateralRef.CollateralKeys`|||
-|`AcctCollateralRelInfo.CollateralRef.CollateralKeys.CollateralId`||*Required<br>This field is required by service provider and hence must be sent in request by client application.|
+|`AcctCollateralRelInfo.CollateralRef.CollateralKeys.CollateralId`||***Required**<br>This field is required by service provider and hence must be sent in request by client application.|
 |`AcctCollateralRelInfo.AcctRef`|||
 |`AcctCollateralRelInfo.AcctRef.AcctKeys`||This aggregate indicates an account for which the collateral is pledged.|
-|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctId`||*Required<br>This field is required by service provider and hence must be sent in request by client application.|
-|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctType`|LOAN|*Required<br>This field is required to be sent in request by client application. Only loan accounts are supported in this service.|
+|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctId`||***Required**<br>This field is required by service provider and hence must be sent in request by client application.|
+|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctType`|LOAN|***Required**<br>This field is required to be sent in request by client application. Only loan accounts are supported in this service.|
 |`AcctCollateralRelInfo.AcctRef.AcctKeys.BranchIdent`||This field refers to the branch number.|
 |`AcctCollateralRelInfo.PledgeRule`|None<br>Principal<br>AvailCreditPlusPrincipal<br>OriginalNoteAmount<br>||
 |`AcctCollateralRelInfo.PledgeType`|Amount<br>Percent|This field is applicable if the pledge rule is 'None'.|
