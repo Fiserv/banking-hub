@@ -10,9 +10,11 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Note
+> #### Notes
 > 
-> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
+> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+
 
 
 # Request Schema
