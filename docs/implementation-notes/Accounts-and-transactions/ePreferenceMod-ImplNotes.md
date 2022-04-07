@@ -10,9 +10,10 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Note
+> #### Notes
 > 
-> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
+> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
 
 
 # Request Schema
@@ -33,7 +34,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`ePreferenceInfo.StmtTruncationOption`|| ImageOption is not used for SDA or CDA accounts in Premier's Multiple mailing addendas.|
 |`ePreferenceInfo.NoticeData`||  |
 |`ePreferenceInfo.NoticeData.NoticeType`|RegularNotice<br>ChargeBack<br>|Notice type is only used for additional ePreference records. |
-|`ePreferenceInfo.NoticeData.NoticeOption`|NoNotice<br>|This field is only used for additional ePreference records.<br><br>Please note EimOption is not available for CDA account type in  Multiple mailing addendas.|
+|`ePreferenceInfo.NoticeData.NoticeOption`|NoNotice<br>|This field is only usedÂ for additional ePreference records.<br><br>Please note EimOption is not available for CDA account type in  Multiple mailing addendas.|
 |`ePreferenceInfo.EmailLink`||This aggregate is used to modify the email address for the primary owner of the account. Only one email can be sent in the request|
 |`ePreferenceInfo.EmailLink.Email`||  |
 |`ePreferenceInfo.EmailLink.Email.EmailType`|Business<br>Person|This field specify the type of email address updated in the core.|
