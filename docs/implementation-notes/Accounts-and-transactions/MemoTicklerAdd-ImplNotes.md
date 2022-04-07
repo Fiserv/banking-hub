@@ -11,6 +11,10 @@ titles: Premier
 ## Premier - Implementation Notes
 
  The following table lists the provider-specific fields and implementation notes for the applicable fields. To view the field descriptions, please refer the API Explorer section of this API.
+ > #### Notes
+> 
+> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
+> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
 
 <table cellspacing="0">
     <col  />
