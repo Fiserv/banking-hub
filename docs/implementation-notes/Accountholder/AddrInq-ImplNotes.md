@@ -63,6 +63,14 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrRec.AddrStatus.EffDt`|||
 <!-- type: tab-end -->
 
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
+
+
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field descriptions of below listed fields, please refer the API Explorer section of this API.
+
 # Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
