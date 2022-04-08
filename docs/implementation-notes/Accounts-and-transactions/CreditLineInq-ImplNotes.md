@@ -90,7 +90,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineRec.CreditLineInfo.PostAddr.CountryCode.CountryCodeValue`||Country code values for postal address are client-defined.|
 |`CreditLineRec.CreditLineInfo.PostAddr.AddrType`|Primary<br>Secondary||
 |`CreditLineRec.CreditLineInfo.PostAddr.TimeFrame`|||
-|`CreditLineRec.CreditLineInfo.PostAddr.TimeFrame.StartDt`||In Premier, secondary address is used every year from date mentioned in this field until secondary address relationship is removed. Start date and day of the month format is recorded.|
+|`CreditLineRec.CreditLineInfo.PostAddr.TimeFrame.StartDt`||Secondary address is used every year from date mentioned in this field until secondary address relationship is removed. Start date and day of the month format is recorded.|
 |`CreditLineRec.CreditLineInfo.PostAddr.TimeFrame.EndDt`||This field refers to the end date of seasonal address. End date in month and day of the month formats are recorded.<br>Secondary address is used every year through date mentioned in this field until secondary address relationship is removed.|
 |`CreditLineRec.CreditLineInfo.PostAddr.Retention`|True<br>False|This field refers to the address retention code for mailing address, to indicate if the address is automatically deleted when accounts, tax addenda or relationships are not attached to the address.|
 |`CreditLineRec.CreditLineInfo.PostAddr.CensusTract`|||
