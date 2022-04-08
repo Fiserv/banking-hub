@@ -12,7 +12,7 @@ paths:
       tags:
       - Delete Address
       summary: Delete Address.
-      description: "Deletes the existing address record associated with an account or party. <br> For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n  </ul>\n  \n  <br>\n  \n   <blockquote style=\"border-left: 0.375em solid #40a9ff; background-color: #e6f7ff; border-radius: 3px; padding: 1em;\" > To view the core specific implementation notes, <a target=\"_blank\" title=\"Click to open in a new tab\" href=\"../docs/?path=docs/implementation-notes/Accountholder/AddrDel_ImplNotes.md\"> click here</a>.</blockquote>"
+      description: "Deletes the existing address record associated with an account or party. <br> For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n  </ul>\n  \n  <br>\n  \n   <blockquote style=\"border-left: 0.375em solid #40a9ff; background-color: #e6f7ff; border-radius: 3px; padding: 1em;\" > To view the core specific implementation notes, <a target=\"_blank\" title=\"Click to open in a new tab\" href=\"../docs/?path=docs/implementation-notes/Accountholder/AddrDel-ImplNotes.md\"> click here</a>.</blockquote>"
       operationId: deleteAddrByPut
       parameters:
       - name: EFXHeader
@@ -3958,45 +3958,115 @@ components:
     EFXHeader:
       required:
       - OrganizationId
-      type: string
+      type: object
       properties:
+        Context:
+          $ref: '#/components/schemas/Context'
         OrganizationId:
           type: string
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
         VendorId:
           type: string
           description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
-        Context:
-          $ref: '#/components/schemas/Context'
-      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+      example: '{ "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
     Context:
       type: object
       properties:
+        AMPMCode:
+          type: string
+          description: 'Transaction Posting Code. '
+          enum:
+          - AM
+          - PM
+        AcquirerCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - US
+          - IND
+        AcquirerCountryCodeValue:
+          type: string
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction Required By Cleartouch
+        BranchIdent:
+          maxLength: 22
+          type: string
+        BusinessApplIdent:
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        Channel:
+          type: string
+          description: Indicates the channel used by the client application.
         ClientAppName:
           maxLength: 40
           type: string
           description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
-        Channel:
-          type: string
-          description: Indicates the channel used by the client application.
         ClientDateTime:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
         ClientTerminalSeqNum:
           maxLength: 36
           type: string
           description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
-        OriginatorType:
-          type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
-          format: int64
-        TerminalIdent:
+        GroupIdent:
           maxLength: 36
           type: string
-          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+          description: Transaction Group Identifier
+        IsOverridden:
+          type: boolean
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        OriginatorType:
+          type: integer
+          description: The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum lenght of 4. Originator Type codes that apply to financial institutions are:- • 6010 - Financial institution—bank, savings and loan (S and L), or credit union • 6011 - Financial institution—ATM • 6012 - Financial institution—merchandise sale • 6999 - Financial institution—home banking
+          format: int64
+        PhoneExchange:
+          type: string
+        PhoneNum:
+          type: string
+        PhoneType:
+          type: string
+        ReentryType:
+          type: string
+          description: 'Indicates if the transaction reposted. '
+          enum:
+          - Manual
+          - Auto
+        SettlementDate:
+          type: string
+          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        TellerIdent:
+          type: string
+        TellerTrnData:
+          $ref: '#/components/schemas/TellerTrnData'
         TerminalAddr1:
           maxLength: 64
           type: string
@@ -4012,17 +4082,6 @@ components:
         TerminalCity:
           maxLength: 32
           type: string
-        TerminalCounty:
-          maxLength: 32
-          type: string
-        TerminalStateProv:
-          maxLength: 32
-          type: string
-          description: State Province. ISO 3166-2:US codes.
-        TerminalPostalCode:
-          maxLength: 11
-          type: string
-          description: Postal Code is ZipCode in the US.
         TerminalCountryCodeSource:
           type: string
           description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
@@ -4032,72 +4091,51 @@ components:
         TerminalCountryCodeValue:
           maxLength: 80
           type: string
-        PhoneType:
+        TerminalCounty:
+          maxLength: 32
           type: string
-        PhoneNum:
+        TerminalIdent:
+          maxLength: 36
           type: string
-        PhoneExchange:
-          type: string
+          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
         TerminalOwnerName:
           maxLength: 40
           type: string
           description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
-        SystTraceAuditNum:
-          maxLength: 36
+        TerminalPostalCode:
+          maxLength: 11
           type: string
-          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
-        NetworkIdent:
-          maxLength: 80
+          description: Postal Code is ZipCode in the US.
+        TerminalStateProv:
+          maxLength: 32
           type: string
-          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
-        NetworkRefIdent:
-          maxLength: 36
-          type: string
-          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
-        AcquirerIdent:
-          maxLength: 36
-          type: string
-          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
-        AcquirerCountryCodeSource:
-          type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - US
-          - IND
-        AcquirerCountryCodeValue:
-          type: string
-        MerchNum:
-          maxLength: 23
-          type: string
-          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
-        SettlementDate:
-          type: string
-          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
-          format: date
-        SettlementIdent:
-          maxLength: 36
-          type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
-        BusinessApplIdent:
-          type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
-        BranchIdent:
-          maxLength: 22
-          type: string
-        TellerIdent:
-          type: string
+          description: State Province. ISO 3166-2:US codes.
         TillIdent:
           type: string
-        AMPMCode:
+        TrnIdent:
           type: string
-          enum:
-          - AM
-          - PM
-        ReentryType:
+          description: Indicates the transaction id
+    TellerTrnData:
+      type: object
+      properties:
+        TellerIdent:
           type: string
-          enum:
-          - Manual
-          - Auto
+          description: Teller Identification.
+        TrnConductorData:
+          type: array
+          description: Teller Transaction Conductor Data.
+          items:
+            $ref: '#/components/schemas/TrnConductorData'
+    TrnConductorData:
+      type: object
+      properties:
+        NoConductorReason:
+          type: string
+          description: No Conductor Reason. Used when a conductor cannot be identified.. - ArmoredCarSvc - MailDeposit - NightDeposit - ATM - AggregatedTransaction - CourierSvc
+        TrnConductorIdent:
+          maxLength: 36
+          type: string
+          description: Transaction Conductor Identifer. Identifies the person conducting the transaction.
     OvrdExceptionDataType:
       title: OvrdExceptionDataType
       type: object
