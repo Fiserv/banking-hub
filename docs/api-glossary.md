@@ -2,7 +2,7 @@
 
 <!-- 
 type: tab 
-titles: General Terms, Acronym , Account Types, Legacy Service Name
+titles: General Terms, Acronyms , Account Types, Legacy Service Name
 -->
 
 | Term                  | Definition      |
