@@ -2,7 +2,7 @@
 
 <!-- 
 type: tab 
-titles: General Terms, Abbreviations , Account Types, Legacy Service Name
+titles: General Terms, Acronym , Account Types, Legacy Service Name
 -->
 
 | Term                  | Definition      |
@@ -35,7 +35,7 @@ titles: General Terms, Abbreviations , Account Types, Legacy Service Name
 
 <!-- type: tab -->
 
-| Term                  | Elaboration                                                                                                                                                         |
+| Acronym                  | Definition                                                                                                                                                         |
 |:-----------------------|:---------------------|
 | ACH                   | ACH (Automated Clearing House network) is an electronic fund transfer made between banks and credit unions.                                                         |
 | CLT                   | Cleartouch                                                                                                                                                          |
