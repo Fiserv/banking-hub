@@ -26,7 +26,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrInfo.AddrRelRef.PartyKeys.PartyId`|||
 |`AddrInfo.AddrRelRef.AddrUse`|Home<br>Personal<br>Business<br>|  |
 |`AddrInfo.PostAddr`||This aggregate is used to modify the address record either primary or seasonal address.|
-|`AddrInfo.PostAddr.OpenDt`||***Conditionally Required**<br>This field is required to be provided when creating new address record. However, this is not applicable for the Seasonal Address type.|
+|`AddrInfo.PostAddr.OpenDt`||***Conditionally Required** <br> This field is required to be provided when creating new address record. However, this is not applicable for the Seasonal Address type.|
 |`AddrInfo.PostAddr.RelationshipMgr`|||
 |`AddrInfo.PostAddr.RelationshipMgr.RelationshipMgrIdent`||This field is not applicable for the Seasonal Address type|
 |`AddrInfo.PostAddr.RelationshipMgr.RelationshipRole`|Officer<br>ReferralOfficer|Officer refers to Responsibility Code and Referral Officer refers to Referral Responsibility Code.|
@@ -43,8 +43,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrInfo.PostAddr.CountryCode.CountryCodeValue`||  |
 |`AddrInfo.PostAddr.AddrType`|Primary<br>Seasonal|This field specify the type of address. In the core address record can have Primary address and Seasonal address, both forms one address record therefore shares same address identifier.<br>Primary address is required when creating a new address record where seasonal address is optional and if needed always related to the primary address.|
 |`AddrInfo.PostAddr.TimeFrame`|||
-|`AddrInfo.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore core only stores Start month and Start Day. Year can be provided as ì9999î.|
-|`AddrInfo.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as ì9999î.|
+|`AddrInfo.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore core only stores Start month and Start Day. Year can be provided as ‚Äú9999‚Äù.|
+|`AddrInfo.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as ‚Äú9999‚Äù.|
 |`AddrInfo.PostAddr.Retention`|true<br>false|  |
 |`AddrInfo.PostAddr.CensusTract`||  |
 |`AddrInfo.PostAddr.CensusBlock`||  |
@@ -65,7 +65,12 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- type: tab -->
 
 
-# Implementation Notes 
+### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
+<!-- type: tab -->
+
 ### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
@@ -73,15 +78,6 @@ We are working on developing content for this section. Stay tuned for more updat
 <!-- type: tab -->
 
 
-# Implementation Notes 
-### Coming soon!
-We are working on developing content for this section. Stay tuned for more updates. 
-
-
-<!-- type: tab -->
-
-
-# Implementation Notes 
 ### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
