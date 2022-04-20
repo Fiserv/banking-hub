@@ -12,7 +12,7 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field descriptions and sample request and Response codes, please refer the API Explorer section of this API
+> - To view the field descriptions and sample Request and Response codes, please refer the API Explorer section of this API
 > - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
 
 
