@@ -5,10 +5,7 @@ type: tab
 titles: Premier, , Precision, Signature, Cleartouch, DNA, 
 -->
 
-<!-- 
-type: tab 
-titles: By Acct, By Party, ByPartyINET
--->
+## By Acct
 
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
@@ -193,7 +190,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelStatus`||  |
 |`PartyAcctRelRec.PartyAcctRelStatus.PartyAcctRelStatusCode`|Valid|  |
 |`PartyAcctRelRec.PartyAcctRelStatus.EffDt`||  |
-<!-- type: tab -->
+
+
+## By Party
+
 
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
@@ -475,7 +475,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelStatus.PartyAcctRelStatusCode`|Valid|  |
 |`PartyAcctRelRec.PartyAcctRelStatus.EffDt`||  |
 
-<!-- type: tab -->
+## ByPartyINET
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
@@ -693,7 +693,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelStatus.PartyAcctRelStatusCode`|Valid|  |
 |`PartyAcctRelRec.PartyAcctRelStatus.EffDt`||  |
 
-<!-- type: tab-end -->
+
 
 <!-- type: tab -->
 
