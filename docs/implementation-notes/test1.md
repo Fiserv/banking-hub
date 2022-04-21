@@ -197,6 +197,7 @@ The following tables list the provider-specific implemented fields for Request a
 
 This is my Tab 2 content
 
+<!-- type: tab -->
 <!-- type: tab-end -->
 
 ### Coming soon!
