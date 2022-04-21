@@ -7,7 +7,7 @@ type: sub-tab
 titles: Tab A, Tab B, Tab C 
 -->
 
-[Header 1](?path=docs/implementation-notes/ImplNotes-links.md#header-one)  [Header 2](?path=docs/implementation-notes/ImplNotes-links.md#header-two)
+[Header 1](?path=docs/implementation-notes/testing/ImplNotes-links.md#header-one)  [Header 2](?path=docs/implementation-notes/testing/ImplNotes-links.md#header-two)
 
 ## Header one
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
