@@ -2,7 +2,7 @@
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, DNA, 
+titles: Premier, , Precision, Signature, Cleartouch, DNA, 
 -->
 
 
@@ -132,6 +132,7 @@ The following tables list the provider-specific implemented fields for Request a
 
 <!-- type: tab-end -->
 
+<!-- type: tab -->
 
 ### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
