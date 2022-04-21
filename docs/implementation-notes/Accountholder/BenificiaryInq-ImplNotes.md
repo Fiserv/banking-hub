@@ -1,4 +1,4 @@
-# Implementation Notes for Benificiary Inq
+# Implementation Notes for Inq Benificiary
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -10,9 +10,9 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Notes
+> #### Note
 > 
-> -	To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
+> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
 > - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
 
 

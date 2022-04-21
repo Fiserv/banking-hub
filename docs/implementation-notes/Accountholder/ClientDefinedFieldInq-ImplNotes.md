@@ -1,8 +1,8 @@
-# Implementation Notes for ClientDefinedField Inq
+# Implementation Notes for Inq ClientDefinedField
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, 
+titles: Premier, Signature, 
 -->
 
 
@@ -10,9 +10,9 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Notes
+> #### Note
 > 
-> -	To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
+> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
 > - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
 
 
@@ -51,4 +51,11 @@ The following tables list the provider-specific implemented fields for Request a
 |`ClientDefinedFieldRec.ClientDefinedFieldStatus`|||
 |`ClientDefinedFieldRec.ClientDefinedFieldStatus.ClientDefinedFieldStatusCode`|Valid| |
 |`ClientDefinedFieldRec.ClientDefinedFieldStatus.EffDt`|||
+<!-- type: tab -->
+
+
+### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
 <!-- type: tab-end -->
