@@ -30,7 +30,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrInfo.PostAddr.RelationshipMgr`|||
 |`AddrInfo.PostAddr.RelationshipMgr.RelationshipMgrIdent`||This field is not applicable for the Seasonal Address type|
 |`AddrInfo.PostAddr.RelationshipMgr.RelationshipRole`|Officer<br>ReferralOfficer|Officer refers to Responsibility Code and Referral Officer refers to Referral Responsibility Code.|
-|`AddrInfo.PostAddr.OriginatingBranch`||*** Conditionally Required**<br>Originating Branch refers to Branch Region and is required to be provided when creating new Address record. This field is not applicable for the Seasonal Address type.|
+|`AddrInfo.PostAddr.OriginatingBranch`||***Conditionally Required**<br>Originating Branch refers to Branch Region and is required to be provided when creating new Address record. This field is not applicable for the Seasonal Address type.|
 |`AddrInfo.PostAddr.ResponsibleBranch`||Responsible Branch refers to accounting branch. This field is not applicable for the Seasonal Address type.|
 |`AddrInfo.PostAddr.AddrFormatType`|Label|Label is the supported address format.|
 |`AddrInfo.PostAddr.Addr1`||***Conditionally Required**<br>This field is required when a new address record is created. Maximum length of this field can be either 30 or 40 characters based upon the Name and Address Length Option values defined under the Miscellaneous specification.<br><br>"0" indicates names and addresses length up to 30 characters<br>"1" indicates names and addresses length up to 40 characters<br>"2" indicates names and addresses length up to 30 characters and two address lines are available<br>"3" indicates names and addresses length up to 40 characters and two address lines are available|
@@ -43,8 +43,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrInfo.PostAddr.CountryCode.CountryCodeValue`||  |
 |`AddrInfo.PostAddr.AddrType`|Primary<br>Seasonal|This field specify the type of address. In the core address record can have Primary address and Seasonal address, both forms one address record therefore shares same address identifier.<br>Primary address is required when creating a new address record where seasonal address is optional and if needed always related to the primary address.|
 |`AddrInfo.PostAddr.TimeFrame`|||
-|`AddrInfo.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore core only stores Start month and Start Day. Year can be provided as ì9999î.|
-|`AddrInfo.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as ì9999î.|
+|`AddrInfo.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore core only stores Start month and Start Day. Year can be provided as ‚Äú9999‚Äù.|
+|`AddrInfo.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as ‚Äú9999‚Äù.|
 |`AddrInfo.PostAddr.Retention`|true<br>false|  |
 |`AddrInfo.PostAddr.CensusTract`||  |
 |`AddrInfo.PostAddr.CensusBlock`||  |
