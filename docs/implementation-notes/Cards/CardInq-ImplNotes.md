@@ -1,8 +1,8 @@
-# Implementation Notes for Get Card
+# Implementation Notes for Inq Card
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, , Precision, Signature, Cleartouch, DNA, 
+titles: Premier, Precision, Signature, Cleartouch, DNA, 
 -->
 
 
@@ -128,11 +128,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`CardRec.CardStatus`||  |
 |`CardRec.CardStatus.CardStatusCode`|Valid|This field is used to indicate current status of debit card.|
 |`CardRec.CardStatus.EffDt`||  |
-
-
-<!-- type: tab-end -->
-
 <!-- type: tab -->
+
 
 ### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
