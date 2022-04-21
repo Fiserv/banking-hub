@@ -2,7 +2,7 @@
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, DNA, 
+titles: Premier, , Precision, Signature, DNA, 
 -->
 
 <!-- 
@@ -127,6 +127,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrRec.AddrStatus`|||
 |`AddrRec.AddrStatus.AddrStatusCode`|Valid||
 |`AddrRec.AddrStatus.EffDt`|||
+<!-- type: tab-end -->
+
 <!-- type: tab -->
 
 
