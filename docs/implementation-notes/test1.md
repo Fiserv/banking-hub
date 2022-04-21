@@ -2,7 +2,7 @@
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, DNA, 
+titles: Premier,, Precision, Signature, Cleartouch, DNA, 
 -->
 
 <!-- 
@@ -193,35 +193,36 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelStatus`||  |
 |`PartyAcctRelRec.PartyAcctRelStatus.PartyAcctRelStatusCode`|Valid|  |
 |`PartyAcctRelRec.PartyAcctRelStatus.EffDt`||  |
+
+
 <!-- type: tab -->
 
 This is my Tab 2 content
 
-<!-- type: tab -->
 <!-- type: tab-end -->
 
-### Coming soon!
+<!-- type: tab -->
+
+### Tab 2
+We are working on developing content for this section. Stay tuned for more updates. 
+
+<!-- type: tab -->
+
+### Tab 3
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+### Tab 4
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
-We are working on developing content for this section. Stay tuned for more updates. 
-
-
-<!-- type: tab -->
-
-
-### Coming soon!
+### Tab 5
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
