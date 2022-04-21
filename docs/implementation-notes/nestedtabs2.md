@@ -23,9 +23,6 @@ akushaksh
 # Tab 1.3
 
 <!-- type: tab-end -->
-
-<!-- type: tab -->
-
 <!-- type: tab -->
 
 # Tab 2
