@@ -1,4 +1,4 @@
-# Implementation Notes for Inq Card
+# Implementation Notes for Get Card
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -128,7 +128,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CardRec.CardStatus`||  |
 |`CardRec.CardStatus.CardStatusCode`|Valid|This field is used to indicate current status of debit card.|
 |`CardRec.CardStatus.EffDt`||  |
-<!-- type: tab -->
+<!-- type: tab-end -->
 
 
 ### Coming soon!
