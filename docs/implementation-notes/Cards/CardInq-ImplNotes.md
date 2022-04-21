@@ -128,6 +128,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`CardRec.CardStatus`||  |
 |`CardRec.CardStatus.CardStatusCode`|Valid|This field is used to indicate current status of debit card.|
 |`CardRec.CardStatus.EffDt`||  |
+
+
 <!-- type: tab-end -->
 
 
