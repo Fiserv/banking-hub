@@ -21,7 +21,7 @@ The following tables list the provider-specific implemented fields for Request a
 > - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`RecCtrlIn`||  |
@@ -31,7 +31,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelSel.AcctKeys`||  |
 |`PartyAcctRelSel.AcctKeys.AcctId`||  |
 |`PartyAcctRelSel.AcctKeys.AcctType`|CDA<br>CRD<br>DDA<br>LOAN<br>CLOC<br>SDA<br>SDB<br>PORT<br> |  |
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||  |
@@ -200,28 +200,28 @@ This is my Tab 2 content
 <!-- type: tab -->
 <!-- type: tab-end -->
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
