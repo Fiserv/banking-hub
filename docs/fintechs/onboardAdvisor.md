@@ -1,17 +1,17 @@
-# Accountholder
+# Onboard Advisor
 
-Accountholder is an API domain that consists of APIs essential to maintaining financial institution accountholder data, including the relationships between customers and accounts.
- 
-Specific to Fiserv core account processing platforms, these APIs make it possible to add or delete parties from accounts and specify their relationships to those accounts such as owner, signer, beneficiary, trustee, custodian and so forth. Calls made using these APIs enable the creation, updating or retrieval of accountholder information. 
+Onboard Advisor includes a powerful identity verification tool that helps you minimize identity verification tool that helps you minimize identity fraud by comparing an applicant's personal identification information against public record databases to flag inconsistencies. It also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules. 
 
-**Who is it for:** Developers creating or integrating apps that need to tap into information about the financial institution accountholders that resides on Fiserv core account processing platforms
+These APIs make it possible to authentuicate new customers before they open an account. Also, Onboard Advisor API's can be used to validate existing customers and customers accessing accounts through a digital channel.  
 
-**How is it used:** Employ these APIs to create or integrate applications that require the ability to define relationships between individual parties and accounts and determine which accounts an individual party can access
+**Who is it for:** Developers creating or integrating apps that need a Know Your Customer (KYC) authentication servie.  
 
-**Potential uses:** Apps that provide customized account access or consolidated views of accounts or family finance apps that help young people pursue their financial goals with oversight from trusted adults
+**How is it used:** Employ these APIs to create or integrate Know You Customer applications with public record databases to authenticate a customers personal information such as identity, address and phone.  
 
-Begin the integration with following services of Accountholder domain in API Explorer:
-* [Address Service](../api/?type=post&path=/address)
+**Potential uses:** KYC Apps that provide customer authencation services. 
+
+Begin the integration with following services of Onboard Advisor domain in API Explorer:
+* [Business Verification Only](../api/?type=post&path=/address)
 * [Party Service](../api/?type=post&path=/parties)
 * [Client Defined Field Service](../api/?type=post&path=/clientDefinedFields/secured)
 * [Party Account Relationship Service](../api/?type=post&path=/partyacctrel/secured)
