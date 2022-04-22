@@ -12,7 +12,7 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
 #### Request Schema
