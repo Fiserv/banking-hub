@@ -12,11 +12,10 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`OvrdExceptionData`||  |
@@ -136,7 +135,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CardInfo.AcctLinkData.AcctRef.AcctKeys.AcctId`||This field identifies the account which needs to be linked to the card.|
 |`CardInfo.AcctLinkData.AcctRef.AcctKeys.AcctType`|DDA<br>SDA<br>LOAN|This field identifies the type of account to be linked to the card. Account types DDA, SDA or LOAN can be linked to the card. Multiple accounts of same account type can be linked to a card. AcctType uniquely identify the account that is linked to the card.|
 |`CardInfo.AcctLinkData.Nickname`||Nickname of the accountholder on an account can be updated by providing this field in request. Maximum field length of 18 characters is supported. This field is an account-level detail and cannot be amended as a standalone field therefore, AcctId and AcctType of account linked with the card should be provided corresponding to the Nickname to be updated.|
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||  |
@@ -149,28 +148,28 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
