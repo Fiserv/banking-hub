@@ -1,8 +1,8 @@
-# Implementation Notes for ClientDefinedField Mod
+# Implementation Notes for Update ClientDefinedField
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, 
+titles: Premier, Signature, 
 -->
 
 
@@ -10,13 +10,12 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Notes
+> #### Note
 > 
-> -	To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`ClientDefinedFieldKeys`||<br><br>This aggregate include aggregate of either a party keys or an account keys. Only any one of the two aggregate is sent in the request, failing to which would lead to error in the operation.|
@@ -30,7 +29,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`ClientDefinedFieldInfo.ClientDefinedData.DataIdent`||Refers to the Field Code and it has to exist in the Flex Data Specifications in Premier.  The service will issue an error  when more than one ClientDefinedData aggregate is sent with the same DataIdent.|
 |`ClientDefinedFieldInfo.ClientDefinedData.Value`||***Required**|
 |`ClientDefinedFieldInfo.ClientDefinedData.ExpDt`||It is an optional field.|
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`|||
@@ -44,4 +43,11 @@ The following tables list the provider-specific implemented fields for Request a
 |`ClientDefinedFieldStatusRec.ClientDefinedFieldStatus`|||
 |`ClientDefinedFieldStatusRec.ClientDefinedFieldStatus.ClientDefinedFieldStatusCode`|Valid| |
 |`ClientDefinedFieldStatusRec.ClientDefinedFieldStatus.EffDt`||Effective date and time when the client defined field modification request was serviced.|
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
 <!-- type: tab-end -->

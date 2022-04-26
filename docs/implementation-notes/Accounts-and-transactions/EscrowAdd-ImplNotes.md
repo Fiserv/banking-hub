@@ -1,8 +1,8 @@
-# Implementation Notes for Escrow Add
+# Implementation Notes for Add Escrow
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, 
+titles: Premier, Precision, Signature, 
 -->
 
 
@@ -10,13 +10,12 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Notes
+> #### Note
 > 
-> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`OvrdExceptionData`|||
@@ -46,7 +45,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode`|||
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode.CurCodeValue`|USD||
-|`EscrowInfo.DisburseData.TimeFrame.RecurRule`||*Conditionally ***Required**<br>Either RecurRule or DisburseSched is required to be provided.|
+|`EscrowInfo.DisburseData.TimeFrame.RecurRule`||***Conditionally Required**<br>Either RecurRule or DisburseSched is required to be provided.|
 |`EscrowInfo.DisburseData.TimeFrame.RecurRule.RecurType`|None<br>Monthly<br>BiMonthly<br>SemiMonthly<br>Weekly<br>BiWeekly<br>Yearly<br>Quarterly<br>SemiYearly<br>|This field refers to the frequency of payout.|
 |`EscrowInfo.DisburseData.TimeFrame.RecurRule.RecurInterval`|1 through 9||
 |`EscrowInfo.DisburseData.NextDisburseDt`||This field refers to the current payout date for service provider. Either NextDisburseDt or DisburseSched is required to be provided.|
@@ -94,7 +93,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`EscrowInfo.ClientDefinedData.DataIdent`||This field refers to the client-defined field code as defined by service provider.|
 |`EscrowInfo.ClientDefinedData.Value`|||
 |`EscrowInfo.ClientDefinedData.ExpDt`|||
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`|||
@@ -108,4 +107,18 @@ The following tables list the provider-specific implemented fields for Request a
 |`EscrowStatusRec.EscrowStatus`|||
 |`EscrowStatusRec.EscrowStatus.EscrowStatusCode`|||
 |`EscrowStatusRec.EscrowStatus.EffDt`|||
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
 <!-- type: tab-end -->

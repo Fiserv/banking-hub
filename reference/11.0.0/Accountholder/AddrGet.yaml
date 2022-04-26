@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.0
 info:
-  title: Address Service - Inquiry
+  title: Address Service - Get
   description: The Address service manages addresses related to parties and product accounts.
   version: 11.0.0
 servers:
@@ -12,7 +12,7 @@ paths:
       tags:
       - Get Address
       summary: Get Address.
-      description: "Retrieves the address record associated with an account or party. <br> For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n  </ul>\n  \n  <br>\n  \n   <blockquote style=\"border-left: 0.375em solid #40a9ff; background-color: #e6f7ff; border-radius: 3px; padding: 1em;\" > To view the core specific implementation notes, <a target=\"_blank\" title=\"Click to open in a new tab\" href=\"../docs/?path=docs/implementation-notes/Accountholder/AddrInq-ImplNotes.md\"> click here</a>.</blockquote>"
+      description: "Retrieves the address record associated with an account or party. <br> For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a> <br><br> <b>Relates to:</b>\n  <ul> \n    <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n    <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n  </ul>\n  \n  <br>\n  \n   <blockquote style=\"border-left: 0.375em solid #40a9ff; background-color: #e6f7ff; border-radius: 3px; padding: 1em;\" > To view provider specific implementation notes and applicable fields, <a target=\"_blank\" title=\"Click to open in a new tab\" href=\"../docs/?path=docs/implementation-notes/Accountholder/AddrInq-ImplNotes.md\"> click here</a>.</blockquote>"
       operationId: getAddrByPost
       parameters:
       - name: EFXHeader
@@ -27,10 +27,16 @@ paths:
             schema:
               $ref: '#/components/schemas/AddrInqRqType'
             examples:
-              Sample Banking By Street:
+              Sample Premier By Street:
                 $ref: '#/components/examples/PremierAddressInqRq-ByStreet'
-              Sample Banking By AddressId:
+              Sample Premier By AddressId:
                 $ref: '#/components/examples/PremierAddressInqRq-ByAddressId'
+              Sample Precision By PartyId:
+                $ref: '#/components/examples/PrecisionAddressInqRq'
+              Sample Signature By PartyId:
+                $ref: '#/components/examples/SignatureAddressInqRq'
+              Sample DNA By PartyId:
+                $ref: '#/components/examples/DNAAddressInqRq'
         required: true
         x-send-file-in-body: false
       responses:
@@ -41,10 +47,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/AddrInqRsType'
               examples:
-                Sample Banking By Street:
+                Sample Premier By Street:
                   $ref: '#/components/examples/PremierAddressInqRs-ByStreet'
-                Sample Banking By AddressId:
+                Sample Premier By AddressId:
                   $ref: '#/components/examples/PremierAddressInqRs-ByAddressId'
+                Sample Precision By PartyId:
+                  $ref: '#/components/examples/PrecisionAddressInqRs'
+                Sample Signature By PartyId:
+                  $ref: '#/components/examples/SignatureAddressInqRs'
+                Sample DNA By PartyId:
+                  $ref: '#/components/examples/DNAAddressInqRs'
         "401":
           description: Unauthorized
           content:
@@ -3282,46 +3294,6 @@ components:
           type: string
           description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
       description: Information about the subject element
-    AdditionalStatusType:
-      title: AdditionalStatusType
-      type: object
-      properties:
-        StatusCode:
-          maxLength: 20
-          type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: |-
-            Name of a service provider. Possible values are:
-              - Cleartouch
-              - DNA
-              - Precision
-              - Premier
-              - Signature
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: 'Server status code of the service provider''s application.  '
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
     MemberDataType:
       title: MemberDataType
       type: object
@@ -3775,19 +3747,6 @@ components:
           items:
             $ref: '#/components/schemas/PostAddrType'
       description: Address details of a party
-    AddrAddRqType:
-      title: AddrAddRqType
-      required:
-      - AddrInfo
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        AddrInfo:
-          $ref: '#/components/schemas/AddrInfoType'
     AddrStatusType:
       title: AddrStatusType
       required:
@@ -3818,39 +3777,6 @@ components:
         AddrStatus:
           $ref: '#/components/schemas/AddrStatusType'
       description: Response message of the address add, del, modify or delete API call.
-    AddrAddRsType:
-      title: AddrAddRsType
-      required:
-      - Status
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/StatusType'
-        AddrStatusRec:
-          $ref: '#/components/schemas/AddrStatusRecType'
-    AddrDelRqType:
-      title: AddrDelRqType
-      required:
-      - AddrKeys
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        AddrKeys:
-          $ref: '#/components/schemas/AddrKeysType'
-    AddrDelRsType:
-      title: AddrDelRsType
-      required:
-      - Status
-      type: object
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
-        AddrStatusRec:
-          $ref: '#/components/schemas/AddrStatusRecType'
     RecCtrlInType:
       title: RecCtrlInType
       type: object
@@ -3933,32 +3859,6 @@ components:
           description: Details of the address record that includes response keys, response status and response information.
           items:
             $ref: '#/components/schemas/AddrRecType'
-    AddrModRqType:
-      title: AddrModRqType
-      required:
-      - AddrInfo
-      - AddrKeys
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        AddrKeys:
-          $ref: '#/components/schemas/AddrKeysType'
-        AddrInfo:
-          $ref: '#/components/schemas/AddrInfoType'
-    AddrModRsType:
-      title: AddrModRsType
-      required:
-      - Status
-      type: object
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
-        AddrStatusRec:
-          $ref: '#/components/schemas/AddrStatusRecType'
     EFXHeader:
       required:
       - OrganizationId
@@ -4102,40 +4002,6 @@ components:
           enum:
           - Manual
           - Auto
-    OvrdExceptionDataType:
-      title: OvrdExceptionDataType
-      type: object
-      properties:
-        OverrideException:
-          type: array
-          description: List of the exceptions that can be overridden.
-          items:
-            $ref: '#/components/schemas/OverrideExceptionType'
-      description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
     StatusType:
       title: StatusType
       required:
@@ -4149,7 +4015,7 @@ components:
           type: array
           description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
           items:
-            $ref: '#/components/schemas/AdditionalStatusType_1'
+            $ref: '#/components/schemas/AdditionalStatusType'
         ContentHTML:
           type: string
           description: Response status in HTML format. This parameter returns only in some cases.
@@ -4196,7 +4062,7 @@ components:
               -  Premier
               -  Signature
       description: Details of the API response messages.
-    AdditionalStatusType_1:
+    AdditionalStatusType:
       title: AdditionalStatusType
       type: object
       properties:
@@ -4571,3 +4437,158 @@ components:
           AddrStatus:
             AddrStatusCode: Valid
             EffDt: 2022-01-18T05:36:25.448
+    SignatureAddressInqRq:
+      value:
+        AddrSel:
+          PartyKeys:
+            PartyId: "0000005257"
+    SignatureAddressInqRs:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Signature
+        RecCtrlOut:
+          SentRecCount: 2
+        AddrRec:
+        - AddrKeys:
+            PartyKeys:
+              PartyId: "0000005257"
+            AddrType: Primary
+          AddrInfo:
+            PostAddr:
+            - AddrUse: Personal
+              AddrUseEnumDesc: Personal
+              AddrFormatType: Parsed
+              FullName1: MR FRANKLIN ACHARIGE SR
+              ApartmentNum: 201A
+              ApartmentNumType: APT
+              HouseNum: "3400"
+              Street: ALTAMONTE SPRINGS HIGHWAY 436N
+              LabelAddr:
+                Addr1: FOREST MANOR ESTATES
+                Addr2: 3400 ALTAMONTE SPRINGS HIGHWAY 436N
+                Addr3: APT 201A
+                Addr4: ALTAMONTE SPRINGS FL
+                Addr5: ""
+              AddrDefinedData:
+              - DataIdent: None
+                Value: FOREST MANOR ESTATES
+              City: ALTAMONTE SPRINGS
+              County: ""
+              District: ""
+              StateProv: FL
+              MilitaryRegion: ""
+              PostalCode: 32774-3942
+              Country: ""
+              AddrType: Primary
+              ForeignFlag: false
+              HandlingCode: ""
+          AddrStatus:
+            AddrStatusCode: Valid
+            EffDt: 2021-11-30T16:57:13.567
+        - AddrKeys:
+            PartyKeys:
+              PartyId: "0000005257"
+            AddrType: Secondary
+          AddrInfo:
+            PostAddr:
+            - AddrUse: Personal
+              AddrUseEnumDesc: Personal
+              AddrFormatType: Label
+              FullName1: ADDRESS PARTY TEST
+              Addr1: ADDR1
+              Addr2: ADDR2
+              Addr3: ADDR3
+              Addr4: ADDR4
+              Addr5: ""
+              PostalCode: 45646-5464
+              AddrType: Secondary
+              TimeFrame:
+                StartDt: 2018-06-29T00:00:00.000
+                EndDt: 2018-07-20T00:00:00.000
+              Retention: true
+              ForeignFlag: false
+              HandlingCode: ""
+          AddrStatus:
+            AddrStatusCode: Valid
+            EffDt: 2021-11-30T16:57:13.568
+    PrecisionAddressInqRq:
+      value:
+        AddrSel:
+          PartyKeys:
+            PartyId: COOK VALERIE
+          AddressIdent: "0"
+    PrecisionAddressInqRs:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Precision
+        AddrRec:
+        - AddrKeys:
+            PartyKeys:
+              PartyId: COOK VALERIE
+            AddressIdent: "0"
+          AddrInfo:
+            AddrRelRef:
+            - PartyKeys:
+                PartyId: COOK VALERIE
+            PostAddr:
+            - AddressIdent: "0"
+              AddrFormatType: Label
+              FullName1: This is India Address 2
+              Addr1: This is India Address 1
+              Addr2: This is India Address 2
+              City: Pune
+              County: "0"
+              StateProv: TX
+              PostalCode: 12345-6789
+              CountryCode:
+                CountryCodeSource: FIPS-10-4
+              AddrType: Primary
+              ContactMethod: "0"
+              UpDt: 2021-10-25T00:00:00.000
+              Comment: ForeignFla-True,PostCode1
+              CensusTract: BENSON
+              ForeignFlag: false
+          AddrStatus:
+            AddrStatusCode: Valid
+            EffDt: 2021-11-29T18:54:58.345
+    DNAAddressInqRq:
+      value:
+        AddrSel:
+          PartyKeys:
+            PartyIdent: "20000001491"
+            PartyIdentType: OrgNum
+    DNAAddressInqRs:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: DNA
+        RecCtrlOut:
+          SentRecCount: 1
+        AddrRec:
+        - AddrKeys:
+            PartyKeys:
+              PartyIdentType: OrgNum
+              PartyIdent: "20000001491"
+            AddressIdent: PRI
+          AddrInfo:
+            PostAddr:
+            - AddrFormatType: Label
+              Addr1: 186 Ecoj Pyf
+              City: T622
+              StateProv: PA
+              PostalCode: 16058-0000
+              CountryCode:
+                CountryCodeSource: ISO3166-Alpha-3
+                CountryCodeValue: USA
+              AddrType: Primary
+          AddrStatus:
+            AddrStatusCode: Valid
+            EffDt: 2021-11-23T20:48:59.791
