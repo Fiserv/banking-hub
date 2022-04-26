@@ -1,4 +1,4 @@
-# Implementation Notes for Mod PartyAcctRel
+# Implementation Notes for Update PartyAcctRel
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -30,7 +30,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelInfo.PartyAcctRelData`||This aggregate sent in the request, modifies display or inquiry names as well as order of theses names, tax ownership and relationship of the party with the account.<br>Statement or mailing address relationships are not modified within this service.<br><br>|
 |`PartyAcctRelInfo.PartyAcctRelData.PartyAcctRelType`|Owner<br>Signer<br>OwnerSigner<br>JointTenancy<br>Executor<br>Trustee<br>Borrower<br>CoBorrower<br>Custodian<br>DoingBusinessAs|Values are client-defined and valid value Trustee is interchangeable with Fiduciary.|
 |`PartyAcctRelInfo.PartyAcctRelData.PartyAcctRelOrder`|First<br>Second<br>Third<br>Other|Party Account Relationship Order as "First", "Second", and "Third" are considered to be main names on the account and most commonly applies to Party Relationship Types as OwnerSigner and Signer, Owner while "other" is used for relationships other then OwnerSigner, Signer, Owner.|
-|`PartyAcctRelInfo.TaxReportingOwnerInd`|true<br>false|***Required**<br>For this field only one name can be denoted per account. If marked as true for multiple names, only the first one with the indicator will be consider as tax reporting owner.<br>By default if no party has the indicator set to true, the first party will be selected as the tax owner indicator.<br><br>Please note Tax Reporting Party can only be set as Owner or a Signer. |
+|`PartyAcctRelInfo.TaxReportingOwnerInd`|true<br>false|***Required**<br>For this field only one name can be denoted per account. If marked as true for multiple names, only the first one with the indicator will be consider as tax reporting owner.<br>By default if no party has the indicator set to true, the first party will be selected as the tax owner indicator.<br><br>Please note Tax Reporting Party can only be set as Owner or a Signer.Â |
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
