@@ -1,4 +1,4 @@
-# Implementation Notes for Del MemoTickler
+# Implementation Notes for Delete MemoTickler
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 
 
@@ -30,7 +30,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`MemoTicklerKeys.AcctKeys.AcctId`||  |
 |`MemoTicklerKeys.AcctKeys.AcctType`|CDA|  |
 |`MemoTicklerKeys.MemoTicklerUse`|Memo<br>Tickler|  |
-|`MemoTicklerKeys.MemoTicklerIdent`||0|
+|`MemoTicklerKeys.MemoTicklerIdent`||
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
