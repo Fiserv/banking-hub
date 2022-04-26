@@ -17,6 +17,4 @@ Begin the integration with following services of Onboard Advisor domain in API E
 * Business Watchlist 
 * Consumer Verification Only
 * Consumer ID Authenticaion
-* Consumer Verification Fraud and Risk
-* Consumer Watchlist
 
