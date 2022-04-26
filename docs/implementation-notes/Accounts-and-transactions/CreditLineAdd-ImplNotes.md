@@ -1,4 +1,4 @@
-# Implementation Notes for CreditLine Add
+# Implementation Notes for Add CreditLine
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -10,13 +10,12 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Notes
+> #### Note
 > 
-> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`PartyAcctRelInfo`|||
@@ -48,7 +47,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineInfo.AccountingMethod`|Class<br>CostCenter||
 |`CreditLineInfo.ClassCode`|||
 |`CreditLineInfo.AcctTypeCode`|||
-|`CreditLineInfo.ClientDefinedData`||***Required**<br>It is required to send the Flex Data metadata (such as field size) along with the user-entered account data.|
+|`CreditLineInfo.ClientDefinedData`||*Required<br>It is required to send the Flex Data metadata (such as field size) along with the user-entered account data.|
 |`CreditLineInfo.ClientDefinedData.DataClassType`|Portfolio||
 |`CreditLineInfo.ClientDefinedData.DataIdent`||This field refers to the client-defined field code used for reference and reporting. Valid values are between 0-90000.|
 |`CreditLineInfo.ClientDefinedData.DataType`|Alpha<br>Boolean<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol||
@@ -88,7 +87,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineInfo.PostAddr.HandlingCode`|||
 |`CreditLineInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint||
 |`CreditLineInfo.PostAddr.MSACode`|||
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`|||
