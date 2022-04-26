@@ -1,8 +1,8 @@
-# Implementation Notes for SafeDepositBox Add
+# Implementation Notes for Add SafeDepositBox
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, 
+titles: Premier, Precision, Signature, 
 -->
 
 
@@ -10,13 +10,12 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Notes
+> #### Note
 > 
-> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`OvrdExceptionData`||    |
@@ -26,9 +25,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelInfo.PartyRef.PartyKeys.PartyId`||***Required**<br>This field refers to unique identifier of party associated with safe deposit box.|
 |`PartyAcctRelInfo.PartyAcctRelData`||***Required**<br>Multiple PartyAcctRelData aggregates can be provided in the request if, party is intended to have multiple relationships with the safe deposit box account.|
 |`PartyAcctRelInfo.PartyAcctRelData.PartyAcctRelType`|Owner<br>Signer<br>OwnerSigner<br>JointTenancy<br>Executor<br>Trustee<br>Borrower<br>CoBorrower<br>Custodian<br>DoingBusinessAs<br>Fiduciary|In addition to the values defined by service provider, financial institutions can create user defined relationship types. Each party should have at least one relationship type with the associated safe deposit box account, whereas party can have multiple relationship types with the safe deposit box account.|
-|`PartyAcctRelInfo.PartyAcctRelData.PartyAcctRelOrder`|First<br>Second<br>Third<br>Other|***Required**<br>Parties having first, second and third relationship order are considered to be the main names and, only one party can be associated with first/second/third relationship order on the safe deposit box account. Relationship order value of 'Other' is commonly used for relationships other than OwnerSigner, Signer and Owner. One party can have multiple 'Other' type of relationship orders on safe deposit box account. If Mailing Name Option parameter is set up at financial institution, then first, second and third names can be used for inquiry or account related mailing purpose. If Mailing Name Option parameter is set to Y, safe deposit box account can have up to 3 names for mailing purpose which can be provided in Postal Address aggregate.|
+|`PartyAcctRelInfo.PartyAcctRelData.PartyAcctRelOrder`|First<br>Second<br>Third<br>Other|***Required**<br>Parties having first, second and third relationship order are considered to be the main names and, only one party can be associated with first/second/third relationship order on the safe deposit box account. Relationship order value of 'Other' is commonly used for relationships other than OwnerSigner, Signer and Owner. One party can have multiple 'Other' type of relationship orders on safe deposit box account. If Mailing Name Option parameter is set up at financial institution, then first, second and third names can be used for inquiry or account related mailing purpose. If Mailing Name Option parameter is set to Y, safe deposit box account can have up to 3 names for mailing purpose which can be provided in PostAdd aggregate.|
 |`PartyAcctRelInfo.OwnerInd`|true<br>false|ESF has introduced a new data element - PartyAcctRelOrder to identify first 3 names displayed on the safe deposit box account. This element is available in ESF release prior to 9.2 and will be deprecated in future.|
-|`PartyAcctRelInfo.TaxReportingOwnerInd`|true<br>false|***Required** This field is required to create safe deposit box account and, there cannot be more than one tax relationships associated to a safe deposit box account. If primary tax reporting indicator is not provided, by default, first party will be considered as tax reporting owner.|
+|`PartyAcctRelInfo.TaxReportingOwnerInd`|true<br>false|***Required** This field identifies the party that has tax responsibility of an account. At least one tax relationship is required to create an account and, there cannot be more than one tax relationships associated to an account. If primary tax reporting indicator is not provided, by default, first party will be considered as tax reporting owner.|
 |`SafeDepositBoxInfo`|||
 |`SafeDepositBoxInfo.BoxDtlStatus`|Active<br>Closed<br>PendingClosed||
 |`SafeDepositBoxInfo.AcctPref`|||
@@ -84,9 +83,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`SafeDepositBoxInfo.PostAddr`|||
 |`SafeDepositBoxInfo.PostAddr.OpenDt`|||
 |`SafeDepositBoxInfo.PostAddr.RelationshipMgr`||    |
-|`SafeDepositBoxInfo.PostAddr.RelationshipMgr.RelationshipMgrIdent`||This field is not applicable for seasonal address type.|
+|`SafeDepositBoxInfo.PostAddr.RelationshipMgr.RelationshipMgrIdent`||This field is not applicable for seasonal address type. Vales of this field are user-defined.|
 |`SafeDepositBoxInfo.PostAddr.RelationshipMgr.RelationshipRole`|Officer<br>ReferralOfficer|Officer refers to responsibility code and referral officer refers to referral responsibility code.|
-|`SafeDepositBoxInfo.PostAddr.OriginatingBranch`||***Required** This field is required if new address record is to be created and values in this field are user-defined.|
+|`SafeDepositBoxInfo.PostAddr.OriginatingBranch`||***Required**This field is required if new address record is to be created and values in this field are user-defined.|
 |`SafeDepositBoxInfo.PostAddr.ResponsibleBranch`||This field refers to the accounting branch associated to address record and does not apply to seasonal address type. Values are user-defined. |
 |`SafeDepositBoxInfo.PostAddr.NameIdent`|||
 |`SafeDepositBoxInfo.PostAddr.AddressIdent`|||
@@ -139,7 +138,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`SafeDepositBoxInfo.AcctTaxData`|||
 |`SafeDepositBoxInfo.AcctTaxData.TaxType`|SalesTax||
 |`SafeDepositBoxInfo.AcctTaxData.WaiveTaxInd`|true<br>false||
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||    |
@@ -150,4 +149,18 @@ The following tables list the provider-specific implemented fields for Request a
 |`SafeDepositBoxStatusRec.SafeDepositBoxStatus`|||
 |`SafeDepositBoxStatusRec.SafeDepositBoxStatus.SafeDepositBoxStatusCode`|Valid||
 |`SafeDepositBoxStatusRec.SafeDepositBoxStatus.EffDt`|||
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
 <!-- type: tab-end -->
