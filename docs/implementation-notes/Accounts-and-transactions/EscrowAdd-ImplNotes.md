@@ -25,7 +25,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`EscrowInfo.AcctKeys.AcctType`|LOAN||
 |`EscrowInfo.EscrowType`||This field is used to identify one of the 99 escrow type codes defined in LAS escrow type description specifications.|
 |`EscrowInfo.Desc`|||
-|`EscrowInfo.EscrowCategory`|Taxes<br>Insurance<br>Other|*Required<br>This field refers to the type of escrow record to be added (Taxes, Insurance and Other).<br>It is mandatory to provide this field.|
+|`EscrowInfo.EscrowCategory`|Taxes<br>Insurance<br>Other|***Required**<br>This field refers to the type of escrow record to be added (Taxes, Insurance and Other).<br>It is mandatory to provide this field.|
 |`EscrowInfo.IncEscrowAnalysisInd`|true<br>false||
 |`EscrowInfo.CushionPmtNum`|||
 |`EscrowInfo.EscrowCoverageAmt`|||
@@ -39,13 +39,13 @@ The following tables list the provider-specific implemented fields for Request a
 |`EscrowInfo.DisburseData.DisburseTo`|||
 |`EscrowInfo.DisburseData.AgentId`||This field is applicable only when the escrow category is set to 'Insurance'.|
 |`EscrowInfo.DisburseData.DisburseRefNum`|||
-|`EscrowInfo.DisburseData.DisburseMethod`|N<br>Y<br>R<br>P<br>S<br>F|*Required<br>This field is required by Service Provider.<br>Values supported by Service Provider are:<br>N -No Auto Disbursements (indicates that escrow disbursement transactions are not generated automatically)<br>Y-Auto Disbursements (indicates that escrow disbursement transactions are generated automatically)<br>R-Automatic When Released (indicates review and release)<br>P-Pending Disbursements (indicates pending disbursement, which means additional account information with option [R], and disbursement will be generated in the next update. The [P] Pending Disbursements value is automatically reset to [R] once the disbursement is generated)<br>S=Auto Disbursements Until Note Is Paid Off (indicates that escrow disbursement transactions are automatically generated until the note is paid off)<br>F- Disbursement This Update (indicates a force payout, which means, disbursement will be generated in the next update)|
+|`EscrowInfo.DisburseData.DisburseMethod`|N<br>Y<br>R<br>P<br>S<br>F|***Required**<br>This field is required by Service Provider.<br>Values supported by Service Provider are:<br>N -No Auto Disbursements (indicates that escrow disbursement transactions are not generated automatically)<br>Y-Auto Disbursements (indicates that escrow disbursement transactions are generated automatically)<br>R-Automatic When Released (indicates review and release)<br>P-Pending Disbursements (indicates pending disbursement, which means additional account information with option [R], and disbursement will be generated in the next update. The [P] Pending Disbursements value is automatically reset to [R] once the disbursement is generated)<br>S=Auto Disbursements Until Note Is Paid Off (indicates that escrow disbursement transactions are automatically generated until the note is paid off)<br>F- Disbursement This Update (indicates a force payout, which means, disbursement will be generated in the next update)|
 |`EscrowInfo.DisburseData.DisburseAmt`|||
 |`EscrowInfo.DisburseData.DisburseAmt.Amt`|||
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode`|||
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode.CurCodeValue`|USD||
-|`EscrowInfo.DisburseData.TimeFrame.RecurRule`||*Conditionally Required<br>Either RecurRule or DisburseSched is required to be provided.|
+|`EscrowInfo.DisburseData.TimeFrame.RecurRule`||***Conditionally Required**<br>Either RecurRule or DisburseSched is required to be provided.|
 |`EscrowInfo.DisburseData.TimeFrame.RecurRule.RecurType`|None<br>Monthly<br>BiMonthly<br>SemiMonthly<br>Weekly<br>BiWeekly<br>Yearly<br>Quarterly<br>SemiYearly<br>|This field refers to the frequency of payout.|
 |`EscrowInfo.DisburseData.TimeFrame.RecurRule.RecurInterval`|1 through 9||
 |`EscrowInfo.DisburseData.NextDisburseDt`||This field refers to the current payout date for service provider. Either NextDisburseDt or DisburseSched is required to be provided.|
@@ -58,8 +58,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`EscrowInfo.DisburseData.DisburseSched.DisburseAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`EscrowInfo.DisburseData.DisburseSched.DisburseAmt.CurCode.CurCodeValue`|USD||
 |`EscrowInfo.DisburseData.DisburseSched.DisburseStatus`|Completed<br>Pending||
-|`EscrowInfo.DisburseData.DateUpdateOption`|NoUpdate<br>AtDisburse<br>Automatic<br>Forecast|*Required<br>This field is required by service provider.|
-|`EscrowInfo.DisburseData.DisburseAmtUpdateOption`|NoUpdate<br>Automatic<br>AtDisburse|*Required<br>This field is required by service provider.|
+|`EscrowInfo.DisburseData.DateUpdateOption`|NoUpdate<br>AtDisburse<br>Automatic<br>Forecast|***Required**<br>This field is required by service provider.|
+|`EscrowInfo.DisburseData.DisburseAmtUpdateOption`|NoUpdate<br>Automatic<br>AtDisburse|***Required**<br>This field is required by service provider.|
 |`EscrowInfo.EscrowInsuranceData`|||
 |`EscrowInfo.EscrowInsuranceData.Term`||Applicable only when the escrow category is set to 'Insurance'.|
 |`EscrowInfo.EscrowInsuranceData.Term.Count`|||
