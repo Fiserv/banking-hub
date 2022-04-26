@@ -12,11 +12,10 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`BeneficiarySel`|||
@@ -28,7 +27,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`BeneficiarySel.AcctKeys`||To be used to search for a list of beneficiary records for a specified account.|
 |`BeneficiarySel.AcctKeys.AcctId`|||
 |`BeneficiarySel.AcctKeys.AcctType`|DDA<br>SDA<br>CDA||
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||  |

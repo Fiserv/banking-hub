@@ -12,11 +12,10 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`OvrdExceptionData`||  |
@@ -32,7 +31,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelInfo.PartyAcctRelData.PartyAcctRelType`|Owner<br>Signer<br>OwnerSigner<br>JointTenancy<br>Executor<br>Trustee<br>Borrower<br>CoBorrower<br>Custodian<br>DoingBusinessAs|Values are client-defined and valid value Trustee is interchangeable with Fiduciary.|
 |`PartyAcctRelInfo.PartyAcctRelData.PartyAcctRelOrder`|First<br>Second<br>Third<br>Other|Party Account Relationship Order as "First", "Second", and "Third" are considered to be main names on the account and most commonly applies to Party Relationship Types as OwnerSigner and Signer, Owner while "other" is used for relationships other then OwnerSigner, Signer, Owner.|
 |`PartyAcctRelInfo.TaxReportingOwnerInd`|true<br>false|***Required**<br>For this field only one name can be denoted per account. If marked as true for multiple names, only the first one with the indicator will be consider as tax reporting owner.<br>By default if no party has the indicator set to true, the first party will be selected as the tax owner indicator.<br><br>Please note Tax Reporting Party can only be set as Owner or a Signer. |
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||  |
@@ -46,21 +45,21 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 

@@ -1,12 +1,14 @@
-# Implementation Notes for Get PartyAcctRel
+# Implementation Notes for Inq-ByPartyINET PartyAcctRel
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, , Precision, Signature, Cleartouch, DNA, 
+titles: Premier, , , Precision, Signature, Cleartouch, DNA, 
 -->
 
-## By Acct
-
+<!-- 
+type: tab 
+titles: By Acct, By Party, By PartyINET
+-->
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
@@ -14,11 +16,10 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`RecCtrlIn`||  |
@@ -28,7 +29,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelSel.AcctKeys`||  |
 |`PartyAcctRelSel.AcctKeys.AcctId`||  |
 |`PartyAcctRelSel.AcctKeys.AcctType`|CDA<br>CRD<br>DDA<br>LOAN<br>CLOC<br>SDA<br>SDB<br>PORT<br> |  |
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||  |
@@ -75,8 +76,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.CountryCode.CountryCodeValueEnumDesc`||  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.AddrType`|Primary<br>Secondary<br>Seasonal|Core support primary,  multiple secondary or seasonal address types. Both primary with seasonal/secondary forms an address record. Seasonal address cannot exist as an independent address record and share address identifier with primary address or one of the secondary address. |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame`||  |
-|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as �9999�.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
-|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as �9999�.<br><br>The month and the day of the month will show the actual Seasonal address  end date.|
+|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
+|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  end date.|
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.ForeignFlag`|true<br>false|  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.Email`||  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.Email.EmailIdent`||Up to 10 occurrences of an email address and web URLs combined may be associated to a customer.|
@@ -136,8 +137,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.CountryCode.CountryCodeValueEnumDesc`||  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.AddrType`|Primary<br>Secondary<br>Seasonal|Core support primary,  multiple secondary or seasonal address types. Both primary with seasonal/secondary forms an address record. Seasonal address cannot exist as an independent address record and share address identifier with primary address or one of the secondary address. |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame`||  |
-|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as �9999�.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
-|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as �9999�.<br><br>The month and the day of the month will show the actual Seasonal address  end date.|
+|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
+|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  end date.|
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.ForeignFlag`|true<br>false|  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.Email`||  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.Email.EmailIdent`||Up to 10 occurrences of an email address and web URLs combined may be associated to a customer.|
@@ -190,11 +191,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelStatus`||  |
 |`PartyAcctRelRec.PartyAcctRelStatus.PartyAcctRelStatusCode`|Valid|  |
 |`PartyAcctRelRec.PartyAcctRelStatus.EffDt`||  |
-
-
-## By Party
-
-
+<!-- type: tab -->
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
@@ -202,11 +199,10 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`RecCtrlIn`||  |
@@ -216,7 +212,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelSel.PartyKeys`||  |
 |`PartyAcctRelSel.PartyKeys.PartyId`||  |
 |`PartyAcctRelSel.ExcludeClosedAcctInd`|true<br>false|By default value is set to 'false' indicating the client application want to include both open and closed accounts to be returned in the response.<br>However if the XREF parameter 'ExcludeClosedLoans' is set up for an FI, then the closed loan accounts will never be returned in the ESF response even when 'ExcludeClosedAccttInd' is set to false or not sent in the request.|
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||  |
@@ -474,8 +470,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelStatus`||  |
 |`PartyAcctRelRec.PartyAcctRelStatus.PartyAcctRelStatusCode`|Valid|  |
 |`PartyAcctRelRec.PartyAcctRelStatus.EffDt`||  |
-
-## ByPartyINET
+<!-- type: tab -->
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
@@ -483,11 +478,10 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`RecCtrlIn`||  |
@@ -499,7 +493,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelSel.ExcludeClosedAcctInd`|true<br>false|By default value is set to 'false' indicating the client application want to include both open and closed accounts to be returned in the response.<br>However if the XREF parameter 'ExcludeClosedLoans' is set up for an FI, then the closed loan accounts will never be returned in the ESF response even when 'ExcludeClosedAccttInd' is set to false or not sent in the request.|
 |`PartyAcctRelSel.IncPartyInfoInd`|true<br>false|For this field, the default value is set to false.|
 |`PartyAcctRelSel.IncAddtlAcctInfoInd`|true<br>false|For this field, the default value is set to false.|
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||  |
@@ -541,8 +535,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.CountryCode.CountryCodeValue`||Values are client-defined.|
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.AddrType`|Primary<br>Secondary<br>Seasonal|Core support primary,  multiple secondary or seasonal address types. Both primary with seasonal/secondary forms an address record. Seasonal address cannot exist as an independent address record and share address identifier with primary address or one of the secondary address. |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame`||  |
-|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
-|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  end date.|
+|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as �9999�.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
+|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as �9999�.<br><br>The month and the day of the month will show the actual Seasonal address  end date.|
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.PostAddr.ForeignFlag`||  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.Email`||  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.PersonPartyListInfo.Contact.Email.EmailIdent`||Up to 10 occurrences of an email address and web URLs combined may be associated to a customer.|
@@ -583,8 +577,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.CountryCode.CountryCodeValue`||Values are client-defined.|
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.AddrType`|Primary<br>Secondary<br>Seasonal|Core support primary,  multiple secondary or seasonal address types. Both primary with seasonal/secondary forms an address record. Seasonal address cannot exist as an independent address record and share address identifier with primary address or one of the secondary address. |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame`||  |
-|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
-|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  end date.|
+|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as �9999�.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
+|`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as �9999�.<br><br>The month and the day of the month will show the actual Seasonal address  end date.|
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.PostAddr.ForeignFlag`||  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.Email`||  |
 |`PartyAcctRelRec.PartyAcctRelInfo.PartyRef.OrgPartyListInfo.Contact.Email.EmailIdent`||Up to 10 occurrences of an email address and web URLs combined may be associated to a customer.|
@@ -692,33 +686,33 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyAcctRelRec.PartyAcctRelStatus`||  |
 |`PartyAcctRelRec.PartyAcctRelStatus.PartyAcctRelStatusCode`|Valid|  |
 |`PartyAcctRelRec.PartyAcctRelStatus.EffDt`||  |
-
-
+<!-- type: tab-end -->
 
 <!-- type: tab -->
 
-### Coming soon!
+
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
