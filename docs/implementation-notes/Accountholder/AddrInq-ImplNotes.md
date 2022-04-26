@@ -2,7 +2,7 @@
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, DNA, 
+titles: Premier, , Precision, Signature, DNA, 
 -->
 
 <!-- 
@@ -11,58 +11,6 @@ titles: By AddrId, By StreetAddr,
 -->
 
 
-The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
-
-
-<!-- theme: info -->
-> #### Note
-> 
-> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
-
-
-# Request Schema
-|Field Name|Allowed Values|Implementation Note|
-|----|----|----|
-|`AddrSel`||  |
-|`AddrSel.Addr1`|||
-|`AddrSel.Street`||Address information is stored in upper case (capital letters), so while searching the address by street the calling application (user) must provide full/partial street name in upper case only to fetch the records.|
-# Response Schema
-|Field Name|Allowed Values|Implementation Note|
-|----|----|----|
-|`Status`|||
-|`RecCtrlOut`|||
-|`RecCtrlOut.SentRecCount`||This field will return one address record, which can include Primary and Seasonal address and any relationships to Party(s) and Account(s).|
-|`RecCtrlOut.Cursor`|||
-|`AddrRec`||Search by street returns information about primary address only. To get additional information about an address, search by AddrId.|
-|`AddrRec.AddrKeys`|||
-|`AddrRec.AddrKeys.AddressIdent`|||
-|`AddrRec.AddrKeys.AddrType`|Primary||
-|`AddrRec.AddrInfo`|||
-|`AddrRec.AddrInfo.PostAddr`||Address record can have Primary address and Seasonal address, both forms one address record therefore shares same address identifier.<br>If Primary address record has Seasonal address related to it, ESF displays them as a separate Postal Address instance. Also, seasonal address has a time frame for which they are valid.|
-|`AddrRec.AddrInfo.PostAddr.OpenDt`|||
-|`AddrRec.AddrInfo.PostAddr.RelationshipMgr`|||
-|`AddrRec.AddrInfo.PostAddr.RelationshipMgr.RelationshipMgrIdent`|||
-|`AddrRec.AddrInfo.PostAddr.RelationshipMgr.RelationshipRole`|Officer<br>ReferralOfficer|Officer refers to Responsibility Code and Referral Officer refers to Referral Responsibility Code.|
-|`AddrRec.AddrInfo.PostAddr.OriginatingBranch`||Originating Branch refers to Branch region associated to the address record.<br> This field does not apply to Seasonal Address type.|
-|`AddrRec.AddrInfo.PostAddr.ResponsibleBranch`||Responsible Branch refers to accounting branch. This field is not applicable for the Seasonal Address type.|
-|`AddrRec.AddrInfo.PostAddr.AddrFormatType`|Label|Label is the supported address format.|
-|`AddrRec.AddrInfo.PostAddr.Addr1`||This field is required when a new address record is created. Maximum length of this field can be either 30 or 40 characters based upon the Name and Address Length Option values available in the core:<br>"0" indicates names and addresses length up to 30 characters.<br>"1" indicates names and addresses length up to 40 characters.<br>"2" indicates names and addresses length up to 30 characters with Address line 2 enabled.<br>"3" indicates names and addresses length up to 40 characters with Address line 2 enabled.|
-|`AddrRec.AddrInfo.PostAddr.Addr2`||This field is required if enabled under the name and addresses length option. Maximum length for this field is either 30 or 40 characters based upon the option values chosen for Address line 1.|
-|`AddrRec.AddrInfo.PostAddr.City`|||
-|`AddrRec.AddrInfo.PostAddr.StateProv`|||
-|`AddrRec.AddrInfo.PostAddr.PostalCode`||If address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 |
-|`AddrRec.AddrInfo.PostAddr.AddrType`|Primary|This field specify the type of address. In the core, address record can have Primary address and Seasonal address, both forms one address record therefore shares same address identifier.<br>Primary address is required when creating a new address record where seasonal address is optional and if needed always related to the primary address.<br>Also, seasonal address always has a time frame.|
-|`AddrRec.AddrInfo.PostAddr.CensusTract`||  |
-|`AddrRec.AddrInfo.PostAddr.CensusBlock`||  |
-|`AddrRec.AddrInfo.PostAddr.ForeignFlag`|||
-|`AddrRec.AddrInfo.PostAddr.HandlingCode`||  |
-|`AddrRec.AddrInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UseDefault|  |
-|`AddrRec.AddrInfo.PostAddr.MSACode`||  |
-|`AddrRec.AddrStatus`|||
-|`AddrRec.AddrStatus.AddrStatusCode`|Valid||
-|`AddrRec.AddrStatus.EffDt`|||
-<!-- type: tab -->
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
@@ -70,16 +18,15 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- theme: info -->
 > #### Note
 > 
-> - To view the field descriptions and sample Requests and Responses, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`AddrSel`||  |
 |`AddrSel.AddrId`||In the core, Primary address and Seasonal addresses share the same address identifier, therefore this service will return both- Primary and Seasonal address, if applicable.|
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`|||
@@ -115,8 +62,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrRec.AddrInfo.PostAddr.CountryCode.CountryCodeValueEnumDesc`|||
 |`AddrRec.AddrInfo.PostAddr.AddrType`|Primary<br>Seasonal<br>|This field specify the type of address. In the core, address record can have Primary address and Seasonal address, both forms one address record therefore shares same address identifier.<br>Primary address is required when creating a new address record where seasonal address is optional and if needed always related to the primary address.<br>Also, seasonal address always has a time frame.|
 |`AddrRec.AddrInfo.PostAddr.TimeFrame`|||
-|`AddrRec.AddrInfo.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address Type. Seasonal address begins on the same Start date every year, therefore core only stores Start month and Start Day. Year can be provided as “9999”.|
-|`AddrRec.AddrInfo.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as “9999”.|
+|`AddrRec.AddrInfo.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address Type. Seasonal address begins on the same Start date every year, therefore core only stores Start month and Start Day. Year can be provided as "9999".|
+|`AddrRec.AddrInfo.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as "9999".|
 |`AddrRec.AddrInfo.PostAddr.Retention`|true<br>false|  |
 |`AddrRec.AddrInfo.PostAddr.CensusTract`||  |
 |`AddrRec.AddrInfo.PostAddr.CensusBlock`||  |
@@ -129,22 +76,77 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrRec.AddrStatus.EffDt`|||
 <!-- type: tab -->
 
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
-### Coming soon!
+
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
+
+
+#### Request Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`AddrSel`||  |
+|`AddrSel.Addr1`|||
+|`AddrSel.Street`||Address information is stored in upper case (capital letters), so while searching the address by street the calling application (user) must provide full/partial street name in upper case only to fetch the records.|
+#### Response Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`Status`|||
+|`RecCtrlOut`|||
+|`RecCtrlOut.SentRecCount`||This field will return one address record, which can include Primary and Seasonal address and any relationships to Party(s) and Account(s).|
+|`RecCtrlOut.Cursor`|||
+|`AddrRec`||Search by street returns information about primary address only. To get additional information about an address, search by AddrId.|
+|`AddrRec.AddrKeys`|||
+|`AddrRec.AddrKeys.AddressIdent`|||
+|`AddrRec.AddrKeys.AddrType`|Primary||
+|`AddrRec.AddrInfo`|||
+|`AddrRec.AddrInfo.PostAddr`||Address record can have Primary address and Seasonal address, both forms one address record therefore shares same address identifier.<br>If Primary address record has Seasonal address related to it, ESF displays them as a separate Postal Address instance. Also, seasonal address has a time frame for which they are valid.|
+|`AddrRec.AddrInfo.PostAddr.OpenDt`|||
+|`AddrRec.AddrInfo.PostAddr.RelationshipMgr`|||
+|`AddrRec.AddrInfo.PostAddr.RelationshipMgr.RelationshipMgrIdent`|||
+|`AddrRec.AddrInfo.PostAddr.RelationshipMgr.RelationshipRole`|Officer<br>ReferralOfficer|Officer refers to Responsibility Code and Referral Officer refers to Referral Responsibility Code.|
+|`AddrRec.AddrInfo.PostAddr.OriginatingBranch`||Originating Branch refers to Branch region associated to the address record.<br> This field does not apply to Seasonal Address type.|
+|`AddrRec.AddrInfo.PostAddr.ResponsibleBranch`||Responsible Branch refers to accounting branch. This field is not applicable for the Seasonal Address type.|
+|`AddrRec.AddrInfo.PostAddr.AddrFormatType`|Label|Label is the supported address format.|
+|`AddrRec.AddrInfo.PostAddr.Addr1`||This field is required when a new address record is created. Maximum length of this field can be either 30 or 40 characters based upon the Name and Address Length Option values available in the core:<br>"0" indicates names and addresses length up to 30 characters.<br>"1" indicates names and addresses length up to 40 characters.<br>"2" indicates names and addresses length up to 30 characters with Address line 2 enabled.<br>"3" indicates names and addresses length up to 40 characters with Address line 2 enabled.|
+|`AddrRec.AddrInfo.PostAddr.Addr2`||This field is required if enabled under the name and addresses length option. Maximum length for this field is either 30 or 40 characters based upon the option values chosen for Address line 1.|
+|`AddrRec.AddrInfo.PostAddr.City`|||
+|`AddrRec.AddrInfo.PostAddr.StateProv`|||
+|`AddrRec.AddrInfo.PostAddr.PostalCode`||If address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 |
+|`AddrRec.AddrInfo.PostAddr.AddrType`|Primary|This field specify the type of address. In the core, address record can have Primary address and Seasonal address, both forms one address record therefore shares same address identifier.<br>Primary address is required when creating a new address record where seasonal address is optional and if needed always related to the primary address.<br>Also, seasonal address always has a time frame.|
+|`AddrRec.AddrInfo.PostAddr.CensusTract`||  |
+|`AddrRec.AddrInfo.PostAddr.CensusBlock`||  |
+|`AddrRec.AddrInfo.PostAddr.ForeignFlag`|||
+|`AddrRec.AddrInfo.PostAddr.HandlingCode`||  |
+|`AddrRec.AddrInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UseDefault|  |
+|`AddrRec.AddrInfo.PostAddr.MSACode`||  |
+|`AddrRec.AddrStatus`|||
+|`AddrRec.AddrStatus.AddrStatusCode`|Valid||
+|`AddrRec.AddrStatus.EffDt`|||
+
+<!-- type: tab-end -->
+
+<!-- type: tab -->
+
+
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
 <!-- type: tab -->
 
 
-### Coming soon!
+#### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
 
 
