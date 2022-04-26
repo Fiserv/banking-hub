@@ -1,4 +1,4 @@
-# Implementation Notes for Inq-CDA AcctTrn
+# Implementation Notes for Get-CDA AcctTrn
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -38,9 +38,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`RecCtrlOut.Cursor`||  |
 |`AcctTrnRec`||  |
 |`AcctTrnRec.AcctTrnKeys`||  |
-|`AcctTrnRec.AcctTrnKeys.AcctKeys`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|CDA|0|
+|`AcctTrnRec.AcctTrnKeys.AcctKeys`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|CDA|
 |`AcctTrnRec.AcctTrnKeys.AcctTrnIdent`||This field refers to record key for memo posted transactions. Unique transaction identifier is not provided for posted transactions. Transaction  posting date and occurrence will be returned as transaction identifier.|
 |`AcctTrnRec.AcctTrnInfo`||  |
 |`AcctTrnRec.AcctTrnInfo.TrnCode`||  |
@@ -92,9 +92,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`RecCtrlOut.Cursor`||  |
 |`AcctTrnRec`||  |
 |`AcctTrnRec.AcctTrnKeys`||  |
-|`AcctTrnRec.AcctTrnKeys.AcctKeys`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|DDA|0|
+|`AcctTrnRec.AcctTrnKeys.AcctKeys`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|DDA|
 |`AcctTrnRec.AcctTrnKeys.AcctTrnIdent`||This field refers to record key for memo posted transactions. Unique transaction identifier is not provided for posted transactions. Transaction  posting date and occurrence will be returned as transaction identifier.|
 |`AcctTrnRec.AcctTrnInfo`||  |
 |`AcctTrnRec.AcctTrnInfo.TrnCode`||  |
@@ -120,10 +120,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails`||This aggregate repeats 7 times.|
 |`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.FloatDays`||  |
 |`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt`||  |
-|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.Amt`||0|
-|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode`||0|
-|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode.CurCodeType`|ISO4217-Alpha|0|
-|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode.CurCodeValue`|USD|0|
+|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.Amt`||
+|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode`||
+|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode.CurCodeType`|ISO4217-Alpha|
+|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode.CurCodeValue`|USD|
 |`AcctTrnRec.AcctTrnStatus`||  |
 |`AcctTrnRec.AcctTrnStatus.AcctTrnStatusCode`|Valid|  |
 |`AcctTrnRec.AcctTrnStatus.EffDt`||  |
@@ -156,9 +156,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`RecCtrlOut.Cursor`||  |
 |`AcctTrnRec`||  |
 |`AcctTrnRec.AcctTrnKeys`||  |
-|`AcctTrnRec.AcctTrnKeys.AcctKeys`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|SDA|0|
+|`AcctTrnRec.AcctTrnKeys.AcctKeys`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|SDA|
 |`AcctTrnRec.AcctTrnKeys.AcctTrnIdent`||This field refers to record key for memo posted transactions. Unique transaction identifier is not provided for posted transactions. Transaction  posting date and occurrence will be returned as transaction identifier.|
 |`AcctTrnRec.AcctTrnInfo`||  |
 |`AcctTrnRec.AcctTrnInfo.TrnCode`||  |
@@ -184,10 +184,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails`||This aggregate repeats 7 times.|
 |`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.FloatDays`|1 through 7|  |
 |`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt`||  |
-|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.Amt`||0|
-|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode`||0|
-|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode.CurCodeType`|ISO4217-Alpha|0|
-|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode.CurCodeValue`|USD|0|
+|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.Amt`||
+|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode`||
+|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode.CurCodeType`|ISO4217-Alpha|
+|`AcctTrnRec.AcctTrnInfo.FloatData.FloatDetails.CheckFloatAmt.CurCode.CurCodeValue`|USD|
 |`AcctTrnRec.AcctTrnStatus`||  |
 |`AcctTrnRec.AcctTrnStatus.AcctTrnStatusCode`|Valid|  |
 |`AcctTrnRec.AcctTrnStatus.EffDt`||  |
@@ -217,9 +217,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`RecCtrlOut.SentRecCount`||This field contains total number of posted transactions with completed nightly processing + number of memo posted transactions.|
 |`AcctTrnRec`||  |
 |`AcctTrnRec.AcctTrnKeys`||  |
-|`AcctTrnRec.AcctTrnKeys.AcctKeys`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|SDB|0|
+|`AcctTrnRec.AcctTrnKeys.AcctKeys`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|SDB|
 |`AcctTrnRec.AcctTrnKeys.AcctTrnIdent`||This field refers to record key for memo posted transactions. Unique transaction identifier is not provided for posted transactions. Transaction  posting date and occurrence will be returned as transaction identifier.|
 |`AcctTrnRec.AcctTrnInfo`||  |
 |`AcctTrnRec.AcctTrnInfo.TrnCode`||  |
@@ -268,9 +268,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`RecCtrlOut.Cursor`||  |
 |`AcctTrnRec`||  |
 |`AcctTrnRec.AcctTrnKeys`||  |
-|`AcctTrnRec.AcctTrnKeys.AcctKeys`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||0|
-|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|LOAN|0|
+|`AcctTrnRec.AcctTrnKeys.AcctKeys`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctId`||
+|`AcctTrnRec.AcctTrnKeys.AcctKeys.AcctType`|LOAN|
 |`AcctTrnRec.AcctTrnKeys.AcctTrnIdent`||This field refers to record key for memo posted transactions. Unique transaction identifier is not provided for posted transactions. Transaction  posting date and occurrence will be returned as transaction identifier.|
 |`AcctTrnRec.AcctTrnInfo`||  |
 |`AcctTrnRec.AcctTrnInfo.TrnCode`||  |
@@ -290,14 +290,14 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctTrnRec.AcctTrnInfo.CompositeCurAmt`||  |
 |`AcctTrnRec.AcctTrnInfo.CompositeCurAmt.CompositeCurAmtType`|AddtlPrincipal<br>Fees<br>Insurance<br>Escrow<br>Interest<br>OtherEscrow<br>LateFee|This core does not provide the principal payments on the loan. Instead, 'AddtlPrincipal' is returned by core, which corresponds to the extra principal payment made on the loan. It usually reflects the amount paid besides the regular monthly payment against the loan to payoff the mortgage early or to reduce future interest payments.|
 |`AcctTrnRec.AcctTrnInfo.CompositeCurAmt.CurAmt`||  |
-|`AcctTrnRec.AcctTrnInfo.CompositeCurAmt.CurAmt.Amt`||0|
+|`AcctTrnRec.AcctTrnInfo.CompositeCurAmt.CurAmt.Amt`||
 |`AcctTrnRec.AcctTrnInfo.CompositeCurAmt.SpecialHandling`|ExcessToPrin|  |
 |`AcctTrnRec.AcctTrnInfo.Desc`||Bank can define custom description for transaction codes. API version should be configured to match the core version and display the transaction descriptions correctly.|
 |`AcctTrnRec.AcctTrnInfo.ChkNum`||  |
 |`AcctTrnRec.AcctTrnInfo.RateOverSplit`||  |
 |`AcctTrnRec.AcctTrnInfo.RateUnderSplit`||  |
 |`AcctTrnRec.AcctTrnInfo.SplitRateAmt`||  |
-|`AcctTrnRec.AcctTrnInfo.SplitRateAmt.Amt`||0|
+|`AcctTrnRec.AcctTrnInfo.SplitRateAmt.Amt`||
 |`AcctTrnRec.AcctTrnInfo.ExternalTrnCode`||  |
 |`AcctTrnRec.AcctTrnInfo.ImageInd`||  |
 |`AcctTrnRec.AcctTrnInfo.TrnImageId`||  |
