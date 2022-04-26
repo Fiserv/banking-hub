@@ -1,4 +1,4 @@
-# Implementation Notes for Inq ePreference
+# Implementation Notes for Get ePreference
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -48,7 +48,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`ePreferenceRec.ePreferenceInfo.StmtTruncationOption`|| ImageOption is not used for SDA or CDA accounts in Premier's Multiple mailing addendas.|
 |`ePreferenceRec.ePreferenceInfo.NoticeData`||  |
 |`ePreferenceRec.ePreferenceInfo.NoticeData.NoticeType`|RegularNotice<br>ChargeBack<br>|  |
-|`ePreferenceRec.ePreferenceInfo.NoticeData.NoticeOption`|NoNotice|This field is only used for additional ePreference records.<br><br>Please note EimOption is not available for CDA account type in  Multiple mailing addendas.|
+|`ePreferenceRec.ePreferenceInfo.NoticeData.NoticeOption`|NoNotice|This field is only used for additional ePreference records.<br><br>Please note EimOption is not available for CDA account type in  Multiple mailing addendas.|
 |`ePreferenceRec.ePreferenceInfo.EmailLink`||  |
 |`ePreferenceRec.ePreferenceInfo.EmailLink.Email`||  |
 |`ePreferenceRec.ePreferenceInfo.EmailLink.Email.EmailType`|Business<br>Person<br>|  |
