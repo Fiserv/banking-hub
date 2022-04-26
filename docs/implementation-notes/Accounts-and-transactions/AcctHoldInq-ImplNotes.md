@@ -1,8 +1,8 @@
-# Implementation Notes for AcctHold Inq
+# Implementation Notes for Inq AcctHold
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, 
+titles: Premier, Signature, Cleartouch, 
 -->
 
 
@@ -10,13 +10,12 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-#### Notes
+> #### Note
+> 
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
-> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this APIPI.
 
-
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`AcctHoldSel`|||
@@ -28,7 +27,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctHoldSel.AcctKeys`|||
 |`AcctHoldSel.AcctKeys.AcctId`|||
 |`AcctHoldSel.AcctKeys.AcctType`|CDA<br>DDA<br>SDA||
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`|| |
@@ -73,4 +72,18 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctHoldRec.AcctHoldStatus`|||
 |`AcctHoldRec.AcctHoldStatus.AcctHoldStatusCode`|Valid||
 |`AcctHoldRec.AcctHoldStatus.EffDt`|||
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
 <!-- type: tab-end -->
