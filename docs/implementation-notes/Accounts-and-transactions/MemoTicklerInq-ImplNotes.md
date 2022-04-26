@@ -1,4 +1,4 @@
-# Implementation Notes for Inq MemoTickler
+# Implementation Notes for Get MemoTickler
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -48,21 +48,21 @@ The following tables list the provider-specific implemented fields for Request a
 |`MemoTicklerRec.MemoTicklerKeys.MemoTicklerIdent`||This field refers to addenda number and is required to identify the memo/tickler.|
 |`MemoTicklerRec.MemoTicklerInfo`||  |
 |`MemoTicklerRec.MemoTicklerInfo.MemoTicklerUse`|Memo<br>Tickler|It is required to provide the addenda type to identify a memo/tickler item. Memo refers to miscellaneous addenda, whereas tickler refers to tickler addenda.|
-|`MemoTicklerRec.MemoTicklerInfo.MemoTicklerText`||0|
-|`MemoTicklerRec.MemoTicklerInfo.MemoTicklerExtendedText`||0|
+|`MemoTicklerRec.MemoTicklerInfo.MemoTicklerText`||
+|`MemoTicklerRec.MemoTicklerInfo.MemoTicklerExtendedText`||
 |`MemoTicklerRec.MemoTicklerInfo.RelationshipMgr`||  |
-|`MemoTicklerRec.MemoTicklerInfo.RelationshipMgr.RelationshipMgrIdent`||0|
-|`MemoTicklerRec.MemoTicklerInfo.RelationshipMgr.RelationshipRole`|Officer|0|
-|`MemoTicklerRec.MemoTicklerInfo.RequiredViewInd`|true<br>false|0|
+|`MemoTicklerRec.MemoTicklerInfo.RelationshipMgr.RelationshipMgrIdent`||
+|`MemoTicklerRec.MemoTicklerInfo.RelationshipMgr.RelationshipRole`|Officer|
+|`MemoTicklerRec.MemoTicklerInfo.RequiredViewInd`|true<br>false|
 |`MemoTicklerRec.MemoTicklerInfo.DeliveryInstruction`||  |
 |`MemoTicklerRec.MemoTicklerInfo.DeliveryInstruction.DeliveryMethod`|Notice|  |
 |`MemoTicklerRec.MemoTicklerInfo.DeliveryInstruction.DeliveryMedia`||This field indicates the client-defined format used to generate an 8 1/2" x 11" or side-by-side notification form.|
 |`MemoTicklerRec.MemoTicklerInfo.ReportGroupCode`||This tag refers to miscellaneous code for both memos and tickelers.|
-|`MemoTicklerRec.MemoTicklerInfo.RecurRule`||0|
+|`MemoTicklerRec.MemoTicklerInfo.RecurRule`||
 |`MemoTicklerRec.MemoTicklerInfo.RecurRule.RecurType`|Daily<br>Quaterly<br>SemiYearly<br>Monthly<br>Yearly<br>Once<br><br><br>|Additional yearly frequencies of every two years, every four years and every five years is supported.|
 |`MemoTicklerRec.MemoTicklerInfo.RecurRule.RecurInterval`||  |
-|`MemoTicklerRec.MemoTicklerInfo.NextMemoTicklerDt`||0|
-|`MemoTicklerRec.MemoTicklerInfo.ExpDt`|<br>|0|
+|`MemoTicklerRec.MemoTicklerInfo.NextMemoTicklerDt`||
+|`MemoTicklerRec.MemoTicklerInfo.ExpDt`|
 |`MemoTicklerRec.MemoTicklerStatus`||  |
 |`MemoTicklerRec.MemoTicklerStatus.MemoTicklerStatusCode`|Valid|  |
 |`MemoTicklerRec.MemoTicklerStatus.EffDt`||  |
