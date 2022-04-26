@@ -1,4 +1,4 @@
-# Implementation Notes for Can StopChk
+# Implementation Notes for Cancel StopChk
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
