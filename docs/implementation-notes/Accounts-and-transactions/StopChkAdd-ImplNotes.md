@@ -45,7 +45,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`StopChkInfo.CurAmtRange.HighCurAmt.CurCode`|||
 |`StopChkInfo.CurAmtRange.HighCurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`StopChkInfo.CurAmtRange.HighCurAmt.CurCode.CurCodeValue`|USD|Only USD is supported.|
-|`StopChkInfo.OrigDt`||*Required<br>This is a mandatory field and is required to be provided in request else, ESF will use system date.|
+|`StopChkInfo.OrigDt`||***Required**<br>This is a mandatory field and is required to be provided in request else, ESF will use system date.|
 |`StopChkInfo.StopChkDt`||If this field is not provided in the request, by default, current date will be used.|
 |`StopChkInfo.ExpDt`|||
 |`StopChkInfo.Desc`||Maximum 25 characters are accepted else, error will be returned.|
