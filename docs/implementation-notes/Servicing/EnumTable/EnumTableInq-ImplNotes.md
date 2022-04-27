@@ -2,7 +2,7 @@
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, , , Precision, Signature, 
+titles: Premier, , , Precision, Signature
 -->
 
 <!-- 
