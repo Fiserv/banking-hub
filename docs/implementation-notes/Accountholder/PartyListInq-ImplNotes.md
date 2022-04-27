@@ -1,4 +1,4 @@
-# Implementation Notes for ListInq Party
+# Implementation Notes for Get Party List
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -70,8 +70,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyListRec.PersonPartyListInfo.Contact.PostAddr.CountryCode.CountryCodeValue`||This field in the core have client defined values for postal address|
 |`PartyListRec.PersonPartyListInfo.Contact.PostAddr.AddrType`|Primary<br>Secondary<br>Seasonal|In the core, user can have one primary addres and multiple secondary or seasonal address. Both primary with seasonal or secondary forms an address record. Seasonal address cannot exist as an independent address record and share address identifier with primary address or one of the secondary address.|
 |`PartyListRec.PersonPartyListInfo.Contact.PostAddr.TimeFrame`||  |
-|`PartyListRec.PersonPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
-|`PartyListRec.PersonPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as “9999”.|
+|`PartyListRec.PersonPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as "9999".<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
+|`PartyListRec.PersonPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as "9999".|
 |`PartyListRec.PersonPartyListInfo.Contact.PostAddr.Retention`|true<br>false|During the account opening process, new address record is created with retention code as true and if account opening workflow fails due to an error, ESF will be unable to delete the address, if created successfully prior to error and remain on the system even if the account is not created.|
 |`PartyListRec.PersonPartyListInfo.Contact.PostAddr.CensusTract`||  |
 |`PartyListRec.PersonPartyListInfo.Contact.PostAddr.CensusBlock`||  |
@@ -122,8 +122,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyListRec.OrgPartyListInfo.Contact.PostAddr.CountryCode.CountryCodeValue`||This field in the core have client defined values for postal address|
 |`PartyListRec.OrgPartyListInfo.Contact.PostAddr.AddrType`|Primary<br>Secondary<br>Seasonal|In the core, user can have one primary addres and multiple secondary or seasonal address. Both primary with seasonal or secondary forms an address record. Seasonal address cannot exist as an independent address record and share address identifier with primary address or one of the secondary address. Seasonal address always have a time frame.<br><br>In order to correctly relate the seasonal address with primary address or seasonal address with secondary address, seasonal address aggregate is presented right after primary or secondary  address, which it relates to.|
 |`PartyListRec.OrgPartyListInfo.Contact.PostAddr.TimeFrame`||  |
-|`PartyListRec.OrgPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as “9999”.<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
-|`PartyListRec.OrgPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as “9999”.|
+|`PartyListRec.OrgPartyListInfo.Contact.PostAddr.TimeFrame.StartDt`||This field applicable for Seasonal Address type. Seasonal address begins on the same Start date every year, therefore Premier only stores Start month and Start Day. Year can be provided as "9999".<br><br>The month and the day of the month will show the actual Seasonal address  start date.|
+|`PartyListRec.OrgPartyListInfo.Contact.PostAddr.TimeFrame.EndDt`||This field is applicable for Seasonal Address Type. Seasonal address ends on the same End date every year, therefore core only stores seasonal address End month and End Day. Year can be provided as "9999".|
 |`PartyListRec.OrgPartyListInfo.Contact.PostAddr.Retention`|true<br>false|During the account opening process, new address record is created with retention code as true and if account opening workflow fails due to an error, ESF will be unable to delete the address, if created successfully prior to error and remain on the system even if the account is not created.|
 |`PartyListRec.OrgPartyListInfo.Contact.PostAddr.CensusTract`||  |
 |`PartyListRec.OrgPartyListInfo.Contact.PostAddr.CensusBlock`||  |
