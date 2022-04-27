@@ -64,11 +64,61 @@ The following tables list the provider-specific implemented fields for Request a
 <!-- type: tab -->
 
 
-#### Coming soon!
-We are working on developing content for this section. Stay tuned for more updates. 
+The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
 
-<!-- type: tab -->
+<!-- theme: info -->
+> #### Note
+> 
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
+
+
+#### Request Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`OvrdExceptionData`|||
+|`AddrInfo`||Service is used to add new alternate address (physical, seasonal and secondary) that can be used by customer.<br>Use AddrMod service to modify an existing primary address.<br>Use PartyMod or AcctMod service to set up an address as address to use for customer/account corrspondence/customers physical address.|
+|`AddrInfo.AddrRelRef`|||
+|`AddrInfo.AddrRelRef.PartyKeys`|||
+|`AddrInfo.AddrRelRef.PartyKeys.PartyId`||***Required**<br>Alternate address of the party is stored as part of customer record.|
+|`AddrInfo.PostAddr`|||
+|`AddrInfo.PostAddr.AddressIdent`||***Required**<br>Field refers to alternate address code and used to identify new alternate address. AddressIdent value (1-99) is to be sent for each alternate address and it is not required for values to be sequential.|
+|`AddrInfo.PostAddr.AddrFormatType`|Label|Label is the supported address format.|
+|`AddrInfo.PostAddr.Addr1`||Field refers to mailing address line i.e., street address, rural route or box number where customer correspondence is mailed. Maximum length of this field is 40 characters.|
+|`AddrInfo.PostAddr.FullName1`||Field refers to Name/Address line and would replace Addr2 in future releases. Line for this field is optional and is printed below the name and above mailing address (Addr1) on correspondence.<br>Maximum length of this field is 40 characters.<br>Client application should send either FullName1 or Addr2 in single ESF request.|
+|`AddrInfo.PostAddr.Addr2`||FullName1 and Addr2, both fields serve same purpose and, it is recommended to use FullName1 instead of Addr2, as Addr2 can be eliminated in future ESF releases.<br>Client application should send either FullName1 or Addr2 in single ESF request.|
+|`AddrInfo.PostAddr.City`||Maximum length of this field is 26 characters.<br>|
+|`AddrInfo.PostAddr.StateProv`||Field refers to two-character abbreviation of a state in US. State is required for US address.|
+|`AddrInfo.PostAddr.PostalCode`||If address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits<br>Examples: 32714-1234 or 32714-0000<br>If ForeignFlag is true, any value up to 10 characters is accepted.<br>If ForeignFlag is false, format of ZIP code consists of 5 or 10 characters of ZIP code, a hyphen, and 4 additional characters. For example, 32714-1234.<br>ZIP code for US address and postal code for non-US address is required.<br>|
+|`AddrInfo.PostAddr.CountryCode`|||
+|`AddrInfo.PostAddr.CountryCode.CountryCodeSource`||XREF rule LMXRL0001529 can be configured in ESF studio to indicate country code source standard used by a financial institution and client application.|
+|`AddrInfo.PostAddr.CountryCode.CountryCodeValue`||Field is applicable for international (non-US) address.|
+|`AddrInfo.PostAddr.AddrType`|Secondary<br>Seasonal|Secondary address is physical address that is different from primary address. Alternate address with a TimeFrame (start and end date) is a seasonal address.|
+|`AddrInfo.PostAddr.TimeFrame`|||
+|`AddrInfo.PostAddr.TimeFrame.StartDt`|||
+|`AddrInfo.PostAddr.TimeFrame.EndDt`|||
+|`AddrInfo.PostAddr.ExpDt`||***Conditionally Required**<br>Field is required to be provided if TimeFrame from PostAddr aggregate is sent in  the request. Date in this field refers to the date when schedule of alternate address expires.|
+|`AddrInfo.PostAddr.ContactMethod`||Field refers to the method used to notify the financial institution about the address change. Values of this field are client-defined.|
+|`AddrInfo.PostAddr.Comment`||Field refers to the comments above address. Maximum 25 characters are accepted.|
+|`AddrInfo.PostAddr.ForeignFlag`||Field refers to foreign address i.e., non-US address.|
+|`AddrInfo.PostAddr.MaintDt`|||
+|`AddrInfo.PostAddr.PhoneNum`|||
+|`AddrInfo.PostAddr.PhoneNum.PhoneType`|ContactPhone||
+|`AddrInfo.PostAddr.PhoneNum.PhoneIdent`||Field is applicable for the secondary address only and identifies the phone numbers of a customer that are used for secondary address. Phone record should should be available for a customer.|
+#### Response Schema
+|Field Name|Allowed Values|Implementation Note|
+|----|----|----|
+|`Status`|||
+|`AddrStatusRec`|||
+|`AddrStatusRec.AddrKeys.PartyKeys`||AddressIdent along with PartyId identifies the alternate address record.|
+|`AddrStatusRec.AddrKeys.PartyKeys.PartyId`|||
+|`AddrStatusRec.AddrKeys.AddressIdent`||Field refers to alternate address code.|
+|`AddrStatusRec.AddrStatus`|||
+|`AddrStatusRec.AddrStatus.AddrStatusCode`|||
+|`AddrStatusRec.AddrStatus.EffDt`|||
+<!-- type: tab-end -->
+
+
 
 
 #### Coming soon!
