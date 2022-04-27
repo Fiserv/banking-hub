@@ -1,8 +1,8 @@
-# Implementation Notes for AcctCollateralRel Add
+# Implementation Notes for Add AcctCollateralRel
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, 
+titles: Premier, Precision, Signature, 
 -->
 
 
@@ -10,13 +10,12 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Notes
+> #### Note
 > 
-> -	To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API.
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API.
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`OvrdExceptionData`|||
@@ -38,7 +37,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelInfo.CollateralPledgeAmt.CurCode.CurCodeValue`|USD||
 |`AcctCollateralRelInfo.CollateralPledgePercent`||This field is applicable if the PledgeType is 'Percent'.|
 |`AcctCollateralRelInfo.PledgeDt`||Future Date is not supported.|
-|`AcctCollateralRelInfo.LienPosition`||0|
+|`AcctCollateralRelInfo.LienPosition`||
 |`OvrdExceptionData`|||
 |`AcctCollateralRelInfo`||Only one collateral can be linked to an account per request.|
 |`AcctCollateralRelInfo.CollateralRef`|||
@@ -58,18 +57,18 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelInfo.CollateralPledgeAmt.CurCode.CurCodeValue`|USD||
 |`AcctCollateralRelInfo.CollateralPledgePercent`||This field is applicable if the PledgeType is 'Percent'.|
 |`AcctCollateralRelInfo.PledgeDt`||Future Date is not supported.|
-|`AcctCollateralRelInfo.LienPosition`||0|
-# Response Schema
+|`AcctCollateralRelInfo.LienPosition`||
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`|||
 |`AcctCollateralRelStatusRec`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys`|||
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys.CollateralId`||0|
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys.CollateralId`||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys`|||
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctId`||0|
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctType`|LOAN<br>|0|
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctId`||
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctType`|LOAN<br>|
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctCollateralRelIdent`||This field refers to the record number and is the pledge identifier of collateral and an account.|
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus.AcctCollateralRelStatusCode`|Valid||
@@ -78,12 +77,26 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelStatusRec`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys`|||
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys.CollateralId`||0|
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys.CollateralId`||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys`|||
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctId`||0|
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctType`|LOAN<br>|0|
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctId`||
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctType`|LOAN<br>|
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctCollateralRelIdent`||This field refers to the record number and is the pledge identifier of collateral and an account.|
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus.AcctCollateralRelStatusCode`|Valid||
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus.EffDt`|||
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
 <!-- type: tab-end -->

@@ -1,8 +1,8 @@
-# Implementation Notes for SafeDepositBox Inq
+# Implementation Notes for Get SafeDepositBox
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
-titles: Premier, 
+titles: Premier, Precision, Signature, Cleartouch, 
 -->
 
 
@@ -10,20 +10,19 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 <!-- theme: info -->
-> #### Notes
+> #### Note
 > 
-> - To view the descriptions of fields listed in the below tables, please refer the API Explorer section of this API
-> - `Status` and `EFXHeader` aggregates are common for all APIs, therefore sub-fields of these aggregates are not listed in the below tables and same can be viewed in the API Explorer section of this API
+> To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
-# Request Schema
+#### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`SafeDepositBoxSel`||    |
 |`SafeDepositBoxSel.SafeDepositBoxKeys`||    |
 |`SafeDepositBoxSel.SafeDepositBoxKeys.AcctId`||    |
 |`SafeDepositBoxSel.SafeDepositBoxKeys.AcctType`|SDB|    |
-# Response Schema
+#### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`Status`||    |
@@ -36,7 +35,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`SafeDepositBoxRec.SafeDepositBoxInfo.BoxDtlStatusEnumDesc`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.BoxDtlStatusDt`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.AcctPref`||    |
-|`SafeDepositBoxRec.SafeDepositBoxInfo.AcctPref.Language`||    |
+|`SafeDepositBoxRec.SafeDepositBoxInfo.AcctPref.Language`||This field indicates the language used to print statements if, language preference is established in CIS general specifications.|
 |`SafeDepositBoxRec.SafeDepositBoxInfo.AcctIdent`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.AcctIdent.AcctIdentType`|PORT|    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.AcctIdent.AcctIdentValue`||This field refers to a portfolio to which the safe deposit box account is associated.|
@@ -44,7 +43,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`SafeDepositBoxRec.SafeDepositBoxInfo.BoxDesc`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.BoxNum`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.BoxSizeCode`||    |
-|`SafeDepositBoxRec.SafeDepositBoxInfo.BoxRentTypeCode`||    |
+|`SafeDepositBoxRec.SafeDepositBoxInfo.BoxRentTypeCode`||This field is used to identify the rent code in SDB annual charges specifications that determines the rent amount.|
 |`SafeDepositBoxRec.SafeDepositBoxInfo.OpenDt`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.RelationshipMgr`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.RelationshipMgr.RelationshipMgrIdent`||    |
@@ -107,7 +106,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`SafeDepositBoxRec.SafeDepositBoxInfo.AcctPeriodData.Count`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.NameIdent`||Only 3 name identifiers can be included for each Address Type.|
-|`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.AddressIdent`||This field is shared by both Primary and Seasonal address types.|
+|`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.AddressIdent`||This field is shared by both primary and seasonal address types.|
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.AddrUse`|Inquiry<br>Mailing|Value of this field for:<br>- Primary and related seasonal address of an account is "Inquiry"<br>- Secondary and related seasonal address of an account is "Mailing"<br>If "Mailing Name Options" parameter is configured at financial institution, it determines if account can have different inquiry and mailing address/ names.<br>- If parameter is set to N, both inquiry and mailing addresses are same and ESF returns only inquiry address.<br>- If parameter is set to Y, both inquiry and mailing addresses can be different and ESF returns both in the response.|
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.AddrFormatType`|Label|    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.FullName1`||This field refers to first name of the customer for inquiry and mailing purpose.|
@@ -117,7 +116,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.Addr2`||This field is applicable if enabled in the CIS Miscellaneous (Institution) specifications.|
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.City`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.StateProv`||    |
-|`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.PostalCode`||This field provides the information in ZIP Code (5 Digit)-Additional Code (4 Digit) format. Additional code is optional and if not present, can be represented with value as '0000'. For example, 32714-1234 or 32714-0000. Additional code of four digits provides a more specific location within a given ZIP code.|
+|`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.PostalCode`||This field provides the information in ZIP Code (5 Digit)-Additional Code (4 Digit) format. Additional code of four digits is optional and provides a more specific location within a given ZIP code. If additional code is not provided, it can be represented with value as '0000'. For example, 32714-1234 or 32714-0000.|
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.CountryCode`||    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.CountryCode.CountryCodeSource`|SPCountryCode|    |
 |`SafeDepositBoxRec.SafeDepositBoxInfo.PostAddr.CountryCode.CountryCodeValue`||    |
@@ -180,4 +179,25 @@ The following tables list the provider-specific implemented fields for Request a
 |`SafeDepositBoxRec.SafeDepositBoxStatus`||    |
 |`SafeDepositBoxRec.SafeDepositBoxStatus.SafeDepositBoxStatusCode`|Valid|    |
 |`SafeDepositBoxRec.SafeDepositBoxStatus.EffDt`||    |
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
+<!-- type: tab -->
+
+
+#### Coming soon!
+We are working on developing content for this section. Stay tuned for more updates. 
+
+
 <!-- type: tab-end -->
