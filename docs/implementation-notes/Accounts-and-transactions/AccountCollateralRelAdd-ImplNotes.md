@@ -85,6 +85,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus.AcctCollateralRelStatusCode`|Valid||
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus.EffDt`|||
+
 <!-- type: tab -->
 
 
@@ -100,3 +101,5 @@ We are working on developing content for this section. Stay tuned for more updat
 
 
 <!-- type: tab-end -->
+
+
