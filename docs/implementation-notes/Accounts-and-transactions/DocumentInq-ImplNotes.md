@@ -87,7 +87,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`DocumentRec.DocumentInfo.PageData.PageValue`||  |
 |`DocumentRec.DocumentInfo.PageData.PageValue.ContentType`|Base64|Only Base64 content is supported.|
 |`DocumentRec.DocumentInfo.PageData.PageValue.BinLength`||  |
-|`DocumentRec.DocumentInfo.PageData.PageValue.BinData`||Field contains binary link/URL in <href> format for the document. Field does not have readable content of document but contains Base64 encoded data.<br>For example,  <xop:Include xmlns:xop="http://www.w3.org/2004/08/xop/include" href="cid:1.a749565624ea33151af6af775763f59efcd19ab4ec1e0f55@apache.org"/>|
+|`DocumentRec.DocumentInfo.PageData.PageValue.BinData`||Field contains binary link/URL in <href> format for the document. Field does not have readable content of document but contains Base64 encoded data.<br>For example, <br>  `<xop:Include xmlns:xop="http://www.w3.org/2004/08/xop/include" href="cid:1.a749565624ea33151af6af775763f59efcd19ab4ec1e0f55@apache.org"/>` |
 |`DocumentRec.DocumentStatus`||  |
 |`DocumentRec.DocumentStatus.DocumentStatusCode`|Valid|Status code of document is 'Valid'.|
 |`DocumentRec.DocumentStatus.EffDt`||  |
@@ -176,7 +176,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`DocumentRec.DocumentInfo.PageData.PageValue`||  |
 |`DocumentRec.DocumentInfo.PageData.PageValue.ContentType`|Base64|Only Base64 content is supported.|
 |`DocumentRec.DocumentInfo.PageData.PageValue.BinLength`||  |
-|`DocumentRec.DocumentInfo.PageData.PageValue.BinData`||Field contains binary link/URL in <href> format for the document. Field does not have readable content of document but contains Base64 encoded data.<br>For example,  <xop:Include xmlns:xop="http://www.w3.org/2004/08/xop/include" href="cid:1.a749565624ea33151af6af775763f59efcd19ab4ec1e0f55@apache.org"/>|
+|`DocumentRec.DocumentInfo.PageData.PageValue.BinData`||Field contains binary link/URL in <href> format for the document. Field does not have readable content of document but contains Base64 encoded data.<br>For example, <br> `<xop:Include xmlns:xop="http://www.w3.org/2004/08/xop/include" href="cid:1.a749565624ea33151af6af775763f59efcd19ab4ec1e0f55@apache.org"/>`|
 |`DocumentRec.DocumentStatus`||  |
 |`DocumentRec.DocumentStatus.DocumentStatusCode`|Valid|Status code of document is 'Valid'.|
 |`DocumentRec.DocumentStatus.EffDt`||  |
