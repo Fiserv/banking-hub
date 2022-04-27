@@ -1,4 +1,4 @@
-# Implementation Notes for Inq Party
+# Implementation Notes for Get Party
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
