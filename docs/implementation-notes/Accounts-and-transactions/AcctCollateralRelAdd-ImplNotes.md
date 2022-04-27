@@ -22,11 +22,11 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelInfo`||Only one collateral can be linked to an account per request.|
 |`AcctCollateralRelInfo.CollateralRef`|||
 |`AcctCollateralRelInfo.CollateralRef.CollateralKeys`|||
-|`AcctCollateralRelInfo.CollateralRef.CollateralKeys.CollateralId`||*Required<br>This field is required by service provider and hence must be sent in request by client application.|
+|`AcctCollateralRelInfo.CollateralRef.CollateralKeys.CollateralId`||***Required**<br>This field is required by service provider and hence must be sent in request by client application.|
 |`AcctCollateralRelInfo.AcctRef`|||
 |`AcctCollateralRelInfo.AcctRef.AcctKeys`||This aggregate indicates an account for which the collateral is pledged.|
-|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctId`||*Required<br>This field is required by service provider and hence must be sent in request by client application.|
-|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctType`|LOAN|*Required<br>This field is required to be sent in request by client application. Only loan accounts are supported in this service.|
+|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctId`||***Required**<br>This field is required by service provider and hence must be sent in request by client application.|
+|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctType`|LOAN|***Required**<br>This field is required to be sent in request by client application. Only loan accounts are supported in this service.|
 |`AcctCollateralRelInfo.AcctRef.AcctKeys.BranchIdent`||This field refers to the branch number.|
 |`AcctCollateralRelInfo.PledgeRule`|None<br>Principal<br>AvailCreditPlusPrincipal<br>OriginalNoteAmount<br>||
 |`AcctCollateralRelInfo.PledgeType`|Amount<br>Percent|This field is applicable if the pledge rule is 'None'.|
@@ -37,16 +37,16 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelInfo.CollateralPledgeAmt.CurCode.CurCodeValue`|USD||
 |`AcctCollateralRelInfo.CollateralPledgePercent`||This field is applicable if the PledgeType is 'Percent'.|
 |`AcctCollateralRelInfo.PledgeDt`||Future Date is not supported.|
-|`AcctCollateralRelInfo.LienPosition`||0|
+|`AcctCollateralRelInfo.LienPosition`||
 |`OvrdExceptionData`|||
 |`AcctCollateralRelInfo`||Only one collateral can be linked to an account per request.|
 |`AcctCollateralRelInfo.CollateralRef`|||
 |`AcctCollateralRelInfo.CollateralRef.CollateralKeys`|||
-|`AcctCollateralRelInfo.CollateralRef.CollateralKeys.CollateralId`||*Required<br>This field is required by service provider and hence must be sent in request by client application.|
+|`AcctCollateralRelInfo.CollateralRef.CollateralKeys.CollateralId`||***Required**<br>This field is required by service provider and hence must be sent in request by client application.|
 |`AcctCollateralRelInfo.AcctRef`|||
 |`AcctCollateralRelInfo.AcctRef.AcctKeys`||This aggregate indicates an account for which the collateral is pledged.|
-|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctId`||*Required<br>This field is required by service provider and hence must be sent in request by client application.|
-|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctType`|LOAN|*Required<br>This field is required to be sent in request by client application. Only loan accounts are supported in this service.|
+|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctId`||***Required**<br>This field is required by service provider and hence must be sent in request by client application.|
+|`AcctCollateralRelInfo.AcctRef.AcctKeys.AcctType`|LOAN|***Required**<br>This field is required to be sent in request by client application. Only loan accounts are supported in this service.|
 |`AcctCollateralRelInfo.AcctRef.AcctKeys.BranchIdent`||This field refers to the branch number.|
 |`AcctCollateralRelInfo.PledgeRule`|None<br>Principal<br>AvailCreditPlusPrincipal<br>OriginalNoteAmount<br>||
 |`AcctCollateralRelInfo.PledgeType`|Amount<br>Percent|This field is applicable if the pledge rule is 'None'.|
@@ -57,7 +57,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelInfo.CollateralPledgeAmt.CurCode.CurCodeValue`|USD||
 |`AcctCollateralRelInfo.CollateralPledgePercent`||This field is applicable if the PledgeType is 'Percent'.|
 |`AcctCollateralRelInfo.PledgeDt`||Future Date is not supported.|
-|`AcctCollateralRelInfo.LienPosition`||0|
+|`AcctCollateralRelInfo.LienPosition`||
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
@@ -65,10 +65,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelStatusRec`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys`|||
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys.CollateralId`||0|
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys.CollateralId`||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys`|||
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctId`||0|
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctType`|LOAN<br>|0|
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctId`||
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctType`|LOAN<br>|
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctCollateralRelIdent`||This field refers to the record number and is the pledge identifier of collateral and an account.|
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus.AcctCollateralRelStatusCode`|Valid||
@@ -77,10 +77,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctCollateralRelStatusRec`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys`|||
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys.CollateralId`||0|
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.CollateralKeys.CollateralId`||
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys`|||
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctId`||0|
-|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctType`|LOAN<br>|0|
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctId`||
+|`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctKeys.AcctType`|LOAN<br>|
 |`AcctCollateralRelStatusRec.AcctCollateralRelKeys.AcctCollateralRelIdent`||This field refers to the record number and is the pledge identifier of collateral and an account.|
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus`|||
 |`AcctCollateralRelStatusRec.AcctCollateralRelStatus.AcctCollateralRelStatusCode`|Valid||

@@ -1,4 +1,4 @@
-# Implementation Notes for Mod Collatral
+# Implementation Notes for Update Collateral
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -39,7 +39,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`CollateralInfo.PostAddr.AddressIdent`||***Conditionally Required**<br>This field is required to be sent in the request if an existing address is associated with the collateral.<br>If an new address needs to be added, then this field is not required to be sent in the request. ESF will add the address using the AddrAdd operation.<br>Please note multiple address can be associated with the address record.|
 |`CollateralInfo.PostAddr.AddrUse`||This field indicates address usage related to the collateral. One address can have multiple relationships. <br>Please note relationships between a party and an address may have client-defined values and when appropriate address usage is not found, the value of the user-defined relationship code is be provided. |
 |`CollateralInfo.PostAddr.AddrType`|Primary<br>|Only primary address type is supported to be associated with the collateral record. |
-|`CollateralInfo.Desc`||The field length for this field is 120 characters.|
+|`CollateralInfo.Desc`||The field length for this field is 12
+characters.|
 |`CollateralInfo.CollateralValueData`|| |
 |`CollateralInfo.CollateralValueData.UnitPrice`|| |
 |`CollateralInfo.CollateralValueData.UnitPrice.UnitNum`||This field is used to specify the property in units or lots.<br>For example to specify investment collateral in terms of shares (say 100 shares) or to specify in case of property in terms of lots (say 10).|
