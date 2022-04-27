@@ -7,7 +7,7 @@ titles: Premier, , , Precision, Signature
 
 <!-- 
 type: tab 
-titles: By Branch, By DataDesc, By RelSpec, 
+titles: By Branch, By DataDesc, By RelSpec
 -->
 
 
@@ -65,6 +65,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`EnumTableSel.EnumTableKeys.DataApplType`|ALL<br>CDA<br>CRD<br>DDA<br>LOAN<br>LOC<br>Party<br>SDA<br>SDB<br>DDL|Required only if the BranchIdent value is sent in the request.|
 |`EnumTableSel.EnumTableKeys.EnumTableIdent`||"Region" refers to a Branch Region, also known as Originating Branch.<br>"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  |
 |`EnumTableSel.EnumFilter`||N/A|
+
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
@@ -99,6 +100,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`EnumTableSel`|||
 |`EnumTableSel.EnumTableKeys`|||
 |`EnumTableSel.EnumTableKeys.EnumTableIdent`||"Region" refers to a Branch Region, also known as Originating Branch.<br>"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  |
+
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
@@ -115,7 +117,6 @@ The following tables list the provider-specific implemented fields for Request a
 |`EnumTableRec.EnumTableStatus`|||
 |`EnumTableRec.EnumTableStatus.EnumTableStatusCode`|Valid||
 |`EnumTableRec.EnumTableStatus.EffDt`|||
-
 
 <!-- type: tab-end -->
 
