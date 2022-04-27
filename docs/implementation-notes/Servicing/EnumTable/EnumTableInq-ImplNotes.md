@@ -89,7 +89,6 @@ The following tables list the provider-specific implemented fields for Request a
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
 
-
 <!-- theme: info -->
 > #### Note
 > 
