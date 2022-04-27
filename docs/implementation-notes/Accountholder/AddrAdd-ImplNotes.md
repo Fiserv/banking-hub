@@ -61,6 +61,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrStatusRec.AddrStatus`|||
 |`AddrStatusRec.AddrStatus.AddrStatusCode`|Valid||
 |`AddrStatusRec.AddrStatus.EffDt`|||
+
+
 <!-- type: tab -->
 
 
@@ -116,10 +118,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`AddrStatusRec.AddrStatus`|||
 |`AddrStatusRec.AddrStatus.AddrStatusCode`|||
 |`AddrStatusRec.AddrStatus.EffDt`|||
-<!-- type: tab-end -->
 
 
-
+<!-- type: tab -->
 
 #### Coming soon!
 We are working on developing content for this section. Stay tuned for more updates. 
