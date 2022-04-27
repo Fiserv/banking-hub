@@ -1,4 +1,4 @@
-# Implementation Notes for Mod Xfer
+# Implementation Notes for Update Transfer
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -65,7 +65,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`XferInfo.ExtendedXferData.FeeIdent`|||
 |`XferInfo.ExtendedXferData.PostingPriority`|First<br>Last||
 |`XferInfo.RefData`|||
-|`XferInfo.RefData.RefType`|PayorDesc<br>XferDesc<br>PayeeDesc<br>TranCode|***Conditionally Required**<br><br>PayorDesc refers to payor identification. PayorDesc is required when the ‘To Account’ type is external account and external account type is DDA, SDA or LOAN.<br><br>PayeeDesc refers to vendor number. VendorNumber is required when the ‘To Account’ type is Ext (external account) and external account type is vendor (BPM).|
+|`XferInfo.RefData.RefType`|PayorDesc<br>XferDesc<br>PayeeDesc<br>TranCode|***Conditionally Required**<br><br>PayorDesc refers to payor identification. PayorDesc is required when the "To Account" type is external account and external account type is DDA, SDA or LOAN.<br><br>PayeeDesc refers to vendor number. VendorNumber is required when the "To Account" type is Ext (external account) and external account type is vendor (BPM).|
 |`XferInfo.RefData.RefDesc`|||
 |`XferInfo.LastXferDt`|||
 |`XferInfo.LastXferAmt`|||
