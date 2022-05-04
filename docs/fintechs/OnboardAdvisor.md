@@ -17,4 +17,4 @@ Begin the integration with following services of Identity Verification domain in
 * Business Watchlist 
 * Consumer Verification Fraud and Risk 
 * Consumer ID Authentication
-
+* Consumer Watchlist
