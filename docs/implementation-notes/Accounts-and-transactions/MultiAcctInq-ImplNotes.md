@@ -18,10 +18,10 @@ The following tables list the provider-specific implemented fields for Request a
 #### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
-|`MultiAcctSel`||This operation fetches the details of multiple accounts by calling AcctInq service for each account that is provided in request.<br>Performance issues and delayed response can be expected due to large number of server calls and higher data volume returned in response.|
-|`MultiAcctSel.AcctKeys`||Multiple instances of MultiAcctSel/AcctKeys aggregate can be sent in the request since AcctInq service operation can be called for multiple accounts.|
+|`MultiAcctSel`||Operation calls AcctInq service for each account that is provided in request to fetch the details of multiple accounts.<br>Performance issues and delayed response can be expected due to large number of server calls and higher data volume returned in response.|
+|`MultiAcctSel.AcctKeys`||Multiple instances of MultiAcctSel/AcctKeys aggregate can be sent in the request as AcctInq service operation can be called for multiple accounts.|
 |`MultiAcctSel.AcctKeys.AcctId`||This field refers to the account number and can contain alphanumeric characters.|
-|`MultiAcctSel.AcctKeys.AcctType`|DDA<br>SDA<br>CDA<br>LOAN<br>CRD<br>SDB|This operation supports inquiry of an account type as configured in ESF for AcctInq service for channel, provider and data application type.|
+|`MultiAcctSel.AcctKeys.AcctType`|DDA<br>SDA<br>CDA<br>LOAN<br>CRD<br>SDB|Operation supports inquiry of an account type as configured in ESF for AcctInq service for channel, provider and data application type.|
 |`MultiAcctSel.AcctKeys.FIIdentType`|ABA|  |
 |`MultiAcctSel.AcctKeys.FIIdent`||  |
 #### Response Schema
@@ -31,7 +31,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`MultiAcctRec`|||
 |`MultiAcctRec.AcctKeys`|||
 |`MultiAcctRec.AcctKeys.AcctId`||This field refers to the account number and can contain alphanumeric characters.|
-|`MultiAcctRec.AcctKeys.AcctType`|DDA<br>SDA<br>CDA<br>LOAN<br>SDB<br>CRD|This operation supports inquiry of an account type as configured in ESF for AcctInq service for channel, provider and data application type.|
+|`MultiAcctRec.AcctKeys.AcctType`|DDA<br>SDA<br>CDA<br>LOAN<br>SDB<br>CRD|Operation supports inquiry of an account type as configured in ESF for AcctInq service for channel, provider and data application type.|
 |`MultiAcctRec.AcctKeys.CardKeys`|||
 |`MultiAcctRec.AcctKeys.CardKeys.CardId`|||
 |`MultiAcctRec.MultiAcctInfo`|||
