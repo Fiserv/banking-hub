@@ -23,7 +23,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`BeneficiarySel.BeneficiaryKeys.AcctKeys`|||
 |`BeneficiarySel.BeneficiaryKeys.AcctKeys.AcctId`|||
 |`BeneficiarySel.BeneficiaryKeys.AcctKeys.AcctType`|DDA<br>SDA<br>CDA||
-|`BeneficiarySel.BeneficiaryKeys.BeneficiaryIdent`||Refers to a Beneficiary Addenda Record Number.|
+|`BeneficiarySel.BeneficiaryKeys.BeneficiaryIdent`||Beneficiary Addenda Record Number.|
 |`BeneficiarySel.AcctKeys`||To be used to search for a list of beneficiary records for a specified account.|
 |`BeneficiarySel.AcctKeys.AcctId`|||
 |`BeneficiarySel.AcctKeys.AcctType`|DDA<br>SDA<br>CDA||
@@ -38,7 +38,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`BeneficiaryRec.BeneficiaryKeys.AcctKeys`|||
 |`BeneficiaryRec.BeneficiaryKeys.AcctKeys.AcctId`|||
 |`BeneficiaryRec.BeneficiaryKeys.AcctKeys.AcctType`|DDA<br>SDA<br>CDA||
-|`BeneficiaryRec.BeneficiaryKeys.BeneficiaryIdent`||This field is also know as Beneficiary Addenda Record Number.|
+|`BeneficiaryRec.BeneficiaryKeys.BeneficiaryIdent`||Beneficiary Addenda Record Number.|
 |`BeneficiaryRec.BeneficiaryInfo`|||
 |`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData`|||
 |`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData.PartyKeys`|||
@@ -60,8 +60,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData.PostAddr.CountryCode.CountryCodeValue`|||
 |`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData.PostAddr.CountryCode.CountryCodeValueEnumDesc`|||
 |`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData.PostAddr.AddrType`|Primary||
-|`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData.BeneficiaryType`||  |
-|`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData.BeneficiaryPercent`||<br>|
+|`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData.BeneficiaryType`||Beneficiary Relationship, which identifies how the beneficiary is related to the owner of the account.|
+|`BeneficiaryRec.BeneficiaryInfo.BeneficiaryData.BeneficiaryPercent`||<br>Portion of the account balance conditionally assigned to the beneficiary.|
 |`BeneficiaryRec.BeneficiaryStatus`|||
 |`BeneficiaryRec.BeneficiaryStatus.BeneficiaryStatusCode`|||
 |`BeneficiaryRec.BeneficiaryStatus.EffDt`|||
