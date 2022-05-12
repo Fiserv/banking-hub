@@ -35,7 +35,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`XferInfo.ToAcctRef.AcctKeys.AcctType`|DDA<br>SDA<br>EXT<br>LOAN<br>SDB<br>GLA<br>|EXT refers to an external account.|
 |`XferInfo.ToAcctRef.AcctKeys.AcctIdent`|||
 |`XferInfo.ToAcctRef.AcctKeys.AcctIdent.AcctIdentType`|AcctTypeCode||
-|`XferInfo.ToAcctRef.AcctKeys.AcctIdent.AcctIdentValue`|0<br>1<br>2<br>3<br>4<br>9|***Conditionally Required*<br><br>This field is required if, credit to account type is external. <br>Valid values for DDA are:<br>0 = None<br>1 = Demand Deposit<br>2 = Savings<br>3 = Vendor (BPM)<br>4 = Loan<br>Valid values for SDA are:<br>0 = None<br>1 = Demand Deposit<br>2 = Savings<br>3 = Vendor (BPM)<br>4 = Loan<br>9 =Check<br>Valid values for CDA are:<br>0 = None<br>1 = Demand Deposit<br>2 = Savings<br>9 =Check|
+|`XferInfo.ToAcctRef.AcctKeys.AcctIdent.AcctIdentValue`|0<br>1<br>2<br>3<br>4<br>9|***Conditionally Required**<br><br>This field is required if, credit to account type is external. <br>Valid values for DDA are:<br>0 = None<br>1 = Demand Deposit<br>2 = Savings<br>3 = Vendor (BPM)<br>4 = Loan<br>Valid values for SDA are:<br>0 = None<br>1 = Demand Deposit<br>2 = Savings<br>3 = Vendor (BPM)<br>4 = Loan<br>9 =Check<br>Valid values for CDA are:<br>0 = None<br>1 = Demand Deposit<br>2 = Savings<br>9 =Check|
 |`XferInfo.ToAcctRef.AcctKeys.FIIdentType`|RoutingNum|This field is used for routing numbers.|
 |`XferInfo.ToAcctRef.AcctKeys.FIIdent`||***Conditionally Required**<br><br>This is a mandatory field if, account type is external.|
 |`XferInfo.CurAmt`|||
