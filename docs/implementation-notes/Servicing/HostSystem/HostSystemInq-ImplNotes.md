@@ -31,7 +31,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`HostSystemRec.HostSystemKeys.HostSystemId`|||
 |`HostSystemRec.HostSystemInfo`|||
 |`HostSystemRec.HostSystemInfo.HostSystemData`|||
-|`HostSystemRec.HostSystemInfo.HostSystemData.SystemName`|InquirySystem<br>MaintenanceSystem<br>MemoPostSystem<br>AMS<br>All|If all system statuses are requested and all systems in Premier are in Active status, ESF returns HostSystemData aggregate for each system and additional HostSystemData aggregate with "All" as the System Name.|
+|`HostSystemRec.HostSystemInfo.HostSystemData.SystemName`|InquirySystem<br>MaintenanceSystem<br>MemoPostSystem<br>AMS<br>All|If all system statuses are requested and all systems in the service provider are in active status, ESF returns HostSystemData aggregate for each system and additional HostSystemData aggregate with "All" as the system name.|
 |`HostSystemRec.HostSystemInfo.HostSystemData.SystemStatus`|Active<br>Inactive||
 |`HostSystemRec.HostSystemStatus`|||
 |`HostSystemRec.HostSystemStatus.HostSystemStatusCode`|Valid||
@@ -42,7 +42,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`HostSystemRec.HostSystemKeys.HostSystemId`|||
 |`HostSystemRec.HostSystemInfo`|||
 |`HostSystemRec.HostSystemInfo.HostSystemData`|||
-|`HostSystemRec.HostSystemInfo.HostSystemData.SystemName`|InquirySystem<br>MaintenanceSystem<br>MemoPostSystem<br>AMS<br>All|If all system statuses are requested and all systems in Premier are in Active status, ESF returns HostSystemData aggregate for each system and additional HostSystemData aggregate with "All" as the System Name.|
+|`HostSystemRec.HostSystemInfo.HostSystemData.SystemName`|InquirySystem<br>MaintenanceSystem<br>MemoPostSystem<br>AMS<br>All|If all system statuses are requested and all systems in the service provider are in active status, ESF returns HostSystemData aggregate for each system and additional HostSystemData aggregate with "All" as the system name.|
 |`HostSystemRec.HostSystemInfo.HostSystemData.SystemStatus`|Active<br>Inactive||
 |`HostSystemRec.HostSystemStatus`|||
 |`HostSystemRec.HostSystemStatus.HostSystemStatusCode`|Valid||
