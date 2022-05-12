@@ -38,7 +38,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineInfo.RelationshipMgr`|||
 |`CreditLineInfo.RelationshipMgr.RelationshipMgrIdent`||Only one officer and one referral officer is supported per CreditLine account.|
 |`CreditLineInfo.RelationshipMgr.RelationshipRole`|Officer<br>ReferralOfficer||
-|`CreditLineInfo.OriginatingBranch`||This field refers to the two-digit branch number.<br>|
+|`CreditLineInfo.OriginatingBranch`||Two-digit branch number.<br>|
 |`CreditLineInfo.ResponsibleBranch`||Client-defined accounting branch is used to aggregate the accounts for similar accounting, processing and integration into general ledger. Accounting branch can also be used to group accounts for reporting.|
 |`CreditLineInfo.AcctTitleOption`|||
 |`CreditLineInfo.AcctTitle`|||
@@ -47,14 +47,14 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineInfo.AccountingMethod`|Class<br>CostCenter||
 |`CreditLineInfo.ClassCode`|||
 |`CreditLineInfo.AcctTypeCode`|||
-|`CreditLineInfo.ClientDefinedData`||***Required**<br>It is required to send the Flex Data metadata (such as field size) along with the user-entered account data.|
+|`CreditLineInfo.ClientDefinedData`||*Required<br>It is required to send the flex data metadata (such as field size) along with the user-entered account data.|
 |`CreditLineInfo.ClientDefinedData.DataClassType`|Portfolio||
-|`CreditLineInfo.ClientDefinedData.DataIdent`||This field refers to the client-defined field code used for reference and reporting. Valid values are between 0-90000.|
+|`CreditLineInfo.ClientDefinedData.DataIdent`||Client-defined field code used for reference and reporting.<br>Valid values are between 0-90000.|
 |`CreditLineInfo.ClientDefinedData.DataType`|Alpha<br>Boolean<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol||
-|`CreditLineInfo.ClientDefinedData.Value`||This field refers to the data value entered by the client for corresponding client-defined field.|
+|`CreditLineInfo.ClientDefinedData.Value`||Data value entered by the client for corresponding client-defined field.|
 |`CreditLineInfo.ClientDefinedData.DataLength`|||
-|`CreditLineInfo.ClientDefinedData.ExpDt`||This field refers to the expiration date entered by the user.|
-|`CreditLineInfo.ClientDefinedData.Desc`||This field refers to the label that appears for the field.|
+|`CreditLineInfo.ClientDefinedData.ExpDt`||Expiration date entered by the user.|
+|`CreditLineInfo.ClientDefinedData.Desc`||Label that appears for the field.|
 |`CreditLineInfo.ClientDefinedData.RequiredFlag`|true<br>false||
 |`CreditLineInfo.AcctStmtData`|||
 |`CreditLineInfo.AcctStmtData.NextStmtDt`|||
@@ -64,9 +64,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineInfo.PostAddr.RelationshipMgr`|||
 |`CreditLineInfo.PostAddr.RelationshipMgr.RelationshipMgrIdent`|||
 |`CreditLineInfo.PostAddr.RelationshipMgr.RelationshipRole`|||
-|`CreditLineInfo.PostAddr.OriginatingBranch`||This field refers to the branch region associated with the address record.|
-|`CreditLineInfo.PostAddr.ResponsibleBranch`||This field refers to the accounting branch associated with the address record.|
-|`CreditLineInfo.PostAddr.AddressIdent`||If an existing address is used, then a valid AddressIdent must be sent by consumer application. <br><br>If a new address is to be added, AddressIdent should not be sent. <br><br>|
+|`CreditLineInfo.PostAddr.OriginatingBranch`||Branch region associated with the address record.|
+|`CreditLineInfo.PostAddr.ResponsibleBranch`||Accounting branch associated with the address record.|
+|`CreditLineInfo.PostAddr.AddressIdent`||If an existing address is used, then a valid AddressIdent should be sent by consumer application. <br>If a new address is to be added, AddressIdent should not be sent. <br><br>|
 |`CreditLineInfo.PostAddr.AddrFormatType`|Label|All address types are in label format.|
 |`CreditLineInfo.PostAddr.Addr1`|||
 |`CreditLineInfo.PostAddr.Addr2`|||
@@ -94,7 +94,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineStatusRec`|||
 |`CreditLineStatusRec.CreditLineKeys`|||
 |`CreditLineStatusRec.CreditLineKeys.AcctKeys`|||
-|`CreditLineStatusRec.CreditLineKeys.AcctKeys.AcctId`||This field refers to the account number of the line entered by the user.<br>|
+|`CreditLineStatusRec.CreditLineKeys.AcctKeys.AcctId`||Account number of the line entered by the user.<br>|
 |`CreditLineStatusRec.CreditLineKeys.AcctKeys.AcctType`|CLOC||
 |`CreditLineStatusRec.CreditLineStatus`|||
 |`CreditLineStatusRec.CreditLineStatus.CreditLineStatusCode`|Valid||
