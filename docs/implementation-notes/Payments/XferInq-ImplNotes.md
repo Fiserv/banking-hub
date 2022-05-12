@@ -47,7 +47,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`XferRec.XferInfo.ToAcctRef.AcctKeys.AcctIdent.AcctIdentType`|AcctTypeCode||
 |`XferRec.XferInfo.ToAcctRef.AcctKeys.AcctIdent.AcctIdentValue`||***Conditionally Required**<br><br>This field is required when the transfer to account is an external transfer. <br><br>Value of 'None' indicates no external account is involved in transfer.<br><br>For transfer from a DDA (Demand Deposit) account, the valid external account types are None, DDA, SDA, Vendor and LOAN. <br><br>For transfer from SDA (Savings Account) account, the valid external account types are None, DDA, SDA, Vendor, LOAN, Check.<br><br>For transfer from a CDA account, the valid external account types are EXT, DDA, SDA, Check.|
 |`XferRec.XferInfo.ToAcctRef.AcctKeys.FIIdentType`|RoutingNum||
-|`XferRec.XferInfo.ToAcctRef.AcctKeys.FIIdent`||**Conditionally Required**<br><br>This is a mandatory field if, account type is external.|
+|`XferRec.XferInfo.ToAcctRef.AcctKeys.FIIdent`||***Conditionally Required**<br><br>This field is required if account type is external.|
 |`XferRec.XferInfo.CurAmt`|||
 |`XferRec.XferInfo.CurAmt.Amt`|||
 |`XferRec.XferInfo.CurAmt.CurCode`|||
@@ -71,16 +71,16 @@ The following tables list the provider-specific implemented fields for Request a
 |`XferRec.XferInfo.ExtendedXferData`|||
 |`XferRec.XferInfo.ExtendedXferData.ACHEntryClass`|PPD<br>CCD<br>WEB<br>CIE||
 |`XferRec.XferInfo.ExtendedXferData.NoticeData`|||
-|`XferRec.XferInfo.ExtendedXferData.NoticeData.NoticeType`|RegularNotice<br>ACHNotice||
+|`XferRec.XferInfo.ExtendedXferData.NoticeData.NoticeType`|RegularNotice<br>ACHNotice|Regular as well as ACH notice type is supported.|
 |`XferRec.XferInfo.ExtendedXferData.NoticeData.NoticeTypeEnumDesc`|||
 |`XferRec.XferInfo.ExtendedXferData.NoticeData.NoticeOption`|NoNotice<br>GenerateNotice<br>||
 |`XferRec.XferInfo.ExtendedXferData.NoticeData.NoticeOptionEnumDesc`|||
 |`XferRec.XferInfo.ExtendedXferData.ForcePostInd`|true<br>false||
-|`XferRec.XferInfo.ExtendedXferData.FeeIdent`|||
+|`XferRec.XferInfo.ExtendedXferData.FeeIdent`||This tag requires pre-installation tasks to define the values for the field.<br>This field refers to the Transfer Charge Code that identifies one out of 999 transfer fee specifications, to be automatically assessed when the transfer occurs.|
 |`XferRec.XferInfo.RefData`|||
-|`XferRec.XferInfo.RefData.RefType`|PayeeDesc<br>PayorDesc<br>XferDesc<br>TranCode||
+|`XferRec.XferInfo.RefData.RefType`|PayeeDesc<br>PayorDesc<br>XferDesc<br>TranCode|XferDesc refers to the transfer description and PayeeDesc refers to the payor identification.|
 |`XferRec.XferInfo.RefData.RefTypeEnumDesc`|||
-|`XferRec.XferInfo.RefData.RefIdent`|||
+|`XferRec.XferInfo.RefData.RefIdent`||This field refers to the vendor number.|
 |`XferRec.XferInfo.RefData.RefDesc`|||
 |`XferRec.XferInfo.LastXferAmt.Amt`|||
 |`XferRec.XferInfo.RemainingOccurrences`|||
