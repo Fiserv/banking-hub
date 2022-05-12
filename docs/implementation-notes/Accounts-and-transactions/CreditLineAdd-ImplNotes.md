@@ -47,7 +47,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineInfo.AccountingMethod`|Class<br>CostCenter||
 |`CreditLineInfo.ClassCode`|||
 |`CreditLineInfo.AcctTypeCode`|||
-|`CreditLineInfo.ClientDefinedData`||*Required<br>It is required to send the flex data metadata (such as field size) along with the user-entered account data.|
+|`CreditLineInfo.ClientDefinedData`||***Required**<br>It is required to send the flex data metadata (such as field size) along with the user-entered account data.|
 |`CreditLineInfo.ClientDefinedData.DataClassType`|Portfolio||
 |`CreditLineInfo.ClientDefinedData.DataIdent`||Client-defined field code used for reference and reporting.<br>Valid values are between 0-90000.|
 |`CreditLineInfo.ClientDefinedData.DataType`|Alpha<br>Boolean<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol||
