@@ -31,13 +31,13 @@ The following tables list the provider-specific implemented fields for Request a
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
-|`Status`||This aggregate is returned in the response and indicates the high-level status code and description of the operation. Error details/code are returned in case of a failure.|
+|`Status`||Aggregate is returned in the response and indicates the high-level status code and description of the operation. Error details/code are returned in case of a failure.|
 |`AcctRec`||  |
 |`AcctRec.AcctKeys`||  |
 |`AcctRec.AcctKeys.AcctId`||  |
 |`AcctRec.AcctKeys.AcctType`|CDA<br>|  |
 |`AcctRec.DepositAcctInfo`||  |
-|`AcctRec.DepositAcctInfo.AcctDtlStatus`||Field refers to the status code of an account and values are user-defined.|
+|`AcctRec.DepositAcctInfo.AcctDtlStatus`||Status code of an account.<br>Values are user-defined.|
 |`AcctRec.DepositAcctInfo.AcctDtlStatusEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.AcctDtlStatusDt`||  |
 |`AcctRec.DepositAcctInfo.AcctPref`||  |
@@ -66,7 +66,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.Term.TermUnits`|Days<br>Months<br>|  |
 |`AcctRec.DepositAcctInfo.Term.TermUnitsEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.TermToMaturity`||  |
-|`AcctRec.DepositAcctInfo.TermToMaturity.Count`||Value indicates the remaining number of monthns between current processing date and maturity date.|
+|`AcctRec.DepositAcctInfo.TermToMaturity.Count`||Value indicates the remaining number of months between current processing date and maturity date.|
 |`AcctRec.DepositAcctInfo.TermToMaturity.TermUnits`|Months|  |
 |`AcctRec.DepositAcctInfo.MaturityDt`||  |
 |`AcctRec.DepositAcctInfo.LastContactDt`||  |
@@ -76,17 +76,17 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RelationshipMgr`||  |
 |`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipMgrIdent`||Value of '0' indicates that an officer is not assigned to an account.|
 |`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipMgrIdentEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipRole`|Officer<br>SecondOfficer<br>ReferralOfficer|Values of indicate following:<br>- Officer refers to Responsibility Code.<br>- SecondOfficer refers to Opened by Responsibility Code.<br>- Referral Officer refers to Referral Responsibility Code.|
-|`AcctRec.DepositAcctInfo.OriginatingBranch`||OriginatingBranch refers to BranchNumber.|
+|`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipRole`|Officer<br>SecondOfficer<br>ReferralOfficer|Values of this field indicate following:<br>- Officer refers to Responsibility Code.<br>- SecondOfficer refers to Opened by Responsibility Code.<br>- Referral Officer refers to Referral Responsibility Code.|
+|`AcctRec.DepositAcctInfo.OriginatingBranch`||BranchNumber of the account.|
 |`AcctRec.DepositAcctInfo.OriginatingBranchEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.ResponsibleBranch`||ResponsibleBranch refers to AccountingGroup.|
+|`AcctRec.DepositAcctInfo.ResponsibleBranch`||AccountingGroup of an account.|
 |`AcctRec.DepositAcctInfo.NicknameOption`|Printed<br>NotPrinted|  |
 |`AcctRec.DepositAcctInfo.Nickname`||  |
 |`AcctRec.DepositAcctInfo.AcctTitleOption`|NotPrinted<br>PrintBefore<br>PrintAfter|  |
 |`AcctRec.DepositAcctInfo.AcctTitle`||User-defined title is printed as an additional name line on all customer correspondences.|
-|`AcctRec.DepositAcctInfo.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|Field indicates the type of customer correspondence that prints handling messages.|
+|`AcctRec.DepositAcctInfo.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|Type of customer correspondence that prints handling messages.|
 |`AcctRec.DepositAcctInfo.HandlingCode`||User-defined code to identify the handling message printed in the customer name and address area on the forms designated by the HandlingCodeOption.|
-|`AcctRec.DepositAcctInfo.OEDCode`||Field refers to the employee/officer/director code to indicate whether an individual is employee, officer or director of institution. Code is primarily used as selection criteria for reporting and values are 1-9.|
+|`AcctRec.DepositAcctInfo.OEDCode`||Code to indicate whether an individual is employee, officer or director of institution. The code is primarily used as selection criteria for reporting and values are 1-9.|
 |`AcctRec.DepositAcctInfo.OEDCodeEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.AccountingMethod`|Class<br>CostCenter<br>AcctType|  |
 |`AcctRec.DepositAcctInfo.AccountingValue`||  |
@@ -98,7 +98,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.ClientDefinedData.DataType`|Alpha<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol|  |
 |`AcctRec.DepositAcctInfo.ClientDefinedData.Value`||  |
 |`AcctRec.DepositAcctInfo.ClientDefinedData.DataLength`||  |
-|`AcctRec.DepositAcctInfo.ClientDefinedData.ExpDt`||If date is not defined in this field, flex data exists with an account for lifetime unitl the data is manually deleted.|
+|`AcctRec.DepositAcctInfo.ClientDefinedData.ExpDt`||If date is not defined in this field, flex data exists with an account for lifetime until the data is manually deleted.|
 |`AcctRec.DepositAcctInfo.ClientDefinedData.Desc`||Label that appears for the field.|
 |`AcctRec.DepositAcctInfo.ClientDefinedData.RequiredFlag`|true <br>false|  |
 |`AcctRec.DepositAcctInfo.AcctStmtData`||  |
@@ -138,7 +138,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RateChangeData.VarianceFactorType`|Variance <br>None|  |
 |`AcctRec.DepositAcctInfo.RateChangeData.RateVariance`||Field refers to the base adjuster/rate adjuster, used to maintain the interest of an account at a level above or below the rate in deposit rate specifications.<br>For accounts assigned to interest rate structures with multiple interest rates, all the rates in the structure are adjusted by the RateVariance.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate`||  |
-|`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.EffDt`||***Conditionally Required**<br>Field is required if pending rate information is applicable on an account.<br>This field indicates the effective date of pending interest cycle and pending rate. Cycle and rate changes are effective after completion of current interest cycle, beginning with the first full cycle after the pending rate effective date.|
+|`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.EffDt`||This field indicates the effective date of pending interest cycle and pending rate. Cycle and rate changes are effective after completion of current interest cycle, beginning with the first full cycle after the pending rate effective date.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.ProdIntRateId`||Field refers to pending deposit rate index. If value of '0' is received in the response, this indicates that pending interest on an account is not linked to the rate specification.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.VarianceFactorType`|Variance<br>Factor|  |
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.RateVariance`||Field refers to the rate adjuster, used to maintain the interest of an account at a level above or below the rate in deposit rate specifications.<br>For accounts assigned to interest rate structures with multiple interest rates, all the rates in the structure are adjusted by the RateVariance.|
@@ -150,7 +150,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RateChangeData.IncreaseOnlyInd`|true<br>false|Field indicates if rate variances can increase/decrease base rate or can only increase base rate.<br>Values indicate following:<br>- False: Either increase or decrease<br>- True: Increase only|
 |`AcctRec.DepositAcctInfo.RateChangeData.FloorRate`||  |
 |`AcctRec.DepositAcctInfo.RateChangeData.CeilingRate`||  |
-|`AcctRec.DepositAcctInfo.RateChangeData.RateChangeRecurType`|Maturity<br>Monthly<br>Weekly<br>Yearly<br>InterestCycle<br>None<br>Quarterly<br>Semiannually<br>BiWeekly<br>|Field if used in combination with RecurInterval refers to rate change frequency.|
+|`AcctRec.DepositAcctInfo.RateChangeData.RateChangeRecurType`|Maturity<br>Monthly<br>Weekly<br>Yearly<br>InterestCycle<br>None<br>Quarterly<br>Semiannually<br>BiWeekly<br>|If used in combination with RecurInterval refers to rate change frequency.|
 |`AcctRec.DepositAcctInfo.RateChangeData.RateChangeRecurTypeEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.RateChangeData.RecurInterval`||Field refers to rate change frequency and used along with with RateChangeRecurType.|
 |`AcctRec.DepositAcctInfo.RateChangeData.DayOfMonth`|1 thru 31|  |
@@ -175,8 +175,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.AcctPeriodData.Rate`||  |
 |`AcctRec.DepositAcctInfo.AcctPeriodData.LastOccuranceDt`||  |
 |`AcctRec.DepositAcctInfo.PostAddr`||  |
-|`AcctRec.DepositAcctInfo.PostAddr.NameIdent`||Each AddressType can have up to 3 name identifiers.|
-|`AcctRec.DepositAcctInfo.PostAddr.AddressIdent`||Unique address identifier is shared by primary and related seasonal address.|
+|`AcctRec.DepositAcctInfo.PostAddr.NameIdent`||Each AddressType can have up to three name identifiers.|
+|`AcctRec.DepositAcctInfo.PostAddr.AddressIdent`||AddressIdent is shared by primary and related seasonal address.|
 |`AcctRec.DepositAcctInfo.PostAddr.AddrUse`|Inquiry<br>Mailing|Value of AddrUse for primary and related seasonal address is 'Inquiry'.<br>Value of AddrUse for secondary and related seasonal address is 'Mailing'.<br>If "Mailing Name Options" parameter is configured at financial institution, it determines if account can have different inquiry and mailing address/names.<br>- If parameter is set to N, both inquiry and mailing addresses are same therefore, only inquiry address is returned by ESF.<br>- If parameter is set to Y, both inquiry and mailing addresses can be different therefore, ESF will return both in response.|
 |`AcctRec.DepositAcctInfo.PostAddr.AddrUseEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.AddrFormatType`|Label|Service provider address type is label.|
@@ -187,27 +187,27 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.PostAddr.Addr2`||Addr2 is supported if enabled under address and name length option in the miscellaneous specifications.|
 |`AcctRec.DepositAcctInfo.PostAddr.City`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.StateProv`||  |
-|`AcctRec.DepositAcctInfo.PostAddr.PostalCode`||Postal Code provides information about the ZIP code, if Address is a United States address. It also provides Postal Code information, if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they are will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 <br><br>Postal codes that are not ZIP codes are a string of characters.|
+|`AcctRec.DepositAcctInfo.PostAddr.PostalCode`||Postal code provides information about the ZIP code if Address is a United States address. It also provides Postal Code information if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 <br><br>Postal codes that are not ZIP codes are a string of characters.|
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeSource`|SPCountryCode|  |
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeValue`||Country code values for postal address are client-defined.|
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeValueEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.AddrType`|Primary<br>Seasonal<br>Secondary|Account can have one primary, one secondary and two seasonal addresses associated to it.<br>Seasonal address cannot exist as a single address record and is related to either primary or secondary address. Therefore, seasonal address shares AddressIdent and AddrUse fields with primary and secondary address.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame`||Field is applicable only if AddrType is seasonal.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.StartDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year, therefore, month and day of month shows actual start date of seasonal address. ESF response displays year as 9999 for start year.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.EndDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year, therefore, month and day of month shows actual end date of seasonal address. ESF response displays year as 9999 for end year.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame`||Applicable only if AddrType is seasonal.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.StartDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year; therefore, month and day of month shows actual start date of seasonal address. ESF response displays year as 9999 for start year.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.EndDt`||Applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year; therefore, month and day of month shows actual end date of seasonal address. ESF response displays year as 9999 for end year.|
 |`AcctRec.DepositAcctInfo.PostAddr.CensusTract`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.CensusBlock`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.ForeignFlag`|true<br>false|  |
-|`AcctRec.DepositAcctInfo.PostAddr.HandlingCode`||Field indicates special routing information for customer correspondence. Values of this field are client-defined.|
-|`AcctRec.DepositAcctInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>|Field is used to identify the type of customer correspondence that prints on handling messages as defined by HandlingCode.|
+|`AcctRec.DepositAcctInfo.PostAddr.HandlingCode`||Field indicates special routing information for customer correspondence. Values are client-defined.|
+|`AcctRec.DepositAcctInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>|Used to identify the type of customer correspondence that prints on handling messages as defined by HandlingCode.|
 |`AcctRec.DepositAcctInfo.PostAddr.MSACode`||  |
 |`AcctRec.DepositAcctInfo.TaxIdentType`|None<br>SSN<br>EIN<br>Foreign<br>ITIN<br>ATIN|  |
 |`AcctRec.DepositAcctInfo.TaxIdent`||  |
-|`AcctRec.DepositAcctInfo.TaxExempt`||Tax data from first party-to-account relationship (as sent by service provider) will be provided. Values are client-defined.|
+|`AcctRec.DepositAcctInfo.TaxExempt`||Tax data from first party-to-account relationship (as sent by service provider) will be provided.<br>Values are client-defined.|
 |`AcctRec.DepositAcctInfo.WithholdingOption`|None<br>StateTax<br>FederalTax<br>StateFederalTax|  |
 |`AcctRec.DepositAcctInfo.WithholdingOptionEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.WithholdingData`||Provides information about federal and state tax. This aggregate can be provided up to two times in the request.|
+|`AcctRec.DepositAcctInfo.WithholdingData`||Aggregate provides information about federal and state tax and can be provided up to two times in the request.|
 |`AcctRec.DepositAcctInfo.WithholdingData.WithholdingType`|FederalTax<br>StateTax|Value of FederalTax refers to the Federal Withholding Rate Override, and value of StateTax refers to State Withholding Rate Override.|
 |`AcctRec.DepositAcctInfo.WithholdingData.WithholdingPercent`||Rate value in this field overrides the federal or state withholding rate in institution specifications.|
 |`AcctRec.DepositAcctInfo.IntReportingCode`|None<br>1099_INT<br>1099_OID|  |
@@ -218,8 +218,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RiskRanking`|None<br>Low<br>Medium<br>High|Additional values can be client-defined.|
 |`AcctRec.DepositAcctInfo.TrnRestriction`||Client-defined transaction restriction code indicates the allowed (posted) and disallowed (non-posted) transaction codes on an account.|
 |`AcctRec.DepositAcctInfo.TrnRestrictionOvrd`||Field refers to user-defined restriction override code that allows a specific type of transaction to post on an account for one update, by overriding the transaction code. Override code is removed after the completion of update.|
-|`AcctRec.DepositAcctInfo.ElectronicBankingOpt`|InquiryOnly<br>Enabled<br>Disable|Field refers to electronic banking restriction.|
-|`AcctRec.DepositAcctInfo.ReportGroupCode`||Field refers to user-defined miscellanoeus code.|
+|`AcctRec.DepositAcctInfo.ElectronicBankingOpt`|InquiryOnly<br>Enabled<br>Disable|Electronic banking restriction on an account.|
+|`AcctRec.DepositAcctInfo.ReportGroupCode`||Field refers to user-defined miscellaneous code.|
 |`AcctRec.DepositAcctInfo.DocDistributionOption`||  |
 |`AcctRec.DepositAcctInfo.DocDistributionOptionEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.NAICS`||  |
@@ -234,7 +234,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RenewalData.RenewalOption`|AutomaticRenewal<br>NoRenewalAllowed<br>None|  |
 |`AcctRec.DepositAcctInfo.RenewalData.RenewalOptionEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.RenewalData.LastRenewalDt`||  |
-|`AcctRec.DepositAcctInfo.NegotiableInstrumentInd`|true<br>false|Field refers tocontract code.<br>Values indicate following:<br>- false: not negotiable<br>- true: negotiable|
+|`AcctRec.DepositAcctInfo.NegotiableInstrumentInd`|true<br>false|Field refers to contract code.<br>Values indicate following:<br>- false: not negotiable<br>- true: negotiable|
 |`AcctRec.DepositAcctInfo.IntDispData`||  |
 |`AcctRec.DepositAcctInfo.IntDispData.IntDisposition`|TransferToAcct<br>Check<br>Capitalize<br>|Field refers to interest payment method.|
 |`AcctRec.DepositAcctInfo.IntDispData.IntDistAcctRef`||  |
@@ -255,7 +255,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.IntDispData.NextIntPmtDt`||  |
 |`AcctRec.DepositAcctInfo.IntDispData.LastIntPmtDt`||  |
 |`AcctRec.DepositAcctInfo.RetirementAcctData`||  |
-|`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementPlanType`||Field refers to IRA plan. Value of 01-20 correspond to a plan type established in the ira description specifications.|
+|`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementPlanType`||IRA plan for an account.<br>Value of 01-20 corresponds to a plan type established in the IRA description specifications.|
 |`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementPlanTypeEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementStatus`|NotEligible<br>Eligible<br>DistributionDisability<br>DistributionDeath<br>DistributionNormal|Field refers to IRA status code.|
 |`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementStatusEnumDesc`||  |
@@ -266,10 +266,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.CollateralPledgeCode`||  |
 |`AcctRec.DepositAcctInfo.HoldInd`|true<br>false|  |
 |`AcctRec.DepositAcctInfo.StopInd`|true<br>false|  |
-|`AcctRec.DepositAcctInfo.CheckNameOption`|None<br>JointOr<br>JointAnd|Field is used to control the method of listing multiple account owner names on interest and distribution checks.|
+|`AcctRec.DepositAcctInfo.CheckNameOption`|None<br>JointOr<br>JointAnd|Controls the method of listing multiple account owner names on interest and distribution checks.|
 |`AcctRec.DepositAcctInfo.ForfeitureCalcMethod`||  |
 |`AcctRec.AcctStatus`||  |
-|`AcctRec.AcctStatus.AcctStatusCode`|Valid|Field refers to internal EFX status.|
+|`AcctRec.AcctStatus.AcctStatusCode`|Valid|Internal EFX status.|
 |`AcctRec.AcctStatus.EffDt`||  |
 <!-- type: tab -->
 
@@ -293,13 +293,13 @@ The following tables list the provider-specific implemented fields for Request a
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
-|`Status`||This aggregate is returned in the response and indicates the high-level status code and description of the operation. Error details/code are returned in case of a failure.|
+|`Status`||Aggregate is returned in the response and indicates the high-level status code and description of the operation. Error details/code are returned in case of a failure.|
 |`AcctRec`||  |
 |`AcctRec.AcctKeys`||  |
 |`AcctRec.AcctKeys.AcctId`||  |
 |`AcctRec.AcctKeys.AcctType`|DDA<br>|  |
 |`AcctRec.DepositAcctInfo`||  |
-|`AcctRec.DepositAcctInfo.AcctDtlStatus`|Active<br>Inactive<br>Dormant<br>ChargedOff<br>ClientControlled<br>Closed|Field refers to the status code of an account and values are user-defined.|
+|`AcctRec.DepositAcctInfo.AcctDtlStatus`|Active<br>Inactive<br>Dormant<br>ChargedOff<br>ClientControlled<br>Closed|Status code of an account.<br>Values are user-defined.|
 |`AcctRec.DepositAcctInfo.AcctDtlStatusEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.AcctDtlStatusDt`||  |
 |`AcctRec.DepositAcctInfo.AcctPref`||  |
@@ -325,18 +325,18 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RelationshipMgr`||  |
 |`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipMgrIdent`||Value of '0' indicates that an officer is not assigned to an account.|
 |`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipMgrIdentEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipRole`|Officer<br>SecondOfficer<br>ReferralOfficer<br>|Values of indicate following:<br>- Officer refers to Responsibility Code.<br>- SecondOfficer refers to Opened by Responsibility Code.<br>- Referral Officer refers to Referral Responsibility Code.|
-|`AcctRec.DepositAcctInfo.OriginatingBranch`||OriginatingBranch refers to BranchNumber.|
+|`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipRole`|Officer<br>SecondOfficer<br>ReferralOfficer<br>|Values of this field indicate following:<br>- Officer refers to Responsibility Code.<br>- SecondOfficer refers to Opened by Responsibility Code.<br>- Referral Officer refers to Referral Responsibility Code.|
+|`AcctRec.DepositAcctInfo.OriginatingBranch`||BranchNumber of the account.|
 |`AcctRec.DepositAcctInfo.OriginatingBranchEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.ResponsibleBranch`||ResponsibleBranch refers to AccountingGroup.|
+|`AcctRec.DepositAcctInfo.ResponsibleBranch`||AccountingGroup of an account.|
 |`AcctRec.DepositAcctInfo.ResponsibleBranchEnumDesc`|||
 |`AcctRec.DepositAcctInfo.NicknameOption`|Printed<br>NotPrinted|  |
 |`AcctRec.DepositAcctInfo.Nickname`||  |
 |`AcctRec.DepositAcctInfo.AcctTitleOption`||  |
 |`AcctRec.DepositAcctInfo.AcctTitle`||User-defined title is printed as an additional name line on all customer correspondences.|
-|`AcctRec.DepositAcctInfo.HandlingCodeOption`|Statements<br>StatementsNotices<br>Notices<br>DoNotPrint<br>UsePortfolio|Field indicates the type of customer correspondence that prints handling messages.|
+|`AcctRec.DepositAcctInfo.HandlingCodeOption`|Statements<br>StatementsNotices<br>Notices<br>DoNotPrint<br>UsePortfolio|Type of customer correspondence that prints handling messages.|
 |`AcctRec.DepositAcctInfo.HandlingCode`||User-defined code to identify the handling message printed in the customer name and address area on the forms designated by the HandlingCodeOption.|
-|`AcctRec.DepositAcctInfo.OEDCode`||Field refers to the employee/officer/director code to indicate whether an individual is employee, officer or director of institution. Code is primarily used as selection criteria for reporting and values are 1-9.|
+|`AcctRec.DepositAcctInfo.OEDCode`||Code to indicate whether an individual is employee, officer or director of institution. The code is primarily used as selection criteria for reporting and values are 1-9.|
 |`AcctRec.DepositAcctInfo.OEDCodeEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.AccountingMethod`|Class<br>CostCenter<br>AcctType|  |
 |`AcctRec.DepositAcctInfo.AccountingValue`||  |
@@ -348,7 +348,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.ClientDefinedData.DataType`|Alpha<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol|  |
 |`AcctRec.DepositAcctInfo.ClientDefinedData.Value`||  |
 |`AcctRec.DepositAcctInfo.ClientDefinedData.DataLength`||  |
-|`AcctRec.DepositAcctInfo.ClientDefinedData.ExpDt`||If date is not defined in this field, flex data exists with an account for lifetime unitl the data is manually deleted.|
+|`AcctRec.DepositAcctInfo.ClientDefinedData.ExpDt`||If date is not defined in this field, flex data exists with an account for lifetime until the data is manually deleted.|
 |`AcctRec.DepositAcctInfo.ClientDefinedData.Desc`||Label that appears for the field.|
 |`AcctRec.DepositAcctInfo.ClientDefinedData.RequiredFlag`|true<br>false|  |
 |`AcctRec.DepositAcctInfo.AcctStmtData`||  |
@@ -393,7 +393,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RateChangeData.RateFactor`|||
 |`AcctRec.DepositAcctInfo.RateChangeData.RateVariance`||Field refers to the base adjuster/rate adjuster, used to maintain the interest of an account at a level above or below the rate in deposit rate specifications.<br>For accounts assigned to interest rate structures with multiple interest rates, all the rates in the structure are adjusted by the RateVariance.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate`||  |
-|`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.EffDt`||***Conditionally Required**<br>Field is required if pending rate information is applicable on an account.<br>This field indicates the effective date of pending interest cycle and pending rate. Cycle and rate changes are effective after completion of current interest cycle, beginning with the first full cycle after the pending rate effective date.|
+|`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.EffDt`||This field indicates the effective date of pending interest cycle and pending rate. Cycle and rate changes are effective after completion of current interest cycle, beginning with the first full cycle after the pending rate effective date.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.ProdIntRateId`||Field refers to pending deposit rate index. If value of '0' is received in the response, this indicates that pending interest on an account is not linked to the rate specification.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.VarianceFactorType`|Variance<br>Factor|  |
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.RateVariance`||Field refers to the rate adjuster, used to maintain the interest of an account at a level above or below the rate in deposit rate specifications.<br>For accounts assigned to interest rate structures with multiple interest rates, all the rates in the structure are adjusted by the RateVariance.|
@@ -421,8 +421,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.TranCounter.Count`|||
 |`AcctRec.DepositAcctInfo.TranCounter.TranCounterType`|RegD6<br>TranLastCurrStmt||
 |`AcctRec.DepositAcctInfo.PostAddr`||  |
-|`AcctRec.DepositAcctInfo.PostAddr.NameIdent`||Each AddressType can have up to 3 name identifiers.|
-|`AcctRec.DepositAcctInfo.PostAddr.AddressIdent`||Unique address identifier is shared by primary and related seasonal address.|
+|`AcctRec.DepositAcctInfo.PostAddr.NameIdent`||Each AddressType can have up to three name identifiers.|
+|`AcctRec.DepositAcctInfo.PostAddr.AddressIdent`||AddressIdent is shared by primary and related seasonal address.|
 |`AcctRec.DepositAcctInfo.PostAddr.AddrUse`|Inquiry<br>Mailing|Value of AddrUse for primary and related seasonal address is 'Inquiry'.<br>Value of AddrUse for secondary and related seasonal address is 'Mailing'.<br>If "Mailing Name Options" parameter is configured at financial institution, it determines if account can have different inquiry and mailing address/names.<br>- If parameter is set to N, both inquiry and mailing addresses are same therefore, only inquiry address is returned by ESF.<br>- If parameter is set to Y, both inquiry and mailing addresses can be different therefore, ESF will return both in response.|
 |`AcctRec.DepositAcctInfo.PostAddr.AddrFormatType`|Label|Service provider address type is label.|
 |`AcctRec.DepositAcctInfo.PostAddr.FullName1`||Field refers to first name of the customer used for account mailing and enquiry purpose.|
@@ -432,27 +432,27 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.PostAddr.Addr2`||Addr2 is supported if enabled under address and name length option in the miscellaneous specifications.|
 |`AcctRec.DepositAcctInfo.PostAddr.City`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.StateProv`||  |
-|`AcctRec.DepositAcctInfo.PostAddr.PostalCode`||Postal Code provides information about the ZIP code, if Address is a United States address. It also provides Postal Code information, if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they are will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 <br><br>Postal codes that are not ZIP codes are a string of characters.|
+|`AcctRec.DepositAcctInfo.PostAddr.PostalCode`||Postal code provides information about the ZIP code if Address is a United States address. It also provides Postal Code information if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 <br><br>Postal codes that are not ZIP codes are a string of characters.|
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeSource`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeValue`||Country code values for postal address are client-defined.|
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeValueEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.AddrType`|Primary<br>Secondary<br>Seasonal|Account can have one primary, one secondary and two seasonal addresses associated to it.<br>Seasonal address cannot exist as a single address record and is related to either primary or secondary address. Therefore, seasonal address shares AddressIdent and AddrUse fields with primary and secondary address.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame`||Field is applicable only if AddrType is seasonal.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.StartDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year, therefore, month and day of month shows actual start date of seasonal address. ESF response displays year as 9999 for start year.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.EndDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year, therefore, month and day of month shows actual end date of seasonal address. ESF response displays year as 9999 for end year.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame`||Applicable only if AddrType is seasonal.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.StartDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year; therefore, month and day of month shows actual start date of seasonal address. ESF response displays year as 9999 for start year.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.EndDt`||Applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year; therefore, month and day of month shows actual end date of seasonal address. ESF response displays year as 9999 for end year.|
 |`AcctRec.DepositAcctInfo.PostAddr.CensusTract`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.CensusBlock`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.ForeignFlag`|true<br>false|  |
-|`AcctRec.DepositAcctInfo.PostAddr.HandlingCode`||Field indicates special routing information for customer correspondence. Values of this field are client-defined.|
-|`AcctRec.DepositAcctInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|Field is used to identify the type of customer correspondence that prints on handling messages as defined by HandlingCode.|
+|`AcctRec.DepositAcctInfo.PostAddr.HandlingCode`||Field indicates special routing information for customer correspondence. Values are client-defined.|
+|`AcctRec.DepositAcctInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|Used to identify the type of customer correspondence that prints on handling messages as defined by HandlingCode.|
 |`AcctRec.DepositAcctInfo.PostAddr.MSACode`||  |
 |`AcctRec.DepositAcctInfo.TaxIdentType`|None<br>SSN<br>EIN<br>Foreign<br>ITIN<br>ATIN|  |
 |`AcctRec.DepositAcctInfo.TaxIdent`||  |
-|`AcctRec.DepositAcctInfo.TaxExempt`||Tax data from first party-to-account relationship (as sent by service provider) will be provided. Values are client-defined.|
+|`AcctRec.DepositAcctInfo.TaxExempt`||Tax data from first party-to-account relationship (as sent by service provider) will be provided.<br>Values are client-defined.|
 |`AcctRec.DepositAcctInfo.WithholdingOption`|None<br>StateTax<br>FederalTax<br>StateFederalTax|  |
 |`AcctRec.DepositAcctInfo.WithholdingOptionEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.WithholdingData`||Provides information about federal and state tax. This aggregate can be provided up to two times in the request.|
+|`AcctRec.DepositAcctInfo.WithholdingData`||Aggregate provides information about federal and state tax and can be provided up to two times in the request.|
 |`AcctRec.DepositAcctInfo.WithholdingData.WithholdingType`|FederalTax<br>StateTax|Value of FederalTax refers to the Federal Withholding Rate Override, and value of StateTax refers to State Withholding Rate Override.|
 |`AcctRec.DepositAcctInfo.WithholdingData.WithholdingPercent`||Rate value in this field overrides the federal or state withholding rate in institution specifications.|
 |`AcctRec.DepositAcctInfo.IntReportingInd`|true<br>false|  |
@@ -482,8 +482,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.TrnRestriction`||Client-defined transaction restriction code indicates the allowed (posted) and disallowed (non-posted) transaction codes on an account.|
 |`AcctRec.DepositAcctInfo.TrnRestrictionOvrd`||Field refers to user-defined restriction override code that allows a specific type of transaction to post on an account for one update, by overriding the transaction code. Override code is removed after the completion of update.|
 |`AcctRec.DepositAcctInfo.MemoPostProcessOptOvrd`|Detail<br>DetailEnhanced<br>Summary<br>None||
-|`AcctRec.DepositAcctInfo.ElectronicBankingOpt`|InquiryOnly<br>Enabled<br>Disable|Field refers to electronic banking restriction.|
-|`AcctRec.DepositAcctInfo.ReportGroupCode`||Field refers to user-defined miscellanoeus code.|
+|`AcctRec.DepositAcctInfo.ElectronicBankingOpt`|InquiryOnly<br>Enabled<br>Disable|Electronic banking restriction on an account.|
+|`AcctRec.DepositAcctInfo.ReportGroupCode`||Field refers to user-defined miscellaneous code.|
 |`AcctRec.DepositAcctInfo.DocDistributionOption`||  |
 |`AcctRec.DepositAcctInfo.DocDistributionOptionEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.NAICS`||  |
@@ -595,7 +595,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.HoldInd`|true<br>false|  |
 |`AcctRec.DepositAcctInfo.StopInd`|true<br>false|  |
 |`AcctRec.AcctStatus`||  |
-|`AcctRec.AcctStatus.AcctStatusCode`|Valid|Field refers to internal EFX status.|
+|`AcctRec.AcctStatus.AcctStatusCode`|Valid|Internal EFX status.|
 |`AcctRec.AcctStatus.EffDt`||  |
 <!-- type: tab -->
 
@@ -618,13 +618,13 @@ The following tables list the provider-specific implemented fields for Request a
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
-|`Status`||This aggregate is returned in the response and indicates the high-level status code and description of the operation. Error details/code are returned in case of a failure.|
+|`Status`||Aggregate is returned in the response and indicates the high-level status code and description of the operation. Error details/code are returned in case of a failure.|
 |`AcctRec`||  |
 |`AcctRec.AcctKeys`||  |
 |`AcctRec.AcctKeys.AcctId`||  |
 |`AcctRec.AcctKeys.AcctType`|SDA|  |
 |`AcctRec.DepositAcctInfo`||  |
-|`AcctRec.DepositAcctInfo.AcctDtlStatus`|Active<br>Inactive<br>Dormant<br>ChargedOff<br>ClientControlled<br>Closed|Field refers to the status code of an account and values are user-defined.|
+|`AcctRec.DepositAcctInfo.AcctDtlStatus`|Active<br>Inactive<br>Dormant<br>ChargedOff<br>ClientControlled<br>Closed|Status code of an account.<br>Values are user-defined.|
 |`AcctRec.DepositAcctInfo.AcctDtlStatusEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.AcctDtlStatusDt`||  |
 |`AcctRec.DepositAcctInfo.AcctPref`||  |
@@ -656,18 +656,18 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RelationshipMgr`||  |
 |`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipMgrIdent`||Value of '0' indicates that an officer is not assigned to an account.|
 |`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipMgrIdentEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipRole`|Ofiicer<br>SecondOfficer<br>ReferralOfficer|Values of indicate following:<br>- Officer refers to Responsibility Code.<br>- SecondOfficer refers to Opened by Responsibility Code.<br>- Referral Officer refers to Referral Responsibility Code.|
-|`AcctRec.DepositAcctInfo.OriginatingBranch`||OriginatingBranch refers to BranchNumber.|
+|`AcctRec.DepositAcctInfo.RelationshipMgr.RelationshipRole`|Ofiicer<br>SecondOfficer<br>ReferralOfficer|Values of this field indicate following:<br>- Officer refers to Responsibility Code.<br>- SecondOfficer refers to Opened by Responsibility Code.<br>- Referral Officer refers to Referral Responsibility Code.|
+|`AcctRec.DepositAcctInfo.OriginatingBranch`||BranchNumber of the account.|
 |`AcctRec.DepositAcctInfo.OriginatingBranchEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.ResponsibleBranch`||ResponsibleBranch refers to AccountingGroup.|
+|`AcctRec.DepositAcctInfo.ResponsibleBranch`||AccountingGroup of an account.|
 |`AcctRec.DepositAcctInfo.ResponsibleBranchEnumDesc`|||
 |`AcctRec.DepositAcctInfo.NicknameOption`|Printed<br>NotPrinted|  |
 |`AcctRec.DepositAcctInfo.Nickname`||  |
 |`AcctRec.DepositAcctInfo.AcctTitleOption`|PrintAfter<br>PrintBefore<br>NotPrinted|  |
 |`AcctRec.DepositAcctInfo.AcctTitle`||User-defined title is printed as an additional name line on all customer correspondences.|
-|`AcctRec.DepositAcctInfo.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|Field indicates the type of customer correspondence that prints handling messages.|
+|`AcctRec.DepositAcctInfo.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|Type of customer correspondence that prints handling messages.|
 |`AcctRec.DepositAcctInfo.HandlingCode`||User-defined code to identify the handling message printed in the customer name and address area on the forms designated by the HandlingCodeOption.|
-|`AcctRec.DepositAcctInfo.OEDCode`||Field refers to the employee/officer/director code to indicate whether an individual is employee, officer or director of institution. Code is primarily used as selection criteria for reporting and values are 1-9.|
+|`AcctRec.DepositAcctInfo.OEDCode`||Code to indicate whether an individual is employee, officer or director of institution. The code is primarily used as selection criteria for reporting and values are 1-9.|
 |`AcctRec.DepositAcctInfo.OEDCodeEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.AccountingMethod`|Class<br>CostCenter<br>AcctType|  |
 |`AcctRec.DepositAcctInfo.AccountingValue`||  |
@@ -679,7 +679,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.ClientDefinedData.DataType`|Alpha<br>Boolean<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol|  |
 |`AcctRec.DepositAcctInfo.ClientDefinedData.Value`||  |
 |`AcctRec.DepositAcctInfo.ClientDefinedData.DataLength`||  |
-|`AcctRec.DepositAcctInfo.ClientDefinedData.ExpDt`||If date is not defined in this field, flex data exists with an account for lifetime unitl the data is manually deleted.|
+|`AcctRec.DepositAcctInfo.ClientDefinedData.ExpDt`||If date is not defined in this field, flex data exists with an account for lifetime until the data is manually deleted.|
 |`AcctRec.DepositAcctInfo.ClientDefinedData.Desc`||Label that appears for the field.|
 |`AcctRec.DepositAcctInfo.ClientDefinedData.RequiredFlag`|true<br>false|  |
 |`AcctRec.DepositAcctInfo.AcctStmtData`||  |
@@ -730,7 +730,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RateChangeData.VarianceFactorType`|Variance<br>Factor|  |
 |`AcctRec.DepositAcctInfo.RateChangeData.RateVariance`||Field refers to the base adjuster/rate adjuster, used to maintain the interest of an account at a level above or below the rate in deposit rate specifications.<br>For accounts assigned to interest rate structures with multiple interest rates, all the rates in the structure are adjusted by the RateVariance.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate`||  |
-|`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.EffDt`||***Conditionally Required**<br>Field is required if pending rate information is applicable on an account.<br>This field indicates the effective date of pending interest cycle and pending rate. Cycle and rate changes are effective after completion of current interest cycle, beginning with the first full cycle after the pending rate effective date.|
+|`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.EffDt`||This field indicates the effective date of pending interest cycle and pending rate. Cycle and rate changes are effective after completion of current interest cycle, beginning with the first full cycle after the pending rate effective date.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.ProdIntRateId`||Field refers to pending deposit rate index. If value of '0' is received in the response, this indicates that pending interest on an account is not linked to the rate specification.|
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.VarianceFactorType`|Variance<br>Factor|  |
 |`AcctRec.DepositAcctInfo.RateChangeData.PendingRate.RateVariance`||Field refers to the rate adjuster, used to maintain the interest of an account at a level above or below the rate in deposit rate specifications.<br>For accounts assigned to interest rate structures with multiple interest rates, all the rates in the structure are adjusted by the RateVariance.|
@@ -742,7 +742,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RateChangeData.IncreaseOnlyInd`|true<br>false|Field indicates if rate variances can increase/decrease base rate or can only increase base rate.<br>Values indicate following:<br>- False: Either increase or decrease<br>- True: Increase only|
 |`AcctRec.DepositAcctInfo.RateChangeData.FloorRate`||  |
 |`AcctRec.DepositAcctInfo.RateChangeData.CeilingRate`||  |
-|`AcctRec.DepositAcctInfo.RateChangeData.RateChangeRecurType`|Daily<br>Maturity<br>Monthly<br>Weekly<br>Yearly<br>SemiYearly<br>InterestCycle<br>None<br>Quarterly<br>BiWeekly<br>|Field if used in combination with RecurInterval refers to rate change frequency.|
+|`AcctRec.DepositAcctInfo.RateChangeData.RateChangeRecurType`|Daily<br>Maturity<br>Monthly<br>Weekly<br>Yearly<br>SemiYearly<br>InterestCycle<br>None<br>Quarterly<br>BiWeekly<br>|If used in combination with RecurInterval refers to rate change frequency.|
 |`AcctRec.DepositAcctInfo.RateChangeData.RateChangeRecurTypeEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.RateChangeData.RecurInterval`||Field refers to rate change frequency and used along with with RateChangeRecurType.|
 |`AcctRec.DepositAcctInfo.RateChangeData.DayOfMonth`|1 thru 31|  |
@@ -773,8 +773,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.TranCounter.Count`|||
 |`AcctRec.DepositAcctInfo.TranCounter.TranCounterType`|RegD6||
 |`AcctRec.DepositAcctInfo.PostAddr`||  |
-|`AcctRec.DepositAcctInfo.PostAddr.NameIdent`||Each AddressType can have up to 3 name identifiers.|
-|`AcctRec.DepositAcctInfo.PostAddr.AddressIdent`||Unique address identifier is shared by primary and related seasonal address.|
+|`AcctRec.DepositAcctInfo.PostAddr.NameIdent`||Each AddressType can have up to three name identifiers.|
+|`AcctRec.DepositAcctInfo.PostAddr.AddressIdent`||AddressIdent is shared by primary and related seasonal address.|
 |`AcctRec.DepositAcctInfo.PostAddr.AddrUse`|Inquiry<br>Mailing|Value of AddrUse for primary and related seasonal address is 'Inquiry'.<br>Value of AddrUse for secondary and related seasonal address is 'Mailing'.<br>If "Mailing Name Options" parameter is configured at financial institution, it determines if account can have different inquiry and mailing address/names.<br>- If parameter is set to N, both inquiry and mailing addresses are same therefore, only inquiry address is returned by ESF.<br>- If parameter is set to Y, both inquiry and mailing addresses can be different therefore, ESF will return both in response.|
 |`AcctRec.DepositAcctInfo.PostAddr.AddrUseEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.AddrFormatType`|Label|Service provider address type is label.|
@@ -785,27 +785,27 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.PostAddr.Addr2`||Addr2 is supported if enabled under address and name length option in the miscellaneous specifications.|
 |`AcctRec.DepositAcctInfo.PostAddr.City`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.StateProv`||  |
-|`AcctRec.DepositAcctInfo.PostAddr.PostalCode`||Postal Code provides information about the ZIP code, if Address is a United States address. It also provides Postal Code information, if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they are will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 <br><br>Postal codes that are not ZIP codes are a string of characters.|
+|`AcctRec.DepositAcctInfo.PostAddr.PostalCode`||Postal code provides information about the ZIP code if Address is a United States address. It also provides Postal Code information if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 <br><br>Postal codes that are not ZIP codes are a string of characters.|
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeSource`|SPCountryCode|  |
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeValue`||Country code values for postal address are client-defined.|
 |`AcctRec.DepositAcctInfo.PostAddr.CountryCode.CountryCodeValueEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.AddrType`|Primary<br>Seasonal<br>Secondary|Account can have one primary, one secondary and two seasonal addresses associated to it.<br>Seasonal address cannot exist as a single address record and is related to either primary or secondary address. Therefore, seasonal address shares AddressIdent and AddrUse fields with primary and secondary address.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame`||Field is applicable only if AddrType is seasonal.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.StartDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year, therefore, month and day of month shows actual start date of seasonal address. ESF response displays year as 9999 for start year.|
-|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.EndDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year, therefore, month and day of month shows actual end date of seasonal address. ESF response displays year as 9999 for end year.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame`||Applicable only if AddrType is seasonal.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.StartDt`||Field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year; therefore, month and day of month shows actual start date of seasonal address. ESF response displays year as 9999 for start year.|
+|`AcctRec.DepositAcctInfo.PostAddr.TimeFrame.EndDt`||Applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year; therefore, month and day of month shows actual end date of seasonal address. ESF response displays year as 9999 for end year.|
 |`AcctRec.DepositAcctInfo.PostAddr.CensusTract`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.CensusBlock`||  |
 |`AcctRec.DepositAcctInfo.PostAddr.ForeignFlag`|true<br>false|  |
-|`AcctRec.DepositAcctInfo.PostAddr.HandlingCode`||Field indicates special routing information for customer correspondence. Values of this field are client-defined.|
-|`AcctRec.DepositAcctInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|Field is used to identify the type of customer correspondence that prints on handling messages as defined by HandlingCode.|
+|`AcctRec.DepositAcctInfo.PostAddr.HandlingCode`||Field indicates special routing information for customer correspondence. Values are client-defined.|
+|`AcctRec.DepositAcctInfo.PostAddr.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|Used to identify the type of customer correspondence that prints on handling messages as defined by HandlingCode.|
 |`AcctRec.DepositAcctInfo.PostAddr.MSACode`||  |
 |`AcctRec.DepositAcctInfo.TaxIdentType`|None<br>SSN<br>EIN<br>Foreign<br>ITIN<br>ATIN|  |
 |`AcctRec.DepositAcctInfo.TaxIdent`||  |
-|`AcctRec.DepositAcctInfo.TaxExempt`||Tax data from first party-to-account relationship (as sent by service provider) will be provided. Values are client-defined.|
+|`AcctRec.DepositAcctInfo.TaxExempt`||Tax data from first party-to-account relationship (as sent by service provider) will be provided.<br>Values are client-defined.|
 |`AcctRec.DepositAcctInfo.WithholdingOption`|None<br>FederalTax<br>StateTax<br>StateFederalTax|  |
 |`AcctRec.DepositAcctInfo.WithholdingOptionEnumDesc`||  |
-|`AcctRec.DepositAcctInfo.WithholdingData`||Provides information about federal and state tax. This aggregate can be provided up to two times in the request.|
+|`AcctRec.DepositAcctInfo.WithholdingData`||Aggregate provides information about federal and state tax and can be provided up to two times in the request.|
 |`AcctRec.DepositAcctInfo.WithholdingData.WithholdingType`|FederalTax<br>StateTax|Value of FederalTax refers to the Federal Withholding Rate Override, and value of StateTax refers to State Withholding Rate Override.|
 |`AcctRec.DepositAcctInfo.WithholdingData.WithholdingPercent`||Rate value in this field overrides the federal or state withholding rate in institution specifications.|
 |`AcctRec.DepositAcctInfo.IntReportingInd`|true<br>false|  |
@@ -834,8 +834,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.RiskRanking`|None<br>Low<br>Medium<br>High|Additional values can be client-defined.|
 |`AcctRec.DepositAcctInfo.TrnRestriction`||Client-defined transaction restriction code indicates the allowed (posted) and disallowed (non-posted) transaction codes on an account.|
 |`AcctRec.DepositAcctInfo.TrnRestrictionOvrd`||Field refers to user-defined restriction override code that allows a specific type of transaction to post on an account for one update, by overriding the transaction code. Override code is removed after the completion of update.|
-|`AcctRec.DepositAcctInfo.ElectronicBankingOpt`|InquiryOnly<br>Enabled<br>Disable|Field refers to electronic banking restriction.|
-|`AcctRec.DepositAcctInfo.ReportGroupCode`||Field refers to user-defined miscellanoeus code.|
+|`AcctRec.DepositAcctInfo.ElectronicBankingOpt`|InquiryOnly<br>Enabled<br>Disable|Electronic banking restriction on an account.|
+|`AcctRec.DepositAcctInfo.ReportGroupCode`||Field refers to user-defined miscellaneous code.|
 |`AcctRec.DepositAcctInfo.DocDistributionOption`||  |
 |`AcctRec.DepositAcctInfo.DocDistributionOptionEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.NAICS`||  |
@@ -873,7 +873,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.IntDispData.NextIntPmtDt`||  |
 |`AcctRec.DepositAcctInfo.IntDispData.LastIntPmtDt`||  |
 |`AcctRec.DepositAcctInfo.RetirementAcctData`||  |
-|`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementPlanType`||Field refers to IRA plan. Value of 01-20 correspond to a plan type established in the ira description specifications.|
+|`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementPlanType`||IRA plan for an account.<br>Value of 01-20 corresponds to a plan type established in the IRA description specifications.|
 |`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementPlanTypeEnumDesc`||  |
 |`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementStatus`|NotEligible<br>Eligible<br>DistributionDisability<br>DistributionDeath<br>DistributionNormal|Field refers to IRA status code.|
 |`AcctRec.DepositAcctInfo.RetirementAcctData.RetirementStatusEnumDesc`||  |
@@ -930,10 +930,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctRec.DepositAcctInfo.NSFEntry.NSFIdent`|||
 |`AcctRec.DepositAcctInfo.NSFEntry.NSFDt`|||
 |`AcctRec.DepositAcctInfo.NSFEntry.Count`|||
-|`AcctRec.DepositAcctInfo.CheckNameOption`|JointAnd<br>JointOr<br>None|Field is used to control the method of listing multiple account owner names on interest and distribution checks.|
+|`AcctRec.DepositAcctInfo.CheckNameOption`|JointAnd<br>JointOr<br>None|Controls the method of listing multiple account owner names on interest and distribution checks.|
 |`AcctRec.DepositAcctInfo.ForfeitureCalcMethod`|Forfeiture1<br>Forfeiture2<br>Forfeiture3|  |
 |`AcctRec.AcctStatus`||  |
-|`AcctRec.AcctStatus.AcctStatusCode`|Valid|Field refers to internal EFX status.|
+|`AcctRec.AcctStatus.AcctStatusCode`|Valid|Internal EFX status.|
 |`AcctRec.AcctStatus.EffDt`||  |
 
 <!-- type: tab-end -->
