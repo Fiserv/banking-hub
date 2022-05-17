@@ -1,4 +1,4 @@
-# Implementation Notes for Inq-CDA Acct
+# Implementation Notes for Get Account
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 
 <!-- 
