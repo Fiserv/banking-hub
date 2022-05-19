@@ -1,4 +1,4 @@
-# Implementation Notes for Reverse Debit
+# Implementation Notes for Rev Debit
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -31,7 +31,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`DebitInfo.CompositeCurAmt.CurAmt.CurCode`|||
 |`DebitInfo.CompositeCurAmt.CurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`DebitInfo.CompositeCurAmt.CurAmt.CurCode.CurCodeTypeEnumDesc`|||
-|`DebitInfo.CompositeCurAmt.CurAmt.CurCode.CurCodeValue`||Only USD is accepted as a currency code.|
+|`DebitInfo.CompositeCurAmt.CurAmt.CurCode.CurCodeValue`||Only USD is supported and expected to be sent in this field.|
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
@@ -47,12 +47,12 @@ The following tables list the provider-specific implemented fields for Request a
 |`DebitStatusRec.DebitStatus.EffDt`|||
 |`Receipt`|||
 |`Receipt.AcctBal`|||
-|`Receipt.AcctBal.BalType`|Avail<br>PrevLedger<br>PrevAvail<br>MemoLedger <br>|The balance types PrevLedger and PrevAvail are the current values on the core at the time of the request while MemoLeger and Avail reflect the new balance after applying the transaction.<br><br>|
+|`Receipt.AcctBal.BalType`|Avail<br>PrevLedger<br>PrevAvail<br>MemoLedger <br>|Balance types PrevLedger and PrevAvail are the current values on the core at the time of the request while MemoLeger and Avail reflect the new balance after applying the transaction.<br><br>|
 |`Receipt.AcctBal.CurAmt`|||
 |`Receipt.AcctBal.CurAmt.Amt`|||
 |`Receipt.AcctBal.CurAmt.CurCode`|||
 |`Receipt.AcctBal.CurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
-|`Receipt.AcctBal.CurAmt.CurCode.CurCodeValue`||Only USD is accepted as a currency code.|
+|`Receipt.AcctBal.CurAmt.CurCode.CurCodeValue`||Only USD is supported and expected to be returned in the response.|
 <!-- type: tab -->
 
 

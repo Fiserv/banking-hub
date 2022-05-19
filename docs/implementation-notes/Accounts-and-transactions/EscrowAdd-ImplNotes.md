@@ -45,10 +45,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode`|||
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`EscrowInfo.DisburseData.DisburseAmt.CurCode.CurCodeValue`|USD||
-|`EscrowInfo.DisburseData.TimeFrame.RecurRule`||***Conditionally Required**<br>Either RecurRule or DisburseSched is required to be provided.|
-|`EscrowInfo.DisburseData.TimeFrame.RecurRule.RecurType`|None<br>Monthly<br>BiMonthly<br>SemiMonthly<br>Weekly<br>BiWeekly<br>Yearly<br>Quarterly<br>SemiYearly<br>|This field refers to the frequency of payout.|
+|`EscrowInfo.DisburseData.TimeFrame.RecurRule`||***Conditionally Required**<br>RecurRule or DisburseSched is required to be provided.|
+|`EscrowInfo.DisburseData.TimeFrame.RecurRule.RecurType`|None<br>Monthly<br>BiMonthly<br>SemiMonthly<br>Weekly<br>BiWeekly<br>Yearly<br>Quarterly<br>SemiYearly<br>|Frequency of payout.|
 |`EscrowInfo.DisburseData.TimeFrame.RecurRule.RecurInterval`|1 through 9||
-|`EscrowInfo.DisburseData.NextDisburseDt`||This field refers to the current payout date for service provider. Either NextDisburseDt or DisburseSched is required to be provided.|
+|`EscrowInfo.DisburseData.NextDisburseDt`||Current payout date for service provider. Either NextDisburseDt or DisburseSched is required to be provided.|
 |`EscrowInfo.DisburseData.DisburseSched`||This aggregate is specific to service provider and refers to escrow disbursement frequency as defined by the table.<br>DisburseSched/RecurType, Next Disburse Amount and NextDisburseDt are required to be provided. If DisburseSched is provided, it will override RecurType, Next Disburse Amount and NextDisburseDt provided in DisburseData aggregate.|
 |`EscrowInfo.DisburseData.DisburseSched.DisburseSchedIdent`|1 through 4|Service provider supports up to 4 disbursement schedules.|
 |`EscrowInfo.DisburseData.DisburseSched.DisburseDt`|||
@@ -90,7 +90,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`EscrowInfo.ReviewData.ReviewFrequency.RecurInterval`|1||
 |`EscrowInfo.ReviewData.NextReviewDt`|||
 |`EscrowInfo.ClientDefinedData`|||
-|`EscrowInfo.ClientDefinedData.DataIdent`||This field refers to the client-defined field code as defined by service provider.|
+|`EscrowInfo.ClientDefinedData.DataIdent`||Client-defined field code as defined by service provider.|
 |`EscrowInfo.ClientDefinedData.Value`|||
 |`EscrowInfo.ClientDefinedData.ExpDt`|||
 #### Response Schema

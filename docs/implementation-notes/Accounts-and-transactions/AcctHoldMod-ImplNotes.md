@@ -25,7 +25,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctHoldKeys.AcctHoldIdent`||***Required**|
 |`AcctHoldInfo`|||
 |`AcctHoldInfo.CurAmt`|||
-|`AcctHoldInfo.CurAmt.Amt`||Hold amount is not expected in Premier if the account is pledged as collateral and loan account is specified, Premier will calculate the hold amount.|
+|`AcctHoldInfo.CurAmt.Amt`||Hold amount is not expected by the service provider if the account is pledged as collateral and loan account is specified, system will calculate the hold amount.|
 |`AcctHoldInfo.CurAmt.CurCode`|||
 |`AcctHoldInfo.CurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`AcctHoldInfo.CurAmt.CurCode.CurCodeValue`|||
@@ -59,7 +59,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`AcctHoldKeys.AcctHoldIdent`||***Required**|
 |`AcctHoldInfo`|||
 |`AcctHoldInfo.CurAmt`|||
-|`AcctHoldInfo.CurAmt.Amt`||Hold amount is not expected in Premier if the account is pledged as collateral and loan account is specified, Premier will calculate the hold amount.|
+|`AcctHoldInfo.CurAmt.Amt`||Hold amount is not expected by the service provider if the account is pledged as collateral and loan account is specified, system will calculate the hold amount.|
 |`AcctHoldInfo.CurAmt.CurCode`|||
 |`AcctHoldInfo.CurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`AcctHoldInfo.CurAmt.CurCode.CurCodeValue`|||

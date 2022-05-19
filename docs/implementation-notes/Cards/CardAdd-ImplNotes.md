@@ -19,16 +19,16 @@ The following tables list the provider-specific implemented fields for Request a
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`OvrdExceptionData`||  |
-|`PartyCardRelInfo`||***Required**<br>Multiple PartyCardRelInfo aggregates can be provided in the request, if multiple parties are to be associated to the card. A card can be created with multiple card owners.|
+|`PartyCardRelInfo`||***Required**<br>Multiple PartyCardRelInfo aggregates can be provided in the request if multiple parties are to be associated to the card. A card can be created with multiple card owners.|
 |`PartyCardRelInfo.PartyRef`||  |
 |`PartyCardRelInfo.PartyRef.PartyKeys`||  |
 |`PartyCardRelInfo.PartyRef.PartyKeys.PartyId`||***Required**<br>This field refers to unique identifier of party associated to an account.|
 |`PartyCardRelInfo.CardRef`||This aggregate is used to provide the portfolio number of existing clients that are consuming this service and had onboarded prior to ESF 9.2 release.|
 |`PartyCardRelInfo.CardRef.CardKeys`||  |
 |`PartyCardRelInfo.CardRef.CardKeys.CardIdent`||  |
-|`PartyCardRelInfo.CardRef.CardKeys.CardIdent.CardIdentType`|PORT|This field refers to portfolio number.|
+|`PartyCardRelInfo.CardRef.CardKeys.CardIdent.CardIdentType`|PORT|Portfolio number associated with the card.|
 |`PartyCardRelInfo.CardRef.CardKeys.CardIdent.CardIdentValue`||  |
-|`PartyCardRelInfo.PartyCardRelType`|Owner<br>Signer<br>OwnerSigner<br>JointTenancy<br>Executor<br>Trustee<br>Borrower<br>CoBorrower<br>Custodian<br>DoingBusinessAs|***Required**<br>Financial Institutions can create user defined relationship types.<br>OwnerSigner relationship is most commonly used for party to card relationship.|
+|`PartyCardRelInfo.PartyCardRelType`|Owner<br>Signer<br>OwnerSigner<br>JointTenancy<br>Executor<br>Trustee<br>Borrower<br>CoBorrower<br>Custodian<br>DoingBusinessAs|***Required**<br>Financial Institutions can create user defined relationship types.<br>OwnerSigner relationship is commonly used for party to card relationship.|
 |`PartyCardRelInfo.PartyCardRelOrder`|First<br>Second<br>Third<br>Other|Parties having first, second and third relationship order are considered to be the main names and, only one party can be associated with first/second/third relationship order on the card. Relationship order value of 'Other' is commonly used for relationships other than OwnerSigner, Signer and Owner. One party can have multiple 'Other' type of relationship orders on card. If Mailing Name Option parameter is set up at financial institution, then first, second and third names can be used for inquiry or account related mailing purpose. If Mailing Name Option parameter is set to Y, a card can have up to 3 names for mailing purpose which can be provided in Postal Address aggregate.|
 |`PartyCardRelInfo.OwnerInd`|true<br>false|ESF has introduced a new data element - PartyAcctRelOrder to identify first 3 names displayed on the account. This element is available in ESF release prior to 9.2 and will be deprecated in future.|
 |`PartyCardRelInfo.TaxReportingOwnerInd`|true<br>false|At least one tax relationship is required to create a card and, there cannot be more than one tax relationships associated to an account.|

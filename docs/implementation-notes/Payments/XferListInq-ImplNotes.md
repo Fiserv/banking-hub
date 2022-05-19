@@ -34,7 +34,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`XferListRec.XferKeys.AcctKeys`|||
 |`XferListRec.XferKeys.AcctKeys.AcctId`|||
 |`XferListRec.XferKeys.AcctKeys.AcctType`|DDA<br>SDA<br>CDA||
-|`XferListRec.XferKeys.XferIdent`|1-999||
+|`XferListRec.XferKeys.XferIdent`|1-999|This field refers to the addenda number.|
 |`XferListRec.XferListInfo`|||
 |`XferListRec.XferListInfo.FromAcctRef`|||
 |`XferListRec.XferListInfo.FromAcctRef.AcctKeys`|||
@@ -43,7 +43,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`XferListRec.XferListInfo.ToAcctRef`|||
 |`XferListRec.XferListInfo.ToAcctRef.AcctKeys`|||
 |`XferListRec.XferListInfo.ToAcctRef.AcctKeys.AcctId`|||
-|`XferListRec.XferListInfo.ToAcctRef.AcctKeys.AcctType`|DDA<br>SDA<br>EXT<br>LOAN<br>SDB<br>GLA<br>||
+|`XferListRec.XferListInfo.ToAcctRef.AcctKeys.AcctType`|DDA<br>SDA<br>EXT<br>LOAN<br>SDB<br>GLA<br>|EXT refers to an external account.|
 |`XferListRec.XferListInfo.CurAmt`|||
 |`XferListRec.XferListInfo.CurAmt.Amt`|||
 |`XferListRec.XferListInfo.CurAmt.CurCode`|||

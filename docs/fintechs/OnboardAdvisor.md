@@ -1,6 +1,6 @@
-# Onboard Advisor
+# Identity Verification 
 
-Onboard Advisor includes a powerful identity verification tool that helps you minimize identity fraud by comparing an applicant's personal identification information against public record databases to flag inconsistencies. Onboard Advisor also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules. 
+Identity Verification includes a powerful identity verification tool that helps you minimize identity fraud by comparing an applicant's personal identification information against public record databases to flag inconsistencies. Onboard Advisor also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules. 
 
 These Know Your  customer (KYC) APIs make it possible to authenticate new customers before they open an account. Also, Onboard Advisor API's can be used to validate existing customers and customers accessing accounts through a digital channel.  
 
@@ -10,11 +10,11 @@ These Know Your  customer (KYC) APIs make it possible to authenticate new custom
 
 **Potential uses:** KYC Apps that provide customer authencation services. 
 
-Begin the integration with following services of Onboard Advisor domain in API Explorer:
+Begin the integration with following services of Identity Verification domain in API Explorer:
 * Business Verification Only
 * Business Verification Only(with Authorizer)
 * Business Verification Fraud and Risk
 * Business Watchlist 
-* Consumer Verification Only
-* Consumer ID Authenticaion
-
+* Consumer Verification Fraud and Risk 
+* Consumer ID Authentication
+* Consumer Watchlist

@@ -1,4 +1,4 @@
-# Implementation Notes for Delete Card
+# Implementation Notes for Del Card
 This section provides the provider-specific Request and Response schema along with the implementation notes for the applicable fields.
 <!-- 
 type: tab 
@@ -34,7 +34,7 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 #### Coming soon!
-We are working on developing content for this section. Stay tuned for more updates. 
+We are working on developing content for this section. Stay tuned for more updates.  
 
 
 <!-- type: tab-end -->
