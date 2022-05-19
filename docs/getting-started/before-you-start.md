@@ -2,7 +2,7 @@
 <!-- theme: info -->
 > #### Note for Developers 
 >
-> The current user journey enables developers to access a range of Standard Bank Platform APIs on Banking Hub. We continue to refine the API content on Banking Hub with the goal of showing very clearly how our Banking Hub APIs facilitate integration to each of our banking solutions.  <br> <br> We are working on developing a registered user journey. Once registration is enabled on Developer Studio, you can sign up to obtain credentials along with the instructions to integrate Banking Hub APIs with our banking platforms. Additionally, you get access to our Sandbox environment to test APIs or may choose to test <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" > Using Third-party API Testing Tools</a>.
+> The current user journey enables developers to access a range of Standard Bank Platform APIs on Banking Hub. We continue to refine the API content on Banking Hub with the goal of showing clearly how our Banking Hub APIs facilitate integration to each of our banking solutions.  <br> <br> We are working on developing a registered user journey. Once registration is enabled on Developer Studio, you can sign up to obtain credentials along with the instructions to integrate Banking Hub APIs with our banking platforms. Additionally, you get access to our Sandbox environment to test APIs or may choose to test <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" > Using Third-party API Testing Tools</a>.
 
 
 Register to the Fiserv Developer Studio to test the APIs in test and live environments. However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
