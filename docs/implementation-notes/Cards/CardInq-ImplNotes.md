@@ -61,8 +61,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`CardRec.CardInfo.PostAddr.AddrUse`|Inquiry<br>Mailing|Value of AddrUse for primary and related seasonal address is 'Inquiry'.<br>Value of AddrUse for secondary and related seasonal address is 'Mailing'.<br>If "Mailing Name Options" parameter is configured at financial institution, it determines if card account can have different inquiry and mailing address/names.<br>- If parameter is set to N, both inquiry and mailing addresses are same therefore, only Inquiry address is returned by ESF.<br>- If parameter is set to Y, both inquiry and mailing addresses can be different therefore, both will be returned by ESF in response.|
 |`CardRec.CardInfo.PostAddr.AddrFormatType`|Label|Address is in label format.|
 |`CardRec.CardInfo.PostAddr.FullName1`||This field refers to first name of the customer for account mailing or inquiry purpose.|
-|`CardRec.CardInfo.PostAddr.FullName2`||This field refers to second name of the customer for account mailing or inquiry purpose.|
-|`CardRec.CardInfo.PostAddr.FullName3`||This field refers to third name of the customer for account mailing or inquiry purpose.|
+|`CardRec.CardInfo.PostAddr.FullName2`||Second name of the customer for account mailing or inquiry purpose.|
+|`CardRec.CardInfo.PostAddr.FullName3`||Third name of the customer for account mailing or inquiry purpose.|
 |`CardRec.CardInfo.PostAddr.Addr1`||  |
 |`CardRec.CardInfo.PostAddr.Addr2`||This field is supported if enabled in the CIS miscellaneous (Institution) specifications.|
 |`CardRec.CardInfo.PostAddr.City`||  |
@@ -74,8 +74,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`CardRec.CardInfo.PostAddr.CountryCode.CountryCodeValueEnumDesc`||  |
 |`CardRec.CardInfo.PostAddr.AddrType`|Primary<br>Seasonal|Account can have primary and seasonal address type. Seasonal address cannot exist as a single address record and is related to either primary or secondary address. Therefore, seasonal address shares AddressIdent with primary address.|
 |`CardRec.CardInfo.PostAddr.TimeFrame`||  |
-|`CardRec.CardInfo.PostAddr.TimeFrame.StartDt`||This field is applicable only if AddrType is seasonal. Seasonal address is enabled on same start and end date every year therefore, ESF displays 9999 as the start year in response for schema validation purpose. Actual month and day is shown in start date of seasonal address.|
-|`CardRec.CardInfo.PostAddr.TimeFrame.EndDt`||This field is applicable only if AddrType is seasonal. Seasonal address is enabled on same start and end date every year therefore, ESF displays 9999 as the start year in response for schema validation purpose. Actual month and day is shown in start date of seasonal address.|
+|`CardRec.CardInfo.PostAddr.TimeFrame.StartDt`||Only applicable if AddrType is seasonal. Seasonal address is enabled on same start and end date every year therefore, ESF displays 9999 as the start year in response for schema validation purpose. Actual month and day is shown in start date of seasonal address.|
+|`CardRec.CardInfo.PostAddr.TimeFrame.EndDt`||Only applicable if AddrType is seasonal. Seasonal address is enabled on same start and end date every year therefore, ESF displays 9999 as the start year in response for schema validation purpose. Actual month and day is shown in start date of seasonal address.|
 |`CardRec.CardInfo.PostAddr.Retention`|true<br>false|  |
 |`CardRec.CardInfo.PostAddr.CensusTract`||  |
 |`CardRec.CardInfo.PostAddr.CensusBlock`||  |
@@ -85,8 +85,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`CardRec.CardInfo.PostAddr.MSACode`||  |
 |`CardRec.CardInfo.CardTrnLimit`||  |
 |`CardRec.CardInfo.CardTrnLimit.TrnTypeValue`|Debit<br>Credit<br>Withdrawal<br>|This field is used in combination with transaction service and CardTrnLimit to identify, the limit amount defined for a card.|
-|`CardRec.CardInfo.CardTrnLimit.TrnSubType`||This field is used in combination with transaction service and CardTrnLimit to identify, the limit amount defined for a card.|
-|`CardRec.CardInfo.CardTrnLimit.TrnSrc`|ATM<br>POS<br>|This field is used in combination with transaction service and CardTrnLimit to identify, the limit amount defined for a card.<br>OnLine/OffLine terms refer to the two distinct ways of processing debit payments i.e., Online/Offline. Customers need to endorse payments by submitting their personal identification numbers (PINs) at the point of sale in case of online debit transaction, whereas shoppers need to sign the sales receipts in case of offline transactions.|
+|`CardRec.CardInfo.CardTrnLimit.TrnSubType`||Used in combination with transaction service and CardTrnLimit to identify, the limit amount defined for a card.|
+|`CardRec.CardInfo.CardTrnLimit.TrnSrc`|ATM<br>POS<br>|Used in combination with transaction service and CardTrnLimit to identify, the limit amount defined for a card.<br>OnLine/OffLine terms refer to the two distinct ways of processing debit payments i.e., Online/Offline. Customers need to endorse payments by submitting their personal identification numbers (PINs) at the point of sale in case of online debit transaction, whereas shoppers need to sign the sales receipts in case of offline transactions.|
 |`CardRec.CardInfo.CardTrnLimit.LimitType`|DailyMax<br>TrnMax|This field is used in combination with transaction service and CardTrnLimit to identify, the limit amount defined for a card.|
 |`CardRec.CardInfo.CardTrnLimit.CurAmt`||  |
 |`CardRec.CardInfo.CardTrnLimit.CurAmt.Amt`||  |
@@ -131,7 +131,7 @@ The following tables list the provider-specific implemented fields for Request a
 
 
 #### Coming soon!
-We are working on developing content for this section. Stay tuned for more updates. 
+We are working on developing content for this section. Stay tuned for more updates.  
 
 
 <!-- type: tab -->

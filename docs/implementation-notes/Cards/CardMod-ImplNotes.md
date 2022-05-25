@@ -132,7 +132,7 @@ We are working on developing content for this section. Stay tuned for more updat
 
 
 #### Coming soon!
-We are working on developing content for this section. Stay tuned for more updates. 
+We are working on developing content for this section. Stay tuned for more updates.  
 
 
 <!-- type: tab-end -->

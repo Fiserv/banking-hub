@@ -19,7 +19,7 @@ The following tables list the provider-specific implemented fields for Request a
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
 |`PartyPartyRelSel`||  |
-|`PartyPartyRelSel.PartyKeys`||This aggregate is used to list all the parties related to the selected party|
+|`PartyPartyRelSel.PartyKeys`||Selection by the party keys is used to list all the parties related to the selected party.|
 |`PartyPartyRelSel.PartyKeys.PartyId`||  |
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
@@ -27,7 +27,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`Status`||  |
 |`RecCtrlOut`||  |
 |`RecCtrlOut.SentRecCount`||  |
-|`PartyPartyRelRec`||This aggregate may repeat multiple times based on the number of relationships that the party has with the other parties. |
+|`PartyPartyRelRec`||Repeat multiple times based on the number of relationships that the party has with the other parties. |
 |`PartyPartyRelRec.PartyPartyRelKeys`||  |
 |`PartyPartyRelRec.PartyPartyRelKeys.PartyKeys`||  |
 |`PartyPartyRelRec.PartyPartyRelKeys.PartyKeys.PartyId`||  |
@@ -48,10 +48,10 @@ The following tables list the provider-specific implemented fields for Request a
 |`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef`||  |
 |`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.PartyKeys`||  |
 |`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.PartyKeys.PartyId`||  |
-|`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.PartyRelType`|Aunt<br>Brother<br>Companion<br>Daugther<br>Father<br>Friend<br>Granddaugther<br>Grandfather<br>Grandson<br>Husband<br>Mother<br>Nephew<br>Niece<br>Sister<br>Son<br>Uncle<br>Wife<br>Grandmother<br>None|Additional client-defined values can be added to the core Premier Administrartor Name Relationship Specifications.|
+|`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.PartyRelType`|Aunt<br>Brother<br>Companion<br>Daugther<br>Father<br>Friend<br>Granddaugther<br>Grandfather<br>Grandson<br>Husband<br>Mother<br>Nephew<br>Niece<br>Sister<br>Son<br>Uncle<br>Wife<br>Grandmother<br>None|Additional client-defined values can be added to the service provider administrartor name relationship specifications.|
 |`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.PartyRelTypeEnumDesc`||  |
 |`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.RelEstablishDt`||  |
-|`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.Name`||Displays the name of the party related to the requested party|
+|`PartyPartyRelRec.PartyPartyRelInfo.RelPartyRef.Name`||Displays the name of the person related to the requested party.|
 |`PartyPartyRelRec.PartyPartyRelStatus`||  |
 |`PartyPartyRelRec.PartyPartyRelStatus.PartyPartyRelStatusCode`|Valid|  |
 |`PartyPartyRelRec.PartyPartyRelStatus.EffDt`||  |

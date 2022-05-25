@@ -18,7 +18,7 @@ The following tables list the provider-specific implemented fields for Request a
 #### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
-|`StopChkKeys`||This service requires AcctKeys and StopChkIdent to identify the item to delete.|
+|`StopChkKeys`||AcctKeys and StopChkIdent is required to identify and delete the item.|
 |`StopChkKeys.AcctKeys`|||
 |`StopChkKeys.AcctKeys.AcctId`|||
 |`StopChkKeys.AcctKeys.AcctType`|DDA<br>SDA<br>CDA<br>LOAN||

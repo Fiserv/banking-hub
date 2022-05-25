@@ -15,6 +15,7 @@ The following tables list the provider-specific implemented fields for Request a
 > To view the field/aggregate descriptions and sample Requests and Responses, please refer the API Explorer section
 
 
+
 #### Request Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
@@ -37,7 +38,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`HostCredentialsRsHdr.UserCode`|||
 |`HostCredentialsRsHdr.UserName`|||
 |`HostCredentialsRsHdr.Assertion`|||
-|`HostCredentialsRsHdr.Assertion.AssertionType`|SDA<br>CDA<br>CRD<br>LOAN<br>DDA<br>Customer<br>BankAdmin|This field should be combined with the values for the AssertionValueInd and Operation fields to determine the proper authority level for the requested user.<br><br>Presently only a subset of the supported of assertion type by Precision are made available for integration.|
-|`HostCredentialsRsHdr.Assertion.AssertionValueInd`||This field should be used in addition with the AssertionType and Operation fields to  determine whether the requested user has the permission to perform the action.|
-|`HostCredentialsRsHdr.Assertion.Operation`|Add<br>Inq<br>Mod<br>Del|This field in combination with the AssertionType and AssertionValueInd fields depicts the action intitled to the request user.|
+|`HostCredentialsRsHdr.Assertion.AssertionType`|SDA<br>CDA<br>CRD<br>LOAN<br>DDA<br>Customer<br>BankAdmin|AssertionType combined with the values for the AssertionValueInd and Operation fields to determine the proper authority level for the requested user.<br><br>Presently only a subset of the supported of assertion type by Precision are made available for integration.|
+|`HostCredentialsRsHdr.Assertion.AssertionValueInd`||AssertionValueInd is used in addition with the AssertionType and Operation fields to  determine whether the requested user has the permission to perform the action.|
+|`HostCredentialsRsHdr.Assertion.Operation`|Add<br>Inq<br>Mod<br>Del|Operation in combination with the AssertionType and AssertionValueInd fields depicts the action entitled to the request user.|
 <!-- type: tab-end -->
+

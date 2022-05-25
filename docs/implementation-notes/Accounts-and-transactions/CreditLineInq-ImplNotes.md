@@ -21,7 +21,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineSel`|||
 |`CreditLineSel.CreditLineKeys`|||
 |`CreditLineSel.CreditLineKeys.AcctKeys`|||
-|`CreditLineSel.CreditLineKeys.AcctKeys.AcctId`||This field refers to the account number of line record.<br>|
+|`CreditLineSel.CreditLineKeys.AcctKeys.AcctId`||Account number of line record.<br>|
 |`CreditLineSel.CreditLineKeys.AcctKeys.AcctType`|CLOC||
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
@@ -30,14 +30,14 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineRec`|||
 |`CreditLineRec.CreditLineKeys`|||
 |`CreditLineRec.CreditLineKeys.AcctKeys`|||
-|`CreditLineRec.CreditLineKeys.AcctKeys.AcctId`||This field refers to the account number of line record.<br>|
+|`CreditLineRec.CreditLineKeys.AcctKeys.AcctId`||Account number of line record.<br>|
 |`CreditLineRec.CreditLineKeys.AcctKeys.AcctType`|CLOC||
 |`CreditLineRec.CreditLineInfo`|||
-|`CreditLineRec.CreditLineInfo.OpenDt`||This field refers to the date on which the line was established.<br>|
-|`CreditLineRec.CreditLineInfo.LastContactDt`||This field refers to the date on which the line was last updated.<br>|
+|`CreditLineRec.CreditLineInfo.OpenDt`||Date on which the line was established.<br>|
+|`CreditLineRec.CreditLineInfo.LastContactDt`||Date on which the line was last updated.<br>|
 |`CreditLineRec.CreditLineInfo.DateData`|||
 |`CreditLineRec.CreditLineInfo.DateData.DateType`|LastFileMaint<br>Accrual||
-|`CreditLineRec.CreditLineInfo.DateData.DateValue`||This field refers to the date on which line was last modified using online maintenance.<br>|
+|`CreditLineRec.CreditLineInfo.DateData.DateValue`||Date on which line was last modified using online maintenance.<br>|
 |`CreditLineRec.CreditLineInfo.RelationshipMgr`|||
 |`CreditLineRec.CreditLineInfo.RelationshipMgr.RelationshipMgrIdent`||Responsibility code value '0' indicates that an officer has not been assigned to the account.|
 |`CreditLineRec.CreditLineInfo.RelationshipMgr.RelationshipRole`|Officer<br>ReferralOfficer|Officer refers to responsibility code, whereas referral officer refers to referral responsibility code.|
@@ -46,18 +46,18 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineRec.CreditLineInfo.AcctTitleOption`|||
 |`CreditLineRec.CreditLineInfo.AcctTitle`||User-defined title is printed as an additional name line on all customer correspondences.|
 |`CreditLineRec.CreditLineInfo.HandlingCodeOption`|StatementsNoticesChecks<br>Statements<br>StatementsNotices<br>StatementsChecks<br>Notices<br>NoticesChecks<br>Checks<br>DoNotPrint<br>UsePortfolio|This field indicates the type of customer correspondence used to print handling messages.|
-|`CreditLineRec.CreditLineInfo.HandlingCode`||This field refers to user-defined handling code to identify the handling message printed in customer name and address area on the forms.|
+|`CreditLineRec.CreditLineInfo.HandlingCode`||User-defined handling code to identify the handling message printed in customer name and address area on the forms.|
 |`CreditLineRec.CreditLineInfo.AccountingMethod`|Class<br>CostCenter||
 |`CreditLineRec.CreditLineInfo.AccountingValue`|||
 |`CreditLineRec.CreditLineInfo.ClassCode`|||
 |`CreditLineRec.CreditLineInfo.AcctTypeCode`|||
 |`CreditLineRec.CreditLineInfo.ClientDefinedData`|||
-|`CreditLineRec.CreditLineInfo.ClientDefinedData.DataIdent`||This field is metadata and refers to client-defined field code used for reference and reporting. Valid values are between 0-90000.|
+|`CreditLineRec.CreditLineInfo.ClientDefinedData.DataIdent`||Metadata and refers to client-defined field code used for reference and reporting. Valid values are between 0-90000.|
 |`CreditLineRec.CreditLineInfo.ClientDefinedData.DataType`|Alpha<br>Boolean<br>Currency<br>CurrencySymbol<br>Date<br>Numeric<br>NumericSymbol<br>Rate<br>RateSymbol||
 |`CreditLineRec.CreditLineInfo.ClientDefinedData.Value`|||
 |`CreditLineRec.CreditLineInfo.ClientDefinedData.DataLength`|||
 |`CreditLineRec.CreditLineInfo.ClientDefinedData.ExpDt`||Expiration date as entered by the user.|
-|`CreditLineRec.CreditLineInfo.ClientDefinedData.Desc`||This field is a metadata and refers to the label that appears for the field.|
+|`CreditLineRec.CreditLineInfo.ClientDefinedData.Desc`||Metadata and refers to the label that appears for the field.|
 |`CreditLineRec.CreditLineInfo.ClientDefinedData.RequiredFlag`|true <br>false|This field is a metadata.<br>If value is:<br>- True = Data is required <br>- False = Data is not required.|
 |`CreditLineRec.CreditLineInfo.AcctStmtData`|||
 |`CreditLineRec.CreditLineInfo.AcctStmtData.NextStmtDt`|||
@@ -90,8 +90,8 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineRec.CreditLineInfo.PostAddr.AddrType`|Primary<br>Secondary||
 |`CreditLineRec.CreditLineInfo.PostAddr.TimeFrame`|||
 |`CreditLineRec.CreditLineInfo.PostAddr.TimeFrame.StartDt`||Secondary address is used every year from date mentioned in this field until secondary address relationship is removed. Start date and day of the month format is recorded.|
-|`CreditLineRec.CreditLineInfo.PostAddr.TimeFrame.EndDt`||This field refers to the end date of seasonal address. End date in month and day of the month formats are recorded.<br>Secondary address is used every year through date mentioned in this field until secondary address relationship is removed.|
-|`CreditLineRec.CreditLineInfo.PostAddr.Retention`|True<br>False|This field refers to the address retention code for mailing address, to indicate if the address is automatically deleted when accounts, tax addenda or relationships are not attached to the address.|
+|`CreditLineRec.CreditLineInfo.PostAddr.TimeFrame.EndDt`||End date of seasonal address. End date in month and day of the month formats are recorded.<br>Secondary address is used every year through date mentioned in this field until secondary address relationship is removed.|
+|`CreditLineRec.CreditLineInfo.PostAddr.Retention`|True<br>False|Address retention code for mailing address, to indicate if the address is automatically deleted when accounts, tax addenda or relationships are not attached to the address.|
 |`CreditLineRec.CreditLineInfo.PostAddr.CensusTract`|||
 |`CreditLineRec.CreditLineInfo.PostAddr.CensusBlock`|||
 |`CreditLineRec.CreditLineInfo.PostAddr.ForeignFlag`|true<br>false||
@@ -115,7 +115,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineRec.CreditLineInfo.LTVPct`|||
 |`CreditLineRec.CreditLineInfo.RunningLTVPct`|||
 |`CreditLineRec.CreditLineInfo.TotalLTVPct`|||
-|`CreditLineRec.CreditLineInfo.CreditLineCode`||This field refers to a four-digit number used to evaluate the performance of a borrower in terms of collectability, timeliness of payment, or any other client-defined criteria. Values can be defined as data descriptions in the administrator program.|
+|`CreditLineRec.CreditLineInfo.CreditLineCode`||Four-digit number used to evaluate the performance of a borrower in terms of collectability, timeliness of payment, or any other client-defined criteria. Values can be defined as data descriptions in the administrator program.|
 |`CreditLineRec.CreditLineInfo.DailyAccrualFactor`|||
 |`CreditLineRec.CreditLineInfo.PartDailyAccrualFactor`|||
 |`CreditLineRec.CreditLineInfo.CensusTract`|||

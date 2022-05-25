@@ -30,7 +30,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`RecCtrlIn.Cursor`|||
 |`EnumTableSel`|||
 |`EnumTableSel.EnumTableKeys`|ABC<br>PQR||
-|`EnumTableSel.EnumTableKeys.EnumTableIdent`|Region<br>Branch|"Region" refers to a Branch Region, also known as Originating Branch.<br>"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  |
+|`EnumTableSel.EnumTableKeys.EnumTableIdent`|Region<br>Branch|Values for this field refers to: <br>- "Region" refers to a branch region, also known as Originating Branch<br>- "Branch" refers to accounting branch also known as Responsible Branch. |
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
@@ -63,11 +63,10 @@ The following tables list the provider-specific implemented fields for Request a
 |----|----|----|
 |`EnumTableSel`|||
 |`EnumTableSel.EnumTableKeys`|||
-|`EnumTableSel.EnumTableKeys.BranchIdent`||If no branch is input, core searches using the default branch name.|
-|`EnumTableSel.EnumTableKeys.DataApplType`|ALL<br>CDA<br>CRD<br>DDA<br>LOAN<br>LOC<br>Party<br>SDA<br>SDB<br>DDL|Required only if the BranchIdent value is sent in the request.|
-|`EnumTableSel.EnumTableKeys.EnumTableIdent`||"Region" refers to a Branch Region, also known as Originating Branch.<br>"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  |
-|`EnumTableSel.EnumFilter`||N/A|
-
+|`EnumTableSel.EnumTableKeys.BranchIdent`||Service provider will search by default branch, if no branch is provided in the request.|
+|`EnumTableSel.EnumTableKeys.DataApplType`|ALL<br>CDA<br>CRD<br>DDA<br>LOAN<br>LOC<br>Party<br>SDA<br>SDB<br>DDL||
+|`EnumTableSel.EnumTableKeys.EnumTableIdent`||Values for this field refers to: <br>- "Region" refers to a branch region, also known as Originating Branch<br>- "Branch" refers to accounting branch also known as Responsible Branch. |
+|`EnumTableSel.EnumFilter`|||
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|
@@ -84,11 +83,9 @@ The following tables list the provider-specific implemented fields for Request a
 |`EnumTableRec.EnumTableStatus`|||
 |`EnumTableRec.EnumTableStatus.EnumTableStatusCode`|Valid||
 |`EnumTableRec.EnumTableStatus.EffDt`|||
-
 <!-- type: tab -->
 
 The following tables list the provider-specific implemented fields for Request and Response messages along with the implementation notes for the applicable fields. 
-
 
 <!-- theme: info -->
 > #### Note
@@ -101,8 +98,7 @@ The following tables list the provider-specific implemented fields for Request a
 |----|----|----|
 |`EnumTableSel`|||
 |`EnumTableSel.EnumTableKeys`|||
-|`EnumTableSel.EnumTableKeys.EnumTableIdent`||"Region" refers to a Branch Region, also known as Originating Branch.<br>"Branch" refers to Accounting Branch/Group also known as Responsible Branch.  |
-
+|`EnumTableSel.EnumTableKeys.EnumTableIdent`||Values for this field refers to: <br>- "Region" refers to a branch region, also known as Originating Branch<br>- "Branch" refers to accounting branch also known as Responsible Branch. |
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
 |----|----|----|

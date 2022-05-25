@@ -20,7 +20,7 @@ The following tables list the provider-specific implemented fields for Request a
 |----|----|----|
 |`CreditLineKeys`|||
 |`CreditLineKeys.AcctKeys`|||
-|`CreditLineKeys.AcctKeys.AcctId`||This field refers to the account number of line record.<br>|
+|`CreditLineKeys.AcctKeys.AcctId`||Account number of line record.<br>|
 |`CreditLineKeys.AcctKeys.AcctType`|CLOC||
 #### Response Schema
 |Field Name|Allowed Values|Implementation Note|
@@ -29,7 +29,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`CreditLineStatusRec`|||
 |`CreditLineStatusRec.CreditLineKeys`|||
 |`CreditLineStatusRec.CreditLineKeys.AcctKeys`|||
-|`CreditLineStatusRec.CreditLineKeys.AcctKeys.AcctId`||This field refers to the account number of the line entered by the user.<br>|
+|`CreditLineStatusRec.CreditLineKeys.AcctKeys.AcctId`||Account number of the line entered by the user.<br>|
 |`CreditLineStatusRec.CreditLineKeys.AcctKeys.AcctType`|CLOC||
 |`CreditLineStatusRec.CreditLineStatus`|||
 |`CreditLineStatusRec.CreditLineStatus.CreditLineStatusCode`|Valid||

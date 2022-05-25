@@ -24,7 +24,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`StopChkInfo.AcctKeys.AcctId`|||
 |`StopChkInfo.AcctKeys.AcctType`|DDA<br>SDA<br>CDA<br>LOAN||
 |`StopChkInfo.AcctKeys.BranchIdent`||This field refers to the branch region and if not provided in request, the branch region of account (on which stop check is placed) will be used.|
-|`StopChkInfo.ChkNum`||Either single or range of check numbers are to be provided in order to create a stop check record. If single check number is provided, inquiry service will return a single check number. Validation of duplicate check numbers is not supported.|
+|`StopChkInfo.ChkNum`||Single or range of check numbers should be provided to create a stop check record. If single check number is provided, inquiry service will return a single check number.<br>Validation of duplicate check numbers is not supported.|
 |`StopChkInfo.ChkNumRange`||If range of check numbers is provided, inquiry service will return the range of check numbers.|
 |`StopChkInfo.ChkNumRange.ChkNumStart`||From and through number define an item number range to verify the stops placed. If the numbers are left blank, only amounts will be verified.|
 |`StopChkInfo.ChkNumRange.ChkNumEnd`||From and through number define an item number range to verify the stops placed. If the numbers are left blank, only amounts will be verified.|
@@ -34,7 +34,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`StopChkInfo.CurAmt.CurCode`|||
 |`StopChkInfo.CurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`StopChkInfo.CurAmt.CurCode.CurCodeValue`|USD|Only USD is supported.|
-|`StopChkInfo.CurAmtRange`||Either single or range of check amounts are to be provided in order to create a stop check record. If range of check amounts is provided, inquiry service will return range of check amounts.|
+|`StopChkInfo.CurAmtRange`||Single or range of check amounts are to be provided in order to create a stop check record. If range of check amounts is provided, inquiry service will return range of check amounts.|
 |`StopChkInfo.CurAmtRange.LowCurAmt`|||
 |`StopChkInfo.CurAmtRange.LowCurAmt.Amt`||From and through amounts define a dollar range to verify the stop checks. If the amounts are left blank, only check/item numbers will be verified.|
 |`StopChkInfo.CurAmtRange.LowCurAmt.CurCode`|||
@@ -45,7 +45,7 @@ The following tables list the provider-specific implemented fields for Request a
 |`StopChkInfo.CurAmtRange.HighCurAmt.CurCode`|||
 |`StopChkInfo.CurAmtRange.HighCurAmt.CurCode.CurCodeType`|ISO4217-Alpha||
 |`StopChkInfo.CurAmtRange.HighCurAmt.CurCode.CurCodeValue`|USD|Only USD is supported.|
-|`StopChkInfo.OrigDt`||***Required**<br>This is a mandatory field and is required to be provided in request else, ESF will use system date.|
+|`StopChkInfo.OrigDt`||*Required<br>Mandatory to provide this field in request else, ESF uses system date.|
 |`StopChkInfo.StopChkDt`||If this field is not provided in the request, by default, current date will be used.|
 |`StopChkInfo.ExpDt`|||
 |`StopChkInfo.Desc`||Maximum 25 characters are accepted else, error will be returned.|
