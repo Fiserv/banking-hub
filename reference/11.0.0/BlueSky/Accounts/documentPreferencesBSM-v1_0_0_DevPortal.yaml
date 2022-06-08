@@ -1,0 +1,299 @@
+---
+openapi: 3.0.0
+info:
+  title: DocumentPreferences
+  description: Data that describes document production preferences
+  contact:
+    name: andy bahmueller
+    email: andy.bahmueller@fiserv.com
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /document-preferences/v1/:
+    post:
+      tags:
+      - Add Document Preference
+      summary: Adds a document preference for an existing customer/owner.
+      description: This service adds a document preference.
+      operationId: DocumentPreferenceAddOperator
+      parameters:
+      - name: Fiserv-OrganizationId
+        in: header
+        description: Organization Identifier is a unique ID that represents the financial institution  or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in  the backend system.  To ensure uniqueness across all institutions in all parts  of the world, use the Dun and Bradstreet number.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: Fiserv-TransactionId
+        in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: Fiserv-ClientApplicationName
+        in: header
+        description: Name of the application making the service request (e.g. Architect,  Commercial Center, etc.).
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: Fiserv-Channel
+        in: header
+        description: Indicates the channel used by the client application.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: Fiserv-ClientDateTime
+        in: header
+        description: Client date and time as reported by the client application that is  making the service request.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: Fiserv-VendorId
+        in: header
+        description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: DocumentPreferences
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/documentpreferences_v1_body'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentPreferenceResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      x-group-name: Document Preferences Service
+      x-proxy-name: Add Document Preference
+      x-child-product-name:
+      - Core Banking Limited
+      - Accounts
+components:
+  schemas:
+    AccountRefRequest:
+      title: AccountRefRequest
+      type: object
+      properties:
+        id:
+          type: string
+          description: Generic identifier that contains no sensitive data and should be  utilized as the key within URI when performing RESTful operations
+        number:
+          type: string
+          description: Actual account number as defined by the bank or credit union
+        type:
+          type: string
+          description: Classifies the type of product with which an account is associated  at a high level; Deposit, Loan, Card.  Additional detail about the  account is at the account object level
+          enum:
+          - Deposit
+          - Loan
+        detailType:
+          type: string
+          description: Detailed account type
+          enum:
+          - Brokerage
+          - CertificateOfDeposit
+          - Checking
+          - Club
+          - Commercial
+          - Construction
+          - Consumer
+          - DebitCard
+          - Escrow
+          - FlexibleSpending
+          - HealthSavings
+          - Installment
+          - LineOfCredit
+          - MoneyMarket
+          - Mortgage
+          - Passbook
+          - Personal
+          - Retirement
+          - Savings
+          - ShareDraft
+          - Student
+        PartyRef:
+          $ref: '#/components/schemas/PartyRef'
+        DocumentPreferenceAdd:
+          $ref: '#/components/schemas/DocumentPreferenceAdd'
+    CardRefRequest:
+      title: CardRefRequest
+      type: object
+      properties:
+        id:
+          type: string
+          description: Generic identifier that contains no sensitive data and should be  utilized as the key within URI when performing RESTful operations
+        number:
+          type: string
+          description: Full card number as it appears on the card
+        type:
+          type: string
+          description: The type of card being described
+          enum:
+          - ATM
+          - Credit
+          - Debit
+          - PrePaid
+          - Rewards
+          - Virtual
+        PartyRef:
+          $ref: '#/components/schemas/PartyRef'
+        DocumentPreferenceAdd:
+          $ref: '#/components/schemas/DocumentPreferenceAdd'
+    DocumentPreferenceAdd:
+      title: DocumentPreferenceAdd
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of document preference being supplied
+          enum:
+          - Account
+          - Card
+          - Customer
+        document:
+          type: array
+          description: Document list to set preferences for
+          items:
+            type: string
+        documentGroup:
+          type: string
+          description: Document group to set preferences for
+        isDigital:
+          type: boolean
+          description: Should the document to be produced digitally (true)
+        isPrinted:
+          type: boolean
+          description: Should the document be printed (true)
+        notifications:
+          type: array
+          description: List of notifications associated document preference
+          items:
+            $ref: '#/components/schemas/Notification'
+    Notification:
+      title: Notification
+      required:
+      - emailAddress
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of notification being described
+          enum:
+          - Both
+          - Email
+          - Phone
+        emailAddress:
+          type: string
+          description: Email address used for notification
+        phone:
+          $ref: '#/components/schemas/Phone'
+    PartyRef:
+      title: PartyRef
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id value maintained by the core representing the party
+        number:
+          type: string
+          description: Actual number of the party
+        DocumentPreferenceAdd:
+          $ref: '#/components/schemas/DocumentPreferenceAdd'
+    Phone:
+      title: Phone
+      type: object
+      properties:
+        countryCode:
+          type: string
+          description: Country code of phone number.  Numeric values only
+        number:
+          type: string
+          description: Phone number being returned.  Numeric values only
+    DocumentPreferenceResponse:
+      title: DocumentPreferenceResponse
+      type: object
+      properties:
+        messages:
+          type: array
+          description: More than one error, warning or informational messages may be returned in the response.
+          items:
+            $ref: '#/components/schemas/Message'
+        links:
+          $ref: '#/components/schemas/Links'
+    ErrorMessage:
+      title: ErrorMessage
+      type: object
+      properties:
+        messages:
+          type: array
+          description: More than one error, warning or informational messages may be returned in the response.
+          items:
+            $ref: '#/components/schemas/Message'
+        links:
+          $ref: '#/components/schemas/Links'
+    Links:
+      title: Links
+      required:
+      - self
+      type: object
+      properties:
+        self:
+          type: string
+          format: uri
+        first:
+          type: string
+          format: uri
+        previous:
+          type: string
+          format: uri
+        next:
+          type: string
+          format: uri
+        last:
+          type: string
+          format: uri
+    Message:
+      title: Message
+      required:
+      - title
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: A URI reference [RFC3986] that identifies the problem type.
+        title:
+          type: string
+          description: A short human-readable summary of the problem type.
+        detail:
+          type: string
+          description: 'A human-readable description of the specific error  '
+        instance:
+          type: string
+          description: This optional key may be present, with a unique URI for the  specific error; this will often point to an error log for that  specific response.
+    documentpreferences_v1_body:
+      oneOf:
+      - $ref: '#/components/schemas/AccountRefRequest'
+      - $ref: '#/components/schemas/CardRefRequest'
