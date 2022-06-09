@@ -1,17 +1,19 @@
 # Know Your Account
 
-Identity Verification includes a powerful identity verification tool that helps you minimize identity fraud by comparing an applicant's personal identification information against public record databases to flag inconsistencies. Identity verification also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules. 
+Know Your Account (KYA) allows applications to run validations on a payment account before processing a transaction, ensuring greater probability of success and allowing for a more seamless transaction flow. 
 
-These Know Your  customer (KYC) APIs make it possible to authenticate new customers before they open an account. Also, Onboard Advisor API's can be used to validate existing customers and customers accessing accounts through a digital channel.  
+These Know Your Account (KYA) APIs make it possible to authenticate new accounts before transactions are posted to the account.   
 
-**Who is it for:** Developers creating or integrating apps that need a Know Your Customer (KYC), Know your Busniess (KYB) and Know Your Account (KYA) and authentication servie.  
+**Who is it for:** Developers creating or integrating apps that need a Know Your Account authentication service.  
 
-**How is it used:** Employ these APIs to create or integrate Know You Customer applications with public record databases to authenticate a customers personal information such as identity, address and phone.  
+**How is it used:** Employ these APIs to create or integrate Know You Account applications with public record databases to authenticate an accounts status.   
 
 **Potential uses:** KYC Apps that provide customer authencation services. 
 
-Begin the integration with following services of Identity Verification domain in API Explorer:
-* Consumer Verification
-* Business Verification 
+Begin the integration with following Account Verification services domain in API Explorer:
 * Account Verification
+* Account status
+* Account creation date
+* Can the account receive transactions
+
 
