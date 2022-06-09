@@ -1,14 +1,16 @@
 # Know Your Business
 
-Identity Verification includes a powerful identity verification tool that helps you minimize identity fraud by comparing an applicant's personal identification information against public record databases to flag inconsistencies. Identity verification also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules. 
+KYB is a standard due diligence process used by financial institutions and other financial services companies to assess and monitor business customer risk and verify a business customer's identity. 
 
-These Know Your  customer (KYC) APIs make it possible to authenticate new customers before they open an account. Also, Onboard Advisor API's can be used to validate existing customers and customers accessing accounts through a digital channel.  
+KYB is a critical process for determining business customer risk and whether the business customer can meet the institution’s requirements to use their services. It’s also a legal requirement to comply with Anti-Money Laundering (AML) laws. 
+
+These Know Your Business (KYB) APIs make it possible to authenticate new business customers before they open an account.  
 
 **Who is it for:** Developers creating or integrating apps that need a Know Your Business (KYB). 
 
 **How is it used:** Employ these APIs to create or integrate Know You Business applications with public record databases to authenticate a businesses information such as company name, address, phone, articles of incorporation, and beneficial owners.   
 
-**Potential uses:** KYC Apps that provide customer authencation services. 
+**Potential uses:** KYB Apps that provide business customer authencation services. 
 
 Begin the integration with following services of Identity Verification domain in API Explorer:
 * Business Name Verification
