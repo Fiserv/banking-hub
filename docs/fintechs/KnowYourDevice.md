@@ -1,17 +1,16 @@
 #  Know Your Device 
 
-Identity Verification includes a powerful identity verification tool that helps you minimize identity fraud by comparing an applicant's personal identification information against public record databases to flag inconsistencies. Identity verification also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules. 
+Device identification (KYD) (AKA “device Id and device fingerprinting”) prevents fraud by analyzing devices and associated identities. KYD can translate across digital channels, on desktop, on mobile browsers, and in native mobile applications.  
 
-These Know Your  customer (KYC) APIs make it possible to authenticate new customers before they open an account. Also, Onboard Advisor API's can be used to validate existing customers and customers accessing accounts through a digital channel.  
+These Know Your Device APIs make it possible to authenticate new customer device before they can access an account.   
 
-**Who is it for:** Developers creating or integrating apps that need a Know Your Customer (KYC), Know your Busniess (KYB) and Know Your Account (KYA) and authentication servie.  
+**Who is it for:** Developers creating or integrating apps that need a Know Your Device (KYD) service.  
 
-**How is it used:** Employ these APIs to create or integrate Know You Customer applications with public record databases to authenticate a customers personal information such as identity, address and phone.  
+**How is it used:** Employ these KYD APIs to create or integrate Know You Device applications with public record databases to authenticate a customers device.  
 
-**Potential uses:** KYC Apps that provide customer authencation services. 
+**Potential uses:** KYD Apps that provide customer device authencation services. 
 
-Begin the integration with following services of Identity Verification domain in API Explorer:
-* Consumer Verification
-* Business Verification 
-* Account Verification
+Begin the integration with following services of Device Identity Verification domain in API Explorer:
+* Device ID Verification
+* 
 
