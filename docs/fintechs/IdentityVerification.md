@@ -2,7 +2,7 @@
 
 Identity Verification includes a powerful identity verification tool that helps you minimize identity fraud by comparing an applicant's personal identification information against public record databases to flag inconsistencies. Identity verification also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules. 
 
-These Know Your Customer (KYC) APIs make it possible to authenticate new customers before they open an account. Also, Onboard Advisor API's can be used to validate existing customers and customers accessing accounts through a digital channel.  
+These Know Your Customer (KYC) APIs make it possible to authenticate new customers before they open an account. 
 
 **Who is it for:** Developers creating or integrating apps that need a Know Your Customer (KYC), Know your Business (KYB) and Know Your Account (KYA) and authentication servie.  
 
