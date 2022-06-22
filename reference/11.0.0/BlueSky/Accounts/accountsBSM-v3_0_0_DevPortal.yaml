@@ -2,18 +2,15 @@
 openapi: 3.0.0
 info:
   title: Accounts
-  description: 'The Accounts Service supports operations to add, update and retrieve information regarding  product accounts serviced by financial institutions. An account is a product  serviced by a financial institution (FI) that carries a balance (credit or debit)  in a particular currency. Generally account types fall into one of two major  classifications deposit and loan product account.  '
+  description: 'The Accounts Service supports operations to add, update and retrieve information regarding product accounts serviced by financial institutions. An account is a product serviced by a financial institution (FI) that carries a balance (credit or debit) in a particular currency. Generally account types fall into one of two major classifications deposit and loan product account.  '
   contact:
     name: andy bahmueller
     email: andy.bahmueller@fiserv.com
-  version: 2.0.0
+  version: 3.0.0
 servers:
-- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/accountsBSM/2.0.0
-  description: SwaggerHub API Auto Mocking
-- url: http://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/accountsBSM/2.0.0
-  description: SwaggerHub API Auto Mocking
+- url: /
 paths:
-  /accounts/v2:
+  /banking/bsm/v1/accounts:
     post:
       tags:
       - Add Account
@@ -22,6 +19,7 @@ paths:
       parameters:
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -29,39 +27,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       requestBody:
         content:
           application/json:
@@ -88,7 +75,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AddAccountAcceptedResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -98,7 +85,7 @@ paths:
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}:
+  /banking/bsm/v1/accounts/{accountId}:
     get:
       tags:
       - Get Account details
@@ -107,17 +94,15 @@ paths:
       parameters:
       - name: accountId
         in: path
-        description: Generic value associated with the identifier associated with a single account
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-        examples:
-          Sample:
-            value: F17AA97E-4281-4E94-B045-BC0637D91C92
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -125,39 +110,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       responses:
         "200":
           description: Ok
@@ -166,7 +140,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetAccountResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -178,23 +152,21 @@ paths:
       - Accounts
     patch:
       tags:
-      - Update Account nickname
-      description: Updates a nickname associated with an account
+      - Update Account
+      description: Updates account
       operationId: updateAccount
       parameters:
       - name: accountId
         in: path
-        description: Generic value associated with the identifier associated with a single account
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-        examples:
-          Sample:
-            value: F17AA97E-4281-4E94-B045-BC0637D91C92
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -202,39 +174,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       requestBody:
         description: Update account
         content:
@@ -249,33 +210,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/UpdateAccountResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       x-group-name: Accounts Service
-      x-proxy-name: Update Account nickname
+      x-proxy-name: Update Account
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/balances:
+  /banking/bsm/v1/accounts/{accountId}/balances:
     get:
       tags:
-      - List Balances
+      - Get Balances List
       description: Retrieves balances associated with a given account
       operationId: listBalances
       parameters:
       - name: accountId
         in: path
-        description: Generic value associated with the identifier associated with a single account.
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -283,39 +245,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       responses:
         "200":
           description: Ok
@@ -324,17 +275,88 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListBalancesResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       x-group-name: Accounts Service
-      x-proxy-name: List Balances
+      x-proxy-name: Get Balances List
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/fundsAvailability:
+  /banking/bsm/v1/accounts/{accountId}/documentDeliveries:
+    patch:
+      tags:
+      - Update Document Delivery
+      description: Updates account document delivery preferences. Refer to Party Service for changes to the party's document delivery preferences changes
+      operationId: updateDocumentDeliveries
+      parameters:
+      - name: accountId
+        in: path
+        description: Account identification
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/AccountId'
+      - name: Fiserv-OrganizationId
+        in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-OrganizationId'
+      - name: Fiserv-TransactionId
+        in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-TransactionId'
+      - name: Fiserv-UserId
+        in: header
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-UserId'
+      - name: Fiserv-ClientDateTime
+        in: header
+        description: Client date and time as reported by the client application that is making the service request.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-ClientDateTime'
+      requestBody:
+        description: Update document deliveries
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDocumentDeliveryRequest'
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateDocumentDeliveryResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-group-name: Accounts Service
+      x-proxy-name: Update Document Delivery
+      x-child-product-name:
+      - Core Banking Lite
+      - Accounts
+  /banking/bsm/v1/accounts/{accountId}/fundsAvailability:
     get:
       tags:
       - Get Funds Availability
@@ -343,14 +365,15 @@ paths:
       parameters:
       - name: accountId
         in: path
-        description: Generic value associated with the identifier associated with a single account.
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -358,39 +381,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       - name: balanceType
         in: query
         description: Indicates balance type to use
@@ -433,7 +445,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetFundsAvailabilityResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -443,107 +455,24 @@ paths:
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/documentDeliveries:
-    patch:
-      tags:
-      - Update Document Delivery
-      description: Updates account document delivery preferences. Refer to Party Service for changes to the party's document delivery preferences changes
-      operationId: updateDocumentDeliveries
-      parameters:
-      - name: accountId
-        in: path
-        description: Generic value that is used to either as the identifier of a customer/owner/user  associated with accounts or the identifier associated with a single account.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: Fiserv-OrganizationId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-OrganizationId'
-      - name: Fiserv-TransactionId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
-      - name: Fiserv-ClientDateTime
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
-      requestBody:
-        description: Update document deliveries
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateDocumentDeliveryRequest'
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdateDocumentDeliveryResponse'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      x-group-name: Accounts Service
-      x-proxy-name: Update Document Delivery
-      x-child-product-name:
-      - Core Banking Lite
-      - Accounts
-  /accounts/v2/{accountId}/transactions:
+  /banking/bsm/v1/accounts/{accountId}/transactions:
     get:
       tags:
-      - List Transactions
+      - Get Transactions List
       description: Retrieves financial transactions associated with a given account
       operationId: listTransactions
       parameters:
       - name: accountId
         in: path
-        description: Generic value that is used to either as the identifier of a customer/owner/user  associated with accounts or the identifier associated with a single account.
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-        examples:
-          Sample:
-            value: F17AA97E-4281-4E94-B045-BC0637D91C92
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -551,39 +480,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       - name: $pageLimit
         in: query
         description: Page limit is the maximum number of records to be returned. Use for page base pagination
@@ -641,10 +559,8 @@ paths:
         style: form
         explode: true
         schema:
-          type: string
-        examples:
-          Sample:
-            value: "1.00"
+          type: number
+          format: currency
       - name: maximumAmount
         in: query
         description: Maximum transaction amount for search criteria
@@ -652,13 +568,11 @@ paths:
         style: form
         explode: true
         schema:
-          type: string
-        examples:
-          Sample:
-            value: "1000.00"
+          type: number
+          format: currency
       - name: fromDate
         in: query
-        description: Transaction start date search criteria
+        description: Transaction posting start date search criteria
         required: false
         style: form
         explode: true
@@ -670,7 +584,7 @@ paths:
             value: 2010-02-13
       - name: toDate
         in: query
-        description: Transaction end date search criteria
+        description: Transaction posting end date search criteria
         required: false
         style: form
         explode: true
@@ -732,33 +646,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListTransactionsResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       x-group-name: Accounts Service
-      x-proxy-name: List Transactions
+      x-proxy-name: Get Transactions List
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/transactions/download:
+  /banking/bsm/v1/accounts/{accountId}/transactions/download:
     get:
       tags:
-      - List Transactions download
+      - Get Transactions List (Download)
       description: Process a request for download of financial transactions for an account
       operationId: ListTransactionDownload
       parameters:
       - name: accountId
         in: path
-        description: Generic value that is used to either as the identifier of a customer/owner/user  associated with accounts or the identifier associated with a single account.
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -766,39 +681,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       - name: type
         in: query
         description: Time period for the transactions
@@ -857,35 +761,36 @@ paths:
                 type: string
                 format: binary
         "204":
-          description: Ok - No content
+          description: No content
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       x-group-name: Accounts Service
-      x-proxy-name: List Transactions download
+      x-proxy-name: Get Transactions List (Download)
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/overdraftProtection:
+  /banking/bsm/v1/accounts/{accountId}/overdraftProtection:
     get:
       tags:
-      - List Overdraft Protection
+      - Get Overdraft Protection List
       description: Retrieves an account's overdraft funding accounts
       operationId: listOverdraftProtection
       parameters:
       - name: accountId
         in: path
-        description: Generic value associated with the identifier associated with a single account
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -893,39 +798,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       - name: $pageLimit
         in: query
         description: Page limit is the maximum number of records to be returned. Use for page base pagination
@@ -984,32 +878,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListOverdraftProtectionResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       x-group-name: Accounts Service
-      x-proxy-name: List Overdraft Protection
+      x-proxy-name: Get Overdraft Protection List
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/stopItem:
+  /banking/bsm/v1/accounts/{accountId}/stopItems:
     get:
       tags:
-      - List Stop Items
+      - Get Stop Items List
       description: Retrieves a list of stop items associated with an account
       operationId: listStopItems
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1017,39 +913,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       - name: $pageLimit
         in: query
         description: '"Page limit is the maximum number of records to be returned. Use for  page based pagination."'
@@ -1124,13 +1009,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListStopItemResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       x-group-name: Accounts Service
-      x-proxy-name: List Stop Items
+      x-proxy-name: Get Stop Items List
       x-child-product-name:
       - Core Banking Lite
       - Accounts
@@ -1138,17 +1023,19 @@ paths:
       tags:
       - Add Stop Item
       description: Adds a stop item to an account
-      operationId: addStopItemV2
+      operationId: addStopItem
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1156,39 +1043,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       requestBody:
         content:
           application/json:
@@ -1202,7 +1078,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AddStopItemResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -1212,15 +1088,16 @@ paths:
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/stopItem/{id}:
+  /banking/bsm/v1/accounts/{accountId}/stopItems/{id}:
     put:
       tags:
       - Replace Stop Item
       description: Replaces a stop item associated with an account
-      operationId: replaceStopItemV2
+      operationId: replaceStopItem
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
@@ -1228,6 +1105,7 @@ paths:
           $ref: '#/components/schemas/AccountId'
       - name: id
         in: path
+        description: Stop Item Id
         required: true
         style: simple
         explode: false
@@ -1235,6 +1113,7 @@ paths:
           $ref: '#/components/schemas/StopItemId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1242,39 +1121,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       requestBody:
         description: Replace stop item
         content:
@@ -1289,7 +1157,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ReplaceStopItemResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -1307,6 +1175,7 @@ paths:
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
@@ -1314,6 +1183,7 @@ paths:
           $ref: '#/components/schemas/AccountId'
       - name: id
         in: path
+        description: Stop Item Id
         required: true
         style: simple
         explode: false
@@ -1321,6 +1191,7 @@ paths:
           $ref: '#/components/schemas/StopItemId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1328,39 +1199,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       responses:
         "200":
           description: Ok
@@ -1369,7 +1229,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeleteStopItemResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -1387,6 +1247,7 @@ paths:
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
@@ -1394,6 +1255,7 @@ paths:
           $ref: '#/components/schemas/AccountId'
       - name: id
         in: path
+        description: Stop Item Id
         required: true
         style: simple
         explode: false
@@ -1401,6 +1263,7 @@ paths:
           $ref: '#/components/schemas/StopItemId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1408,39 +1271,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       requestBody:
         content:
           application/json:
@@ -1454,7 +1306,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UpdateStopItemResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -1464,26 +1316,24 @@ paths:
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/transfers:
+  /banking/bsm/v1/accounts/{accountId}/transfers:
     get:
       tags:
-      - List Transfers
+      - Get Transfers List
       description: Retrieves transfer funds associated to a given account
       operationId: listTransfer
       parameters:
       - name: accountId
         in: path
-        description: Generic value that is used to either as the identifier of a customer/owner/user  associated with accounts or the identifier associated with a single account.
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-        examples:
-          Sample:
-            value: F17AA97E-4281-4E94-B045-BC0637D91C92
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1491,39 +1341,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       - name: $pageLimit
         in: query
         description: Page limit is the maximum number of records to be returned. Use for page base pagination
@@ -1576,7 +1415,7 @@ paths:
             value: "133442222"
       - name: status
         in: query
-        description: Status of transfer fund
+        description: Status of transfer fund. When no provided assume transfer instructions regardless of their status are provided
         required: false
         style: form
         explode: false
@@ -1628,32 +1467,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListTransfersResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       x-group-name: Accounts Service
-      x-proxy-name: List Transfers
+      x-proxy-name: Get Transfers List
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/hold:
+  /banking/bsm/v1/accounts/{accountId}/holds:
     get:
       tags:
-      - List Holds
+      - Get Holds List
       description: Retrieves a list of holds associated with an account
       operationId: listHolds
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1661,39 +1502,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       - name: $pageLimit
         in: query
         description: '"Page limit is the maximum number of records to be returned. Use for  page based pagination."'
@@ -1751,13 +1581,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListHoldsResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       x-group-name: Accounts Service
-      x-proxy-name: List Holds
+      x-proxy-name: Get Holds List
       x-child-product-name:
       - Core Banking Lite
       - Accounts
@@ -1769,13 +1599,15 @@ paths:
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          $ref: '#/components/schemas/AccountId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1783,39 +1615,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       requestBody:
         content:
           application/json:
@@ -1829,7 +1650,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AddHoldResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -1839,7 +1660,7 @@ paths:
       x-child-product-name:
       - Core Banking Lite
       - Accounts
-  /accounts/v2/{accountId}/hold/{id}:
+  /banking/bsm/v1/accounts/{accountId}/holds/{id}:
     put:
       tags:
       - Replace Hold
@@ -1848,6 +1669,7 @@ paths:
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
@@ -1855,6 +1677,7 @@ paths:
           $ref: '#/components/schemas/AccountId'
       - name: id
         in: path
+        description: Hold Id
         required: true
         style: simple
         explode: false
@@ -1862,6 +1685,7 @@ paths:
           $ref: '#/components/schemas/HoldId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1869,39 +1693,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       requestBody:
         content:
           application/json:
@@ -1915,7 +1728,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ReplaceHoldResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -1933,6 +1746,7 @@ paths:
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
@@ -1940,6 +1754,7 @@ paths:
           $ref: '#/components/schemas/AccountId'
       - name: id
         in: path
+        description: Hold Id
         required: true
         style: simple
         explode: false
@@ -1947,6 +1762,7 @@ paths:
           $ref: '#/components/schemas/HoldId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -1954,39 +1770,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       responses:
         "200":
           description: Ok
@@ -1995,7 +1800,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeleteHoldResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -2013,6 +1818,7 @@ paths:
       parameters:
       - name: accountId
         in: path
+        description: Account identification
         required: true
         style: simple
         explode: false
@@ -2020,6 +1826,7 @@ paths:
           $ref: '#/components/schemas/AccountId'
       - name: id
         in: path
+        description: Hold Id
         required: true
         style: simple
         explode: false
@@ -2027,6 +1834,7 @@ paths:
           $ref: '#/components/schemas/HoldId'
       - name: Fiserv-OrganizationId
         in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
         required: true
         style: simple
         explode: false
@@ -2034,39 +1842,28 @@ paths:
           $ref: '#/components/schemas/Fiserv-OrganizationId'
       - name: Fiserv-TransactionId
         in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-TransactionId'
-      - name: Fiserv-ClientApplicationName
+      - name: Fiserv-UserId
         in: header
-        required: true
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
         style: simple
         explode: false
         schema:
-          $ref: '#/components/schemas/Fiserv-ClientApplicationName'
-      - name: Fiserv-Channel
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-Channel'
+          $ref: '#/components/schemas/Fiserv-UserId'
       - name: Fiserv-ClientDateTime
         in: header
+        description: Client date and time as reported by the client application that is making the service request.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/Fiserv-ClientDateTime'
-      - name: Fiserv-VendorId
-        in: header
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/Fiserv-VendorId'
       requestBody:
         content:
           application/json:
@@ -2080,7 +1877,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UpdateHoldResponse'
         default:
-          description: Unexpected error
+          description: Default error response
           content:
             application/json:
               schema:
@@ -2090,26 +1887,438 @@ paths:
       x-child-product-name:
       - Core Banking Lite
       - Accounts
+  /banking/bsm/v1/accounts/{accountId}/addresses:
+    get:
+      tags:
+      - Get Addresses List
+      description: Retrieves a list of addresses associated with an account
+      operationId: listAddresses
+      parameters:
+      - name: accountId
+        in: path
+        description: Account identification
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/AccountId'
+      - name: Fiserv-OrganizationId
+        in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-OrganizationId'
+      - name: Fiserv-TransactionId
+        in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-TransactionId'
+      - name: Fiserv-UserId
+        in: header
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-UserId'
+      - name: Fiserv-ClientDateTime
+        in: header
+        description: Client date and time as reported by the client application that is making the service request.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-ClientDateTime'
+      - name: $pageLimit
+        in: query
+        description: '"Page limit is the maximum number of records to be returned. Use for  page based pagination."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 250
+          minimum: 1
+          type: integer
+        examples:
+          Sample:
+            value: "10"
+      - name: $pageOffset
+        in: query
+        description: '"Page offset is the page starting point of the result set. Use for  page based pagination."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 0
+          type: integer
+        examples:
+          Sample:
+            value: "1"
+      - name: $cursorLimit
+        in: query
+        description: '"Cursor limit is the maximum number of records to be returned. Use  for cursor base pagination."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 250
+          minimum: 1
+          type: integer
+        examples:
+          Sample:
+            value: "10"
+      - name: $cursor
+        in: query
+        description: '"Cursor is the record pointer starting point of the result set. Use  for cursor based pagination."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        examples:
+          Sample:
+            value: "1222"
+      - name: type
+        in: query
+        description: Type of address being searched for. When the value of a type is not provided in the query parameter all addresses are provided in the response
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - Alternate
+          - Mailing
+          - Mortgage
+          - Notice
+          - Primary
+          - Statement
+          - Checks
+          - DividendCheck
+          - Tax
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAddressesResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-group-name: Accounts Service
+      x-proxy-name: Get Addresses List
+      x-child-product-name:
+      - Core Banking Lite
+      - Accounts
+  /banking/bsm/v1/accounts/{accountId}/periodicData:
+    get:
+      tags:
+      - Get Periodic Data List
+      description: Retrieves a list of periodic data associated with the account
+      operationId: listPeriodData
+      parameters:
+      - name: accountId
+        in: path
+        description: Account identification
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/AccountId'
+      - name: Fiserv-OrganizationId
+        in: header
+        description: Organization Identifier is a unique ID that represents the financial institution or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in the backend system.  To ensure uniqueness across all institutions in all parts of the world, use the Duns and Bradstreet number.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-OrganizationId'
+      - name: Fiserv-TransactionId
+        in: header
+        description: Transaction Identifier. This is the transaction UUID of the current message
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-TransactionId'
+      - name: Fiserv-UserId
+        in: header
+        description: User Identifier represents a person who uses an online banking (OLB) platform.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-UserId'
+      - name: Fiserv-ClientDateTime
+        in: header
+        description: Client date and time as reported by the client application that is making the service request.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Fiserv-ClientDateTime'
+      - name: $pageLimit
+        in: query
+        description: '"Page limit is the maximum number of records to be returned. Use for  page based pagination."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 250
+          minimum: 1
+          type: integer
+        examples:
+          Sample:
+            value: "10"
+      - name: $pageOffset
+        in: query
+        description: '"Page offset is the page starting point of the result set. Use for  page based pagination."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 0
+          type: integer
+        examples:
+          Sample:
+            value: "1"
+      - name: $cursorLimit
+        in: query
+        description: '"Cursor limit is the maximum number of records to be returned. Use  for cursor base pagination."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 250
+          minimum: 1
+          type: integer
+        examples:
+          Sample:
+            value: "10"
+      - name: $cursor
+        in: query
+        description: '"Cursor is the record pointer starting point of the result set. Use  for cursor based pagination."'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        examples:
+          Sample:
+            value: "1222"
+      - name: period
+        in: query
+        description: Describe the time frame data is reported. The absence of a value indicates data of all time frames is provided
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - Last
+          - Next
+          - YearToDate
+          - PriorYear
+          - MonthToDate
+          - PriorMonth
+          - CurrentCycle
+          - PriorCycle
+          - LifeToDate
+      - name: type
+        in: query
+        description: Describe the type of periodic data item. The absence of a value indicates all period data types are provided in the response
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - Advance
+          - Check
+          - Credit
+          - Debit
+          - Deposit
+          - NSF
+          - Overdraft
+          - Payment
+          - Withdrawal
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPeriodicDataResponse'
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-proxy-name: Get Periodic Data List
+      x-child-product-name:
+      - Core Banking Lite
+      - Accounts
 components:
   schemas:
     Fiserv-OrganizationId:
       type: string
-      description: Organization Identifier is a unique ID that represents the financial institution  or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in  the backend system.  To ensure uniqueness across all institutions in all parts  of the world, use the Dun and Bradstreet number
+      description: 'Organization Identifier is a unique ID that represents the financial institution  or holding vendor.  This ID does not necessarily match the Org ID or Bank ID in  the backend system.  To ensure uniqueness across all institutions in all parts  of the world, use the Duns and Bradstreet number '
     Fiserv-TransactionId:
       type: string
       description: Transaction Identifier. This is the transaction UUID of the current message
-    Fiserv-ClientApplicationName:
+    Fiserv-UserId:
       type: string
-      description: Name of the application making the service request (e.g. Architect,  Commercial Center, etc.)
-    Fiserv-Channel:
-      type: string
-      description: Indicates the channel used by the client application
+      description: User Identifier represents a person who uses an online banking (OLB) platform.
     Fiserv-ClientDateTime:
       type: string
-      description: Client date and time as reported by the client application that is  making the service request
-    Fiserv-VendorId:
-      type: string
-      description: An identifier, supplied by Fiserv, that represents the vendor using this API service
+      description: Client date and time as reported by the client application that is making the service request.
+    AccountAdd:
+      title: AccountAdd
+      required:
+      - detailType
+      - productId
+      - relationships
+      type: object
+      properties:
+        detailType:
+          $ref: '#/components/schemas/AccountDetailType'
+        number:
+          type: string
+          description: Actual account number as defined by the bank or credit union
+        productId:
+          type: string
+          description: Indicates the product for the account, as defined by the bank or credit union
+        nickname:
+          type: string
+          description: User defined name of account
+        effectiveDateTime:
+          type: string
+          description: Date and time the request was created
+          format: date-time
+        openDate:
+          type: string
+          description: Date the account was opened
+          format: date
+          deprecated: true
+        openedDate:
+          type: string
+          description: Date the account was opened
+          format: date
+        branchCode:
+          type: string
+          description: Code associated to the branch
+        currencyCode:
+          type: string
+          description: Indicates the currency applied to balances, interest, etc. Based on ISO-4217 string value; i.e. USD, EUR
+        titles:
+          type: array
+          description: Title on account typically identifies ownership or responsibility for account  and manner in which ownership/responsibility is assigned
+          items:
+            type: string
+        titleCode:
+          type: string
+          description: Instructs the location of the account title within the block of name/address
+          enum:
+          - AfterName
+          - BeforeName
+          - NoPrint
+          - Undefined
+        rate:
+          type: number
+          description: Interest rate for the account being added, expressed as a percent.   For example, 1.25% would be represented as 1.25
+          format: float
+        initialAmount:
+          type: number
+          description: Initial amount that was added to the account at the time of opening
+          format: currency
+        term:
+          $ref: '#/components/schemas/TermAdd'
+        preferredContactMethod:
+          type: string
+          description: Preferred method of contact
+          enum:
+          - Email
+          - Phone
+          - SMS
+        openMethod:
+          type: string
+          description: Method by which the account was requested to be created
+          enum:
+          - Email
+          - Fax
+          - InPerson
+          - Internet
+          - Mail
+          - Mobile
+          - Phone
+        addresses:
+          type: array
+          description: Address associated with the account (optional)
+          items:
+            $ref: '#/components/schemas/AddressBasic'
+        deposit:
+          $ref: '#/components/schemas/DepositAdd'
+        loan:
+          $ref: '#/components/schemas/LoanAdd'
+        officers:
+          type: array
+          description: Contains information about officers assigned to the account
+          items:
+            $ref: '#/components/schemas/Officer'
+        relationships:
+          type: array
+          description: Array of objects that describe the relationships to the account
+          items:
+            $ref: '#/components/schemas/RelationshipAdd'
+        features:
+          type: array
+          description: Account features
+          items:
+            $ref: '#/components/schemas/Features'
+    AccountUpdate:
+      title: AccountUpdate
+      type: object
+      properties:
+        nickname:
+          type: string
+          description: User defined name of the account
+        titles:
+          type: array
+          description: Title on account typically identifies ownership or responsibility for account  and manner in which ownership/responsibility is assigned
+          items:
+            type: string
+        titleCode:
+          type: string
+          description: Instructs the location of the account title within the block of name/address
+          enum:
+          - AfterName
+          - BeforeName
+          - NoPrint
+          - Undefined
+        preferredContactMethod:
+          type: string
+          description: Preferred method of contact
+          enum:
+          - Email
+          - Phone
+          - SMS
+        deposit:
+          $ref: '#/components/schemas/DepositUpdate'
+        features:
+          type: array
+          description: Account features
+          items:
+            $ref: '#/components/schemas/Features'
     Account:
       title: Accounts
       required:
@@ -2118,7 +2327,7 @@ components:
       - detailType
       - isOpen
       - number
-      - productIdentification
+      - productId
       - status
       - type
       properties:
@@ -2133,7 +2342,7 @@ components:
         number:
           type: string
           description: Actual account number as defined by the bank or credit union. In the case of some credit units this number may be a combination of the member number with the share type or certificate number or loan note number
-        productIdentification:
+        productId:
           type: string
           description: Indicates the product for the account as defined by the bank or credit union
         productDescription:
@@ -2167,24 +2376,39 @@ components:
           type: string
           description: Date the account was opened
           format: date
+          deprecated: true
+        openedDate:
+          type: string
+          description: Date the account was opened
+          format: date
+        closedDate:
+          type: string
+          description: Date the account was closed
+          format: date
         branchCode:
           type: string
           description: 'Value of the identifier of the branch  '
         currencyCode:
           type: string
-          description: Value identifiying which currency the amounts and balances are expressed in.  Value is ISO 4217 currency code, eg USD, EUR,CHF
+          description: Value identifiying which currency the amounts and balances are expressed in.   Value is ISO 4217 currency code, eg USD, EUR,CHF
         classCode:
-          $ref: '#/components/schemas/CatalogTableCode'
-        title:
-          type: string
-          description: Title on account typically identifies ownership or responsibility for account and manner in which ownership/responsibility is assigned
+          maximum: 99
+          minimum: 0
+          type: integer
+          description: Two digit code used to group deposit and loan products that share similar capabilities, entitlements and permissions. These codes range from 0..99 and they are defined by account detail type. This means that for deposit accounts (Checking, Savings and CertificateOfDeposit) there may be up to 300 permutations of class codes. The code is used by retail banking applications to simplify implementations configurations.
+        titles:
+          type: array
+          description: Title on account typically identifies ownership or responsibility for account  and manner in which ownership/responsibility is assigned
+          items:
+            type: string
         titleCode:
           type: string
-          description: Instructs  the  location of the account title  within the block of name/address
+          description: Instructs the location of the account title within the block of name/address
           enum:
           - AfterName
           - BeforeName
           - NoPrint
+          - Undefined
         lastTransactionDateTime:
           type: string
           description: Date of last financial transaction on the account
@@ -2197,25 +2421,20 @@ components:
           type: number
           description: The interest or earnings rate associated with the account
           format: float
-        isCardAttached:
-          type: boolean
-          description: Is there at least 1 card associated with this account (true)
-          default: false
-        isCombinedStatement:
-          type: boolean
-          description: Is this account part of a combined statement (true)
-        balances:
-          minItems: 1
-          type: array
-          description: Balance. Defines account balances a financial institution account may carry (ex ledger, available, collected, etc.)
-          items:
-            $ref: '#/components/schemas/Balance'
-        organization:
-          $ref: '#/components/schemas/Organization'
-        payment:
-          $ref: '#/components/schemas/Payment'
-        term:
-          $ref: '#/components/schemas/Term'
+        cardAttached:
+          type: string
+          description: Indicates whether there is at least 1 card associated with this account
+          enum:
+          - "true"
+          - "false"
+          - Undefined
+        combinedStatement:
+          type: string
+          description: Indicates whether this account is part of a combined statement
+          enum:
+          - "true"
+          - "false"
+          - Undefined
         preferredContactMethod:
           type: string
           description: Preferred contact method
@@ -2223,21 +2442,18 @@ components:
           - Email
           - Phone
           - SMS
-        addresses:
+        balances:
+          minItems: 1
           type: array
-          description: 'Defines specific elements that describe a address information '
+          description: Balance. Defines account balances a financial institution account may carry (ex ledger, available, collected, etc.)
           items:
-            $ref: '#/components/schemas/Address'
-        phones:
-          type: array
-          description: Defines specific elements that Describe a telephone number
-          items:
-            $ref: '#/components/schemas/Phone'
-        emails:
-          type: array
-          description: Defines specific elements that describe an email
-          items:
-            $ref: '#/components/schemas/Email'
+            $ref: '#/components/schemas/Balance'
+        routingTransitNumber:
+          $ref: '#/components/schemas/RoutingTransitNumber'
+        payment:
+          $ref: '#/components/schemas/Payment'
+        term:
+          $ref: '#/components/schemas/Term'
         deposit:
           $ref: '#/components/schemas/DepositDetail'
         loan:
@@ -2246,23 +2462,15 @@ components:
           $ref: '#/components/schemas/InterestPaid'
         interestAccrual:
           $ref: '#/components/schemas/InterestAccrual'
-    AccountDetail:
-      required:
-      - detailType
-      - number
-      type: object
-      properties:
-        detailType:
-          $ref: '#/components/schemas/AccountDetailType'
-        number:
-          type: string
-          description: Actual account number as defined by the bank or credit union
-        organization:
-          $ref: '#/components/schemas/Organization'
+        features:
+          type: array
+          description: Account features
+          items:
+            $ref: '#/components/schemas/Features'
     AccountDetailStatus:
       title: AccountDetailStatus
       type: string
-      description: "Indicates a more specific status of the account.  Values:\n  \n  * 'Active' - An open bank account in which transactions can be made\n  * 'Bankruptcy' - Bankruptcy is a legal process through which people or other entities who cannot repay debts to creditors may seek relief from some or all of their debts. In most jurisdictions, bankruptcy is imposed by a court order, often initiated by the debtor\n  * 'ChargedOff' - A charged-off is a declaration by a creditor that an amount of debt is unlikely to be collected. Also known as Written-Off\n  * 'ClientDefined' - The status has been defined by the financial institution\n  * 'Closed' - A closed account is any account that has been deactivated or otherwise terminated, either by the customer, custodian or counterparty. At this stage, no further credits and debits can be added.\n  * 'ClosedReopenDeposit' - The account has been closed but it could be reopened with a deposit. Some banks close accounts with zero balance but allow the account to be reopened if a deposit occurs\n  * 'ClosedToAdvances' - The Lender stops full or partial advances of the loan to the borrower\n  * 'ClosedToday' -  Prevents any posting and/or maintenance to the account status on the day the closing transaction is performed\n  * 'ClosedToPosting' - The account cannot accept debit or credit transactions\n  * 'ClosedWithBalances' - The account has been closed with outstanding balances\n  * 'Collection' - The account has been referred to a collection agency to collect on the bad debt\n  * 'CoolingOff' - Indicates the account is within the grace period where the customer has rights to cancel a credit agreement –NEED VALIDATION\n  * 'Delinquent' - A delinquent account means that the account is behind on payments\n  * 'Dormant' - A dormant account is an account that has had no financial activity for a long period of time, except for the posting of interest. Financial institutions are required by state laws to transfer resources held in dormant accounts to the state's treasury after the accounts have been dormant for a certain period of time\n  * 'EarlyCollection' - The account has started the process of collection.\n  * 'Escheated' - When money lies dormant in a deposit account or appears to be abandoned, the bank or other organizations with which the money was deposited aren’t necessarily allowed to just keep that money for their own use. After a period of time, they’re required to turn it over to the state. This is called escheatment. Once it's turned over to the state for safekeeping, the owner of the money can still access it by making a proper claim for it\n  * 'Foreclosure' - Foreclosure is a legal process in which a lender attempts to recover the balance of a loan from a borrower who has stopped making payments to the lender by forcing the sale of the asset used as the collateral for the loan\n  * 'Hold' - There is a restriction on an account owner's ability to access funds in the account due to various reasons. When a bank places an account on hold, it usually does so to protect itself from potential loss, but it also may have the interest of the customer in mind\n  * 'Inactive' -A bank account that has not been used for a long period of time\n  * 'Matured' -  Refers to the date at which a certificate of deposit or CD reaches the last date of its term. The Deposit Maturity also marks the date when the CD is either redeemed for face value or has its maturity rolled over to a later date\n  * 'Managed' - The account is manually controlled by the financial institution. The account is being monitored outside from an automated inactive/dormant schedule maybe because of suspicious activity.\n  * 'New' -  New account today\n  * 'NewThisMonth' - New account this month\n  * 'NoCreditPost' - An account that does not accept credit   transactions\n  * 'NoDebitPost' - Post no debit is a situation where all debit transactions are prevented (blocked) on an account to stop money from going out of the bank account\n  * 'NonAccrual' - A nonaccrual loan is a lender's term for an unsecured loan whose payment is 90 days or more overdue. The loan is no longer generating its stated interest rate because no payment has been made by the borrower. It is, therefore, a nonperforming loan. Loans can have interest credited only when the borrower makes a payment (of a portion of the principal plus interest). The interest on a nonaccrual loan is thus recorded as earned income. Nonaccrual loans are sometimes referred to as doubtful loans, troubled loans, or sour loans\n  * 'NoRenew' - An account that does not renew at maturity or on expiration\n  * 'NoWithdrawal' - An account that does not accept withdrawal transactions\n  * 'Pending' - An account that has not been fully onboarded on the system\n  * 'Probate' - Probate is the legal process of distributing a dead person's assets. When someone dies, he or she usually leaves behind assets to distribute   and debts to pay.\n  * 'Purge' - The account has been irrevocably closed. In the system of record old and unneeded data has been removed\n  * 'Repossession' - Repossession occurs when the account has not received loan payments and the collateral is seize\n  * 'TransferredOut' - The account has been transferred or sold to another financial institution or collection agency \n  * 'Void' - An acccount was opened in error and it has been voided for processing"
+      description: "Indicates a more specific status of the account.  Values:\n  * 'Active' - An open bank account in which transactions can be made\n  * 'Bankruptcy' - Bankruptcy is a legal process through which people or other entities who cannot repay debts to creditors may seek relief from some or all of their debts. In most jurisdictions, bankruptcy is imposed by a court order, often initiated by the debtor\n  * 'ChargedOff' - A charged-off is a declaration by a creditor that an amount of debt is unlikely to be collected. Also known as Written-Off\n  * 'ClientDefined' - The status has been defined by the financial institution\n  * 'Closed' - A closed account is any account that has been deactivated or otherwise terminated, either by the customer, custodian or counterparty. At this stage, no further credits and debits can be added.\n  * 'ClosedReopenDeposit' - The account has been closed but it could be reopened with a deposit. Some banks close accounts with zero balance but allow the account to be reopened if a deposit occurs\n  * 'ClosedToAdvances' - The Lender stops full or partial advances of the loan to the borrower\n  * 'ClosedToday' -  Prevents any posting and/or maintenance to the account status on the day the closing transaction is performed\n  * 'ClosedToPosting' - The account cannot accept debit or credit transactions\n  * 'ClosedWithBalances' - The account has been closed with outstanding balances\n  * 'Collection' - The account has been referred to a collection agency to collect on the bad debt\n  * 'CoolingOff' - Indicates the account is within the grace period where the customer has rights to cancel a credit agreement –NEED VALIDATION\n  * 'Delinquent' - A delinquent account means that the account is behind on payments\n  * 'Dormant' - A dormant account is an account that has had no financial activity for a long period of time, except for the posting of interest. Financial institutions are required by state laws to transfer resources held in dormant accounts to the state's treasury after the accounts have been dormant for a certain period of time\n  * 'EarlyCollection' - The account has started the process of collection.\n  * 'Escheated' - When money lies dormant in a deposit account or appears to be abandoned, the bank or other organizations with which the money was deposited aren’t necessarily allowed to just keep that money for their own use. After a period of time, they’re required to turn it over to the state. This is called escheatment. Once it's turned over to the state for safekeeping, the owner of the money can still access it by making a proper claim for it\n  * 'Foreclosure' - Foreclosure is a legal process in which a lender attempts to recover the balance of a loan from a borrower who has stopped making payments to the lender by forcing the sale of the asset used as the collateral for the loan\n  * 'Hold' - There is a restriction on an account owner's ability to access funds in the account due to various reasons. When a bank places an account on hold, it usually does so to protect itself from potential loss, but it also may have the interest of the customer in mind\n  * 'Inactive' -A bank account that has not been used for a long period of time\n  * 'Matured' -  Refers to the date at which a certificate of deposit or CD reaches the last date of its term. The Deposit Maturity also marks the date when the CD is either redeemed for face value or has its maturity rolled over to a later date\n  * 'Managed' - The account is manually controlled by the financial institution. The account is being monitored outside from an automated inactive/dormant schedule maybe because of suspicious activity.\n  * 'New' -  New account today\n  * 'NewThisMonth' - New account this month\n  * 'NoCreditPost' - An account that does not accept credit   transactions\n  * 'NoDebitPost' - Post no debit is a situation where all debit transactions are prevented (blocked) on an account to stop money from going out of the bank account\n  * 'NonAccrual' - A nonaccrual loan is a lender's term for an unsecured loan whose payment is 90 days or more overdue. The loan is no longer generating its stated interest rate because no payment has been made by the borrower. It is, therefore, a nonperforming loan. Loans can have interest credited only when the borrower makes a payment (of a portion of the principal plus interest). The interest on a nonaccrual loan is thus recorded as earned income. Nonaccrual loans are sometimes referred to as doubtful loans, troubled loans, or sour loans\n  * 'NoRenew' - An account that does not renew at maturity or on expiration\n  * 'NoWithdrawal' - An account that does not accept withdrawal transactions\n  * 'Pending' - An account that has not been fully onboarded on the system\n  * 'Probate' - Probate is the legal process of distributing a dead person's assets. When someone dies, he or she usually leaves behind assets to distribute   and debts to pay.\n  * 'Purge' - The account has been irrevocably closed. In the system of record old and unneeded data has been removed\n  * 'Repossession' - Repossession occurs when the account has not received loan payments and the collateral is seize\n  * 'TransferredOut' - The account has been transferred or sold to another financial institution or collection agency \n  * 'Void' - An acccount was opened in error and it has been voided for processing"
       enum:
       - Active
       - Bankruptcy
@@ -2313,9 +2521,7 @@ components:
       - CreditCard
       - DemandDepositLoan
       - Escrow
-      - FlexibleSpending
       - FloorPlan
-      - HealthSavings
       - HomeEquity
       - HomeEquityLineOfCredit
       - Installment
@@ -2327,7 +2533,6 @@ components:
       - Passbook
       - Personal
       - PortfolioRelationship
-      - Retirement
       - Savings
       - ShareDraft
       - Student
@@ -2335,20 +2540,29 @@ components:
       title: AccountReferenceAdd
       type: object
       oneOf:
-      - $ref: '#/components/schemas/AccountIdentifier'
-      - $ref: '#/components/schemas/AccountDetail'
+      - required:
+        - id
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/AccountId'
+      - required:
+        - detailType
+        - number
+        type: object
+        properties:
+          detailType:
+            $ref: '#/components/schemas/AccountDetailType'
+          number:
+            type: string
+            description: Actual account number as defined by the bank or credit union
+          routingTransitNumber:
+            $ref: '#/components/schemas/RoutingTransitNumber'
     AccountId:
       title: AccountId
       type: string
-      description: Generic identifier that contains no sensitive data and should be  utilized as the key within URI when performing RESTful operations
-    AccountIdentifier:
-      title: AccountIdentifier
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/AccountId'
+      description: Generic account identifier that contains no sensitive data and should be utilized as the key within URI when performing RESTful operations.
+      example: F17AA97E-4281-4E94-B045-BC0637D91C92
     AccountNumber:
       title: AccountNumber
       type: string
@@ -2369,12 +2583,14 @@ components:
         number:
           type: string
           description: Actual account number as defined by the bank or credit union
-        organization:
-          $ref: '#/components/schemas/Organization'
+        routingTransitNumber:
+          $ref: '#/components/schemas/RoutingTransitNumber'
+      description: Account Information
     AccountTransferRef:
       title: AccountTransferRef
       required:
       - detailType
+      - id
       - isDebit
       - number
       type: object
@@ -2387,102 +2603,60 @@ components:
         number:
           type: string
           description: Actual account number as defined by the bank or credit union
-        organization:
-          $ref: '#/components/schemas/Organization'
+        routingTransitNumber:
+          $ref: '#/components/schemas/RoutingTransitNumber'
         isDebit:
           type: boolean
           description: Indicates if the account related is debited (from) or credited (to)
+      description: Account Information
+    PeriodicData:
+      title: PerioridData
+      required:
+      - period
+      - type
+      type: object
+      properties:
+        period:
+          type: string
+          description: Describe the time frame data is reported
+          enum:
+          - Last
+          - Next
+          - YearToDate
+          - PriorYear
+          - MonthToDate
+          - PriorMonth
+          - CurrentCycle
+          - PriorCycle
+          - LifeToDate
+        type:
+          type: string
+          description: Describe the type of periodic data item
+          enum:
+          - Advance
+          - Check
+          - Credit
+          - Debit
+          - Deposit
+          - NSF
+          - Overdraft
+          - Payment
+          - Withdrawal
+        date:
+          type: string
+          description: Date on which the described activity took place
+          format: date
+        amount:
+          type: number
+          description: Monetary amount associated with the activity
     AddAccountRequest:
       title: AddAccountRequest
       required:
-      - detailType
-      - productIdentification
-      - relationships
+      - account
       type: object
       properties:
-        detailType:
-          $ref: '#/components/schemas/AccountDetailType'
-        number:
-          type: string
-          description: Actual account number as defined by the bank or credit union
-        productIdentification:
-          type: string
-          description: Indicates the product for the account, as defined by the bank or credit union
-        nickname:
-          type: string
-          description: User defined name of account
-        effectiveDateTime:
-          type: string
-          description: Date and time the request was created
-          format: date-time
-        openDate:
-          type: string
-          description: Date the account was opened
-          format: date
-        branchCode:
-          type: string
-          description: Code associated to the branch
-        currencyCode:
-          type: string
-          description: Indicates the currency applied to balances, interest, etc. Based on ISO-4217 string value; i.e. USD, EUR
-        rate:
-          type: number
-          description: Interest rate for the account being added, expressed as a percent.   For example, 1.25% would be represented as 1.25
-          format: float
-        initialAmount:
-          type: number
-          description: Initial amount that was added to the account at the time of opening
-          format: currency
-        term:
-          $ref: '#/components/schemas/TermAdd'
-        preferredContactMethod:
-          type: string
-          description: Preferred method of contact
-          enum:
-          - Email
-          - Phone
-          - SMS
-        openMethod:
-          type: string
-          description: Method by which the account was requested to be created
-          enum:
-          - Email
-          - Fax
-          - InPerson
-          - Internet
-          - Mail
-          - Mobile
-          - Phone
-        addresses:
-          type: array
-          description: Address associated with the account (optional)
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/AddressExisting'
-            - $ref: '#/components/schemas/AddressAdd'
-        phones:
-          type: array
-          description: Phone number associated with the account (optional)
-          items:
-            $ref: '#/components/schemas/Phone'
-        emails:
-          type: array
-          description: Defines specific elements that describe an email (optional)
-          items:
-            $ref: '#/components/schemas/Email'
-        deposit:
-          $ref: '#/components/schemas/DepositAdd'
-        loan:
-          $ref: '#/components/schemas/LoanAdd'
-        officers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Officer'
-        relationships:
-          type: array
-          description: Array of objects that describe the relationships to the account
-          items:
-            $ref: '#/components/schemas/RelationshipAdd'
+        account:
+          $ref: '#/components/schemas/AccountAdd'
     AddAccountResponse:
       title: AddAccountResponse
       type: object
@@ -2503,40 +2677,6 @@ components:
           description: More than one error, warning or informational messages may be returned in the response.
           items:
             $ref: '#/components/schemas/Message'
-    AddressReference:
-      title: AddressReference
-      required:
-      - number
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of address reference
-          enum:
-          - Account
-          - Address
-          - Party
-          - Card
-        number:
-          type: string
-          description: Reference number that uniquely identifies the associated object as specified  by the Type field. Can be a composite key
-    Address:
-      title: Address
-      allOf:
-      - $ref: '#/components/schemas/AddressBasic'
-      - type: object
-        properties:
-          lastUpdatedDate:
-            type: string
-            description: Last date on which the address was updated
-            format: date
-          reference:
-            $ref: '#/components/schemas/AddressReference'
-    AddressAdd:
-      allOf:
-      - $ref: '#/components/schemas/AddressBasic'
-      - type: object
     AddressBasic:
       title: AddressBasic
       required:
@@ -2555,6 +2695,9 @@ components:
           - Notice
           - Primary
           - Statement
+          - Checks
+          - DividendCheck
+          - Tax
         lineOne:
           type: string
           description: Line one of address
@@ -2567,10 +2710,11 @@ components:
         stateProvince:
           type: string
           description: State or province associated with address
-        country:
+        countryCode:
+          maxLength: 3
           type: string
-          description: Name of country associated with address
-          example: Sweden
+          description: ISO 3166-1 alpha-3 code that represents the country
+          example: USA
         postalCode:
           type: string
           description: Postal code associated with address
@@ -2582,13 +2726,49 @@ components:
           type: string
           description: Date on which the address is valid to
           format: date
-    AddressExisting:
-      title: AddressExisting
+        isSeasonal:
+          type: boolean
+          description: Indicates that the address reactives annually with every season defined by the end and start dates. Primary address can not be defined as seasonal addresses.
+          default: false
+    AddressCollateral:
+      title: AddressCollateral
       required:
-      - reference
+      - lineOne
+      - postalCode
+      type: object
+      properties:
+        lineOne:
+          type: string
+          description: Line one of address
+        lineTwo:
+          type: string
+          description: Line two of address
+        city:
+          type: string
+          description: City, town or municipality associated with address
+        stateProvince:
+          type: string
+          description: State or province associated with address
+        countryCode:
+          maxLength: 3
+          type: string
+          description: ISO 3166-1 alpha-3 code that represents the country
+          example: USA
+        postalCode:
+          type: string
+          description: Postal code associated with address
+    AddressList:
+      title: AddressList
+      required:
+      - id
+      - lineOne
+      - postalCode
       - type
       type: object
       properties:
+        id:
+          type: string
+          description: Value that represents the identifier of the Address.  Item does not contain sensitive information
         type:
           type: string
           description: Type of address being returned
@@ -2599,53 +2779,53 @@ components:
           - Notice
           - Primary
           - Statement
-        reference:
-          $ref: '#/components/schemas/AddressReference'
+          - Checks
+          - DividendCheck
+          - Tax
+        lineOne:
+          type: string
+          description: Line one of address
+        lineTwo:
+          type: string
+          description: Line two of address
+        city:
+          type: string
+          description: City, town or municipality associated with address
+        stateProvince:
+          type: string
+          description: State or province associated with address
+        countryCode:
+          maxLength: 3
+          type: string
+          description: ISO 3166-1 alpha-3 code that represents the country
+          example: USA
+        postalCode:
+          type: string
+          description: Postal code associated with address
+        startDate:
+          type: string
+          description: Date on which the address is valid from
+          format: date
+        endDate:
+          type: string
+          description: 'Date on which the address is valid to  '
+          format: date
+        isSeasonal:
+          type: boolean
+          description: Indicates that the address reactives annually with every season defined by the end and start dates. Primary address can not be defined as seasonal addresses.
+          default: false
+        lastUpdatedDate:
+          type: string
+          description: Last date on which the address was updated
+          format: date
     AddHoldRequest:
       title: AddHoldRequest
       required:
-      - type
+      - hold
       type: object
       properties:
-        type:
-          type: string
-          description: Type of hold
-          enum:
-          - Hold
-          - Caution
-          - Pledge
-        amount:
-          type: number
-          description: The amount of the hold
-          format: currency
-        holdAmountType:
-          type: string
-          description: Identifies the way the amount hold is calculated. Fixed is common when the hold amount is provided
-          enum:
-          - Ledger
-          - Available
-          - Fixed
-          - Payoff
-          - All
-        effectiveDate:
-          type: string
-          description: Effective date of the hold
-          format: date
-        expirationDate:
-          type: string
-          description: Date on which the hold will expire
-          format: date
-        reasonCode:
-          $ref: '#/components/schemas/CatalogTableCode'
-        reasonDescription:
-          type: string
-          description: 'Reason for the hold '
-        authorizedBy:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedBy'
-        securedAccount:
-          $ref: '#/components/schemas/AccountReferenceAdd'
+        hold:
+          $ref: '#/components/schemas/HoldAdd'
     AddHoldResponse:
       title: AddHoldResponse
       type: object
@@ -2660,40 +2840,11 @@ components:
     AddStopItemRequest:
       title: AddStopItemRequest
       required:
-      - reasonCode
-      - type
+      - stopItem
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/StopItemType'
-        itemNumber:
-          $ref: '#/components/schemas/StopItemNumber'
-        companyId:
-          $ref: '#/components/schemas/StopItemCompanyId'
-        amount:
-          $ref: '#/components/schemas/StopItemAmount'
-        payeeName:
-          $ref: '#/components/schemas/StopItemPayeeName'
-        originationDate:
-          $ref: '#/components/schemas/StopItemOriginationDate'
-        expirationDate:
-          $ref: '#/components/schemas/StopItemExpirationDate'
-        isPermanent:
-          $ref: '#/components/schemas/StopItemIsPermanent'
-        reasonCode:
-          $ref: '#/components/schemas/CatalogTableCode'
-        reasonDescription:
-          $ref: '#/components/schemas/StopItemReasonDescription'
-        authorizedBy:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedBy'
-        specialOption:
-          $ref: '#/components/schemas/StopItemSpecialOption'
-        itemRange:
-          $ref: '#/components/schemas/ItemRange'
-        varianceRange:
-          $ref: '#/components/schemas/VarianceRange'
+        stopItem:
+          $ref: '#/components/schemas/StopItemAdd'
     AddStopItemResponse:
       title: AddStopItemResponse
       type: object
@@ -2722,6 +2873,7 @@ components:
         value:
           type: string
           description: Name of the authorizing party
+      description: Authorization Information
     Balance:
       title: Balance
       required:
@@ -2731,11 +2883,29 @@ components:
       properties:
         type:
           type: string
-          description: "Identifies the type of balance being supplied. Values:\n  * 'Amount Due' - The amount of the total payment amount required to bring the account current\n  * 'Available'- The amount of money in your account that is available for immediate withdrawal\n  * 'AvailableCredit' - The amount of the unused portion of the total line of credit balance authorized for this account\n  * 'Current' - The amount of money that is actually in your account at any given time including those funds that may be on hold or are still uncollected. Also known as MemoLedger\n  * 'Ledger' - The amount of money in an account at the start of the business day, including all deposits and withdrawals posted the previous night, whether or not the funds have been collected\n  * 'Escrow' - Balance of the money set aside with the purpose of paying property taxes and homeowners' insurance premiums\n  * 'Fee' -  The amount of fee, charges, membership fee due on the account\n  * 'InterestDue' - Interest due represents the amount required to pay the interest cost of the loan for the payment period\n  * 'Initial' - Origination or face amount of the loan account. Also initial deposit or certificate value for time deposits\n  * 'LateFee' -  Late fee refers to unpaid balance of late fees. Late fees are charges that consumers pay when they fail to make a payment on a debt such as a loan or a credit card\n  * 'Memo' - This is the ledger balance minus any uncollected funds (float) minus memo-posted debits, plus memo-posted credits (activity of the day).. Also known as MemoAvailable\n  * 'PayoffAmount' - The amount needed to be paid including principal amount, interest and any other charges in order to settle the loan or credit card account\n  * 'Principal' - The amount of the remaining unpaid balance of a loan exclusive of interest and any other charges\n  * 'Redemption' -Redemption value is the price of a term deposit account before its maturity date\n  * 'Sweep' - Total available balance combined from all related accounts that are part of a cash management relationship\n  \n"
+          description: |
+            Identifies the type of balance being supplied. Values:
+              * 'Amount Due' - The amount of the total payment amount required to bring the account current
+              * 'Available'- The amount of money in your account that is available for immediate withdrawal
+              * 'AvailableCredit' - The amount of the unused portion of the total line of credit balance authorized for this account
+              * 'ChargeOff'- Amount of loan that was charged-off
+              * 'Current' - The amount of money that is actually in your account at any given time including those funds that may be on hold or are still uncollected. Also known as MemoLedger
+              * 'Ledger' - The amount of money in an account at the start of the business day, including all deposits and withdrawals posted the previous night, whether or not the funds have been collected
+              * 'Escrow' - Balance of the money set aside with the purpose of paying property taxes and homeowners' insurance premiums
+              * 'Fee' -  The amount of fee, charges, membership fee due on the account
+              * 'InterestDue' - Interest due represents the amount required to pay the interest cost of the loan for the payment period
+              * 'Initial' - Origination or face amount of the loan account. Also initial deposit or certificate value for time deposits
+              * 'LateFee' -  Late fee refers to unpaid balance of late fees. Late fees are charges that consumers pay when they fail to make a payment on a debt such as a loan or a credit card
+              * 'Memo' - This is the ledger balance minus any uncollected funds (float) minus memo-posted debits, plus memo-posted credits (activity of the day).. Also known as MemoAvailable
+              * 'PayoffAmount' - The amount needed to be paid including principal amount, interest and any other charges in order to settle the loan or credit card account
+              * 'Principal' - The amount of the remaining unpaid balance of a loan exclusive of interest and any other charges
+              * 'Redemption' -Redemption value is the price of a term deposit account before its maturity date
+              * 'Sweep' - Total available balance combined from all related accounts that are part of a cash management relationship
           enum:
           - AmountDue
           - Available
           - AvailableCredit
+          - ChargeOff
           - Current
           - Ledger
           - Escrow
@@ -2752,16 +2922,23 @@ components:
           type: number
           description: The value representing the balance being returned
           format: currency
+        asOfDate:
+          type: string
+          description: 'The date associated to the balance being returned   '
+          format: date
     CatalogTableCode:
       title: CatalogTableCode
+      required:
+      - code
+      type: object
       properties:
         code:
           type: string
-          description: Code as appear in catalog
+          description: Code for the Catalog Item
         description:
           type: string
-          description: Description of related code as appears in catalog
-      description: Catalog API may be used to retrieve all code/description values associated to the element
+          description: Description of related code for Catalog Item. The element description is a required ouput element, for example it should be populated in GET responses
+      description: Catalog table codes consist of two elements code and description. The element code is a required input/output element. The element description is a required output element, for example it should be populated in GET responses.
     Collateral:
       title: Collateral
       required:
@@ -2798,6 +2975,8 @@ components:
         currencyCode:
           type: string
           description: Indicates the currency applied to balances, interest, etc.  Based  on ISO-4217 string value; ie USD, EUR
+        address:
+          $ref: '#/components/schemas/AddressCollateral'
     Commercial:
       title: Commercial
       type: object
@@ -2808,9 +2987,13 @@ components:
         NAICS:
           type: string
           description: Code used to classify business establishments
-        isSBA:
-          type: boolean
-          description: 'Is this a Small Business Administration (SBA) loan?  '
+        SBA:
+          type: string
+          description: Indicates whether the account is a Small Business Administration loan
+          enum:
+          - "true"
+          - "false"
+          - Undefined
     CourtesyOverdraft:
       title: CourtesyOverdraft
       type: object
@@ -2847,12 +3030,13 @@ components:
           - FSA
           - HSA
           - IRA
-          - ISA
-          - JuniorISA
           - Roth
           - SEP
         taxFavoredPlanCode:
           $ref: '#/components/schemas/CatalogTableCode'
+        planNumber:
+          type: string
+          description: Plan number associated with investment portfolio
         interestDispositionType:
           type: string
           description: Interest disposition method by which interest payments are made
@@ -2885,6 +3069,15 @@ components:
           description: List of options and amounts to perform courtesy overdraft processing
           items:
             $ref: '#/components/schemas/CourtesyOverdraft'
+      description: Contains information specific to Deposit accounts
+    DepositUpdate:
+      title: DepositUpdate
+      type: object
+      properties:
+        planNumber:
+          type: string
+          description: Plan number associated with investment portfolio
+      description: Contains information specific to Deposit accounts
     DepositDetail:
       title: DepositDetail
       type: object
@@ -2904,10 +3097,10 @@ components:
           - FSA
           - HSA
           - IRA
-          - ISA
-          - JuniorISA
           - Roth
           - SEP
+        taxFavoredPlanCode:
+          $ref: '#/components/schemas/CatalogTableCode'
         planNumber:
           type: string
           description: Plan number associated with investment portfolio
@@ -2949,6 +3142,7 @@ components:
           - InternalTransfer
         maturityDispositionAccount:
           $ref: '#/components/schemas/AccountReference'
+      description: Contains information specific to Deposit accounts
     DetailItem:
       title: DetailItem
       required:
@@ -2958,7 +3152,7 @@ components:
       properties:
         description:
           type: string
-          description: Additional detail of what makes up the amount. For example for Insurance Amount we may have detail items for Life, Disability or Unemployment insurance. Another example may be Fee Amount we may have detail items for NSF, Legal or Collection fees.
+          description: Additional detail of what makes up the amount. For example for Insurance Amount we may have detail items for Life, Accident, Other, Disability or Unemployment insurance. Another example may be Fee Amount we may have detail items for NSF, Legal or Collection fees.
         amount:
           type: number
           description: The value representing the detail amount being returned
@@ -3026,35 +3220,7 @@ components:
           - Statement
         method:
           $ref: '#/components/schemas/CatalogTableCode'
-    Email:
-      title: Emails
-      required:
-      - address
-      - contactAllowed
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of email address being returned
-          enum:
-          - Business
-          - Personal
-          - Work
-        address:
-          type: string
-          description: Email address being returned
-          format: email
-        isPreferred:
-          type: boolean
-          description: Is this email address the preferred form of contact?
-        contactAllowed:
-          type: string
-          description: Indicates whether the email address can be  used for contact
-          enum:
-          - "true"
-          - "false"
-          - Undefined
+      description: Document Deliveries Information
     Escrow:
       title: Escrow
       type: object
@@ -3079,14 +3245,22 @@ components:
           type: string
           description: Date of last disbursement from escrow account
           format: date
-        ytdInterestEarnedAmount:
+        ytdInterestPaidAmount:
           type: number
-          description: YTD interest earnings on escrow account
+          description: YTD interest paid on escrow account
           format: currency
-        pytdInterestEarnedAmount:
+        currentYear:
+          type: string
+          description: Current year of the interest paid
+          format: YYYY
+        priorYearInterestPaidAmount:
           type: number
-          description: Previous YTD interest earnings on escrow account
+          description: Previous YTD interest paid on escrow account
           format: currency
+        PriorYear:
+          type: string
+          description: Prior year of the interest paid
+          format: YYYY
         details:
           type: array
           description: Array of elements that further describe the make-up of the distribution amount
@@ -3114,6 +3288,23 @@ components:
           type: string
           description: Date associated to escrow detail item
           format: date
+    Features:
+      title: Features
+      required:
+      - isEnabled
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Feature type
+          enum:
+          - RoundUp
+        isEnabled:
+          type: boolean
+          description: A 'true' value indicates the feature is enabled
+        roundUp:
+          $ref: '#/components/schemas/RoundUp'
     FundAvailability:
       title: FundAvailability
       required:
@@ -3127,6 +3318,7 @@ components:
         isAvailable:
           type: boolean
           description: Indicates whether there are funds available to proceed with the transaction based on the condition of the balance
+      description: Fund Availability Information
     GetAccountResponse:
       title: GetAccountResponse
       type: object
@@ -3154,8 +3346,153 @@ components:
       type: object
       properties:
         id:
+          $ref: '#/components/schemas/HoldId'
+        type:
+          $ref: '#/components/schemas/HoldType'
+        amount:
+          $ref: '#/components/schemas/HoldAmount'
+        holdAmountType:
+          $ref: '#/components/schemas/HoldAmountType'
+        createdDate:
+          $ref: '#/components/schemas/HoldCreatedDate'
+        effectiveDate:
+          $ref: '#/components/schemas/HoldEffectiveDate'
+        expirationDate:
+          $ref: '#/components/schemas/HoldExpirationDate'
+        reasonCode:
+          $ref: '#/components/schemas/CatalogTableCode'
+        reasonDescription:
+          $ref: '#/components/schemas/HoldReasonDescription'
+        authorizedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedBy'
+        securedAccount:
+          $ref: '#/components/schemas/AccountReference'
+      description: Holds details
+    HoldAdd:
+      title: HoldAdd
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/HoldType'
+        amount:
+          $ref: '#/components/schemas/HoldAmount'
+        holdAmountType:
+          $ref: '#/components/schemas/HoldAmountType'
+        effectiveDate:
+          $ref: '#/components/schemas/HoldEffectiveDate'
+        expirationDate:
+          $ref: '#/components/schemas/HoldExpirationDate'
+        reasonCode:
+          $ref: '#/components/schemas/CatalogTableCode'
+        reasonDescription:
           type: string
-          description: Value that represents the identifier of the hold that does not contain sensitive data
+          description: 'Reason for the hold '
+        authorizedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedBy'
+        securedAccount:
+          $ref: '#/components/schemas/AccountReferenceAdd'
+    HoldAmount:
+      title: HoldAmount
+      type: number
+      description: The amount of the hold
+      format: currency
+    HoldAmountType:
+      title: HoldAmountType
+      type: string
+      description: Identifies the way the amount hold is calculated. Fixed is common when the hold amount is provided
+      enum:
+      - Ledger
+      - Available
+      - Fixed
+      - Payoff
+      - All
+    HoldCreatedDate:
+      title: HoldCreatedDate
+      type: string
+      description: Date on which the hold was created
+      format: date
+    HoldEffectiveDate:
+      title: HoldEffectiveDate
+      type: string
+      description: Effective date of the hold
+      format: date
+    HoldExpirationDate:
+      title: HoldExpirationDate
+      type: string
+      description: Date on which the hold will expire
+      format: date
+    HoldId:
+      type: string
+      description: Value that represents the identifier of the Hold that does not  contain sensitive data
+    HoldReasonDescription:
+      title: HoldReasonDescription
+      type: string
+      description: "Reason for the hold \n    "
+    HoldReplace:
+      title: HoldReplace
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of hold
+          enum:
+          - Hold
+          - Caution
+          - Pledge
+        amount:
+          type: number
+          description: The amount of the hold
+          format: currency
+        holdAmountType:
+          type: string
+          description: Identifies the way the amount hold is calculated. Fixed is common  when the hold amount is provided
+          enum:
+          - Ledger
+          - Available
+          - Fixed
+          - Payoff
+          - All
+        effectiveDate:
+          type: string
+          description: Effective date of the hold
+          format: date
+        expirationDate:
+          type: string
+          description: Date on which the hold will expire
+          format: date
+        reasonCode:
+          $ref: '#/components/schemas/CatalogTableCode'
+        reasonDescription:
+          type: string
+          description: 'Reason for the hold '
+        authorizedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedBy'
+        securedAccount:
+          $ref: '#/components/schemas/AccountReferenceAdd'
+    HoldType:
+      title: HoldType
+      type: string
+      description: Type of hold
+      enum:
+      - Hold
+      - Caution
+      - Pledge
+    HoldUpdate:
+      title: HoldUpdate
+      required:
+      - type
+      type: object
+      properties:
         type:
           type: string
           description: Type of hold
@@ -3176,10 +3513,6 @@ components:
           - Fixed
           - Payoff
           - All
-        createdDate:
-          type: string
-          description: Date on which the hold was created
-          format: date
         effectiveDate:
           type: string
           description: Effective date of the hold
@@ -3198,30 +3531,11 @@ components:
           items:
             $ref: '#/components/schemas/AuthorizedBy'
         securedAccount:
-          $ref: '#/components/schemas/AccountReference'
-    HoldId:
-      type: string
-      description: Value that represents the identifier of the Hold that does not  contain sensitive data
+          $ref: '#/components/schemas/AccountReferenceAdd'
     InterestAccrual:
       title: Interest
       type: object
       properties:
-        ytdAmount:
-          type: number
-          description: Current year interest accrual to date
-          format: currency
-        currentYear:
-          type: string
-          description: Current accrual year
-          format: YYYY
-        pytdAmount:
-          type: number
-          description: Prior year interest accrual to date
-          format: currency
-        priorYear:
-          type: string
-          description: Prior accrual year
-          format: YYYY
         accruedThruDate:
           type: string
           description: Date through which the interest is accrued for this account
@@ -3234,6 +3548,7 @@ components:
           type: number
           description: One day's worth of interest
           format: currency
+      description: Interest Accrual Information
     InterestPaid:
       title: InterestPaid
       type: object
@@ -3244,15 +3559,15 @@ components:
           format: currency
         currentYear:
           type: string
-          description: Current accrual year
+          description: 'Current year of interest paid '
           format: YYYY
-        pytdAmount:
+        priorYearAmount:
           type: number
           description: Prior year interest paid to date
           format: currency
         priorYear:
           type: string
-          description: Prior accrual year
+          description: Prior year of interest paid
           format: YYYY
         lastPaidAmount:
           type: number
@@ -3270,6 +3585,7 @@ components:
           type: string
           description: Date of the next scheduled interest payment
           format: date
+      description: Interest Paid Information
     ItemRange:
       title: ItemRange
       required:
@@ -3283,6 +3599,37 @@ components:
         end:
           type: string
           description: Ending number of the check number range
+      description: Item range information
+    ListPeriodicDataResponse:
+      title: ListPeriodicDataResponse
+      type: object
+      properties:
+        messages:
+          type: array
+          description: More than one error, warning or informational messages may be returned in the response.
+          items:
+            $ref: '#/components/schemas/Message'
+        links:
+          $ref: '#/components/schemas/Links'
+        periodicData:
+          type: array
+          items:
+            $ref: '#/components/schemas/PeriodicData'
+    ListAddressesResponse:
+      title: ListAddressesResponse
+      type: object
+      properties:
+        messages:
+          type: array
+          description: More than one error, warning or informational messages may be returned in the response.
+          items:
+            $ref: '#/components/schemas/Message'
+        links:
+          $ref: '#/components/schemas/Links'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressList'
     ListBalancesResponse:
       title: ListBalancesResponse
       type: object
@@ -3358,7 +3705,7 @@ components:
           type: array
           description: List of transactions in the result
           items:
-            $ref: '#/components/schemas/TransactionList'
+            $ref: '#/components/schemas/Transaction'
     ListTransfersResponse:
       title: ListTransfersResponse
       type: object
@@ -3406,6 +3753,7 @@ components:
           type: number
           description: Annual percentage rate
           format: float
+      description: Contains information specific to Loan accounts
     LoanDetail:
       title: LoanDetail
       type: object
@@ -3432,7 +3780,7 @@ components:
           format: float
         isSecured:
           type: boolean
-          description: Is loan secured by collateral (True) or is the loan not secured  by collateral (false)
+          description: Is loan secured by collateral (true) or is the loan not secured  by collateral (false)
         chargeOffAmount:
           type: number
           description: Amount of loan that was charged-off
@@ -3469,6 +3817,7 @@ components:
           description: Past Due detail information
           items:
             $ref: '#/components/schemas/PastDueDetail'
+      description: Contains information specific to Deposit accounts
     Officer:
       title: Officer
       required:
@@ -3488,23 +3837,6 @@ components:
         code:
           type: string
           description: Code related to the officer information being sent
-    Organization:
-      title: Organization
-      required:
-      - type
-      - value
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of organization value being described
-          enum:
-          - ABA
-          - DUNS
-          - Fiserv
-        value:
-          type: string
-          description: Value that identifies the financial institution
     OverdraftFunding:
       title: FundingAccount
       required:
@@ -3524,8 +3856,8 @@ components:
         priorityNumber:
           type: integer
           description: Number that indicates the account sequence the system uses when attempting to draw funds from accounts
-        organization:
-          $ref: '#/components/schemas/Organization'
+        routingTransitNumber:
+          $ref: '#/components/schemas/RoutingTransitNumber'
     PastDueDetail:
       title: PastDueDetail
       type: object
@@ -3535,9 +3867,8 @@ components:
           description: Amount associated with the past due amount
           format: currency
         daysPastDue:
-          type: number
+          type: integer
           description: Number of days that the payment is past due
-          format: integer
         operator:
           type: string
           description: This is a qualifier for the number of past due days. The value indicates  whether the account is Equal (EQ), Lesser Than (LT), Lesser or Equal to (LTE) Greater or Equal to (GTE)
@@ -3553,7 +3884,7 @@ components:
       properties:
         dueDate:
           type: string
-          description: Scheduled date of the oldest payment due on the loan. When the loan is current this may be the date of the already billed payment which may not be past due yet. This field should be confused with a projection of the  next payment due (look at next due and next amount). Only due (billed) payments are presented in this field
+          description: Scheduled date of the oldest payment due on the loan. When the loan is current this  may be the date of the already billed payment which may not be past due yet.  This field should be confused with a projection of the  next payment  due (look at next due and next amount). Only due (billed) payments are presented in this field
           format: date
         dueAmount:
           type: number
@@ -3614,43 +3945,6 @@ components:
           description: Number of payments remaining to fully satisfy  the account. The value of 'N/A' represent the account does not have an end date
         sourceAccount:
           $ref: '#/components/schemas/AccountReference'
-    Phone:
-      title: Phones
-      required:
-      - contactAllowed
-      - number
-      - type
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of phone number being returned
-          enum:
-          - Fax
-          - Home
-          - Mobile
-          - Other
-          - Pager
-          - Work
-        countryCode:
-          type: string
-          description: Country code of phone number.  Numeric values only
-        number:
-          type: string
-          description: Phone number being returned.  Numeric values only
-        extension:
-          type: string
-          description: Extension number associated with phone number
-        isPreferred:
-          type: boolean
-          description: Is this phone number the preferred form of contact?
-        contactAllowed:
-          type: string
-          description: Indicates whether the phone number can be used for contact
-          enum:
-          - "true"
-          - "false"
-          - Undefined
     ErrorResponse:
       title: ErrorResponse
       type: object
@@ -3662,6 +3956,7 @@ components:
             $ref: '#/components/schemas/Message'
     RecurringDetail:
       title: RecurringDetail
+      description: Recurring Information
       allOf:
       - $ref: '#/components/schemas/RecurringBasic'
       - type: object
@@ -3672,10 +3967,10 @@ components:
             format: date
           endDate:
             type: string
-            description: 'Indicates the date of the end of the recurring period              '
+            description: Indicates the date of the end of the recurring period
             format: date
     RecurringBasic:
-      title: Recurring
+      title: RecurringBasic
       required:
       - code
       - frequency
@@ -3730,12 +4025,12 @@ components:
           maximum: 5
           minimum: 1
           type: integer
-          description: Numeric value represents the week of the month of ocurrance. Values range from 1 thru 5. Value 5 indicates last week of the month
+          description: Numeric value represents the week of the month of ocurrance. Values range from 1 thru 5.  A value 5 indicates last week of the month
         secondWeekOfMonth:
           maximum: 5
           minimum: 1
           type: integer
-          description: Numeric value represents the second week of the month ocurrance. Values range from 1 thru 5. Value 5 indicates last week of the month. This is used for TwiceMonthly recurring models
+          description: Numeric value represents the second week of the month ocurrance. Values range from 1 thru 5.  A value 5 indicates last week of the month. This is used for TwiceMonthly recurring models
       description: Recurring indicates the time frame and frequency of the transfer fund instruction
     RelationshipAdd:
       title: Relationship
@@ -3771,48 +4066,11 @@ components:
     ReplaceHoldRequest:
       title: ReplaceHoldRequest
       required:
-      - type
+      - hold
       type: object
       properties:
-        type:
-          type: string
-          description: Type of hold
-          enum:
-          - Hold
-          - Caution
-          - Pledge
-        amount:
-          type: number
-          description: The amount of the hold
-          format: currency
-        holdAmountType:
-          type: string
-          description: Identifies the way the amount hold is calculated. Fixed is common  when the hold amount is provided
-          enum:
-          - Ledger
-          - Available
-          - Fixed
-          - Payoff
-          - All
-        effectiveDate:
-          type: string
-          description: Effective date of the hold
-          format: date
-        expirationDate:
-          type: string
-          description: Date on which the hold will expire
-          format: date
-        reasonCode:
-          $ref: '#/components/schemas/CatalogTableCode'
-        reasonDescription:
-          type: string
-          description: 'Reason for the hold '
-        authorizedBy:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedBy'
-        securedAccount:
-          $ref: '#/components/schemas/AccountReferenceAdd'
+        hold:
+          $ref: '#/components/schemas/HoldReplace'
     ReplaceHoldResponse:
       title: ReplaceHoldResponse
       type: object
@@ -3824,38 +4082,12 @@ components:
             $ref: '#/components/schemas/Message'
     ReplaceStopItemRequest:
       title: ReplaceStopItemRequest
+      required:
+      - stopItem
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/StopItemType'
-        itemNumber:
-          $ref: '#/components/schemas/StopItemNumber'
-        companyId:
-          $ref: '#/components/schemas/StopItemCompanyId'
-        amount:
-          $ref: '#/components/schemas/StopItemAmount'
-        payeeName:
-          $ref: '#/components/schemas/StopItemPayeeName'
-        originationDate:
-          $ref: '#/components/schemas/StopItemOriginationDate'
-        expirationDate:
-          $ref: '#/components/schemas/StopItemExpirationDate'
-        isPermanent:
-          $ref: '#/components/schemas/StopItemIsPermanent'
-        reasonCode:
-          $ref: '#/components/schemas/CatalogTableCode'
-        reasonDescription:
-          $ref: '#/components/schemas/StopItemReasonDescription'
-        authorizedBy:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedBy'
-        specialOption:
-          $ref: '#/components/schemas/StopItemSpecialOption'
-        itemRange:
-          $ref: '#/components/schemas/ItemRange'
-        varianceRange:
-          $ref: '#/components/schemas/VarianceRange'
+        stopItem:
+          $ref: '#/components/schemas/StopItemReplace'
     ReplaceStopItemResponse:
       title: ReplaceStopItemResponse
       type: object
@@ -3865,6 +4097,43 @@ components:
           description: More than one error, warning or informational messages may be returned in the response.
           items:
             $ref: '#/components/schemas/Message'
+    RoundUp:
+      title: RoundUp
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/RoundUpAccountId'
+      - $ref: '#/components/schemas/RoundUpAccountDetail'
+    RoundUpAccountId:
+      title: RoundUpAccountId
+      required:
+      - accountId
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/AccountId'
+        amount:
+          type: number
+          description: Round up amount
+          format: currency
+    RoundUpAccountDetail:
+      title: RoundUpAccountDetail
+      required:
+      - accountDetailType
+      - accountNumber
+      type: object
+      properties:
+        accountNumber:
+          $ref: '#/components/schemas/AccountNumber'
+        accountDetailType:
+          $ref: '#/components/schemas/AccountDetailType'
+        amount:
+          type: number
+          description: Round up amount
+          format: currency
+    RoutingTransitNumber:
+      maxLength: 9
+      type: string
+      description: Routing number is a nine-digit code used by financial institutions to identify other financial institutions. It's also known as an RTN (routing transit number) and an ABA (American Bankers Association) routing number.
     SplitRate:
       title: SplitRate
       type: object
@@ -3877,15 +4146,10 @@ components:
           type: number
           description: Interest rate that is applied to the principal balance portion below to the split amount.
           format: float
-        overRate:
-          type: number
-          description: Interest rate that is applied to the principal balance portion above split amount.
-          format: float
     StopItem:
       title: StopItem
       required:
       - id
-      - reasonCode
       - type
       type: object
       properties:
@@ -3911,6 +4175,43 @@ components:
           $ref: '#/components/schemas/StopItemIsPermanent'
         isCertified:
           $ref: '#/components/schemas/StopItemIsCertified'
+        reasonCode:
+          $ref: '#/components/schemas/CatalogTableCode'
+        reasonDescription:
+          $ref: '#/components/schemas/StopItemReasonDescription'
+        authorizedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedBy'
+        specialOption:
+          $ref: '#/components/schemas/StopItemSpecialOption'
+        itemRange:
+          $ref: '#/components/schemas/ItemRange'
+        varianceRange:
+          $ref: '#/components/schemas/VarianceRange'
+      description: Stop Item Details
+    StopItemAdd:
+      title: StopItemAdd
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StopItemType'
+        itemNumber:
+          $ref: '#/components/schemas/StopItemNumber'
+        companyId:
+          $ref: '#/components/schemas/StopItemCompanyId'
+        amount:
+          $ref: '#/components/schemas/StopItemAmount'
+        payeeName:
+          $ref: '#/components/schemas/StopItemPayeeName'
+        originationDate:
+          $ref: '#/components/schemas/StopItemOriginationDate'
+        expirationDate:
+          $ref: '#/components/schemas/StopItemExpirationDate'
+        isPermanent:
+          $ref: '#/components/schemas/StopItemIsPermanent'
         reasonCode:
           $ref: '#/components/schemas/CatalogTableCode'
         reasonDescription:
@@ -3964,6 +4265,40 @@ components:
     StopItemReasonDescription:
       type: string
       description: Description of the reason for why the item was stopped
+    StopItemReplace:
+      title: StopItemReplace
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StopItemType'
+        itemNumber:
+          $ref: '#/components/schemas/StopItemNumber'
+        companyId:
+          $ref: '#/components/schemas/StopItemCompanyId'
+        amount:
+          $ref: '#/components/schemas/StopItemAmount'
+        payeeName:
+          $ref: '#/components/schemas/StopItemPayeeName'
+        originationDate:
+          $ref: '#/components/schemas/StopItemOriginationDate'
+        expirationDate:
+          $ref: '#/components/schemas/StopItemExpirationDate'
+        isPermanent:
+          $ref: '#/components/schemas/StopItemIsPermanent'
+        reasonCode:
+          $ref: '#/components/schemas/CatalogTableCode'
+        reasonDescription:
+          $ref: '#/components/schemas/StopItemReasonDescription'
+        authorizedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedBy'
+        specialOption:
+          $ref: '#/components/schemas/StopItemSpecialOption'
+        itemRange:
+          $ref: '#/components/schemas/ItemRange'
+        varianceRange:
+          $ref: '#/components/schemas/VarianceRange'
     StopItemSpecialOption:
       type: string
       description: Additional processing options associated with the stop item
@@ -4003,6 +4338,7 @@ components:
           - Months
           - Years
           - Indefinite
+      description: term Information
     TermAdd:
       title: Term
       type: object
@@ -4028,7 +4364,7 @@ components:
       properties:
         count:
           type: integer
-          description: Indicates the number of periods at the time the account was established.  THe value should be represented as a whole number.
+          description: Indicates the number of periods at the time the account was established.  The value should be represented as a whole number.
         units:
           type: string
           description: Unit of time the term is expressed in
@@ -4038,11 +4374,6 @@ components:
           - Months
           - Years
           - Indefinite
-    TransactionList:
-      title: TransactionList
-      allOf:
-      - $ref: '#/components/schemas/Transaction'
-      - type: object
     Transaction:
       title: Transaction
       required:
@@ -4118,9 +4449,11 @@ components:
           type: string
           description: Date and time the transaction posted
           format: date-time
-        description:
-          type: string
+        descriptions:
+          type: array
           description: Transaction description as it appears on a customer's statement
+          items:
+            type: string
         traceNumber:
           type: string
           description: Trace number
@@ -4139,7 +4472,6 @@ components:
           - Coupon
           - Receipt
           - Other
-          - Undefined
         transactionCode:
           type: string
           description: Transaction code used for posting
@@ -4214,7 +4546,7 @@ components:
           format: currency
         currencyCode:
           type: string
-          description: Value identifiying which currency the amounts and balances are expressed in.  Value is ISO 4217 currency code, eg USD, EUR,CHF
+          description: Value identifiying which currency the amounts and balances are expressed in.   Value is ISO 4217 currency code, eg USD, EUR,CHF
         status:
           type: string
           description: Indicates the status of the transfer fund instruction
@@ -4226,7 +4558,7 @@ components:
           $ref: '#/components/schemas/AccountTransferRef'
         nextTransferDate:
           type: string
-          description: 'Date and of when the transfer fund will be posted '
+          description: 'Date of when the transfer fund will be posted '
           format: date
         lastTransferDateTime:
           type: string
@@ -4240,11 +4572,12 @@ components:
           $ref: '#/components/schemas/RecurringDetail'
     UpdateAccountRequest:
       title: UpdateAccountRequest
+      required:
+      - account
       type: object
       properties:
-        nickname:
-          type: string
-          description: User defined name of the account
+        account:
+          $ref: '#/components/schemas/AccountUpdate'
     UpdateAccountResponse:
       title: UpdateAccountResponse
       type: object
@@ -4272,48 +4605,11 @@ components:
     UpdateHoldRequest:
       title: UpdateHoldRequest
       required:
-      - type
+      - hold
       type: object
       properties:
-        type:
-          type: string
-          description: Type of hold
-          enum:
-          - Hold
-          - Caution
-          - Pledge
-        amount:
-          type: number
-          description: The amount of the hold
-          format: currency
-        holdAmountType:
-          type: string
-          description: Identifies the way the amount hold is calculated. Fixed is common when the hold amount is provided
-          enum:
-          - Ledger
-          - Available
-          - Fixed
-          - Payoff
-          - All
-        effectiveDate:
-          type: string
-          description: Effective date of the hold
-          format: date
-        expirationDate:
-          type: string
-          description: Date on which the hold will expire
-          format: date
-        reasonCode:
-          $ref: '#/components/schemas/CatalogTableCode'
-        reasonDescription:
-          type: string
-          description: 'Reason for the hold '
-        authorizedBy:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedBy'
-        securedAccount:
-          $ref: '#/components/schemas/AccountReferenceAdd'
+        hold:
+          $ref: '#/components/schemas/HoldUpdate'
     UpdateHoldResponse:
       title: UpdateHoldResponse
       type: object
@@ -4323,8 +4619,8 @@ components:
           description: More than one error, warning or informational messages may be returned in the response.
           items:
             $ref: '#/components/schemas/Message'
-    UpdateStopItemRequest:
-      title: UpdateStopItemRequest
+    StopItemUpdate:
+      title: StopItemUpdate
       type: object
       properties:
         type:
@@ -4357,6 +4653,14 @@ components:
           $ref: '#/components/schemas/ItemRange'
         varianceRange:
           $ref: '#/components/schemas/VarianceRange'
+    UpdateStopItemRequest:
+      title: UpdateStopItemRequest
+      required:
+      - stopItem
+      type: object
+      properties:
+        stopItem:
+          $ref: '#/components/schemas/StopItemUpdate'
     UpdateStopItemResponse:
       title: UpdateStopItemResponse
       type: object
@@ -4381,6 +4685,7 @@ components:
           type: number
           description: Upper end of the variance the amount can be
           format: currency
+      description: Variance Range Information
     Links:
       title: Links
       required:
@@ -4389,19 +4694,25 @@ components:
       properties:
         self:
           type: string
+          description: Current record
           format: uri
         first:
           type: string
+          description: First record available
           format: uri
         previous:
           type: string
+          description: Previous record available
           format: uri
         next:
           type: string
+          description: Next record available
           format: uri
         last:
           type: string
+          description: Last record available
           format: uri
+      description: Links Details
     Message:
       title: Message
       required:
@@ -4431,29 +4742,28 @@ components:
           $ref: '#/components/schemas/AccountId'
         number:
           $ref: '#/components/schemas/AccountNumber'
+      description: Account Information
     AddHoldResponse_hold:
       required:
       - id
       type: object
       properties:
         id:
-          type: string
-          description: Value that represents the identifier of the Hold.  Item does not contain sensitive information
+          $ref: '#/components/schemas/HoldId'
+      description: Hold Information
     AddStopItemResponse_stopItem:
       type: object
       properties:
         id:
           $ref: '#/components/schemas/StopItemId'
+      description: Stop Item Information
   examples:
     LWHeader:
       value:
         LWHeader:
           Fiserv-OrganizationId: 11-222-3333
           Fiserv-TransactionId: 2699906D-6D65-4AE3-AD68-D2ACE751C34A
-          Fiserv-ClientApplicationName: Portico
-          Fiserv-Channel: Mobile
           Fiserv-ClientDateTime: 2021-05-27T13:23:10.508Z
-          Fiserv-VendorId: F26EFA5E-5708-46A9-81C5-624559ADBD0C
     AccountList:
       value:
         links:
@@ -4470,10 +4780,10 @@ components:
           status: Active
           detailStatus: Active
           isOpen: true
-          isCardAttached: true
+          cardAttached: true
           currencyCode: USD
           title: Owner
-          classCode: NOW
+          classCode: 3
           branchCode: 333
           lastTransactionDateTime: 2021-05-27T13:23:10.508Z
           lastTransactionAmount: 10.0
@@ -4489,9 +4799,6 @@ components:
             amount: 100.0
           - type: MemoAvailable
             amount: 110.0
-          organization:
-            type: DUNS
-            value: 11-222-3333
         - id: F17AA97E-4281-4E94-B045-BC0637D91C92
           type: Deposit
           detailType: Savings
@@ -4501,15 +4808,15 @@ components:
           status: Active
           detailStatus: Active
           isOpen: true
-          isCardAttached: true
+          cardAttached: true
           currencyCode: USD
           title: Owner
-          classCode: Class13
+          classCode: 3
           branchCode: 333
           lastTransactionDateTime: 2021-05-27T13:23:10.508Z
           lastTransactionAmount: 24.01
           rate: 0
-          balance:
+          balances:
           - type: Available
             amount: 1000.0
           - type: Current
@@ -4518,9 +4825,6 @@ components:
             amount: 1500.45
           - type: MemoAvailable
             amount: 1000.0
-          organization:
-            type: DUNS
-            value: 11-222-3333
         - id: F6CF8BA2-7A46-453A-8A27-399D86432676
           type: Loan
           detailType: Consumer
@@ -4530,15 +4834,15 @@ components:
           status: Active
           detailStatus: Active
           isOpen: true
-          isCardAttached: false
+          cardAttached: false
           currencyCode: USD
           title: Owner
-          classCode: Class13
+          classCode: 3
           branchCode: 333
           lastTransactionDateTime: 2021-05-27T14:56:29.980Z
           lastTransactionAmount: 30.0
           rate: 15.55
-          balance:
+          balances:
           - type: AmountDue
             amount: 40.0
           - type: AvailableCredit
@@ -4547,9 +4851,6 @@ components:
             amount: 4444.0
           - type: Principal
             amount: 4000.0
-          organization:
-            type: DUNS
-            value: 11-222-3333
           term:
             endDate: 2022-05-27
             count: 12
@@ -4589,20 +4890,8 @@ components:
             lineTwo: ""
             city: Lake Mary
             stateProvince: FL
-            country: USA
+            countryCode: USA
             postalCode: "32746"
-          email:
-            type: Child
-            address: myemail@home.com
-            isPreferred: false
-            isContactAllowed: false
-          phone:
-            type: Home
-            countryCode: 1
-            number: 4077883201
-            extension: ""
-            isPreferred: true
-            isContactAllowed: true
         - partyId: 8BDA4351-D993-4C3E-B8EA-65836951400E
           partyNumber: 79A85428
           type: Primary
@@ -4621,20 +4910,8 @@ components:
             lineTwo: ""
             city: Lake Mary
             stateProvince: FL
-            country: USA
+            countryCode: USA
             postalCode: "32746"
-          email:
-            type: Personal
-            address: myemail@home.com
-            isPreferred: false
-            isContactAllowed: false
-          phone:
-            type: Home
-            countryCode: 1
-            number: 4077883201
-            extension: ""
-            isPreferred: true
-            isContactAllowed: true
     Transactions:
       value:
         messages:
@@ -4661,13 +4938,13 @@ components:
           checkNumber: 10C
           transactionCode: TC51
           amount: 75
-          isCustomerViewable: 1
+          isCustomerViewable: true
           distribution:
           - type: Principal
             amount: 70
           - type: ServiceCharge
             amount: 5
-          balance:
+          balances:
           - type: Available
             amount: 100
           - type: Current
@@ -4696,7 +4973,7 @@ components:
             amount: 100
           - type: ServiceCharge
             amount: 15
-          balance:
+          balances:
           - type: Available
             amount: 215
           - type: Current
