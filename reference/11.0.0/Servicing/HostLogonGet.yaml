@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   title: Host Logon Service - Get Host Logon
   description: Host logon service is used to authenticate users and provide user authorization (system assertions/entitlements).
-  version: 11.0.0
+  version: 11.0.0_Secured
 servers:
 - url: /
 paths:
@@ -28,10 +28,6 @@ paths:
             examples:
               Sample Premier:
                 $ref: '#/components/examples/HostLogonRequest-Premier'
-              Sample Precision:
-                $ref: '#/components/examples/HostLogonRequest-Precision'
-              Sample Cleartouch:
-                $ref: '#/components/examples/HostLogonRequest-Cleartouch'
         required: true
       responses:
         "200":
@@ -43,46 +39,6 @@ paths:
               examples:
                 Sample Premier:
                   $ref: '#/components/examples/HostLogonResponse-Premier'
-                Sample Precision:
-                  $ref: '#/components/examples/HostLogonResponse-Precision'
-                Sample Cleartouch:
-                  $ref: '#/components/examples/HostLogonResponse-Cleartouch'
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HostLogonAddRsType'
-              examples:
-                "401":
-                  $ref: '#/components/examples/401-Premier'
-        "422":
-          description: Un-processable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HostLogonAddRsType'
-              examples:
-                "422":
-                  $ref: '#/components/examples/422-Premier'
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HostLogonAddRsType'
-              examples:
-                "500":
-                  $ref: '#/components/examples/500-Premier'
-        "503":
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HostLogonAddRsType'
-              examples:
-                "503":
-                  $ref: '#/components/examples/503-Premier'
         default:
           description: Unexpected error
           content:
@@ -92,7 +48,7 @@ paths:
       deprecated: false
       x-group-name: Host Logon Service
       x-proxy-name: Get Host Logon
-      x-child-product-name: ["Core Banking","Operations and Servicing"]
+      x-child-product-name: Operations and Servicing
 components:
   schemas:
     SubjectElementType:
@@ -114,6 +70,7 @@ components:
     AssertionTypeType:
       title: AssertionTypeType
       type: string
+      description: 'Type of assertion that specifies the area of system or function to which user may or may not have access based upon the <b>AssertionValueInd</b> value. <br> To view the allowed values, please refer the <a target="_blank" href="../docs/?path=docs/implementation-notes/Servicing/HostLogonAdd-ImplNotes.md" >provider specific implementation notes</a>. '
       example: SDA
       enum:
       - SDA
@@ -126,6 +83,7 @@ components:
     OperationType:
       title: OperationType
       type: string
+      description: 'Type of operation to which the user may or may not have access based upon the <b>AssertionValueInd</b> value. <br> To view the allowed values, please refer the <a target="_blank" href="../docs/?path=docs/implementation-notes/Servicing/HostLogonAdd-ImplNotes.md" >provider specific implementation notes</a>. '
       example: Add
       enum:
       - Add
@@ -143,7 +101,7 @@ components:
           $ref: '#/components/schemas/AssertionTypeType'
         AssertionValueInd:
           type: boolean
-          description: Flag to indicate the user have the right to access or permission to perform the action
+          description: Flag to indicate if the user has permission to access the <b>AssertionType</b> and <b>Operation</b> values returned in the response.
         Operation:
           $ref: '#/components/schemas/OperationType'
     Binary128Type:
@@ -191,7 +149,7 @@ components:
         LoginName:
           maxLength: 255
           type: string
-          description: Unique identification name of the user requesting the entitlements
+          description: 'Provider defined unique identification name of the user for which the credentials/entitlements to be retrieved. '
         SubjectPswd:
           $ref: '#/components/schemas/SubjectPswdType'
         TrnDt:
@@ -206,7 +164,7 @@ components:
       properties:
         SecTokenLogin:
           $ref: '#/components/schemas/SecTokenLoginType'
-      description: Security token details for login
+      description: Security token to authenticate user in a login process.
     HostCredentialsRsHdrType:
       title: HostCredentialsRsHdrType
       type: object
@@ -214,25 +172,25 @@ components:
         SessKey:
           maxLength: 64
           type: string
-          description: Session key used to establish secure connection for future communication with the ESF for the same user
+          description: Session key of a user which is used in future communication with ESF for the same user.
         AuthCode:
           maxLength: 256
           type: string
-          description: Code used for authorization
+          description: Authentication code
         UserCode:
           maxLength: 10
           type: string
-          description: User Code.
+          description: User code
         UserName:
           maxLength: 256
           type: string
-          description: Name of the user
+          description: Name of the user.
         Assertion:
           type: array
-          description: Assertion details to determine the entitlements of the user
+          description: Assertion details to determine the entitlements of the user.
           items:
             $ref: '#/components/schemas/AssertionType'
-      description: Response header details for host credentials
+      description: Details of the host or user entitlements.
     HostLogonAddRqType:
       title: HostLogonRqType
       required:
@@ -241,7 +199,7 @@ components:
       properties:
         HostCredentialsRqHdr:
           $ref: '#/components/schemas/HostCredentialsRqHdrType'
-      description: Request header details for host credentials
+      description: Credentials of the host or user whose entitlements to be retrieved.
     SubjectRoleType:
       title: SubjectRoleType
       type: string
