@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   title: Party Account Relationship Service - Get Party Account Relationship
   description: Party Account Relationship service manages the nature of relationship between a party and a product account. It is used to indicate the primary contact and tax responsible parties as well as state the relationship type between the party and an account.
-  version: 11.0.0
+  version: 11.0.0_GetPartyAcctRel
 servers:
 - url: /
 paths:
@@ -27,26 +27,10 @@ paths:
             schema:
               $ref: '#/components/schemas/PartyAcctRelInqRqType'
             examples:
-              Sample Premier by Account:
+              Sample by Account:
                 $ref: '#/components/examples/PremierPartyAcctRelInqRequest-byAcct'
-              Sample Premier by Party:
+              Sample by Party:
                 $ref: '#/components/examples/PremierPartyAcctRelInqRequest-byParty'
-              Sample Precision by Account:
-                $ref: '#/components/examples/PrecisionPartyAcctRelInqRequest-byAcct'
-              Sample Precision by Party:
-                $ref: '#/components/examples/PrecisionPartyAcctRelInqRequest-byParty'
-              Sample Signature by Account:
-                $ref: '#/components/examples/SignaturePartyAcctRelInqRequest-byAcct'
-              Sample Signature by Party:
-                $ref: '#/components/examples/SignaturePartyAcctRelInqRequest-byParty'
-              Sample Cleartouch by Account:
-                $ref: '#/components/examples/CleartouchPartyAcctRelInqRequest-byAcct'
-              Sample Cleartouch by Party:
-                $ref: '#/components/examples/CleartouchPartyAcctRelInqRequest-byParty'
-              Sample DNA by Account:
-                $ref: '#/components/examples/DNAPartyAcctRelInqRequest-byAcct'
-              Sample DNA by Party:
-                $ref: '#/components/examples/DNAPartyAcctRelInqRequest-byParty'
       responses:
         "200":
           description: Ok
@@ -55,62 +39,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/PartyAcctRelInqRsType'
               examples:
-                Sample Premier by Account:
+                Sample by Account:
                   $ref: '#/components/examples/PremierPartyAcctRelInqResponse-byAcct'
-                Sample Premier by Party:
+                Sample by Party:
                   $ref: '#/components/examples/PremierPartyAcctRelInqResponse-byParty'
-                Sample Precision by Account:
-                  $ref: '#/components/examples/PrecisionPartyAcctRelInqResponse-byAcct'
-                Sample Precision by Party:
-                  $ref: '#/components/examples/PrecisionPartyAcctRelInqResponse-byParty'
-                Sample Signature by Account:
-                  $ref: '#/components/examples/SignaturePartyAcctRelInqResponse-byAcct'
-                Sample Signature by Party:
-                  $ref: '#/components/examples/SignaturePartyAcctRelInqResponse-byParty'
-                Sample Cleartouch by Account:
-                  $ref: '#/components/examples/CleartouchPartyAcctRelInqResponse-byAcct'
-                Sample Cleartouch by Party:
-                  $ref: '#/components/examples/CleartouchPartyAcctRelInqResponse-byParty'
-                Sample DNA by Account:
-                  $ref: '#/components/examples/DNAPartyAcctRelInqResponse-byAcct'
-                Sample DNA by Party:
-                  $ref: '#/components/examples/DNAPartyAcctRelInqResponse-byParty'
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-              examples:
-                "401":
-                  $ref: '#/components/examples/401-Premier'
-        "422":
-          description: Un-processable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-              examples:
-                "422":
-                  $ref: '#/components/examples/422-Premier'
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-              examples:
-                "500":
-                  $ref: '#/components/examples/500-Premier'
-        "503":
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartyAcctRelInqRsType'
-              examples:
-                "503":
-                  $ref: '#/components/examples/503-Premier'
         default:
           description: See HTTP Status Code Standards
           content:
@@ -119,7 +51,7 @@ paths:
                 $ref: '#/components/schemas/PartyAcctRelInqRsType'
       x-group-name: Party Account Relationship Service
       x-proxy-name: Get Party Account Relationship
-      x-child-product-name: ["Core Banking","Accountholder"]
+      x-child-product-name: Accountholder
 components:
   schemas:
     AccessLevelDataType:
@@ -263,6 +195,10 @@ components:
       properties:
         CurCodeType:
           $ref: '#/components/schemas/CurCodeTypeType'
+        CurCodeTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Currency Code Type Enumeration Description.
         CurCodeValue:
           maxLength: 80
           type: string
@@ -497,6 +433,10 @@ components:
           description: |-
             Application the Client Defined Data belongs to. <br> Valid value is:
               - Portfolio
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Data Identification. Identification of the client defined data item.
         Value:
           maxLength: 256
           type: string
@@ -551,6 +491,9 @@ components:
           description: Details of the time frame of statement
           items:
             $ref: '#/components/schemas/StmtTimeFrameType'
+        LastStmtDt:
+          type: string
+          description: Last Statement Date.
       description: Details of the account statement
     NoticeDataType:
       title: NoticeDataType
@@ -1213,10 +1156,17 @@ components:
               - YTD
               - CTD
               - PriorYr
+        LastOccurInd:
+          type: boolean
+          description: Flag to indicate the last occurrence.
         Amt:
           type: number
           description: Amount in decimal. <br>
           example: 10
+        Count:
+          type: integer
+          description: Count. Sometimes specifies the duration of the time frame base on the units specified.
+          format: int64
         Rate:
           type: number
           description: 'Current rate of the account. '
@@ -1392,6 +1342,10 @@ components:
           PhoneType:
             type: string
             description: "Type of a phone. <br> Valid values are: \n  - Home\n  - Work\n  - Mobile\n  - Fax\n  - Pager\n  - Other\n  - Modem"
+          PhoneTypeEnumDesc:
+            maxLength: 80
+            type: string
+            description: Phone Type Enumeration Description.
           PhoneIdent:
             type: integer
             description: Phone identifier to serialize the phone types when more than one phone type exists
@@ -1402,10 +1356,22 @@ components:
           PreferredPhone:
             type: boolean
             description: Flag to indicate the phone number is preferred phone number of contact
+          Priority:
+            maxLength: 10
+            type: string
+            description: Priority Code.
+          DoNotContactInd:
+            type: boolean
+            description: Do Not Contact Indicator.
           PhoneDesc:
             maxLength: 30
             type: string
             description: Description of phone
+          UpDt:
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+            type: string
+            description: Update Date.
+            format: date-time
     PostAddrType:
       title: PostAddrType
       description: Postal address details of the party
@@ -1415,6 +1381,13 @@ components:
         - AddrType
         type: object
         properties:
+          NameIdent:
+            maxLength: 36
+            type: array
+            description: Name Identifier.
+            items:
+              maxLength: 36
+              type: string
           AddressIdent:
             maxLength: 36
             type: string
@@ -1427,8 +1400,16 @@ components:
                 - Home
                 - Personal
                 - Tax
+          AddrUseEnumDesc:
+            maxLength: 80
+            type: string
+            description: Address Use  Enumeration Description.
           AddrFormatType:
             $ref: '#/components/schemas/AddrFormatTypeType'
+          FullName1:
+            maxLength: 96
+            type: string
+            description: Full Name Line 1.
           Addr1:
             maxLength: 64
             type: string
@@ -1437,27 +1418,103 @@ components:
             maxLength: 64
             type: string
             description: Address line 2. To enter Addr2, Addr1 field must be provided.
+          Addr3:
+            maxLength: 64
+            type: string
+            description: Address Line 3.
+          Addr4:
+            maxLength: 64
+            type: string
+            description: Address Line 4.
+          Addr5:
+            maxLength: 64
+            type: string
+            description: Address Line 5.
+          Addr6:
+            maxLength: 64
+            type: string
+            description: Address Line 6.
+          ApartmentNum:
+            maxLength: 15
+            type: string
+            description: Apartment Number.
+          ApartmentNumType:
+            type: string
+            description: Apartment Number Type. This is an identifier of the type of number provided in the Apartment Number field.
+          HouseNum:
+            maxLength: 15
+            type: string
+            description: House Number.
+          Street:
+            maxLength: 64
+            type: string
+            description: Street.
+          LabelAddr:
+            $ref: '#/components/schemas/LabelAddrType'
+          AddrDefinedData:
+            type: array
+            description: Address Defined Data.
+            items:
+              $ref: '#/components/schemas/AddrDefinedDataType'
+          HouseName:
+            maxLength: 64
+            type: string
+            description: House Name.
           City:
             maxLength: 32
             type: string
             description: Name of the city
+          County:
+            maxLength: 32
+            type: string
+            description: County.
+          District:
+            maxLength: 32
+            type: string
+            description: District.
           StateProv:
             maxLength: 80
             type: string
             description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+          MilitaryRegion:
+            type: string
+            description: Military Region. Identifier that replaces State and City for military addresses
           PostalCode:
             maxLength: 11
             type: string
             description: 'Postal code or Zip code <br> <b>Note: If address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they will be displayed as 0000.  Examples: 32714-1234 or 32714-0000</b> '
+          Country:
+            maxLength: 64
+            type: string
+            description: Country.
           CountryCode:
             $ref: '#/components/schemas/CountryCodeType'
+          POBox:
+            maxLength: 16
+            type: string
+            description: PO Box.
           AddrType:
             $ref: '#/components/schemas/AddrTypeType'
           TimeFrame:
             $ref: '#/components/schemas/TimeFrameType'
+          ExpDt:
+            type: string
+            description: Expiration Date.
+            format: date
           Retention:
             type: boolean
             description: Flag to indicate the address to be retained after its timeframe
+          MoveInDt:
+            type: string
+            description: Move In Date.
+            format: date
+          ContactMethod:
+            type: string
+            description: Contact Method.
+          Comment:
+            maxLength: 300
+            type: string
+            description: Comment. A comment entered in history.
           CensusTract:
             maxLength: 20
             type: string
@@ -1478,6 +1535,9 @@ components:
           MSACode:
             type: integer
             description: Code that identifies a Metropolitan Statistical Area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB), and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+          AddrInUseInd:
+            type: boolean
+            description: Address In Use.
     TaxDataType:
       title: TaxDataType
       type: object
@@ -2086,16 +2146,10 @@ components:
       allOf:
       - type: object
         properties:
-          SvcIdent:
-            $ref: '#/components/schemas/SvcIdentType'
           ISOCode:
             maxLength: 80
             type: string
             description: ISO Card Code. Some systems like Precision instead of ISO Number they use a code to refer to the ISO Number of the card.
-          CardNum:
-            maxLength: 32
-            type: string
-            description: Card Number. This number does not include the ISO component of the card identification.
           CardId:
             maxLength: 36
             type: string
@@ -2105,8 +2159,6 @@ components:
             type: string
             description: Card Sequence Number. Typically refers to the member number (if applicable).
             example: "532"
-          CardIdent:
-            $ref: '#/components/schemas/CardIdentType'
     AcctKeysType:
       title: AcctKeysType
       properties:
@@ -2114,9 +2166,18 @@ components:
           maxLength: 36
           type: string
           description: Unique identification number of an account record
+        SubAcctId:
+          maxLength: 36
+          type: string
+          description: Sub Account Identifier.
         AcctType:
           type: string
           description: "Type of an account.  <br> Valid values are:\n  - CDA\n  - CRD\n  - DDA\n  - LOAN\n  - CLOC\n  - SDA\n  - SDB\n  - PORT\n  \n<br> For more information on account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" title=\"Click to open\">Glossary </a>."
+        CardKeys:
+          type: array
+          description: Card Keys.  Contains data that describes the key of the Card record.
+          items:
+            $ref: '#/components/schemas/CardKeysType'
         AcctIdent:
           type: array
           description: Unique identifier of an account record
@@ -2302,6 +2363,12 @@ components:
           maxLength: 36
           type: string
           description: Unique identification number of a party record
+        PartyIdentType:
+          $ref: '#/components/schemas/PartyIdentTypeType'
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: Party Identification.
       description: Unique information to identify the party record
     AgreementDataType:
       title: AgreementDataType
@@ -2385,11 +2452,23 @@ components:
           description: 'Date on which the account record was created. <br> Format: yyyy-mm-dd '
           format: date
           example: 2021-11-20
+        IntAccrualStartDt:
+          type: string
+          description: Interest Accrual Start Date.
+          format: date
         ClosedDt:
           type: string
           description: 'Date on which the account record was closed. <br> Format: yyyy-mm-dd '
           format: date
           example: 2021-11-20
+        ClosedReasonCode:
+          maxLength: 80
+          type: string
+          description: Closed Reason Code.
+        ClosedReasonEnumDesc:
+          maxLength: 80
+          type: string
+          description: Closed Reason Enumeration Description.
         Term:
           $ref: '#/components/schemas/TermType'
         MaturityDt:
@@ -2397,6 +2476,11 @@ components:
           description: 'Maturity date for certificate of deposit or loan. <br> Format: yyyy-mm-dd '
           format: date
           example: 2021-11-20
+        LastContactDt:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
+          type: string
+          description: Last Contact Date. Date the FI contacted the customer on regards to this account.
+          format: date-time
         DateData:
           type: array
           description: Details of  additional date types and values associated to the account
@@ -2434,6 +2518,11 @@ components:
           type: string
           description: Title of account. This value is typically used to indicate the ownership or responsibility of accountholder and manner in which the ownership or responsibility is assigned
           example: John Doe CUSTODIAN
+        AddtlTitles:
+          type: array
+          description: Additional Account Titles.
+          items:
+            $ref: '#/components/schemas/AddtlTitlesType'
         OEDCode:
           type: string
           description: |-
@@ -2446,6 +2535,9 @@ components:
           maxLength: 80
           type: string
           description: Description of the enumeration value in the OEDCode field
+        EmployeeInd:
+          type: boolean
+          description: Employee Indicator. Indicates that the account holder is employee of the FI.
         ClassCode:
           maxLength: 80
           type: string
@@ -2505,10 +2597,32 @@ components:
           description: Accounting period data details such as last interest payment, non-sufficient funds, overdraft activity year to date, current month, and cycle to date
           items:
             $ref: '#/components/schemas/AcctPeriodDataType'
+        FullName:
+          maxLength: 96
+          type: string
+          description: Full Name.
+        ElectronicBankingOpt:
+          type: string
+          description: |-
+            Flag to indicate services available via Electronic Banking. <br> Some of the examples are:
+              - InquiryOnly
+              - Enabled
+              - Disable
         ReportGroupCode:
           maxLength: 80
           type: string
           description: Client-defined code to group the accounts for reporting purposes
+        DocDistributionOption:
+          maxLength: 80
+          type: string
+          description: Client-defined document distribution method to distrubute the notices and statement forms
+        DocDistributionOptionEnumDesc:
+          maxLength: 80
+          type: string
+          description: Document Distribution Option Enumeration Description.
+        SweepBalRelationshipInd:
+          type: boolean
+          description: Sweep Balance Relationship Indicator.
         RestrictedInd:
           type: boolean
           description: Flag to indicate restriction
@@ -2516,6 +2630,9 @@ components:
           maxLength: 80
           type: string
           description: Description of the reason for restricted view
+        AcctMajorType:
+          type: string
+          description: Account Major Type.
     PmtPostingRestrictionsType:
       title: PmtPostingRestrictionsType
       type: object
@@ -2574,6 +2691,10 @@ components:
             Type of composite currency amount.  <br> Valid values are:
               - PmtDue
               - Rent
+        CompositeCurAmtTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Composite Currency Amount Type Enumeration Description.
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
     DuePmtType:
@@ -2627,6 +2748,11 @@ components:
       title: LastPmtType
       type: object
       properties:
+        PmtCompositeAmt:
+          type: array
+          description: Payment composite amount.
+          items:
+            $ref: '#/components/schemas/PmtCompositeAmtType'
         PmtDt:
           type: string
           description: "Date on which last payment was made. <br>\nFormat: yyyy-mm-dd "
@@ -2640,6 +2766,14 @@ components:
       - $ref: '#/components/schemas/AcctInfoType'
       - type: object
         properties:
+          RetirementPlanIdent:
+            maxLength: 36
+            type: string
+            description: Retirement Plan Identifier.
+          RetirementPlanType:
+            maxLength: 80
+            type: string
+            description: 'Retirement Plan Type. Retirement Plan Type. Indicator that specifies that you are adding an account from one of the following categories:  Individual Retirement Account, Simplified Employee Pension Account, HR-10 Account (Keogh), SIMPLE IRA.'
           NonAccrualInd:
             type: boolean
             description: Flag to indicate the loan is on non accrual condition
@@ -2673,6 +2807,8 @@ components:
             description: Count of the safe deposit box that you are opening for the party
           DuePmt:
             $ref: '#/components/schemas/DuePmtType'
+          NextPmt:
+            $ref: '#/components/schemas/NextPmtType'
           LastPmt:
             $ref: '#/components/schemas/LastPmtType'
     AcctRefType:
@@ -2781,6 +2917,10 @@ components:
               Type of email address. <br> Valid values are:
                 - Business
                 - Home
+          EmailTypeEnumDesc:
+            maxLength: 80
+            type: string
+            description: Email Type Enumeration Description.
           EmailAddr:
             maxLength: 254
             type: string
@@ -2788,6 +2928,10 @@ components:
           PreferredEmail:
             type: boolean
             description: Flag to indicate the email address is a preferred email address to contact
+          Priority:
+            maxLength: 10
+            type: string
+            description: Priority Code.
     WebAddrType:
       title: WebAddrType
       type: object
@@ -2801,10 +2945,17 @@ components:
           description: |-
             Type of web address. <br> Valid value is:
               - Work
+        WebAddrTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Web Address Type Enumeration Description.
         WebAddrLink:
           maxLength: 1024
           type: string
           description: Link or URL for web address
+        PreferredWebAddr:
+          type: boolean
+          description: Preferred Web Address.
       description: Web address details of the party
     ContactType:
       title: ContactType
@@ -2818,6 +2969,9 @@ components:
           $ref: '#/components/schemas/EmailType'
         WebAddr:
           $ref: '#/components/schemas/WebAddrType'
+        DoNotSolicitInd:
+          type: boolean
+          description: Do Not Solicit Indicator. Use to determine whether contact information can be used for solicitation.
     GovIssuedIdentType:
       title: GovIssuedIdentType
       required:
@@ -2907,6 +3061,14 @@ components:
           maxLength: 32
           type: string
           description: Issuer of the identity card/document
+        IssuerEnumDesc:
+          maxLength: 80
+          type: string
+          description: Issuer Enumeration Description.
+        IssuerLocation:
+          maxLength: 80
+          type: string
+          description: Issuer Location.
         IssueDt:
           pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
@@ -2916,6 +3078,16 @@ components:
           type: string
           description: 'Date after which the account becomes inactive.  <br> Format: yyyy-MM-ddTHH:mm:ss.SSS <br>'
           format: date
+        NextIdentVerifyDt:
+          type: string
+          description: Next Identification Verification Date.
+          format: date
+        VerificationDetailText:
+          maxLength: 255
+          type: string
+          description: Verification Detail Text.
+        GovIssuedIdent:
+          $ref: '#/components/schemas/GovIssuedIdentType'
     SecretDataType:
       title: SecretDataType
       required:
@@ -2933,6 +3105,8 @@ components:
       title: PartyListInfoType
       type: object
       properties:
+        MemberData:
+          $ref: '#/components/schemas/MemberDataType'
         PartyType:
           type: string
           description: "Type of a party. This field is used to further classify a type of party. <br> Valid values are: \n  - Unknown\n  - Personal-Prospect\n  - Business-Prospect\n  - Consumer\n  - Corporate\n  - SoleProprietorship\n  - C-Corporation\n  - S-Corporation\n  - Partnership\n  - Trust/Estate\n  - LimitLiabilityC-Corp\n  - LimitLiabilityS-Corp\n  - LimitLiabilityPartnership\n  - Other\n  - ThirdParty"
@@ -2947,6 +3121,10 @@ components:
             $ref: '#/components/schemas/ContactType'
         TaxIdentType:
           $ref: '#/components/schemas/TaxIdentTypeType'
+        TaxIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Tax Identification Type Enumeration Description.
         TaxIdent:
           maxLength: 12
           type: string
@@ -2957,6 +3135,13 @@ components:
           description: Details of issued identity card/document of a party
           items:
             $ref: '#/components/schemas/IssuedIdentType'
+        OEDCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Officer Employee Director Enumeration Description.
+        EmployeeInd:
+          type: boolean
+          description: Employee Indicator. Indicates that the account holder is employee of the FI.
         SecretData:
           type: array
           description: Client-defined secret data of party that is used to validate the identity of the party in scenarios such as forgotten password
@@ -2966,10 +3151,22 @@ components:
           maxLength: 32
           type: string
           description: Branch that primarily created the account with the party
+        OriginatingBranchEnumDesc:
+          maxLength: 80
+          type: string
+          description: Originating Branch Enumeration Description.
+        MarketSegment:
+          maxLength: 80
+          type: string
+          description: Party Market Segment.  Value that the institution can can use to enter marketing information for this customer.
         TelebancPswd:
           maxLength: 255
           type: string
           description: Electronic Banking Password used for personal identification
+        SocioEconomicCode:
+          maxLength: 10
+          type: string
+          description: Socio Economic Code.
     NameTypeType:
       title: NameTypeType
       type: string
@@ -3021,6 +3218,12 @@ components:
           maxLength: 40
           type: string
           description: Middle name of the person
+        NamePrefix:
+          type: string
+          description: Name Prefix. Identifies a title before a person's name.
+        NameSuffix:
+          type: string
+          description: Name Suffix. For example, “Ms.”, or “Dr.”
         PreferredName:
           maxLength: 96
           type: string
@@ -3029,6 +3232,8 @@ components:
           maxLength: 96
           type: string
           description: Name that identifies a person for legal or any other official purposes
+        NameFormat:
+          $ref: '#/components/schemas/NameFormatType'
       description: Name details of a person party
     PersonPartyListInfoType:
       title: PersonPartyListInfoType
@@ -3068,6 +3273,8 @@ components:
           maxLength: 96
           type: string
           description: Legal name of the organization
+        NameFormat:
+          $ref: '#/components/schemas/NameFormatType'
       description: Organization name details
     OrgPartyListInfoType:
       title: OrgPartyListInfoType
@@ -3078,6 +3285,16 @@ components:
         properties:
           OrgName:
             $ref: '#/components/schemas/OrgNameType'
+          RecipientGIIN:
+            maxLength: 19
+            type: string
+            description: RecipientGlobal Intermediary Identification Number. IRS assigns to a Participating Foreign Financial Institution (PFFI) or Registered Deemed Compliant FFI after a financial institution’s FATCA registration is submitted and approved.
+          LegalForm:
+            type: string
+            description: Legal Form. PublicLimitedCompany, PrivateLimitedCompany, SoleTraders, Partnership, LimitedLiabilityPartnership, Club, Society.
+          BeneficialOwnerReqInd:
+            type: boolean
+            description: Beneficial Owner Required Indicator.
     PartyRefType:
       title: PartyRefType
       required:
@@ -3123,6 +3340,13 @@ components:
           description: Description of the relationship of the party to the account
         PartyAcctRelOrder:
           $ref: '#/components/schemas/PartyAcctRelOrderType'
+        OwnershipType:
+          type: string
+          description: Ownership Type.
+        OwnershipTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Ownership Type Enumeration Description.
     LiabilityType:
       title: LiabilityType
       type: object
@@ -3154,9 +3378,14 @@ components:
         PrimaryOwnerInd:
           type: boolean
           description: Flag to indicate the account owner is primary owner
+        Liability:
+          $ref: '#/components/schemas/LiabilityType'
         TaxReportingOwnerInd:
           type: boolean
           description: 'Flag to indicate whether the party has tax responsibility on the account. <br> <b>Note: Do not apply to Portfolio relationships.</b>'
+        TaxReportingSignerInd:
+          type: boolean
+          description: Tax Reporting Owner Signer.
         Nickname:
           maxLength: 80
           type: string
@@ -3165,6 +3394,8 @@ components:
           maxLength: 80
           type: string
           description: Full name of the party
+        AcctRelClass:
+          $ref: '#/components/schemas/AcctRelClassType'
         PortHasCreditLineInd:
           type: boolean
           description: Flag to indicate the presence of a credit line associated to the Port
@@ -3176,13 +3407,22 @@ components:
       - $ref: '#/components/schemas/PartyRelInfoType'
       - type: object
         properties:
+          FDICOwnership:
+            maxLength: 80
+            type: string
+            description: FDIC Ownership.
+          FDICOwnershipEnumDesc:
+            maxLength: 80
+            type: string
+            description: FDIC Ownership Enumeration Description.
           AcctRef:
             $ref: '#/components/schemas/AcctRefType'
+          AutoEnrollmentData:
+            $ref: '#/components/schemas/AutoEnrollmentDataType'
     PartyAcctRelKeysType:
       title: PartyAcctRelKeysType
       description: Unique information to identify the Party-to-Account Relationship record
       allOf:
-      - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
           PartyKeys:
@@ -3208,17 +3448,42 @@ components:
       properties:
         PartyKeys:
           $ref: '#/components/schemas/PartyKeysType'
+        CardKeys:
+          $ref: '#/components/schemas/CardKeysType'
         AcctKeys:
           $ref: '#/components/schemas/AcctKeysType'
+        AcctSelCriteria:
+          type: array
+          description: Account Selection Criteria.
+          items:
+            $ref: '#/components/schemas/AcctSelCriteriaType'
         ExcludeClosedAcctInd:
           type: boolean
           description: 'Flag to indicate to exclude closed accounts. <br> <b>Note: By default value is set to ''false'' indicating the client application want to include both open and closed accounts to be returned in the response.</b>'
+        PartyAcctRelType:
+          type: array
+          description: Party-to-Account Relationship Type. Describes the relationship between the Party and the Account.
+          items:
+            type: string
         IncPartyInfoInd:
           type: boolean
           description: 'Flag to indicate to include party information. By default value is set to ''false''. <br> <b>Note: In case of ''True'', when the selection is made by Party, the information of the Party will appear once only in the first instance of a record to avoid unnecessary repetition and when the selection is made by Account the Party information summary is always provided.</b>'
         IncAddtlAcctInfoInd:
           type: boolean
           description: 'Flag to indicate to include additional account information.  <br> <b>Note: By default value is set to ''false'' indicating to exclude additional account information.</b>'
+        IncEDistributionInd:
+          type: boolean
+          description: Include e-Distribution Indicator. By using this indicator only accounts available for e-Distribution are returned in the response.
+        IncEBankingInd:
+          type: boolean
+          description: Include E-Banking Indicator. Provides accounts enabled for internet banking use.
+        IncFrequentConductorsInd:
+          type: boolean
+          description: Include Frequent Conductors Indicator.
+        AvailBalMethod:
+          maxLength: 80
+          type: string
+          description: Available Balance Calculation Method.
       description: Selection criteria for a Party-to-Account Relationship inquiry
     PartyAcctRelInqRqType:
       title: PartyAcctRelInqRqType
