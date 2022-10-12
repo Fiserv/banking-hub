@@ -10,9 +10,7 @@ Payments is an API domain consisting of payment transaction-related APIs that su
 
 
 Begin the integration with following services of Payments domain in API Explorer:
-* [Credit Service](../api/?type=post&path=/credits)
-* [Debit Service](../api/?type=post&path=/debits)
-* [Transfer Service](../api/?type=post&path=/transfers)
+
 
 
 ## See Also

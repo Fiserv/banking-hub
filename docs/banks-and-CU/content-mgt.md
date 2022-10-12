@@ -8,9 +8,9 @@ Users can also easily retrieve documents from the central repository for researc
 
 API domains related to Content Management: 
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
-- [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
+- [Accounts](?path=docs/fintechs/accounts..md "Click to open")
+- [Transactions](?path=docs/fintechs/transactions..md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
-
 
 ## See Also
 - [Deposits](?path=docs/banks-and-CU/deposits.md "Click to open")
