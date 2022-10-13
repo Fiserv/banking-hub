@@ -7,8 +7,8 @@ Functions supported include retrieval of information about transactions and bala
 
 API domains related to Bank Servicing: 
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
-- [Accounts](?path=docs/fintechs/accounts..md "Click to open")
-- [Transactions](?path=docs/fintechs/transactions..md "Click to open")
+- [Accounts](?path=docs/fintechs/accounts.md "Click to open")
+- [Transactions](?path=docs/fintechs/transactions.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
 
 ## See Also
@@ -18,7 +18,3 @@ API domains related to Bank Servicing:
 - [Content Management](?path=docs/banks-and-CU/content-mgt.md "Click to open")
 - [Risk & Performance Management](?path=docs/banks-and-CU/riskMgt.md "Click to open")
 - [Treasury Services](?path=docs/banks-and-CU/treasury-services.md "Click to open")
-
-
-
-
