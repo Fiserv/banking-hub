@@ -7,7 +7,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 -->
 
 
-<p style="font-size: 22px;">Enhancements </p>
+<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
 **Add Account `POST /accounts`**
 
@@ -40,7 +40,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 
 <!-- type: tab -->
-<p style="font-size: 22px;">Enhancements </p>
+<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
 **Update Party `PUT /Parties`**
 
@@ -48,7 +48,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 - ESF now provides ability to map both TIN and Foreign TaxId by implementing a new field "OtherTaxIent" for Foreign TaxId.
 
 
-<p style="font-size: 22px;">Fixed </p>
+<p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
 **Get Party Account Relationship `POST /PartyAcctRel/Secured`**
 
@@ -57,7 +57,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 
 <!-- type: tab -->
-<p style="font-size: 22px;">What's New </p>
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 **Add Account `POST /accounts`**
 
@@ -66,7 +66,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 
 <!-- type: tab -->
-<p style="font-size: 22px;">What's New </p>
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 **Add Account `POST /accounts`**
 
@@ -75,7 +75,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 
 <!-- type: tab -->
-<p style="font-size: 22px;">Enhancements </p>
+<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
 **Get Party Account Relationship `POST /partyacctrel/secured`**
 
