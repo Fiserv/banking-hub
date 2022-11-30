@@ -16,9 +16,4 @@ Begin the integration with following services of Identity Verification domain in
 * Business Name Verification
 * TIN Verification
 * Address Verification
-* Phone Verification
-* Email Verification
-* Articles of Incorporation
-* Ultimate Beneficial Owners
-* Recruitment Reports
-* Business License
+
