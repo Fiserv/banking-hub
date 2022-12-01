@@ -15,10 +15,9 @@ Begin the integration with following services of Identity Verification domain in
 * Business Verification Only
 * Business Verification Only (with Authorizer)
 * Business Verification Fraud and Risk
-* Business Verification Watchlist
 * Customer Verification Fraud and Risk
 * Customer Identity Authentication
-* Watchlist Scan
+* Watchlist Scan (Customer and Business)
 * Address Verification
 
 
