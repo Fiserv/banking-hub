@@ -1,19 +1,21 @@
 ---
 openapi: 3.0.1
 info:
-  title: Loan Indirect Liability Service
-  description: Indirect liability service is used for management of endorsers and guarantors.
-  version: 11.0.0_PRM
+  title: Credit Service
+  description: |-
+    The Credit service is used to add or reverse credit entry for a specified loan or deposit product account. <br>
+        This service helps to reverse from or post credit entry to the beneficiary or receiver’s account for specific types of payments including wire transfers plus fees.
+  version: 11.0.0_CT-Add_SDA_Teller
 servers:
 - url: /
 paths:
-  /indirectLiability:
+  /credits:
     post:
       tags:
-      - Add Indirect Liability
-      summary: Add Indirect Liability.
-      description: "Adds an indirect liability relationship to a loan.\n        <br>\n        This API is used for managing endorsers and guarantors.\n        <br><br>\n        For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: IndirectLiabilityAddOper
+      - Add Credit
+      summary: Add Credit.
+      description: "Adds a credit transaction entry to an account for cash, check deposits, or merchandise payments. Generally, this API is used for Teller transactions.<br>\n        <br>\n        For more information about the Payments domain, <a href=\"../docs/?path=docs/fintechs/payments.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\" title=\"Click to open\">Cash Management</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\" title=\"Click to open\">Treasury Services</a></li>\n          </ul>"
+      operationId: CreditAddOper
       parameters:
       - name: EFXHeader
         in: header
@@ -25,42 +27,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IndirectLiabilityAddOperRequest'
+              $ref: '#/components/schemas/CreditAddOperRequest'
       responses:
         "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IndirectLiabilityAddOperResponse'
+                $ref: '#/components/schemas/CreditAddOperResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IndirectLiabilityAddOperResponse'
-      x-group-name: Loan Indirect Liability Service
-      x-proxy-name: Add Indirect Liability
-      x-child-product-name: Accounts
-      x-core: Premier
+                $ref: '#/components/schemas/CreditAddOperResponse'
+      x-group-name: Credit Service
+      x-proxy-name: Add Credit
+      x-child-product-name: Transactions
+      x-core: Cleartouch-SDA_Teller
 components:
   schemas:
-    IndirectLiabilityAddOperRequest:
+    CreditAddOperRequest:
       required:
-      - IndirectLiabilityInfo
+      - CreditInfo
       properties:
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
-        IndirectLiabilityInfo:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo'
-    IndirectLiabilityAddOperResponse:
+        CreditInfo:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo'
+    CreditAddOperResponse:
       required:
-      - IndirectLiabilityStatusRec
+      - CreditStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        IndirectLiabilityStatusRec:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperResponse_IndirectLiabilityStatusRec'
+        CreditStatusRec:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/CreditAddOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -405,7 +409,7 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_AcctKeys:
+    CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys:
       required:
       - AcctId
       type: object
@@ -413,367 +417,279 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: Unique identification number of an account record.
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
             Type of an account.
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+
+            **Note:** *Required field*
+
+
+
+            If the account type is not sent in the request or sent an invalid account type, then ESF will return an error as "700-Unsupported function"
           enum:
-          - LOAN
-          - CLOC
+          - SDA
+          - ""
       description: Unique information to identify the account record.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_AcctIdent:
-      type: object
-      properties:
-        AcctIdentType:
-          type: string
-          description: |+
-            Type of account identifiers.
-
-
-
-
-
-          enum:
-          - PORT
-        AcctIdentValue:
-          maxLength: 36
-          type: string
-          description: |-
-            Account identification value.
-
-            **Note:** Portfolio number is required while adding indirect liability record. If not provided, existing portfolio account associated to the loan/line is used as default.
-      description: Unique identifier of an account record.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_PartyKeys:
-      type: object
-      properties:
-        PartyId:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification number of a party record.
-
-            **Note:** Supports up to three names for one indirect liability record.
-      description: Unique information to identify the party record.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_CreditBureauData:
-      type: object
-      properties:
-        ECOACode:
-          type: string
-          description: Code to specify the relationship of the party with the account as reported by the credit bureau.
-        ConsumerCode:
-          type: string
-          description: Consumer code to specify the credit worthiness of the party as reported by the credit bureau.
-      description: Details of data reported by the credit bureau.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_IndirectLiabilityParty:
-      properties:
-        PartyKeys:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_PartyKeys'
-        CreditBureauData:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_CreditBureauData'
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_PartyKeys_1:
-      type: object
-      properties:
-        PartyId:
-          maxLength: 36
-          type: string
-          description: Unique identification code for the party record.
-      description: |-
-        Unique party information used to identify the party record for indirect liability payment.
-
-        **Note:** If IndirectLiabilityInfo/IndirectLiabilityParty/PartyKeys is not provided, PartyKeys should be sent in the request.  Only one occurrence for this aggregate can be sent along with the PartyId that needs to be associated to the IndirectLiability record being created on the loan (see LiabilityType applicable for the PartyId). If both aggregates are sent, then ESF would ignore IndirectLiabilityInfo/PartyKeys and only process occurences of IndirectLiabilityInfo/IndirectLiabilityParty/PartyKeys. Multiple addendum (IndirectLiability Records) can be created with same customer (PartyId) if, other fields are validated successfully. Application should provide the correct PartyId to call this service.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_Liability:
-      type: object
-      properties:
-        LiabilityPercent:
-          type: number
-          description: Percentage value of the liability for which party is responsible.
-        LiabilityAmt:
-          type: number
-          description: Amount of liability for which party is responsible.
-      description: |-
-        Calling application must provide either LiabilityPercent or LiabilityAmt while creating the IndirectLiability record on the loan/line and also validate the sum of LiabilityPercent/LiabilityAmt figures being sent across the parties. This is required to ensure that semantically correct values are sent in request as premier does not validate the percentage/amount figure on the IndirectLiability.
-
-        **Note:** Calling application must provide either LiabilityPercent or LiabilityAmt while creating the IndirectLiability Record on the Loan/Line and also validate the sum of LiabilityPercent/LiabilityAmt figures being sent across the Parties. This is required to ensure that semantically correct values are sent in request as Premier does not validate the percentage/amount figure on the IndirectLiability.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_RelationshipMgr:
+    CreditAddOperRequest_CreditInfo_AcctRef:
       required:
-      - RelationshipMgrIdent
-      properties:
-        RelationshipMgrIdent:
-          maxLength: 36
-          type: string
-          description: Unique identifier of a relationship manager.
-        RelationshipRole:
-          type: string
-          description: |+
-            Role of a relationship manager.
-
-          enum:
-          - Officer
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_NoticeData:
-      properties:
-        NoticeType:
-          type: string
-          description: |-
-            Type of account notice.
-
-            **Note:** Valid values that can be sent are:
-
-            - Past Due notification-indicates whether past due notification is produced for the third party.
-
-
-
-            - Billing notification-indicates whether billing notification is produced for the third party.
-
-
-
-            - RatePmtChangeNotice-refers to change notification and indicates whether rate and payment change notification is produced for the third party.
-
-
-
-            - Maturity notification-indicates whether maturity notification is produced for the third party.
-
-
-
-            - Tickler notification-indicates whether tickler notification is produced for the third party.
-
-
-
-            - Credit bureau notification-indicates whether the third party is reported to credit bureaus.
-
-
-
-            - Advance notification-indicates whether advance notification and transaction receipts are produced for the third party.
-          enum:
-          - PastDueNotice
-          - BillingNotice
-          - RatePmtChangeNotice
-          - MaturityNotice
-          - TicklerNotice
-          - CreditBureauNotice
-          - LoanAdvanceNotice
-        NoticeOption:
-          type: string
-          description: "Options for account notice.\n\n**Note:** For the PastDueNotice type, only values of NoNotice, PastDueAndRightToCure and \n\nNoFirstPastDueNotice are applicable.\n\n\n\nFor all other Notice types the following values are applicable:\n\n- GenerateNotice\n\n- NoNotice\n\n"
-          enum:
-          - GenerateNotice
-          - NoNotice
-          - PastDueAndRightToCure
-          - NoFirstPastDueNotice
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_SBAData:
-      type: object
-      properties:
-        ApprovalDt:
-          type: string
-          description: "Date on which small business loan is approved by the SBA.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        FeePct:
-          type: number
-          description: |-
-            Percentage value of the servicing fee.
-
-            **Note:** Refers to the percentage of the guaranteed portion of the outstanding loan balance that is paid as a fee to the SBA (Small Business Association).
-      description: Details of the small business loan approved by the SBA (Small Business Administration).
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_ClientDefinedData:
-      required:
-      - DataIdent
-      properties:
-        DataIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique data identifier to identify the client-defined data item.
-
-            **Note:** Refers to a FieldCode.
-        DataType:
-          type: string
-          description: "Type of the client-defined data item.\n\n\n\n**Note:** Refers to Metadata. "
-          enum:
-          - Alpha
-          - 'Currency '
-          - 'CurrencySymbol '
-          - 'Date '
-          - Numeric
-          - NumericSymbol
-          - Rate
-          - 'RateSymbol '
-        Value:
-          maxLength: 256
-          type: string
-          description: |-
-            Value of the client-defined data item.
-
-            **Note:** User entered value for the field.
-        DataLength:
-          type: integer
-          description: Length of the client-defined data item.
-          format: int64
-        ExpDt:
-          type: string
-          description: "Date on which client-defined data item expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        Desc:
-          maxLength: 100
-          type: string
-          description: Description for the client-defined item.
-        RequiredFlag:
-          type: boolean
-          description: Flag to indicate data value is required for the client-defined data.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo:
+      - AcctKeys
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_AcctKeys'
-        AcctIdent:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_AcctIdent'
-        BureauAddrStatusCode:
-          type: string
-          description: User-defined code to specify the status of the address associated with the primary account holder as reported to the credit reporting agencies.
-        IndirectLiabilityParty:
-          type: array
-          description: Details of the party associated with the Indirect liability record.
-          items:
-            $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_IndirectLiabilityParty'
-        PartyKeys:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_PartyKeys_1'
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** *Required field*
-        LiabilityType:
-          type: string
-          description: |-
-            Type of liability that the party has with account.
-
-
-
-            **Note:** *Required field*
-          enum:
-          - Guarantor
-          - Indirect
-          - GovernmentAgency
-          - CoSigner
-        Liability:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_Liability'
-        ExpDt:
-          type: string
-          description: "Date on which indirect liability record data expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        RelationshipMgr:
-          type: array
-          description: Information about financial institution officers who have management-related responsibilities of the account.
-          items:
-            $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_RelationshipMgr'
-        ReportGroupCode:
-          type: string
-          description: Client-defined code to group the accounts primarily for reporting purposes.
-        HandlingCodeOption:
-          type: string
-          description: |-
-            Notification and statement forms handling option for the indirect liability record.
-
-            **Note:** Value to identify the types of customer correspondence that prints handling messages as defined by HandlingCode.
-
-            This field is required by service provider.
-          enum:
-          - UseDefault
-          - StatementsNoticesChecks
-          - Statements
-          - StatementsNotices
-          - StatementsChecks
-          - Notices
-          - NoticesChecks
-          - Checks
-          - DoNotPrint
-        HandlingCode:
-          type: string
-          description: |-
-            Handling code to specify the handling process of the notification and statement forms.
-
-            **Note:** This field is used for special routing of all correspondence involving limited liability. It is printed in the customer's name and address area on all special forms.
-        OEDCode:
-          type: string
-          description: |-
-            Officer, employee, director code. This code is used to indicate if the party is an employee of the financial institution.
-
-            **Note:** Values are client defined.
-          enum:
-          - Director
-          - Employee
-          - ExecutiveOfficer
-          - FamilyMember
-          - FiservOfficerOrEmployee
-          - MainShareHolder
-          - Officer
-          - RelInterest
-          - SubsidaryEmployee
-          - SvcCorpEmployee
-          - Other
-          - NoRelationship
-          - OfficerOtherBank
-        DocDistributionOption:
-          type: string
-          description: |-
-            Client-defined document distribution method to distribute the notices and statement forms.
-
-            **Note:** Refers to document distribution group. Determines the distribution method used when processing statements and notices via director document distribution. Values are client defined.
-        NoticeData:
-          type: array
-          description: Details of the account notice processing data.
-          items:
-            $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_NoticeData'
-        SBAData:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_SBAData'
-        NextFinancialStmtDt:
-          type: string
-          description: "Next date of the financial statement.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        FinancialStmtNoticeCode:
-          type: string
-          description: |-
-            Code for financial statement notice that controls the timing of financial statement generation including notice generation and tickler reporting.
-
-            **Note:** It is required to provide this field to indicate whether zero balance lines or notes are to be included.
-        ClientDefinedData:
-          type: array
-          description: "Details of the client-defined data. \n\n**Note:** Metadata such as flex data (field size) is required to be sent along with the user-entered indirect liability data."
-          items:
-            $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_ClientDefinedData'
-      description: Details of the indirect liability record.
-    IndirectLiabilityAddOperResponse_IndirectLiabilityStatusRec_IndirectLiabilityStatus:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
+      description: Reference information of an account that is being credited.
+    CreditAddOperRequest_CreditInfo_CurAmt_CurCode:
       required:
-      - IndirectLiabilityStatusCode
+      - CurCodeValue
       type: object
       properties:
-        IndirectLiabilityStatusCode:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported."
+      description: Details of currency code.
+    CreditAddOperRequest_CreditInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** Value of the amount is required and cannot be "0" (zero).
+        CurCode:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt_CurCode'
+      description: |+
+        Details of the amount to be processed in credit transaction.
+
+    CreditAddOperRequest_CreditInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      properties:
+        CurAmt:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt'
+    CreditAddOperRequest_CreditInfo_FromAcctRef:
+      type: object
+      properties:
+        TrnCode:
+          type: string
+          description: |-
+            Service provider transaction code of the payment posted to the account.
+
+            **Note:** This field is used to enter a two digit statement description code.
+      description: |-
+        Reference details of the account from which the funds are transferred.
+
+        Applicable when the credit funds are transferred from other accounts.
+    CreditAddOperRequest_CreditInfo_XferFromAcct:
+      required:
+      - FromAcctRef
+      properties:
+        FromAcctRef:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_FromAcctRef'
+    CreditAddOperRequest_CreditInfo:
+      required:
+      - CompositeCurAmt
+      - CreditType
+      type: object
+      properties:
+        CreditType:
+          type: string
+          description: Type of credit transaction.
+          enum:
+          - Deposit
+        Desc:
+          maxLength: 200
+          type: array
+          description: |-
+            Description of the credit transaction.
+
+            **Note:** Client generated Reg-E description that service providers can use to display on the customers statments, up to 33 characters.
+          items: {}
+        MediaType:
+          type: string
+          description: |-
+            Type of media on which the transaction is recorded.
+
+            **Note:** *Conditionally Required field*
+
+            Required when account type is "SDA".
+
+            This field is used to indicate if this is a passbook or statement account.
+          enum:
+          - Statement
+          - NoBook
+        AcctRef:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef'
+        CompositeCurAmt:
+          type: array
+          description: |-
+            Details of the composition of the credited amount.
+
+            **Note:** One CompositeCurAmt aggregate is required which contains the transaction amount.
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CompositeCurAmt'
+        XferFromAcct:
+          type: array
+          description: "Details of the account  from which transfer of funds is made. \n\nApplicable when funds are transferred from one or more accounts."
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_XferFromAcct'
+      description: Details of the credit transaction.
+    CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
           type: string
           description: |+
-            Code that specifies the status for indirect liability record.
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+          enum:
+          - SDA
+          - ""
+      description: Unique information to identify the account record.
+    CreditAddOperResponse_CreditStatusRec_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys'
+      description: Unique information to identify a credit record.
+    CreditAddOperResponse_CreditStatusRec_CreditStatus:
+      required:
+      - CreditStatusCode
+      type: object
+      properties:
+        CreditStatusCode:
+          type: string
+          description: |+
+            Code to specify the current status of the credit transaction.
 
           enum:
-          - Valid
+          - Posted
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective data and time when the status of the indirect liability record is changed.
+            Effective date and time when the transaction status is changed.
 
-
-
-            Format: yyyy-MM-ddTHH:mm:ss.sss
+            Format: yyyy-mm-ddThh:mm:ss.micro
 
             Example: 2021-01-31T23:59:59.999
-      description: Details of the current status of the indirect liability record.
-    IndirectLiabilityAddOperResponse_IndirectLiabilityStatusRec:
+      description: Details of the credit transaction status.
+    CreditAddOperResponse_CreditStatusRec:
       required:
-      - IndirectLiabilityStatus
+      - CreditStatus
       type: object
       properties:
-        IndirectLiabilityStatus:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperResponse_IndirectLiabilityStatusRec_IndirectLiabilityStatus'
-      description: Details of the indirect liability status record used in response to return results from add, modify or delete indirect liability record.
+        CreditKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
+        CreditStatus:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditStatus'
+      description: Details of the credit transaction response that includes response keys and response status.
+    CreditAddOperResponse_Receipt_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** Refers to total transaction amount.
+      description: Details of the transaction amount.
+    CreditAddOperResponse_Receipt_WarningOrLockout:
+      required:
+      - Type
+      properties:
+        Type:
+          type: string
+          description: Type of warning or lockout that indicates whether the associated warning code is for a warning flag or a lockout flag.
+          enum:
+          - Warning
+          - Lockout
+        Code:
+          type: string
+          description: Value of the warning or lockout code.
+    CreditAddOperResponse_Receipt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+      description: Details of the currency amount.
+    CreditAddOperResponse_Receipt_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
+          type: string
+          description: Type of the balance.
+          enum:
+          - Current
+          - ""
+        CurAmt:
+          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_CurAmt'
+    CreditAddOperResponse_Receipt:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: Short name for the account printed on the receipt.
+        TellerIdent:
+          type: string
+          description: |-
+            Unique identifier of a teller used to run the transaction.
+
+
+
+            **Note:** Teller number can be static number for the service or passed through the token created from the teller signon.
+        TrnAmt:
+          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_TrnAmt'
+        WarningOrLockout:
+          type: array
+          description: Details of the account warning or lockout associated to the account.
+          items:
+            $ref: '#/components/schemas/CreditAddOperResponse_Receipt_WarningOrLockout'
+        AcctBal:
+          type: array
+          description: |-
+            Details of the account balance at the time the credit transaction posted.
+
+            **Note:** AcctBal aggregate will repeat for balances affected by the transaction.
+          items:
+            $ref: '#/components/schemas/CreditAddOperResponse_Receipt_AcctBal'
+      description: Details of the credit transaction receipt.

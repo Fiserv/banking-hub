@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: EnumTableService - Get Enumeration Table
-  description: Enumeration table service supports an inquiry operation that allows to retrieve enumerated values and associated descriptions from fields available to service providers.
-  version: 11.0.0_PRM
+  title: Address Service
+  description: The Address service manages addresses related to parties and product accounts.
+  version: 11.0.0_PRM-Inq_ByAddrId
 servers:
 - url: /
 paths:
-  /enumtable/secured:
+  /address/secured:
     post:
       tags:
-      - Get Enumeration Table
-      summary: Get Enumeration Table.
-      description: "Retrieves enumeration values and their descriptions associated to a field.\n        <br><br>\n        For more information about the Operations and Servicing domain <a href=\"../docs/?path=docs/fintechs/servicing.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: GetEnumTableSecured
+      - Get Address
+      summary: Get Address
+      description: "Retrieves the address record associated with an account or party.\n        <br>\n        For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: getAddrByPost
       parameters:
       - name: EFXHeader
         in: header
@@ -25,47 +25,45 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetEnumTableSecuredRequest'
+              $ref: '#/components/schemas/getAddrByPostRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
+                $ref: '#/components/schemas/getAddrByPostResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
-      x-group-name: Enumeration Table Service
-      x-proxy-name: Get Enumeration Table
-      x-child-product-name: Operations and Servicing
-      x-core: Premier
+                $ref: '#/components/schemas/getAddrByPostResponse'
+      x-group-name: Address Service
+      x-proxy-name: Get Address
+      x-child-product-name: Accountholder
+      x-core: Premier-ByAddrId
 components:
   schemas:
-    GetEnumTableSecuredRequest:
+    getAddrByPostRequest:
       required:
-      - EnumTableSel
+      - AddrSel
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_RecCtrlIn'
-        EnumTableSel:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel'
-    GetEnumTableSecuredResponse:
+        AddrSel:
+          $ref: '#/components/schemas/getAddrByPostRequest_AddrSel'
+    getAddrByPostResponse:
       required:
-      - EnumTableRec
+      - AddrRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
         RecCtrlOut:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_RecCtrlOut'
-        EnumTableRec:
+          $ref: '#/components/schemas/getAddrByPostResponse_RecCtrlOut'
+        AddrRec:
           type: array
-          description: Details of the enumeration table record returned in the response for the specified search criteria.
+          description: Details of the address record that includes response keys, response status and response information.
           items:
-            $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableRec'
+            $ref: '#/components/schemas/getAddrByPostResponse_AddrRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -97,13 +95,16 @@ components:
           maxLength: 80
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: Client date and time as reported by the client application that is making the service request.
         ClientTerminalSeqNum:
           maxLength: 36
-          description: 'Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12. type: string'
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
           description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
@@ -373,168 +374,374 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    GetEnumTableSecuredRequest_RecCtrlIn:
+    getAddrByPostRequest_AddrSel:
       type: object
       properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum number of records that can be returned within a single response.
-          format: int64
-        Cursor:
-          maxLength: 250
+        AddrId:
+          maxLength: 36
           type: string
           description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
+            Unique identification number of an address record.
 
+            **Note:** Refers to Address Id in Premier.
 
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-      description: Maximum number of records that client can specify to process within a single response.
-    GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys:
-      required:
-      - EnumTableIdent
-      type: object
-      properties:
-        EnumTableIdent:
-          type: string
-          description: "Unique identifier of the enumeration table.\n\n**Note:** \"Region\" also known as originating branch refers to a branch region. \n\n\"Branch\"  also known as responsible branch refers to accounting branch/group. "
-          enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
-          type: string
-          description: |-
-            Unique identification code of branch.
-
-
-
-            **Note:** Premier will search using the default branch if no branch is provided.
-        DataApplType:
-          type: string
-          description: |-
-            Type of data application.
-
-
-
-
-
-
-
-
-
-
-
-            **Note:** Valid required only if Branchldent is sent.
-          enum:
-          - ALL
-          - CDA
-          - CRD
-          - DDA
-          - LOAN
-          - LOC
-          - Party
-          - SDA
-          - SDB
-          - DDL
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredRequest_EnumTableSel:
-      required:
-      - EnumTableKeys
-      type: object
-      properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys'
-        EnumFilter:
-          maxLength: 80
-          type: array
-          description: |-
-            Filter used to sort the values returned in the enumeration table response.
-
-            For example, if EnumFilter is set to "country code" for StateProv table, then response includes the states of the country code sent in the request.
-          items: {}
-      description: Details of selected EnumTable records.
-    GetEnumTableSecuredResponse_RecCtrlOut:
+            For Premier primary address and seasonal addresses share the same identifier, therefore this service will return both,- Primary and Seasonal address, if applicable.
+      description: Details of the selection criteria used to identify address associated with an account.
+    getAddrByPostResponse_RecCtrlOut:
       required:
       - SentRecCount
       type: object
       properties:
         SentRecCount:
           type: integer
-          description: Total number of records that matched the selection criteria and returned in the response message.
+          description: |-
+            Total number of records that matched the selection criteria and returned in the response message.
+
+            **Note:** This implementation will return one address record, which can include primary and seasonal address and any relationships to Party(s) and Account(s).
           format: int64
-        Cursor:
-          maxLength: 250
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    getAddrByPostResponse_AddrKeys:
+      type: object
+      properties:
+        AddrId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an address record.
+      description: Unique information to identify the address record.
+    getAddrByPostResponse_AddrInfo_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of a party record.
+      description: |-
+        Unique information to identify the party record.
+
+        **Note:** Information that identifies party to which address is related.
+    getAddrByPostResponse_AddrInfo_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
           type: string
           description: |-
-            Next record pointer included in the response if more than 250 posted transaction records exist.
+            Type of an account.
 
 
 
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field.
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    GetEnumTableSecuredResponse_EnumTableKeys:
-      required:
-      - EnumTableIdent
-      type: object
-      properties:
-        EnumTableIdent:
-          type: string
-          description: Unique identifier of the enumeration table.
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary </a>.
           enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
-          type: string
-          description: |+
-            Unique identification code of branch.
+          - CDA
+          - CRD
+          - DDA
+          - LOAN
+          - SDA
+          - SDB
+          - PORT
+          - CLOC
+      description: |-
+        Unique information to identify the account record.
 
-        DataApplType:
-          type: string
-          description: |+
-            Type of data application.
-
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredResponse_EnumTableInfo:
-      type: object
+        **Note:** Information that identifies account to which address is related.
+    getAddrByPostResponse_AddrInfo_AddrRelRef:
       properties:
-        EnumTableData:
-          type: array
-          description: Details of data in enumeration table.
-          items: {}
-      description: Information of enumeration table returned in the response.
-    GetEnumTableSecuredResponse_EnumTableStatus:
+        PartyKeys:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_PartyKeys'
+        AcctKeys:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_AcctKeys'
+        AddrUse:
+          type: string
+          description: |+
+            Type of address usage.
+
+            **Note:** Premier supports the following "AddressUses" for a party:
+
+            Home
+
+            Personal
+
+            Business
+
+            Tax
+
+            User define values
+
+          enum:
+          - Inquiry
+          - Mailing
+          - Business
+          - Home
+          - Personal
+          - Physical
+          - NonPhysical
+          - Tax
+          - MultipleMailer
+          - Beneficiary
+          - Miscellaneous
+          - Tickler
+          - Indirect
+          - Closed
+          - 1098Tax
+          - 1099ATax
+          - 1099BTax
+          - 1099DIVTax
+          - 1099INTTax
+          - 1099MISCTax
+          - 1099OIDTax
+          - 1099RTax
+          - 1099STax
+          - 5498Tax
+          - TaxBNotice
+          - 1099CTax
+          - 1099ETax
+          - 1042STax
+          - NoteCosigner
+          - NoteEscrow
+          - NoteTaxEscrow
+          - NoteInsuranceEscrow
+          - FinancialPropertyStmt
+          - LineCosigner
+          - LineCommitment
+    getAddrByPostResponse_AddrInfo_RelationshipMgr:
       required:
-      - EnumTableStatusCode
+      - RelationshipMgrIdent
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: Client-defined Responsibility Code to identify the officer responsible for the account.
+        RelationshipRole:
+          type: string
+          description: "Role of a relationship manager.\n\n**Note:** Values refers to: \n\n- Officer refers to responsibility code\n\n- Referral Officer refers to referral responsibility code"
+          enum:
+          - Officer
+          - ReferralOfficer
+    getAddrByPostResponse_AddrInfo_CountryCode:
+      required:
+      - CountryCodeValue
       type: object
       properties:
-        EnumTableStatusCode:
+        CountryCodeSource:
+          type: string
+          description: Standard country code format.
+          enum:
+          - SPCountryCode
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+        CountryCodeValueEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the CountryCodeValue field.
+      description: Details of the country code.
+    getAddrByPostResponse_AddrInfo_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Start date and time value.\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** Applicable only for seasonal address type.  \n\nThe seasonal address begins on the same start date and ends on the same end date every year, therefore Premier only stores seasonal address start month and start day. \n\nYear can be provided as 9999."
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "End date and time value.\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** Applicable only for seasonal address type.  \n\nThe seasonal address begins on the same start date and ends on the same end date every year, therefore Premier only stores seasonal address start month and start day. \n\nYear can be provided as 9999."
+      description: Details of the time frame.
+    getAddrByPostResponse_AddrInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        OpenDt:
+          type: string
+          description: "Date on which the account is created.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        RelationshipMgr:
+          type: array
+          description: Information about financial institution officers who have management-related responsibilities of the party or account.
+          items:
+            $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_RelationshipMgr'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account with the party.
+
+            **Note:** Refers to branch region associated to the address record.
+        ResponsibleBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Accounting branch associated with the address record.
+
+            **Note:** Refers to accounting branch associated to the address record.
+        AddrFormatType:
+          type: string
+          description: |-
+            Format type of the address.
+
+            **Note:** Premier supports Label address format.
+          enum:
+          - Label
+        Addr1:
+          maxLength: 64
           type: string
           description: |+
-            Code to specify the current status of enumeration table.
+            Address line 1.
 
+
+
+            **Note:** *Conditionally Required field*
+
+
+
+            Should be provided if a new address record is being created.
+
+            Dependent on Name and Address Length Option defined under Miscellaneous specification in Premier, First Address Line can be either 30 or 40 characters long.
+
+            Name and Address Length Option values available in Premier:
+
+            "0" indicates names and addresses up to 30 characters in length can be entered.
+
+            "1" indicates names and addresses up to 40 characters in length can be entered.
+
+            "2" indicates names and addresses up to 30 characters may be entered, and that two address lines are available.
+
+            "3" indicates names and addresses up to 40 characters may be entered, and that two address lines are available.
+
+        Addr2:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 2. To enter Addr2, Addr1 field must be provided.
+
+            **Note:** Address Line 2 is supported if enabled under Address and Name Length Option in Miscellaneous specification in Premier. Preceding also defines the length of Address Line 2, which can be either 40 or 30 characters.
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: "Postal code or Zip code.\n\n**Note:** Postal Code provides information about the ZIP code, if Address is a United States address. It also provides Postal Code information, if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they are will be displayed as 0000.  Examples: 32714-1234 or 32714-0000 \n\n\n\nPostal codes for non-US addresses are simply a string of characters."
+        CountryCode:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_CountryCode'
+        AddrType:
+          type: string
+          description: |-
+            Type of the address.
+
+            **Note:** Address record in Premier, can consist of two addresses. The main address, called Primary address in ESF, and a Seasonal address. Primary and Seasonal are considered as one record in Premier therefore they share the same address identifier.
+
+            ESF displays these two addresses as a separate Postal Address aggregates.
+
+
+
+            Seasonal address will always have a time frame.
+          enum:
+          - Primary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_TimeFrame'
+        Retention:
+          type: boolean
+          description: |-
+            Flag to indicate if the address should be retained after its time frame.
+
+            **Note:** If indicated not to retain Address record, Premier automatically deletes it when no accounts, tax addenda, or any other relationships exist for the address record.
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+        CensusBlock:
+          maxLength: 20
+          type: string
+          description: Census block number  assigned by the U.S. Postal Service uniquely identifies carrier delivery point.
+        ForeignFlag:
+          type: boolean
+          description: Flag to indicate whether the given address is foreign address.
+        HandlingCode:
+          type: string
+          description: "Handling code to specify the handling process of the notification and statement forms.\n\n**Note:** Values are client-defined. "
+        HandlingCodeOption:
+          type: string
+          description: |-
+            Notification and statement forms handling option.
+
+            **Note:** Refers to the value identifies the types of customer correspondence that will print handling messages, as defined by the Handling Code.
+          enum:
+          - StatementsNoticesChecks
+          - Statements
+          - StatementsNotices
+          - StatementsChecks
+          - Notices
+          - NoticesChecks
+          - Checks
+          - DoNotPrint
+        MSACode:
+          type: integer
+          description: Code that identifies a Metropolitan Statistical Area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+          format: int64
+    getAddrByPostResponse_AddrInfo:
+      required:
+      - PostAddr
+      type: object
+      properties:
+        AddrRelRef:
+          type: array
+          description: |+
+            Details of relationship between address and an account or a party to which the address is associated.
+
+            **Note:** This aggregate provides information about how selected address is related to a party(s) and/or account(s).
+
+
+
+          items:
+            $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_AddrRelRef'
+        PostAddr:
+          type: array
+          description: "Postal address details of a party.\n\n**Note:** Address record in Premier can consist of two addresses: Primary address and a Seasonal address. \n\nPrimary and Seasonal addresses are considered as one record in Premier, therefore they share the same address identifier.\n\nIf Primary address record has Seasonal address related to it, ESF displays them as a separate postal address instances.\n\nSeasonal address will always have a time frame."
+          items:
+            $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_PostAddr'
+      description: Details of address associated with an account.
+    getAddrByPostResponse_AddrStatus:
+      required:
+      - AddrStatusCode
+      type: object
+      properties:
+        AddrStatusCode:
+          type: string
+          description: Status code of the address.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective date and time when the status of enumeration table is changed.
+            Effective date and time when the address status is changed.
 
-            Format: yyyy-MM-ddTHH:mm:ss.sss
 
-            Example: 2021-01-31T23:59:59.999
-      description: Current status of the enumeration table.
-    GetEnumTableSecuredResponse_EnumTableRec:
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-12-31T23:59:59.999
+      description: Current status of the address.
+    getAddrByPostResponse_AddrRec:
       required:
-      - EnumTableInfo
-      - EnumTableKeys
-      - EnumTableStatus
+      - AddrInfo
+      - AddrKeys
+      - AddrStatus
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableKeys'
-        EnumTableInfo:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableInfo'
-        EnumTableStatus:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableStatus'
+        AddrKeys:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrKeys'
+        AddrInfo:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo'
+        AddrStatus:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrStatus'

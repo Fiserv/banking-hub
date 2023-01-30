@@ -1,19 +1,21 @@
 ---
 openapi: 3.0.1
 info:
-  title: EnumTableService - Get Enumeration Table
-  description: Enumeration table service supports an inquiry operation that allows to retrieve enumerated values and associated descriptions from fields available to service providers.
-  version: 11.0.0_PRM
+  title: Credit Service
+  description: |-
+    The Credit service is used to add or reverse credit entry for a specified loan or deposit product account. <br>
+        This service helps to reverse from or post credit entry to the beneficiary or receiver’s account for specific types of payments including wire transfers plus fees.
+  version: 11.0.0_SIG-Rev_LOAN_Teller
 servers:
 - url: /
 paths:
-  /enumtable/secured:
-    post:
+  /credits:
+    put:
       tags:
-      - Get Enumeration Table
-      summary: Get Enumeration Table.
-      description: "Retrieves enumeration values and their descriptions associated to a field.\n        <br><br>\n        For more information about the Operations and Servicing domain <a href=\"../docs/?path=docs/fintechs/servicing.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: GetEnumTableSecured
+      - Reverse Credit
+      summary: Reverse Credit.
+      description: "Reverses the previously processed credit transaction in an account. This API reverses the effect of CreditAdd transaction.<br>\n        <br>\n        For more information about the Payments domain, <a href=\"../docs/?path=docs/fintechs/payments.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\" title=\"Click to open\">Cash Management</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\" title=\"Click to open\">Treasury Services</a></li>\n          </ul>"
+      operationId: CreditRevOper
       parameters:
       - name: EFXHeader
         in: header
@@ -25,47 +27,59 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetEnumTableSecuredRequest'
+              $ref: '#/components/schemas/CreditRevOperRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
+                $ref: '#/components/schemas/CreditRevOperResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
-      x-group-name: Enumeration Table Service
-      x-proxy-name: Get Enumeration Table
-      x-child-product-name: Operations and Servicing
-      x-core: Premier
+                $ref: '#/components/schemas/CreditRevOperResponse'
+      x-group-name: Credit Service
+      x-proxy-name: Reverse Credit
+      x-child-product-name: Transactions
+      x-core: Signature-LOAN_Teller
 components:
   schemas:
-    GetEnumTableSecuredRequest:
+    CreditRevOperRequest:
       required:
-      - EnumTableSel
+      - CreditInfo
+      - CreditKeys
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_RecCtrlIn'
-        EnumTableSel:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel'
-    GetEnumTableSecuredResponse:
+        RevReasonCode:
+          type: string
+          description: |-
+            Code to specify the reason for the reversal.
+
+
+
+            **Note:** For Regular Payment Reversal (reversal of a previous day transaction) value of NSF is used when the payment caused an NSF to the account against which the money was withdrawn to fullfil the loan payment. Otherwise the value of Reversal is expected.
+          enum:
+          - NSF
+          - Reversal
+        CreditKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys'
+        CreditInfo:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo'
+    CreditRevOperResponse:
       required:
-      - EnumTableRec
+      - CreditStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_RecCtrlOut'
-        EnumTableRec:
-          type: array
-          description: Details of the enumeration table record returned in the response for the specified search criteria.
-          items:
-            $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableRec'
+        AcctInfoDtl:
+          type: object
+          description: Information of the account that is returned in the response for CreditAdd, CreditRev, DebitAdd and DebitRev when an error occurred that prevented the transaction to be processed.
+        CreditStatusRec:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -97,13 +111,16 @@ components:
           maxLength: 80
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: Client date and time as reported by the client application that is making the service request.
         ClientTerminalSeqNum:
           maxLength: 36
-          description: 'Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12. type: string'
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
           description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
@@ -373,146 +390,261 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    GetEnumTableSecuredRequest_RecCtrlIn:
-      type: object
-      properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum number of records that can be returned within a single response.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
-
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-      description: Maximum number of records that client can specify to process within a single response.
-    GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys:
+    CreditRevOperRequest_CreditKeys_AcctKeys:
       required:
-      - EnumTableIdent
+      - AcctId
       type: object
       properties:
-        EnumTableIdent:
-          type: string
-          description: "Unique identifier of the enumeration table.\n\n**Note:** \"Region\" also known as originating branch refers to a branch region. \n\n\"Branch\"  also known as responsible branch refers to accounting branch/group. "
-          enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
+        AcctId:
+          maxLength: 36
           type: string
           description: |-
-            Unique identification code of branch.
+            Unique account identification number.
 
 
 
-            **Note:** Premier will search using the default branch if no branch is provided.
-        DataApplType:
+            **Note:** Refers to account number.
+
+            Max length: 12 characters
+        AcctType:
           type: string
           description: |-
-            Type of data application.
+            Type of an account.
 
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
 
-
-
-
-
-
-
-
-
-
-            **Note:** Valid required only if Branchldent is sent.
+            **Note:** *Required field*
           enum:
-          - ALL
-          - CDA
-          - CRD
-          - DDA
           - LOAN
-          - LOC
-          - Party
-          - SDA
-          - SDB
-          - DDL
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredRequest_EnumTableSel:
-      required:
-      - EnumTableKeys
-      type: object
-      properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys'
-        EnumFilter:
-          maxLength: 80
-          type: array
-          description: |-
-            Filter used to sort the values returned in the enumeration table response.
-
-            For example, if EnumFilter is set to "country code" for StateProv table, then response includes the states of the country code sent in the request.
-          items: {}
-      description: Details of selected EnumTable records.
-    GetEnumTableSecuredResponse_RecCtrlOut:
-      required:
-      - SentRecCount
-      type: object
-      properties:
-        SentRecCount:
-          type: integer
-          description: Total number of records that matched the selection criteria and returned in the response message.
-          format: int64
-        Cursor:
-          maxLength: 250
+        FIIdentType:
           type: string
           description: |-
-            Next record pointer included in the response if more than 250 posted transaction records exist.
+            Identification type of a financial institution.
 
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field.
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    GetEnumTableSecuredResponse_EnumTableKeys:
-      required:
-      - EnumTableIdent
-      type: object
-      properties:
-        EnumTableIdent:
-          type: string
-          description: Unique identifier of the enumeration table.
+            **Note:** Signature uses the value "ABA".
           enum:
-          - Region
-          - Branch
+          - ABA
+        FIIdent:
+          maxLength: 34
+          type: string
+          description: Unique identification number of a financial institution.
         BranchIdent:
           maxLength: 22
           type: string
-          description: |+
-            Unique identification code of branch.
+          description: |-
+            Unique identifier of a branch.
 
-        DataApplType:
-          type: string
-          description: |+
-            Type of data application.
-
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredResponse_EnumTableInfo:
+            **Note:** Max length: 3 characters
+      description: Unique information to identify the account record.
+    CreditRevOperRequest_CreditKeys:
       type: object
       properties:
-        EnumTableData:
-          type: array
-          description: Details of data in enumeration table.
-          items: {}
-      description: Information of enumeration table returned in the response.
-    GetEnumTableSecuredResponse_EnumTableStatus:
+        CreditId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a credit record.
+
+            **Note:** Service provider uses only four characters.
+        AcctKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys_AcctKeys'
+      description: Unique information to identify a credit record.
+    CreditRevOperRequest_CreditInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00.
+      description: |+
+        Details of the amount to be processed in credit transaction.
+
+    CreditRevOperRequest_CreditInfo_CompositeCurAmt:
       required:
-      - EnumTableStatusCode
+      - CurAmt
+      properties:
+        CompositeCurAmtType:
+          type: string
+          description: "Type of composite currency amount.\n\n**Note:** Value of \n\nPrincipal can be used in the following transactions:\n\n - Loan Payment\n\n - Chargeoff Recovery\n\n - Unscheduled Payment\n\nInterest can be used in the following transactions:\n\n - Loan Payment\n\n - Chargeoff Recovery\n\n - Unscheduled Payment\n\nLoanFee can be used in the following transactions:\n\n - Loan Fee Payment\n\n - Loan Fee Waived\n\n - Unscheduled Payment\n\n - Loan Fee Reversal\n\n - Late Fee Payment Reversal\n\nLateFee can be used in the following transactions:\n\n - Late Fee Payment\n\n - Late Fee Waived\n\n - Unscheduled Payment"
+          enum:
+          - Principal
+          - Interest
+          - LoanFee
+          - LateFee
+        CurAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CurAmt'
+        SpecialHandling:
+          type: array
+          description: "Special instructions for processing the transaction amount. \n\n\n\n**Note:** Set value to Recovery for the following transactions:\n\n - Loan payment\n\n - Chargeoff recovery"
+          items: {}
+          enum:
+          - Unscheduled
+          - Irregular
+          - Recovery
+    CreditRevOperRequest_CreditInfo_CashAmt:
       type: object
       properties:
-        EnumTableStatusCode:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+      description: Details of the cash in amounts.
+    CreditRevOperRequest_CreditInfo_CashInData:
+      required:
+      - CashAmt
+      properties:
+        CashAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CashAmt'
+    CreditRevOperRequest_CreditInfo_ChkEnteredAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+      description: |+
+        Details of the amount entered for check.
+
+    CreditRevOperRequest_CreditInfo_ChkInData:
+      required:
+      - ChkEnteredAmt
+      properties:
+        ChkEnteredAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_ChkEnteredAmt'
+    CreditRevOperRequest_CreditInfo_OtherFundsInAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+      description: |-
+        Details of the funds in amount.
+
+        **Note:** Amount details that are required when a customer makes multiple transactions and funds are carried over from one transaction to the next.
+    CreditRevOperRequest_CreditInfo_OtherFundsOutAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+      description: |-
+        Details of the funds out amount.
+
+        **Note:** Amount details that are required when a customer makes multiple transactions and funds are carried over from one transaction to the next.
+    CreditRevOperRequest_CreditInfo:
+      required:
+      - CompositeCurAmt
+      - CreditType
+      type: object
+      properties:
+        CreditType:
+          type: string
+          description: "Type of credit transaction.\n\n**Note:** Fee is expected for the following types of transactions:\n\n - Loan Fee Payment\n\n - Late Fee Payment\n\n - Loan Fee Reversal\n\n - Late Fee Payment Reversal\n\nCredit is expected for the following types of transactions: \n\n - Loan Fee Waived\n\n - Late Fee Waived\n\nPayment is expected for the following type of transactions:\n\n - Loan Payment Reversal\n\n - Loan Payment\n\n - Chargeoff Recovery\n\n - Irregular Payment\n\n - Unscheduled payment"
+          enum:
+          - Fee
+          - Credit
+          - Payment
+        AdditionalCode:
+          type: string
+          description: Code that further defines the transaction.
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+        Desc:
+          maxLength: 100
+          type: array
+          description: |-
+            Description of the credit transaction.
+
+            **Note:** Max length: 30 characters
+          items: {}
+        CompositeCurAmt:
+          type: array
+          description: Details of the composition of the credited amount.
+          items:
+            $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt'
+        CashInData:
+          type: array
+          description: Details of the cash in amounts included in the credit transaction.
+          items:
+            $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CashInData'
+        CashOutData:
+          type: array
+          description: Details to specify the cash out data that was dispensed as part of the transaction.
+          items:
+            $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CashInData'
+        ChkInData:
+          type: array
+          description: |+
+            Details of the check amounts included in the credit transaction.
+
+          items:
+            $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_ChkInData'
+        OtherFundsInAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_OtherFundsInAmt'
+        OtherFundsOutAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_OtherFundsOutAmt'
+      description: "Details of the credit transaction.\n\n**Note:** Service provider uses a default \"TranCode\" based on field specified in ESF request.\n\nAn OrgId/FI can configure the TranCode to be used in different conditions supported by ESF. If a TranCode is configured in ESF corresponding to the field criteria sent in the request, then it is used by the operation and overrides the default setup. "
+    CreditRevOperResponse_CreditStatusRec_CreditKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+            **Note:** Refers to the account number.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+          enum:
+          - LOAN
+      description: Unique information to identify the account record.
+    CreditRevOperResponse_CreditStatusRec_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditKeys_AcctKeys'
+      description: Unique information to identify a credit record.
+    CreditRevOperResponse_CreditStatusRec_CreditStatus:
+      required:
+      - CreditStatusCode
+      type: object
+      properties:
+        CreditStatusCode:
           type: string
           description: |+
-            Code to specify the current status of enumeration table.
+            Code to specify the current status of the credit transaction.
 
           enum:
           - Valid
@@ -520,21 +652,27 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective date and time when the status of enumeration table is changed.
+            Effective date and time when the transaction status is changed.
 
-            Format: yyyy-MM-ddTHH:mm:ss.sss
+            Format: yyyy-mm-ddThh:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
-      description: Current status of the enumeration table.
-    GetEnumTableSecuredResponse_EnumTableRec:
+      description: Details of the credit transaction status.
+    CreditRevOperResponse_CreditStatusRec:
       required:
-      - EnumTableInfo
-      - EnumTableKeys
-      - EnumTableStatus
+      - CreditStatus
+      type: object
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableKeys'
-        EnumTableInfo:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableInfo'
-        EnumTableStatus:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableStatus'
+        CreditKeys:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditKeys'
+        CreditStatus:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditStatus'
+      description: Details of the credit transaction response that includes response keys and response status.
+    CreditRevOperResponse_Receipt:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: Name on the receipt.
+      description: Details of the credit transaction receipt.

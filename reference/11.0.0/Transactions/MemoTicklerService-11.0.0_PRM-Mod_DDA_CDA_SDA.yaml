@@ -1,19 +1,24 @@
 ---
 openapi: 3.0.1
 info:
-  title: EnumTableService - Get Enumeration Table
-  description: Enumeration table service supports an inquiry operation that allows to retrieve enumerated values and associated descriptions from fields available to service providers.
-  version: 11.0.0_PRM
+  title: Memo Tickler Service
+  description: |-
+    Memo tickler service supports operations to manage memo and ticklers.
+        <br>
+        Memo and ticklers are used to notify the officers from financial institutions regarding important messages or actions that need to take place when interacting with the customer or performing a transaction to the customer's account.
+        <br>
+        Memo is a continuous message that does not require any specific action to be taken on it. Tickler is a one-time or recurring message which may require some specific action to be taken.
+  version: 11.0.0_PRM-Mod_DDA_CDA_SDA
 servers:
 - url: /
 paths:
-  /enumtable/secured:
-    post:
+  /memotickler:
+    put:
       tags:
-      - Get Enumeration Table
-      summary: Get Enumeration Table.
-      description: "Retrieves enumeration values and their descriptions associated to a field.\n        <br><br>\n        For more information about the Operations and Servicing domain <a href=\"../docs/?path=docs/fintechs/servicing.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: GetEnumTableSecured
+      - Update Memo Trickler
+      summary: Update Memo Tickler.
+      description: "This service operation adds memos and ticklers for customer’s account and parties.\n        <br>\n        For more information about the Transactions domain, <a href=\"../docs/?path=docs/fintechs/transactions.md\" title=\"Click to open\">click here.</a><br>\n        <br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: MemoTicklerModOper
       parameters:
       - name: EFXHeader
         in: header
@@ -25,47 +30,43 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetEnumTableSecuredRequest'
+              $ref: '#/components/schemas/MemoTicklerModOperRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
+                $ref: '#/components/schemas/MemoTicklerModOperResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
-      x-group-name: Enumeration Table Service
-      x-proxy-name: Get Enumeration Table
-      x-child-product-name: Operations and Servicing
-      x-core: Premier
+                $ref: '#/components/schemas/MemoTicklerModOperResponse'
+      x-group-name: Memo Tickler Service
+      x-proxy-name: Update Memo Tickler
+      x-child-product-name: Transactions
+      x-core: Premier-DDA_CDA_SDA
 components:
   schemas:
-    GetEnumTableSecuredRequest:
+    MemoTicklerModOperRequest:
       required:
-      - EnumTableSel
+      - MemoTicklerInfo
+      - MemoTicklerKeys
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_RecCtrlIn'
-        EnumTableSel:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel'
-    GetEnumTableSecuredResponse:
+        MemoTicklerKeys:
+          $ref: '#/components/schemas/MemoTicklerModOperRequest_MemoTicklerKeys'
+        MemoTicklerInfo:
+          $ref: '#/components/schemas/MemoTicklerModOperRequest_MemoTicklerInfo'
+    MemoTicklerModOperResponse:
       required:
-      - EnumTableRec
+      - MemoTicklerStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_RecCtrlOut'
-        EnumTableRec:
-          type: array
-          description: Details of the enumeration table record returned in the response for the specified search criteria.
-          items:
-            $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableRec'
+        MemoTicklerStatusRec:
+          $ref: '#/components/schemas/MemoTicklerModOperResponse_MemoTicklerStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -97,13 +98,16 @@ components:
           maxLength: 80
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: Client date and time as reported by the client application that is making the service request.
         ClientTerminalSeqNum:
           maxLength: 36
-          description: 'Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12. type: string'
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
           description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
@@ -373,168 +377,228 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    GetEnumTableSecuredRequest_RecCtrlIn:
-      type: object
-      properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum number of records that can be returned within a single response.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
-
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-      description: Maximum number of records that client can specify to process within a single response.
-    GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys:
+    MemoTicklerModOperRequest_MemoTicklerKeys_AcctKeys:
       required:
-      - EnumTableIdent
+      - AcctId
       type: object
       properties:
-        EnumTableIdent:
+        AcctId:
+          maxLength: 36
           type: string
-          description: "Unique identifier of the enumeration table.\n\n**Note:** \"Region\" also known as originating branch refers to a branch region. \n\n\"Branch\"  also known as responsible branch refers to accounting branch/group. "
-          enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
+          description: Unique account identification number.
+        AcctType:
           type: string
           description: |-
-            Unique identification code of branch.
-
-
-
-            **Note:** Premier will search using the default branch if no branch is provided.
-        DataApplType:
-          type: string
-          description: |-
-            Type of data application.
+            Type of an account.
 
 
 
 
 
-
-
-
-
-
-
-            **Note:** Valid required only if Branchldent is sent.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Gloassary</a>.
           enum:
-          - ALL
           - CDA
-          - CRD
           - DDA
-          - LOAN
-          - LOC
-          - Party
           - SDA
-          - SDB
-          - DDL
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredRequest_EnumTableSel:
-      required:
-      - EnumTableKeys
+          - ""
+      description: ' Account key details to identify an account record.'
+    MemoTicklerModOperRequest_MemoTicklerKeys:
       type: object
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys'
-        EnumFilter:
+        AcctKeys:
+          $ref: '#/components/schemas/MemoTicklerModOperRequest_MemoTicklerKeys_AcctKeys'
+        MemoTicklerUse:
+          type: string
+          description: |-
+            Indicates whether a record is a memo or tickler.
+
+            Customers do not have tickler records.
+          enum:
+          - Memo
+          - Tickler
+        MemoTicklerIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Identification code for a memo tickler.
+
+            **Note:** Memo/tickler number.
+      description: "Keys to identify a memo tickler record.\n\n**Note:** Premier requires account keys to know if the record is a memo or a tickler. "
+    MemoTicklerModOperRequest_MemoTicklerInfo_RelationshipMgr:
+      required:
+      - RelationshipMgrIdent
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: "A client-defined responsibility code to identify the officer responsible for the account.\n\n**Note:** The client-defined responsibility code identifies the officer responsible for the account. "
+        RelationshipRole:
+          type: string
+          description: |-
+            Role of a relationship manager.
+
+
+
+            **Note:** Identifies the officer for both memos and ticklers.
+          enum:
+          - Officer
+    MemoTicklerModOperRequest_MemoTicklerInfo_DeliveryInstruction:
+      type: object
+      properties:
+        DeliveryMethod:
+          type: string
+          description: "Delivery method of a reminder.\n\n\n\n\n\n**Note:** The item appears as a notice printed during nightly processing. "
+          enum:
+          - Notice
+        DeliveryMedia:
+          type: string
+          description: "Client-defined notification format to generate notification form for Ticklers.\n\nThis field is required if the delivery method is set to \"Notice\"\n\n**Note:** Applicable only for ticklers. \n\nThis field must be provided, if the delivery method value is set to \"Notice\"\n\n\n\nThis field indicates the client-defined format used to generate an 8 1/2\" x 11\" or side-by-side notification form.\n\n"
+      description: Instructions to deliver a reminder of memo or tickler.
+    MemoTicklerModOperRequest_MemoTicklerInfo_RecurRule:
+      type: object
+      properties:
+        RecurType:
+          type: string
+          description: |+
+            Type of recurrence.
+
+
+
+
+
+            **Note:** Daily: Daily (Recurrence Interval 1).
+
+            Monthly: Monthly (Recurrence Interval 1).
+
+            Quarterly: Quarterly (Recurrence Interval 1).
+
+            Semiyearly: SemiYearly (Recurrence Interval 1).
+
+            Yearly: Yearly (Recurrence Interval 1).
+
+            One time: Once.
+
+
+
+          enum:
+          - Daily
+          - Monthly
+          - Quaterly
+          - SemiYearly
+          - Yearly
+          - Once
+          - ""
+          - ""
+          - ""
+        RecurInterval:
+          type: integer
+          description: "Recurrence interval between two successive occurrences of memo or tickler. \n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to set to '1', then there will be 1 month interval between the next payment.\n\nThe default value is set to 1.\n\n"
+          format: int64
+      description: Details of recurrence rule.
+    MemoTicklerModOperRequest_MemoTicklerInfo:
+      type: object
+      properties:
+        MemoTicklerText:
+          maxLength: 100
+          type: array
+          description: "Description of memo or tickler.\n\n**Note:** One description line is accepted. Max limit character is 40 char with exception of loan that accepts max limit of 60 character. "
+          items: {}
+        MemoTicklerExtendedText:
           maxLength: 80
           type: array
           description: |-
-            Filter used to sort the values returned in the enumeration table response.
+            Additional description of memo or tickler.
 
-            For example, if EnumFilter is set to "country code" for StateProv table, then response includes the states of the country code sent in the request.
+            **Note:** Additionally 60 char is accepted.
           items: {}
-      description: Details of selected EnumTable records.
-    GetEnumTableSecuredResponse_RecCtrlOut:
+        RelationshipMgr:
+          type: array
+          description: Information about financial institution officers who have management-related responsibilities of the party, account or card.
+          items:
+            $ref: '#/components/schemas/MemoTicklerModOperRequest_MemoTicklerInfo_RelationshipMgr'
+        RequiredViewInd:
+          type: boolean
+          description: Flag to indicate whether a memo is displayed on the first page of inquiry.
+        DeliveryInstruction:
+          $ref: '#/components/schemas/MemoTicklerModOperRequest_MemoTicklerInfo_DeliveryInstruction'
+        ReportGroupCode:
+          type: string
+          description: "Client-defined code to group the accounts for reporting purposes.\n\n**Note:** Miscellaneous code for memos and ticklers. "
+        RecurRule:
+          $ref: '#/components/schemas/MemoTicklerModOperRequest_MemoTicklerInfo_RecurRule'
+        NextMemoTicklerDt:
+          type: string
+          description: "Date on which next memo tickler is reported.\n\n\n\nThis field is mandatory if the RecurType is not defined or set to \"Once\".\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** When a tickler is reported with optional customer notification, it is the next tickler date. The next tickler date is automatically advanced each time a tickler is reported with the frequency of a month or higher. \n\nIf tickler frequency is one time or blank, the date must be advanced manually. "
+          format: date
+        ExpDt:
+          type: string
+          description: "Date after which a memo and tickler becomes inactive.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Ticklers and memo may have expiration dates."
+          format: date
+      description: Details of memo tickler.
+    MemoTicklerModOperResponse_MemoTicklerStatusRec_MemoTicklerKeys_AcctKeys:
       required:
-      - SentRecCount
+      - AcctId
       type: object
       properties:
-        SentRecCount:
-          type: integer
-          description: Total number of records that matched the selection criteria and returned in the response message.
-          format: int64
-        Cursor:
-          maxLength: 250
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique account identification number.
+        AcctType:
           type: string
           description: |-
-            Next record pointer included in the response if more than 250 posted transaction records exist.
+            Type of an account.
 
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field.
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    GetEnumTableSecuredResponse_EnumTableKeys:
-      required:
-      - EnumTableIdent
-      type: object
-      properties:
-        EnumTableIdent:
-          type: string
-          description: Unique identifier of the enumeration table.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Gloassary</a>.
           enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
-          type: string
-          description: |+
-            Unique identification code of branch.
-
-        DataApplType:
-          type: string
-          description: |+
-            Type of data application.
-
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredResponse_EnumTableInfo:
+          - CDA
+          - DDA
+          - SDA
+          - ""
+          - ""
+          - ""
+      description: ' Account key details to identify an account record.'
+    MemoTicklerModOperResponse_MemoTicklerStatusRec_MemoTicklerKeys:
       type: object
       properties:
-        EnumTableData:
-          type: array
-          description: Details of data in enumeration table.
-          items: {}
-      description: Information of enumeration table returned in the response.
-    GetEnumTableSecuredResponse_EnumTableStatus:
+        AcctKeys:
+          $ref: '#/components/schemas/MemoTicklerModOperResponse_MemoTicklerStatusRec_MemoTicklerKeys_AcctKeys'
+        MemoTicklerUse:
+          type: string
+          description: |-
+            Indicates whether a record is a memo or tickler.
+
+            Customers do not have tickler records.
+        MemoTicklerIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification code to identify a memo tickler.
+      description: Unique information to identify a memo tickler record.
+    MemoTicklerModOperResponse_MemoTicklerStatusRec_MemoTicklerStatus:
       required:
-      - EnumTableStatusCode
+      - MemoTicklerStatusCode
       type: object
       properties:
-        EnumTableStatusCode:
+        MemoTicklerStatusCode:
           type: string
           description: |+
-            Code to specify the current status of enumeration table.
+            Status code of a memo tickler.
 
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Effective date and time when the status of enumeration table is changed.
-
-            Format: yyyy-MM-ddTHH:mm:ss.sss
-
-            Example: 2021-01-31T23:59:59.999
-      description: Current status of the enumeration table.
-    GetEnumTableSecuredResponse_EnumTableRec:
+          description: "Effective date and time value when the status of memo tickler is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+      description: Status details of a memo tickler reported.
+    MemoTicklerModOperResponse_MemoTicklerStatusRec:
       required:
-      - EnumTableInfo
-      - EnumTableKeys
-      - EnumTableStatus
+      - MemoTicklerKeys
+      - MemoTicklerStatus
+      type: object
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableKeys'
-        EnumTableInfo:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableInfo'
-        EnumTableStatus:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableStatus'
+        MemoTicklerKeys:
+          $ref: '#/components/schemas/MemoTicklerModOperResponse_MemoTicklerStatusRec_MemoTicklerKeys'
+        MemoTicklerStatus:
+          $ref: '#/components/schemas/MemoTicklerModOperResponse_MemoTicklerStatusRec_MemoTicklerStatus'
+      description: Details of updated status of a memo tickler.

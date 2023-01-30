@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: EnumTableService - Get Enumeration Table
-  description: Enumeration table service supports an inquiry operation that allows to retrieve enumerated values and associated descriptions from fields available to service providers.
-  version: 11.0.0_PRM
+  title: Party Account Relationship Service
+  description: Party account relationship service manages the nature of relationship between a party and a product account. It is used to indicate the primary contact and tax responsible parties as well as state the relationship type between the party and an account.
+  version: 11.0.0_SIG-Mod_ByAcct
 servers:
 - url: /
 paths:
-  /enumtable/secured:
-    post:
+  /partyacctrel:
+    put:
       tags:
-      - Get Enumeration Table
-      summary: Get Enumeration Table.
-      description: "Retrieves enumeration values and their descriptions associated to a field.\n        <br><br>\n        For more information about the Operations and Servicing domain <a href=\"../docs/?path=docs/fintechs/servicing.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: GetEnumTableSecured
+      - Update Party Account Relationship
+      summary: Update Party Account Relationship
+      description: "Modifies the relationship-related information between party and account.\n        <br><br>For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a>\n        <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: PartyAcctRelMod
       parameters:
       - name: EFXHeader
         in: header
@@ -25,47 +25,43 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetEnumTableSecuredRequest'
+              $ref: '#/components/schemas/PartyAcctRelModRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
+                $ref: '#/components/schemas/PartyAcctRelModResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
-      x-group-name: Enumeration Table Service
-      x-proxy-name: Get Enumeration Table
-      x-child-product-name: Operations and Servicing
-      x-core: Premier
+                $ref: '#/components/schemas/PartyAcctRelModResponse'
+      x-group-name: Party Account Relationship Service
+      x-proxy-name: Update Party Account Relationship
+      x-child-product-name: Accountholder
+      x-core: Signature-ByAcct
 components:
   schemas:
-    GetEnumTableSecuredRequest:
+    PartyAcctRelModRequest:
       required:
-      - EnumTableSel
+      - PartyAcctRelInfo
+      - PartyAcctRelKeys
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_RecCtrlIn'
-        EnumTableSel:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel'
-    GetEnumTableSecuredResponse:
+        PartyAcctRelInfo:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo'
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelKeys'
+    PartyAcctRelModResponse:
       required:
-      - EnumTableRec
+      - PartyAcctRelStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_RecCtrlOut'
-        EnumTableRec:
-          type: array
-          description: Details of the enumeration table record returned in the response for the specified search criteria.
-          items:
-            $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableRec'
+        PartyAcctRelStatusRec:
+          $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -97,13 +93,16 @@ components:
           maxLength: 80
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: Client date and time as reported by the client application that is making the service request.
         ClientTerminalSeqNum:
           maxLength: 36
-          description: 'Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12. type: string'
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
           description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
@@ -373,168 +372,208 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    GetEnumTableSecuredRequest_RecCtrlIn:
+    PartyAcctRelModRequest_PartyAcctRelInfo_PartyRef_PartyKeys:
       type: object
       properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum number of records that can be returned within a single response.
-          format: int64
-        Cursor:
-          maxLength: 250
+        PartyId:
+          maxLength: 36
           type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
+          description: "Unique identification number of a party record.\n\n**Note:** Refers to the Customer key/ Customer permanent identifier. \n\nMax length: 10 characters\n\n "
+      description: |-
+        Unique information to identify the party record.
 
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-      description: Maximum number of records that client can specify to process within a single response.
-    GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys:
+        **Note:** Refers to the Customer key.
+    PartyAcctRelModRequest_PartyAcctRelInfo_PartyRef:
       required:
-      - EnumTableIdent
+      - PartyKeys
       type: object
       properties:
-        EnumTableIdent:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_PartyRef_PartyKeys'
+      description: |+
+        Reference details of a party object that is part of the relationship with an account.
+
+    PartyAcctRelModRequest_PartyAcctRelInfo_PartyAcctRelData:
+      required:
+      - PartyAcctRelType
+      properties:
+        PartyAcctRelType:
           type: string
-          description: "Unique identifier of the enumeration table.\n\n**Note:** \"Region\" also known as originating branch refers to a branch region. \n\n\"Branch\"  also known as responsible branch refers to accounting branch/group. "
+          description: "Type of relationship between the party and an account.\n\n**Note:** A PartyAcctRelType must be defined for every customer relationship associated to the selected account. \n\n\n\nSignature supports other user-defined values apart from the system-defined values. \n\n\n\nTo delete an account and party relationship, there is no need to send DEL relationship in the request. The client application can simply remove (not send) the relationship from the modification request. This will cause the party account relationship to be eliminated in Signature core. "
           enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
+          - Administrator
+          - Assumption
+          - Beneficiary
+          - CoTrustee
+          - Custodian
+          - CustodianUTMA
+          - Delete
+          - Executor
+          - JointTenancy
+          - JointTenantInCommon
+          - Owner
+          - PersonalRep
+          - Related
+          - SoleOwner
+          - Trustee
+        PartyAcctRelOrder:
+          type: string
+          description: "Relationship order of party with an account in case of JointTenancy or JointTenantsInComman.\n\n**Note:** For example JA1 is represented as <PartyAcctRelType>JointTenantInCommon</PartyAcctRelType> with <PartyAcctRelOrder>First</PartyAcctRelOrder>.\n\n\n\nFor example JO1 is represented as <PartyAcctRelType>JointTenancy</PartyAcctRelType> with <PartyAcctRelOrder>First</PartyAcctRelOrder>. \n\n\n\nFor JAF and JOF relationships, no value is sent in the Party Account Relationship Order field.\n\n"
+          enum:
+          - First
+          - Second
+          - Third
+          - Fourth
+          - Fifth
+          - Other
+    PartyAcctRelModRequest_PartyAcctRelInfo_Liability:
+      type: object
+      properties:
+        LiabilityPercent:
+          type: number
+          description: |+
+            Percentage for which the party is responsible.
+
+            **Note:** The sum of the Liability Percent across all party account relationships for an account should be equal to 100.
+
+      description: Details of liability of a party/account holder.
+    PartyAcctRelModRequest_PartyAcctRelInfo:
+      type: object
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_PartyRef'
+        PartyAcctRelData:
+          type: array
+          description: Details of the relationship of the party to an account.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_PartyAcctRelData'
+        Liability:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_Liability'
+        FDICOwnership:
+          type: string
+          description: |+
+            Relationship of party with FDIC.
+
+            **Note:** For Signature, the system-defined values are:
+
+            "000" - Not assigned
+
+            "001" - No ownership assigned
+
+            "002" - Single ownership
+
+            "003" - Joint ownership
+
+            "004" - Revocable trust
+
+            "005" - Irrevocable trust
+
+            "006" - Corp, partnership, unincorporated assoc.
+
+            "007" - Retirement and employee benefit plans
+
+            "008" - Accts for others-fiduciary relationship
+
+            "009" - Interest bearing public funds - instate
+
+            "010"- Non-interest bearing public funds - instate
+
+            "011" - Out of state public funds.
+
+            Additional user-defined codes may be set up in Common File.
+
+      description: Details of a relationship between party and account.
+    PartyAcctRelModRequest_PartyAcctRelKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
           type: string
           description: |-
-            Unique identification code of branch.
+            Type of an account.
 
-
-
-            **Note:** Premier will search using the default branch if no branch is provided.
-        DataApplType:
-          type: string
-          description: |-
-            Type of data application.
-
-
-
-
-
-
-
-
-
-
-
-            **Note:** Valid required only if Branchldent is sent.
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
           enum:
-          - ALL
+          - DDA
+          - SDA
           - CDA
-          - CRD
+          - LOAN
+          - SDB
+      description: Unique information to identify the account record.
+    PartyAcctRelModRequest_PartyAcctRelKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelKeys_AcctKeys'
+      description: "Unique information to identify the party-to-account relationship record.\n\n**Note:** The keys for the request are the Account number and Account type. \n\n\n\n"
+    PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+          enum:
+          - CDA
+          - SDA
           - DDA
           - LOAN
-          - LOC
-          - Party
-          - SDA
           - SDB
-          - DDL
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredRequest_EnumTableSel:
+      description: Unique information to identify the account record.
+    PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys'
+      description: Unique information to identify the party-to-account relationship record.
+    PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelStatus:
       required:
-      - EnumTableKeys
+      - PartyAcctRelStatusCode
       type: object
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys'
-        EnumFilter:
-          maxLength: 80
-          type: array
-          description: |-
-            Filter used to sort the values returned in the enumeration table response.
-
-            For example, if EnumFilter is set to "country code" for StateProv table, then response includes the states of the country code sent in the request.
-          items: {}
-      description: Details of selected EnumTable records.
-    GetEnumTableSecuredResponse_RecCtrlOut:
-      required:
-      - SentRecCount
-      type: object
-      properties:
-        SentRecCount:
-          type: integer
-          description: Total number of records that matched the selection criteria and returned in the response message.
-          format: int64
-        Cursor:
-          maxLength: 250
+        PartyAcctRelStatusCode:
           type: string
-          description: |-
-            Next record pointer included in the response if more than 250 posted transaction records exist.
-
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field.
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    GetEnumTableSecuredResponse_EnumTableKeys:
-      required:
-      - EnumTableIdent
-      type: object
-      properties:
-        EnumTableIdent:
-          type: string
-          description: Unique identifier of the enumeration table.
-          enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
-          type: string
-          description: |+
-            Unique identification code of branch.
-
-        DataApplType:
-          type: string
-          description: |+
-            Type of data application.
-
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredResponse_EnumTableInfo:
-      type: object
-      properties:
-        EnumTableData:
-          type: array
-          description: Details of data in enumeration table.
-          items: {}
-      description: Information of enumeration table returned in the response.
-    GetEnumTableSecuredResponse_EnumTableStatus:
-      required:
-      - EnumTableStatusCode
-      type: object
-      properties:
-        EnumTableStatusCode:
-          type: string
-          description: |+
-            Code to specify the current status of enumeration table.
-
+          description: Status code for party to account relationship record.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Effective date and time when the status of enumeration table is changed.
-
-            Format: yyyy-MM-ddTHH:mm:ss.sss
-
-            Example: 2021-01-31T23:59:59.999
-      description: Current status of the enumeration table.
-    GetEnumTableSecuredResponse_EnumTableRec:
+          description: "Effective date and time value when the party to account relationship status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+      description: Status details of relationship between party and an account.
+    PartyAcctRelModResponse_PartyAcctRelStatusRec:
       required:
-      - EnumTableInfo
-      - EnumTableKeys
-      - EnumTableStatus
+      - PartyAcctRelKeys
+      - PartyAcctRelStatus
+      type: object
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableKeys'
-        EnumTableInfo:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableInfo'
-        EnumTableStatus:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableStatus'
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys'
+        PartyAcctRelStatus:
+          $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelStatus'
+      description: Updated status and response details due to add, modify and delete operation on relationship between party and an account.

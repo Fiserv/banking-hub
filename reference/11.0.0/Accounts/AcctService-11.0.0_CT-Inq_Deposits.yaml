@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: EnumTableService - Get Enumeration Table
-  description: Enumeration table service supports an inquiry operation that allows to retrieve enumerated values and associated descriptions from fields available to service providers.
-  version: 11.0.0_PRM
+  title: Account Service
+  description: The account service helps to create and manage product accounts serviced by the financial institutions. It is also used to retrieve information about the existing accounts and maintain information of new accounts.
+  version: 11.0.0_CT-Inq_Deposits
 servers:
 - url: /
 paths:
-  /enumtable/secured:
+  /accounts/secured:
     post:
       tags:
-      - Get Enumeration Table
-      summary: Get Enumeration Table.
-      description: "Retrieves enumeration values and their descriptions associated to a field.\n        <br><br>\n        For more information about the Operations and Servicing domain <a href=\"../docs/?path=docs/fintechs/servicing.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: GetEnumTableSecured
+      - Get Accounts
+      summary: Get Accounts.
+      description: "Retrieves account-related information of the existing Checking, Savings, CD or Loan account records.<br>\n        For more information about the Accounts domain, <a href=\"../docs/?path=docs/fintechs/accounts.md\" title=\"Click to open\">click here.</a><br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\" title=\"Click to open\">Cash Management</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\" title=\"Click to open\">Treasury Services</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/riskMgt.md\" title=\"Click to open\">Risk and Performance Management</a></li>\n          </ul>"
+      operationId: getAccountsSecured
       parameters:
       - name: EFXHeader
         in: header
@@ -25,47 +25,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetEnumTableSecuredRequest'
+              $ref: '#/components/schemas/getAccountsSecuredRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
+                $ref: '#/components/schemas/getAccountsSecuredResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
-      x-group-name: Enumeration Table Service
-      x-proxy-name: Get Enumeration Table
-      x-child-product-name: Operations and Servicing
-      x-core: Premier
+                $ref: '#/components/schemas/getAccountsSecuredResponse'
+      x-group-name: Account Service
+      x-proxy-name: Get Account Details
+      x-child-product-name: Accounts
+      x-core: Cleartouch-Deposits
 components:
   schemas:
-    GetEnumTableSecuredRequest:
+    getAccountsSecuredRequest:
       required:
-      - EnumTableSel
+      - AcctSel
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_RecCtrlIn'
-        EnumTableSel:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel'
-    GetEnumTableSecuredResponse:
+        AcctSel:
+          $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel'
+    getAccountsSecuredResponse:
       required:
-      - EnumTableRec
+      - AcctRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_RecCtrlOut'
-        EnumTableRec:
-          type: array
-          description: Details of the enumeration table record returned in the response for the specified search criteria.
-          items:
-            $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableRec'
+        AcctRec:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -97,13 +90,16 @@ components:
           maxLength: 80
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: Client date and time as reported by the client application that is making the service request.
         ClientTerminalSeqNum:
           maxLength: 36
-          description: 'Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12. type: string'
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
           description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
@@ -373,168 +369,266 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    GetEnumTableSecuredRequest_RecCtrlIn:
-      type: object
-      properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum number of records that can be returned within a single response.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
-
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-      description: Maximum number of records that client can specify to process within a single response.
-    GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys:
+    getAccountsSecuredRequest_AcctSel_AcctKeys:
       required:
-      - EnumTableIdent
+      - AcctId
       type: object
       properties:
-        EnumTableIdent:
+        AcctId:
+          maxLength: 36
           type: string
-          description: "Unique identifier of the enumeration table.\n\n**Note:** \"Region\" also known as originating branch refers to a branch region. \n\n\"Branch\"  also known as responsible branch refers to accounting branch/group. "
-          enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
+          description: Unique identification number of an account record.
+        AcctType:
           type: string
           description: |-
-            Unique identification code of branch.
+            Type of an account.
 
 
 
-            **Note:** Premier will search using the default branch if no branch is provided.
-        DataApplType:
-          type: string
-          description: |-
-            Type of data application.
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+            **Note:** *Required field*
 
 
 
+            Type of account associated with the requested account.
 
-
-
-
-
-
-
-
-            **Note:** Valid required only if Branchldent is sent.
+            If Invalid AcctType is provided, 'Unsupported Function' error would be returned by ESF.
           enum:
-          - ALL
-          - CDA
-          - CRD
           - DDA
-          - LOAN
-          - LOC
-          - Party
           - SDA
-          - SDB
-          - DDL
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredRequest_EnumTableSel:
+      description: Unique information to identify the account record.
+    getAccountsSecuredRequest_AcctSel:
       required:
-      - EnumTableKeys
+      - AcctKeys
       type: object
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys'
-        EnumFilter:
-          maxLength: 80
-          type: array
-          description: |-
-            Filter used to sort the values returned in the enumeration table response.
-
-            For example, if EnumFilter is set to "country code" for StateProv table, then response includes the states of the country code sent in the request.
-          items: {}
-      description: Details of selected EnumTable records.
-    GetEnumTableSecuredResponse_RecCtrlOut:
+        AcctKeys:
+          $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel_AcctKeys'
+      description: Details of selected account.
+    getAccountsSecuredResponse_AcctRec_AcctKeys:
       required:
-      - SentRecCount
+      - AcctId
       type: object
       properties:
-        SentRecCount:
-          type: integer
-          description: Total number of records that matched the selection criteria and returned in the response message.
-          format: int64
-        Cursor:
-          maxLength: 250
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
           type: string
           description: |-
-            Next record pointer included in the response if more than 250 posted transaction records exist.
+            Type of an account.
 
 
 
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field.
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    GetEnumTableSecuredResponse_EnumTableKeys:
-      required:
-      - EnumTableIdent
-      type: object
-      properties:
-        EnumTableIdent:
-          type: string
-          description: Unique identifier of the enumeration table.
+            For more information about about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
-          type: string
-          description: |+
-            Unique identification code of branch.
-
-        DataApplType:
-          type: string
-          description: |+
-            Type of data application.
-
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredResponse_EnumTableInfo:
-      type: object
-      properties:
-        EnumTableData:
-          type: array
-          description: Details of data in enumeration table.
-          items: {}
-      description: Information of enumeration table returned in the response.
-    GetEnumTableSecuredResponse_EnumTableStatus:
+          - DDA
+          - SDA
+      description: Unique information to identify the account record.
+    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_Term:
       required:
-      - EnumTableStatusCode
+      - TermUnits
       type: object
       properties:
-        EnumTableStatusCode:
-          type: string
-          description: |+
-            Code to specify the current status of enumeration table.
+        Count:
+          type: integer
+          description: |-
+            Number of occurrences with respect to the specified unit value.
 
+            **Note:** Maximum value is 999.
+          format: int64
+        TermUnits:
+          type: string
+          description: "Units to define the term of the account. \n\n\n\n"
+          enum:
+          - Days
+          - Months
+      description: |-
+        Term details for a deposit account.
+
+        **Note:** Applicable for savings account type-certificate of deposit classification.
+    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: |-
+            Currency code value as per the ISO4217-Alpha format.
+
+
+
+            Please note that presently only USD currency code is supported.
+      description: Details of currency code.
+    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt_CurCode'
+      description: Details of the currency amount.
+    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
+          type: string
+          description: |-
+            Client-defined balance type.
+
+            **Note:** Value "AvailCredit" is applicable for demand deposit account.
+          enum:
+          - InterestAccrued
+          - 'Current '
+          - 'Avail '
+          - Sweep
+          - Hold
+          - 'BalanceLastStatement '
+          - 'Float '
+          - 'AvailCredit '
+          - ""
+        CurAmt:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt'
+    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPeriodData:
+      required:
+      - AcctAmtType
+      properties:
+        AcctAmtType:
+          type: string
+          description: "Type of amount.\n\n**Note:** Values applicable for demand deposit account type: \n\n- IntPaid (PriorYr, YTD)\n\n- SvcCharge (YTD)\n\n\n\nValues applicable for savings account type:\n\n- IntPaid (PriorYr, YTD)\n\n- FederalWithholding (PriorYr, YTD)"
+          enum:
+          - 'IntPaid '
+          - SvcCharge
+          - 'FederalWithholding '
+        AcctPeriodType:
+          type: string
+          description: Type of the account period.
+          enum:
+          - 'YTD '
+          - PriorYr
+          - ""
+        Amt:
+          type: number
+          description: Amount in decimal format.
+    getAccountsSecuredResponse_AcctRec_DepositAcctInfo:
+      type: object
+      properties:
+        AcctDtlStatus:
+          type: string
+          description: |-
+            Current status of an account.
+
+
+
+
+
+            **Note:** Cleartouch banks have the option to provide Internet access for closed accounts until those accounts are purged from the system. If the bank uses this option, the requested information for a closed account will be returned.
+
+            For banks that do not use this option ESF error"2350 -Account Closed" will be returned.
+          enum:
+          - Active
+          - 'Closed '
+          - Dormant
+          - 'Matured '
+          - ""
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: |-
+            Unique identifier of a product to indicate the processing options of account.
+
+            **Note:** Valid values are 01 to 99.
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description of debit transaction.
+        TaxIncentiveType:
+          type: string
+          description: "Type of tax incentive. \n\n\n\n**Note:** Value \"HAS\" is applicable for demand deposit account only."
+          enum:
+          - HSA
+          - None
+        AcctUse:
+          type: string
+          description: 'Usage of the account. Institutions in U.S should use this field for regulation D reporting purpose. '
+          enum:
+          - 'Business '
+          - 'Retail '
+          - ""
+        OpenDt:
+          type: string
+          description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        Term:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_Term'
+        MaturityDt:
+          type: string
+          description: "Date of maturity of a deposit account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Applicable for savings account type-certificate of deposit classification."
+          format: date
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account with the party.
+
+            **Note:** This field contains the three digit originating branch number for an account.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Name that customer can assign to the account for easy identification.
+        ClassCode:
+          type: string
+          description: "Code to group accounts for the purpose of processing and reporting.\n\n**Note:** Values are 01 through 99. "
+        Rate:
+          type: number
+          description: "Current interest rate for the account.\n\n**Note:** \n\n- Maximum value is 999.999"
+        AcctBal:
+          type: array
+          description: Amount of balance present in a financial institution account.
+          items:
+            $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctBal'
+        AcctPeriodData:
+          type: array
+          description: Accounting period data details such as last interest payment, nonsufficient funds, overdraft activity year to date, current month, and cycle to date.
+          items:
+            $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPeriodData'
+      description: Details of the deposit account.
+    getAccountsSecuredResponse_AcctRec_AcctStatus:
+      required:
+      - AcctStatusCode
+      type: object
+      properties:
+        AcctStatusCode:
+          type: string
+          description: Status code of an account.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Effective date and time when the status of enumeration table is changed.
-
-            Format: yyyy-MM-ddTHH:mm:ss.sss
-
-            Example: 2021-01-31T23:59:59.999
-      description: Current status of the enumeration table.
-    GetEnumTableSecuredResponse_EnumTableRec:
+          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: Status details of the account.
+    getAccountsSecuredResponse_AcctRec:
       required:
-      - EnumTableInfo
-      - EnumTableKeys
-      - EnumTableStatus
+      - AcctKeys
+      - AcctStatus
+      type: object
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableKeys'
-        EnumTableInfo:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableInfo'
-        EnumTableStatus:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableStatus'
+        AcctKeys:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_AcctKeys'
+        DepositAcctInfo:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo'
+        AcctStatus:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_AcctStatus'
+      description: Details of an account record.

@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: EnumTableService - Get Enumeration Table
-  description: Enumeration table service supports an inquiry operation that allows to retrieve enumerated values and associated descriptions from fields available to service providers.
-  version: 11.0.0_PRM
+  title: Debit Service
+  description: This service domain is the debit facility for Accounts. A debit is performed with the use of a DebitAdd message. \_The client \_can use the DebitRev message to reverse the previous debit request.
+  version: 11.0.0_SIG-Rev_DDA_SDA_Teller
 servers:
 - url: /
 paths:
-  /enumtable/secured:
-    post:
+  /debits:
+    put:
       tags:
-      - Get Enumeration Table
-      summary: Get Enumeration Table.
-      description: "Retrieves enumeration values and their descriptions associated to a field.\n        <br><br>\n        For more information about the Operations and Servicing domain <a href=\"../docs/?path=docs/fintechs/servicing.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: GetEnumTableSecured
+      - Reverse Debit
+      summary: Reverse Debit.
+      description: "Reverses the previously processed debit transaction in an account. This API reverses the effect of DebitAdd transaction.    <br>\n        For more information about the Payments domain, <a href=\"../docs/?path=docs/fintechs/payments.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\">Cash Management</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\">Treasury Services</a></li>\n          </ul>"
+      operationId: DebitRevOper
       parameters:
       - name: EFXHeader
         in: header
@@ -25,47 +25,56 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetEnumTableSecuredRequest'
+              $ref: '#/components/schemas/DebitRevOperRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
+                $ref: '#/components/schemas/DebitRevOperResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEnumTableSecuredResponse'
-      x-group-name: Enumeration Table Service
-      x-proxy-name: Get Enumeration Table
-      x-child-product-name: Operations and Servicing
-      x-core: Premier
+                $ref: '#/components/schemas/DebitRevOperResponse'
+      x-group-name: Debit Service
+      x-proxy-name: Reverse Debit
+      x-child-product-name: Transactions
+      x-core: Signature-DDA_SDA_Teller
 components:
   schemas:
-    GetEnumTableSecuredRequest:
+    DebitRevOperRequest:
       required:
-      - EnumTableSel
+      - DebitInfo
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_RecCtrlIn'
-        EnumTableSel:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel'
-    GetEnumTableSecuredResponse:
+        RevReasonCode:
+          type: string
+          description: |-
+            Code to specify the reason for the reversal.
+
+
+
+            **Note:** ESF allows only the value 'Reversal', to be passed for this field, in the request.
+          enum:
+          - Reversal
+        DebitKeys:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitKeys'
+        DebitInfo:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo'
+    DebitRevOperResponse:
       required:
-      - EnumTableRec
+      - DebitStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_RecCtrlOut'
-        EnumTableRec:
-          type: array
-          description: Details of the enumeration table record returned in the response for the specified search criteria.
-          items:
-            $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableRec'
+        AcctInfoDtl:
+          $ref: '#/components/schemas/DebitRevOperResponse_AcctInfoDtl'
+        DebitStatusRec:
+          $ref: '#/components/schemas/DebitRevOperResponse_DebitStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/DebitRevOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -97,13 +106,16 @@ components:
           maxLength: 80
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: Client date and time as reported by the client application that is making the service request.
         ClientTerminalSeqNum:
           maxLength: 36
-          description: 'Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12. type: string'
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
           description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
@@ -373,168 +385,379 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    GetEnumTableSecuredRequest_RecCtrlIn:
-      type: object
-      properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum number of records that can be returned within a single response.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
-
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-      description: Maximum number of records that client can specify to process within a single response.
-    GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys:
+    DebitRevOperRequest_DebitKeys_AcctKeys:
       required:
-      - EnumTableIdent
+      - AcctId
       type: object
       properties:
-        EnumTableIdent:
+        AcctId:
+          maxLength: 36
           type: string
-          description: "Unique identifier of the enumeration table.\n\n**Note:** \"Region\" also known as originating branch refers to a branch region. \n\n\"Branch\"  also known as responsible branch refers to accounting branch/group. "
+          description: "Unique identification number of an account record.\n\n\n\n\n\n\n\n**Note:** Refers to account number and is a required field in signature. "
+        AcctType:
+          type: string
+          description: "Type of an account.\n\n\n\nFor more information on account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary </a>.\n\n**Note:** This is a required field in signature. "
           enum:
-          - Region
-          - Branch
-        BranchIdent:
-          maxLength: 22
-          type: string
-          description: |-
-            Unique identification code of branch.
-
-
-
-            **Note:** Premier will search using the default branch if no branch is provided.
-        DataApplType:
-          type: string
-          description: |-
-            Type of data application.
-
-
-
-
-
-
-
-
-
-
-
-            **Note:** Valid required only if Branchldent is sent.
-          enum:
-          - ALL
-          - CDA
-          - CRD
           - DDA
-          - LOAN
-          - LOC
-          - Party
           - SDA
-          - SDB
-          - DDL
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredRequest_EnumTableSel:
-      required:
-      - EnumTableKeys
-      type: object
-      properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredRequest_EnumTableSel_EnumTableKeys'
-        EnumFilter:
-          maxLength: 80
-          type: array
-          description: |-
-            Filter used to sort the values returned in the enumeration table response.
-
-            For example, if EnumFilter is set to "country code" for StateProv table, then response includes the states of the country code sent in the request.
-          items: {}
-      description: Details of selected EnumTable records.
-    GetEnumTableSecuredResponse_RecCtrlOut:
-      required:
-      - SentRecCount
-      type: object
-      properties:
-        SentRecCount:
-          type: integer
-          description: Total number of records that matched the selection criteria and returned in the response message.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: |-
-            Next record pointer included in the response if more than 250 posted transaction records exist.
-
-
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field.
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    GetEnumTableSecuredResponse_EnumTableKeys:
-      required:
-      - EnumTableIdent
-      type: object
-      properties:
-        EnumTableIdent:
-          type: string
-          description: Unique identifier of the enumeration table.
-          enum:
-          - Region
-          - Branch
         BranchIdent:
           maxLength: 22
           type: string
-          description: |+
-            Unique identification code of branch.
+          description: |-
+            Unique identifier of a branch.
 
-        DataApplType:
-          type: string
-          description: |+
-            Type of data application.
-
-      description: Unique information to identify the name of enumeration table record.
-    GetEnumTableSecuredResponse_EnumTableInfo:
+            Example: "1234".
+      description: Unique information to identify the account record.
+    DebitRevOperRequest_DebitKeys:
       type: object
       properties:
-        EnumTableData:
-          type: array
-          description: Details of data in enumeration table.
-          items: {}
-      description: Information of enumeration table returned in the response.
-    GetEnumTableSecuredResponse_EnumTableStatus:
+        DebitId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a debit record.
+
+            Example: 830520165.
+        AcctKeys:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitKeys_AcctKeys'
+      description: Unique information to identify a debit record.
+    DebitRevOperRequest_DebitInfo_AcctRef_AcctKeys:
       required:
-      - EnumTableStatusCode
+      - AcctId
       type: object
       properties:
-        EnumTableStatusCode:
+        AcctId:
+          maxLength: 36
           type: string
           description: |+
-            Code to specify the current status of enumeration table.
+            Unique identification number of an account record.
 
+
+
+
+
+      description: Unique information to identify the account record.
+    DebitRevOperRequest_DebitInfo_AcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_AcctRef_AcctKeys'
+      description: Reference information of an account from which the amount is debited.
+    DebitRevOperRequest_DebitInfo_OtherAcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+          - IRA
+          - LOAN
+      description: Unique information to identify the account record.
+    DebitRevOperRequest_DebitInfo_OtherAcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_OtherAcctRef_AcctKeys'
+      description: Reference information of an account number related to the transaction but it is not the transaction object of the transaction.
+    DebitRevOperRequest_DebitInfo_FeeData:
+      type: object
+      properties:
+        FeeType:
+          type: string
+          description: |-
+            Type of fee.
+
+            **Note:** Fee type that identifies if the applied fee is for a customer or a non-customer fee.
+          enum:
+          - CustomerFee
+          - NonCustomerFee
+        WaiverReason:
+          maxLength: 40
+          type: string
+          description: Reason for waiver fee.
+        WaiverCode:
+          type: string
+          description: Code for waiver fee.
+      description: Details of the fee data that comprises the transaction.
+    DebitRevOperRequest_DebitInfo_MonetaryInstrAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00.
+      description: Amount details of the monetary instrument.
+    DebitRevOperRequest_DebitInfo_MonetaryInstrData:
+      properties:
+        MonetaryInstrNum:
+          maxLength: 17
+          type: string
+          description: Number of the monetary instrument.
+        MonetaryInstrAmt:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_MonetaryInstrAmt'
+        MonetaryInstrType:
+          type: string
+          description: |-
+            Type of monetary instrument.
+
+            **Note:** Signature uses the value "Bank"
+          enum:
+          - Bank
+    DebitRevOperRequest_DebitInfo_OtherFundsInAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00.
+      description: |-
+        Details of the funds in amount.
+
+        **Note:** Used a customer does multiple transaction and when funds are carried over from one transaction to the next.
+    DebitRevOperRequest_DebitInfo_OtherFundsOutAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00.
+      description: |-
+        Details of the funds out  amount.
+
+        **Note:** Used a customer does multiple transaction and when funds are carried over from one transaction to the next.
+    DebitRevOperRequest_DebitInfo_PayeeData:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: Name of the person.
+      description: Details of the payee.
+    DebitRevOperRequest_DebitInfo_RemitterData:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: Name of the person.
+      description: Details of the person making the payment.
+    DebitRevOperRequest_DebitInfo:
+      required:
+      - DebitType
+      type: object
+      properties:
+        DebitType:
+          type: string
+          description: |-
+            Type of debit transaction.
+
+            **Note:** Note:
+
+            Value of withdrawal is expected for the following types of transactions:
+
+            - a journal withdrawal, i.e., ACH, ATM, Memo
+
+            - Regular cash/check withdrawal
+
+            Value of fee is expected for the following type of transactions:
+
+            - Service charge credit
+
+            Value of Chargeback is expeced for the following type of transactions:
+
+            - A deposited item returned
+          enum:
+          - Withdrawal
+          - ChargeBack
+          - Fee
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the transaction status is changed.\n\nFormat: yyyy-mm-ddThh:mm:ss.micro\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** yyyy-mm-ddThh:mm:ss.micro \n\nThe micro argument is six digits and optional."
+        Desc:
+          maxLength: 100
+          type: array
+          description: |-
+            Description of debit transaction.
+
+            **Note:** When special handling is memo, up to three descriptions are supported.
+          items: {}
+        MediaType:
+          type: string
+          description: Type of media on which the transaction is recorded.
+          enum:
+          - Passbook
+          - NoBook
+        AcctRef:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_AcctRef'
+        OtherAcctRef:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_OtherAcctRef'
+        FeeData:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_FeeData'
+        MonetaryInstrData:
+          type: array
+          description: |-
+            Details of the issued checks used to itemize these checks that are part of the transaction.
+
+            Also used for check withdrawal and printing a certified check.
+          items:
+            $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_MonetaryInstrData'
+        OtherFundsInAmt:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_OtherFundsInAmt'
+        OtherFundsOutAmt:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_OtherFundsOutAmt'
+        PayeeData:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_PayeeData'
+        RemitterData:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_RemitterData'
+      description: |-
+        Details of the debit transaction.
+
+        **Note:** Core uses a default TranCode based on fields specified in ESF request. An OrgId/FI can configure the TranCode to be used in different conditions supported by ESF. If a TranCode is configured in ESF corredponding to the field criteria sent in the request, then it is used by the operation and overrides the default setup. Otherwise, the default TranCode for the condition is used.
+    DebitRevOperResponse_AcctInfoDtl:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: |-
+            Name of the person.
+
+            **Note:** Last name first name middle initial separated by space.
+        OpenDt:
+          type: string
+          description: |-
+            Date on which the account record is created.
+
+            Format: yyyy-mm-dd.
+
+            Example: 2021-11-20.
+          format: date
+      description: Account details that returned in the response for "DebitAdd" and "DebitRev" service, when an error occurs and prevent the transaction to be processed.
+    DebitRevOperResponse_DebitStatusRec_DebitKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: "Unique identification number of an account record.\n\n\n\n\n\n\n\n**Note:** Refers to account number. "
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary </a>.
+      description: Unique information to identify the account record.
+    DebitRevOperResponse_DebitStatusRec_DebitKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/DebitRevOperResponse_DebitStatusRec_DebitKeys_AcctKeys'
+      description: Unique information to identify a debit record.
+    DebitRevOperResponse_DebitStatusRec_DebitStatus:
+      required:
+      - DebitStatusCode
+      type: object
+      properties:
+        DebitStatusCode:
+          type: string
+          description: Code to specify the status of the debit transaction.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Effective date and time when the status of enumeration table is changed.
-
-            Format: yyyy-MM-ddTHH:mm:ss.sss
-
-            Example: 2021-01-31T23:59:59.999
-      description: Current status of the enumeration table.
-    GetEnumTableSecuredResponse_EnumTableRec:
+          description: "Effective date and time when the transaction status is changed.\n\nFormat: yyyy-mm-ddThh:mm:ss.micro\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** yyyy-mm-ddThh:mm:ss.micro \n\nThe micro argument is six digits and optional."
+      description: Details of the debit transaction status.
+    DebitRevOperResponse_DebitStatusRec:
       required:
-      - EnumTableInfo
-      - EnumTableKeys
-      - EnumTableStatus
+      - DebitStatus
+      type: object
       properties:
-        EnumTableKeys:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableKeys'
-        EnumTableInfo:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableInfo'
-        EnumTableStatus:
-          $ref: '#/components/schemas/GetEnumTableSecuredResponse_EnumTableStatus'
+        DebitKeys:
+          $ref: '#/components/schemas/DebitRevOperResponse_DebitStatusRec_DebitKeys'
+        DebitStatus:
+          $ref: '#/components/schemas/DebitRevOperResponse_DebitStatusRec_DebitStatus'
+      description: Details of the debit transaction response returned from add and reversal of the object.
+    DebitRevOperResponse_Receipt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00.
+      description: Details of the debit amount to be processed.
+    DebitRevOperResponse_Receipt_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
+          type: string
+          description: "Type of account balance. \n\n"
+          enum:
+          - Avail
+          - Memo
+        CurAmt:
+          $ref: '#/components/schemas/DebitRevOperResponse_Receipt_CurAmt'
+    DebitRevOperResponse_Receipt:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: |-
+            Name of the person.
+
+            **Note:** Last name first name middle initial separated by space.
+        OpenDt:
+          type: string
+          description: |-
+            Date on which the account record is created.
+
+            Format: yyyy-mm-dd.
+
+            Example: 2021-11-20.
+          format: date
+        AcctBal:
+          type: array
+          description: Details of the account balance at the time the debit transaction posted.
+          items:
+            $ref: '#/components/schemas/DebitRevOperResponse_Receipt_AcctBal'
+      description: Details of the debit transaction receipt.

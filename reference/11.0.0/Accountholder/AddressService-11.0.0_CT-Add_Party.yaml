@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Loan Indirect Liability Service
-  description: Indirect liability service is used for management of endorsers and guarantors.
-  version: 11.0.0_PRM
+  title: Address Service
+  description: The Address service manages addresses related to parties and product accounts.
+  version: 11.0.0_CT-Add_Party
 servers:
 - url: /
 paths:
-  /indirectLiability:
+  /address:
     post:
       tags:
-      - Add Indirect Liability
-      summary: Add Indirect Liability.
-      description: "Adds an indirect liability relationship to a loan.\n        <br>\n        This API is used for managing endorsers and guarantors.\n        <br><br>\n        For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: IndirectLiabilityAddOper
+      - Add Address
+      summary: Add Address
+      description: "Creates a new address record for a Party or a financial account. This API also allows you to relate a newly created account record to the existing Party. <br>\n        For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul> "
+      operationId: addAddress
       parameters:
       - name: EFXHeader
         in: header
@@ -25,42 +25,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IndirectLiabilityAddOperRequest'
+              $ref: '#/components/schemas/addAddressRequest'
       responses:
         "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IndirectLiabilityAddOperResponse'
+                $ref: '#/components/schemas/addAddressResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IndirectLiabilityAddOperResponse'
-      x-group-name: Loan Indirect Liability Service
-      x-proxy-name: Add Indirect Liability
-      x-child-product-name: Accounts
-      x-core: Premier
+                $ref: '#/components/schemas/addAddressResponse'
+      x-group-name: Address Service
+      x-proxy-name: Add Address
+      x-child-product-name: Accountholder
+      x-core: Cleartouch-Party
 components:
   schemas:
-    IndirectLiabilityAddOperRequest:
+    addAddressRequest:
       required:
-      - IndirectLiabilityInfo
+      - AddrInfo
       properties:
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
-        IndirectLiabilityInfo:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo'
-    IndirectLiabilityAddOperResponse:
+        PartyAddrRelInfo:
+          $ref: '#/components/schemas/addAddressRequest_PartyAddrRelInfo'
+        AddrInfo:
+          $ref: '#/components/schemas/addAddressRequest_AddrInfo'
+    addAddressResponse:
       required:
-      - IndirectLiabilityStatusRec
+      - AddrStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        IndirectLiabilityStatusRec:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperResponse_IndirectLiabilityStatusRec'
+        AddrStatusRec:
+          $ref: '#/components/schemas/addAddressResponse_AddrStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -405,48 +407,7 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: Unique identification number of an account record.
-        AcctType:
-          type: string
-          description: |-
-            Type of an account.
-
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
-          enum:
-          - LOAN
-          - CLOC
-      description: Unique information to identify the account record.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_AcctIdent:
-      type: object
-      properties:
-        AcctIdentType:
-          type: string
-          description: |+
-            Type of account identifiers.
-
-
-
-
-
-          enum:
-          - PORT
-        AcctIdentValue:
-          maxLength: 36
-          type: string
-          description: |-
-            Account identification value.
-
-            **Note:** Portfolio number is required while adding indirect liability record. If not provided, existing portfolio account associated to the loan/line is used as default.
-      description: Unique identifier of an account record.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_PartyKeys:
+    addAddressRequest_PartyAddrRelInfo_PartyRef_PartyKeys:
       type: object
       properties:
         PartyId:
@@ -455,305 +416,168 @@ components:
           description: |-
             Unique identification number of a party record.
 
-            **Note:** Supports up to three names for one indirect liability record.
-      description: Unique information to identify the party record.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_CreditBureauData:
+            **Note:** Refers to the permanent identifier of customer.
+      description: "Unique information to identify the party record.\n\n**Note:** Either PartyKeys or AcctKeys should be provided, and both the aggregates should not be included in the request. "
+    addAddressRequest_PartyAddrRelInfo_PartyRef:
+      required:
+      - PartyKeys
       type: object
-      properties:
-        ECOACode:
-          type: string
-          description: Code to specify the relationship of the party with the account as reported by the credit bureau.
-        ConsumerCode:
-          type: string
-          description: Consumer code to specify the credit worthiness of the party as reported by the credit bureau.
-      description: Details of data reported by the credit bureau.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_IndirectLiabilityParty:
       properties:
         PartyKeys:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_PartyKeys'
-        CreditBureauData:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_CreditBureauData'
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_PartyKeys_1:
+          $ref: '#/components/schemas/addAddressRequest_PartyAddrRelInfo_PartyRef_PartyKeys'
+      description: |+
+        Reference details of a party object that is part of the relationship with the address.
+
+    addAddressRequest_PartyAddrRelInfo:
       type: object
       properties:
-        PartyId:
-          maxLength: 36
-          type: string
-          description: Unique identification code for the party record.
-      description: |-
-        Unique party information used to identify the party record for indirect liability payment.
-
-        **Note:** If IndirectLiabilityInfo/IndirectLiabilityParty/PartyKeys is not provided, PartyKeys should be sent in the request.  Only one occurrence for this aggregate can be sent along with the PartyId that needs to be associated to the IndirectLiability record being created on the loan (see LiabilityType applicable for the PartyId). If both aggregates are sent, then ESF would ignore IndirectLiabilityInfo/PartyKeys and only process occurences of IndirectLiabilityInfo/IndirectLiabilityParty/PartyKeys. Multiple addendum (IndirectLiability Records) can be created with same customer (PartyId) if, other fields are validated successfully. Application should provide the correct PartyId to call this service.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_Liability:
-      type: object
-      properties:
-        LiabilityPercent:
-          type: number
-          description: Percentage value of the liability for which party is responsible.
-        LiabilityAmt:
-          type: number
-          description: Amount of liability for which party is responsible.
-      description: |-
-        Calling application must provide either LiabilityPercent or LiabilityAmt while creating the IndirectLiability record on the loan/line and also validate the sum of LiabilityPercent/LiabilityAmt figures being sent across the parties. This is required to ensure that semantically correct values are sent in request as premier does not validate the percentage/amount figure on the IndirectLiability.
-
-        **Note:** Calling application must provide either LiabilityPercent or LiabilityAmt while creating the IndirectLiability Record on the Loan/Line and also validate the sum of LiabilityPercent/LiabilityAmt figures being sent across the Parties. This is required to ensure that semantically correct values are sent in request as Premier does not validate the percentage/amount figure on the IndirectLiability.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_RelationshipMgr:
+        PartyRef:
+          $ref: '#/components/schemas/addAddressRequest_PartyAddrRelInfo_PartyRef'
+      description: Details of the relationship between a party and an address.
+    addAddressRequest_AddrInfo_CountryCode:
       required:
-      - RelationshipMgrIdent
-      properties:
-        RelationshipMgrIdent:
-          maxLength: 36
-          type: string
-          description: Unique identifier of a relationship manager.
-        RelationshipRole:
-          type: string
-          description: |+
-            Role of a relationship manager.
-
-          enum:
-          - Officer
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_NoticeData:
-      properties:
-        NoticeType:
-          type: string
-          description: |-
-            Type of account notice.
-
-            **Note:** Valid values that can be sent are:
-
-            - Past Due notification-indicates whether past due notification is produced for the third party.
-
-
-
-            - Billing notification-indicates whether billing notification is produced for the third party.
-
-
-
-            - RatePmtChangeNotice-refers to change notification and indicates whether rate and payment change notification is produced for the third party.
-
-
-
-            - Maturity notification-indicates whether maturity notification is produced for the third party.
-
-
-
-            - Tickler notification-indicates whether tickler notification is produced for the third party.
-
-
-
-            - Credit bureau notification-indicates whether the third party is reported to credit bureaus.
-
-
-
-            - Advance notification-indicates whether advance notification and transaction receipts are produced for the third party.
-          enum:
-          - PastDueNotice
-          - BillingNotice
-          - RatePmtChangeNotice
-          - MaturityNotice
-          - TicklerNotice
-          - CreditBureauNotice
-          - LoanAdvanceNotice
-        NoticeOption:
-          type: string
-          description: "Options for account notice.\n\n**Note:** For the PastDueNotice type, only values of NoNotice, PastDueAndRightToCure and \n\nNoFirstPastDueNotice are applicable.\n\n\n\nFor all other Notice types the following values are applicable:\n\n- GenerateNotice\n\n- NoNotice\n\n"
-          enum:
-          - GenerateNotice
-          - NoNotice
-          - PastDueAndRightToCure
-          - NoFirstPastDueNotice
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_SBAData:
+      - CountryCodeValue
       type: object
       properties:
-        ApprovalDt:
+        CountryCodeSource:
           type: string
-          description: "Date on which small business loan is approved by the SBA.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        FeePct:
-          type: number
-          description: |-
-            Percentage value of the servicing fee.
-
-            **Note:** Refers to the percentage of the guaranteed portion of the outstanding loan balance that is paid as a fee to the SBA (Small Business Association).
-      description: Details of the small business loan approved by the SBA (Small Business Administration).
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_ClientDefinedData:
-      required:
-      - DataIdent
-      properties:
-        DataIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique data identifier to identify the client-defined data item.
-
-            **Note:** Refers to a FieldCode.
-        DataType:
-          type: string
-          description: "Type of the client-defined data item.\n\n\n\n**Note:** Refers to Metadata. "
+          description: "Standard country code format.\n\n**Note:** Cleartouch supports FIPS-10 standard for country codes. "
           enum:
-          - Alpha
-          - 'Currency '
-          - 'CurrencySymbol '
-          - 'Date '
-          - Numeric
-          - NumericSymbol
-          - Rate
-          - 'RateSymbol '
-        Value:
-          maxLength: 256
+          - FIPS-10
+        CountryCodeValue:
+          type: string
+          description: "Country code value as per the country code format set in the CountryCodeSource field.\n\n**Note:** Refers to two character country code. "
+      description: Details of the country code.
+    addAddressRequest_AddrInfo_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Start date and time value to search the address records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired when the address type is Seasonal or PrimaryPending. \n\nRefers to the beginning date for a seasonal address or the date that a PrimaryPending (future address) becomes the primary address."
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "End date and time value to search the address records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired when the address type is Seasonal. \n\nRefers to the expiration date for a seasonal address. "
+      description: Details of the time frame when the postal address is active.
+    addAddressRequest_AddrInfo_PhoneNum:
+      required:
+      - PhoneType
+      properties:
+        PhoneType:
+          type: string
+          description: Type of a phone.
+          enum:
+          - Other
+        Phone:
+          type: string
+          description: "Phone number to search the party records.\n\n**Note:** Cleartouch does not support international phone number or phone extension in this service. \n\n\n\nEFX Phone field follows format:\n\n+IntlDialCode-AreaCode-PhoneNum[+Extn]\n\nClient application must send the phone number in the above format. \n\nFor example: +1-800-5551212+739\n\n\n\n"
+    addAddressRequest_AddrInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        AddrUse:
+          type: string
+          description: "Usage of the address.\n\n**Note:** In case of party addresses, only alternate address use is supported. "
+          enum:
+          - Alternate
+        Addr1:
+          maxLength: 64
           type: string
           description: |-
-            Value of the client-defined data item.
+            Address line 1.
 
-            **Note:** User entered value for the field.
-        DataLength:
-          type: integer
-          description: Length of the client-defined data item.
-          format: int64
-        ExpDt:
+            **Note:** Max length: 35 characters
+        Addr2:
+          maxLength: 64
           type: string
-          description: "Date on which client-defined data item expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        Desc:
-          maxLength: 100
+          description: |-
+            Address line 2. To enter Addr2, Addr1 field must be provided.
+
+            **Note:** Max length: 35 characters
+        City:
+          maxLength: 32
           type: string
-          description: Description for the client-defined item.
-        RequiredFlag:
+          description: |-
+            Name of the city.
+
+            **Note:** Max length: 24 characters
+        County:
+          maxLength: 32
+          type: string
+          description: |-
+            Name of the county associated with the address.
+
+            **Note:** In case of Cleartouch it refers to three digit county code.
+        StateProv:
+          type: string
+          description: "State province name as per <a href=\"https://en.wikipedia.org/wiki/ISO_3166-2:US\" title=\"Click to open\" target=\"_blank\" >ISO 3166-2:US codes</a>.\n\n**Note:** Refers to two character state code. "
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: "Postal code or Zip code.\n\n**Note:** Refers to five or nine character zip code. "
+        CountryCode:
+          $ref: '#/components/schemas/addAddressRequest_AddrInfo_CountryCode'
+        AddrType:
+          type: string
+          description: "Type of the address.\n\n**Note:** Primary addresses can not be added using this service. \n\nPrimaryPending address type refers to the future address of the party. "
+          enum:
+          - PrimaryPending
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/addAddressRequest_AddrInfo_TimeFrame'
+        Retention:
           type: boolean
-          description: Flag to indicate data value is required for the client-defined data.
-    IndirectLiabilityAddOperRequest_IndirectLiabilityInfo:
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_AcctKeys'
-        AcctIdent:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_AcctIdent'
-        BureauAddrStatusCode:
-          type: string
-          description: User-defined code to specify the status of the address associated with the primary account holder as reported to the credit reporting agencies.
-        IndirectLiabilityParty:
-          type: array
-          description: Details of the party associated with the Indirect liability record.
-          items:
-            $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_IndirectLiabilityParty'
-        PartyKeys:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_PartyKeys_1'
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** *Required field*
-        LiabilityType:
-          type: string
-          description: |-
-            Type of liability that the party has with account.
-
-
-
-            **Note:** *Required field*
-          enum:
-          - Guarantor
-          - Indirect
-          - GovernmentAgency
-          - CoSigner
-        Liability:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_Liability'
-        ExpDt:
-          type: string
-          description: "Date on which indirect liability record data expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        RelationshipMgr:
-          type: array
-          description: Information about financial institution officers who have management-related responsibilities of the account.
-          items:
-            $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_RelationshipMgr'
-        ReportGroupCode:
-          type: string
-          description: Client-defined code to group the accounts primarily for reporting purposes.
-        HandlingCodeOption:
-          type: string
-          description: |-
-            Notification and statement forms handling option for the indirect liability record.
-
-            **Note:** Value to identify the types of customer correspondence that prints handling messages as defined by HandlingCode.
-
-            This field is required by service provider.
-          enum:
-          - UseDefault
-          - StatementsNoticesChecks
-          - Statements
-          - StatementsNotices
-          - StatementsChecks
-          - Notices
-          - NoticesChecks
-          - Checks
-          - DoNotPrint
+          description: "Flag to indicate if the address should be retained after its time frame.\n\n**Note:** Applicable only for seasonal addresses. "
         HandlingCode:
           type: string
           description: |-
             Handling code to specify the handling process of the notification and statement forms.
 
-            **Note:** This field is used for special routing of all correspondence involving limited liability. It is printed in the customer's name and address area on all special forms.
-        OEDCode:
-          type: string
-          description: |-
-            Officer, employee, director code. This code is used to indicate if the party is an employee of the financial institution.
-
-            **Note:** Values are client defined.
-          enum:
-          - Director
-          - Employee
-          - ExecutiveOfficer
-          - FamilyMember
-          - FiservOfficerOrEmployee
-          - MainShareHolder
-          - Officer
-          - RelInterest
-          - SubsidaryEmployee
-          - SvcCorpEmployee
-          - Other
-          - NoRelationship
-          - OfficerOtherBank
-        DocDistributionOption:
-          type: string
-          description: |-
-            Client-defined document distribution method to distribute the notices and statement forms.
-
-            **Note:** Refers to document distribution group. Determines the distribution method used when processing statements and notices via director document distribution. Values are client defined.
-        NoticeData:
+            **Note:** Refers to the special handling instructions for mailing.
+        PhoneNum:
           type: array
-          description: Details of the account notice processing data.
+          description: "Details of phone number of a party.\n\n**Note:** The phone number aggregate is only applicable to seasonal addresses. Cleartouch requires this field when the address type is seasonal. \n\n"
           items:
-            $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_NoticeData'
-        SBAData:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_SBAData'
-        NextFinancialStmtDt:
-          type: string
-          description: "Next date of the financial statement.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        FinancialStmtNoticeCode:
-          type: string
-          description: |-
-            Code for financial statement notice that controls the timing of financial statement generation including notice generation and tickler reporting.
-
-            **Note:** It is required to provide this field to indicate whether zero balance lines or notes are to be included.
-        ClientDefinedData:
-          type: array
-          description: "Details of the client-defined data. \n\n**Note:** Metadata such as flex data (field size) is required to be sent along with the user-entered indirect liability data."
-          items:
-            $ref: '#/components/schemas/IndirectLiabilityAddOperRequest_IndirectLiabilityInfo_ClientDefinedData'
-      description: Details of the indirect liability record.
-    IndirectLiabilityAddOperResponse_IndirectLiabilityStatusRec_IndirectLiabilityStatus:
+            $ref: '#/components/schemas/addAddressRequest_AddrInfo_PhoneNum'
+    addAddressRequest_AddrInfo:
       required:
-      - IndirectLiabilityStatusCode
+      - PostAddr
       type: object
       properties:
-        IndirectLiabilityStatusCode:
+        PostAddr:
+          type: array
+          description: "Postal address details of a party.\n\n**Note:** Only one address per request can be added. "
+          items:
+            $ref: '#/components/schemas/addAddressRequest_AddrInfo_PostAddr'
+      description: Address details of a party.
+    addAddressResponse_AddrStatusRec_AddrKeys_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a party record.
+
+            **Note:** Refers to permanent identifier of a customer.
+      description: Unique information to identify the party record.
+    addAddressResponse_AddrStatusRec_AddrKeys:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addAddressResponse_AddrStatusRec_AddrKeys_PartyKeys'
+      description: Unique information to identify the address record.
+    addAddressResponse_AddrStatusRec_AddrStatus:
+      required:
+      - AddrStatusCode
+      type: object
+      properties:
+        AddrStatusCode:
           type: string
           description: |+
-            Code that specifies the status for indirect liability record.
+            Status code of the address.
 
           enum:
           - Valid
@@ -761,19 +585,20 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective data and time when the status of the indirect liability record is changed.
-
-
+            Effective date and time when the address status is changed.
 
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
-            Example: 2021-01-31T23:59:59.999
-      description: Details of the current status of the indirect liability record.
-    IndirectLiabilityAddOperResponse_IndirectLiabilityStatusRec:
+            Example: 2021-12-31T23:59:59.999
+      description: Current status of the address.
+    addAddressResponse_AddrStatusRec:
       required:
-      - IndirectLiabilityStatus
+      - AddrKeys
+      - AddrStatus
       type: object
       properties:
-        IndirectLiabilityStatus:
-          $ref: '#/components/schemas/IndirectLiabilityAddOperResponse_IndirectLiabilityStatusRec_IndirectLiabilityStatus'
-      description: Details of the indirect liability status record used in response to return results from add, modify or delete indirect liability record.
+        AddrKeys:
+          $ref: '#/components/schemas/addAddressResponse_AddrStatusRec_AddrKeys'
+        AddrStatus:
+          $ref: '#/components/schemas/addAddressResponse_AddrStatusRec_AddrStatus'
+      description: Response message of the address add, del, modify or delete API call.
