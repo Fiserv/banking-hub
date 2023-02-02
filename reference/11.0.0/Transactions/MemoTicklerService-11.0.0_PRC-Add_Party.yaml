@@ -17,7 +17,7 @@ paths:
       tags:
       - Add Memo Tickler
       summary: Add Memo Tickler.
-      description: "Creates a memo or tickler record for an account or party.\n        <br>\n        Memo and tickler are used to notify the officers from financial institutions regarding important messages or actions that need to take place when interacting with the customer or performing a transaction to the customer's account.\n        <br>For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br> <br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      description: "Creates a memo or tickler record for an account or party.\n        <br>\n        Memo and tickler are used to notify the officers from financial institutions regarding important messages or actions that need to take place when interacting with the customer or performing a transaction to the customer's account.\n        <br>        \n        For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br> <br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
       operationId: MemoTicklerAddOper
       parameters:
       - name: EFXHeader
@@ -55,8 +55,7 @@ components:
       - MemoTicklerInfo
       properties:
         OvrdExceptionData:
-          type: object
-          description: List of the exceptions that can be overridden.
+          $ref: '#/components/schemas/OvrdExceptionDataType'
         MemoTicklerInfo:
           $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo'
     MemoTicklerAddOperResponse:
@@ -64,8 +63,7 @@ components:
       - MemoTicklerStatusRec
       properties:
         Status:
-          type: object
-          description: Details of the API response messages.
+          $ref: '#/components/schemas/StatusType'
         MemoTicklerStatusRec:
           $ref: '#/components/schemas/MemoTicklerAddOperResponse_MemoTicklerStatusRec'
     EFXHeader:
@@ -254,6 +252,164 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OverrideException:
+          type: array
+          description: List of the exceptions that can be overridden.
+          items:
+            $ref: '#/components/schemas/OverrideExceptionType'
+      description: Details of the exceptions that can be manually acknowledged by the client.
+    OverrideExceptionType:
+      title: OverrideExceptionType
+      type: object
+      properties:
+        SubjectRole:
+          type: string
+          description: Role of the subject who is overriding the exception.
+        SubjectIdent:
+          maxLength: 36
+          type: string
+          description: Subject identification value to identify the subject who is overriding the exception.
+        OvrdExceptionCode:
+          maxLength: 40
+          type: string
+          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
+        OvrdElement:
+          $ref: '#/components/schemas/OvrdElementType'
+    OvrdElementType:
+      title: OvrdElementType
+      type: object
+      description: Information about the elements that corresponds to the override exception code.
+      allOf:
+      - $ref: '#/components/schemas/SubjectElementType'
+      - type: object
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
     MemoTicklerAddOperRequest_MemoTicklerInfo_PartyKeys:
       type: object
       properties:
@@ -363,9 +519,6 @@ components:
           - Weekly
           - BiWeekly
           - SemiMonthly
-          - ""
-          - ""
-          - ""
         RecurInterval:
           type: integer
           description: "Recurrence interval between two successive occurrences  of memo or tickler. \n\nIf value is: \n\n- Daily: Number of days between occurrences .\n\n- Weekly: Number of weeks between occurrences.\n\n- Monthly: Number of months between occurrences.\n\n- Yearly:  Number of years between occurrences.\n\n- Cycle:  Number of the designated cycle.   \n\nIf not provided, default value is  1, i.e. every day, every week, every month, or every year. \n\n**Note:** Precision accepts 0-99. This field applies only if MemoTicklerUse = Tickler. Use RecurInterval to set the number of months in a period when the RecurType value does not define the monthly period on its own. For example, if the review period is every 4 months, set the RecurType = Monthly and the RecurInterval = 4. No RecurInterval is needed for Monthly (once a month), BiMonthly, Quarterly, SemiYearly or Yearly.\n\n"
