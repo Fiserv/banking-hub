@@ -45,25 +45,28 @@ To make an API call, you need the following:
 **Creating an account on Dev Studio**
 
 
-To create an account on Fiserv Developer Studio, refer to the [Register to Fiserv Developer Studio](?path=docs/getting-started/before-you-start.md#register-to-fiserv-developer-studio) section. After successful registration, following credentials are obtained via email:
-- API Key
-- Username/Password
-- OrgId 
-- AppId
-- VendorId 
-- ChannelId
+To create an account on Fiserv Developer Studio, refer to the [Register to Fiserv Developer Studio](?path=docs/getting-started/before-you-start.md#register-to-fiserv-developer-studio) section. 
+After successful registration, you will be able to <create a workspace>. You can obtain the following credentials from the workspace:
 
-Some of these credentials are required to be passed as header parameters under the EFXHeader parameter. For more information, refer to the [EFXHeader](?path=docs/api-ref-EFX-header.md) section.
+* Product name
+  
+* Org ID 
+  
+* API key name
+* API key type
+* API key
+* API secret
+* Host URL
+  
+These credentials are important to send in API requests. **API key** and **API secret** values are used to generate access token, whereas **Org ID** value is required to be passed as header parameter under the [EFXHeader](?path=docs/api-ref-EFX-header.md) parameter.
+
 
 **Generating an Access Token**
    
-An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. 
+An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. **API key **and **API secret** values obtained from Workspace are required to generate an access token. 
+  
+To generate an access token, refer to Generating Access Token section.
 
-To generate the access token, follow the steps below:
-1.	Sign on to your Fiserv Developer Studio account
-2.	Go to the Dashboard
-3.	From the top-right corner of the screen, click **Credentials**
-4.	Click **Generate Access Token**
 
 <!-- theme: info -->
 > #### Note
@@ -88,9 +91,11 @@ Open a web or desktop application of Postman and follow the steps below:
 
 1.	Create a new HTTP Request
 2.	Set the API method to POST or PUT as mentioned in the documentation of the API that you want to test <br> **Note:** *API method of all Fiserv APIs is either set to POST or PUT for all operations*
-3.	Insert the host URL 
-4.	Add EFXHeader and Authorization as new parameters under the **Headers** section and insert the {EFXHeader} and {token} values in the respective fields
-5.	Insert the request-payload under the **Body** tab. Make sure that the **raw** button activated, and text format is set to **JSON** (refer the screenshot)<br> <kbd><img src="https://user-images.githubusercontent.com/81968767/145019152-399b813e-61a6-41c1-9e79-2e3cfd10015f.png" width="70%" /></kbd><br> **Note:** *Default request-payload can be copied from the API Explorer documentation and you may modify certain fields as mentioned in the documentation*
+3.	Insert the request URL 
+4.	Under the **Authentication** tab, set Type value to **Bearer Token** and insert access token in the **Token** box
+    ![image](https://user-images.githubusercontent.com/81968767/220967588-52eec24d-4b13-4d26-ba28-a9ad90943e26.png)
+5.	Add EFXHeader as new parameters under the **Headers** section and insert the <EFXHeader> value in JSON format 
+6.	Insert the request-payload under the **Body** tab. Make sure that the **raw** button activated, and text format is set to **JSON** (refer the screenshot)<br> <kbd><img src="https://user-images.githubusercontent.com/81968767/145019152-399b813e-61a6-41c1-9e79-2e3cfd10015f.png" width="70%" /></kbd><br> **Note:** *Default request-payload can be copied from the API Explorer documentation and you may modify certain fields as mentioned in the documentation*
 6.	Modify the field values in JSON code that you want to test 
 7.	Click **Send**. API Response is generated in the Response section.
 
