@@ -23,194 +23,100 @@ To set up an account on Fiserv Developer Studio, follow the steps below:
 3.	Follow the instructions on the screen to set up your account based on integration requirements
 4.	Sign on to your Fiserv Developer Studio account once it is activated
 
+### Creating a Workspace
 
-After successful registration, following credentials are sent via email:
-- API Key
-- Username/Password
-- OrgId 
-- AppId
-- VendorId 
-- ChannelId
+Workspaces are dedicated spaces for developers to manage their Fiserv product integrations and projects. You can obtain API Key, API Secret and product related details from the workspace.
 
-Some of these credentials are required to send as header parameters under the EFXHeader parameter. For more information, refer to the <a href="?path=docs/api-ref-EFX-header.md" target="_blank" title="Click to open" >EFXHeader</a> section.
-## Know Our Standard API structure 
+To create a workspace in Developer Studio, follow the steps below:
 
-This section describes a standard structure of request and response message of Banking Hub RESTful APIs. 
+1.	Sign into your Fiserv Developer Studio account
+2.	From the top-right corner of the screen, click Workspaces. My Workspace page appears.
+3.	To create new workspace click Add a new workspace button or click Create a new Workspace card
+    <!-- theme: info -->
+    > #### Note
+    >
+    > All previously created workspaces are listed on the Workspaces page. 
+4.	Enter workspace name and description
+5.	In the Product list, select Banking Hub and then click Create. A new workspace is created and three tabs of your workspace, namely – Summary, Credentials and Settings are visible.
+![image](https://user-images.githubusercontent.com/81968767/220959037-4fb7f53e-4655-4086-a0a2-8994ee505cb0.png)
 
-### Request Message
 
-All API requests must contain the following components:
+Every workspace has following three sections:
 
-*	API Method: POST or PUT
-*   Host URL:  https://{_url_}/v{_version_}/
-*	Request Header
-*	Request Body
+* **Summary** : Displays workspace details and list of activities performed on the workspace
+* **Credentials** : Lists all active API keys. From this section, you can view or download the following details of an API key:
+    * Product name :_Name of the product, for example, Banking Hub._
+    
+    * Org ID :_Organization ID is required to send in all API requests as a header parameter._
+    
+    * API key name :_Name of API key_
+    * API key type :_Type of API key, for example, Trial._
+    * API key :_Alphanumeric value of API key. API key is used as username while generation access token._
+    * API secret :_Alphanumeric value of API secret. API secret is used as password while generation access token._
+    * Host URL :_Host URL path to send API requests._
+    
+    ![image](https://user-images.githubusercontent.com/81968767/220959851-a1d25503-93fb-4d51-8057-b2aa66d34fe8.png)
+    
+* **Settings** :Used to modify or delete the workspace
 
-For every API request, a response message is obtained that contains a response payload and status of the API request.
-#### Request Header
-Header parameters are common for all API requests of Banking Hub APIs. Header parameters are sent as a JSON object under EFXHeader header parameter.
+![image](https://user-images.githubusercontent.com/81968767/220960606-ed60419a-f6e2-4022-bf1c-2d15142b5f01.png)
 
-For more information on EFXHeader and to view the list of all header parameters, <a href="?path=docs/api-ref-EFX-header.md" title="Click to view the list of EFX header parameters" > click here.</a>
 
-Sample Header Example:
-```
-"EFXHeader": {
-    "OrganizationId": "CTOrg",
-    "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c",
-    "VendorId": "112233",
-    "Context": {
-      "Channel": "WEB"
-    }
-    }
-```
+## Generating Access Token
 
-#### Request Body
-Request body of an API that changes based on the type of transaction being processed. Request body contains the detailed information that is required to perform a particular transaction.
+An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. API Key and API Secret values obtained from the Workspace are required to generate an access token. 
 
-**Request Payload:** 
+Use below API to generate an access token using Postman.
 
-Following example shows the sample request payload for Get Account Hold API request.
+### URL
 
+``POST https://cert.api.fiservapps.com/fts-apim/oauth2/v2 ``
+
+
+### Headers
+
+|     Header Name      |     Description                                          |     Required      |
+|---------------------|----------------------------------------------------------|---------------|
+|     ``Authorization`` |    <p>Base64 encoded string representing your username and password values, appended to the text Basic as follows: </p> <p> <code> Basic &lt; Base64 encoded username and password &gt; </code></p> <p> **Important:** In Postman, use Authorization tab to enter Username and Password value and set authentication type to Basic Auth. Use your **API Key** as Username and **API Secret** as password. </p>                      |     Required    |
+
+![image](https://user-images.githubusercontent.com/81968767/220961162-0931a990-f69a-4be7-a6bb-ab847f9464b2.png)
+
+
+### Request Body
+
+Enter the following key value pair in the request body under the x-www-form-urlencoded option
+
+``grant_type = client_credentials``
+
+![image](https://user-images.githubusercontent.com/81968767/220961197-8e76ec1f-b291-4dfd-8287-c4a83b4ecf40.png)
+
+### Response
+
+Field Name	Description	Type
+access_token	Generated access token value	string
+expiries_in
+Time in milliseconds until the generated token is valid. 
+Note: Once generated, the access token is valid for 15 mins. You can reuse the access token until it expires. 	number
+Token_type	Type of access token	string
+
+|     Field Name      |     Description                                          |     Type      |
+|---------------------|----------------------------------------------------------|---------------|
+|   ``access_token``    |     Generated access token   value                       |     string    |
+|``expiries_in``       | <p>Time in milliseconds until the generated token is valid.</p> <p>**Note:** Once generated, the access token is valid for 15 mins. You can reuse the access token until it expires. </p> | number        |
+|    ``Token_type``   |     Type of access token                                 |     string    |
+
+**Sample Response:**
 ```
 {
-  "AcctHoldSel": {
-    "AcctHoldKeys": [
-      {
-        "AcctKeys": {
-          "AcctId": "string",
-          "AcctType": "string"
-        },
-        "AcctHoldIdent": "string"
-      }
-    ],
-    "AcctKeys": [
-      {
-        "AcctId": "string",
-        "AcctType": "string"
-      }
-    ]
-  }
+    "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJwaS5hdG0iOiJhYXVxIn0.eyJzY29wZSI6IiIsImNsaWVudF9pZCI6ImdxNHpvZDB6Wng3NkVPTUtKQUlQUlJUZHJHOENWNGdJIiwiaXNzIjoiaHR0cHM6Ly9mZGMtZmVkc3NvLWNhdC5maXJzdGRhdGEuY29",
+    "expires_in": "899000",
+    "token_type": "Bearer"
 }
 ```
 
-
-### Response Message
-
-
-Upon a successful API request, a response payload is received. The response payload contains the status and the returned details of the requested API in key-value pairs. The default response format is JSON (JavaScript Object Notation). 
+![image](https://user-images.githubusercontent.com/81968767/220961415-46799965-9fee-4d45-88bf-fdfa5563477b.png)
 
 
-**Response Payload:**
 
-Following example shows the sample response payload for **Get Account Hold** API request.
 
-```
-{
-  "Status": {
-    "Id": "string",
-    "StatusCode": "string",
-    "StatusDesc": "string",
-    "Severity": "string",
-    "SvcProviderName": "string",
-    "ServerStatusCode": "string",
-    "ServerStatusDesc": "string",
-    "OvrdExceptionInd": true,
-    "SubjectRole": "string",
-    "SubjectElement": [
-      {
-        "Path": "string",
-        "ServerPath": "string",
-        "Value": "string"
-      }
-    ],
-    "ContentHTML": "string",
-    "AdditionalStatus": [
-      {
-        "StatusCode": "string",
-        "StatusDesc": "string",
-        "Severity": "string",
-        "SvcProviderName": "string",
-        "ServerStatusCode": "string",
-        "ServerStatusDesc": "string",
-        "OvrdExceptionInd": true,
-        "SubjectElement": [
-          {
-            "Path": "string",
-            "ServerPath": "string",
-            "Value": "string"
-          }
-        ]
-      }
-    ]
-  },
-  "RecCtrlOut": {
-    "SentRecCount": 0
-  },
-  "AcctHoldRec": [
-    {
-      "AcctHoldKeys": {
-        "AcctKeys": {
-          "AcctId": "string",
-          "AcctType": "string"
-        },
-        "AcctHoldIdent": "string"
-      },
-      "AcctHoldInfo": {
-        "AcctRef": {
-          "AcctKeys": {
-            "AcctId": "string",
-            "AcctType": "string"
-          }
-        },
-        "CurAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "RelationshipMgr": [
-          {
-            "RelationshipMgrIdent": "string",
-            "RelationshipRole": "string"
-          }
-        ],
-        "ReportGroupCode": "string",
-        "SecuredAcctRef": {
-          "AcctKeys": {
-            "AcctId": "string",
-            "AcctType": "string"
-          }
-        },
-        "MaxPledgeAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "HoldReason": [],
-        "ExpDt": "string",
-        "EffDt": "string",
-        "AcctHoldOption": "string",
-        "AcctHoldIdent": "string",
-        "PendingHoldAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "PendingHoldDt": "string"
-      },
-      "AcctHoldStatus": {
-        "AcctHoldStatusCode": "string",
-        "EffDt": "string"
-      }
-    }
-  ]
-}
-```
 
-To view the API documentation of **Get Account Hold** API in API Explorer, [click here.](../api/?type=post&path=/accountHolds/secured)
-   
