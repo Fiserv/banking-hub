@@ -72,9 +72,17 @@ To  test an API using Postman application:
 3.	Set the API method to POST or PUT, as mentioned in the API document which you want to test <br> **Note:** *API method of all Fiserv APIs is either set to POST or PUT for all operations*
 4.	Insert the request URL 
 5.	Under the **Authentication** tab, set Type value to **Bearer Token** and insert access token in the **Token** box
+
     ![image](https://user-images.githubusercontent.com/81968767/220967588-52eec24d-4b13-4d26-ba28-a9ad90943e26.png)
+    
 6.	Add EFXHeader as new parameters under the **Headers** section and insert the <EFXHeader> value in JSON format 
-7.	Insert the request-payload under the **Body** tab. Make sure that the **raw** radio button is activated and the text format is set to **JSON** <br> <kbd><img src="https://user-images.githubusercontent.com/81968767/145019152-399b813e-61a6-41c1-9e79-2e3cfd10015f.png" width="70%" /></kbd><br> **Note:** *Default request-payload can be copied from the API Explorer document and you may modify certain fields as mentioned in the documentation.*
+7.	Insert the request-payload under the **Body** tab. Make sure that the **raw** radio button is activated and the text format is set to **JSON** 
+    <br> <kbd><img src="https://user-images.githubusercontent.com/81968767/145019152-399b813e-61a6-41c1-9e79-2e3cfd10015f.png" width="70%" /></kbd><br>
+    <!-- theme: info -->
+    > #### Note
+    >
+    > Default request-payload can be copied from the API Explorer document and you may modify certain fields as mentioned in the documentation.
+  
 8.	Modify the field values in JSON code that you want to test 
 9.	Click **Send**. API response is generated in the Response section
 
@@ -82,4 +90,3 @@ To  test an API using Postman application:
 <kbd>
   <img src="https://user-images.githubusercontent.com/81968767/145146913-16d54888-1e48-46b7-99f5-64827a78e21f.gif" />
 </kbd> <br><br>
-
