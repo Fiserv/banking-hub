@@ -58,6 +58,7 @@ For more information on EFXHeader and to view the list of all header parameters,
 ```
 
 #### Request Body
+
 The request body of an API changes based on the type of transaction being processed. Request body contains the detailed information that is required to perform a particular transaction.
 
 **Request Payload** 
@@ -87,8 +88,7 @@ The following example shows the sample request payload for **Get Account Hold** 
 ```
 
 
-### Response Message
-
+**Response Message**
 
 Upon a successful API request, a response payload is received. The response payload contains the status and the returned details of the requested API in key-value pairs. The default response format is JSON. 
 
