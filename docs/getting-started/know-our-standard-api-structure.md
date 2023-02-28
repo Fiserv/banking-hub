@@ -57,7 +57,7 @@ For more information on EFXHeader and to view the list of all header parameters,
 
 ```
 
-#### Request Body
+### Request Body
 
 The request body of an API changes based on the type of transaction being processed. Request body contains the detailed information that is required to perform a particular transaction.
 
