@@ -79,7 +79,7 @@ Use the API mentioned below to generate an access token using Postman.
 
 |     Header Name      |     Description                                          |     Required      |
 |---------------------|----------------------------------------------------------|---------------|
-|     ``Authorization`` |    <p>Base64 encoded string representing your username and password values, appended to the text Basic as follows: </p> <p> <code> Basic <Base64 encoded username and password> </code></p> <p> **Important:** In Postman, use the **Authorization** tab to enter Username and Password value and set authentication type to Basic Auth. Use your **API key** as username and **API secret** as password. </p>                      |     Required    |
+|     ``Authorization`` |    <p>Base64 encoded string representing your username and password values, appended to the text Basic as follows: </p> <p> <code> Basic <Base64 encoded username and password> </code></p> <p> **Important:** In Postman, use the **Authorization** tab to enter Username and Password value and set authentication type to **Basic Auth**. Use your **API key** as username and **API secret** as password. </p>                      |     Required    |
 
 ![image](https://user-images.githubusercontent.com/81968767/220961162-0931a990-f69a-4be7-a6bb-ab847f9464b2.png)
 
