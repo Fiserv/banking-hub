@@ -91,4 +91,4 @@ To  test an API using Postman application:
   
 <kbd>
   <img src="https://user-images.githubusercontent.com/81968767/145146913-16d54888-1e48-46b7-99f5-64827a78e21f.gif" />
-</kbd> <br><br>
+</kbd>
