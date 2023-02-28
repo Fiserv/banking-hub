@@ -5,64 +5,70 @@
 > The current user journey enables developers to access a range of Standard Bank Platform APIs on Banking Hub. We continue to refine the API content on Banking Hub with the goal of showing clearly how our Banking Hub APIs facilitate integration to each of our banking solutions.
 
 
-Register to the Fiserv Developer Studio to test the APIs in our Sandbox environment or you may choose to test using <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a>. However, registration is not required to learn about our API integration process and test the APIs in API Explorer.
+Register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test using the <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a> of your choice. However, registration is not required to learn about our APIs and reference documentation.
 
-## Register to Fiserv Developer Studio
-To validate and deploy Fiserv banking APIs into production, create an account with Fiserv Developer Studio to obtain credentials for sandbox testing and live environments.
+## Register on Fiserv Developer Studio
+The following sections will help you in creating an account with Fiserv Developer Studio and obtain credentials for sandbox testing.
 
 
 ### Setting up an Account
 
-To set up an account on Fiserv Developer Studio, follow the steps below:
+Perform the following steps to set up an account on Fiserv Developer Studio:
 1.	From the top-right corner of the screen, click **Create Account**
 2.	Populate the required fields and click **Next**
-3.	Follow the instructions on the screen to set up your account based on integration requirements
-4.	Sign on to your Fiserv Developer Studio account once it is activated
+3.	Follow the instructions on the screen to set up your account
+4.	Sign in to your Fiserv Developer Studio account once it is activated
 
-### Creating a Workspace
+### Creating a Banking Hub Workspace
 
-Workspaces are dedicated spaces for developers to obtain API Key, API Secret and product related details from the workspace.
+Workspaces are dedicated spaces for developers to obtain API key, API secret and product related details.
 
-To create a workspace in Developer Studio, follow the steps below:
+Perform the following steps to create a workspace on Fiserv Developer Studio:
 
 1.	Sign in to your Fiserv Developer Studio account
-2.	From the top-right corner of the screen, click **Workspaces**. My Workspace page appears
-3.	To create new workspace, click the **Add a new workspace** button or click the **Create a new workspace** card. Create a workspace dialog box appears
+2.	From the top-right corner of the screen, click **Workspaces**. My Workspace page displays
+    <!-- theme: info -->
+    > #### Note
+    >
+    > All previously created workspaces are listed on the **My workspaces** page. 
+    
+3.	To create a new workspace, click the **Add a new workspace** button or click the **Create a new workspace** card. Create a workspace dialog box displays
+4.	Enter workspace name and description
+5.	From the **Product** drop-down list, select **Banking Hub** and click **Create**. A new workspace is created and three tabs of your workspace, namely Summary, Credentials and Settings are visible
 
     <!-- theme: info -->
     > #### Note
     >
-    > All previously created workspaces are listed on the Workspaces page. 
-4.	Enter workspace name and description
-5.	From the **Product** drop-down list, select **Banking Hub** and then click **Create**. A new workspace is created and three tabs of your workspace, namely – Summary, Credentials and Settings are visible
-
+    > Currently, only one workspace can be created for Banking Hub.
+    
     ![image](https://user-images.githubusercontent.com/81968767/220959037-4fb7f53e-4655-4086-a0a2-8994ee505cb0.png)
-
 
 Every workspace has following three sections:
 
 * **Summary**: Displays workspace details and list of activities performed on the workspace
 * **Credentials**: Lists all active API keys. From this section, you can view or download the following details of an API key:
     * Product name: _Name of the product, for example, Banking Hub_    
-    * Org ID: _Organization ID is required to send in all API requests as a header parameter_    
-    * API key name: _Name of API key_
+    * Org ID: _Organization ID is required to send all API requests as a header parameter_    
+    * API key name: _Name of the API key_
     * API key type: _Type of API key, for example, Trial_
-    * API key: _Alphanumeric value of API key. API key is used as username while generation access token_
-    * API secret: _Alphanumeric value of API secret. API secret is used as password while generation access token_
+    * API key: _Alphanumeric value of the API key. API key is used as username while generating the access token_
+    * API secret: _Alphanumeric value of the API secret. API secret is used as password while generating the access token_
     * Host URL: _Host URL path to send API requests_
       
       ![image](https://user-images.githubusercontent.com/85101648/221510348-6388665d-89e1-4684-b41e-a6f3f9c4f12b.png)
 
 * **Settings**: Used to modify or delete the workspace
 
-  ![image](https://user-images.githubusercontent.com/81968767/220960606-ed60419a-f6e2-4022-bf1c-2d15142b5f01.png)
-
+<kbd>
+    <img src="https://user-images.githubusercontent.com/85101648/221875469-81044247-b844-47be-bd8b-7363fa302d40.gif" />
+</kbd>
+              
 
 ## Generating Access Token
 
 An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. **API key** and **API secret** values obtained from the Workspace are required to generate an access token. 
 
-Use below API to generate an access token using Postman.
+Use the API mentioned below to generate an access token using Postman.
 
 ### URL
 
@@ -73,14 +79,14 @@ Use below API to generate an access token using Postman.
 
 |     Header Name      |     Description                                          |     Required      |
 |---------------------|----------------------------------------------------------|---------------|
-|     ``Authorization`` |    <p>Base64 encoded string representing your username and password values, appended to the text Basic as follows: </p> <p> <code> Basic &lt;Base64 encoded username and password&gt; </code></p> <p> **Important:** In Postman, use Authorization tab to enter Username and Password value and set authentication type to Basic Auth. Use your **API Key** as Username and **API Secret** as password. </p>                      |     Required    |
+|     ``Authorization`` |    <p>Base64 encoded string representing your username and password values, appended to the text Basic as follows: </p> <p> <code> Basic <Base64 encoded username and password> </code></p> <p> **Important:** In Postman, use the **Authorization** tab to enter Username and Password value and set authentication type to Basic Auth. Use your **API key** as username and **API secret** as password. </p>                      |     Required    |
 
 ![image](https://user-images.githubusercontent.com/81968767/220961162-0931a990-f69a-4be7-a6bb-ab847f9464b2.png)
 
 
 ### Request Body
 
-Enter the following key value pair in the request body under the x-www-form-urlencoded option
+From the Body tab, select the **x-www-form-urlencoded** radio button and enter the following key-value pair:
 
 ``grant_type = client_credentials``
 
@@ -88,20 +94,13 @@ Enter the following key value pair in the request body under the x-www-form-urle
 
 ### Response
 
-Field Name	Description	Type
-access_token	Generated access token value	string
-expiries_in
-Time in milliseconds until the generated token is valid. 
-Note: Once generated, the access token is valid for 15 mins. You can reuse the access token until it expires. 	number
-Token_type	Type of access token	string
-
 |     Field Name      |     Description                                          |     Type      |
 |---------------------|----------------------------------------------------------|---------------|
 |   ``access_token``    |     Generated access token   value                       |     string    |
-|``expiries_in``       | <p>Time in milliseconds until the generated token is valid.</p> <p>**Note:** Once generated, the access token is valid for 15 mins. You can reuse the access token until it expires. </p> | number        |
+|``expires_in``       | <p>Time in milliseconds until the generated token is valid.</p> <p>**Note:** Once generated, the access token is valid for approximately 15 minutes. You can reuse the access token until it expires. </p> | number        |
 |    ``Token_type``   |     Type of access token                                 |     string    |
 
-**Sample Response:**
+**Sample Response**
 ```
 {
     "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJwaS5hdG0iOiJhYXVxIn0.eyJzY29wZSI6IiIsImNsaWVudF9pZCI6ImdxNHpvZDB6Wng3NkVPTUtKQUlQUlJUZHJHOENWNGdJIiwiaXNzIjoiaHR0cHM6Ly9mZGMtZmVkc3NvLWNhdC5maXJzdGRhdGEuY29",
@@ -110,9 +109,6 @@ Token_type	Type of access token	string
 }
 ```
 
-![image](https://user-images.githubusercontent.com/81968767/220961415-46799965-9fee-4d45-88bf-fdfa5563477b.png)
-
-
-
-
-
+<kbd>
+    <img src="https://user-images.githubusercontent.com/85101648/221878635-c859cc8d-98a3-47a3-8e57-2299af44b26e.gif" />
+</kbd>
