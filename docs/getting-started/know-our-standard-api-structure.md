@@ -8,14 +8,15 @@ All API requests must contain the following components:
 
 *	API Method
 * Request URL
+* Access Token
 *	Request Header
 *	Request Body
 
-For every API request, a response message is obtained that contains a response payload and status of the API request.
+For every API request, a response message is obtained that contains a response payload and the status of the API request.
 
 ### API Method
 
-For the security reasons all API method are set to POST or PUT irrespective of the operation. 
+For security reasons, all API methods are set to POST or PUT, irrespective of the operation. 
 
 ### Request URL
 
@@ -23,13 +24,13 @@ Request URL is formed by appending Host URL and API path.
 
 **Request URL = Host URL + API path**
 
-To get Host URL, go to API key section of your Workspace. And API path along with the method (POST or PUT) is listed under the API Explorer section of that API on Developer Studio. 
-Refer following example to construct a request URL for AcctAdd API:
+To get Host URL, go to API key section of your Workspace. The API path along with the method (POST or PUT) is listed under the API Explorer section of that API on Fiserv Developer Studio. 
+Refer the following example to construct a request URL for **AcctAdd** API:
 
 ![image](https://user-images.githubusercontent.com/81968767/220958005-84e01e43-ff91-4240-a1d7-0e4a888655d5.png)
 
 
-If Host URL of the product is https://cert.api.fiservapps.com/banking/efx/v1/, then request URL will be:
+If host URL of the product is https://cert.api.fiservapps.com/banking/efx/v1/, then request URL will be:
 
 ![image](https://user-images.githubusercontent.com/81968767/220958136-563f1974-a241-42e5-886c-e00e5af08ce0.png)
 
@@ -37,8 +38,8 @@ If Host URL of the product is https://cert.api.fiservapps.com/banking/efx/v1/, t
 
 ### Access Token
 
-An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely.  Banking Hub API uses Bearer Access token, and API key and API Secret are required to generate access token. A generated access token is valid for 15 minutes.
-To generate an access token, refer to <Generating Access Token> section.
+An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. Banking Hub API uses Bearer Access token, and API key and API secret are required to generate an access token. A generated access token is valid for approximately 15 minutes.
+To generate an access token, refer to the [Generating Access Token](?path=docs/getting-started/before-you-start.md#generating-access-token) section.
 
 
 ### Request Header
@@ -46,9 +47,9 @@ To generate an access token, refer to <Generating Access Token> section.
   
 Header parameters are common for all API requests of Banking Hub APIs. Header parameters are sent as a JSON object under EFXHeader header parameter.
 
-For more information on EFXHeader and to view the list of all header parameters, <a href="?path=docs/api-ref-EFX-header.md" title="Click to view the list of EFX header parameters" > click here.</a>
+For more information on EFXHeader and to view the list of all header parameters,<a href="?path=docs/api-ref-EFX-header.md" title="Click to view the list of EFX header parameters"> click here</a>.
 
-Sample Header Example:
+**Sample Header Example**
 ```
 "EFXHeader": {
     "OrganizationId":"999990010"   }
@@ -57,11 +58,11 @@ Sample Header Example:
 ```
 
 #### Request Body
-Request body of an API that changes based on the type of transaction being processed. Request body contains the detailed information that is required to perform a particular transaction.
+The request body of an API changes based on the type of transaction being processed. Request body contains the detailed information that is required to perform a particular transaction.
 
-**Request Payload:** 
+**Request Payload** 
 
-Following example shows the sample request payload for Get Account Hold API request.
+The following example shows the sample request payload for **Get Account Hold** API request.
 
 ```
 {
@@ -89,12 +90,12 @@ Following example shows the sample request payload for Get Account Hold API requ
 ### Response Message
 
 
-Upon a successful API request, a response payload is received. The response payload contains the status and the returned details of the requested API in key-value pairs. The default response format is JSON (JavaScript Object Notation). 
+Upon a successful API request, a response payload is received. The response payload contains the status and the returned details of the requested API in key-value pairs. The default response format is JSON. 
 
 
-**Response Payload:**
+**Response Payload**
 
-Following example shows the sample response payload for **Get Account Hold** API request.
+The following example shows the sample response payload for **Get Account Hold** API request.
 
 ```
 {
@@ -204,4 +205,4 @@ Following example shows the sample response payload for **Get Account Hold** API
 }
 ```
 
-To view the API documentation of **Get Account Hold** API in API Explorer, [click here.](../api/?type=post&path=/accountHolds/secured)
+To view the API documentation of **Get Account Hold** API in API Explorer, [click here](../api/?type=post&path=/accountHolds/secured).
