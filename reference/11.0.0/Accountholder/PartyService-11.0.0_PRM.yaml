@@ -3,7 +3,7 @@ openapi: 3.0.1
 info:
   title: Party Service
   description: |-
-    The Party service provides support for operations that manage Party data and properties related to the Party such as names, addresses, issued identifications, tax data, phone numbers and email addresses.<br>
+    The party service provides support for operations that manage party data and properties related to the party such as names, addresses, issued identifications, tax data, phone numbers and email addresses.<br>
     Party refers to a person or organization, who has a relationship with the financial institution.
   version: 11.0.0_PRM
 servers:
@@ -41,7 +41,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UpdatePartyResponse'
-      x-default-example: Premier
       x-group-name: Party Service
       x-proxy-name: Update Party
       x-child-product-name: Accountholder
@@ -77,7 +76,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/addPartyResponse'
-      x-default-example: Premier
       x-group-name: Party Service
       x-proxy-name: Add Party
       x-child-product-name: Accountholder
@@ -150,7 +148,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getPartyListInqSecuredResponse'
-      x-default-example: Premier
       x-group-name: Party Service
       x-proxy-name: Get Party List
       x-child-product-name: Accountholder
@@ -236,13 +233,17 @@ components:
       type: string
       properties:
         OrganizationId:
+          maxLength: 36
           type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
         VendorId:
+          maxLength: 255
           type: string
-          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
         Context:
           $ref: '#/components/schemas/Context'
       example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
@@ -252,67 +253,84 @@ components:
         ClientAppName:
           maxLength: 40
           type: string
-          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
         Channel:
+          maxLength: 80
           type: string
-          description: Indicates the channel used by the client application.
-        ClientDateTime:
-          type: string
-          description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
-        ClientTerminalSeqNum:
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
           maxLength: 36
           type: string
-          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
           format: int64
         TerminalIdent:
           maxLength: 36
           type: string
-          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
         TerminalAddr1:
           maxLength: 64
           type: string
+          description: Terminal address line 1.
         TerminalAddr2:
           maxLength: 64
           type: string
+          description: Terminal address line 2.
         TerminalAddr3:
           maxLength: 64
           type: string
+          description: Terminal address line 3.
         TerminalAddr4:
           maxLength: 64
           type: string
+          description: Terminal address line 4.
         TerminalCity:
           maxLength: 32
           type: string
+          description: Terminal city name.
         TerminalCounty:
           maxLength: 32
           type: string
+          description: Terminal county name.
         TerminalStateProv:
           maxLength: 32
           type: string
-          description: State Province. ISO 3166-2:US codes.
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
         TerminalPostalCode:
           maxLength: 11
           type: string
-          description: Postal Code is ZipCode in the US.
+          description: 'Postal Code where the terminal is located. '
         TerminalCountryCodeSource:
-          type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - ISO3166Numeric
-          - ISO3166Alpha3
-        TerminalCountryCodeValue:
           maxLength: 80
           type: string
-        PhoneType:
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
         PhoneNum:
           type: string
+          description: Phone number.
         PhoneExchange:
+          maxLength: 80
           type: string
+          description: Phone exchange.
         TerminalOwnerName:
           maxLength: 40
           type: string
@@ -332,47 +350,70 @@ components:
         AcquirerIdent:
           maxLength: 36
           type: string
-          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
         AcquirerCountryCodeSource:
+          maxLength: 80
           type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - US
-          - IND
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
         AcquirerCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
         MerchNum:
           maxLength: 23
           type: string
-          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
         SettlementDate:
           type: string
-          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
           format: date
         SettlementIdent:
           maxLength: 36
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: Identification of the settlement account in which the transaction will be settled.
         BusinessApplIdent:
+          maxLength: 80
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
         BranchIdent:
           maxLength: 22
           type: string
+          description: Branch identification number.
         TellerIdent:
+          maxLength: 80
           type: string
+          description: Teller identification number.
         TillIdent:
+          maxLength: 80
           type: string
+          description: Till identification number.
         AMPMCode:
           type: string
+          description: 'Transaction posting code. '
           enum:
           - AM
           - PM
         ReentryType:
           type: string
+          description: Type of re-entry.
           enum:
           - Manual
           - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
     OvrdExceptionDataType:
       title: OvrdExceptionDataType
       type: object
@@ -536,7 +577,7 @@ components:
       properties:
         Language:
           type: string
-          description: "Preferred language of the party as per <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1</a> standards. \n\n\n\n**Note:** This field indicates the customer's preffered language."
+          description: "Preferred language of the party as per <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1</a> standards. \n\n\n\n**Note:** This field indicates the customer's preferred language."
           enum:
           - UseInstitution
           - English
@@ -608,7 +649,7 @@ components:
 
             **Note:** Client application need to pass the values as defined/configured on Premier for the financial institution.
 
-            If the the datatype is "Date" then the value is provided in YYYY/MM/DD format.
+            If, the datatype is "Date" then the value is provided in YYYY/MM/DD format.
         DataLength:
           type: integer
           description: Maximum allowed length of the client-defined data entered in the "Value" field.
@@ -673,7 +714,7 @@ components:
 
             **Note:** Foreign country residence code of two characters on IRS Form 1042-S as per the current definitions provided by IRS.
 
-            Maximum length: two characters
+            Maximum length: two characters.
       description: Country details of the recipient of the foreign tax.
     addPartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData:
       type: object
@@ -683,7 +724,7 @@ components:
           description: |-
             Foreign tax forms as defined by the Internal Revenue Service (IRS).
 
-            **Note:** Refers to foreign tax code.
+            **Note:** Refers to foreign tax form code.
           enum:
           - None
           - 1042S
@@ -752,7 +793,7 @@ components:
       properties:
         TaxIdentType:
           type: string
-          description: "Tax identification type. \n\n**Note:** Code that indicates whether the Tax Identification Number is a Social Security Number (SSN), Employer Identification Number (EIN), foreign tax ID number, Adoption Taxpayer Identification Number (ATIN), or Individual Taxpayer Identification Number (ITIN).\n\n\n\nMultiple customers with same SSN/EIN can be configured therefore, ESF does not validate the SSN/EIN sent in request for duplicity."
+          description: "Tax identification type. \n\n**Note:** Code that indicates whether the tax identification number is a Social Security Number (SSN), Employer Identification Number (EIN), foreign tax ID number, Adoption Taxpayer Identification Number (ATIN), or Individual Taxpayer Identification Number (ITIN).\n\n\n\nMultiple customers with same SSN/EIN can be configured therefore, ESF does not validate the SSN/EIN sent in request for duplicity."
           enum:
           - None
           - SSN
@@ -762,7 +803,7 @@ components:
         TaxIdent:
           maxLength: 12
           type: string
-          description: "Unique identifier of tax. \n\n**Note:** Refers to the Tax Id Number field in Premier. "
+          description: "Unique identifier of tax. \n\n**Note:** Refers to the tax Id number field in premier. "
         TaxIdentVerified:
           type: boolean
           description: Flag to indicate the tax information is verified.
@@ -780,7 +821,7 @@ components:
           description: |-
             Any other identifier of tax information related to a party.
 
-            **Note:** Refers to Foreign Tax Identification Number as per IRS Form 1042-S.
+            **Note:** Refers to foreign tax identification number as per IRS Form 1042-S.
         BNotice1Dt:
           type: string
           description: "Date when the B-Notice 1 is sent to a party.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n\n\n"
@@ -1543,6 +1584,17 @@ components:
           - RaceNotProvided
           - RaceNotApplicable
       description: Information related to a person party.
+    addPartyRequest_OrgPartyInfo_PartyPref:
+      type: object
+      properties:
+        Language:
+          type: string
+          description: "Preferred language of the party as per <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1</a> standards. \n\n\n\n**Note:** This field indicates the customer's preffered language."
+          enum:
+          - UseInstitution
+          - English
+          - Spanish
+      description: Preferences of a party for the service provider to provide party-specific "parameters".
     addPartyRequest_OrgPartyInfo_CreditRisk:
       required:
       - RiskCategory
@@ -1615,25 +1667,6 @@ components:
           maxLength: 20
           type: string
           description: Number to indicate if the client-defined data belongs to a group.
-    addPartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode:
-      required:
-      - CountryCodeValue
-      type: object
-      properties:
-        CountryCodeSource:
-          type: string
-          description: |+
-            Standard format of country code.
-
-          enum:
-          - IRS
-        CountryCodeValue:
-          type: string
-          description: |-
-            Country code value as per the country code format set in the CountryCodeSource field.
-
-            **Note:** Refers to country tax code.
-      description: Tax recipient country code. Use <a href="https://www.irs.gov/e-file-providers/foreign-country-code-listing-for-modernized-e-file">IRS country code table </a>.
     addPartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData_RecipientResidenceCountry:
       required:
       - CountryCodeValue
@@ -1661,7 +1694,7 @@ components:
           description: |-
             Foreign tax forms as defined by the Internal Revenue Service (IRS).
 
-            **Note:** Refers to foreign code.
+            **Note:** Refers to foreign tax form code.
           enum:
           - None
           - 1042S
@@ -1686,7 +1719,7 @@ components:
 
             **Note:** Maximum length: two characters
         RecipientCountryCode:
-          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode'
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode'
         RecipientResidenceCountry:
           $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData_RecipientResidenceCountry'
         RecipientPostalCode:
@@ -2241,7 +2274,7 @@ components:
       type: object
       properties:
         PartyPref:
-          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PartyPref'
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_PartyPref'
         EstablishedDt:
           type: string
           description: "Date on which the party record is created. Also known as \"Customer Since Date\".\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** *Required field*\n\n\n\nDate when name/address record is created."
@@ -3348,7 +3381,7 @@ components:
           format: date
         DeceasedDt:
           type: string
-          description: "Deceased date\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Deceased date.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         Gender:
           type: string
@@ -4205,7 +4238,7 @@ components:
         Cursor:
           maxLength: 250
           type: string
-          description: Next record pointer to include in the response if more than 250 posted transaction records exist.
+          description: Next record pointer to include in the response if additional records are available.
       description: Maximum number of records to be processed within a single response as specified by the client.
     getPartyListInqSecuredRequest_PartyListSel_ClientDefinedSearch:
       required:
@@ -4990,6 +5023,65 @@ components:
           enum:
           - Officer
           - ReferralOfficer
+    UpdatePartyRequest_PersonPartyInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique data identifier to identify the client-defined data item.
+
+            **Note:** Values configured at the time of application integration in the core system for Financial Institution (FI) should be passed in request by application.
+        DataType:
+          type: string
+          description: Type of client-defined data.
+          enum:
+          - Alpha
+          - Boolean
+          - Currency
+          - CurrencySymbol
+          - Date
+          - Numeric
+          - NumericSymbol
+          - Rate
+          - RateSymbol
+        Value:
+          maxLength: 256
+          type: string
+          description: |-
+            Value of the client-defined data item.
+
+            **Note:** Client application need to pass the values as defined/configured on Premier for the financial institution.
+
+            If the the datatype is "Date" then the value is provided in YYYY/MM/DD format.
+        DataLength:
+          type: integer
+          description: Maximum allowed length of the client-defined data entered in the "Value" field.
+          format: int64
+        ExpDt:
+          type: string
+          description: "Date after which the client-defined data item expires and becomes inactive.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        Desc:
+          maxLength: 200
+          type: string
+          description: 'Description of the client-defined data. '
+        RequiredFlag:
+          type: boolean
+          description: |+
+            Flag to indicate a data value is required for the client-defined data.
+
+        SearchFlag:
+          type: boolean
+          description: |+
+            Flag to indicate the client-defined data can be searched.
+
+        GroupNum:
+          maxLength: 20
+          type: string
+          description: Number to indicate if the client-defined data belongs to a group.
     UpdatePartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData:
       type: object
       properties:
@@ -5675,7 +5767,7 @@ components:
           type: array
           description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
           items:
-            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_ClientDefinedData'
+            $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_ClientDefinedData'
         PartyType:
           type: string
           description: |-
