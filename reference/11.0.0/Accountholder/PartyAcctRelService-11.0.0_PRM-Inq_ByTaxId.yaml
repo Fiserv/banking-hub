@@ -7,12 +7,12 @@ info:
 servers:
 - url: /
 paths:
-  /partyacctrel/secured:
+  /partyacctrelservice/partyacctrel/partyacctrel/secured:
     post:
       tags:
       - Get Party Account Relationship
       summary: Get Party Account Relationship
-      description: "Retrieves the relationship-related information between Party and account, such as:<br>\n          <ul>\n          <li>List of all Parties (person or organization) related to an account</li> \n          <li>List of all accounts related to a Party</li>\n          </ul>For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a>\n        <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/riskMgt.md\" title=\"Click to open\">Risk and Performance Management</a></li>\n          </ul>"
+      description: "Retrieves the relationship-related information between Party and account, such as:<br>\n          <ul>\n          <li>List of all Parties (person or organization) related to an account</li> \n          <li>List of all accounts related to a Party</li>\n          </ul>\n          \n        For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a>\n        <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/riskMgt.md\" title=\"Click to open\">Risk and Performance Management</a></li>\n          </ul>"
       operationId: PartyAcctRelInqBySecured
       parameters:
       - name: EFXHeader
@@ -98,6 +98,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -581,16 +582,7 @@ components:
         EndDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            End date and time value.
-
-            Format: yyyy-MM-ddTHH:mm:ss.sss
-
-            Example: 2021-01-31T23:59:59.999
-
-            **Note:** Applicable for Seasonal Address Type only.   The Seasonal address begins on the same Start date and ends on the same End date every year. ESF response displays year as 9999  for Seasonal address End year.
-
-            The month and the day of the month will show the actual Seasonal address  end date.
+          description: "End date and time value.\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** Applicable for seasonal address type only. The seasonal address begins on the same start date and ends on the same end date every year. \n\nPremier stores only month and day for the seasonal address start and end dates. \n\nESF maps 9999 as the year so that the date can be displayed in the EFX standard date format such as 9999-02-21.\n\nThe month and the day of the month will show the actual seasonal address end date."
       description: Details of the time frame when the address is active.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr:
       required:
@@ -742,7 +734,7 @@ components:
         PartyType:
           type: string
           description: |-
-            Type of the party used for further classification of party types.
+            Type of the party used for further classification of the party.
 
             **Note:** Refers to customer type, indicating the personal customer's relationship to the financial institution.
           enum:
@@ -761,7 +753,6 @@ components:
           - LimitLiabilityPartnership
           - Other
           - ThirdParty
-          - ""
         Contact:
           type: array
           description: "Contact information of a party (person or organization).\n\n**Note:** By default, all the contact aggregates within each relationship aggregate are returned by the operation - however for performance considerations, the number can be configured in ESF studio using the Xref rule for an Institution to indicate the maximum number of contacts to be returned in the response within each relationship record. "
@@ -1034,7 +1025,6 @@ components:
           - LimitLiabilityPartnership
           - Other
           - ThirdParty
-          - ""
         Contact:
           type: array
           description: "Contact details of a party (person or organization).\n\n**Note:** By default, all the contact aggregates within each relationship aggregate are returned by the operation - however for performance considerations, the number can be configured in ESF studio using the Xref rule for an Institution to indicate the maximum number of contacts to be returned in the response within each relationship record. "
@@ -1090,7 +1080,6 @@ components:
           - Signer
           - PrimaryPortfolioName
           - SecondaryPortfolioName
-          - ""
         PartyAcctRelOrder:
           type: string
           description: "Relationship order of party with an account in case of JointTenancy or JointTenantsInComman. \n\n**Note:** Parties with the party account relationship order as \"First\", \"Second\", and \"Third\" are considered to be main names on the account and most commonly applies to party relationship types as OwnerSigner and Signer, Owner.\n\n\"Other\" relationship order is commonly used for relationships that are NOT OwnerSigner, Signer, Owner."
@@ -1121,15 +1110,15 @@ components:
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
           enum:
-          - 'DDA '
-          - 'SDA '
-          - 'CDA '
-          - 'LOAN '
-          - 'CLOC '
-          - 'SDB '
-          - 'DDL '
-          - 'CRD '
-          - 'PORT '
+          - DDA
+          - SDA
+          - CDA
+          - LOAN
+          - CLOC
+          - SDB
+          - DDL
+          - CRD
+          - PORT
       description: Unique information to identify the account record.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt_CurCode:
       required:
@@ -1178,8 +1167,6 @@ components:
           - PayOffAmt
           - Principal
           - PmtDue
-          - ""
-          - ""
         CurAmt:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt'
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_CurAmt_CurCode:
@@ -1220,7 +1207,6 @@ components:
           enum:
           - PmtDue
           - Rent
-          - ""
         CurAmt:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_CurAmt'
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt:
@@ -1262,7 +1248,6 @@ components:
           - Bankruptcy
           - EarlyCollection
           - ClosedToAdvances
-          - ""
         ProductIdent:
           maxLength: 42
           type: string

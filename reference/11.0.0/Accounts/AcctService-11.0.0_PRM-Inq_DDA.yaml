@@ -7,7 +7,7 @@ info:
 servers:
 - url: /
 paths:
-  /accounts/secured:
+  /acctservice/acctmgmt/accounts/secured:
     post:
       tags:
       - Get Accounts
@@ -91,6 +91,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -390,7 +391,6 @@ components:
             **Note:** *Required field*
           enum:
           - DDA
-          - ""
       description: Unique information to identify the account record.
     getAccountsSecuredRequest_AcctSel:
       required:
@@ -419,7 +419,6 @@ components:
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
           - DDA
-          - ""
       description: Unique information to identify the account record.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPref:
       type: object
@@ -431,7 +430,6 @@ components:
           - UsePortfolio
           - English
           - Spanish
-          - ""
       description: Preferences to define the default settings such as language and region for an account.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctIdent:
       properties:
@@ -520,7 +518,6 @@ components:
           - Officer
           - SecondOfficer
           - ReferralOfficer
-          - ""
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_ClientDefinedData:
       required:
       - DataIdent
@@ -621,7 +618,6 @@ components:
           enum:
           - Primary
           - Secondary
-          - ""
         SpecialStmtCode:
           type: string
           description: "Code to indicate a special statement. \n\n**Note:** Refers to the Statement Request Code. Indicates whether a final or transcript statement is produced during the next update. During the application update process, a statement is automatically generated and the code is reset to None."
@@ -638,7 +634,7 @@ components:
             **Note:** Refers to the Statement Format Override Code, if any. This overrides the Statement Code in DDA Class Specifications. The Statement Format Override Code applies only when using flexible statements (statement format 98 or 99). A value of 00 indicates no override.
         StmtTruncationOption:
           type: string
-          description: "Option to indicate if the physical items are enclosed with an account statement.\n\n**Note:** N - Items included; \n\nY - items not included; \n\n2 - Items included (CIP only);\n\n 3 Items not included (CIP only); \n\n4 - Items included and items not on BFM3203 Daily Transaction Discrepancy Report;\n\n 5 - Items not included and items not on BFM3203 Daily Transaction Discrepancy Report;\n\n 6 - Items included (CIP only) and items not on BFM3203 Daily Transaction Discrepancy Report; \n\n7 Items not included (CIP only) and items not on BFM3203 Daily Transaction Discrepancy Report. "
+          description: "Option to indicate if the physical items are enclosed with an account statement.\n\n**Note:** Possible values for this field:\n\nN - Items included\n\nY - items not included \n\n2 - Items included (CIP only)\n\n3 - Items not included (CIP only) \n\n4 - Items included and items not on BFM3203 Daily Transaction Discrepancy Report\n\n5 - Items not included and items not on BFM3203 Daily Transaction Discrepancy Report\n\n6 - Items included (CIP only) and items not on BFM3203 Daily Transaction Discrepancy Report; \n\n7 - Items not included (CIP only) and items not on BFM3203 Daily Transaction Discrepancy Report"
         StmtGroup:
           type: string
           description: Group to identify statement cycle for an account.
@@ -655,7 +651,6 @@ components:
           - PayeeChanges
           - BalanceOnReceipt
           - RegCCNotice
-          - ""
         NoticeOption:
           type: string
           description: "Option for account notice. \n\n"
@@ -846,21 +841,6 @@ components:
           description: Details of the pending rate of interest.
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_PendingRate'
-    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
-          enum:
-          - ISO4217-Alpha
-          - ""
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
-      description: Details of currency code.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt:
       type: object
       properties:
@@ -868,7 +848,7 @@ components:
           type: number
           description: Amount in decimal format.
         CurCode:
-          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt_CurCode'
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_InitialAmount_CurCode'
       description: Details of the currency amount.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctBal:
       required:
@@ -886,10 +866,10 @@ components:
           - Closing
           - BalanceLastStatement
           - Current
-          - 'Interest '
+          - Interest
           - ClosingInterest
           - InterestAccrued
-          - 'Ledger '
+          - Ledger
           - MinLedger
           - BalanceLastStatement
           - OpeningOutstanding
@@ -899,18 +879,17 @@ components:
           - PrevInterestAccrued
           - PrevAvail
           - PrevSvcChg
-          - 'PrevLedger '
-          - 'Principal '
+          - PrevLedger
+          - Principal
           - SvcChg
           - Hold
-          - 'OtherTransfers '
+          - OtherTransfers
           - Sweep
           - Float
           - MemoLedger
           - Memo
           - AvailPending
           - LedgerPending
-          - ""
         CurAmt:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt'
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPeriodData:
@@ -962,8 +941,6 @@ components:
           - StateWithhold
           - SvcCharge
           - SvcChargeWaived
-          - ""
-          - ""
         AcctPeriodType:
           type: string
           description: Type of the account period.
@@ -978,7 +955,6 @@ components:
           - ThisCycle
           - YTD
           - PriorDay
-          - ""
         LastOccurInd:
           type: boolean
           description: Flag to indicate the last occurrence.
@@ -1379,7 +1355,6 @@ components:
           enum:
           - RiskScore1
           - RiskScore2
-          - ""
         InternalScore:
           type: string
           description: Internal credit risk rating to assess the credit risk of customer.
@@ -1461,8 +1436,6 @@ components:
           enum:
           - TransferToAcct
           - Capitalize
-          - ""
-          - ""
         IntDistAcctRef:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntDispData_IntDistAcctRef'
         IntPmtFrequency:
@@ -1497,13 +1470,13 @@ components:
           - OptOutNoReply
           - OptOut
           - OptOutCourtesy
-          - 'OptInAtmPosODLimit '
-          - 'OptInPosODLimit '
-          - 'OptInAtmODLimit '
-          - 'OptInAtmPosAuthLimit '
-          - 'OptInPosAuthLimit '
+          - OptInAtmPosODLimit
+          - OptInPosODLimit
+          - OptInAtmODLimit
+          - OptInAtmPosAuthLimit
+          - OptInPosAuthLimit
           - OptInAtmAuthLimit
-          - 'NotAuth '
+          - NotAuth
         AuthLimitOptionEnumDesc:
           maxLength: 80
           type: string
@@ -1618,7 +1591,6 @@ components:
           description: Type of float data.
           enum:
           - RegCC
-          - ""
         FloatDetails:
           type: array
           description: Details of float containing float days and check amount.
@@ -1635,7 +1607,6 @@ components:
           enum:
           - Maintenance
           - Activity
-          - ""
         SvcChgMethodOpt:
           type: integer
           description: Service charge code on the account.
@@ -1730,7 +1701,6 @@ components:
           enum:
           - DDA
           - SDA
-          - ""
       description: Unique information to identify the account record.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_SvcChgData_SvcChgAcctRef:
       required:
@@ -2093,7 +2063,7 @@ components:
         OEDCode:
           type: string
           description: |+
-            Officer, employee, director code. This code is used to indicate if the party is an employee, officer or director of the financial institution.
+            Officer, employee, director code. This code is used to indicate if the party is an employee, officer, or director of the financial institution.
 
             **Note:** Values are client defined.
 

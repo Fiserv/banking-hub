@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Party Account Relationship Service
-  description: Party account relationship service manages the nature of relationship between a party and a product account. It is used to indicate the primary contact and tax responsible parties as well as state the relationship type between the party and an account.
-  version: 11.0.0_CT-Inq_ByParty_CommercialCenter
+  title: Address Service
+  description: The Address service manages addresses related to parties and product accounts.
+  version: 11.0.0_SIG
 servers:
 - url: /
 paths:
-  /partyacctrel/secured:
-    post:
+  /addrservice/partyacctsvc/address/secured:
+    put:
       tags:
-      - Get Party Account Relationship
-      summary: Get Party Account Relationship
-      description: "Retrieves the relationship-related information between Party and account, such as:<br>\n          <ul>\n          <li>List of all Parties (person or organization) related to an account</li> \n          <li>List of all accounts related to a Party</li>\n          </ul>For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a>\n        <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/riskMgt.md\" title=\"Click to open\">Risk and Performance Management</a></li>\n          </ul>"
-      operationId: PartyAcctRelInqBySecured
+      - Delete Address
+      summary: Delete Address
+      description: "Deletes the existing address record associated with an account or party.\n        <br>\n        For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: deleteAddrByPut
       parameters:
       - name: EFXHeader
         in: header
@@ -25,47 +25,42 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest'
+              $ref: '#/components/schemas/deleteAddrByPutRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse'
+                $ref: '#/components/schemas/deleteAddrByPutResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse'
-      x-group-name: Party Account Relationship Service
-      x-proxy-name: Get Party Account Relationship
+                $ref: '#/components/schemas/deleteAddrByPutResponse'
+      x-group-name: Address Service
+      x-proxy-name: Delete Address
       x-child-product-name: Accountholder
-      x-core: Cleartouch-ByParty_CommercialCenter
+      x-core: Signature
 components:
   schemas:
-    PartyAcctRelInqBySecuredRequest:
+    deleteAddrByPutRequest:
       required:
-      - PartyAcctRelSel
+      - AddrKeys
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_RecCtrlIn'
-        PartyAcctRelSel:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel'
-    PartyAcctRelInqBySecuredResponse:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        AddrKeys:
+          $ref: '#/components/schemas/deleteAddrByPutRequest_AddrKeys'
+    deleteAddrByPutResponse:
       required:
-      - PartyAcctRelRec
+      - AddrStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_RecCtrlOut'
-        PartyAcctRelRec:
-          type: array
-          description: Details of the party-to-account relationship record.
-          items:
-            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelRec'
+        AddrStatusRec:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -252,6 +247,56 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OverrideException:
+          type: array
+          description: List of the exceptions that can be overridden.
+          items:
+            $ref: '#/components/schemas/OverrideExceptionType'
+      description: Details of the exceptions that can be manually acknowledged by the client.
+    OverrideExceptionType:
+      title: OverrideExceptionType
+      type: object
+      properties:
+        SubjectRole:
+          type: string
+          description: Role of the subject who is overriding the exception.
+        SubjectIdent:
+          maxLength: 36
+          type: string
+          description: Subject identification value to identify the subject who is overriding the exception.
+        OvrdExceptionCode:
+          maxLength: 40
+          type: string
+          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
+        OvrdElement:
+          $ref: '#/components/schemas/OvrdElementType'
+    OvrdElementType:
+      title: OvrdElementType
+      type: object
+      description: Information about the elements that corresponds to the override exception code.
+      allOf:
+      - $ref: '#/components/schemas/SubjectElementType'
+      - type: object
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -320,22 +365,6 @@ components:
       - Error
       - Warning
       - Info
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -376,18 +405,7 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    PartyAcctRelInqBySecuredRequest_RecCtrlIn:
-      type: object
-      properties:
-        Cursor:
-          maxLength: 250
-          type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-      description: Maximum number of records to be processed within a single response as specified by the client.
-    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys:
+    deleteAddrByPutRequest_AddrKeys_PartyKeys:
       type: object
       properties:
         PartyId:
@@ -396,42 +414,32 @@ components:
           description: |-
             Unique identification number of a party record.
 
-            **Note:** Refers to Customer number.
-
-            Max length: 9 digits
-      description: Unique information to identify the party record.
-    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel:
+            **Note:** Permanent identifier of a customer.
+      description: "Unique information to identify the party record.\n\n**Note:** To delete an alternate address for a Party (Customer), use PartyKeys aggregate. \n\nOnly one secondary/seasonal address for a party is supported. \n\nPrimary address cannot be deleted.\n\n\n\n\n\n"
+    deleteAddrByPutRequest_AddrKeys_AcctKeys_CardKeys:
       type: object
       properties:
-        PartyKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys'
-      description: Selection criteria for a party-to-account relationship inquiry.
-    PartyAcctRelInqBySecuredResponse_RecCtrlOut:
-      required:
-      - SentRecCount
-      type: object
-      properties:
-        SentRecCount:
-          type: integer
-          description: "Total number of records that matched the selection criteria and returned in the response message.\n\n**Note:** Cleartouch returns a maximum number of records by default in a single response. If more account records are available for a party, then cleartouch will return a value in the cursor field to allow the client application to retrieve the next set of account records. \n\n"
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_PartyKeys:
-      type: object
-      properties:
-        PartyId:
+        CardId:
           maxLength: 36
           type: string
-          description: "Unique identification number of a party record.\n\n**Note:** Refer to the customer number.  This field is a 9-digit field in Cleartouch. "
-      description: Unique information to identify the party record.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys:
+          description: |+
+            Unique identification number of a card maintained by the financial institution. This number is printed on the front side of the card.
+
+            Example: 526466529
+
+            **Note:** The CardId includes the ISO and card number. Maximum 19 digits are allowed in PAN (Primary Account Number).
+
+        CardSeqNum:
+          maxLength: 3
+          type: string
+          description: "Sequence number of a card that refers to the member number to whom the card is issued.\n\n**Note:** Member number is a one-digit number to identify multiple cards for different customers (for example, a wife’s card can have \"1\" and husband’s card can have \"2\" to differentiate the cards). It should be provided in request if member number functionality is supported by the financial institution. "
+      description: |-
+        Unique information to identify a card record.
+
+        **Note:** To delete the address for a card, use CardKeys aggregate.
+
+        Only one secondary/seasonal address for a card is supported.
+    deleteAddrByPutRequest_AddrKeys_AcctKeys:
       required:
       - AcctId
       type: object
@@ -439,140 +447,191 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identification number of an account record.\n\n\n\n\n\n\n\n**Note:** Refers to account number. Cleartouch supports 18 digits in this field. "
+          description: Unique identification number of an account record.
         AcctType:
           type: string
-          description: "Type of an account.\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\"  title=\"Click to open\"> Glossary</a>.\n\n**Note:** Cleartouch supports additional user defined account types. \n\n\n\nHowever, for this service implementation, Cleartouch only supports account types listed below: \n\nDDA - Checking \n\nSDA - Savings \n\nMLA - Mortgage\n\nILA - Consumer\n\nCLA - Commercial \n\n\n\n"
+          description: |-
+            Type of an account.
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+            **Note:** It is required for an AcctType to identify the account.
           enum:
           - DDA
           - SDA
-          - MLA
-          - ILA
-          - CLA
-          - ""
-          - ""
-          - ""
-          - ""
-          - ""
-      description: Details of the account keys to identify an account record.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys:
+          - CDA
+          - LOAN
+          - SDB
+        CardKeys:
+          $ref: '#/components/schemas/deleteAddrByPutRequest_AddrKeys_AcctKeys_CardKeys'
+      description: |+
+        Unique information to identify the account record.
+
+        **Note:** To delete the address for an account, use AcctKeys aggregate.
+
+        Multiple secondary/seasonal addresses for an account is supported but only one address can be deleted with one service request.
+
+
+
+
+
+    deleteAddrByPutRequest_AddrKeys:
       type: object
       properties:
         PartyKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_PartyKeys'
+          $ref: '#/components/schemas/deleteAddrByPutRequest_AddrKeys_PartyKeys'
         AcctKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys'
-      description: Unique information to identify the party-to-account relationship record.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt:
+          $ref: '#/components/schemas/deleteAddrByPutRequest_AddrKeys_AcctKeys'
+        AddressIdent:
+          type: string
+          description: "Unique identifier of an address record.\n\n**Note:** Alternate address type. \n\n\n\nValid value for card and safe deposit box is: \n\n- Alternate\n\n\n\nValid values for DDA, SDA, and CDA are: \n\n- Alternate\n\n- Government\n\n- LegalTitle\n\n- Check\n\n- StatementPrimary\n\n- StatementAdditional (1-5)\n\n\n\nValid additional statement values for RPA and DDA accounts (formerly CAMPlus):\n\n- RPAStatementAddtl (1-5)\n\n- RPAStatementAddtl\n\n\n\nValid values for LOAN are:\n\n- Alternate\n\n- Government\n\n- LegalTitle\n\n- StatementPrimary\n\n- StatementAdditional (1-5)\n\n\n\nNot applicable for a party. \n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+          enum:
+          - Alternate
+          - Government
+          - LegalTitle
+          - Check
+          - StatementPrimary
+          - StatementAdditional1
+          - StatementAdditional2
+          - StatementAdditional3
+          - StatementAdditional4
+          - StatementAdditional5
+          - RPAStatementAddtl1
+          - RPAStatementAddtl2
+          - RPAStatementAddtl3
+          - RPAStatementAddtl4
+          - RPAStatementAddtl5
+          - RPAStatementAddtl
+        AddrType:
+          type: string
+          description: |+
+            Type of address.
+
+            **Note:** To delete an address, AddrType can either be secondary or seasonal.
+
+          enum:
+          - Secondary
+          - Seasonal
+      description: |-
+        Unique information to identify the address record.
+
+        **Note:** Minimum one address keys out of account, party or card should be provided.
+    deleteAddrByPutResponse_AddrStatusRec_AddrKeys_PartyKeys:
       type: object
       properties:
-        Amt:
-          type: number
+        PartyId:
+          maxLength: 36
+          type: string
           description: |-
-            Amount in decimal format.
+            Unique identification number of a party record.
 
-            Example: 10.00
-      description: Details of the currency amount.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctBal:
+            **Note:** Permanent identifier of a customer.
+      description: Unique information to identify a party record.
+    deleteAddrByPutResponse_AddrStatusRec_AddrKeys_AcctKeys_CardKeys:
+      type: object
+      properties:
+        CardId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of a card maintained by the financial institution. This number is printed on the front side of the card.
+
+            Example: 526466529
+
+            **Note:** The CardId includes the ISO and card number. Maximum 19 digits are allowed in PAN (Primary Account Number).
+
+        CardSeqNum:
+          maxLength: 3
+          type: string
+          description: |-
+            Sequence number of a card that refers to the member number to whom the card is issued.
+
+            **Note:** Only applicable if the member number functionality is supported by the financial institution.
+      description: Unique information to identify a card record.
+    deleteAddrByPutResponse_AddrStatusRec_AddrKeys_AcctKeys:
       required:
-      - BalType
-      - CurAmt
-      properties:
-        BalType:
-          type: string
-          description: "Type of the balance.\n\n**Note:** If a loan account is a line of credit, then the available balance may contain an amount. \n\n"
-          enum:
-          - Avail
-          - Current
-          - Sweep
-          - PayOffAmt
-        CurAmt:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt'
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo:
+      - AcctId
       type: object
       properties:
-        AcctDtlStatus:
+        AcctId:
+          maxLength: 36
           type: string
-          description: "Current status of the account.\n\n**Note:** Financial institutions have the option to retrieve only the active accounts or all the accounts (active and closed) by setting up the bank level parameter on Cleartouch core. \n\nIf the bank has the parameter set to not return closed accounts (parameter =0) on Cleartouch core, then the closed accounts will not be returned in this ESF response. If the bank has the parameter set to return closed accounts (parameter = 1), then the closed accounts will be returned in the ESF response. "
-          enum:
-          - Active
-          - Closed
-          - 'Delinquent Dormant '
-          - 'Inactive '
-          - 'Matured NewThisMonth '
-          - 'Purge Repossession '
-        ProductIdent:
-          maxLength: 42
+          description: Unique identification number of an account record.
+        AcctType:
           type: string
           description: |-
-            Unique identifier of a product to indicate the processing options of an account.
+            Type of an account.
 
-            **Note:** Refers to Product type.
-
-            Max length: 3 digits
-        OpenDt:
-          type: string
-          description: "Date on which the account record was created.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        MaturityDt:
-          type: string
-          description: "Maturity date for certificate of deposit or loan.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        Rate:
-          type: number
-          description: Current rate of the account.
-        AcctBal:
-          type: array
-          description: Details of the account balance at the time the debit transaction posted.
-          items:
-            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctBal'
-        AcctMajorType:
-          type: string
-          description: |-
-            Type of major account.
-
-            **Note:** Values are static in Cleartouch.
-      description: Summary details of an account.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef:
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+        CardKeys:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec_AddrKeys_AcctKeys_CardKeys'
+      description: Unique information to identify an address record.
+    deleteAddrByPutResponse_AddrStatusRec_AddrKeys:
       type: object
       properties:
-        AcctSummInfo:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo'
-      description: Reference information of an account object that is part of the relationship.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo:
-      type: object
-      properties:
-        Nickname:
-          maxLength: 80
+        PartyKeys:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec_AddrKeys_PartyKeys'
+        AcctKeys:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec_AddrKeys_AcctKeys'
+        AddressIdent:
           type: string
-          description: Name that customer can assign to an account for easy identification.
-        AcctRef:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef'
-      description: 'Details of a relationship between party and account. '
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelStatus:
+          description: "Unique identifier of an address record.\n\n**Note:** Alternate address type. \n\n\n\nValid value for card and safe deposit box is: \n\n- Alternate\n\n\n\nValid values for DDA, SDA, and CDA are: \n\n- Alternate\n\n- Government\n\n- LegalTitle\n\n- Check\n\n- StatementPrimary\n\n- StatementAdditional (1-5)\n\n\n\nValid additional statement values for RPA and DDA accounts (formerly CAMPlus):\n\n- RPAStatementAddtl (1-5)\n\n- RPAStatementAddtl\n\n\n\nValid values for LOAN are:\n\n- Alternate\n\n- Government\n\n- LegalTitle\n\n- StatementPrimary\n\n- StatementAdditional (1-5)\n\n\n\nNot applicable for a party. \n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+          enum:
+          - Alternate
+          - Government
+          - LegalTitle
+          - Check
+          - StatementPrimary
+          - StatementAdditional1
+          - StatementAdditional2
+          - StatementAdditional3
+          - StatementAdditional4
+          - StatementAdditional5
+          - RPAStatementAddtl1
+          - RPAStatementAddtl2
+          - RPAStatementAddtl3
+          - RPAStatementAddtl4
+          - RPAStatementAddtl5
+          - RPAStatementAddtl
+        AddrType:
+          type: string
+          description: |+
+            Type of address.
+
+            **Note:** To delete an address, AddrType can either be secondary or seasonal.
+
+          enum:
+          - Secondary
+          - Seasonal
+      description: Unique information to identify an address record.
+    deleteAddrByPutResponse_AddrStatusRec_AddrStatus:
       required:
-      - PartyAcctRelStatusCode
+      - AddrStatusCode
       type: object
       properties:
-        PartyAcctRelStatusCode:
+        AddrStatusCode:
           type: string
-          description: Details of party to account relationship.
+          description: Status code of an address.
           enum:
-          - Valid
+          - Deleted
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the party-to-account relationship status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
-      description: Details of party-to-account relationship status.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelRec:
+          description: |-
+            Effective date and time when an address status is changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-12-31T23:59:59.999
+      description: Current status of an address.
+    deleteAddrByPutResponse_AddrStatusRec:
       required:
-      - PartyAcctRelInfo
-      - PartyAcctRelKeys
-      - PartyAcctRelStatus
+      - AddrKeys
+      - AddrStatus
+      type: object
       properties:
-        PartyAcctRelKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys'
-        PartyAcctRelInfo:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo'
-        PartyAcctRelStatus:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelStatus'
+        AddrKeys:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec_AddrKeys'
+        AddrStatus:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec_AddrStatus'
+      description: Response message of the address add, del, modify or delete API call.
