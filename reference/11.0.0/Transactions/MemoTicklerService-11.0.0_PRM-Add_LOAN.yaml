@@ -8,17 +8,17 @@ info:
         Memo and ticklers are used to notify the officers from financial institutions regarding important messages or actions that need to take place when interacting with the customer or performing a transaction to the customer's account.
         <br>
         Memo is a continuous message that does not require any specific action to be taken on it. Tickler is a one-time or recurring message which may require some specific action to be taken.
-  version: 11.0.0_PRM-Del_DDA
+  version: 11.0.0_PRM-Add_LOAN
 servers:
 - url: /
 paths:
-  /memoticklerservice/partyacctsvc/memotickler/secured:
-    put:
+  /memoticklerservice/partyacctsvc/memotickler:
+    post:
       tags:
-      - Delete Memo Tickler
-      summary: Delete Memo Tickler.
-      description: "Deletes a memo or tickler associated with an account or party.\n        <br>\n        For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br>\n        <br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: delMemoTicklerSecured
+      - Add Memo Tickler
+      summary: Add Memo Tickler.
+      description: "Creates a memo or tickler record for an account or party.\n        <br>\n        Memo and tickler are used to notify the officers from financial institutions regarding important messages or actions that need to take place when interacting with the customer or performing a transaction to the customer's account.\n        <br>        \n        For more information about the Accounts and Transactions domain, <a href=\"../docs/?path=docs/fintechs/acct-and-transactions.md\" title=\"Click to open\">click here.</a><br>\n        <br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: MemoTicklerAddOper
       parameters:
       - name: EFXHeader
         in: header
@@ -30,40 +30,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/delMemoTicklerSecuredRequest'
+              $ref: '#/components/schemas/MemoTicklerAddOperRequest'
       responses:
-        "200":
-          description: Success
+        "201":
+          description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/delMemoTicklerSecuredResponse'
+                $ref: '#/components/schemas/MemoTicklerAddOperResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/delMemoTicklerSecuredResponse'
+                $ref: '#/components/schemas/MemoTicklerAddOperResponse'
       x-group-name: Memo Tickler Service
-      x-proxy-name: Delete Memo Tickler
+      x-proxy-name: Add Memo Tickler
       x-child-product-name: Transactions
-      x-core: Premier-DDA
+      x-core: Premier-LOAN
 components:
   schemas:
-    delMemoTicklerSecuredRequest:
+    MemoTicklerAddOperRequest:
       required:
-      - MemoTicklerKeys
+      - MemoTicklerInfo
       properties:
-        MemoTicklerKeys:
-          $ref: '#/components/schemas/delMemoTicklerSecuredRequest_MemoTicklerKeys'
-    delMemoTicklerSecuredResponse:
+        MemoTicklerInfo:
+          $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo'
+    MemoTicklerAddOperResponse:
       required:
       - MemoTicklerStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
         MemoTicklerStatusRec:
-          $ref: '#/components/schemas/delMemoTicklerSecuredResponse_MemoTicklerStatusRec'
+          $ref: '#/components/schemas/MemoTicklerAddOperResponse_MemoTicklerStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -375,7 +375,7 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    delMemoTicklerSecuredRequest_MemoTicklerKeys_AcctKeys:
+    MemoTicklerAddOperRequest_MemoTicklerInfo_AcctKeys:
       required:
       - AcctId
       type: object
@@ -383,42 +383,208 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: Unique account identification number.
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
             Type of an account.
 
+
+
             For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
-          - DDA
+          - LOAN
       description: Unique information to identify the account record.
-    delMemoTicklerSecuredRequest_MemoTicklerKeys:
+    MemoTicklerAddOperRequest_MemoTicklerInfo_RelationshipMgr:
+      required:
+      - RelationshipMgrIdent
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: Client-defined responsibility code to identify the officer responsible for the account.
+        RelationshipRole:
+          type: string
+          description: |-
+            Role of a relationship manager.
+
+
+
+            **Note:** For memos and ticklers, this field identifies the officer.
+          enum:
+          - Officer
+    MemoTicklerAddOperRequest_MemoTicklerInfo_DeliveryInstruction:
+      type: object
+      properties:
+        DeliveryMethod:
+          type: string
+          description: |+
+            Delivery method of a reminder.
+
+
+
+          enum:
+          - Notice
+        DeliveryMedia:
+          type: string
+          description: "Client-defined notification format to generate notification form for ticklers.\n\n**Note:** Refers to  8 1/2\" x 11\" or side-by-side notification form. \n\n\n\nThis field must be entered if the delivery method (notification type) is 'Notice'"
+      description: Instructions to deliver a reminder of memo or tickler.
+    MemoTicklerAddOperRequest_MemoTicklerInfo_RecurRule:
+      type: object
+      properties:
+        RecurType:
+          type: string
+          description: |+
+            Type of recurrence.
+
+
+
+
+
+            **Note:** The supported values of this field are:
+
+            - Daily:Daily (Recurrence Interval 1)
+
+            - Monthly: Monthy (Recurrence Interval 1)
+
+            - Quarterly: Quaterly (Recurrence Interval 1)
+
+            - Semiyearly : SemiYearly (Recurrence Interval 1)
+
+            - Yearly: Yearly ( Recurrence Interval 1)
+
+            - Every 2 years: Yearly ( Recurrence Interval 2)
+
+            - Every 3 years: Yearly ( Recurrence Interval 3)
+
+            - Every 4 years:Yearly ( with Recurrence Interval 4)
+
+            - Every 5 years:Yearly ( with Recurrence Interval 5)
+
+            - One time: Once
+
+            - Payoff: PayOff
+
+          enum:
+          - Daily
+          - Monthly
+          - Quaterly
+          - SemiYearly
+          - Yearly
+          - Once
+          - PayOff
+        RecurInterval:
+          type: integer
+          description: "Recurrence interval between two successive occurrences  of memo or tickler. \n\n\n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1 month interval between the next occurrence.\n\nThe default value is set to 1.\n\n"
+          format: int64
+        LeadDays:
+          type: integer
+          description: |-
+            Total number of lead days prior the event for a review.
+
+            **Note:** Applicable only for loan ticklers.
+          format: int64
+      description: "Details of recurrence rule.\n\n**Note:** Refers to miscellaneous code for memos and ticklers. "
+    MemoTicklerAddOperRequest_MemoTicklerInfo:
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/delMemoTicklerSecuredRequest_MemoTicklerKeys_AcctKeys'
+          $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo_AcctKeys'
         MemoTicklerUse:
           type: string
-          description: |+
+          description: |-
             Value that indicates whether a record is a memo or a tickler.
 
+
+
+            **Note:** This field is not applicable when memo/tickler created for accounts.
           enum:
           - Memo
           - Tickler
-        MemoTicklerIdent:
+        MemoTicklerText:
+          maxLength: 100
+          type: array
+          description: |-
+            Description of memo or tickler.
+
+            **Note:** For ticklers, one description line is accepted and up to 60 characters for LOAN.
+
+
+
+            For memos upto five description lines (60 Char) are accepted.
+          items: {}
+        MemoTicklerExtendedText:
+          maxLength: 80
+          type: array
+          description: |+
+            Additional description of memo or tickler.
+
+            **Note:** For ticklers, an additional message line of 60 characters is accepted.
+
+            This message prints in addition to a standard message from the notification format specifications.
+
+
+
+          items: {}
+        RelationshipMgr:
+          type: array
+          description: Information about the financial institution officers who have management related responsibilities of the MemoTickler.
+          items:
+            $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo_RelationshipMgr'
+        RequiredViewInd:
+          type: boolean
+          description: |-
+            Flag to indicate a memo is displayed on the first page of inquiry.
+
+            **Note:** Refers to priority code in memo.
+        DeliveryInstruction:
+          $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo_DeliveryInstruction'
+        ReportGroupCode:
+          type: string
+          description: "Client-defined code to group the accounts for reporting purposes.\n\n**Note:** Refers to miscellaneous code for memos and ticklers. "
+        RecurRule:
+          $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo_RecurRule'
+        NextMemoTicklerDt:
+          type: string
+          description: "Date on which next memo and tickler is reported.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** When the tickler frequency is monthly or greater, the next tickler date is automatically advanced each time a tickler is reported. \n\nThe date must be advanced manually when the tickler frequency is one time or blank."
+          format: date
+        ExpDt:
+          type: string
+          description: "Date after which a memo and tickler becomes inactive.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+      description: 'Details of memo tickler. '
+    MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
           maxLength: 36
           type: string
-          description: |-
-            Identification code for a memo tickler.
+          description: |+
+            Unique identification number of an account record.
 
-            **Note:** Refers to memo or tickler number.
-      description: Keys to identify a memo tickler record.
-    delMemoTicklerSecuredResponse_MemoTicklerStatusRec_MemoTicklerKeys:
+
+
+
+
+        AcctType:
+          type: string
+          description: "Type  of an account. \n\n\n\nFor more information on account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>."
+          enum:
+          - LOAN
+      description: Unique information to identify the account record.
+    MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerKeys:
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/delMemoTicklerSecuredRequest_MemoTicklerKeys_AcctKeys'
+          $ref: '#/components/schemas/MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerKeys_AcctKeys'
         MemoTicklerUse:
           type: string
           description: |+
@@ -432,7 +598,7 @@ components:
           type: string
           description: Unique identification code to identify a memo tickler.
       description: Unique information to identify a memo tickler record.
-    delMemoTicklerSecuredResponse_MemoTicklerStatusRec_MemoTicklerStatus:
+    MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerStatus:
       required:
       - MemoTicklerStatusCode
       type: object
@@ -449,14 +615,14 @@ components:
           type: string
           description: "Effective date and time value when the status of memo tickler is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
       description: Status details of a memo tickler.
-    delMemoTicklerSecuredResponse_MemoTicklerStatusRec:
+    MemoTicklerAddOperResponse_MemoTicklerStatusRec:
       required:
       - MemoTicklerKeys
       - MemoTicklerStatus
       type: object
       properties:
         MemoTicklerKeys:
-          $ref: '#/components/schemas/delMemoTicklerSecuredResponse_MemoTicklerStatusRec_MemoTicklerKeys'
+          $ref: '#/components/schemas/MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerKeys'
         MemoTicklerStatus:
-          $ref: '#/components/schemas/delMemoTicklerSecuredResponse_MemoTicklerStatusRec_MemoTicklerStatus'
+          $ref: '#/components/schemas/MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerStatus'
       description: Details of updated status of a memo tickler.
