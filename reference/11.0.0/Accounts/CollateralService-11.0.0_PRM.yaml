@@ -147,7 +147,7 @@ paths:
                 $ref: '#/components/schemas/CollateralInqSecuredResponse'
       x-group-name: Collateral Service
       x-proxy-name: Get Collateral
-      x-child-product-name: Accounts
+      x-child-product-name: 'Accounts '
       x-core: Premier
 components:
   schemas:
@@ -201,9 +201,12 @@ components:
     CollateralInqSecuredResponse:
       required:
       - CollateralRec
+      - CollateralSel
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
+        RecCtrlIn:
+          $ref: '#/components/schemas/CollateralInqSecuredRequest_RecCtrlIn'
         RecCtrlOut:
           type: object
           description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
@@ -212,6 +215,8 @@ components:
           description: Details of the collateral record.
           items:
             $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralRec'
+        CollateralSel:
+          $ref: '#/components/schemas/CollateralInqSecuredRequest_CollateralSel'
     ModCollateralRequest:
       required:
       - CollateralInfo
@@ -235,13 +240,17 @@ components:
       type: string
       properties:
         OrganizationId:
+          maxLength: 36
           type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
         VendorId:
+          maxLength: 255
           type: string
-          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
         Context:
           $ref: '#/components/schemas/Context'
       example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
@@ -251,67 +260,84 @@ components:
         ClientAppName:
           maxLength: 40
           type: string
-          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
         Channel:
+          maxLength: 80
           type: string
-          description: Indicates the channel used by the client application.
-        ClientDateTime:
-          type: string
-          description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
-        ClientTerminalSeqNum:
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
           maxLength: 36
           type: string
-          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
           format: int64
         TerminalIdent:
           maxLength: 36
           type: string
-          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
         TerminalAddr1:
           maxLength: 64
           type: string
+          description: Terminal address line 1.
         TerminalAddr2:
           maxLength: 64
           type: string
+          description: Terminal address line 2.
         TerminalAddr3:
           maxLength: 64
           type: string
+          description: Terminal address line 3.
         TerminalAddr4:
           maxLength: 64
           type: string
+          description: Terminal address line 4.
         TerminalCity:
           maxLength: 32
           type: string
+          description: Terminal city name.
         TerminalCounty:
           maxLength: 32
           type: string
+          description: Terminal county name.
         TerminalStateProv:
           maxLength: 32
           type: string
-          description: State Province. ISO 3166-2:US codes.
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
         TerminalPostalCode:
           maxLength: 11
           type: string
-          description: Postal Code is ZipCode in the US.
+          description: 'Postal Code where the terminal is located. '
         TerminalCountryCodeSource:
-          type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - ISO3166Numeric
-          - ISO3166Alpha3
-        TerminalCountryCodeValue:
           maxLength: 80
           type: string
-        PhoneType:
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
         PhoneNum:
           type: string
+          description: Phone number.
         PhoneExchange:
+          maxLength: 80
           type: string
+          description: Phone exchange.
         TerminalOwnerName:
           maxLength: 40
           type: string
@@ -331,47 +357,70 @@ components:
         AcquirerIdent:
           maxLength: 36
           type: string
-          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
         AcquirerCountryCodeSource:
+          maxLength: 80
           type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - US
-          - IND
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
         AcquirerCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
         MerchNum:
           maxLength: 23
           type: string
-          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
         SettlementDate:
           type: string
-          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
           format: date
         SettlementIdent:
           maxLength: 36
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: Identification of the settlement account in which the transaction will be settled.
         BusinessApplIdent:
+          maxLength: 80
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
         BranchIdent:
           maxLength: 22
           type: string
+          description: Branch identification number.
         TellerIdent:
+          maxLength: 80
           type: string
+          description: Teller identification number.
         TillIdent:
+          maxLength: 80
           type: string
+          description: Till identification number.
         AMPMCode:
           type: string
+          description: 'Transaction posting code. '
           enum:
           - AM
           - PM
         ReentryType:
           type: string
+          description: Type of re-entry.
           enum:
           - Manual
           - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
     StatusType:
       title: StatusType
       required:
@@ -1317,12 +1366,12 @@ components:
       properties:
         Count:
           type: integer
-          description: "Duration of the coverage with respect to the time value defined in the TermUnits field. \n\n**Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral."
+          description: "Duration of the insurance coverage with respect to the time value defined in the TermUnits field. \n\n**Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral."
           format: int64
         TermUnits:
           type: string
           description: |-
-            Type of time duration for the insurance coverage.
+            Time duration unit of the insurance coverage.
 
 
 
@@ -1349,17 +1398,12 @@ components:
       properties:
         Count:
           type: integer
-          description: |-
-            Count.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-
-            Also knows as vendor single interest insurance policy.
+          description: "Duration of the insurance coverage with respect to the time value defined in the TermUnits field. \n\n**Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.\n\nAlso knows as vendor single interest insurance policy."
           format: int64
         TermUnits:
           type: string
           description: |-
-            Type of time duration for the insurance coverage.
+            Time duration unit of the insurance coverage.
 
 
 
@@ -2495,7 +2539,7 @@ components:
             **Note:** Amount of cash paid out if the borrower cancels the policy.
         CurCode:
           $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
-      description: Details of policy surrender amount.
+      description: 'Details of cash face value in life insurance that can be used for many purposes, such as a source of loans or cash or to pay policy premiums.  '
     addCollateralRequest_CollateralInfo_LifeInsuranceData:
       type: object
       properties:
@@ -2548,7 +2592,7 @@ components:
           description: |-
             Date from which the insurance policy is effective.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
 
@@ -2661,7 +2705,7 @@ components:
           description: |-
             Date on which the collateral is created.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
         CollateralFilingData:
@@ -2788,7 +2832,7 @@ components:
           description: |-
             Date on which the collateral status is changed.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
       description: Details of the status of a collateral.
@@ -2823,7 +2867,7 @@ components:
 
 
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
       description: Details of the status of a collateral.
@@ -2843,17 +2887,12 @@ components:
       properties:
         MaxRecLimit:
           type: integer
-          description: Maximum number of records in the result set to satisfy the request. If no value is specified, the maximum value of 250 records is sent.
+          description: Maximum number of records in the result set to satisfy the request.
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
-
-
-
-            For more than 250 posted transactions, ESF returns Cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
+          description: Next record pointer to include in the response if additional records are available.
       description: Maximum number of records that client can specify to process within a single response.
     CollateralInqSecuredRequest_CollateralSel_PartyKeys:
       type: object
@@ -3159,19 +3198,6 @@ components:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralValueData_PreviousValueAmt'
         PurchasePriceAmt:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralValueData_PurchasePriceAmt'
-        MarketPricingCode:
-          maxLength: 10
-          type: string
-          description: |-
-            Code to specify the market pricing for the property.
-
-            **Note:** Applicable for collateral type as "Basic".
-        MarketMarginPercent:
-          type: number
-          description: |-
-            Market-assigned percentage value that is used to calculate margin value of the collateral as per market price.
-
-            **Note:** Applicable for collateral type as "Basic".
       description: Details of the collateral valuation.
     CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraisedValueAmt:
       type: object
@@ -3200,145 +3226,6 @@ components:
         CurCode:
           $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
       description: Details of the appraisal fee.
-    CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraisedValueAmt_1:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            **Note:** Applicable when additional appraisal details are added.
-        CurCode:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
-      description: |+
-        Details of the appraisal value of the collateral.
-
-    CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraisalFeeAmt_1:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            **Note:** Applicable when additional appraisal details are added.
-        CurCode:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
-      description: Details of the appraisal fee.
-    CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraiserPostAddr:
-      required:
-      - AddrType
-      type: object
-      properties:
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: Unique address identification value.
-        AddrType:
-          type: string
-          description: Type of the address.
-      description: Details of the postal address of the appraiser.
-    CollateralInqSecuredResponse_CollateralInfo_AppraisalData_ClientDefinedData:
-      required:
-      - DataIdent
-      properties:
-        DataIdent:
-          maxLength: 36
-          type: string
-          description: Data identification value to identify the client-defined data item.
-        Value:
-          maxLength: 256
-          type: string
-          description: Value of the client-defined data item.
-        ExpDt:
-          type: string
-          description: "Date on which client-defined data item expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-    CollateralInqSecuredResponse_CollateralInfo_AppraisalData_CommentData:
-      properties:
-        CommentIdent:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identifier of a comment instance.
-
-        CommentDt:
-          type: string
-          description: "Date on which comment is added.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n"
-          format: date
-        CommentDesc:
-          maxLength: 240
-          type: string
-          description: Description of the comment instance to capture additional details.
-        PriorityInd:
-          type: boolean
-          description: |-
-            Flag to indicate when to display the comment description under which section of the collateral inquiry.
-
-
-
-            - True indicates that the system displays the comment information under the priority comments section and in the comments section under the activity menu of a collateral inquiry.
-
-            - False indicates that the system displays the comment information in the comment section under the activity menu of a collateral inquiry.
-        RelationshipMgr:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_RelationshipMgr_2'
-        ExpDt:
-          type: string
-          description: "Date on which the comment instance expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-    CollateralInqSecuredResponse_CollateralInfo_AppraisalData_RelationshipMgr:
-      required:
-      - RelationshipMgrIdent
-      type: object
-      properties:
-        RelationshipMgrIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identifier for a relationship manager.
-
-            **Note:** Refers to the responsibility code associated with the appraisal.
-      description: Information about financial institution officers who have management-related responsibilities of the account.
-    CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraisalHistory:
-      properties:
-        AppraisalIdent:
-          maxLength: 36
-          type: string
-          description: 'Unique identifier of an appraisal history instance. '
-        AppraisedValueAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraisedValueAmt_1'
-        AppraisedValueDt:
-          type: string
-          description: "Valuation date of appraisal on which the additional appraisal details are added.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Applicable when additional appraisal details are added."
-          format: date
-        AppraisalFeeAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraisalFeeAmt_1'
-        AppraiserIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification code for appraiser.
-
-            **Note:** This field is used to populate company appraiser indentification.
-        AppraiserPostAddr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraiserPostAddr'
-        ClientDefinedData:
-          type: array
-          description: Details of the client-defined data whose definition, data type and value are defined by the client or user.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_ClientDefinedData'
-        CommentData:
-          type: array
-          description: Details of the comments associated with the appraisal instance.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_CommentData'
-        RelationshipMgr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_RelationshipMgr'
-        ExpDt:
-          type: string
-          description: "Date on which the appraisal instance expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Date after which system automatically deletes additional information. \n\nPost this date, system automatically deletes expired information during the update."
-          format: date
     CollateralInqSecuredResponse_CollateralInfo_AppraisalData:
       type: object
       properties:
@@ -3360,13 +3247,6 @@ components:
           format: date
         AppraisalFeeAmt:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraisalFeeAmt'
-        AppraisalHistory:
-          type: array
-          description: |+
-            Details of the appraisal history of the collateral.
-
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_AppraisalHistory'
       description: Details regarding appraisal of the collateral.
     CollateralInqSecuredResponse_CollateralInfo_RepriceData_PriceAmt:
       type: object
@@ -3377,50 +3257,18 @@ components:
         CurCode:
           $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
       description: Details of the previous price.
-    CollateralInqSecuredResponse_CollateralInfo_RepriceData_CommentData:
-      properties:
-        CommentDesc:
-          maxLength: 240
-          type: string
-          description: Description of the comment instance to capture additional details.
-        RelationshipMgr:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_RelationshipMgr_2'
-        ExpDt:
-          type: string
-          description: "Date on which the comment instance expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
     CollateralInqSecuredResponse_CollateralInfo_RepriceData_PriceHistory:
       properties:
-        PriceHistoryIdent:
-          maxLength: 36
-          type: string
-          description: Unique identification code for price history instance.
         PriceAmt:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_RepriceData_PriceAmt'
         PriceDt:
           type: string
           description: "Date of the previous price.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n"
           format: date
-        PostedDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: |-
-            Date and time value when the transaction is posted in the system.
-
-
-
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
-
-            Example: 2021-01-31T23:59:59.999
         Desc:
           maxLength: 100
           type: string
           description: Description to specify the details of the previous price.
-        CommentData:
-          type: array
-          description: Details of the comments associated with the price history instance.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_RepriceData_CommentData'
     CollateralInqSecuredResponse_CollateralInfo_RepriceData:
       type: object
       properties:
@@ -3454,293 +3302,6 @@ components:
         CombinedLTVCurrentBalAmt:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralLoanToValueData_CombinedLTVCurrentBalAmt'
       description: Details of the Loan-To-Value (LTV) ratio based on which the secured loan is provided.
-    CollateralInqSecuredResponse_CollateralInfo_CompanyPostAddr:
-      type: object
-      properties:
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** Refers to company address identification.
-      description: Details of the postal address of the insurance company.
-    CollateralInqSecuredResponse_CollateralInfo_AgencyPostAddr:
-      required:
-      - AddrType
-      type: object
-      properties:
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** Refers to agency address identification.
-        AddrType:
-          type: string
-          description: Type of the address.
-          enum:
-          - Primary
-      description: Details of the postal address of the insurance agency.
-    CollateralInqSecuredResponse_CollateralInfo_PolicyAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-        CurCode:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
-      description: Details of the insurance policy amount.
-    CollateralInqSecuredResponse_CollateralInfo_PolicyDeductAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-        CurCode:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
-      description: |+
-        Details of the amount that a policyholder has to pay before the insurance company starts paying up.
-
-    CollateralInqSecuredResponse_CollateralInfo_CoveragePremiumAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-        CurCode:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
-      description: |+
-        Details of the premium coverage amount of the policy.
-
-    CollateralInqSecuredResponse_CollateralInfo_CoverageDeductAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-        CurCode:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
-      description: Details of the amount payable for covered health care services before the insurance plan starts to pay.
-    CollateralInqSecuredResponse_CollateralInfo_MinimumLimitsAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-        CurCode:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
-      description: Minimum limit amount.
-    CollateralInqSecuredResponse_CollateralInfo_VSITerm:
-      required:
-      - TermUnits
-      type: object
-      properties:
-        Count:
-          type: integer
-          description: 'Duration of the coverage with respect to the time value defined in the TermUnits field. '
-          format: int64
-        TermUnits:
-          type: string
-          description: |+
-            Type of time duration for the insurance coverage.
-
-          enum:
-          - Unknown
-      description: Details of the term for which VSI insurance is applicable.
-    CollateralInqSecuredResponse_CollateralInfo_CoverageData:
-      required:
-      - CoverageType
-      properties:
-        CoverageType:
-          type: string
-          description: |-
-            Value that specifies the type of coverage applicable for the collateral.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-          enum:
-          - AllHullRisk
-          - Collision
-          - Comprehensive
-          - Fire
-          - Liability
-          - Theft
-          - Homeowners
-          - Flood
-        CoverageInd:
-          type: boolean
-          description: |-
-            Flag to indicate if the insurance coverage is in effect for the collateral.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-    CollateralInqSecuredResponse_CollateralInfo_CollateralInsuranceData:
-      properties:
-        InsuranceIdent:
-          maxLength: 36
-          type: string
-          description: Unique identification code for the instance of the CollateralInsuranceData field.
-        InsuranceType:
-          type: string
-          description: "Type of insurance.\n\n**Note:** \n\n- Use \"Other\" for any type of insurance \n\n- Use \"RealEstate\" for insurance of real estate specific property as collateral."
-          enum:
-          - Other
-          - RealEstate
-        CompanyIdent:
-          maxLength: 60
-          type: string
-          description: |-
-            Name of the insurance company.
-
-            **Note:** This field is used to populate company indentification.
-        CompanyPostAddr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CompanyPostAddr'
-        AgentIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Identification code of the insurance agent.
-
-            **Note:** Refers to agent identification.
-        AgencyIdent:
-          maxLength: 60
-          type: string
-          description: |-
-            Name of the insurance agency.
-
-            **Note:** Refers to agency identification.
-        AgencyPostAddr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AgencyPostAddr'
-        PolicyNum:
-          maxLength: 40
-          type: string
-          description: |-
-            Unique identification number of the policy
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-        PolicyAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_PolicyAmt'
-        PolicyDeductAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_PolicyDeductAmt'
-        CoveragePremiumAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CoveragePremiumAmt'
-        CoverageDeductAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CoverageDeductAmt'
-        MinimumLimitsAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_MinimumLimitsAmt'
-        OtherCoverageDesc:
-          maxLength: 40
-          type: string
-          description: Description for other coverage available for the collateral.
-        CoverageTerm:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CoverageTerm'
-        InsuranceEffDt:
-          type: string
-          description: "Date from which the insurance coverage is effective.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        InsuranceExpDt:
-          type: string
-          description: "Date on which the insurance coverage expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        VSIPremiumAmt:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_VSIPremiumAmt'
-        VSITerm:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_VSITerm'
-        LastInsurReviewDt:
-          type: string
-          description: "Review date of last insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        NextInsurReviewDt:
-          type: string
-          description: "Review date of next insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        CoverageData:
-          type: array
-          description: Details that describe the type of coverage applicable for the collateral under the insurance.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CoverageData'
-        RelationshipMgr:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_RelationshipMgr_1'
-        ExpDt:
-          type: string
-          description: "Expiry date on which the information related to the collateral insurance automatically gets deleted.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n\n\n**Note:** Date after which system automatically deletes additional information. \n\nPost this date, system automatically deletes expired information during the update."
-          format: date
-        ClientDefinedData:
-          type: array
-          description: Details of the client-defined data whose definition, data type and value are defined by the client or user.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_ClientDefinedData'
-        CommentData:
-          type: array
-          description: Details of the comments associated with the insurance data instance.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_CommentData'
-    CollateralInqSecuredResponse_CollateralInfo_RelationshipMgr:
-      required:
-      - RelationshipMgrIdent
-      type: object
-      properties:
-        RelationshipMgrIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identifier for a relationship manager.
-
-            **Note:** Responsibility code associated with the UCC filing history record.
-      description: Information about financial institution officers who have management-related responsibilities of the account.
-    CollateralInqSecuredResponse_CollateralInfo_FilingHistory:
-      properties:
-        FilingIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification code for filing history instance.
-
-            **Note:** FilingHistory instance start with number 1. If multiple instance exists, then add 1 to each new instance.
-        FilingNum:
-          type: integer
-          description: Number that specifies the latest or current filing for the collateral.
-          format: int64
-        FilingDt:
-          type: string
-          description: "Date on which filing for collateral is filed.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-        FilingAmendmentType:
-          type: string
-          description: |+
-            Information that specifies the type of amendment for collateral filing.
-
-        ClientDefinedData:
-          type: array
-          description: Details of the client-defined data whose definition, data type and value are defined by the client or user.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_ClientDefinedData'
-        CommentData:
-          type: array
-          description: Details of the comments associated with the collateral filing history instance.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_CommentData'
-        RelationshipMgr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_RelationshipMgr'
-        ExpDt:
-          type: string
-          description: "Date on which the collateral filing information expires.\n\n\n\nFormat: yyyy-mm-dd  \n\nExample: 2021-11-20\n\n**Note:** Date after which system automatically deletes additional information. \n\nPost this date, system automatically deletes expired information during the update."
-          format: date
     CollateralInqSecuredResponse_CollateralInfo_CollateralFilingData:
       properties:
         FilingDesc:
@@ -3779,12 +3340,7 @@ components:
           - Continuation
           - CollateralAmendment
           - PartyAmendment
-        FilingHistory:
-          type: array
-          description: Details of the collateral filing history.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_FilingHistory'
-    CollateralInqSecuredResponse_CollateralInfo_RelationshipMgr_1:
+    CollateralInqSecuredResponse_CollateralInfo_RelationshipMgr:
       required:
       - RelationshipMgrIdent
       properties:
@@ -3813,24 +3369,6 @@ components:
         CurCode:
           $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
       description: Details of the lien amount.
-    CollateralInqSecuredResponse_CollateralInfo_LienHolderPostAddr:
-      required:
-      - AddrType
-      type: object
-      properties:
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** This field refers to lien holder's address identification.
-        AddrType:
-          type: string
-          description: Type of the address.
-          enum:
-          - Primary
-      description: Details of the postal address of the lien holder.
     CollateralInqSecuredResponse_CollateralInfo_LienAmt:
       type: object
       properties:
@@ -3840,66 +3378,8 @@ components:
         CurCode:
           $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
       description: Amount of the lien on the collateral.
-    CollateralInqSecuredResponse_CollateralInfo_CommentData:
-      properties:
-        CommentIdent:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identifier of a comment instance.
-
-        CommentDt:
-          type: string
-          description: "Date on which comment is added.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n"
-          format: date
-        CommentDesc:
-          maxLength: 240
-          type: string
-          description: Description of the comment instance to capture additional details.
-        PriorityInd:
-          type: boolean
-          description: |-
-            Flag to indicate when to display the comment description under which section of the collateral inquiry.
-
-
-
-            - True indicates that the system displays the comment information under the priority comments section and in the comments section under the activity menu of a collateral inquiry.
-
-            - False indicates that the system displays the comment information in the Comment section under the activity menu of a collateral inquiry.
-        RelationshipMgr:
-          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_RelationshipMgr_2'
-        ExpDt:
-          type: string
-          description: "Date on which the comment instance expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-    CollateralInqSecuredResponse_CollateralInfo_RelationshipMgr_2:
-      required:
-      - RelationshipMgrIdent
-      type: object
-      properties:
-        RelationshipMgrIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identifier for a relationship manager.
-
-            **Note:** Responsibility code associated with the lien holder history record.
-      description: Information about financial institution officers who have management-related responsibilities of the account.
     CollateralInqSecuredResponse_CollateralInfo_LienHolderData:
       properties:
-        LienHolderIdent:
-          maxLength: 36
-          type: string
-          description: Unique identifier for the lienholder record.
-        LienHolderNameIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification code for the name of lien holder.
-
-            **Note:** This field refers to lien holder identification.
-        LienHolderPostAddr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_LienHolderPostAddr'
         LienHolderType:
           type: string
           description: 'Type of lien holder. '
@@ -3923,7 +3403,7 @@ components:
         LienSignersNum:
           maxLength: 10
           type: string
-          description: Lien Signers Number.
+          description: Number of lien signers.
         LienAcct:
           maxLength: 20
           type: string
@@ -3938,20 +3418,6 @@ components:
           type: string
           description: "Due date of the lien account.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
-        LienExpDt:
-          type: string
-          description: "Date after which lien on the collateral expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Date after which system automatically deletes additional information. \n\nPos this date, system automatically deletes expired information during the update."
-          format: date
-        ClientDefinedData:
-          type: array
-          description: Details of the client-defined data whose definition, data type and value are defined by the client or user.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_ClientDefinedData'
-        CommentData:
-          type: array
-          description: "Details of the comments associated with the collateral lienholder instance. \n\nEach lien holder instance can have multiple comments. They are related based on the LienHolderIdent. As a default core behavior, Multiple comments against a ResponsibilityCode for the same LientHolderIdent may not be allowed.\n\n**Note:** Each lien holder instance can have multiple comments. They are related based on the LienHolderIdent."
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CommentData'
         LienTransactionPurpose:
           type: string
           description: Additional information that specifies the purpose of the lien transaction.
@@ -3963,7 +3429,7 @@ components:
         PledgePriority:
           maxLength: 6
           type: string
-          description: Lien pledge priority.
+          description: Priority of the lien pledge for satifying a debt.
         LienPosition:
           maxLength: 10
           type: string
@@ -3999,11 +3465,11 @@ components:
         Image:
           maxLength: 30
           type: string
-          description: Image.
+          description: Image document for lien hold record.
         LienExclusionOption:
           maxLength: 10
           type: string
-          description: Lien Exclusion Option.
+          description: Option to specify exclusion from the lien. If exclusion is specified then the collateral cannot be used for satisfying the debt.
         LienDesc:
           maxLength: 60
           type: string
@@ -4012,8 +3478,6 @@ components:
           maxLength: 20
           type: string
           description: Unique certificate number that the Federal Insurance of Deposit Corporation (FDIC) agency issues to the institution.
-        RelationshipMgr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_RelationshipMgr_2'
     CollateralInqSecuredResponse_CollateralInfo_DateData:
       properties:
         DateType:
@@ -4029,7 +3493,7 @@ components:
 
 
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
     CollateralInqSecuredResponse_CollateralInfo_VehicleData:
@@ -4104,7 +3568,7 @@ components:
 
 
 
-            Note: Applies to basic collateral type.
+            Applies to basic collateral type.
         MarketMarginPercent:
           type: number
           description: Market-assigned percentage value that is used to calculate margin value of the collateral as per market price.
@@ -4131,24 +3595,12 @@ components:
           - SubstantiallyRehabilitated
           - UnderConstruction
         NumberOfUnits:
-          type: string
+          type: integer
           description: Number of units used to specify the property in terms of lots.
-          enum:
-          - use 04
+          format: int64
         LegalData:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_PropertyData_LegalData'
       description: Details of the property used as collateral.
-    CollateralInqSecuredResponse_CollateralInfo_DepositAcctCollateralData_IssuerPostalAddr:
-      type: object
-      properties:
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** This field refers to deposit issuer address identification.
-      description: Details of the postal address of the issuer
     CollateralInqSecuredResponse_CollateralInfo_DepositAcctCollateralData_HoldAmt:
       type: object
       properties:
@@ -4161,15 +3613,6 @@ components:
     CollateralInqSecuredResponse_CollateralInfo_DepositAcctCollateralData:
       type: object
       properties:
-        IssuerIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification code for issuer.
-
-            **Note:** This field refers to deposit account issuer identification.
-        IssuerPostalAddr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_DepositAcctCollateralData_IssuerPostalAddr'
         AcctId:
           maxLength: 36
           type: string
@@ -4194,48 +3637,10 @@ components:
         ExternalInd:
           type: boolean
           description: Flag to indicate the deposit account is an external account to the bank.
-        MaturityDt:
-          type: string
-          description: "Maturity date of the deposit account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Applicable for collateral type as \"deposit accounts\"."
-          format: date
       description: Details of the deposit account used as collateral.
-    CollateralInqSecuredResponse_CollateralInfo_CommodityData_BrokerPostAddr:
-      required:
-      - AddrType
-      type: object
-      properties:
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** This field refers to commodity broker address identification.
-        AddrType:
-          type: string
-          description: Type of the address.
-          enum:
-          - Primary
-      description: Details of the postal address of the broker.
     CollateralInqSecuredResponse_CollateralInfo_CommodityData:
       type: object
       properties:
-        IssuerIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification code for issuer.
-
-            **Note:** This field refers to commodity issuer identification.
-        BrokerIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Name of the broker.
-
-            **Note:** This is field refers to commodity broker identification.
-        BrokerPostAddr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CommodityData_BrokerPostAddr'
         CommodityType:
           type: string
           description: Type of commodity.
@@ -4265,56 +3670,6 @@ components:
           type: string
           description: Number of shares or certificates representing the ownership in a business.
       description: Details of the investment commodity used as collateral.
-    CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_CompanyPostAddr:
-      type: object
-      properties:
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** This field refers to life insurance company address identification.
-      description: Details of the postal address of the insurance company.
-    CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_PurchaserPostAddr:
-      required:
-      - AddrType
-      properties:
-        AddressIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique address identification value.
-
-            **Note:** This field refers to life insurance purchaser address identification.
-        AddrUse:
-          type: string
-          description: |-
-            Usage of the address.
-
-            **Note:** This field indicate when address corresponds to the mailing address of the policy owner.
-          enum:
-          - Mailing
-        AddrType:
-          type: string
-          description: Type of the address.
-          enum:
-          - Primary
-    CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_PartyKeys:
-      type: object
-      properties:
-        PartyId:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification number of a party record.
-
-            **Note:** This field refers to life insurance beneficiary identification.
-      description: Unique information to identify the party record.
-    CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_BeneficiaryData:
-      properties:
-        PartyKeys:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_PartyKeys'
     CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_FaceValueAmt:
       type: object
       properties:
@@ -4340,32 +3695,6 @@ components:
           maxLength: 40
           type: string
           description: Unique identification number of the policy.
-        CompanyIdent:
-          maxLength: 60
-          type: string
-          description: |-
-            Name of the insurance company.
-
-            **Note:** This field refers to life insurance company identification.
-        CompanyPostAddr:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_CompanyPostAddr'
-        PurchaserIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification code of the insurance owner or purchaser.
-
-            **Note:** This field refers to life insurance purchaser identification.
-        PurchaserPostAddr:
-          type: array
-          description: Details of the postal address of the insurance purchaser.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_PurchaserPostAddr'
-        BeneficiaryData:
-          type: array
-          description: Details of the beneficiary party benefited from insurance policy.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_LifeInsuranceData_BeneficiaryData'
         Desc:
           maxLength: 100
           type: string
@@ -4424,9 +3753,6 @@ components:
             **Note:** Collateral is imparied if the IneligibleAmount > 0 or if CollateralCalcMethod is 3 or 4.
         ImpairedAmt:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_ImpairedAmt'
-        PropertyTypeCode:
-          type: string
-          description: Client-defined code to classify the type of property used as collateral.
         CollateralDetailStatus:
           type: string
           description: Client-defined status of the collateral.
@@ -4464,11 +3790,6 @@ components:
           - Other
         CollateralLoanToValueData:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralLoanToValueData'
-        CollateralInsuranceData:
-          type: array
-          description: Details of the collateral insurance.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralInsuranceData'
         LastReviewDt:
           type: string
           description: "Date on which collateral is last reviewed.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
@@ -4487,7 +3808,7 @@ components:
           description: |-
             Date on which the collateral is created.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
         CollateralFilingData:
@@ -4502,7 +3823,7 @@ components:
           type: array
           description: Information about financial institution officers who have management-related responsibilities of the account.
           items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_RelationshipMgr_1'
+            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_RelationshipMgr'
         OriginatingBranch:
           maxLength: 32
           type: string
@@ -4546,27 +3867,6 @@ components:
           description: Details of the additional date types and values associated to the account.
           items:
             $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_DateData'
-        ClientDefinedData:
-          type: array
-          description: Details of the client-defined data whose definition, data type and value are defined by the client or user.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_ClientDefinedData'
-        OccupancyType:
-          maxLength: 30
-          type: string
-          description: |-
-            Owner occupancy code
-
-
-
-            **Note:** Client-defined code that indicates how the borrower uses the collateral.
-
-            Applicable for collateral type as "basic".
-        CommentData:
-          type: array
-          description: Details of the general comments associated with the collateral.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_CommentData'
         VehicleData:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_VehicleData'
         PropertyData:
@@ -4599,7 +3899,7 @@ components:
 
 
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
       description: Details of the status of a collateral.
@@ -4888,6 +4188,18 @@ components:
           items:
             $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_AppraisalData_AppraisalHistory'
       description: Details regarding appraisal of the collateral.
+    ModCollateralRequest_CollateralInfo_RepriceData_CommentData:
+      properties:
+        CommentDesc:
+          maxLength: 240
+          type: string
+          description: Description of the comment instance to capture additional details.
+        RelationshipMgr:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_RelationshipMgr_2'
+        ExpDt:
+          type: string
+          description: "Date on which the comment instance expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
     ModCollateralRequest_CollateralInfo_RepriceData_PriceHistory:
       properties:
         PriceHistoryIdent:
@@ -4914,7 +4226,7 @@ components:
 
             **Note:** Only one comment on price history can exist.
           items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_RepriceData_CommentData'
+            $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_RepriceData_CommentData'
     ModCollateralRequest_CollateralInfo_RepriceData:
       type: object
       properties:
@@ -4970,33 +4282,6 @@ components:
       description: |+
         Details of the amount that a policyholder has to pay before the insurance company starts paying up.
 
-    ModCollateralRequest_CollateralInfo_VSITerm:
-      required:
-      - TermUnits
-      type: object
-      properties:
-        Count:
-          type: integer
-          description: |-
-            Count.
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-
-            Also knows as vendor single interest insurance policy.
-          format: int64
-        TermUnits:
-          type: string
-          description: |-
-            Detail of collateral filing data to identify types of formal filings initiated by the organization about the collateral item.
-
-
-
-            Example: UCC filing
-
-            **Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral.
-          enum:
-          - Unknown
-      description: Details of the term for which VSI insurance is applicable.
     ModCollateralRequest_CollateralInfo_ClientDefinedData:
       required:
       - DataIdent
@@ -5123,7 +4408,7 @@ components:
         VSIPremiumAmt:
           $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_VSIPremiumAmt'
         VSITerm:
-          $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_VSITerm'
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_VSITerm'
         LastInsurReviewDt:
           type: string
           description: "Review date of last insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Applicable in case of additional insurance details. Insurance can be used to secure the different types of collateral."
@@ -5153,6 +4438,22 @@ components:
           description: "Details of the comments associated with the insurance data instance.\n\n**Note:** Each insurance can have multiple comments and are based on the InsuranceIdent. \n\nBy default, service provider may not allow multiple comments against a ResponsibilityCode for the same InsuranceIdent."
           items:
             $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_CommentData'
+    ModCollateralRequest_CollateralInfo_ClientDefinedData_1:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Data identification value to identify the client-defined data item.
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+        ExpDt:
+          type: string
+          description: "Date on which client-defined data item expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
     ModCollateralRequest_CollateralInfo_CommentData_1:
       properties:
         CommentIdent:
@@ -5225,7 +4526,7 @@ components:
           type: array
           description: Details of the client-defined data whose definition, data type and value are defined by the client or user.
           items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_AppraisalData_ClientDefinedData'
+            $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_ClientDefinedData_1'
         CommentData:
           type: array
           description: "Details of the comments associated with the collateral filing history instance.\n\n**Note:** Each UCC filing can have multiple comments and are related  based on the FilingIdent. \n\nBy default, service provider may not allow multiple comments against a ResponsibilityCode for the same FilingIdent."
@@ -5311,7 +4612,7 @@ components:
         CurCode:
           $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
       description: Details of the lien amount.
-    ModCollateralRequest_CollateralInfo_ClientDefinedData_1:
+    ModCollateralRequest_CollateralInfo_ClientDefinedData_2:
       required:
       - DataIdent
       properties:
@@ -5401,7 +4702,7 @@ components:
         LienSignersNum:
           maxLength: 10
           type: string
-          description: Lien signers number
+          description: Number of lien signers.
         LienAcct:
           maxLength: 20
           type: string
@@ -5417,7 +4718,7 @@ components:
           format: date
         LienAcctMatDt:
           type: string
-          description: "Due date of the lien account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Maturity date of the lien account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         LienExpDt:
           type: string
@@ -5438,7 +4739,7 @@ components:
           maxLength: 6
           type: string
           description: |-
-            Lien Pledge Priority
+            Priority of the lien pledge for satifying a debt.
 
             **Note:** *Required field*
 
@@ -5494,7 +4795,7 @@ components:
           type: array
           description: Details of the client-defined data whose definition, data type and value are defined by the client or user.
           items:
-            $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_ClientDefinedData_1'
+            $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_ClientDefinedData_2'
         CommentData:
           type: array
           description: "Details of the comments associated with the collateral lienholder instance.\n\n**Note:** Each lien holder instance can have multiple comments and are based on the LienHolderIdent. \n\nBy default, service provider may not allow multiple comments against a ResponsibilityCode for the same LienHolderIdent."
@@ -5928,7 +5229,7 @@ components:
           description: |-
             Date from which the insurance policy is effective.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
 
@@ -6007,7 +5308,7 @@ components:
           description: |-
             Date on which the collateral is created.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
         CollateralFilingData:
@@ -6073,7 +5374,7 @@ components:
           type: array
           description: Details of the client-defined data whose definition, data type and value are defined by the client or user.
           items:
-            $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_ClientDefinedData_1'
+            $ref: '#/components/schemas/ModCollateralRequest_CollateralInfo_ClientDefinedData_2'
         OccupancyType:
           maxLength: 30
           type: string
