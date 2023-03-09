@@ -88,12 +88,12 @@ The following example shows the sample request payload for **Get Account Hold** 
 ```
 
 
-**Response Message**
+## Response Message
 
 Upon a successful API request, a response payload is received. The response payload contains the status and the returned details of the requested API in key-value pairs. The default response format is JSON. 
 
 
-**Response Payload**
+### Response Payload
 
 The following example shows the sample response payload for **Get Account Hold** API request.
 
