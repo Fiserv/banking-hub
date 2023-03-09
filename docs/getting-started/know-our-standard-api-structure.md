@@ -22,7 +22,10 @@ For security reasons, all API methods are set to POST or PUT, irrespective of th
 
 Request URL is formed by appending Host URL and API path. 
 
-**Request URL = Host URL + API path**
+<!-- theme: info -->
+>
+> **Request URL = Host URL + API path**
+
 
 To get Host URL, go to API key section of your Workspace. The API path along with the method (POST or PUT) is listed under the API Explorer section of that API on Fiserv Developer Studio. 
 Refer the following example to construct a request URL for **AcctAdd** API:
@@ -63,26 +66,23 @@ The request body of an API changes based on the type of transaction being proces
 
 **Request Payload** 
 
-The following example shows the sample request payload for **Get Account Hold** API request.
+The following example shows the sample request payload for **Get Party List** API request.
 
 ```
 {
-  "AcctHoldSel": {
-    "AcctHoldKeys": [
-      {
-        "AcctKeys": {
-          "AcctId": "string",
-          "AcctType": "string"
-        },
-        "AcctHoldIdent": "string"
-      }
-    ],
-    "AcctKeys": [
-      {
-        "AcctId": "string",
-        "AcctType": "string"
-      }
-    ]
+  "RecCtrlIn": {
+    "MaxRecLimit": 0,
+    "Cursor": "string"
+  },
+  "PartyListSel": {
+    "Name": "string",
+    "NameSearchCode": "string",
+    "NameTypeOption": "string",
+    "TaxIdent": "string",
+    "Phone": "string",
+    "EmailAddr": "string",
+    "AcctId": "string",
+    "AcctType": "string"
   }
 }
 ```
@@ -95,7 +95,7 @@ Upon a successful API request, a response payload is received. The response payl
 
 ### Response Payload
 
-The following example shows the sample response payload for **Get Account Hold** API request.
+The following example shows the sample response payload for **Get Party List** API request.
 
 ```
 {
@@ -139,65 +139,77 @@ The following example shows the sample response payload for **Get Account Hold**
   "RecCtrlOut": {
     "SentRecCount": 0
   },
-  "AcctHoldRec": [
+  "PartyListRec": [
     {
-      "AcctHoldKeys": {
-        "AcctKeys": {
-          "AcctId": "string",
-          "AcctType": "string"
-        },
-        "AcctHoldIdent": "string"
+      "PartyKeys": {
+        "PartyId": "string"
       },
-      "AcctHoldInfo": {
-        "AcctRef": {
-          "AcctKeys": {
-            "AcctId": "string",
-            "AcctType": "string"
-          }
-        },
-        "CurAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "RelationshipMgr": [
+      "PersonPartyListInfo": {
+        "PartySelType": "string",
+        "Contact": [
           {
-            "RelationshipMgrIdent": "string",
-            "RelationshipRole": "string"
+            "PhoneNum": {
+              "PhoneType": "string",
+              "PhoneTypeEnumDesc": "string",
+              "Phone": "string",
+              "PreferredPhone": true,
+              "PhoneDesc": "string"
+            },
+            "PostAddr": {
+              "AddrFormatType": "string",
+              "Addr1": "string",
+              "Addr2": "string",
+              "City": "string",
+              "StateProv": "string",
+              "PostalCode": "string",
+              "AddrType": "string"
+            },
+            "Email": {
+              "EmailAddr": "string"
+            }
           }
         ],
-        "ReportGroupCode": "string",
-        "SecuredAcctRef": {
-          "AcctKeys": {
-            "AcctId": "string",
-            "AcctType": "string"
-          }
+        "TaxIdentType": "string",
+        "TaxIdent": "string",
+        "PersonName": {
+          "NameType": "string",
+          "FullName": "string",
+          "FamilyName": "string",
+          "GivenName": "string",
+          "MiddleName": "string"
         },
-        "MaxPledgeAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "HoldReason": [],
-        "ExpDt": "string",
-        "EffDt": "string",
-        "AcctHoldOption": "string",
-        "AcctHoldIdent": "string",
-        "PendingHoldAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "PendingHoldDt": "string"
+        "BirthDt": "string"
       },
-      "AcctHoldStatus": {
-        "AcctHoldStatusCode": "string",
+      "OrgPartyListInfo": {
+        "PartySelType": "string",
+        "Contact": [
+          {
+            "PhoneNum": {
+              "PhoneType": "string",
+              "PhoneTypeEnumDesc": "string",
+              "Phone": "string",
+              "PreferredPhone": true
+            },
+            "PostAddr": {
+              "AddrFormatType": "string",
+              "Addr1": "string",
+              "Addr2": "string",
+              "City": "string",
+              "StateProv": "string",
+              "PostalCode": "string",
+              "AddrType": "string"
+            }
+          }
+        ],
+        "TaxIdentType": "string",
+        "TaxIdent": "string",
+        "OrgName": {
+          "NameType": "string",
+          "Name": "string"
+        }
+      },
+      "PartyStatus": {
+        "PartyStatusCode": "string",
         "EffDt": "string"
       }
     }
@@ -205,4 +217,4 @@ The following example shows the sample response payload for **Get Account Hold**
 }
 ```
 
-To view the API documentation of **Get Account Hold** API in API Explorer, [click here](../api/?type=post&path=/accountHolds/secured).
+To view the API documentation of **Get Party List** API in API Explorer, [click here](../api/?type=post&path=/partyservice/parties/parties/secured/list).
