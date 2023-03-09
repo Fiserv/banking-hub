@@ -6,11 +6,11 @@ This section describes a standard structure of request and response message of B
 
 All API requests must contain the following components:
 
-*	<a href="?path=docs/getting-started/know-our-standard-api-structure.md#api-method">API Method</a>
-* <a href="?path=docs/getting-started/know-our-standard-api-structure.md#request-url">Request URL</a>
-* <a href="?path=docs/getting-started/know-our-standard-api-structure.md#access-token">Access Token</a>
-*	<a href="?path=docs/getting-started/know-our-standard-api-structure.md#request-header">Request Header</a>
-*	<a href="?path=docs/getting-started/know-our-standard-api-structure.md#request-body">Request Body</a>
+*	[API Method](#api-method)
+* [Request URL](#request-url)
+* [Access Token](#access-token)
+*	[Request Header](#request-header)
+*	[Request Body](#request-body)
 
 For every API request, a response message is obtained that contains a response payload and the status of the API request.
 
