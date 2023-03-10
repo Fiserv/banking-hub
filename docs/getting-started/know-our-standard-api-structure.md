@@ -23,20 +23,18 @@ For security reasons, all API methods are set to POST or PUT, irrespective of th
 Request URL is formed by appending Host URL and API path. 
 
 <!-- theme: info -->
->
 > **Request URL = Host URL + API path**
 
 
 To get Host URL, go to API key section of your Workspace. The API path along with the method (POST or PUT) is listed under the API Explorer section of that API on Fiserv Developer Studio. 
-Refer the following example to construct a request URL for **AcctAdd** API:
+Refer the following example to construct a request URL for [**Add Account**](../api/?type=post&path=/acctservice/acctmgmt/accounts) API:
 
-![image](https://user-images.githubusercontent.com/81968767/220958005-84e01e43-ff91-4240-a1d7-0e4a888655d5.png)
+![image](https://user-images.githubusercontent.com/81968767/224235588-d0eb8fd0-6408-475e-99ba-a0a7b06c95b2.png)
 
 
 If host URL of the product is https://cert.api.fiservapps.com/banking/efx/v1/, then request URL will be:
 
 ![image](https://user-images.githubusercontent.com/81968767/220958136-563f1974-a241-42e5-886c-e00e5af08ce0.png)
-
 
 
 ### Access Token
