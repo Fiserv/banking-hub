@@ -2,13 +2,12 @@
 <!-- theme: info -->
 > #### Note for Developers 
 >
-> The current user journey enables developers to access a range of Standard Bank Platform APIs on Banking Hub. We continue to refine the API content on Banking Hub with the goal of showing clearly how our Banking Hub APIs facilitate integration to each of our banking solutions.
+> The current user journey enables developers to register for a trail plan that provides access to a range of Standard Bank Platform APIs on Banking Hub. 
 
-
-Register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test using the <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a> of your choice. However, registration is not required to learn about our APIs and reference documentation.
+Before you start integration, it is important to register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test APIs using the <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a> of your choice. However, registration is not required to learn about our APIs and reference documentation.
 
 ## Register on Fiserv Developer Studio
-This section describes a process to create an account on Fiserv Developer Studio and a process to create a workspace to obtain credentials for sandbox testing.
+This section describes a process to create an account and workspace on Fiserv Developer Studio to obtain credentials for sandbox testing.
 
 ### Creating an Account
 
@@ -107,6 +106,7 @@ From the Body tab, select the **x-www-form-urlencoded** radio button and enter t
     "token_type": "Bearer"
 }
 ```
+
 
 <kbd>
     <img src="https://user-images.githubusercontent.com/85101648/221878635-c859cc8d-98a3-47a3-8e57-2299af44b26e.gif" />
