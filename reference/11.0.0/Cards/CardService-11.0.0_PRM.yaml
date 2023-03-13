@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: Card Service
-  description: "The Card service provides administration in respect to creation, modification, inquiry, and deletion of any type of EFT cards used by the holders. It supports operations managing the credit, debit, prepaid and private label cards."
+  description: The Card service provides administration in respect to creation, modification, inquiry, and deletion of any type of EFT cards used by the holders. It supports operations managing the credit, debit, prepaid and private label cards.
   version: 11.0.0_PRM
 servers:
 - url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/CardService/11.0.0_PRM
@@ -229,7 +229,7 @@ components:
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
         CardStatusRec:
-          $ref: '#/components/schemas/CardAddOperResponse_CardStatusRec'
+          $ref: '#/components/schemas/CardModOperResponse_CardStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -421,52 +421,10 @@ components:
       title: OvrdExceptionDataType
       type: object
       properties:
-        OverrideException:
-          type: array
-          description: List of the exceptions that can be overridden.
-          items:
-            $ref: '#/components/schemas/OverrideExceptionType'
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -535,6 +493,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -654,6 +628,15 @@ components:
             OwnerSigner relationship is commonly used for party to card relationship.
           enum:
           - Owner
+          - Signer
+          - OwnerSigner
+          - JointTenancy
+          - Executor
+          - Trustee
+          - Borrower
+          - CoBorrower
+          - Custodian
+          - DoingBusinessAs
         PartyCardRelOrder:
           type: string
           description: "Relationship order of a party with card.\n\nIndicates the relationship order for JointTenancy or JointTenantsInCommon. \n\n**Note:** Parties having first, second and third relationship order are considered to be the main names and, only one party can be associated with first/second/third relationship order on the card. Relationship order value of 'Other' is commonly used for relationships other than OwnerSigner, signer and owner. One party can have multiple 'Other' type of relationship orders on card. If mailing name option parameter is set up at financial institution, then first, second and third names can be used for inquiry or account related mailing purpose. If mailing name option parameter is set to Y, a card can have up to 3 names for mailing purpose which can be provided in postal address aggregate."
@@ -661,8 +644,6 @@ components:
           - First
           - Second
           - Third
-          - Fourth
-          - Fifth
           - Other
         OwnerInd:
           type: boolean
@@ -707,9 +688,6 @@ components:
           description: Role of a relationship manager.
           enum:
           - Officer
-          - SecondOfficer
-          - ThirdOfficer
-          - FourthOfficer
           - ReferralOfficer
     CardAddOperRequest_CardInfo_TimeFrame_RecurRule:
       properties:
@@ -717,26 +695,7 @@ components:
           type: string
           description: 'Type of recurrence. '
           enum:
-          - Daily
-          - Maturity
-          - InterestCycle
-          - Monthly
-          - BiMonthly
-          - Once
-          - SemiMonthly
-          - TwiceMonthly
-          - Weekly
-          - BiWeekly
-          - Yearly
-          - SemiYearly
           - Cycle
-          - None
-          - PayOff
-          - Anniversary
-          - PmtRecalculation
-          - Quarterly
-          - CycleAndQuarterly
-          - SvcChgCycle
         RecurInterval:
           type: integer
           description: |+
@@ -763,7 +722,6 @@ components:
           description: Type of a card fee.
           enum:
           - CardFee
-          - TrnFee
           - ForeignFee
         FeePlan:
           maxLength: 80
@@ -804,33 +762,8 @@ components:
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
-          - CCA
-          - RRA
-          - LEAS
-          - CDA
-          - MLN
-          - CLA
-          - CRD
           - DDA
-          - EQU
-          - GLA
-          - ILA
-          - AdultCashISA
-          - IRA
-          - RET
-          - EXT
-          - JuniorCashISA
-          - LIP
-          - LOAN
-          - LOC
-          - CLOC
-          - MLA
-          - PBA
-          - PORT
           - SDA
-          - SDB
-          - MMA
-          - DDL
       description: Details of the charge fee account that is designated to pay the fee charges.
     CardAddOperRequest_CardInfo_PersonEmbossingName:
       type: object
@@ -846,42 +779,6 @@ components:
         NamePrefix:
           type: string
           description: 'Name prefix to add before the name of the card holder. '
-          enum:
-          - Ms
-          - Miss
-          - Mrs
-          - Mr
-          - Master
-          - Rev
-          - Fr
-          - Dr
-          - Atty
-          - Prof
-          - Hon
-          - Pres
-          - Gov
-          - Coach
-          - Ofc
-          - Msgr
-          - Sr
-          - Br
-          - Supt
-          - Rep
-          - Sen
-          - Amb
-          - Treas
-          - Sec
-          - Pvt
-          - Cpl
-          - Sgt
-          - Adm
-          - Maj
-          - Capt
-          - Cmdr
-          - Lt
-          - Lt Col
-          - Col
-          - Gen
       description: |-
         Details of the name to be embossed on the issuing card.
 
@@ -905,9 +802,6 @@ components:
             **Note:** Officer refers to responsibility code whereas, referral officer refers to referral responsibility code.
           enum:
           - Officer
-          - SecondOfficer
-          - ThirdOfficer
-          - FourthOfficer
           - ReferralOfficer
     CardAddOperRequest_CardInfo_CountryCode:
       required:
@@ -920,11 +814,6 @@ components:
             Standard format of country code.
 
           enum:
-          - FIPS-10
-          - ISO3166-Numeric
-          - ISO3166-Alpha-3
-          - ISO3166-Alpha-2
-          - IRS
           - SPCountryCode
         CountryCodeValue:
           type: string
@@ -1017,67 +906,8 @@ components:
           type: string
           description: "Usage of the address. \n\n**Note:** *Required field*\n\n\n\nAddrUse for primary and related seasonal address is 'Inquiry', whereas for secondary and related seasonal address is 'Mailing'. This field is required to be provided if, new or existing address is to be linked to a card.\n\nIf \"Mailing Name Options\" parameter is configured at financial institution, it determines if card can have different inquiry and mailing address/names.\n\n- If parameter is set to N, both inquiry and mailing addresses are same therefore, primary/inquiry address information is supported.\n\n- If parameter is set to Y, then secondary/mailing and primary/inquiry addresses are supported whereas, inquiry and mailing address data can be provided in request.\n\nAddrUse for seasonal address is always same as primary/secondary address"
           enum:
-          - Business
-          - Home
-          - Personal
-          - Government
-          - LegalTitle
-          - StmtPrimary
-          - StmtAddtl
           - Inquiry
           - Mailing
-          - Check
-          - Dividend
-          - Business
-          - Home
-          - Physical
-          - Tax
-          - Stmt
-          - Personal
-          - Beneficiary
-          - MultipleMailer
-          - Miscellaneous
-          - Tickler
-          - Indirect
-          - Closed
-          - 1098Tax
-          - 1099ATax
-          - 1099BTax
-          - 1099Tax
-          - 1099DIVTax
-          - 1099INTTax
-          - 1099MISCTax
-          - 1099OIDTax
-          - 1099RTax
-          - 1099STax
-          - 5498Tax
-          - TaxBNotice
-          - 1099CTax
-          - 1099ETax
-          - 1042STax
-          - NoteCollateral
-          - NoteCosigner
-          - NoteEscrow
-          - NoteTaxEscrow
-          - NoteInsuranceEscrow
-          - LineCollateral
-          - FinancialPropertyStmt
-          - LineCosigner
-          - LineCommitment
-          - PaidNote
-          - Property
-          - Appraiser
-          - Broker
-          - Builder
-          - InsuranceAgency
-          - InsuranceCompany
-          - Landlord
-          - LienHolder
-          - CollateralLocation
-          - PolicyHolder
-          - Seller
-          - Trustee
-          - Issuer
         AddrFormatType:
           type: string
           description: |-
@@ -1090,7 +920,6 @@ components:
             Label address format is supported.
           enum:
           - Label
-          - Parsed
         Addr1:
           maxLength: 64
           type: string
@@ -1156,11 +985,8 @@ components:
           description: "Type of the address.\n\n**Note:** This field is required to be provided if, new or existing address is to be linked to the card.\n\nCard can have one primary, one secondary and two seasonal addresses. \n\nHowever, seasonal address cannot exist as a single address record hence, it is always related to a primary/secondary address. Therefore, seasonal address always shares AddressIdent and AddrUse with primary or the secondary address. \n\nIn order to relate the primary/secondary address with seasonal address, present the seasonal address right after the primary/secondary address.\n\nIt is required to provide the TimeFrame for seasonal address."
           enum:
           - Primary
-          - PrimaryPending
           - Secondary
           - Seasonal
-          - Previous
-          - Physical
         TimeFrame:
           $ref: '#/components/schemas/CardAddOperRequest_CardInfo_TimeFrame_1'
         Retention:
@@ -1200,8 +1026,6 @@ components:
           - NoticesChecks
           - Checks
           - DoNotPrint
-          - UsePortfolio
-          - UseDefault
         MSACode:
           type: integer
           description: MSA Code identifies a Metropolitan Statistical Area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB), and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
@@ -1221,7 +1045,6 @@ components:
             Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank" title="Click to open in a new tab">ISO 4217 codes </a> to view the list of all currency codes.
           enum:
           - ISO4217-Alpha
-          - ISO4217-Numeric
         CurCodeValue:
           type: string
           description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
@@ -1253,13 +1076,6 @@ components:
           - Debit
           - Credit
           - Withdrawal
-          - PreAuth
-          - Deposit
-          - Transfer
-          - DepositAvail
-          - Advances
-          - All
-          - None
         TrnSubType:
           maxLength: 15
           type: string
@@ -1271,31 +1087,14 @@ components:
 
             **Note:** OnLine/OffLine terms refer to the two distinct ways of processing debit payments i.e. online/offline. Customers need to endorse payments by submitting their personal identification numbers (PINs) at the point of sale in case of online debit transaction, whereas shoppers need to sign the sales receipts in case of offline transactions. POS refers to withdrawal of funds through a point-of-sale transaction (typically a cash or debit card purchase). ATM refers to withdrawal of funds using an ATM machine.
           enum:
-          - POS
-          - Combined
           - ATM
-          - ATMOffline
-          - POSOffline
-          - POSOnline
-          - Teller
-          - SystemGenerated
-          - VRU
-          - ACH
-          - RealTime
-          - Batch
-          - POSTemp
-          - ATMTemp
-          - ATMOfflineTemp
-          - POSOfflineTemp
-          - POSOnlineTemp
+          - POS
         LimitType:
           type: string
           description: 'Type of the transaction limit. '
           enum:
           - DailyMax
-          - ThreeDayMax
           - TrnMax
-          - CycleMax
         CurAmt:
           $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt'
     CardAddOperRequest_CardInfo_MaxCreditLimitAmt_CurCode:
@@ -1308,7 +1107,6 @@ components:
           description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
-          - ISO4217-Numeric
         CurCodeValue:
           type: string
           description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
@@ -1352,14 +1150,6 @@ components:
           enum:
           - ForeignFeeWaived
           - ForeignFee
-          - CardFee
-          - CardUse
-          - Inquiry
-          - Deposit
-          - Credit
-          - Debit
-          - CardAccess
-          - Withdrawal
         CardPeriodType:
           type: string
           description: |-
@@ -1369,15 +1159,7 @@ components:
 
             **Note:** This field indicates the period in which data is reported. For example, month to date (MTD), life to date (LTD), etc. Only MTD value is supported.
           enum:
-          - CTD
-          - LTD
           - MTD
-          - ThisCycle
-          - PriorCycle
-          - PriorMonth
-          - PriorYr
-          - Today
-          - YTD
         Amt:
           type: number
           description: |-
@@ -1412,33 +1194,9 @@ components:
           type: string
           description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>.\n\n**Note:** This field identifies the type of account to be linked to the card. Account types DDA, SDA or LOAN can be linked to the card. \n\nMultiple accounts of same account type can be linked to a card. AcctType uniquely identify the account that is linked to the card."
           enum:
-          - CCA
-          - RRA
-          - LEAS
-          - CDA
-          - MLN
-          - CLA
-          - CRD
           - DDA
-          - EQU
-          - GLA
-          - ILA
-          - AdultCashISA
-          - IRA
-          - RET
-          - EXT
-          - JuniorCashISA
-          - LIP
-          - LOAN
-          - LOC
-          - CLOC
-          - MLA
-          - PBA
-          - PORT
           - SDA
-          - SDB
-          - MMA
-          - DDL
+          - LOAN
       description: Unique information to identify the account record.
     CardAddOperRequest_CardInfo_AcctRef:
       required:
@@ -1514,17 +1272,6 @@ components:
           - ActiveNoRenew
           - NoWithdrawal
           - HotCard
-          - Closed
-          - ClosedToday
-          - Dormant
-          - Expired
-          - Issued
-          - New
-          - Restricted
-          - InquiryOnly
-          - Lockout
-          - Other
-          - Test
         CardFee:
           type: array
           description: |-
@@ -1619,9 +1366,6 @@ components:
           description: Value that generates card order to replace the existing EFT card issued to the cardholder.
           enum:
           - ReplaceCard
-          - IssueCard
-          - ReIssueCard
-          - RemakeCard
           - NewCard
           - DoNotGenerate
         GeneratePINMailer:
@@ -1738,7 +1482,6 @@ components:
           description: Status code of the card.
           enum:
           - Valid
-          - Deleted
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
@@ -1847,9 +1590,6 @@ components:
           description: Role of a relationship manager.
           enum:
           - Officer
-          - SecondOfficer
-          - ThirdOfficer
-          - FourthOfficer
           - ReferralOfficer
     CardInqOperSecuredResponse_CardInfo_TimeFrame:
       type: object
@@ -1872,7 +1612,6 @@ components:
             **Note:** This field identifies the fee type (card fee or foreign fee).
           enum:
           - CardFee
-          - TrnFee
           - ForeignFee
         FeePlan:
           maxLength: 80
@@ -1916,11 +1655,6 @@ components:
           type: string
           description: Standard country code format.
           enum:
-          - FIPS-10
-          - ISO3166-Numeric
-          - ISO3166-Alpha-3
-          - ISO3166-Alpha-2
-          - IRS
           - SPCountryCode
         CountryCodeValue:
           type: string
@@ -1990,67 +1724,8 @@ components:
 
             - If parameter is set to Y, both inquiry and mailing addresses can be different therefore, both will be returned by ESF in response.
           enum:
-          - Business
-          - Home
-          - Personal
-          - Government
-          - LegalTitle
-          - StmtPrimary
-          - StmtAddtl
           - Inquiry
           - Mailing
-          - Check
-          - Dividend
-          - Business
-          - Home
-          - Physical
-          - Tax
-          - Stmt
-          - Personal
-          - Beneficiary
-          - MultipleMailer
-          - Miscellaneous
-          - Tickler
-          - Indirect
-          - Closed
-          - 1098Tax
-          - 1099ATax
-          - 1099BTax
-          - 1099Tax
-          - 1099DIVTax
-          - 1099INTTax
-          - 1099MISCTax
-          - 1099OIDTax
-          - 1099RTax
-          - 1099STax
-          - 5498Tax
-          - TaxBNotice
-          - 1099CTax
-          - 1099ETax
-          - 1042STax
-          - NoteCollateral
-          - NoteCosigner
-          - NoteEscrow
-          - NoteTaxEscrow
-          - NoteInsuranceEscrow
-          - LineCollateral
-          - FinancialPropertyStmt
-          - LineCosigner
-          - LineCommitment
-          - PaidNote
-          - Property
-          - Appraiser
-          - Broker
-          - Builder
-          - InsuranceAgency
-          - InsuranceCompany
-          - Landlord
-          - LienHolder
-          - CollateralLocation
-          - PolicyHolder
-          - Seller
-          - Trustee
-          - Issuer
         AddrFormatType:
           type: string
           description: |-
@@ -2059,7 +1734,6 @@ components:
             **Note:** Address is in label format.
           enum:
           - Label
-          - Parsed
         FullName1:
           maxLength: 96
           type: string
@@ -2113,11 +1787,7 @@ components:
             **Note:** Account can have primary and seasonal address type. Seasonal address cannot exist as a single address record and is related to either primary or secondary address. Therefore, seasonal address shares AddressIdent with primary address.
           enum:
           - Primary
-          - PrimaryPending
-          - Secondary
           - Seasonal
-          - Previous
-          - Physical
         TimeFrame:
           $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_TimeFrame_1'
         Retention:
@@ -2144,7 +1814,6 @@ components:
           type: string
           description: "Notification and statement forms handling option. This code indicates which documents will be printed with handling messages. \n\n**Note:** This field identifies type of correspondence that will print the handling messages, as defined by HandlingCode."
           enum:
-          - StatementsNoticesChecks
           - Statements
           - StatementsNotices
           - StatementsChecks
@@ -2153,7 +1822,7 @@ components:
           - Checks
           - DoNotPrint
           - UsePortfolio
-          - UseDefault
+          - StatementsNoticesChecks
         MSACode:
           type: integer
           description: |-
@@ -2186,13 +1855,6 @@ components:
           - Debit
           - Credit
           - Withdrawal
-          - PreAuth
-          - Deposit
-          - Transfer
-          - DepositAvail
-          - Advances
-          - All
-          - None
         TrnSubType:
           maxLength: 15
           type: string
@@ -2209,31 +1871,14 @@ components:
 
             OnLine/OffLine terms refer to the two distinct ways of processing debit payments i.e., online/offline. Customers need to endorse payments by submitting their personal identification numbers (PINs) at the point of sale in case of online debit transaction, whereas shoppers need to sign the sales receipts in case of offline transactions.
           enum:
-          - POS
-          - Combined
           - ATM
-          - ATMOffline
-          - POSOffline
-          - POSOnline
-          - Teller
-          - SystemGenerated
-          - VRU
-          - ACH
-          - RealTime
-          - Batch
-          - POSTemp
-          - ATMTemp
-          - ATMOfflineTemp
-          - POSOfflineTemp
-          - POSOnlineTemp
+          - POS
         LimitType:
           type: string
           description: "Type of the transaction limit. \n\n**Note:** This field is used in combination with transaction service and CardTrnLimit to identify, the limit amount defined for a card."
           enum:
           - DailyMax
-          - ThreeDayMax
           - TrnMax
-          - CycleMax
         CurAmt:
           $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CurAmt'
     CardInqOperSecuredResponse_CardInfo_MaxCreditLimitAmt:
@@ -2267,7 +1912,6 @@ components:
           - OptInPosAuthLimit
           - OptInPosODLimit
           - OptOut
-          - OptIn
           - OptOutCourtesy
           - OptOutNoReply
       description: Method to process overdraft transactions (transactions exceeding available balance) carried out at ATM and POS systems.
@@ -2283,38 +1927,8 @@ components:
             Value of LastActivity relates to transactions done and refers to 'Last Activity Date' in core. This value indicates the most recent date when debit card was used for transaction.
 
           enum:
-          - LastTrn
-          - RewardsExpDt
-          - Dormant
-          - LastActivity
-          - LastLoanActivity
-          - Anniversary
-          - LastAccess
-          - LastOverdraft
-          - OverdraftEnroll
-          - LastPrc
-          - eStmt
-          - PreviousStmt
-          - CurrentPrc
-          - NextPrc
-          - IRALastStmt
-          - System
-          - LastPrcThru
           - LastFileMaint
-          - ChargeOff
-          - NonAccrual
-          - BankruptcyFiling
-          - Foreclosure
-          - OriginalIssued
-          - OldestHold
-          - Disbursement
-          - Accrual
-          - Contract
-          - DateFirstPmt
-          - FirstAccess
-          - SafeDepositKeyPaid
-          - AnticipatedPayoff
-          - Recorded
+          - LastActivity
         DateValue:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
@@ -2332,29 +1946,13 @@ components:
           enum:
           - ForeignFeeWaived
           - ForeignFee
-          - CardFee
-          - CardUse
-          - Inquiry
-          - Deposit
-          - Credit
-          - Debit
-          - CardAccess
-          - Withdrawal
         CardPeriodType:
           type: string
           description: |+
             Indicator to define the type of date range for the card period.
 
           enum:
-          - CTD
-          - LTD
           - MTD
-          - ThisCycle
-          - PriorCycle
-          - PriorMonth
-          - PriorYr
-          - Today
-          - YTD
         LastOccurInd:
           type: boolean
           description: Flag to indicate if the data refers to a last occurrence.
@@ -2430,16 +2028,6 @@ components:
           - NoWithdrawal
           - HotCard
           - Closed
-          - ClosedToday
-          - Dormant
-          - Expired
-          - Issued
-          - New
-          - Restricted
-          - InquiryOnly
-          - Lockout
-          - Other
-          - Test
         CardDtlStatusEnumDesc:
           maxLength: 80
           type: string
@@ -2503,9 +2091,6 @@ components:
           description: Value that generates card order to replace the existing EFT card issued to the cardholder.
           enum:
           - ReplaceCard
-          - IssueCard
-          - ReIssueCard
-          - RemakeCard
           - NewCard
           - DoNotGenerate
         GeneratePINMailer:
@@ -2598,7 +2183,6 @@ components:
             **Note:** This field is used to indicate current status of debit card.
           enum:
           - Valid
-          - Deleted
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
@@ -2622,26 +2206,7 @@ components:
           type: string
           description: 'Type of recurrence. '
           enum:
-          - Daily
-          - Maturity
-          - InterestCycle
-          - Monthly
-          - BiMonthly
-          - Once
-          - SemiMonthly
-          - TwiceMonthly
-          - Weekly
-          - BiWeekly
-          - Yearly
-          - SemiYearly
           - Cycle
-          - None
-          - PayOff
-          - Anniversary
-          - PmtRecalculation
-          - Quarterly
-          - CycleAndQuarterly
-          - SvcChgCycle
         RecurInterval:
           type: integer
           description: |+
@@ -2668,7 +2233,6 @@ components:
           description: Type of a card fee.
           enum:
           - CardFee
-          - TrnFee
           - ForeignFee
         FeePlan:
           maxLength: 80
@@ -2743,67 +2307,8 @@ components:
           type: string
           description: "Usage of the address. \n\n**Note:** *Required field*\n\n\n\nAddrUse for primary and related seasonal address is 'Inquiry', whereas for secondary and related seasonal address is 'Mailing'. This field is required to be provided if, new or existing address is to be linked to a card.\n\nIf \"Mailing Name Options\" parameter is configured at financial institution, it determines if card can have different inquiry and mailing address/names.\n\n- If parameter is set to N, both inquiry and mailing addresses are same therefore, primary/inquiry address information is supported.\n\n- If parameter is set to Y, then secondary/mailing and primary/inquiry addresses are supported whereas, inquiry and mailing address data can be provided in request.\n\nAddrUse for seasonal address is always same as primary/secondary address"
           enum:
-          - Business
-          - Home
-          - Personal
-          - Government
-          - LegalTitle
-          - StmtPrimary
-          - StmtAddtl
           - Inquiry
           - Mailing
-          - Check
-          - Dividend
-          - Business
-          - Home
-          - Physical
-          - Tax
-          - Stmt
-          - Personal
-          - Beneficiary
-          - MultipleMailer
-          - Miscellaneous
-          - Tickler
-          - Indirect
-          - Closed
-          - 1098Tax
-          - 1099ATax
-          - 1099BTax
-          - 1099Tax
-          - 1099DIVTax
-          - 1099INTTax
-          - 1099MISCTax
-          - 1099OIDTax
-          - 1099RTax
-          - 1099STax
-          - 5498Tax
-          - TaxBNotice
-          - 1099CTax
-          - 1099ETax
-          - 1042STax
-          - NoteCollateral
-          - NoteCosigner
-          - NoteEscrow
-          - NoteTaxEscrow
-          - NoteInsuranceEscrow
-          - LineCollateral
-          - FinancialPropertyStmt
-          - LineCosigner
-          - LineCommitment
-          - PaidNote
-          - Property
-          - Appraiser
-          - Broker
-          - Builder
-          - InsuranceAgency
-          - InsuranceCompany
-          - Landlord
-          - LienHolder
-          - CollateralLocation
-          - PolicyHolder
-          - Seller
-          - Trustee
-          - Issuer
         AddrFormatType:
           type: string
           description: |-
@@ -2816,7 +2321,6 @@ components:
             Label address format is supported.
           enum:
           - Label
-          - Parsed
         Addr1:
           maxLength: 64
           type: string
@@ -2871,11 +2375,8 @@ components:
           description: "Type of the address.\n\n**Note:** This field is required to be provided if, new or existing address is to be linked to the card.\n\nCard can have one primary, one secondary and two seasonal addresses. \n\nHowever, seasonal address cannot exist as a single address record hence, it is always related to a primary/secondary address. Therefore, seasonal address always shares AddressIdent and AddrUse with primary or the secondary address.\n\nIn order to relate the primary/secondary address with seasonal address, present the seasonal address right after the primary/secondary address.\n\nIt is required to provide the TimeFrame for seasonal address."
           enum:
           - Primary
-          - PrimaryPending
           - Secondary
           - Seasonal
-          - Previous
-          - Physical
         TimeFrame:
           $ref: '#/components/schemas/CardAddOperRequest_CardInfo_TimeFrame_1'
         Retention:
@@ -2916,7 +2417,6 @@ components:
           - Checks
           - DoNotPrint
           - UsePortfolio
-          - UseDefault
         MSACode:
           type: integer
           description: MSA Code identifies a Metropolitan Statistical Area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB), and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
@@ -2932,13 +2432,6 @@ components:
           - Debit
           - Credit
           - Withdrawal
-          - PreAuth
-          - Deposit
-          - Transfer
-          - DepositAvail
-          - Advances
-          - All
-          - None
         TrnSubType:
           maxLength: 15
           type: string
@@ -2947,31 +2440,14 @@ components:
           type: string
           description: Source of the transaction to apply the transaction limit.
           enum:
-          - POS
-          - Combined
           - ATM
-          - ATMOffline
-          - POSOffline
-          - POSOnline
-          - Teller
-          - SystemGenerated
-          - VRU
-          - ACH
-          - RealTime
-          - Batch
-          - POSTemp
-          - ATMTemp
-          - ATMOfflineTemp
-          - POSOfflineTemp
-          - POSOnlineTemp
+          - POS
         LimitType:
           type: string
           description: 'Type of the transaction limit. '
           enum:
           - DailyMax
-          - ThreeDayMax
           - TrnMax
-          - CycleMax
         CurAmt:
           $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt'
     CardModOperRequest_CardInfo_MaxCreditLimitAmt:
@@ -3031,16 +2507,6 @@ components:
           - NoWithdrawal
           - HotCard
           - Closed
-          - ClosedToday
-          - Dormant
-          - Expired
-          - Issued
-          - New
-          - Restricted
-          - InquiryOnly
-          - Lockout
-          - Other
-          - Test
         CardFee:
           type: array
           description: Details of the charges and fees applicable to the card.
@@ -3122,9 +2588,6 @@ components:
           description: Value that generates card order to replace the existing EFT card issued to the cardholder.
           enum:
           - ReplaceCard
-          - IssueCard
-          - ReIssueCard
-          - RemakeCard
           - NewCard
           - DoNotGenerate
         GeneratePINMailer:
@@ -3177,9 +2640,6 @@ components:
         NicknameOption:
           type: string
           description: Indicates the printing option for the account nickname on card.
-          enum:
-          - Printed
-          - NotPrinted
         Nickname:
           maxLength: 80
           type: string
@@ -3216,3 +2676,27 @@ components:
           description: Maximum number of invalid PIN entry attempts allowed.
           format: int64
       description: Detailed information about the card.
+    CardModOperResponse_CardStatusRec_CardStatus:
+      required:
+      - CardStatusCode
+      type: object
+      properties:
+        CardStatusCode:
+          type: string
+          description: Status code of the card.
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+      description: Details of the card status returned in the result of API call.
+    CardModOperResponse_CardStatusRec:
+      required:
+      - CardKeys
+      - CardStatus
+      type: object
+      properties:
+        CardKeys:
+          $ref: '#/components/schemas/CardAddOperResponse_CardStatusRec_CardKeys'
+        CardStatus:
+          $ref: '#/components/schemas/CardModOperResponse_CardStatusRec_CardStatus'
+      description: Details of the card status record.
