@@ -6,11 +6,11 @@ This section describes a standard structure of request and response message of B
 
 All API requests must contain the following components:
 
-*	API Method
-* Request URL
-* Access Token
-*	Request Header
-*	Request Body
+*	[API Method](#api-method)
+* [Request URL](#request-url)
+* [Access Token](#access-token)
+*	[Request Header](#request-header)
+*	[Request Body](#request-body)
 
 For every API request, a response message is obtained that contains a response payload and the status of the API request.
 
@@ -22,18 +22,19 @@ For security reasons, all API methods are set to POST or PUT, irrespective of th
 
 Request URL is formed by appending Host URL and API path. 
 
-**Request URL = Host URL + API path**
+<!-- theme: info -->
+> **Request URL = Host URL + API path**
+
 
 To get Host URL, go to API key section of your Workspace. The API path along with the method (POST or PUT) is listed under the API Explorer section of that API on Fiserv Developer Studio. 
-Refer the following example to construct a request URL for **AcctAdd** API:
+Refer the following example to construct a request URL for [**Add Account**](../api/?type=post&path=/acctservice/acctmgmt/accounts) API:
 
-![image](https://user-images.githubusercontent.com/81968767/220958005-84e01e43-ff91-4240-a1d7-0e4a888655d5.png)
+![image](https://user-images.githubusercontent.com/81968767/224235588-d0eb8fd0-6408-475e-99ba-a0a7b06c95b2.png)
 
 
 If host URL of the product is https://cert.api.fiservapps.com/banking/efx/v1/, then request URL will be:
 
 ![image](https://user-images.githubusercontent.com/81968767/220958136-563f1974-a241-42e5-886c-e00e5af08ce0.png)
-
 
 
 ### Access Token
@@ -63,39 +64,36 @@ The request body of an API changes based on the type of transaction being proces
 
 **Request Payload** 
 
-The following example shows the sample request payload for **Get Account Hold** API request.
+The following example shows the sample request payload for **Get Party List** API request.
 
 ```
 {
-  "AcctHoldSel": {
-    "AcctHoldKeys": [
-      {
-        "AcctKeys": {
-          "AcctId": "string",
-          "AcctType": "string"
-        },
-        "AcctHoldIdent": "string"
-      }
-    ],
-    "AcctKeys": [
-      {
-        "AcctId": "string",
-        "AcctType": "string"
-      }
-    ]
+  "RecCtrlIn": {
+    "MaxRecLimit": 0,
+    "Cursor": "string"
+  },
+  "PartyListSel": {
+    "Name": "string",
+    "NameSearchCode": "string",
+    "NameTypeOption": "string",
+    "TaxIdent": "string",
+    "Phone": "string",
+    "EmailAddr": "string",
+    "AcctId": "string",
+    "AcctType": "string"
   }
 }
 ```
 
 
-**Response Message**
+## Response Message
 
 Upon a successful API request, a response payload is received. The response payload contains the status and the returned details of the requested API in key-value pairs. The default response format is JSON. 
 
 
-**Response Payload**
+### Response Payload
 
-The following example shows the sample response payload for **Get Account Hold** API request.
+The following example shows the sample response payload for **Get Party List** API request.
 
 ```
 {
@@ -139,65 +137,77 @@ The following example shows the sample response payload for **Get Account Hold**
   "RecCtrlOut": {
     "SentRecCount": 0
   },
-  "AcctHoldRec": [
+  "PartyListRec": [
     {
-      "AcctHoldKeys": {
-        "AcctKeys": {
-          "AcctId": "string",
-          "AcctType": "string"
-        },
-        "AcctHoldIdent": "string"
+      "PartyKeys": {
+        "PartyId": "string"
       },
-      "AcctHoldInfo": {
-        "AcctRef": {
-          "AcctKeys": {
-            "AcctId": "string",
-            "AcctType": "string"
-          }
-        },
-        "CurAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "RelationshipMgr": [
+      "PersonPartyListInfo": {
+        "PartySelType": "string",
+        "Contact": [
           {
-            "RelationshipMgrIdent": "string",
-            "RelationshipRole": "string"
+            "PhoneNum": {
+              "PhoneType": "string",
+              "PhoneTypeEnumDesc": "string",
+              "Phone": "string",
+              "PreferredPhone": true,
+              "PhoneDesc": "string"
+            },
+            "PostAddr": {
+              "AddrFormatType": "string",
+              "Addr1": "string",
+              "Addr2": "string",
+              "City": "string",
+              "StateProv": "string",
+              "PostalCode": "string",
+              "AddrType": "string"
+            },
+            "Email": {
+              "EmailAddr": "string"
+            }
           }
         ],
-        "ReportGroupCode": "string",
-        "SecuredAcctRef": {
-          "AcctKeys": {
-            "AcctId": "string",
-            "AcctType": "string"
-          }
+        "TaxIdentType": "string",
+        "TaxIdent": "string",
+        "PersonName": {
+          "NameType": "string",
+          "FullName": "string",
+          "FamilyName": "string",
+          "GivenName": "string",
+          "MiddleName": "string"
         },
-        "MaxPledgeAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "HoldReason": [],
-        "ExpDt": "string",
-        "EffDt": "string",
-        "AcctHoldOption": "string",
-        "AcctHoldIdent": "string",
-        "PendingHoldAmt": {
-          "Amt": 0,
-          "CurCode": {
-            "CurCodeType": "string",
-            "CurCodeValue": "string"
-          }
-        },
-        "PendingHoldDt": "string"
+        "BirthDt": "string"
       },
-      "AcctHoldStatus": {
-        "AcctHoldStatusCode": "string",
+      "OrgPartyListInfo": {
+        "PartySelType": "string",
+        "Contact": [
+          {
+            "PhoneNum": {
+              "PhoneType": "string",
+              "PhoneTypeEnumDesc": "string",
+              "Phone": "string",
+              "PreferredPhone": true
+            },
+            "PostAddr": {
+              "AddrFormatType": "string",
+              "Addr1": "string",
+              "Addr2": "string",
+              "City": "string",
+              "StateProv": "string",
+              "PostalCode": "string",
+              "AddrType": "string"
+            }
+          }
+        ],
+        "TaxIdentType": "string",
+        "TaxIdent": "string",
+        "OrgName": {
+          "NameType": "string",
+          "Name": "string"
+        }
+      },
+      "PartyStatus": {
+        "PartyStatusCode": "string",
         "EffDt": "string"
       }
     }
@@ -205,4 +215,4 @@ The following example shows the sample response payload for **Get Account Hold**
 }
 ```
 
-To view the API documentation of **Get Account Hold** API in API Explorer, [click here](../api/?type=post&path=/accountHolds/secured).
+To view the API documentation of **Get Party List** API in API Explorer, [click here](../api/?type=post&path=/partyservice/parties/parties/secured/list).

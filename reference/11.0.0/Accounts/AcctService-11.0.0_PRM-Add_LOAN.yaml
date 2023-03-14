@@ -211,52 +211,10 @@ components:
       title: OvrdExceptionDataType
       type: object
       properties:
-        OverrideException:
-          type: array
-          description: List of the exceptions that can be overridden.
-          items:
-            $ref: '#/components/schemas/OverrideExceptionType'
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -325,6 +283,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -624,7 +598,7 @@ components:
           - Maturity
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.\n\nThe default value is set to 1.\n\n\n\n**Note:** Value for this field is expected to be: \n\n- blank, if \"RecurType\" is \"None\"\n\n- For all other values of \"RecurType\", preferred value is  1\n\nA blank or any other value will be treated as 1 and the translation to Premier will be based on the RecurType value."
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Value for this field is expected to be: \n\n- blank, if \"RecurType\" is \"None\"\n\n- For all other values of \"RecurType\", preferred value is  1\n\nA blank or any other value will be treated as 1 and the translation to Premier will be based on the RecurType value."
           format: int64
         DayOfMonth:
           type: string
@@ -717,7 +691,7 @@ components:
           - NoOverride
         LeadDays:
           type: integer
-          description: "Number of days before an event.\n\n\n\n**Note:** Applicable to the following Premier fields:\n\n\"First Past Due Notice Days Override\" and \"Second Past Du Notice Days Override\". "
+          description: "Number of days prior to the event to do a review.\n\n**Note:** Applicable to the following Premier fields:\n\n\"First Past Due Notice Days Override\" and \"Second Past Du Notice Days Override\". "
           format: int64
         NoticeRemarks:
           maxLength: 50
@@ -729,7 +703,7 @@ components:
         BasedOnCode:
           type: string
           description: |-
-            Based on code
+            Based on code is the source of interest rate which can be used alone or with additional factors that, when combined, calculate an interest rate.
 
             **Note:** Refers to rate index.
         AccrualMethod:
@@ -746,7 +720,7 @@ components:
           - AddOn
         AccrualCode:
           type: string
-          description: "Code to indicate additional accrual method instructions for the account.\n\n\n\n**Note:** This field indicates the interest earning calculation for loans with one of the accrual methods listed below:\n\n- PrincipalAndInterest\n\n- PrincipalPlusInterest \n\n- AddOn\n\n\n\nValues for this field indicates: \n\n- \"0\" applies to AddOn method that indicates 365/360 accrual accounting. The interest rate is multiplied by the principal and divided by 360 to determine the daily earnings.\n\n- \"1\" applies to AddOn method that indicates actuarial interest. The interest rate is multiplied by the principal and divided by 360 to determine the daily earnings.\n\n- \"2\" applies to PrincipalAndInterest and PrincipalPlusInterest methods \n\nFor \"PrincipalAndInterest\" and \"PrincipalPlusInterest\" with \"DailyAccrual Actual365\"  indicates 30/365 accrual accounting. The interest rate is multiplied by the principal and divided by 365 to determine the daily earnings.\n\nFor \"PrincipalAndInterest\" and \"PrincipalPlusInterest\" with \"DailyAccrual Actual360\" interest rate is multiplied by the principal and divided by 360 to determine the daily earnings."
+          description: "Code to indicate additional accrual method instructions for the account.\n\n\n\n**Note:** This field indicates the interest earning calculation for loans with one of the accrual methods listed below:\n\n- PrincipalAndInterest\n\n- PrincipalPlusInterest \n\n- AddOn\n\n\n\nValues for this field indicates: \n\n- \"0\" applies to AddOn method that indicates 365/360 accrual accounting. The interest rate is multiplied by the principal and divided by 360 to determine the daily earnings.\n\n- \"1\" applies to AddOn method that indicates actuarial interest. The interest rate is multiplied by the principal and divided by the number of The interest rate is multiplied by the principal and divided by 360 to determine the daily earnings.\n\n- \"2\" applies to PrincipalAndInterest and PrincipalPlusInterest methods \n\nFor \"PrincipalAndInterest\" and \"PrincipalPlusInterest\" with \"DailyAccrual Actual365\"  indicates 30/365 accrual accounting. The interest rate is multiplied by the principal and divided by 365 to determine the daily earnings.\n\nFor \"PrincipalAndInterest\" and \"PrincipalPlusInterest\" with \"DailyAccrual Actual360\" interest rate is multiplied by the principal and divided by 360 to determine the daily earnings."
         DailyAccrual:
           type: string
           description: |-
@@ -801,7 +775,7 @@ components:
       properties:
         VarianceFactorType:
           type: string
-          description: "Type of variance factor used to calculate interest rate. \n\n**Note:** Refers to percent of prime code."
+          description: "Type of variance factor used to calculate interest rate. \n\nThis value is used in combination with the RateVariance, RateFactor and RateCalcMethod.\n\n**Note:** Refers to percent of \"Prime Code\" field."
           enum:
           - Variance
           - Factor
@@ -887,7 +861,7 @@ components:
           - Maturity
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.\n\nThe default value is set to 1.\n\n\n\n**Note:** Values for Premier: \n\n- Every 2 Years (7): Every two years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"2\"\n\n- Every 3 Years (8): Every three years,  it is expected a RecurType of \"Yearly\" and RecurInterval of  \"3\"\n\n- Every 4 Years (9): Every four years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"4\"\n\n- Every 5 Years (10): Every five years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"5\"\n\n- Every 6 Years (11): Every six years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"6\"\n\n- Every 7 Years (12): Every seven years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"7\"\n\n- Every 8 Years (13): Every eight years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"8\"\n\n- Every 9 Years (14): Every nine years, it is expected a RecurType of  \"Yearly\" and RecurInterval of  \"9\"\n\n- Every 10 Years (15): Every 10 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"10\"\n\n- Every 11 Years (16): Every 11 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"11\"\n\n- Every 12 Years (17): Every 12 years, it is expected a RecurType of \"Yearly\" and RecurInterval of  \"12\"\n\n- Every 13 Years (18): Every 13 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"13\"\n\n- Every 14 Years (19): Every 14 years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"14\"\n\n- Every 15 Years (20): Every 15 years, it is expected a RecurType of  \"Yearly\"  and RecurInterval of \"15\""
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Values for Premier: \n\n- Every 2 Years (7): Every two years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"2\"\n\n- Every 3 Years (8): Every three years,  it is expected a RecurType of \"Yearly\" and RecurInterval of  \"3\"\n\n- Every 4 Years (9): Every four years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"4\"\n\n- Every 5 Years (10): Every five years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"5\"\n\n- Every 6 Years (11): Every six years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"6\"\n\n- Every 7 Years (12): Every seven years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"7\"\n\n- Every 8 Years (13): Every eight years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"8\"\n\n- Every 9 Years (14): Every nine years, it is expected a RecurType of  \"Yearly\" and RecurInterval of  \"9\"\n\n- Every 10 Years (15): Every 10 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"10\"\n\n- Every 11 Years (16): Every 11 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"11\"\n\n- Every 12 Years (17): Every 12 years, it is expected a RecurType of \"Yearly\" and RecurInterval of  \"12\"\n\n- Every 13 Years (18): Every 13 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"13\"\n\n- Every 14 Years (19): Every 14 years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"14\"\n\n- Every 15 Years (20): Every 15 years, it is expected a RecurType of  \"Yearly\"  and RecurInterval of \"15\""
           format: int64
         DayOfMonth:
           type: string
@@ -899,7 +873,7 @@ components:
           - 1 through 31
         LeadDays:
           type: integer
-          description: "Number of days before an event.\n\n\n\n**Note:** Refers to rate change forecast days, the number of days in advance of the next rate change date that a new interest rate is forecast and reported to the borrower. The \"Lead Days\" must be less than the number of days in the \"Rate Change Frequency\". \n\nFor monthly rate changes, the lead days must be from 0 to 28 days. For quarterly rate changes, the lead days must be from 0 to 89 days. For semi-annual rate changes, the lead days must be from 0 to 180 days. For annual rate changes, the lead days must be from 0 to 365 days. On the rate change lead date, a rate change notice is produced. If the value of the Rate Change Frequency is blank, and the Lead Days is blank, changes affect the loan immediately. If the Rate Change Frequency is blank, and the lead days are greater than zero, the lead days define the number of days that will pass before a new rate is actually implemented on the loan."
+          description: "Number of days prior to the event to do a review.\n\n**Note:** Refers to rate change forecast days, the number of days in advance of the next rate change date that a new interest rate is forecast and reported to the borrower. The \"Lead Days\" must be less than the number of days in the \"Rate Change Frequency\". \n\nFor monthly rate changes, the lead days must be from 0 to 28 days. For quarterly rate changes, the lead days must be from 0 to 89 days. For semi-annual rate changes, the lead days must be from 0 to 180 days. For annual rate changes, the lead days must be from 0 to 365 days. On the rate change lead date, a rate change notice is produced. If the value of the Rate Change Frequency is blank, and the Lead Days is blank, changes affect the loan immediately. If the Rate Change Frequency is blank, and the lead days are greater than zero, the lead days define the number of days that will pass before a new rate is actually implemented on the loan."
           format: int64
         NextRateChangeDt:
           type: string
@@ -1129,7 +1103,7 @@ components:
 
             **Note:** Retention code indicates address record should be retained or can be deleted when no accounts, tax addenda, or any other relationships exist for the address record.
 
-            If during Account opening process, new address record is being created with retention code as true and account opening workflow fails due to an error, ESF will be unable to delete the address, if new address was created successfully prior to the error. Address record will remain on Premier system even though account will not be created.
+            If during Account opening process, new address record is being created with retention code as true and account opening workflow fails due to an error, ESF will be unable to delete the address. If new address was created successfully prior to the error address record will remain on Premier system even though account will not be created.
 
         CensusTract:
           maxLength: 20
@@ -1244,14 +1218,14 @@ components:
           - Anniversary
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.\n\nThe default value is set to 1.\n\n\n\n**Note:** \n\n- For Premier values of No Prepayment Prin Charge, No Unused Credit Charge, and No Recurring Charges, they are set to RecurType of None and RecurInterval is not set.\n\n- For all other Premier value RecurInterval will be set to 1."
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** \n\n- For Premier values of No Prepayment Prin Charge, No Unused Credit Charge, and No Recurring Charges, they are set to RecurType of None and RecurInterval is not set.\n\n- For all other Premier value RecurInterval will be set to 1."
           format: int64
         DayOfMonth:
           type: string
           description: Day of the month.
         Occurrences:
           type: integer
-          description: Occurrence
+          description: Occurrence of the recur rule.
           format: int64
     addAccountRequest_LoanAcctInfo_TimeFrame_1:
       type: object
@@ -1286,7 +1260,7 @@ components:
           description: Value that indicates the tier type is based on months or full payment is paid.
           enum:
           - Months
-      description: Details of the early payoff table.
+      description: Details of the early payoff table to indicate whether the tier is based on months or full payment paid.
     addAccountRequest_LoanAcctInfo_Fee:
       required:
       - FeeType
@@ -1561,18 +1535,16 @@ components:
         FeeDeferralInd:
           type: boolean
           description: |+
-            Fee Deferral Indicator.
+            Flag to indicate the fee is deffered fee.
 
         FeeReportableInd:
           type: boolean
           description: |+
-            Fee Reportable Indicator.
+            Flag to indicate the loan fees are added to reportable points.
 
         FeeAPRCalcInd:
           type: boolean
-          description: |+
-            Fee APR Calculation Indicator.
-
+          description: Flag to indicate the loan fees are included in the APR calculation.
         CurAmt:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_1'
     addAccountRequest_LoanAcctInfo_Term:
@@ -1701,7 +1673,7 @@ components:
           description: Unique identifier of a product to indicate the processing options of account.
         InsuranceCompany:
           type: string
-          description: Insurance company
+          description: Name of the insurance company.
         InsuranceCalcOption:
           type: string
           description: Option for insurance calculation.
@@ -1718,22 +1690,23 @@ components:
           - PctAvgBalSimpleIns
         RatePlan:
           type: integer
-          description: |+
+          description: |-
             Interest rate plan to calculate simple insurance.
 
             **Note:** The value for this option is tied to the correspondening insurance code number from the LAS insurance specifications.
 
+            Rate Plan is valid only if the Simple Insurance Method is [8] Remaining Payments x Monthly Rate (8). Indicates simple insurance is based on the remaining payments multiplied by the Accident &amp; Health Rate defined by the rate plan. The rate is annualized and divided by 1000.
           format: int64
         SingleRate:
           type: number
-          description: 'Single rate '
+          description: Value of the single rate.
         InsuranceStartDt:
           type: string
-          description: "Starting date of the insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Starting date of the insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Premier core supports MMDDYYYY format."
           format: date
         InsuranceExpDt:
           type: string
-          description: "Expiry date of the insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Expiry date of the insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Premier core supports MMDDYYYY format."
           format: date
         FixedPremiumAmt:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FixedPremiumAmt'
@@ -1799,11 +1772,11 @@ components:
           - Maturity
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.\n\nThe default value is set to 1.\n\n\n\n**Note:** \n\n- For Premier value of \"None\", no RecurInterval is not expected\n\n- For all other Premier value RecurInterval  value of 1 is expected. If RecurInterval is blank or any other values it will treated as a 1."
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** \n\n- For Premier value of \"None\", no RecurInterval is not expected\n\n- For all other Premier value RecurInterval  value of 1 is expected. If RecurInterval is blank or any other values it will treated as a 1."
           format: int64
         RecurStartDate:
           type: string
-          description: "Starting date of the recurrence.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Starting date of the recurrence.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Premier core supports MMDDYYYY format."
           format: date
     addAccountRequest_LoanAcctInfo_InterestBilling_RecurModel:
       type: object
@@ -1896,14 +1869,14 @@ components:
           type: string
           description: Method for billing of loan.
           enum:
-          - None
+          - 'None '
           - Coupon
           - BillingNotice
           - BillingByStmt
-          - ACHXferDDA
+          - 'ACHXferDDA '
           - ACHXferSDA
           - DirectDebitDDA
-          - DirectDebitSDA
+          - 'DirectDebitSDA '
           - ACHXferDDAStmt
           - ACHXferSDAStmt
           - DirectDebitDDAStmt
@@ -1967,13 +1940,7 @@ components:
           - Maturity
         RecurInterval:
           type: string
-          description: |+
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
           enum:
           - "1"
         DayOfMonth:
@@ -2025,7 +1992,7 @@ components:
         PmtSchedIdent:
           maxLength: 36
           type: string
-          description: "Unique identifier of the payment schedule used to identify the payment schedule number in case of multiple schedules for a loan.\n\n**Note:** \n\nFor regular payment schedule:\n\nSet 1st occurrence 1 and increase each new occurrence by 1.\n\nPremier has payment schedule from 1-9. Any payment schedules that are greater than 9 will be ignored and not built.\n\nFor alternate payment schedule:\n\nSet 1st occurrence 1 and increase each new occurrence by 1.\n\nPremier has payment schedule from 1-24. Any payment schedules that are greater than 24 will be ignored and not built."
+          description: "Unique identifier of the payment schedule used to identify the payment schedule number in case of multiple schedules for a loan.\n\n**Note:** \n\n- For regular payment schedule:\n\nSet 1st occurrence 1 and increase each new occurrence by 1.\n\nPremier has payment schedule from 1-9. Any payment schedules that are greater than 9 will be ignored and not built.\n\n- For alternate payment schedule:\n\nSet 1st occurrence 1 and increase each new occurrence by 1.\n\nPremier has payment schedule from 1-24. Any payment schedules that are greater than 24 will be ignored and not built."
         RecurModel:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_RecurModel'
         NumberOfTimes:
@@ -2127,12 +2094,7 @@ components:
           - BillingForecast
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-
-
-            For example, If ‘Daily’: Number of days between occurrences. If ‘Weekly’: Number of weeks between occurrences. If 'Monthly’: Number of months between occurrences. If ‘Yearly’: Number of years between occurrences. If not provided, assume default value of 1, that is, every day, every week, every month, or every year. If 'Cycle': Number of the designated cycle.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
           format: int64
         LeadDays:
           type: integer
@@ -2182,12 +2144,7 @@ components:
           - PmtRecalculation
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-
-
-            For example, If ‘Daily’: Number of days between occurrences. If ‘Weekly’: Number of weeks between occurrences. If 'Monthly’: Number of months between occurrences. If ‘Yearly’: Number of years between occurrences. If not provided, assume default value of 1, that is, every day, every week, every month, or every year. If 'Cycle': Number of the designated cycle.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
           format: int64
         LeadDays:
           type: integer
@@ -2248,7 +2205,7 @@ components:
 
         DealerReserveRate:
           type: number
-          description: Value of the dealer reserve rate.
+          description: Value of the annual percentage rate at which a dealer earns interest.
         DealerReserveAmt:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DealerReserveAmt'
     addAccountRequest_LoanAcctInfo_LOCAdvance:
@@ -2256,7 +2213,7 @@ components:
       properties:
         WaiveAdvanceFeeInd:
           type: boolean
-          description: 'Waive Advance Fee Indicator. '
+          description: Flag to indicate the loan fees assessed for overdraft and transfer advance transactions is waived.
       description: Details of the Line of Credit (LOC) advance.
     addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_MortgagePointsYTDAmt:
       type: object
@@ -2281,7 +2238,7 @@ components:
         County:
           maxLength: 32
           type: string
-          description: County
+          description: Name of the country.
         StateProv:
           type: string
           description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
@@ -2310,21 +2267,28 @@ components:
             Example: 10.00
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
-      description: Details of the forbearance amount.
+      description: "Details of the forbearance amount. \n\nThis value indicates the amount of mortgage which the lender allows to pause or reduce the payment for a certain period of time."
     addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_HAMPData:
       type: object
       properties:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date of the Home Affordable Modification Program (HAMP).\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: |-
+            Effective date of the Home Affordable Modification Program (HAMP).
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
         HAMPOption:
           type: string
           description: Option for Home Affordable Modification Program (HAMP).
           enum:
           - HAMP60month
           - HAMPStandard
-          - "2"
+          - 2
           - "3"
           - "4"
         HAMPServicer:
@@ -2343,7 +2307,7 @@ components:
           - FHLB
         ReportingCode:
           type: string
-          description: Reporting code
+          description: Code that indicates the reporting status of the loan to FHA or FHLB
     addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_CRAData:
       type: object
       properties:
@@ -2479,7 +2443,7 @@ components:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AcctPref'
         AcctIdent:
           type: array
-          description: Unique identifier of an account record.
+          description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. "
           items:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AcctIdent'
         ProductIdent:
@@ -2527,10 +2491,13 @@ components:
         ResponsibleBranch:
           maxLength: 32
           type: string
-          description: |-
+          description: |+
             Branch responsible for the relationship.
 
-            **Note:** Client-defined accounting branch used to group accounts for reporting purposes.
+            **Note:** This field is mapped to accounting branch in PRM, that is used to group accounts for reporting of similar account processing and integration into the general ledger.
+
+            In addition, the accounting branch can be used to group accounts for reporting.
+
         NicknameOption:
           type: string
           description: 'Printing option for the account nickname. '
@@ -2731,7 +2698,7 @@ components:
           description: "The three-digit report purpose code used to group notes for call reporting.\n\n**Note:** *Required field*\n\n\n\nThis field is used to integrate note to the general ledger. "
         SecuredLoanInd:
           type: boolean
-          description: Secure loan indicator.
+          description: Flag to indicate the loan is secured.
         CollateralCode:
           type: string
           description: |-
@@ -2749,22 +2716,22 @@ components:
           description: "Loan-To-Value percentage used with the collateral balance code field to calculate the collateral-required amount for a loan. \n\n\n\n**Note:** Refers to Required Pledge LTV.\n\nIf Loan-To-Value percentage is defined at the account level, then it overrides any collateral level pledge rules.\n\nThis field can be defaulted from product specifications."
         RevolvingLoanInd:
           type: boolean
-          description: "Revolving Loan Indicator\n\n**Note:** This field is mapped to original maximum credit code. \n\nEither \"RevelovingLoanCode\" or \"RevolvingLoanInd\" is sent in the request, not both.\n\nIf both are sent, \"RevolvingLoanCode\" takes the precedence."
+          description: "Flag to indicate the amount is available for loan disbursement.\n\n**Note:** This field is mapped to original maximum credit code. \n\nEither \"RevelovingLoanCode\" or \"RevolvingLoanInd\" is sent in the request, not both.\n\nIf both are sent, \"RevolvingLoanCode\" takes the precedence."
         RevolvingLoanCode:
           type: string
-          description: "Revolving Loan Code\n\n**Note:** This field is mapped to original maximum credit code. \n\nEither \"RevelovingLoanCode\" or \"RevolvingLoanInd\" is sent in the request, not both.\n\nIf both are sent, \"RevolvingLoanCode\" takes the precedence."
+          description: "Code that indicates the amount available for loan disbursement.\_\n\n**Note:** This field is mapped to original maximum credit code. \n\nEither \"RevelovingLoanCode\" or \"RevolvingLoanInd\" is sent in the request, not both.\n\nIf both are sent, \"RevolvingLoanCode\" takes the precedence."
           enum:
           - SingleAdvance
           - CreditLimit
           - AdvanceLimit
         Insurance:
           type: array
-          description: Details of insurance.
+          description: Details of insurance on loan.
           items:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_Insurance'
         IncCreditLineLifeCalcInd:
           type: boolean
-          description: Include Credit Line Life Calculation and Billing Indicator.
+          description: Flag to indicate the loans are included in the calculations and billing of line credit life insurance.
         InsuranceBillingFrequency:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InsuranceBillingFrequency'
         SinglePremiumInsurance:
@@ -2790,7 +2757,7 @@ components:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtTermReview'
         WriteDownCode:
           type: string
-          description: Write down code
+          description: Code that indicates reduction in the assest value.
         PmtPostingRestrictions:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtPostingRestrictions'
         AdvPostingRestrictions:
@@ -2862,4 +2829,4 @@ components:
           $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctKeys'
         AcctStatus:
           $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctStatus'
-      description: Details of the updated status of the account.
+      description: Details of the account status record in response to the add operation.

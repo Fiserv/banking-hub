@@ -2,18 +2,16 @@
 <!-- theme: info -->
 > #### Note for Developers 
 >
-> The current user journey enables developers to access a range of Standard Bank Platform APIs on Banking Hub. We continue to refine the API content on Banking Hub with the goal of showing clearly how our Banking Hub APIs facilitate integration to each of our banking solutions.
+> The current user journey enables developers to register for a trial plan that provides access to a range of Standard Bank Platform APIs on Banking Hub. 
 
-
-Register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test using the <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a> of your choice. However, registration is not required to learn about our APIs and reference documentation.
+Before you start integration, it is important to register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test APIs using the <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a> of your choice. However, registration is not required to learn about our APIs and reference documentation.
 
 ## Register on Fiserv Developer Studio
-The following sections will help you in creating an account with Fiserv Developer Studio and obtain credentials for sandbox testing.
+This section describes the process to create an account and workspace on Fiserv Developer Studio to obtain credentials for sandbox testing.
 
+### Creating an Account
 
-### Setting up an Account
-
-Perform the following steps to set up an account on Fiserv Developer Studio:
+Perform the following steps to create an account on Fiserv Developer Studio:
 1.	From the top-right corner of the screen, click **Create Account**
 2.	Populate the required fields and click **Next**
 3.	Follow the instructions on the screen to set up your account
@@ -48,7 +46,7 @@ Every workspace has following three sections:
 * **Summary**: Displays workspace details and list of activities performed on the workspace
 * **Credentials**: Lists all active API keys. From this section, you can view or download the following details of an API key:
     * Product name: _Name of the product, for example, Banking Hub_    
-    * Org ID: _Organization ID is required to send all API requests as a header parameter_    
+    * Org ID: _Organization ID is required to send in all API requests under the <a href="?path=docs/getting-started/know-our-standard-api-structure.md#request-body" >Request Header</a>_    
     * API key name: _Name of the API key_
     * API key type: _Type of API key, for example, Trial_
     * API key: _Alphanumeric value of the API key. API key is used as username while generating the access token_
@@ -79,7 +77,7 @@ Use the API mentioned below to generate an access token using Postman.
 
 |     Header Name      |     Description                                          |     Required      |
 |---------------------|----------------------------------------------------------|---------------|
-|     ``Authorization`` |    <p>Base64 encoded string representing your username and password values, appended to the text Basic as follows: </p> <p> <code> Basic <Base64 encoded username and password> </code></p> <p> **Important:** In Postman, use the **Authorization** tab to enter Username and Password value and set authentication type to **Basic Auth**. Use your **API key** as username and **API secret** as password. </p>                      |     Required    |
+|     ``Authorization`` |    <p>Base64 encoded string representing your username and password values, appended to the text Basic as follows: </p> <p> <code> Basic <Base64 encoded username and password> </code></p> <p> **Important:** In Postman, use the **Authorization** tab to enter Username and Password values and set authentication type to **Basic Auth**. Use your **API key** as username and **API secret** as password. </p>                      |     Required    |
 
 ![image](https://user-images.githubusercontent.com/81968767/220961162-0931a990-f69a-4be7-a6bb-ab847f9464b2.png)
 
@@ -108,6 +106,7 @@ From the Body tab, select the **x-www-form-urlencoded** radio button and enter t
     "token_type": "Bearer"
 }
 ```
+
 
 <kbd>
     <img src="https://user-images.githubusercontent.com/85101648/221878635-c859cc8d-98a3-47a3-8e57-2299af44b26e.gif" />

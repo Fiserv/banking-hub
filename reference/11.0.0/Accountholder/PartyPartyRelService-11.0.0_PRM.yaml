@@ -2,7 +2,10 @@
 openapi: 3.0.1
 info:
   title: Party Parties Service
-  description: "The Party-to-Party Relationship service supports operations that manage information related to the existence and nature of relationship between two parties.<br>\nIt supports adding, modifying, and deleting party-to-party relationship and provide an option to return a subset of party information. It also gives an option to manage relationship properties such as relationship type and establishment date.<br>\n    \n    Party refers to a person or organization, who has a relationship with the financial institution."
+  description: |-
+    The party-to-party relationship service supports operations that manage information related to the existence and nature of relationship between two parties.<br>
+    It supports adding, modifying, and deleting party-to-party relationship and provide an option to return a subset of party information. It also gives an option to manage relationship properties such as relationship type and establishment date.<br>
+    Party refers to a person or organization, who has a relationship with the financial institution.
   version: 11.0.0_PRM
 servers:
 - url: /
@@ -43,7 +46,7 @@ paths:
       x-proxy-name: Add Party to Party Relationship
       x-child-product-name: Accountholder
       x-core: Premier
-  /partyparties/secured:
+  /partypartyrelservice/parties/partyparties/secured:
     put:
       tags:
       - Delete Party to Party Relationship
@@ -169,13 +172,17 @@ components:
       type: string
       properties:
         OrganizationId:
+          maxLength: 36
           type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
         VendorId:
+          maxLength: 255
           type: string
-          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
         Context:
           $ref: '#/components/schemas/Context'
       example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
@@ -185,67 +192,84 @@ components:
         ClientAppName:
           maxLength: 40
           type: string
-          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
         Channel:
+          maxLength: 80
           type: string
-          description: Indicates the channel used by the client application.
-        ClientDateTime:
-          type: string
-          description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
-        ClientTerminalSeqNum:
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
           maxLength: 36
           type: string
-          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
           format: int64
         TerminalIdent:
           maxLength: 36
           type: string
-          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
         TerminalAddr1:
           maxLength: 64
           type: string
+          description: Terminal address line 1.
         TerminalAddr2:
           maxLength: 64
           type: string
+          description: Terminal address line 2.
         TerminalAddr3:
           maxLength: 64
           type: string
+          description: Terminal address line 3.
         TerminalAddr4:
           maxLength: 64
           type: string
+          description: Terminal address line 4.
         TerminalCity:
           maxLength: 32
           type: string
+          description: Terminal city name.
         TerminalCounty:
           maxLength: 32
           type: string
+          description: Terminal county name.
         TerminalStateProv:
           maxLength: 32
           type: string
-          description: State Province. ISO 3166-2:US codes.
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
         TerminalPostalCode:
           maxLength: 11
           type: string
-          description: Postal Code is ZipCode in the US.
+          description: 'Postal Code where the terminal is located. '
         TerminalCountryCodeSource:
-          type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - ISO3166Numeric
-          - ISO3166Alpha3
-        TerminalCountryCodeValue:
           maxLength: 80
           type: string
-        PhoneType:
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
         PhoneNum:
           type: string
+          description: Phone number.
         PhoneExchange:
+          maxLength: 80
           type: string
+          description: Phone exchange.
         TerminalOwnerName:
           maxLength: 40
           type: string
@@ -265,47 +289,70 @@ components:
         AcquirerIdent:
           maxLength: 36
           type: string
-          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
         AcquirerCountryCodeSource:
+          maxLength: 80
           type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - US
-          - IND
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
         AcquirerCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
         MerchNum:
           maxLength: 23
           type: string
-          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
         SettlementDate:
           type: string
-          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
           format: date
         SettlementIdent:
           maxLength: 36
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: Identification of the settlement account in which the transaction will be settled.
         BusinessApplIdent:
+          maxLength: 80
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
         BranchIdent:
           maxLength: 22
           type: string
+          description: Branch identification number.
         TellerIdent:
+          maxLength: 80
           type: string
+          description: Teller identification number.
         TillIdent:
+          maxLength: 80
           type: string
+          description: Till identification number.
         AMPMCode:
           type: string
+          description: 'Transaction posting code. '
           enum:
           - AM
           - PM
         ReentryType:
           type: string
+          description: Type of re-entry.
           enum:
           - Manual
           - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
     StatusType:
       title: StatusType
       required:
@@ -441,6 +488,8 @@ components:
 
             **Note:** *Required field*
 
+
+
             Refers to the party to with a related party needs to be added.
       description: Unique information to identify the party record.
     PartyPartyRelAddOperRequest_PartyPartyRelInfo_PartyRef:
@@ -461,6 +510,8 @@ components:
             Unique identification number of a party record.
 
             **Note:** *Required field*
+
+
 
             Refers to the related party.
       description: Unique information to identify the party record.
@@ -551,7 +602,6 @@ components:
           - Sibling
           - Parent
           - Organization
-      description: Reference details of a related party.
     PartyPartyRelAddOperRequest_PartyPartyRelInfo:
       required:
       - PartyRef
@@ -609,7 +659,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the relationship status is changed. \n\nFormat: yyyy-mm-ddThh:mm:ss.sss\n\nExample: 2021-06-07T10:47:00.700"
+          description: "Effective date and time that an associated action takes effect.  \n\nFormat: yyyy-mm-ddThh:mm:ss.micro\n\nExample: 2021-01-31T23:59:59.999"
       description: Relationship status between two parties.
     PartyPartyRelAddOperResponse_PartyPartyRelStatusRec:
       required:
@@ -628,7 +678,7 @@ components:
         PartyId:
           maxLength: 36
           type: string
-          description: "Unique identification number of a party record.\n\n**Note:** *Required field*\n\nRefers to the party identifier of the customer. "
+          description: "Unique identification number of a party record.\n\n**Note:** *Required field*\n\n\n\nRefers to the party identifier of the customer. "
       description: Unique information to identify the party record.
     PartyPartyRelDelOperSecuredRequest_PartyPartyRelKeys_RelPartyKeys:
       type: object
@@ -636,7 +686,7 @@ components:
         PartyId:
           maxLength: 36
           type: string
-          description: "Unique identification number of a party record.\n\n**Note:** *Required field*\n\nRefers to the party identifier of the party related to the customer. "
+          description: "Unique identification number of a party record.\n\n**Note:** *Required field*\n\n\n\nRefers to the party identifier of the party related to the customer. "
       description: Unique information to identify the related party.
     PartyPartyRelDelOperSecuredRequest_PartyPartyRelKeys:
       required:
@@ -650,7 +700,7 @@ components:
           $ref: '#/components/schemas/PartyPartyRelDelOperSecuredRequest_PartyPartyRelKeys_RelPartyKeys'
         PartyRelType:
           type: string
-          description: "Relationship of a party with the related party.\n\n**Note:** *Required field*\n\nRefers to the relationship between the customer and the related party that needs to be deleted. "
+          description: "Relationship of a party with the related party.\n\n**Note:** *Required field*\n\n\n\nRefers to the relationship between the customer and the related party that needs to be deleted. "
           enum:
           - Aunt
           - Brother
@@ -729,7 +779,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the relationship status is changed. \n\nFormat: yyyy-mm-ddThh:mm:ss.sss\n\nExample: 2021-06-07T10:47:00.700"
+          description: "Effective date and time that an associated action takes effect.  \n\nFormat: yyyy-mm-ddThh:mm:ss.micro\n\nExample: 2021-01-31T23:59:59.999"
       description: Relationship status between two parties.
     PartyPartyRelDelOperSecuredResponse_PartyPartyRelStatusRec:
       required:
@@ -849,7 +899,7 @@ components:
           description: |-
             Relationship of a party with the related party.
 
-            **Note:** Premier supports a number of system-defined relationships. Additional client-defined relationships may be added to the Premier Administrator Name Relationship Specification.
+            **Note:** Premier supports a number of system-defined relationships. Additional client-defined relationships may be added to the premier administrator name relationship specification.
           enum:
           - Aunt
           - Brother
@@ -880,7 +930,7 @@ components:
           description: |-
             Date on which the relationship was established.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
         Name:
@@ -899,21 +949,6 @@ components:
         RelPartyRef:
           $ref: '#/components/schemas/PartyPartyRelInqOperSecuredResponse_PartyPartyRelInfo_RelPartyRef'
       description: Relationship information between two parties.
-    PartyPartyRelInqOperSecuredResponse_PartyPartyRelStatus:
-      required:
-      - PartyPartyRelStatusCode
-      type: object
-      properties:
-        PartyPartyRelStatusCode:
-          type: string
-          description: Relationship status code.
-          enum:
-          - Valid
-        EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: "Effective date and time when the relationship status is changed. \n\nFormat: yyyy-mm-dd\n\nExample: 2021-06-07"
-      description: Relationship status between two parties.
     PartyPartyRelInqOperSecuredResponse_PartyPartyRelRec:
       required:
       - PartyPartyRelInfo
@@ -925,4 +960,4 @@ components:
         PartyPartyRelInfo:
           $ref: '#/components/schemas/PartyPartyRelInqOperSecuredResponse_PartyPartyRelInfo'
         PartyPartyRelStatus:
-          $ref: '#/components/schemas/PartyPartyRelInqOperSecuredResponse_PartyPartyRelStatus'
+          $ref: '#/components/schemas/PartyPartyRelAddOperResponse_PartyPartyRelStatusRec_PartyPartyRelStatus'
