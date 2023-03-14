@@ -12,7 +12,7 @@ paths:
       tags:
       - Add Account
       summary: Add Account.
-      description: "Creates a new Checking, Savings, CD or Loan Account for one or multiple parties. Account is a product serviced by a financial institution (FI) that carries a credit or debit balance in a particular currency.<br>\n        Following are the supported accounts:\n        <ul>\n          <li>Certificate of Deposit (CDA)</li>\n          <li>Demand Deposit Account (DDA)</li>\n          <li>Savings Deposit Account (SDA)</li>\n          <li>Loan Account (LOAN)</li>\n        </ul>\n      For more information about the Accounts domain, <a href=\"../docs/?path=docs/fintechs/accounts.md\" title=\"Click to open\">click here.</a><br>\n        <br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      description: "Creates a new Checking, Savings, CD or Loan Account for one or multiple parties. Account is a product serviced by a financial institution (FI) that carries a credit or debit balance in a particular currency.<br>\n        Following are the supported accounts:\n        <ul>\n          <li>Certificate of Deposit (CDA)</li>\n          <li>Demand Deposit Account (DDA)</li>\n          <li>Savings Deposit Account (SDA)</li>\n          <li>Loan Account (LOAN)</li>\n        </ul>\n         For more information about the Accounts domain, <a href=\"../docs/?path=docs/fintechs/accounts.md\" title=\"Click to open\">click here.</a><br>\n        <br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
       operationId: addAccount
       parameters:
       - name: EFXHeader
@@ -223,52 +223,10 @@ components:
       title: OvrdExceptionDataType
       type: object
       properties:
-        OverrideException:
-          type: array
-          description: List of the exceptions that can be overridden.
-          items:
-            $ref: '#/components/schemas/OverrideExceptionType'
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -337,6 +295,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -538,10 +512,7 @@ components:
             Example: 10.00
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_InitialAmount_CurCode'
-      description: |-
-        Initial amount details of an account.
-
-        For example, the origination amount for a loan+F34 or a certificate value of a time deposit account.
+      description: Details of the certificate value of a time deposit account.
     addAccountRequest_DepositAcctInfo_RelationshipMgr:
       required:
       - RelationshipMgrIdent
@@ -655,16 +626,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** This field is used to identify user-defined statement cycle number/alternate statement cycle number.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** This field is used to identify user-defined statement cycle number/alternate statement cycle number."
           format: int64
         AlternateStmtInd:
           type: boolean
@@ -767,16 +729,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Values of this field are user-defined. Valid values are from 0 to 99.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Values of this field are user-defined. Valid values are from 0 to 99."
           format: int64
       description: Details of accrual frequency.
     addAccountRequest_DepositAcctInfo_IntRateData_BalCutOffData:
@@ -827,17 +780,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Refers to pending interest cycle, which is the pending frequency of the interest credit to the customer.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Refers to pending interest cycle, which is the pending frequency of the interest credit to the customer.\n\n"
           format: int64
       description: Details of the time frame for pending interest rate payment.
     addAccountRequest_DepositAcctInfo_PendingRate:
@@ -855,7 +798,7 @@ components:
             **Note:** Refers to pending deposit rate index. If ProdIntRateId is to be provided in request, pending interest payment frequency should also be sent. Values in this field are user-defined.
         VarianceFactorType:
           type: string
-          description: 'Type of variance factor used to calculate interest rate. '
+          description: 'Type of pending variance factor used to calculate interest rate. '
           enum:
           - Variance
           - Factor
@@ -891,7 +834,7 @@ components:
       properties:
         VarianceFactorType:
           type: string
-          description: "Type of variance factor used to calculate interest rate. \n\n**Note:** *Conditionally Required Field*\n\n\n\nRequired to be provided only if the Rate "
+          description: "Type of variance factor used to calculate interest rate. \n\nThis value is used in combination with the RateVariance, RateFactor and RateCalcMethod.\n\n**Note:** *Conditionally Required Field*\n\n\n\nRequired to be provided only if the Rate "
           enum:
           - Variance
           - Factor
@@ -1228,19 +1171,7 @@ components:
           - Once
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of fee.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** For dormant fees it is the cycle for charging the fee.
-
-            For recurring fees this indicates the interval of time between charges or cycle number.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** For dormant fees it is the cycle for charging the fee.\n\nFor recurring fees this indicates the interval of time between charges or cycle number.\n\n"
           format: int64
     addAccountRequest_DepositAcctInfo_TimeFrame_1:
       type: object
@@ -1394,13 +1325,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of interest.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
           format: int64
     addAccountRequest_DepositAcctInfo_IntDispData:
       type: object
@@ -1440,6 +1365,8 @@ components:
           type: number
           description: |-
             Amount in decimal format.
+
+            Example: 10.00
 
             **Note:** This field indicates the maximum negative balance that a demand deposit account is allowed to maintain.
         CurCode:
@@ -1621,16 +1548,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Valid values are form 0 to 99.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Valid values are form 0 to 99."
           format: int64
     addAccountRequest_DepositAcctInfo_SvcChgData:
       type: object
@@ -1775,7 +1693,7 @@ components:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctPref'
         AcctIdent:
           type: array
-          description: Unique identifier of an account record.
+          description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. "
           items:
             $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctIdent'
         ProductIdent:
@@ -1812,7 +1730,7 @@ components:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_InitialAmount'
         OpenDt:
           type: string
-          description: "Date on which the account record is created.\n\nFormat: mm/dd/yyyy \n\nExample: 11/20/2021\n\n**Note:** *Required field*"
+          description: "Date on which the account record is created.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** *Required field*"
           format: date
         RelationshipMgr:
           type: array
@@ -2071,7 +1989,7 @@ components:
           description: "Unique identification code for amount pledged as collateral.\n\n**Note:** Values are client-defined. "
         EIM_NSFInstruction:
           type: string
-          description: "Type of action to be undertaken in case of an NSF that may have led to a dishonor of instrument. \n\n**Note:** EIM charges are levied against an NSF."
+          description: "Type of action to be undertaken in case of a NSF that may have led to a dishonor of instrument. \n\n**Note:** EIM charges are levied against an NSF."
           enum:
           - Specification
           - Post
@@ -2136,4 +2054,4 @@ components:
           $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctKeys'
         AcctStatus:
           $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctStatus'
-      description: Details of the updated status of the account.
+      description: Details of the account status record in response to the add operation.
