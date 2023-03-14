@@ -254,52 +254,10 @@ components:
       title: OvrdExceptionDataType
       type: object
       properties:
-        OverrideException:
-          type: array
-          description: List of the exceptions that can be overridden.
-          items:
-            $ref: '#/components/schemas/OverrideExceptionType'
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -368,6 +326,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -464,10 +438,7 @@ components:
             Example: 10.00
         CurCode:
           $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_InitialAmount_CurCode'
-      description: |-
-        Initial amount details of an account.
-
-        For example, the origination amount for a loan+F34 or a certificate value of a time deposit account.
+      description: Details of the certificate value of a time deposit account.
     AccountModRequest_DepositAcctInfo_BalanceAtClosingAmt_CurCode:
       required:
       - CurCodeValue
@@ -489,6 +460,8 @@ components:
           type: number
           description: |-
             Amount in decimal format.
+
+            Example: 10.00
 
             **Note:** Refers to closing withdrawal amount.
         CurCode:
@@ -589,16 +562,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** This field is used to identify user-defined statement cycle number/alternate statement cycle number.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** This field is used to identify user-defined statement cycle number/alternate statement cycle number."
           format: int64
         AlternateStmtInd:
           type: boolean
@@ -683,16 +647,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Valid values are from 0 to 99.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Valid values are from 0 to 99."
           format: int64
       description: Details of accrual frequency.
     AccountModRequest_DepositAcctInfo_IntRateData:
@@ -705,7 +660,7 @@ components:
       properties:
         VarianceFactorType:
           type: string
-          description: "Type of variance factor used to calculate interest rate. \n\n**Note:** Refers to rate adjuster option.\n\nFor this field either a RateFactor or RateVariance can be applied but not both. The \"VarianceFactorType\" specifies the type to use."
+          description: "Type of variance factor used to calculate interest rate. \n\nThis value is used in combination with the RateVariance, RateFactor and RateCalcMethod.\n\n**Note:** Refers to rate adjuster option.\n\nFor this field either a RateFactor or RateVariance can be applied but not both. The \"VarianceFactorType\" specifies the type to use."
           enum:
           - Variance
           - Factor
@@ -1042,16 +997,7 @@ components:
           - SvcChgCycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of fee.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** This field must be provided for a new recurring charge
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** This field must be provided for a new recurring charge"
           format: int64
         Occurrences:
           type: integer
@@ -1238,7 +1184,10 @@ components:
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
         CurCode:
           $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_OverdraftData_OverdraftLimitAmt_CurCode'
       description: Details of the amount specified in overdraft program.
@@ -1507,16 +1456,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** The number that identifies the Service Charge Cycle. Valid values are from 0 to 99.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n-If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** The number that identifies the Service Charge Cycle. Valid values are from 0 to 99."
           format: int64
     AccountModRequest_DepositAcctInfo_SvcChgData:
       type: object
@@ -1660,7 +1600,7 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |+
-            Last contact date when the financial institution contacted the customer for this account.
+            Last contact date when the financial institution contacted the customer for the account.
 
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
@@ -1954,4 +1894,4 @@ components:
           $ref: '#/components/schemas/AccountModRequest_AcctKeys'
         AcctStatus:
           $ref: '#/components/schemas/AccountModResponse_AcctStatusRec_AcctStatus'
-      description: Details of the updated status of the account.
+      description: Details of the account status record in response to the update operation.
