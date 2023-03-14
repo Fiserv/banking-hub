@@ -2,12 +2,12 @@
 <!-- theme: info -->
 > #### Note for Developers 
 >
-> The current user journey enables developers to register for a trail plan that provides access to a range of Standard Bank Platform APIs on Banking Hub. 
+> The current user journey enables developers to register for a trial plan that provides access to a range of Standard Bank Platform APIs on Banking Hub. 
 
 Before you start integration, it is important to register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test APIs using the <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a> of your choice. However, registration is not required to learn about our APIs and reference documentation.
 
 ## Register on Fiserv Developer Studio
-This section describes a process to create an account and workspace on Fiserv Developer Studio to obtain credentials for sandbox testing.
+This section describes the process to create an account and workspace on Fiserv Developer Studio to obtain credentials for sandbox testing.
 
 ### Creating an Account
 
@@ -46,7 +46,7 @@ Every workspace has following three sections:
 * **Summary**: Displays workspace details and list of activities performed on the workspace
 * **Credentials**: Lists all active API keys. From this section, you can view or download the following details of an API key:
     * Product name: _Name of the product, for example, Banking Hub_    
-    * Org ID: _Organization ID is required to send in all API requests under the <a href="?path=docs/getting-started/before-you-start.md#request-body" >Request Header</a>_    
+    * Org ID: _Organization ID is required to send in all API requests under the <a href="?path=docs/getting-started/know-our-standard-api-structure.md#request-body" >Request Header</a>_    
     * API key name: _Name of the API key_
     * API key type: _Type of API key, for example, Trial_
     * API key: _Alphanumeric value of the API key. API key is used as username while generating the access token_
