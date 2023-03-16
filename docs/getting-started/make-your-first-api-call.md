@@ -58,7 +58,11 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 <!-- theme: success -->  
 > #### Recommendation
 >
-> Keep the API documentation accessible to refer to the default request-payload for the request message. You can also download the Postman collection from the API Explorer section and refer to samples within the collection. 
+> Keep the API documentation accessible to refer to the default request-payload for the request message. You may also download the Postman collection and refer to sample API requests for Premier core APIs. 
+
+#### Resources
+
+* [Download Postman Collection - Premier Core](https://github.com/Fiserv/banking-hub/files/10987356/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.postman_collection.zip "Click to Download")
 
 To  test an API using Postman application: 
 
