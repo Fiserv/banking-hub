@@ -64,7 +64,7 @@ Every workspace has following three sections:
 
 ## Generating Access Token
 
-An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. **API key** and **API secret** values obtained from the Workspace are required to generate an access token. 
+An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. **API key** and **API secret** obtained from the Workspace are required to generate an access token. 
 
 Use the API mentioned below to generate an access token using Postman.
 
