@@ -64,6 +64,25 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 
 * [Download Postman Collection - Premier Core](https://github.com/Fiserv/banking-hub/files/10987356/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.postman_collection.zip "Click to Download")
 
+
+#### Prerequisite to run Postman collection
+
+The attached Postman collection use variables to store and reuse few values such as Hostname, Username and Password. To update the variable values, perform the below steps in Postman.
+1.	From the **Collections** tab, select the root folder of Banking Hub Postman collection 
+2.	Select the **Variables** tab
+3.	Insert the variable values in the **Current value** column for the following variables:
+    * **authToken_UserName**: _API key value_
+    * **authToken_Password**: _API secret value_
+    * **OrgId**: _Org Id value_
+    
+      <!-- theme: info -->
+      > #### Note
+      > 
+      > You can obtain the _API key_, _API secret_ and _Org Id_ values from the Credentials tab of My workspaces. 
+
+    <kbd>![Postman-collection-steps](https://user-images.githubusercontent.com/81968767/225672853-7c17109c-3969-4ab7-9fa5-282b335e9b72.png) </kbd>
+
+
 To  test an API using Postman application: 
 
 1. Open a web or desktop application of Postman
