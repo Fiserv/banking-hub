@@ -45,7 +45,7 @@ The following table lists the EFX status codes and their descriptions related to
                 </tr>
                 <tr>
                     <td><code>50</code></td>
-                    <td>Error</td>
+                    <td>Warning</td>
                     <td>General warning</td>
                 </tr>
                 <tr>
