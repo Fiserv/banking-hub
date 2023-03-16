@@ -2,11 +2,11 @@
 
 EFX is a framework used for exchange of information between service-providers, clients and vendors.
 
-EFXHeader is a mandatory parameter that needs to be sent in the request message of every API call of Banking Hub. EFX header parameter contains authentication and client-related information. Header parameters should be sent as a JSON object under the EFXHeader header parameter, refer the sample EFXHeader example below:
+EFXHeader is a mandatory parameter that needs to be sent in the request message of every API request to Banking Hub. Header parameters should be sent as a JSON object under the EFXHeader header parameter, refer the sample EFXHeader example below:
 
 ```
 "EFXHeader": {
-  "OrganizationId": "CTOrg",
+  "OrganizationId": "999990301",
   "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c",
   "VendorId": "112233",
   "Context": {
@@ -18,7 +18,7 @@ EFXHeader is a mandatory parameter that needs to be sent in the request message 
 List of parameters that can be sent under the EFXHeader:
 |Parameter | Description | Data Type | Required|
 |---------|----------|---------|-----------|
-|OrganizationId | Unique identification value to represent the financial institution or holding company. <br><br>*Example: PRMOrg* | string | Required |
+|OrganizationId | Unique identification value to represent the financial institution or holding company. <br><br>*Example: 999990301* | string | Required |
 | TrnId | Transaction UUID (Universal Unique Identifier) of the current message. This ID is usually used for tracking messages.<br><br> *maxLength: 36*| string | Optional|
 | VendorId | Unique vendor identification number provided by Fiserv to identify the vendor.| string| Optional |
 | Context  | Additional information related to the specific channels used by the client application. | object  | Optional |
