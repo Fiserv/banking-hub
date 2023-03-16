@@ -74,11 +74,10 @@ The attached Postman collection use variables to store and reuse few values such
     * authToken_UserName: _API key value_
     * authToken_Password: _API secret value_
     * OrgId: _Org Id value_
-  
-   <!-- theme: info -->
-   > #### Note
-   > 
-   > You can obtain the API key, API secret and Org ID values from the Credentials tab of My workspaces. 
+     <!-- theme: info -->
+     > #### Note
+     > 
+     > You can obtain the API key, API secret and Org ID values from the Credentials tab of My workspaces. 
 
   
 
