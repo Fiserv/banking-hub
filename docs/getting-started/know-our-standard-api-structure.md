@@ -1,4 +1,4 @@
-# Know Our Standard API structure 
+# Know Our Standard API Structure 
 
 This section describes a standard structure of request and response message of Banking Hub RESTful APIs. 
 
@@ -39,7 +39,7 @@ If host URL of the product is https://cert.api.fiservapps.com/banking/efx/v1/, t
 
 ### Access Token
 
-An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. Banking Hub API uses Bearer Access token, and API key and API secret are required to generate an access token. A generated access token is valid for approximately 15 minutes.
+An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. Banking Hub API uses bearer access token, and API key and API secret are required to generate an access token. A generated access token is valid for approximately 15 minutes.
 To generate an access token, refer to the [Generating Access Token](?path=docs/getting-started/before-you-start.md#generating-access-token) section.
 
 
