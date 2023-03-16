@@ -32,12 +32,12 @@ After successful registration, you will be able to create a workspace. You can o
 * API secret
 * Host URL
   
-These credentials are important to send in API requests. **API key** and **API secret** are used to generate access token, whereas **Org ID** is required to be passed as header parameter under the [EFXHeader](?path=docs/api-ref-EFX-header.md) parameter.
+These credentials are important to send in API requests. **API key** and **API secret** values are used to generate access token, whereas **Org ID** value is required to be passed as header parameter under the [EFXHeader](?path=docs/api-ref-EFX-header.md) parameter.
 
 
 **Generating an Access Token**
    
-An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. **API key** and **API secret** obtained from Workspace are required to generate an access token. 
+An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. **API key** and **API secret** values obtained from Workspace are required to generate an access token. 
   
 To generate an access token, refer to the [Generating Access Token](?path=docs/getting-started/before-you-start.md#generating-access-token) section.
 
@@ -58,7 +58,11 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 <!-- theme: success -->  
 > #### Recommendation
 >
-> Keep the API documentation accessible to refer to the default request-payload for the request message. You can also download the Postman collection from the API Explorer section and refer to samples within the collection. 
+> Keep the API documentation accessible to refer to the default request-payload for the request message. You may also download the Postman collection and refer to sample API requests for Premier core APIs. 
+
+#### Resources
+
+* [Download Postman Collection - Premier Core](https://github.com/Fiserv/banking-hub/files/10987356/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.postman_collection.zip "Click to Download")
 
 To  test an API using Postman application: 
 
