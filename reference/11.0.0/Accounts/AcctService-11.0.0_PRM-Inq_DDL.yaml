@@ -7,7 +7,7 @@ info:
 servers:
 - url: /
 paths:
-  /accounts/secured:
+  /acctservice/acctmgmt/accounts/secured:
     post:
       tags:
       - Get Accounts
@@ -91,6 +91,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -393,7 +394,6 @@ components:
             **Note:** *Required field*
           enum:
           - DDL
-          - ""
       description: Unique information to identify the account record.
     getAccountsSecuredRequest_AcctSel:
       required:
@@ -402,7 +402,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel_AcctKeys'
-      description: Details of selected account.
+      description: Details of the selection criteria used for account inquiry.
     getAccountsSecuredResponse_AcctRec_AcctKeys:
       required:
       - AcctId
@@ -449,7 +449,6 @@ components:
           - LastTrn
           - LastPrc
           - Accrual
-          - ""
         DateValue:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
@@ -486,7 +485,7 @@ components:
             SecondOfficer refers to opened by responsibility code.
           enum:
           - Officer
-          - 'SecondOfficer '
+          - SecondOfficer
     getAccountsSecuredResponse_AcctRec_LoanAcctInfo_AcctStmtData:
       type: object
       properties:
@@ -635,7 +634,7 @@ components:
           - LTD
         LastOccurInd:
           type: boolean
-          description: Flag to indicate the last occurrence.
+          description: Flag to indicate the last occurrence of the accounting period.
         Amt:
           type: number
           description: |-
@@ -653,9 +652,13 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Date of the last occurrence.
+            Last occurrence date of the accounting period.
 
 
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
 
             **Note:** Applicable only for advances and payments.
     getAccountsSecuredResponse_AcctRec_LoanAcctInfo_CountryCode:
@@ -1020,7 +1023,7 @@ components:
           description: Description of the enumeration value in the AcctDtlStatus field.
         AcctIdent:
           type: array
-          description: Unique identifier of an account record.
+          description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. "
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_LoanAcctInfo_AcctIdent'
         ProductIdent:
@@ -1219,10 +1222,7 @@ components:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_LoanAcctInfo_LOCAdvance'
         IncYearEndReportCode:
           type: string
-          description: |-
-            Type of interest report at the year end.
-
-            **Note:** Refers to interest reporting code.
+          description: Code for interest reporting at the year end.
           enum:
           - ReportToBorrower
           - "1098"

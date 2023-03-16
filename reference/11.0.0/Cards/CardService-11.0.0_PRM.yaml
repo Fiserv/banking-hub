@@ -2,13 +2,13 @@
 openapi: 3.0.1
 info:
   title: Card Service
-  description: ' The Card service provides administration in respect to creation, modification, inquiry, and deletion of any type of EFT cards used by the holders. It supports operations managing the credit, debit, prepaid and private label cards.'
+  description: The Card service provides administration in respect to creation, modification, inquiry, and deletion of any type of EFT cards used by the holders. It supports operations managing the credit, debit, prepaid and private label cards.
   version: 11.0.0_PRM
 servers:
 - url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/CardService/11.0.0_PRM
   description: SwaggerHub API Auto Mocking
 paths:
-  /cards:
+  /cardservice/cards/cards:
     put:
       tags:
       - Update Card
@@ -79,7 +79,7 @@ paths:
       x-proxy-name: Add Card
       x-child-product-name: Cards
       x-core: Premier
-  /cards/secured:
+  /cardservice/cards/cards/secured:
     put:
       tags:
       - Delete Card
@@ -226,8 +226,8 @@ components:
       required:
       - CardStatusRec
       properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
         CardStatusRec:
           $ref: '#/components/schemas/CardModOperResponse_CardStatusRec'
     EFXHeader:
@@ -236,13 +236,17 @@ components:
       type: string
       properties:
         OrganizationId:
+          maxLength: 36
           type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
         VendorId:
+          maxLength: 255
           type: string
-          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
         Context:
           $ref: '#/components/schemas/Context'
       example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
@@ -252,67 +256,84 @@ components:
         ClientAppName:
           maxLength: 40
           type: string
-          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
         Channel:
+          maxLength: 80
           type: string
-          description: Indicates the channel used by the client application.
-        ClientDateTime:
-          type: string
-          description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
-        ClientTerminalSeqNum:
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
           maxLength: 36
           type: string
-          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
           format: int64
         TerminalIdent:
           maxLength: 36
           type: string
-          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
         TerminalAddr1:
           maxLength: 64
           type: string
+          description: Terminal address line 1.
         TerminalAddr2:
           maxLength: 64
           type: string
+          description: Terminal address line 2.
         TerminalAddr3:
           maxLength: 64
           type: string
+          description: Terminal address line 3.
         TerminalAddr4:
           maxLength: 64
           type: string
+          description: Terminal address line 4.
         TerminalCity:
           maxLength: 32
           type: string
+          description: Terminal city name.
         TerminalCounty:
           maxLength: 32
           type: string
+          description: Terminal county name.
         TerminalStateProv:
           maxLength: 32
           type: string
-          description: State Province. ISO 3166-2:US codes.
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
         TerminalPostalCode:
           maxLength: 11
           type: string
-          description: Postal Code is ZipCode in the US.
+          description: 'Postal Code where the terminal is located. '
         TerminalCountryCodeSource:
-          type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - ISO3166Numeric
-          - ISO3166Alpha3
-        TerminalCountryCodeValue:
           maxLength: 80
           type: string
-        PhoneType:
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
         PhoneNum:
           type: string
+          description: Phone number.
         PhoneExchange:
+          maxLength: 80
           type: string
+          description: Phone exchange.
         TerminalOwnerName:
           maxLength: 40
           type: string
@@ -332,97 +353,78 @@ components:
         AcquirerIdent:
           maxLength: 36
           type: string
-          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
         AcquirerCountryCodeSource:
+          maxLength: 80
           type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - US
-          - IND
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
         AcquirerCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
         MerchNum:
           maxLength: 23
           type: string
-          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
         SettlementDate:
           type: string
-          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
           format: date
         SettlementIdent:
           maxLength: 36
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: Identification of the settlement account in which the transaction will be settled.
         BusinessApplIdent:
+          maxLength: 80
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
         BranchIdent:
           maxLength: 22
           type: string
+          description: Branch identification number.
         TellerIdent:
+          maxLength: 80
           type: string
+          description: Teller identification number.
         TillIdent:
+          maxLength: 80
           type: string
+          description: Till identification number.
         AMPMCode:
           type: string
+          description: 'Transaction posting code. '
           enum:
           - AM
           - PM
         ReentryType:
           type: string
+          description: Type of re-entry.
           enum:
           - Manual
           - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
     OvrdExceptionDataType:
       title: OvrdExceptionDataType
       type: object
       properties:
-        OverrideException:
-          type: array
-          description: List of the exceptions that can be overridden.
-          items:
-            $ref: '#/components/schemas/OverrideExceptionType'
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -491,6 +493,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -605,7 +623,7 @@ components:
 
 
 
-            Financial Institutions can create user defined relationship types.
+            Financial institutions can create user defined relationship types.
 
             OwnerSigner relationship is commonly used for party to card relationship.
           enum:
@@ -621,7 +639,7 @@ components:
           - DoingBusinessAs
         PartyCardRelOrder:
           type: string
-          description: "Relationship order of a party with card.\n\nIndicates the relationship order for JointTenancy or JointTenantsInCommon. \n\n**Note:** Parties having first, second and third relationship order are considered to be the main names and, only one party can be associated with first/second/third relationship order on the card. Relationship order value of 'Other' is commonly used for relationships other than OwnerSigner, Signer and Owner. One party can have multiple 'Other' type of relationship orders on card. If Mailing Name Option parameter is set up at financial institution, then first, second and third names can be used for inquiry or account related mailing purpose. If Mailing Name Option parameter is set to Y, a card can have up to 3 names for mailing purpose which can be provided in Postal Address aggregate."
+          description: "Relationship order of a party with card.\n\nIndicates the relationship order for JointTenancy or JointTenantsInCommon. \n\n**Note:** Parties having first, second and third relationship order are considered to be the main names and, only one party can be associated with first/second/third relationship order on the card. Relationship order value of 'Other' is commonly used for relationships other than OwnerSigner, signer and owner. One party can have multiple 'Other' type of relationship orders on card. If mailing name option parameter is set up at financial institution, then first, second and third names can be used for inquiry or account related mailing purpose. If mailing name option parameter is set to Y, a card can have up to 3 names for mailing purpose which can be provided in postal address aggregate."
           enum:
           - First
           - Second
@@ -813,7 +831,7 @@ components:
           description: |-
             Start date and time value.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
 
@@ -824,7 +842,7 @@ components:
           description: |-
             End date and time value.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
 
@@ -862,9 +880,9 @@ components:
 
             **Note:** This field is applicable if AddrType is secondary and AddrUse is mailing.
 
-            Only up to 3 name identifiers can be provided if financial institution is configured to use different Primary/Inquiry and Secondary/Mailing addresses and names. If provided for Primary/Inquiry address it will be ignored as name relationships for inquiry are established using information provided in PartyCardRelInfo.
+            Only up to 3 name identifiers can be provided if financial institution is configured to use different primary/inquiry and secondary/mailing addresses and names. If provided for primary/inquiry address it will be ignored as name relationships for inquiry are established using information provided in PartyCardRelInfo.
 
-            Not applicable for Seasonal Address type.
+            Not applicable for seasonal address type.
 
             Only names which have a relationship to the card or card portfolio can be associated to the new card for mailing purpose.
 
@@ -906,7 +924,7 @@ components:
           maxLength: 64
           type: string
           description: |-
-            Address line 1
+            Address line 1.
 
             **Note:** *Conditionally Required field*
 
@@ -914,7 +932,7 @@ components:
 
             This field is required to be provided if new address record is to be created.
 
-            Value is dependent on address and name Length option defined under miscellaneous specification. Field length can be either 30 or 40 characters long.
+            Value is dependent on address and name length option defined under miscellaneous specification. Field length can be either 30 or 40 characters long.
         Addr2:
           maxLength: 64
           type: string
@@ -931,7 +949,7 @@ components:
 
             This field is required to be provided if a new address record is to be created.
 
-            Field length is 20 characters long (including spaces). It is recommended for consumer to abbreviate the value sent in the EFX request to prevent truncation (For example, City name "Rancho Santa Margarita" exceeds 20 characters and can be abbreviated to "Rancho S Margarita" to avoid truncation). Total length of 40 characters is supported for city, StateProv and PostalCode (appended together) including spaces.
+            Field length is 20 characters long (including spaces). It is recommended for consumer to abbreviate the value sent in the EFX request to prevent truncation (For example, city name "Rancho Santa Margarita" exceeds 20 characters and can be abbreviated to "Rancho S Margarita" to avoid truncation). Total length of 40 characters is supported for city, StateProv and PostalCode (appended together) including spaces.
 
         StateProv:
           type: string
@@ -1012,6 +1030,27 @@ components:
           type: integer
           description: MSA Code identifies a Metropolitan Statistical Area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB), and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
           format: int64
+    CardAddOperRequest_CardInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: |-
+            Standard ISO currency code format.
+
+
+
+            Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank" title="Click to open in a new tab">ISO 4217 codes </a> to view the list of all currency codes.
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
+      description: |+
+        Details of the currency code.
+
     CardAddOperRequest_CardInfo_CurAmt:
       type: object
       properties:
@@ -1024,28 +1063,7 @@ components:
 
             Example: 10.00
         CurCode:
-          required:
-          - CurCodeValue
-          type: string
-          properties:
-            CurCodeType:
-              type: string
-              description: |-
-                Standard ISO currency code format.
-
-
-
-                Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank" title="Click to open in a new tab">ISO 4217 codes </a> to view the list of all currency codes.
-              enum:
-              - ISO4217-Alpha
-            CurCodeValue:
-              type: string
-              description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
-          description: |+
-            Details of the currency code.
-
-          enum:
-          - Field added
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt_CurCode'
       description: Details of the transaction limit amount applicable for the party.
     CardAddOperRequest_CardInfo_CardTrnLimit:
       required:
@@ -1067,7 +1085,7 @@ components:
           description: |-
             Source of the transaction to apply the transaction limit.
 
-            **Note:** OnLine/OffLine terms refer to the two distinct ways of processing debit payments i.e. Online/Offline. Customers need to endorse payments by submitting their personal identification numbers (PINs) at the point of sale in case of online debit transaction, whereas shoppers need to sign the sales receipts in case of offline transactions. POS refers to withdrawal of funds through a point-of-sale transaction (typically a cash or debit card purchase). ATM refers to withdrawal of funds using an ATM machine.
+            **Note:** OnLine/OffLine terms refer to the two distinct ways of processing debit payments i.e. online/offline. Customers need to endorse payments by submitting their personal identification numbers (PINs) at the point of sale in case of online debit transaction, whereas shoppers need to sign the sales receipts in case of offline transactions. POS refers to withdrawal of funds through a point-of-sale transaction (typically a cash or debit card purchase). ATM refers to withdrawal of funds using an ATM machine.
           enum:
           - ATM
           - POS
@@ -1079,15 +1097,29 @@ components:
           - TrnMax
         CurAmt:
           $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt'
+    CardAddOperRequest_CardInfo_MaxCreditLimitAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
+      description: |+
+        Details of the currency code.
+
     CardAddOperRequest_CardInfo_MaxCreditLimitAmt:
       type: object
       properties:
         Amt:
           type: number
           description: |-
-            Amount in decimal format.
-
-            Example: 10.00
+            Value that generates card order to replace the existing EFT card issued to the cardholder.
 
 
 
@@ -1095,23 +1127,7 @@ components:
 
             **Note:** Credit card limit refers to the maximum amount a customer can withdraw in a 24-hour period (midnight to midnight), using the debit card as a credit card.
         CurCode:
-          required:
-          - CurCodeValue
-          type: string
-          properties:
-            CurCodeType:
-              type: string
-              description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
-              enum:
-              - ISO4217-Alpha
-            CurCodeValue:
-              type: string
-              description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
-          description: |+
-            Details of the currency code.
-
-          enum:
-          - Field added
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_MaxCreditLimitAmt_CurCode'
       description: |-
         Maximum amount the cardholder can spend using a debit card in a day.
 
@@ -1221,7 +1237,7 @@ components:
           description: "Card sequence number that typically refers to the member number to whom the card is issued. \n\n**Note:** Member number on debit card is incremented by 1 each time a card is re-issued (up to 8), or is incremented by 2 each time a debit card is force re-issued.\n\nThis field can be provided only if supported by CardType."
         CardType:
           type: string
-          description: "Type of a card. \n\n**Note:** *Required field*\n\n\n\nThis field refers to the client-defined debit card type code, and established in debit card type specifications, that includes the type of card to be produced for the account (For example, Standard Debit Card/VISA)."
+          description: "Type of a card. \n\n**Note:** *Required field*\n\n\n\nThis field refers to the client-defined debit card type code, and established in debit card type specifications, that includes the type of card to be produced for the account (For example, standard debit card/VISA)."
         ProductIdent:
           maxLength: 42
           type: string
@@ -1244,13 +1260,13 @@ components:
 
             Values indicate following:
 
-            Active (0): Indicates an active card which will be re-issued when it is activated.
+            - Active (0): Indicates an active card which will be re-issued when it is activated.
 
-            Do Not Renew (1): Indicates an active card which will not be re-issued when it expires.
+            - Do not renew (1): Indicates an active card which will not be re-issued when it expires.
 
-            No Withdrawal (7): Indicates that withdrawals are not allowed.
+            - No withdrawal (7): Indicates that withdrawals are not allowed.
 
-            Hot Card (8): Indicates a hot card which will be captured if an ATM has the card capture feature.
+            - Hot card (8): Indicates a hot card which will be captured if an ATM has the card capture feature.
           enum:
           - Active
           - ActiveNoRenew
@@ -1277,7 +1293,7 @@ components:
         NextIssueDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date of the next issue of the card.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999   \n\n**Note:** *Required field*\n\nThis field is required to be provided."
+          description: "Date of the next issue of the card.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999   \n\n**Note:** *Required field*\n\nThis field is required to be provided."
         CardCategory:
           type: string
           description: |-
@@ -1297,7 +1313,9 @@ components:
 
             **Note:** *Required field*
 
-            Maximum length: 26 characters
+
+
+            Maximum length: 26 characters.
         SecondaryEmbossingName:
           maxLength: 80
           type: string
@@ -1308,7 +1326,7 @@ components:
 
 
 
-            Maximum length: 26 characters
+            Maximum length: 26 characters.
         PostAddr:
           type: array
           description: |-
@@ -1322,15 +1340,15 @@ components:
 
             Value of AddrUse for secondary and related seasonal address is 'Mailing'.
 
-            If "Mailing Name Options" parameter is configured at financial institution, it determines if card can have different inquiry and mailing address/ names.
+            If "mailing name options" parameter is configured at financial institution, it determines if card can have different inquiry and mailing address/ names.
 
             - If parameter is set to N, both inquiry and mailing addresses are same therefore, only primary address type and AddrUse as Inquiry is to be provided.
 
             - If parameter is set to Y, both inquiry and mailing addresses can be different therefore, secondary address type and AddrUse as Mailing and Names is to be provided.
 
-            If existing address is to be linked to a card then, AddressIdent including AddrType, AddrUse and AdddrFormatType are required to be provided.
+            - If existing address is to be linked to a card then, AddressIdent including AddrType, AddrUse and AdddrFormatType are required to be provided.
 
-            If new address is to be created for a card, address details including AddrType, AddrUse and AdddrFormatType is required to be provided.
+            - If new address is to be created for a card, address details including AddrType, AddrUse and AdddrFormatType is required to be provided.
           items:
             $ref: '#/components/schemas/CardAddOperRequest_CardInfo_PostAddr'
         CardTrnLimit:
@@ -1467,7 +1485,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
       description: Details of the card status returned in the result of API call.
     CardAddOperResponse_CardStatusRec:
       required:
@@ -1542,6 +1560,8 @@ components:
 
         **Note:** *Required*
 
+
+
         It is required to provide this aggregate in the request. This aggregate contains CardId which is used to retrieve the details of card that is created using CardAdd operation.
     CardInqOperSecuredResponse_CardKeys:
       type: object
@@ -1589,7 +1609,7 @@ components:
           description: |-
             Type of card fee.
 
-            **Note:** This field identifies the fee type (Card Fee or Foreign Fee).
+            **Note:** This field identifies the fee type (card fee or foreign fee).
           enum:
           - CardFee
           - ForeignFee
@@ -1653,7 +1673,7 @@ components:
           description: |-
             Start date and time value.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
 
@@ -1664,7 +1684,7 @@ components:
           description: |-
             End date and time value to search the transaction record.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
 
@@ -1700,7 +1720,7 @@ components:
 
             If "Mailing Name Options" parameter is configured at financial institution, it determines if card account can have different inquiry and mailing address/names.
 
-            - If parameter is set to N, both inquiry and mailing addresses are same therefore, only Inquiry address is returned by ESF.
+            - If parameter is set to N, both inquiry and mailing addresses are same therefore, only inquiry address is returned by ESF.
 
             - If parameter is set to Y, both inquiry and mailing addresses can be different therefore, both will be returned by ESF in response.
           enum:
@@ -1742,7 +1762,7 @@ components:
         Addr2:
           maxLength: 64
           type: string
-          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided.\n\n**Note:** This field is supported if enabled in the CIS miscellaneous (Institution) specifications."
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided.\n\n**Note:** This field is supported if enabled in the CIS miscellaneous (institution) specifications."
         City:
           maxLength: 32
           type: string
@@ -1756,7 +1776,7 @@ components:
           description: |-
             Postal code or Zip code.
 
-            **Note:** Postal Code provides information about the ZIP code if, address is from United States and, provides information about postal code if, address is not from United States.  This field provides the information in ZIP Code (5 Digit)-Additional Code (4 Digit) format. Additional code of four digits is optional and provides a more specific location within a given ZIP code. If additional code is not provided, it can be represented with value as '0000'. For example, 32714-1234 or 32714-0000.
+            **Note:** Postal code provides information about the ZIP code if, address is from United States and, provides information about postal code if, address is not from United States.  This field provides the information in ZIP code (5 Digit)-additional code (4 Digit) format. Additional code of four digits is optional and provides a more specific location within a given ZIP code. If additional code is not provided, it can be represented with value as '0000'. For example, 32714-1234 or 32714-0000.
         CountryCode:
           $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CountryCode'
         AddrType:
@@ -1808,29 +1828,8 @@ components:
           description: |-
             Code that identifies a Metropolitan Statistical Area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
 
-            **Note:** Refers to the client-defined Metropolitan Statistical Area Code, assigned by the U.S. Office of Management and Budget to identify areas which contain a city or urbanized area(s) with a population of 50,000 plus.
+            **Note:** Refers to the client-defined metropolitan statistical area code, assigned by the U.S. Office of Management and Budget to identify areas which contain a city or urbanized area(s) with a population of 50,000 plus.
           format: int64
-    CardInqOperSecuredResponse_CardInfo_CurAmt_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: |-
-            Standard ISO currency code format.
-
-
-
-            Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank" title="Click to open in a new tab">ISO 4217 codes </a> to view the list of all currency codes.
-          enum:
-          - ISO4217-Alpha
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
-      description: |+
-        Details of the currency code.
-
     CardInqOperSecuredResponse_CardInfo_CurAmt:
       type: object
       properties:
@@ -1841,9 +1840,9 @@ components:
 
 
 
-            Example: 10.00
+            Example: 10.00.
         CurCode:
-          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CurAmt_CurCode'
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt_CurCode'
       description: Details of the transaction limit amount applicable for the party.
     CardInqOperSecuredResponse_CardInfo_CardTrnLimit:
       required:
@@ -1870,7 +1869,7 @@ components:
 
             **Note:** Used in combination with transaction service and CardTrnLimit to identify, the limit amount defined for a card.
 
-            OnLine/OffLine terms refer to the two distinct ways of processing debit payments i.e., Online/Offline. Customers need to endorse payments by submitting their personal identification numbers (PINs) at the point of sale in case of online debit transaction, whereas shoppers need to sign the sales receipts in case of offline transactions.
+            OnLine/OffLine terms refer to the two distinct ways of processing debit payments i.e., online/offline. Customers need to endorse payments by submitting their personal identification numbers (PINs) at the point of sale in case of online debit transaction, whereas shoppers need to sign the sales receipts in case of offline transactions.
           enum:
           - ATM
           - POS
@@ -1896,7 +1895,7 @@ components:
 
             **Note:** Credit card limit refers to the maximum amount a customer can withdraw in a 24-hour period (midnight to midnight), using the debit card as a credit card.
         CurCode:
-          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CurAmt_CurCode'
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt_CurCode'
       description: Maximum amount the cardholder can spend using a debit card in a day.
     CardInqOperSecuredResponse_CardInfo_AtmPosOverdraft:
       type: object
@@ -1925,7 +1924,7 @@ components:
 
             **Note:** Value of LastFileMaint relates to generic updates done on files and is referred to 'Last Change Date' in core. This value indicates the date on which last maintenance of files occurred.
 
-            Value of LastActivity relates to transactions done and refers to 'Last Activity Date in core. This value indicates the most recent date when debit card was used for transaction.
+            Value of LastActivity relates to transactions done and refers to 'Last Activity Date' in core. This value indicates the most recent date when debit card was used for transaction.
 
           enum:
           - LastFileMaint
@@ -1936,7 +1935,7 @@ components:
           description: |-
             Date value.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
     CardInqOperSecuredResponse_CardInfo_CardPeriodData:
@@ -1997,7 +1996,7 @@ components:
           description: |-
             Product identification number. The product assigned to card account. This product is used to identify the processing parameters of the card such as interest rates, statement cycles, descriptions, account modeling information and field overrides.
 
-            **Note:** The product assigned to this account. The Product is established in Product Specifications using Premier Administrator and controls parameters such as interest rates, statement cycles, descriptions, account modeling information and field overrides.
+            **Note:** The product assigned to this account. The product is established in product specifications using premier administrator and controls parameters such as interest rates, statement cycles, descriptions, account modeling information and field overrides.
         Desc:
           maxLength: 200
           type: string
@@ -2014,15 +2013,15 @@ components:
 
             **Note:** Values indicate following:
 
-            Active (0): Indicates an active card which will be re-issued when it is activated.
+            - Active (0): Indicates an active card which will be re-issued when it is activated.
 
-            Do Not Renew (1): Indicates an active card which will not be re-issued when it expires.
+            - Do Not Renew (1): Indicates an active card which will not be re-issued when it expires.
 
-            No Withdrawal (7): Indicates that withdrawals are not allowed.
+            - No Withdrawal (7): Indicates that withdrawals are not allowed.
 
-            Hot Card (8): Indicates a hot card which will be captured if an ATM has the card capture feature.
+            - Hot Card (8): Indicates a hot card which will be captured if an ATM has the card capture feature.
 
-            Closed (9): Indicates a closed card which will be captured if an ATM has the card capture feature.
+            - Closed (9): Indicates a closed card which will be captured if an ATM has the card capture feature.
           enum:
           - Active
           - ActiveNoRenew
@@ -2055,7 +2054,7 @@ components:
         NextIssueDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date of the next issue of the card.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999   "
+          description: "Date of the next issue of the card.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999   "
         CardCategory:
           type: string
           description: Category of a card.
@@ -2113,7 +2112,7 @@ components:
           description: |-
             Expiry date of the previous card. This date is used as a reference to order a new card and sometimes to verify the expiry date of the issued card if the card is not in use.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
         OriginatingBranch:
@@ -2129,7 +2128,7 @@ components:
           description: |-
             Branch responsible for the relationship.
 
-            **Note:** This field refers to client-defined accounting branch for similar accounting, processing and integration into the general ledger. Accounting Branch can also be used to group accounts for reporting.
+            **Note:** This field refers to client-defined accounting branch for similar accounting, processing and integration into the general ledger. Accounting branch can also be used to group accounts for reporting.
         CardPeriodData:
           type: array
           description: Periodic details of a card recurring at regular intervals.
@@ -2187,7 +2186,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
       description: Details of the card status returned in the result of API call.
     CardInqOperSecuredResponse_CardRec:
       required:
@@ -2201,6 +2200,30 @@ components:
           $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo'
         CardStatus:
           $ref: '#/components/schemas/CardInqOperSecuredResponse_CardStatus'
+    CardModOperRequest_CardInfo_TimeFrame_RecurRule:
+      properties:
+        RecurType:
+          type: string
+          description: 'Type of recurrence. '
+          enum:
+          - Cycle
+        RecurInterval:
+          type: integer
+          description: |+
+            Card fee payment recurrence interval. This value defines the payment interval between two successive occurrences. For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month-month interval between the next payment.
+
+            The default value is set to 1.
+
+          format: int64
+    CardModOperRequest_CardInfo_TimeFrame:
+      type: object
+      properties:
+        RecurRule:
+          type: array
+          description: Details of the recurrence rule.
+          items:
+            $ref: '#/components/schemas/CardModOperRequest_CardInfo_TimeFrame_RecurRule'
+      description: "Time frame details of the applicable fee. \n\n\n\n"
     CardModOperRequest_CardInfo_CardFee:
       required:
       - CardFeeType
@@ -2217,7 +2240,7 @@ components:
           description: |-
             Fee plan to charge the card fee.
 
-            **Note:** If CardFeeType is CardFee, then charge code indicates one of the 20 charges from debit card charge specifications that is to be assessed on the debit card account. Debit card charge code specifications can be configured by Bank/FI.
+            **Note:** If CardFeeType is CardFee, then charge code indicates one of the 20 charges from debit card charge specifications that is to be assessed on the debit card account. Debit card charge code specifications can be configured by bank/FI.
 
 
 
@@ -2225,49 +2248,7 @@ components:
 
             Value of FeePlan is not transformed by ESF and is passed as-is between core and application.
         TimeFrame:
-          type: string
-          properties:
-            RecurRule:
-              type: array
-              description: Details of the recurrence rule.
-              items:
-                properties:
-                  RecurType:
-                    type: string
-                    description: 'Type of recurrence. '
-                    enum:
-                    - Cycle
-                  RecurInterval:
-                    type: integer
-                    description: |+
-                      Card fee payment recurrence interval. This value defines the payment interval between two successive occurrences. For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month-month interval between the next payment.
-
-                      The default value is set to 1.
-
-                    format: int64
-          description: "Time frame details of the applicable fee. \n\n\n\n"
-          enum:
-          - Field added
-    CardModOperRequest_CardInfo_RelationshipMgr:
-      required:
-      - RelationshipMgrIdent
-      properties:
-        RelationshipMgrIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identifier of a relationship manager.
-
-            **Note:** This field is user-defined and not applicable for seasonal address type.
-        RelationshipRole:
-          type: string
-          description: |-
-            Role of a relationship manager.
-
-            **Note:** Officer refers to responsibility code whereas, Referral Officer refers to referral responsibility code.
-          enum:
-          - Officer
-          - ReferralOfficer
+          $ref: '#/components/schemas/CardModOperRequest_CardInfo_TimeFrame'
     CardModOperRequest_CardInfo_PostAddr:
       required:
       - AddrType
@@ -2280,7 +2261,7 @@ components:
           type: array
           description: Information about the financial institution officers who have management-related responsibilities of the account.
           items:
-            $ref: '#/components/schemas/CardModOperRequest_CardInfo_RelationshipMgr'
+            $ref: '#/components/schemas/CardAddOperRequest_CardInfo_RelationshipMgr_1'
         OriginatingBranch:
           maxLength: 32
           type: string
@@ -2300,9 +2281,9 @@ components:
 
             **Note:** This field is applicable if AddrType is secondary and AddrUse is mailing.
 
-            Only up to 3 name identifiers can be provided if financial institution is configured to use different Primary/Inquiry and Secondary/Mailing addresses and names. If provided for Primary/Inquiry address it will be ignored as name relationships for inquiry are established using information provided in PartyCardRelInfo.
+            Only up to 3 name identifiers can be provided if financial institution is configured to use different primary/inquiry and secondary/mailing addresses and names. If provided for Primary/Inquiry address it will be ignored as name relationships for inquiry are established using information provided in PartyCardRelInfo.
 
-            Not applicable for Seasonal Address type.
+            Not applicable for seasonal address type.
 
             Only names which have a relationship to the card or card portfolio can be associated to the new card for mailing purpose.
 
@@ -2343,7 +2324,7 @@ components:
         Addr1:
           maxLength: 64
           type: string
-          description: "Address line 1\n\n**Note:** *Conditionally Required field* \n\n\n\nThis field is required to be provided if new address record is to be created.\n\nValue is dependent on address and name Length option defined under miscellaneous specification. Field length can be either 30 or 40 characters long."
+          description: "Address line 1.\n\n**Note:** *Conditionally Required field* \n\n\n\nThis field is required to be provided if new address record is to be created.\n\nValue is dependent on address and name Length option defined under miscellaneous specification. Field length can be either 30 or 40 characters long."
         Addr2:
           maxLength: 64
           type: string
@@ -2358,7 +2339,7 @@ components:
 
             This field is required to be provided if a new address record is to be created.
 
-            Field length is 20 characters long (including spaces). It is recommended for consumer to abbreviate the value sent in the EFX request to prevent truncation (For example, City name "Rancho Santa Margarita" exceeds 20 characters and can be abbreviated to "Rancho S Margarita" to avoid truncation). Total length of 40 characters is supported for city, StateProv and PostalCode (appended together) including spaces.
+            Field length is 20 characters long (including spaces). It is recommended for consumer to abbreviate the value sent in the EFX request to prevent truncation (For example, city name "Rancho Santa Margarita" exceeds 20 characters and can be abbreviated to "Rancho S Margarita" to avoid truncation). Total length of 40 characters is supported for city, StateProv and PostalCode (appended together) including spaces.
 
         StateProv:
           type: string
@@ -2382,7 +2363,7 @@ components:
 
 
 
-            Postal Code provides information about the ZIP code if, address is from United States and, provides information about postal code if, address is not from United States.  This field provides the information in ZIP Code (5 Digit)-Additional Code (4 Digit) format. Additional code of four digits is optional and provides a more specific location within a given ZIP code. If additional code is not provided, it can be represented with value as '0000'. For example, 32714-1234 or 32714-0000.
+            Postal code provides information about the ZIP code if, address is from United States and, provides information about postal code if, address is not from United States.  This field provides the information in ZIP Code (5 Digit)-Additional Code (4 Digit) format. Additional code of four digits is optional and provides a more specific location within a given ZIP code. If additional code is not provided, it can be represented with value as '0000'. For example, 32714-1234 or 32714-0000.
 
 
 
@@ -2468,23 +2449,7 @@ components:
           - DailyMax
           - TrnMax
         CurAmt:
-          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CurAmt'
-    CardModOperRequest_CardInfo_MaxCreditLimitAmt_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
-          enum:
-          - ISO4217-Alpha
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
-      description: |+
-        Details of the currency code.
-
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt'
     CardModOperRequest_CardInfo_MaxCreditLimitAmt:
       type: object
       properties:
@@ -2493,15 +2458,13 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
-
-
-
-
 
             **Note:** Credit card limit refers to the maximum amount a customer can withdraw in a 24-hour period (midnight to midnight), using the debit card as a credit card.
         CurCode:
-          $ref: '#/components/schemas/CardModOperRequest_CardInfo_MaxCreditLimitAmt_CurCode'
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_MaxCreditLimitAmt_CurCode'
       description: Maximum amount the cardholder can spend using a debit card in a day.
     CardModOperRequest_CardInfo:
       type: object
@@ -2512,7 +2475,7 @@ components:
           description: "Card sequence number that typically refers to the member number to whom the card is issued. \n\n**Note:** Member number on debit card is incremented by 1 each time a card is re-issued (up to 8), or is incremented by 2 each time a debit card is force re-issued.\n\nThis field can be provided only if supported by CardType."
         CardType:
           type: string
-          description: "Type of a card. \n\n**Note:** *Required*\n\nThis field refers to the client-defined debit card type code, and established in debit card type specifications, that includes the type of card to be produced for the account (For example, Standard Debit Card/VISA)."
+          description: "Type of a card. \n\n**Note:** *Required*\n\nThis field refers to the client-defined debit card type code, and established in debit card type specifications, that includes the type of card to be produced for the account (For example, standard debit card/VISA)."
         ProductIdent:
           maxLength: 42
           type: string
@@ -2529,13 +2492,15 @@ components:
 
             **Note:** Values indicate following:
 
-            Active (0): Indicates an active card which will be re-issued when it is activated.
+            - Active (0): Indicates an active card which will be re-issued when it is activated.
 
-            Do Not Renew (1): Indicates an active card which will not be re-issued when it expires.
+            - Do not renew (1): Indicates an active card which will not be re-issued when it expires.
 
-            No Withdrawal (7): Indicates that withdrawals are not allowed.
+            - No withdrawal (7): Indicates that withdrawals are not allowed.
 
-            Hot Card (8): Indicates a hot card which will be captured if an ATM has the card capture feature.
+            - Hot card (8): Indicates a hot card which will be captured if an ATM has the card capture feature.
+
+            - Closed (9): indicates a closed card which will be captured if an ATM has the card capture feature.
           enum:
           - Active
           - ActiveNoRenew
@@ -2560,7 +2525,7 @@ components:
         NextIssueDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date of the next issue of the card.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999   \n\n**Note:** *Required field*"
+          description: "Date of the next issue of the card.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999   \n\n**Note:** *Required field*"
         CardCategory:
           type: string
           description: Category of a card.
@@ -2586,7 +2551,7 @@ components:
 
 
 
-            Maximum length: 26 characters
+            Maximum length: 26 characters.
         PostAddr:
           type: array
           description: |-
@@ -2645,7 +2610,7 @@ components:
           description: |-
             Expiry date of the previous card. This date is used as a reference to order a new card and sometimes to verify the expiry date of the issued card if the card is not in use.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
         OriginatingBranch:
@@ -2722,7 +2687,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
       description: Details of the card status returned in the result of API call.
     CardModOperResponse_CardStatusRec:
       required:

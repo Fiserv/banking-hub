@@ -7,7 +7,7 @@ info:
 servers:
 - url: /
 paths:
-  /accounts:
+  /acctservice/acctmgmt/accounts:
     put:
       tags:
       - Update Account
@@ -95,6 +95,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -253,52 +254,10 @@ components:
       title: OvrdExceptionDataType
       type: object
       properties:
-        OverrideException:
-          type: array
-          description: List of the exceptions that can be overridden.
-          items:
-            $ref: '#/components/schemas/OverrideExceptionType'
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -367,6 +326,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -437,7 +412,6 @@ components:
           - UsePortfolio
           - English
           - Spanish
-          - ""
       description: Preferences to define the default settings such as language and region for an account.
     AccountModRequest_DepositAcctInfo_RelationshipMgr:
       required:
@@ -454,7 +428,6 @@ components:
           - Officer
           - SecondOfficer
           - ReferralOfficer
-          - ""
     AccountModRequest_DepositAcctInfo_ClientDefinedData:
       required:
       - DataIdent
@@ -510,16 +483,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** This field is used to identify user-defined statement cycle number/alternate statement cycle number.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** This field is used to identify user-defined statement cycle number/alternate statement cycle number."
           format: int64
         AlternateStmtInd:
           type: boolean
@@ -567,7 +531,6 @@ components:
           - Primary
           - SecondaryDDA
           - SecondarySDA
-          - ""
         SpecialStmtCode:
           type: string
           description: 'Code to indicate a special statement. '
@@ -602,7 +565,6 @@ components:
           - RateChangeNotice
           - RegCCNotice
           - RegularNotice
-          - ""
         NoticeOption:
           type: string
           description: "Option for account notice. \n\n"
@@ -626,7 +588,6 @@ components:
           - Weekly
           - BiWeekly
           - Maturity
-          - ""
         AccrualMethod:
           type: string
           description: Method of interest accrual.
@@ -655,7 +616,6 @@ components:
             **Note:** Premier uses days only.
           enum:
           - Daily
-          - ""
         MaturityIntInterval:
           type: integer
           description: |-
@@ -676,7 +636,7 @@ components:
           - IndexFreq
         VarianceFactorType:
           type: string
-          description: 'Type of variance factor used to calculate interest rate. '
+          description: "Type of variance factor used to calculate interest rate. \n\nThis value is used in combination with the RateVariance, RateFactor and RateCalcMethod."
           enum:
           - Variance
           - Factor
@@ -708,16 +668,9 @@ components:
           - None
           - Quarterly
           - BiWeekly
-          - ""
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
           format: int64
         DayOfMonth:
           type: string
@@ -727,9 +680,7 @@ components:
             Values are 01-31, with 31 indicating month-end.
         LeadDays:
           type: integer
-          description: |+
-            Number of days before an event.
-
+          description: Number of days prior to the event to do a review.
           format: int64
         NextRateChangeDt:
           type: string
@@ -1055,12 +1006,12 @@ components:
           - SvcChgCycle
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of fee.\n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.\n\nThe default value is set to 1.\n\n\n\n**Note:** \n\n- For Dormant Fees is the cycle for charging the fee.\n\n- For Recurring Fees this indicates the interval of time between charges or Cycle Number"
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** \n\n- For Dormant Fees is the cycle for charging the fee.\n\n- For Recurring Fees this indicates the interval of time between charges or Cycle Number"
           format: int64
         Occurrences:
           type: integer
           description: |-
-            Number of occurrences.
+            Number of occurrences in recurrence rule.
 
             **Note:** Refers to the recurring fees remaining field.
           format: int64
@@ -1137,7 +1088,6 @@ components:
           enum:
           - Charge
           - Waive
-          - ""
         CurAmt:
           $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_CurAmt'
         TimeFrame:
@@ -1154,7 +1104,6 @@ components:
           enum:
           - RiskScore1
           - RiskScore2
-          - ""
         InternalScore:
           type: string
           description: |-
@@ -1196,13 +1145,7 @@ components:
           - Monthly
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
           format: int64
       description: "Time interval details between the renewals for an account.\n\n**Note:** Any renewal frequency information provided will be set in the account with a value of \"Apply\". "
     AccountModRequest_DepositAcctInfo_RenewalData:
@@ -1290,17 +1233,9 @@ components:
           - Weekly
           - Maturity
           - Daily
-          - ""
-          - ""
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of interest.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
           format: int64
         DayOfMonth:
           type: string
@@ -1319,7 +1254,6 @@ components:
           - Check
           - Capitalize
           - None
-          - ""
         IntDistAcctRef:
           $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_IntDispData_IntDistAcctRef'
         DistributionAmt:
@@ -1389,7 +1323,6 @@ components:
           enum:
           - SDA
           - DDA
-          - ""
       description: |-
         Unique information to identify the account record.
 
@@ -1401,7 +1334,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_ClubPayoffData_ClubPayoffAcctRef_AcctKeys'
-      description: Reference information of the account where the payoff of a club savings account are being distributed.
+      description: Reference information of the account where the payoffs of a club savings account are being distributed.
     AccountModRequest_DepositAcctInfo_ClubPayoffData:
       required:
       - ClubPayoffOption
@@ -1462,18 +1395,12 @@ components:
       properties:
         RecurType:
           type: string
-          description: "Type of recurrence. \n\n\n\n\n\n**Note:** Values \"SvcChgTimeFrame\" together refers to the statement cycle for the account."
+          description: "Type of recurrence. \n\n\n\n"
           enum:
           - Cycle
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
           format: int64
     AccountModRequest_DepositAcctInfo_SvcChgData:
       type: object
@@ -1621,7 +1548,7 @@ components:
           - Phone
         ClientDefinedData:
           type: array
-          description: "Details of the client-defined data whose value, data type and definition are defined by the client or user.\n\n**Note:** If the \"ClientdefinedData\" required to be updated then the final state of the account is sent in the request in order for ESF to determine which client-defined data is newly added, updated or deleted.\n\nPremier requires the flex data metadata (such as field size) to be sent along with the user-entered account data.\n\nThe metadata must match the flex data field definition, as defined on Premier, for both new and updated flex data fields. \n\nThis service will not modify flex data field definitions. Only \"Value\" and \"ExpDt\" can be updated."
+          description: "Details of the client-defined data whose value, data type and definition are client-defined.\n\n**Note:** If the \"ClientdefinedData\" required to be updated then the final state of the account is sent in the request in order for ESF to determine which client-defined data is newly added, updated or deleted.\n\nPremier requires the flex data metadata (such as field size) to be sent along with the user-entered account data.\n\nThe metadata must match the flex data field definition, as defined on Premier, for both new and updated flex data fields. \n\nThis service will not modify flex data field definitions. Only \"Value\" and \"ExpDt\" can be updated."
           items:
             $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_ClientDefinedData'
         AcctStmtData:
@@ -1840,4 +1767,4 @@ components:
           $ref: '#/components/schemas/AccountModResponse_AcctStatusRec_AcctKeys'
         AcctStatus:
           $ref: '#/components/schemas/AccountModResponse_AcctStatusRec_AcctStatus'
-      description: Details of the updated status of the account.
+      description: Details of the account status record in response to the update operation.

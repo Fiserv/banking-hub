@@ -7,7 +7,7 @@ info:
 servers:
 - url: /
 paths:
-  /accounts:
+  /acctservice/acctmgmt/accounts:
     put:
       tags:
       - Update Account
@@ -95,6 +95,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -253,52 +254,10 @@ components:
       title: OvrdExceptionDataType
       type: object
       properties:
-        OverrideException:
-          type: array
-          description: List of the exceptions that can be overridden.
-          items:
-            $ref: '#/components/schemas/OverrideExceptionType'
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -367,6 +326,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -508,15 +483,15 @@ components:
           - Monthly
           - Quarterly
           - SemiYearly
-          - 'Yearly '
+          - Yearly
           - Weekly
           - BiWeekly
           - BiMonthly
           - TwiceMonthly
-          - 'Maturity '
+          - Maturity
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.\n\nThe default value is set to 1.\n\n\n\n**Note:** When RecurType is None, leave this field blank. For all other RecurType values, 1 is the only valid allowed value, indicating that the RecurType is the interval. For example, Quarterly means 1 time every three months. "
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** When RecurType is None, leave this field blank. For all other RecurType values, 1 is the only valid allowed value, indicating that the RecurType is the interval. For example, Quarterly means 1 time every three months. "
           format: int64
         DayOfMonth:
           type: string
@@ -582,7 +557,7 @@ components:
           - NoOverride
         LeadDays:
           type: integer
-          description: "Number of days before an event.\n\n\n\n**Note:** Applicable to the following Premier notices:\n\n\"First Past Due Notice Days Override\" and \"Second Past Due Notice Days Override\". "
+          description: "Number of days prior to the event to do a review.\n\n**Note:** Applicable to the following Premier notices:\n\n\"First Past Due Notice Days Override\" and \"Second Past Due Notice Days Override\". "
           format: int64
         NoticeRemarks:
           maxLength: 50
@@ -625,48 +600,7 @@ components:
           - Maturity
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** To specify any of the following Premier Rates Change Frequency values, set the RecurType to Yearly and the RecurInterval to the number of years (for example, set RecurInterval to 2 for "Every 2 years"):
-
-            Every 2 Years (7)
-
-            Every 3 Years (8)
-
-            Every 4 Years (9)
-
-            Every 5 Years (10)
-
-            Every 6 Years (11)
-
-            Every 7 Years (12)
-
-            Every 8 Years (13)
-
-            Every 9 Years (14)
-
-            Every 10 Years (15)
-
-            Every 11 Years (16)
-
-            Every 12 Years (17)
-
-            Every 13 Years (18)
-
-            Every 14 Years (19)
-
-            Every 15 Years (20)
-
-            When RecurType is None, RecurInterval must be blank.
-
-            For any other RecurType, a RecurInterval is not required. The system will set RecurInterval to 1 to indicate a single recurrence per period, such as once a month.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** To specify any of the following Premier Rates Change Frequency values, set the RecurType to Yearly and the RecurInterval to the number of years (for example, set RecurInterval to 2 for \"Every 2 years\"):\n\nEvery 2 Years (7)\n\nEvery 3 Years (8)\n\nEvery 4 Years (9)\n\nEvery 5 Years (10)\n\nEvery 6 Years (11)\n\nEvery 7 Years (12)\n\nEvery 8 Years (13)\n\nEvery 9 Years (14)\n\nEvery 10 Years (15)\n\nEvery 11 Years (16)\n\nEvery 12 Years (17)\n\nEvery 13 Years (18)\n\nEvery 14 Years (19)\n\nEvery 15 Years (20)\n\nWhen RecurType is None, RecurInterval must be blank.\n\nFor any other RecurType, a RecurInterval is not required. The system will set RecurInterval to 1 to indicate a single recurrence per period, such as once a month."
           format: int64
         DayOfMonth:
           type: string
@@ -747,7 +681,7 @@ components:
       properties:
         VarianceFactorType:
           type: string
-          description: 'Type of variance factor used to calculate interest rate. '
+          description: "Type of variance factor used to calculate interest rate. \n\nThis value is used in combination with the RateVariance, RateFactor and RateCalcMethod."
           enum:
           - Variance
           - Factor
@@ -1094,16 +1028,7 @@ components:
           - Anniversary
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** When RecurType is None, this field must be blank. For all other RecurTypes, this field must be set to 1.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** When RecurType is None, this field must be blank. For all other RecurTypes, this field must be set to 1."
           format: int64
         DayOfMonth:
           type: string
@@ -1266,7 +1191,7 @@ components:
           $ref: '#/components/schemas/AccountModRequest_LoanAcctInfo_EarlyPayoffTable'
         ReportingOptionCode:
           type: string
-          description: Reporting option code.
+          description: Code for reporting option
     AccountModRequest_LoanAcctInfo_CreditRisk:
       required:
       - RiskCategory
@@ -1402,20 +1327,7 @@ components:
           - Maturity
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** When RecurType is None, RecurInterval must be blank.
-
-
-
-            For all other RecurType values, RecurInterval value of 1 is expected. If any other value is sent, it will be treated as a 1.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** When RecurType is None, RecurInterval must be blank.\n\n\n\nFor all other RecurType values, RecurInterval value of 1 is expected. If any other value is sent, it will be treated as a 1."
           format: int64
     AccountModRequest_LoanAcctInfo_InterestBilling_RecurModel:
       type: object
@@ -1497,7 +1409,6 @@ components:
           - DirectDebitSDAStmt
           - ACHXferDDAStmt
           - ACHXferSDAStmt
-          - ""
         FromAcctKeys:
           $ref: '#/components/schemas/AccountModRequest_LoanAcctInfo_LoanBilling_FromAcctKeys'
         Desc:
@@ -1522,18 +1433,7 @@ components:
           - Maturity
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** When RecurType is None, RecurInterval must be blank.
-
-            For all other RecurType values, RecurInterval value of 1 is expected. If any other value is sent, it will be treated as a 1.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** When RecurType is None, RecurInterval must be blank.\n\nFor all other RecurType values, RecurInterval value of 1 is expected. If any other value is sent, it will be treated as a 1."
           format: int64
         DayOfMonth:
           type: string
@@ -1703,7 +1603,6 @@ components:
           enum:
           - Escrow
           - OtherEscrow
-          - ""
         CurAmt:
           $ref: '#/components/schemas/AccountModRequest_LoanAcctInfo_CurAmt'
     AccountModRequest_LoanAcctInfo_NextPmt:
@@ -1752,9 +1651,7 @@ components:
           description: Maximum amount that the payment can change per review period.
         LeadDays:
           type: integer
-          description: |+
-            Number of days before an event.
-
+          description: Number of days prior to the event to do a review.
           format: int64
         NextPmtTermReviewDt:
           type: string
@@ -1786,9 +1683,7 @@ components:
       properties:
         LeadDays:
           type: integer
-          description: |+
-            Number of days before an event.
-
+          description: Number of days prior to the event to do a review.
           format: int64
       description: Details of the recurrence rule.
     AccountModRequest_LoanAcctInfo_EscrowCtrlData_EscrowMinShortageAmt:
@@ -1901,7 +1796,7 @@ components:
             Example: 10.00
         CurCode:
           $ref: '#/components/schemas/AccountModRequest_LoanAcctInfo_PrePayMaxAmt_CurCode'
-      description: Details of forbearance amount.
+      description: "Details of the forbearance amount. \n\nThis value indicates the amount of mortgage which the lender allows to pause or reduce the payment for a certain period of time."
     AccountModRequest_LoanAcctInfo_HomeMortgageDisclosure_HAMPData:
       type: object
       properties:
@@ -1911,7 +1806,7 @@ components:
           description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
         HAMPOption:
           type: string
-          description: Type of HAMP.
+          description: Option for Home Affordable Modification Program (HAMP).
           enum:
           - HAMP60month
           - HAMPStandard
@@ -1921,13 +1816,12 @@ components:
           - "3"
           - "6"
           - "7"
-          - ""
         HAMPServicer:
           type: string
-          description: HAMP servicer.
+          description: Servicer of the Home Affordable Modification Program (HAMP).
         ForbearanceAmt:
           $ref: '#/components/schemas/AccountModRequest_LoanAcctInfo_HomeMortgageDisclosure_HAMPData_ForbearanceAmt'
-      description: Details of home affordable modification program.
+      description: Details of Home Affordable Modification Program (HAMP).
     AccountModRequest_LoanAcctInfo_HomeMortgageDisclosure_MortgageReportingData:
       properties:
         ReportingType:
@@ -2311,7 +2205,7 @@ components:
         LTVPct:
           type: number
           description: |+
-            Loan to value percentage used with the collateral balance code field, to calculate the collateral required amount for a loan.
+            Loan to value percentage used with the collateral balance code field, to calculate the collateral-required amount for a loan.
 
         RevolvingLoanInd:
           type: boolean
@@ -2388,7 +2282,7 @@ components:
           description: Classification of FDIC entity.
         FDICClassificationDt:
           type: string
-          description: 'FDIC classification date. '
+          description: "Date of classification from Federal Deposit Insurance Corporation (FDIC).\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         FDICCode:
           maxLength: 3
@@ -2474,4 +2368,4 @@ components:
           $ref: '#/components/schemas/AccountModRequest_AcctKeys'
         AcctStatus:
           $ref: '#/components/schemas/AccountModResponse_AcctStatusRec_AcctStatus'
-      description: Details of the updated status of the account.
+      description: Details of the account status record in response to the update operation.

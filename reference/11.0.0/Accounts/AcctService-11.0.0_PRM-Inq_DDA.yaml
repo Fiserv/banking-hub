@@ -7,7 +7,7 @@ info:
 servers:
 - url: /
 paths:
-  /accounts/secured:
+  /acctservice/acctmgmt/accounts/secured:
     post:
       tags:
       - Get Accounts
@@ -91,6 +91,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -390,7 +391,6 @@ components:
             **Note:** *Required field*
           enum:
           - DDA
-          - ""
       description: Unique information to identify the account record.
     getAccountsSecuredRequest_AcctSel:
       required:
@@ -399,7 +399,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel_AcctKeys'
-      description: Details of selected account.
+      description: Details of the selection criteria used for account inquiry.
     getAccountsSecuredResponse_AcctRec_AcctKeys:
       required:
       - AcctId
@@ -419,7 +419,6 @@ components:
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
           - DDA
-          - ""
       description: Unique information to identify the account record.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPref:
       type: object
@@ -431,7 +430,6 @@ components:
           - UsePortfolio
           - English
           - Spanish
-          - ""
       description: Preferences to define the default settings such as language and region for an account.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctIdent:
       properties:
@@ -463,13 +461,10 @@ components:
       properties:
         Amt:
           type: number
-          description: "Amount in decimal format.\n\n**Note:** This amount refers to the first credit deposit posted after the account is opened. "
+          description: "Amount in decimal format.\n\nExample: 10.00\n\n**Note:** This amount refers to the first credit deposit posted after the account is opened. "
         CurCode:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_InitialAmount_CurCode'
-      description: |-
-        Initial amount details of an account.
-
-        For example, the origination amount for a loan+F34 or a certificate value of a time deposit account.
+      description: Details of the certificate value of a time deposit account.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_DateData:
       properties:
         DateType:
@@ -520,7 +515,6 @@ components:
           - Officer
           - SecondOfficer
           - ReferralOfficer
-          - ""
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_ClientDefinedData:
       required:
       - DataIdent
@@ -573,16 +567,7 @@ components:
           description: Description of the enumeration value in the RecurType field.
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Refers to Statement Cycle or Alternate Cycle.  Alternate Cycle values are client defined.  The value of the AlternateStmtOption applies to the alternate cycles only. 'Cycle' would indicate the Number of the designated cycle. If not provided at the time of account statement setup - the system assumes returns a default value of 1, that is, every day, every week, every month, or every year: based on the RecurType associated to the account statement.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Refers to Statement Cycle or Alternate Cycle.  Alternate Cycle values are client defined.  The value of the AlternateStmtOption applies to the alternate cycles only. 'Cycle' would indicate the Number of the designated cycle. If not provided at the time of account statement setup - the system assumes returns a default value of 1, that is, every day, every week, every month, or every year: based on the RecurType associated to the account statement."
           format: int64
         AlternateStmtInd:
           type: boolean
@@ -621,7 +606,6 @@ components:
           enum:
           - Primary
           - Secondary
-          - ""
         SpecialStmtCode:
           type: string
           description: "Code to indicate a special statement. \n\n**Note:** Refers to the Statement Request Code. Indicates whether a final or transcript statement is produced during the next update. During the application update process, a statement is automatically generated and the code is reset to None."
@@ -638,7 +622,7 @@ components:
             **Note:** Refers to the Statement Format Override Code, if any. This overrides the Statement Code in DDA Class Specifications. The Statement Format Override Code applies only when using flexible statements (statement format 98 or 99). A value of 00 indicates no override.
         StmtTruncationOption:
           type: string
-          description: "Option to indicate if the physical items are enclosed with an account statement.\n\n**Note:** N - Items included; \n\nY - items not included; \n\n2 - Items included (CIP only);\n\n 3 Items not included (CIP only); \n\n4 - Items included and items not on BFM3203 Daily Transaction Discrepancy Report;\n\n 5 - Items not included and items not on BFM3203 Daily Transaction Discrepancy Report;\n\n 6 - Items included (CIP only) and items not on BFM3203 Daily Transaction Discrepancy Report; \n\n7 Items not included (CIP only) and items not on BFM3203 Daily Transaction Discrepancy Report. "
+          description: "Option to indicate if the physical items are enclosed with an account statement.\n\n**Note:** Possible values for this field:\n\nN - Items included\n\nY - items not included \n\n2 - Items included (CIP only)\n\n3 - Items not included (CIP only) \n\n4 - Items included and items not on BFM3203 Daily Transaction Discrepancy Report\n\n5 - Items not included and items not on BFM3203 Daily Transaction Discrepancy Report\n\n6 - Items included (CIP only) and items not on BFM3203 Daily Transaction Discrepancy Report; \n\n7 - Items not included (CIP only) and items not on BFM3203 Daily Transaction Discrepancy Report"
         StmtGroup:
           type: string
           description: Group to identify statement cycle for an account.
@@ -655,7 +639,6 @@ components:
           - PayeeChanges
           - BalanceOnReceipt
           - RegCCNotice
-          - ""
         NoticeOption:
           type: string
           description: "Option for account notice. \n\n"
@@ -666,6 +649,8 @@ components:
           type: number
           description: |-
             Amount in decimal format.
+
+            Example: 10.00
 
             **Note:** If only one tier exists, the amount may appear as 0 for Tier 1. The last tier will not have a high amount.
         CurCode:
@@ -772,16 +757,7 @@ components:
           description: Description of the enumeration value in the RecurType field.
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Refers to pending interest cycle, which is the pending frequency of the interest credit to the customer.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Refers to pending interest cycle, which is the pending frequency of the interest credit to the customer."
           format: int64
       description: Details of the time frame for pending interest rate payment.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_PendingRate:
@@ -799,7 +775,7 @@ components:
             **Note:** Refers to the pending deposit rate index. If value of 0 is received, then the account's pending interest is not linked to a rate specification.
         VarianceFactorType:
           type: string
-          description: 'Type of variance factor used to calculate interest rate. '
+          description: 'Type of pending variance factor used to calculate interest rate. '
           enum:
           - Variance
           - Factor
@@ -823,7 +799,7 @@ components:
       properties:
         VarianceFactorType:
           type: string
-          description: 'Type of variance factor used to calculate interest rate. '
+          description: "Type of variance factor used to calculate interest rate. \n\nThis value is used in combination with the RateVariance, RateFactor and RateCalcMethod."
           enum:
           - Variance
           - Factor
@@ -846,29 +822,17 @@ components:
           description: Details of the pending rate of interest.
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_PendingRate'
-    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
-          enum:
-          - ISO4217-Alpha
-          - ""
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
-      description: Details of currency code.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
         CurCode:
-          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt_CurCode'
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_InitialAmount_CurCode'
       description: Details of the currency amount.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctBal:
       required:
@@ -886,10 +850,10 @@ components:
           - Closing
           - BalanceLastStatement
           - Current
-          - 'Interest '
+          - Interest
           - ClosingInterest
           - InterestAccrued
-          - 'Ledger '
+          - Ledger
           - MinLedger
           - BalanceLastStatement
           - OpeningOutstanding
@@ -899,18 +863,17 @@ components:
           - PrevInterestAccrued
           - PrevAvail
           - PrevSvcChg
-          - 'PrevLedger '
-          - 'Principal '
+          - PrevLedger
+          - Principal
           - SvcChg
           - Hold
-          - 'OtherTransfers '
+          - OtherTransfers
           - Sweep
           - Float
           - MemoLedger
           - Memo
           - AvailPending
           - LedgerPending
-          - ""
         CurAmt:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt'
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPeriodData:
@@ -962,8 +925,6 @@ components:
           - StateWithhold
           - SvcCharge
           - SvcChargeWaived
-          - ""
-          - ""
         AcctPeriodType:
           type: string
           description: Type of the account period.
@@ -978,13 +939,15 @@ components:
           - ThisCycle
           - YTD
           - PriorDay
-          - ""
         LastOccurInd:
           type: boolean
-          description: Flag to indicate the last occurrence.
+          description: Flag to indicate the last occurrence of the accounting period.
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
         Count:
           type: integer
           description: Number of occurrences with respect to the specified unit value.
@@ -995,9 +958,14 @@ components:
         LastOccuranceDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |+
-            Date of the last occurrence.
+          description: |-
+            Last occurrence date of the accounting period.
 
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_TranCounter:
       required:
       - TranCounterType
@@ -1265,16 +1233,7 @@ components:
           - SvcChgCycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of fee.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** This field identifies the number of the cycle to use or the interval between recurrence type.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** This field identifies the number of the cycle to use or the interval between recurrence type."
           format: int64
         Occurrences:
           type: integer
@@ -1379,7 +1338,6 @@ components:
           enum:
           - RiskScore1
           - RiskScore2
-          - ""
         InternalScore:
           type: string
           description: Internal credit risk rating to assess the credit risk of customer.
@@ -1441,16 +1399,7 @@ components:
           description: Description of the enumeration value in the RecurType field.
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of interest.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Interest cycle for the account.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** Interest cycle for the account."
           format: int64
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntDispData:
       type: object
@@ -1461,8 +1410,6 @@ components:
           enum:
           - TransferToAcct
           - Capitalize
-          - ""
-          - ""
         IntDistAcctRef:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntDispData_IntDistAcctRef'
         IntPmtFrequency:
@@ -1476,7 +1423,10 @@ components:
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
       description: Details of the amount specified in overdraft program.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_OverdraftData_AtmPosOverdraft_AuthLimitAmt:
       type: object
@@ -1618,7 +1568,6 @@ components:
           description: Type of float data.
           enum:
           - RegCC
-          - ""
         FloatDetails:
           type: array
           description: Details of float containing float days and check amount.
@@ -1635,7 +1584,6 @@ components:
           enum:
           - Maintenance
           - Activity
-          - ""
         SvcChgMethodOpt:
           type: integer
           description: Service charge code on the account.
@@ -1730,7 +1678,6 @@ components:
           enum:
           - DDA
           - SDA
-          - ""
       description: Unique information to identify the account record.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_SvcChgData_SvcChgAcctRef:
       required:
@@ -1749,16 +1696,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** The number that identifies the Service Charge Cycle. Valid values 0-99
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** The number that identifies the Service Charge Cycle. Valid values 0-99"
           format: int64
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_SvcChgData:
       type: object
@@ -1879,7 +1817,7 @@ components:
         RegCC_NSFType:
           type: string
           description: |+
-            Type of NSF.
+            Type of NSF used to identify regular and large items totals.
 
           enum:
           - LargeItems
@@ -1982,7 +1920,7 @@ components:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPref'
         AcctIdent:
           type: array
-          description: Unique identifier of an account record.
+          description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. "
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctIdent'
         ProductIdent:
@@ -2018,7 +1956,7 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |+
-            Last contact date when the financial institution contacted the customer for this account.
+            Last contact date when the financial institution contacted the customer for the account.
 
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
@@ -2093,7 +2031,7 @@ components:
         OEDCode:
           type: string
           description: |+
-            Officer, employee, director code. This code is used to indicate if the party is an employee, officer or director of the financial institution.
+            Officer, employee, director code. This code is used to indicate if the party is an employee, officer, or director of the financial institution.
 
             **Note:** Values are client defined.
 

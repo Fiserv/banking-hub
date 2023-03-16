@@ -7,7 +7,7 @@ info:
 servers:
 - url: /
 paths:
-  /accounts/secured:
+  /acctservice/acctmgmt/accounts/secured:
     post:
       tags:
       - Get Accounts
@@ -91,6 +91,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -396,7 +397,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel_AcctKeys'
-      description: Details of selected account.
+      description: Details of the selection criteria used for account inquiry.
     getAccountsSecuredResponse_AcctRec_LoanAcctInfo_AcctPref:
       type: object
       properties:
@@ -451,7 +452,7 @@ components:
           description: Name of the tier in rate matrix.
         RateIndex:
           type: integer
-          description: Index rate of the rate matrix.
+          description: Index rate of the rate matrix tier.
           format: int64
         IntAPR:
           type: number
@@ -474,7 +475,7 @@ components:
           - Maturity
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.\n\nThe default value is set to 1.\n\n\n\n**Note:** For Premier value of \n\nEvery 2 Years (7): Every two years, it is expected a RecurType of Yearly and RecurInterval of 2\n\nEvery 3 Years (8): Every three years, it is expected a RecurType of Yearly and RecurInterval of 3\n\nEvery 4 Years (9): Every four years, it is expected a RecurType of Yearly and RecurInterval of 4\n\nEvery 5 Years (10): Every five years, it is expected a RecurType of Yearly and RecurInterval of 5\n\nEvery 6 Years (11): Every six years, it is expected a RecurType of Yearly and RecurInterval of 6\n\nEvery 7 Years (12): Every seven years, it is expected a RecurType of Yearly and RecurInterval of 7\n\nEvery 8 Years (13): Every eight years, it is expected a RecurType of Yearly and RecurInterval of 8\n\nEvery 9 Years (14): Every nine years, it is expected a RecurType of Yearly and RecurInterval of 9\n\nEvery 10 Years (15): Every ten years, it is expected a RecurType of Yearly and RecurInterval of 10\n\nEvery 11 Years (16): Every eleven years, it is expected a RecurType of Yearly and RecurInterval of 11\n\nEvery 12 Years (17): Every twelve years, it is expected a RecurType of Yearly and RecurInterval of 12\n\nEvery 13 Years (18): Every thirteen years, it is expected a RecurType of Yearly and RecurInterval of 13\n\nEvery 14 Years (19): Every fourteen years, it is expected a RecurType of Yearly and RecurInterval of 14\n\nEvery 15 Years (20): Every fifteen years, it is expected a RecurType of Yearly and RecurInterval of 15\n\n\n\nFor RecurType of None, RecurInterval will not be returned.\n\n\n\nFor any other Premier value, RecurInterval will be set to 1."
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** For Premier value of \n\nEvery 2 Years (7): Every two years, it is expected a RecurType of Yearly and RecurInterval of 2\n\nEvery 3 Years (8): Every three years, it is expected a RecurType of Yearly and RecurInterval of 3\n\nEvery 4 Years (9): Every four years, it is expected a RecurType of Yearly and RecurInterval of 4\n\nEvery 5 Years (10): Every five years, it is expected a RecurType of Yearly and RecurInterval of 5\n\nEvery 6 Years (11): Every six years, it is expected a RecurType of Yearly and RecurInterval of 6\n\nEvery 7 Years (12): Every seven years, it is expected a RecurType of Yearly and RecurInterval of 7\n\nEvery 8 Years (13): Every eight years, it is expected a RecurType of Yearly and RecurInterval of 8\n\nEvery 9 Years (14): Every nine years, it is expected a RecurType of Yearly and RecurInterval of 9\n\nEvery 10 Years (15): Every ten years, it is expected a RecurType of Yearly and RecurInterval of 10\n\nEvery 11 Years (16): Every eleven years, it is expected a RecurType of Yearly and RecurInterval of 11\n\nEvery 12 Years (17): Every twelve years, it is expected a RecurType of Yearly and RecurInterval of 12\n\nEvery 13 Years (18): Every thirteen years, it is expected a RecurType of Yearly and RecurInterval of 13\n\nEvery 14 Years (19): Every fourteen years, it is expected a RecurType of Yearly and RecurInterval of 14\n\nEvery 15 Years (20): Every fifteen years, it is expected a RecurType of Yearly and RecurInterval of 15\n\n\n\nFor RecurType of None, RecurInterval will not be returned.\n\n\n\nFor any other Premier value, RecurInterval will be set to 1."
           format: int64
         DayOfMonth:
           type: string
@@ -657,7 +658,7 @@ components:
           - PriorYr
         LastOccurInd:
           type: boolean
-          description: Flag to indicate the last occurrence.
+          description: Flag to indicate the last occurrence of the accounting period.
         Amt:
           type: number
           description: |-
@@ -667,9 +668,14 @@ components:
         LastOccuranceDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |+
-            Date of the last occurrence.
+          description: |-
+            Last occurrence date of the accounting period.
 
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
     getAccountsSecuredResponse_AcctRec_LoanAcctInfo_CountryCode:
       required:
       - CountryCodeValue
@@ -800,10 +806,7 @@ components:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_LoanAcctInfo_TimeFrame'
         Retention:
           type: boolean
-          description: |-
-            Flag to indicate the address should be retained after its timeframe.
-
-            **Note:** Refers to Address Retention Code for the Mailing Address. Indicates if the address is automatically deleted when no accounts, tax addenda, or relationships are attached to the address.
+          description: "Flag to indicate the address should be retained after its timeframe.\n\n**Note:** Refers to Address Retention Code for the mailing address. \n\nThis field indicates if the address is automatically deleted when no accounts, tax addenda, or relationships are attached to the address."
         CensusTract:
           maxLength: 20
           type: string
@@ -879,26 +882,7 @@ components:
           - Maturity
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** For Premier value of Biweekly (every 14 days) it is set by using RecurType of Daily and RecurInterval of 14.
-
-            For Premier value Bimonthly (every 2 months) it is set by using RecurType of Monthly and RecurInterval of 2.
-
-
-
-            For Premier value of None, no RecurInterval will be set.
-
-
-
-            For all other Premier value RecurInterval will be set to 1.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** For Premier value of Biweekly (every 14 days) it is set by using RecurType of Daily and RecurInterval of 14.\n\nFor Premier value Bimonthly (every 2 months) it is set by using RecurType of Monthly and RecurInterval of 2.\n\n\n\nFor Premier value of None, no RecurInterval will be set.\n\n\n\nFor all other Premier value RecurInterval will be set to 1."
           format: int64
     getAccountsSecuredResponse_AcctRec_LoanAcctInfo_InterestBilling_RecurModel:
       type: object
@@ -1129,7 +1113,7 @@ components:
 
             **Note:** For Premier, class code denotes that the account is part of group of accounts.
 
-            This tag requires preinstallation tasks to define the values.
+            This field requires preinstallation tasks to define the values.
         Rate:
           type: number
           description: Current interest rate for the account.
@@ -1142,7 +1126,7 @@ components:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_LoanAcctInfo_AcctBal'
         AcctPeriodData:
           type: array
-          description: Accounting period data details such as last interest payment, nonsufficientsufficient funds, overdraft activity year to date, current month and cycle to date.
+          description: Accounting period data details such as last interest payment, non-sufficient funds, overdraft activity year to date, current month and cycle to date.
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_LoanAcctInfo_AcctPeriodData'
         PostAddr:
