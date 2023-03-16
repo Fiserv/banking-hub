@@ -2,14 +2,14 @@
 
 This section describes the process to send an API request to the server and receive a response payload. To test the APIs, use the third-party API testing tool.
 
-## Using Third-party API Testing Tools
+## Using Third-Party API Testing Tools
 
 You can test our APIs in the Sandbox environment using third-party API testing tools, such as Postman, Apigee, JMeter and others.
 
 <!-- theme: success -->
 > #### Tip
 >
-> We recommend you to refer to the <a href="?path=docs/getting-started/before-you-start.md#know-our-standard-api-structure" title="Click to open">Know Our Standard API Structure</a> section to understand the API structure prior to testing the APIs in any third-party tool.
+> We recommend you to refer to the <a href="?path=docs/getting-started/know-our-standard-api-structure.md#know-our-standard-api-structure" title="Click to open">Know Our Standard API Structure</a> section to understand the API structure prior to testing the APIs in any third-party tool.
 
 
 ### Prerequisites
@@ -21,7 +21,7 @@ To make an API call, you need:
 **Creating an account on Dev Studio**
 
 
-To create an account on Fiserv Developer Studio, refer to the [Register to Fiserv Developer Studio](?path=docs/getting-started/before-you-start.md#register-to-fiserv-developer-studio) section. 
+To create an account on Fiserv Developer Studio, refer to the [Register on Fiserv Developer Studio](?path=docs/getting-started/before-you-start.md#register-on-fiserv-developer-studio) section. 
 After successful registration, you will be able to create a workspace. You can obtain the following credentials from the workspace:
 
 * Product name  
