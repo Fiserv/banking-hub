@@ -12,7 +12,7 @@ This section describes the process to create an account and workspace on Fiserv 
 ### Creating an Account
 
 Perform the following steps to create an account on Fiserv Developer Studio:
-1.	From the top-right corner of the screen, click **Create Account**
+1.	From the top-right corner of the screen, click **Create account**
 2.	Populate the required fields and click **Next**
 3.	Follow the instructions on the screen to set up your account
 4.	Sign in to your Fiserv Developer Studio account once it is activated
@@ -96,7 +96,7 @@ From the Body tab, select the **x-www-form-urlencoded** radio button and enter t
 |---------------------|----------------------------------------------------------|---------------|
 |   ``access_token``    |     Generated access token   value                       |     string    |
 |``expires_in``       | <p>Time in milliseconds until the generated token is valid.</p> <p>**Note:** Once generated, the access token is valid for approximately 15 minutes. You can reuse the access token until it expires. </p> | number        |
-|    ``Token_type``   |     Type of access token                                 |     string    |
+|    ``token_type``   |     Type of access token                                 |     string    |
 
 **Sample Response**
 ```
