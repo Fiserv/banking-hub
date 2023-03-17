@@ -79,8 +79,8 @@ The attached Postman collection use variables to store and reuse few values such
       > #### Note
       > 
       > You can obtain the _API key_, _API secret_ and _Org Id_ values from the Credentials tab of My workspaces. 
-
-    <kbd>![Postman-collection-steps](https://user-images.githubusercontent.com/81968767/225672853-7c17109c-3969-4ab7-9fa5-282b335e9b72.png) </kbd>
+ 
+ <kbd>![Postman-collection-steps](https://user-images.githubusercontent.com/81968767/225672853-7c17109c-3969-4ab7-9fa5-282b335e9b72.png) </kbd>
 
 
 To  test an API using Postman application: 
