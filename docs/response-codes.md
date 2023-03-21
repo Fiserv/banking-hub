@@ -10,16 +10,16 @@ For every successful or unsuccessful API call, one of the following HTTP Status 
 
 | HTTP Status Code          | Description   |
 |-------------------|-----------|
-| `200  OK `      | Successful request   |
-| `201  Created `     | Successfully created a new resource     |
-| `400  Bad request `     | Server is unable to process the request due to invalid syntax     |
+| `200  OK`      | Successful request   |
+| `201  Created`     | Successfully created a new resource     |
+| `400  Bad request`     | Server is unable to process the request due to invalid syntax     |
 | `401  Unauthorized` | Invalid authentication credentials  |
 | `403  Forbidden` | Forbidden to access the valid URL  |
 | `404  Not found` | Server unable to find the requested resource  |
 | `405  Method not allowed` | Method not allowed  |
 | `422  Un-processable Entity`  | Server is unable to process the request due to semantic errors |
-| `500  Internal Server Error ` | Server encountered an unexpected error while processing the request  |
-| `503  Service Unavailable  `        | Service is temporarily unavailable due to overload or maintenance activity    |
+| `500  Internal Server Error` | Server encountered an unexpected error while processing the request  |
+| `503  Service Unavailable`        | Service is temporarily unavailable due to overload or maintenance activity    |
 
 ## EFX Status Codes
 EFX status codes are the service-specific status codes and provide additional information to the returned HTTP status or error code. 
@@ -66,7 +66,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>1090</code></td>
                     <td>Warning</td>
-                    <td>Invalid Value</td>
+                    <td>Invalid value</td>
                 </tr>
                 <tr>
                     <td><code>1100</code></td>
@@ -86,7 +86,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>1140</code></td>
                     <td>Warning</td>
-                    <td>Details not available</td>
+                    <td>Some selection criteria not supported</td>
                 </tr>
                 <tr>
                     <td><code>1240</code></td>
@@ -118,7 +118,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>1050</code></td>
                     <td>Error</td>
-                    <td>Invalid value</td>
+                    <td>Invalid enum value</td>
                 </tr>
                 <tr>
                     <td><code>1070</code></td>
@@ -174,7 +174,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>1760</code></td>
                     <td>Error</td>
-                    <td>Authentication failed</td>
+                    <td>Authorization failed</td>
                 </tr>
                 <tr>
                     <td><code>1910</code></td>
@@ -253,7 +253,7 @@ The following table lists the EFX status codes and their descriptions related to
                     <td rowspan="62" style="background-color: #fff;" ><code>422 Un-processable Entity</code></td>
                     <td><code>1</code></td>
                     <td>Error</td>
-                    <td>Invalid field size</td>
+                    <td>Exceeds maximum character length</td>
                 </tr>
                 <tr>
                     <td><code>10</code></td>
@@ -268,7 +268,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>100</code></td>
                     <td>Error</td>
-                    <td>General Application issue</td>
+                    <td>General application issue</td>
                 </tr>
                 <tr>
                     <td><code>200</code></td>
@@ -298,7 +298,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>1020</code></td>
                     <td>Error</td>
-                    <td>Required Element Not Included</td>
+                    <td>Required element not included</td>
                 </tr>
                 <tr>
                     <td><code>1030</code></td>
@@ -318,10 +318,10 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>1070</code></td>
                     <td>Error</td>
-                    <td>Invalid Format</td>
+                    <td>Invalid format</td>
                 </tr>
                 <tr>
-                    <td><code>1080<code></td>
+                    <td><code>1080</code></td>
                     <td>Error</td>
                     <td>Invalid field size</td>
                 </tr>
@@ -368,7 +368,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>2011</code></td>
                     <td>Error</td>
-                    <td>General application issue</td>
+                    <td>Active error</td>
                 </tr>
                 <tr>
                     <td><code>2020</code></td>
@@ -463,7 +463,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>2600</code></td>
                     <td>Error</td>
-                    <td>Invalid check number</td>
+                    <td>Invalid check number range</td>
                 </tr>
                 <tr>
                     <td><code>2610</code></td>
@@ -473,7 +473,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>2620</code></td>
                     <td>Error</td>
-                    <td>Invalid check number</td>
+                    <td>Check number not found</td>
                 </tr>
                 <tr>
                     <td><code>2740</code></td>
@@ -561,7 +561,7 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Invalid maximum term</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="21"><code>500 Internal Server Error<code></td>
+                    <td style="background-color: #fff;" rowspan="21"><code>500 Internal Server Error</code></td>
                     <td><code>10</code></td>
                     <td>Error</td>
                     <td>Additional action needed</td>
