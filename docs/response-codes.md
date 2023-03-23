@@ -38,7 +38,7 @@ The following table lists the EFX status codes and their descriptions related to
             </thead>
             <tbody>
                 <tr>
-                    <td style="background-color: #fff;" rowspan="12"><code>200 OK</code></td>
+                    <td style="background-color: #fff;" rowspan="9"><code>200 OK</code></td>
                     <td><code>0</code></td>
                     <td>Info</td>
                     <td>Success</td>
@@ -59,16 +59,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Request declined</td>
                 </tr>
                 <tr>
-                    <td><code>1080</code></td>
-                    <td>Warning</td>
-                    <td>Unchanged</td>
-                </tr>
-                <tr>
-                    <td><code>1090</code></td>
-                    <td>Warning</td>
-                    <td>Invalid value</td>
-                </tr>
-                <tr>
                     <td><code>1100</code></td>
                     <td>Warning</td>
                     <td>Too many records request</td>
@@ -77,11 +67,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td><code>1120</code></td>
                     <td>Info</td>
                     <td>No records match the selection criteria</td>
-                </tr>
-                <tr>
-                    <td><code>1121</code></td>
-                    <td>Info</td>
-                    <td>Success</td>
                 </tr>
                 <tr>
                     <td><code>1140</code></td>
@@ -110,7 +95,7 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>General warning</td>
                 </tr>
                 <tr>
-                    <td rowspan="10" style="background-color: #fff;" ><code>400 Bad request</code></td>
+                    <td rowspan="8" style="background-color: #fff;" ><code>400 Bad request</code></td>
                     <td><code>1020</code></td> 
                     <td>Error</td>
                     <td>Required element not included</td>
@@ -136,16 +121,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Invalid value</td>
                 </tr>
                 <tr>
-                    <td><code>1120</code></td>
-                    <td>Error</td>
-                    <td>No records found</td>
-                </tr>
-                <tr>
-                    <td><code>1121</code></td>
-                    <td>Error</td>
-                    <td>No records found</td>
-                </tr>
-                <tr>
                     <td><code>1160</code></td>
                     <td>Error</td>
                     <td>Selection criteria not supported</td>
@@ -161,7 +136,7 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Date-time value is greater than the accepted limit</td>
                 </tr>
                 <tr>
-                    <td rowspan="8" style="background-color: #fff;"><code>401 Unauthorized</code></td>
+                    <td rowspan="5" style="background-color: #fff;"><code>401 Unauthorized</code></td>
                     <td><code>1700</code></td>
                     <td>Error</td>
                     <td>Security violation</td>
@@ -186,21 +161,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Error</td>
                     <td>General data error</td>
                 </tr>
-                 <tr>
-                    <td><code>2380</code></td>
-                    <td>Error</td>
-                    <td>Unauthorized account</td>
-                </tr>
-                 <tr>
-                    <td><code>2395</code></td>
-                    <td>Error</td>
-                    <td>Party not permitted to perform the action</td>
-                </tr>
-                <tr>
-                    <td><code>3700</code></td>
-                    <td>Error</td>
-                    <td>Invalid object type</td>
-                </tr>
                 <tr>
                     <td rowspan="1" style="background-color: #fff;" ><code>403 Forbidden</code></td>
                     <td><code>2360</code></td>
@@ -208,12 +168,7 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Restricted access</td>
                 </tr>
                 <tr>
-                    <td rowspan="4" style="background-color: #fff;" ><code>404 Not found</code></td>
-                    <td><code>1120</code></td>
-                    <td>Info</td>
-                    <td>No records found</td>
-                </tr>
-                <tr>
+                    <td rowspan="3" style="background-color: #fff;" ><code>404 Not found</code></td>
                     <td><code>1121</code></td>
                     <td>Error</td>
                     <td>No records found</td>
@@ -229,14 +184,19 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Invalid party reference</td>
                 </tr>
                 <tr>
-                    <td rowspan="4" style="background-color: #fff;" ><code>405 Method not allowed</code></td>
+                    <td rowspan="5" style="background-color: #fff;" ><code>405 Method not allowed</code></td>
                     <td><code>400</code></td>
                     <td>Error</td>
                     <td>Function not available</td>
                 </tr>
                 <tr>
+                    <td><code>500</code></td>
+                    <td>Error</td>
+                    <td>Unsupported service</td>
+                </tr>
+                <tr>
                     <td><code>600</code></td>
-                    <td>Warning</td>
+                    <td>Error</td>
                     <td>Authentication error</td>
                 </tr>
                 <tr>
@@ -250,20 +210,10 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Provider implementation not supported</td>
                 </tr>
                 <tr>
-                    <td rowspan="62" style="background-color: #fff;" ><code>422 Un-processable Entity</code></td>
-                    <td><code>1</code></td>
-                    <td>Error</td>
-                    <td>Exceeds maximum character length</td>
-                </tr>
-                <tr>
+                    <td rowspan="52" style="background-color: #fff;" ><code>422 Unprocessable Entity</code></td>
                     <td><code>10</code></td>
                     <td>Error</td>
                     <td>Additional action needed</td>
-                </tr>
-                <tr>
-                    <td><code>50</code></td>
-                    <td>Warning</td>
-                    <td>General warning</td>
                 </tr>
                 <tr>
                     <td><code>100</code></td>
@@ -296,11 +246,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Duplicate request</td>
                 </tr>
                 <tr>
-                    <td><code>1020</code></td>
-                    <td>Error</td>
-                    <td>Required element not included</td>
-                </tr>
-                <tr>
                     <td><code>1030</code></td>
                     <td>Error</td>
                     <td>Value out of range</td>
@@ -316,21 +261,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Cannot modify element</td>
                 </tr>
                 <tr>
-                    <td><code>1070</code></td>
-                    <td>Error</td>
-                    <td>Invalid format</td>
-                </tr>
-                <tr>
-                    <td><code>1080</code></td>
-                    <td>Error</td>
-                    <td>Invalid field size</td>
-                </tr>
-                <tr>
-                    <td><code>1121</code></td>
-                    <td>Error</td>
-                    <td>No records found</td>
-                </tr>
-                <tr>
                     <td><code>1220</code></td>
                     <td>Error</td>
                     <td>Invalid identifier</td>
@@ -339,11 +269,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td><code>1300</code></td>
                     <td>Error</td>
                     <td>Value out of range</td>
-                </tr>
-                <tr>
-                    <td><code>1421</code></td>
-                    <td>Error</td>
-                    <td>Invalid party reference</td>
                 </tr>
                 <tr>
                     <td><code>1500</code></td>
@@ -391,11 +316,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Final amount limit exceeded</td>
                 </tr>
                 <tr>
-                    <td><code>2120</code></td>
-                    <td>Error</td>
-                    <td>Invalid date-time range</td>
-                </tr>
-                <tr>
                     <td><code>2130</code></td>
                     <td>Error</td>
                     <td>Date expired</td>
@@ -404,11 +324,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td><code>2140</code></td>
                     <td>Error</td>
                     <td>Date-time value is less than the accepted limit</td>
-                </tr>
-                <tr>
-                    <td><code>2150</code></td>
-                    <td>Error</td>
-                    <td>Date-time value is greater than the accepted limit</td>
                 </tr>
                 <tr>
                     <td><code>2180</code></td>
@@ -426,14 +341,9 @@ The following table lists the EFX status codes and their descriptions related to
                     <td>Account closed</td>
                 </tr>
                 <tr>
-                    <td><code>2360</code></td>
-                    <td>Error</td>
-                    <td>Restricted access</td>
-                </tr>
-                <tr>
                     <td><code>2365</code></td>
                     <td>Error</td>
-                    <td>Request denied due to Account Status</td>
+                    <td>Request denied due to account status</td>
                 </tr>
                 <tr>
                     <td><code>2380</code></td>
@@ -559,112 +469,6 @@ The following table lists the EFX status codes and their descriptions related to
                     <td><code>200437</code></td>
                     <td>Error</td>
                     <td>Invalid maximum term</td>
-                </tr>
-                <tr>
-                    <td style="background-color: #fff;" rowspan="21"><code>500 Internal Server Error</code></td>
-                    <td><code>10</code></td>
-                    <td>Error</td>
-                    <td>Additional action needed</td>
-                </tr>
-                <tr>
-                    <td><code>50</code></td>
-                    <td>Warning</td>
-                    <td>General warning</td>
-                </tr>
-                <tr>
-                    <td><code>300</code></td>
-                    <td>Error</td>
-                    <td>System not available</td>
-                </tr>
-                <tr>
-                    <td><code>400</code></td>
-                    <td>Error</td>
-                    <td>Unavailable function</td>
-                </tr>
-                <tr>
-                    <td><code>500</code></td>
-                    <td>Error</td>
-                    <td>Unsupported service</td>
-                </tr>
-                <tr>
-                    <td><code>600</code></td>
-                    <td>Error</td>
-                    <td>Unsupported message</td>
-                </tr>
-                <tr>
-                    <td><code>700</code></td>
-                    <td>Error</td>
-                    <td>Unsupported function</td>
-                </tr>
-                <tr>
-                    <td><code>810</code></td>
-                    <td>Error</td>
-                    <td>Message cannot be reversed</td>
-                </tr>
-                <tr>
-                    <td><code>1020</code></td>
-                    <td>Error</td>
-                    <td>Required element not included</td>
-                </tr>
-                <tr>
-                    <td><code>1060</code></td>
-                    <td>Error</td>
-                    <td>Element cannot be modified</td>
-                </tr>
-                <tr>
-                    <td><code>1070</code></td>
-                    <td>Error</td>
-                    <td>Invalid format</td>
-                </tr>
-                <tr>
-                    <td><code>1090</code></td>
-                    <td>Error</td>
-                    <td>Invalid value</td>
-                </tr>
-                <tr>
-                    <td><code>1220</code></td>
-                    <td>Error</td>
-                    <td>Invalid identifier</td>
-                </tr>
-                <tr>
-                    <td><code>1800</code></td>
-                    <td>Error</td>
-                    <td>Service not enabled</td>
-                </tr>
-                <tr>
-                    <td><code>1820</code></td>
-                    <td>Error</td>
-                    <td>Customer session already in progress</td>
-                </tr>
-                <tr>
-                    <td><code>2380</code></td>
-                    <td>Error</td>
-                    <td>Unauthorized account</td>
-                </tr>
-                <tr>
-                    <td><code>2400</code></td>
-                    <td>Error</td>
-                    <td>Account unavailable</td>
-                </tr>
-                <tr>
-                    <td><code>3060</code></td>
-                    <td>Error</td>
-                    <td>Usage limit exceeded</td>
-                </tr>
-                <tr>
-                    <td><code>6000</code></td>
-                    <td>Error</td>
-                    <td>Terminal not configured</td>
-                </tr>
-                <tr>
-                    <td><code>6100</code></td>
-                    <td>Error</td>
-                    <td>Message not permitted from terminal</td>
-                </tr>
-                <tr>
-                    <td><code>6130</code></td>
-                    <td>Error</td>
-                    <td>Function not available to user</td>
                 </tr>
                 <tr>
                     <td style="background-color: #fff;" rowspan="2"><code>503 Service Unavailable</code></td>
