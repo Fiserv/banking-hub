@@ -458,7 +458,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>6350</code></td>
                     <td>Error</td>
-                    <td>Posting session cannot be back-dated.</td>
+                    <td>Posting session cannot be back-dated</td>
                 </tr>
                 <tr>
                     <td><code>6410</code></td>
