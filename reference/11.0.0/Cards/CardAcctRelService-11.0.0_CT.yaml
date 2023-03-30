@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Card Service
-  description: ' The Card service provides administration in respect to creation, modification, inquiry, and deletion of any type of EFT cards used by the holders. It supports operations managing the credit, debit, prepaid and private label cards.'
+  title: Card Account Relationship Service
+  description: The card account relationship service supports operations to manage accounts associated to a card.
   version: 11.0.0_CT
 servers:
 - url: /
 paths:
-  /cardservice/cards/cards/secured:
+  /cardacctrelservice/cards/cardAccounts/secured:
     post:
       tags:
-      - Get Card
-      summary: Get Card.
-      description: "Retrieves the details of an existing debit or credit card account.<br>\n        <br>\n        For more information about the Cards domain, <a href=\"../docs/?path=docs/fintechs/cards.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: CardInqOperSecured
+      - Get Card Account Relationship
+      summary: Get Card Account Relationship
+      description: "Retrieves the relationship-related information between a card and a financial account.<br><br>\n        For more information about the Cards domain, <a href=\"../docs/?path=docs/fintechs/cards.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: CardAcctRelInqOperSecured
       parameters:
       - name: EFXHeader
         in: header
@@ -25,43 +25,45 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CardInqOperSecuredRequest'
+              $ref: '#/components/schemas/CardAcctRelInqOperSecuredRequest'
       responses:
-        "200":
-          description: Success
+        "201":
+          description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CardInqOperSecuredResponse'
+                $ref: '#/components/schemas/CardAcctRelInqOperSecuredResponse'
         default:
-          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          description: To view the complete list of response codes, <a href="?path=docs/response-codes.md"> click here</a>.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CardInqOperSecuredResponse'
-      x-group-name: Card Service
-      x-proxy-name: Get Card
+                $ref: '#/components/schemas/CardAcctRelInqOperSecuredResponse'
+      x-group-name: Card Account Relationship Service
+      x-proxy-name: Get Card Account Relationship
       x-child-product-name: Cards
       x-core: Cleartouch
 components:
   schemas:
-    CardInqOperSecuredRequest:
+    CardAcctRelInqOperSecuredRequest:
       required:
-      - CardSel
+      - CardAcctRelSel
       properties:
-        CardSel:
-          $ref: '#/components/schemas/CardInqOperSecuredRequest_CardSel'
-    CardInqOperSecuredResponse:
+        CardAcctRelSel:
+          $ref: '#/components/schemas/CardAcctRelInqOperSecuredRequest_CardAcctRelSel'
+    CardAcctRelInqOperSecuredResponse:
       required:
-      - CardRec
+      - CardAcctRelRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        CardRec:
+        RecCtrlOut:
+          $ref: '#/components/schemas/CardAcctRelInqOperSecuredResponse_RecCtrlOut'
+        CardAcctRelRec:
           type: array
-          description: Details of the card record.
+          description: Details of the card-account relationship record.
           items:
-            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardRec'
+            $ref: '#/components/schemas/CardAcctRelInqOperSecuredResponse_CardAcctRelRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -329,272 +331,94 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    CardInqOperSecuredRequest_CardSel_CardKeys:
+    CardAcctRelInqOperSecuredRequest_CardAcctRelSel_CardKeys:
       type: object
       properties:
         CardId:
           maxLength: 36
           type: string
-          description: Unique identification number of a card maintained by financial institution. This number is printed on the front side of the card.
+          description: Unique identification number of a card maintained by a financial institution. This number is printed on the front side of the card.
       description: Unique information to identify a card record.
-    CardInqOperSecuredRequest_CardSel:
+    CardAcctRelInqOperSecuredRequest_CardAcctRelSel:
+      type: object
+      properties:
+        CardKeys:
+          $ref: '#/components/schemas/CardAcctRelInqOperSecuredRequest_CardAcctRelSel_CardKeys'
+      description: "Aggregate to select the accounts related or linked to a card.\n\n**Note:** Service provider does not support record control. \n\nAll accounts attached to the card will be returned in the response. There can be up to 100 accounts attached to the card."
+    CardAcctRelInqOperSecuredResponse_RecCtrlOut:
+      required:
+      - SentRecCount
+      type: object
+      properties:
+        SentRecCount:
+          type: integer
+          description: Total number of records that matched the selection criteria and returned in the response message.
+          format: int64
+      description: |+
+        Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+
+    CardAcctRelInqOperSecuredResponse_CardAcctRelKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |+
+            Type of an account.
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
+
+          enum:
+          - SDA
+          - DDA
+          - MMA
+      description: Unique information to identify the account record.
+    CardAcctRelInqOperSecuredResponse_CardAcctRelKeys:
       required:
       - CardKeys
       type: object
       properties:
         CardKeys:
-          $ref: '#/components/schemas/CardInqOperSecuredRequest_CardSel_CardKeys'
-      description: |+
-        Criteria to select the card record.
-
-    CardInqOperSecuredResponse_CardInfo_FeeWaiver:
-      type: object
-      properties:
-        WaiverReason:
-          maxLength: 40
-          type: string
-          description: |-
-            Reason to waive the fees.
-
-            **Note:** Reason for service charge.
-        WaiverCode:
-          type: string
-          description: 'Method used to apply the loss to income. '
-      description: Method used to waive the fees.
-    CardInqOperSecuredResponse_CardInfo_TimeFrame:
-      type: object
-      properties:
-        EndDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: |-
-            End date and time value.
-
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
-
-            Example: 2021-01-31T23:59:59.999
-
-            **Note:** Used to waive only AnnualFee.
-      description: "Time frame for the applicable fee. \n\n\n\n"
-    CardInqOperSecuredResponse_CardInfo_CardFee:
+          $ref: '#/components/schemas/CardAcctRelInqOperSecuredRequest_CardAcctRelSel_CardKeys'
+        AcctKeys:
+          $ref: '#/components/schemas/CardAcctRelInqOperSecuredResponse_CardAcctRelKeys_AcctKeys'
+      description: Unique information to identify the relationship between a card and an account.
+    CardAcctRelInqOperSecuredResponse_CardAcctRelStatus:
       required:
-      - CardFeeType
-      properties:
-        CardFeeType:
-          type: string
-          description: |+
-            Type of a card fee.
-
-        FeePlan:
-          maxLength: 80
-          type: string
-          description: Fee plan to charge the card fee.
-        WaiveFeeInd:
-          type: boolean
-          description: Flag to indicate if the fees is to be waived.
-        FeeWaiver:
-          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_FeeWaiver'
-        TimeFrame:
-          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_TimeFrame'
-    CardInqOperSecuredResponse_CardInfo_RefData:
-      required:
-      - RefType
-      properties:
-        RefType:
-          type: string
-          description: |+
-            Reference type used to further identify the amount.
-
-          enum:
-          - Photo
-        RefIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Reference number is used in combination with reference type to further identify the amount.
-
-            Example: 1234588
-    CardInqOperSecuredResponse_CardInfo_DateData:
-      properties:
-        RefData:
-          type: array
-          description: Details of the Reference data to further identify the amount.
-          items:
-            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_RefData'
-    CardInqOperSecuredResponse_CardInfo_CardPeriodData:
-      properties:
-        CardAmtType:
-          type: string
-          description: |+
-            Type of amount processed using card in the mentioned period.
-
-          enum:
-          - Withdrawal
-        CardAmtSource:
-          type: string
-          description: Type of source for the amount.
-          enum:
-          - ATM
-          - POS
-        CardPeriodType:
-          type: string
-          description: |+
-            Indicator to define the type of date range for the card period.
-
-          enum:
-          - ThisCycle
-        Amt:
-          type: number
-          description: |-
-            Transaction limit amount in the decimal format.
-
-            Example: 200.00
-        Count:
-          type: integer
-          description: Number of occurrences with respect to the specified unit value.
-          format: int64
-    CardInqOperSecuredResponse_CardInfo:
+      - CardAcctRelStatusCode
       type: object
       properties:
-        CardNum:
-          maxLength: 32
+        CardAcctRelStatusCode:
           type: string
-          description: |+
-            Number assigned to the card known as card account number of up to 10 digits.
-
-        CardSeqNum:
-          maxLength: 3
-          type: string
-          description: |+
-            Card Sequence Number that refers to the member number to whom the card is issued.
-
-        CardType:
-          type: string
-          description: |-
-            Type of a card.
-
-
-
-            **Note:** The financial institution should provide the numeric value for the CardType, which is setup in service provider.
-        ProductIdent:
-          maxLength: 42
-          type: string
-          description: Unique identifier of a product to indicate the processing options of the card.
-        EmployeeInd:
-          type: boolean
-          description: Flag to indicate if a cardholder is an employee of financial institution.
-        CardDtlStatus:
-          type: string
-          description: |+
-            Current status of the card.
-
-        CardFee:
-          type: array
-          description: |-
-            Details of the charges and fees applicable to the card
-
-            **Note:** Option to waive annual fee, autoreissue fee and service charge fee is provided.
-          items:
-            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CardFee'
-        IssueDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: |-
-            Card issuing date when the current card was issued.
-
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
-
-            Example: 2021-01-31T23:59:59.999
-        ExpDt:
-          type: string
-          description: |+
-            Card expiration date after which the card becomes inactive.
-
-          format: date
-        CardsInUseNum:
-          type: integer
-          description: Number of cards issued.
-          format: int64
-        GenerateCardNum:
-          maxLength: 1
-          type: string
-          description: Number of plastic cards that need to be generated.
-        GenerateCardOrder:
-          type: string
-          description: Value that generate card order to replace the existing EFT card issued to the cardholder.
-          enum:
-          - ReplaceCard
-          - NewCard
-          - DoNotGenerate
-        DateData:
-          type: array
-          description: Details of transactions done at a particular date
-          items:
-            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_DateData'
-        CardVerifyData:
-          type: string
-          description: Field to enable or disable the verification process on a newly ordered debit card.
-          enum:
-          - ValidateCard
-          - DoNotValidateCard
-        CardPeriodData:
-          type: array
-          description: Periodic details of a card recurring at regular intervals.
-          items:
-            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CardPeriodData'
-        PINOffset:
-          maxLength: 10
-          type: string
-          description: PIN Offset number assigned to the card.
-        PINOffsetResetInd:
-          type: boolean
-          description: |+
-            Flag to indicate if the PIN offset is calculated.
-
-        PINInvalidEntryNum:
-          type: integer
-          description: ' Number of invalid PIN entry attempts.'
-          format: int64
-        PINInvalidEntryAllowedNum:
-          type: integer
-          description: Maximum number of invalid PIN entry attempts allowed.
-          format: int64
-        PINLastGenerationDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: |-
-            Date when the PIN was last generated.
-
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
-
-            Example: 2021-01-31T23:59:59.999
-      description: Detailed information about the card.
-    CardInqOperSecuredResponse_CardStatus:
-      required:
-      - CardStatusCode
-      type: object
-      properties:
-        CardStatusCode:
-          type: string
-          description: |+
-            Status code of the card.
-
+          description: Relationship status code of a card linked to an account.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
-      description: Details of the card status returned in the result of API call.
-    CardInqOperSecuredResponse_CardRec:
+          description: "Effective date and time value when the status of a card linked to an account is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+      description: Current relationship status of a card linked to an account.
+    CardAcctRelInqOperSecuredResponse_CardAcctRelRec:
       required:
-      - CardInfo
-      - CardKeys
-      - CardStatus
+      - CardAcctRelKeys
+      - CardAcctRelStatus
       properties:
-        CardKeys:
-          $ref: '#/components/schemas/CardInqOperSecuredRequest_CardSel_CardKeys'
-        CardInfo:
-          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo'
-        CardStatus:
-          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardStatus'
+        CardAcctRelKeys:
+          $ref: '#/components/schemas/CardAcctRelInqOperSecuredResponse_CardAcctRelKeys'
+        CardAcctRelStatus:
+          $ref: '#/components/schemas/CardAcctRelInqOperSecuredResponse_CardAcctRelStatus'
