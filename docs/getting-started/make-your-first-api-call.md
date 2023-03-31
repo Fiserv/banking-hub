@@ -62,7 +62,7 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 
 #### Resources
 
-* [Download Postman Collection - Premier Core](https://github.com/Fiserv/banking-hub/files/10987356/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.postman_collection.zip "Click to Download")
+* [Download Postman Collection - Premier Core](https://github.com/Fiserv/banking-hub/files/11049044/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip "Click to Download")
 
 
 #### Prerequisite to run Postman collection
