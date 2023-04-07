@@ -42,13 +42,13 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 - Something new that was added or introduced like a documents or a services.
 
 
-**BeneficialOwnerAdd `POST ?/beneficialowner`**
+**BeneficialOwnerAdd `POST /beneficialowner`**
 
 
 - The BeneficialOwnerAdd service implementation provides the ability to add a beneficial owner to a legal entity or a business customer. Ownership details, such as business title and/or percent allocated, can be set during the creation of this relationship. Only one record is added per service request.
 
 
-**BeneficialOwnerMod `PUT ?/beneficialowner`**
+**BeneficialOwnerMod `PUT /beneficialowner`**
 
 
 - The BeneficialOwnerMod service implementation provides the ability to modify the beneficial ownership details of the beneficial owner such as business title and/or percent allocated. The relationship type code cannot be changed using this service operation. Only one record is modified per service request. 
