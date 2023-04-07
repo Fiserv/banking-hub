@@ -24,6 +24,7 @@ List of parameters that can be sent under the EFXHeader:
 | Context  | Additional information related to the specific channels used by the client application. | object  | Optional |
 | Context.ClientAppName| Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.| string| Optional|
 | Context.Channel|Name of channel used by the client application, such as, Internet, Mobile, and Teller. |string | Optional|
+| Context.isOverriden|Flag to indicate if previous exception is overridden by the sender. |boolean | Optional|
 | Context.TrnIdent| Transaction identification number. | string| Optional|
 | Context.ClientDateTime| Client date and time as reported by the client application while sending the service request. <br><br> *Format: yyyy-MM-ddTHH:mm:ss.SSS* <br> *Example: 2021-01-31T23:59:59.999* |string | Optional|
 | Context.ClientTerminalSeqNum| Unique identification value of transaction defined by the client. Also known as TraceNumber or Sequence in some systems.When used by a Network defined transaction, the value of this identifier is typically set to narrow character of 12. <br><br> *maxLength: 36*|string | Optional|
@@ -57,4 +58,5 @@ List of parameters that can be sent under the EFXHeader:
 | Context.TellerIdent| Teller identification number.| string| Optional|
 | Context.AMPMCode| Transaction Posting Code. <br> <table><thead><td>Value</td>	<td>Description</td></thead><tbody><tr><td>AM</td>	<td>Transactions are processed on the same day</td></tr><tr><td>PM</td>	<td>Transactions are memo posted on the posting day and permanently posted next business day.</td></tr> </tbody></table> | string| Optional|
 | Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul>| string| Optional|
+| Context.AdditionalSettings|Additional information required to successfully process the transaction. <br> <b>Note:</b> Required for Cleartouch core APIs.| object| Optional|
 
