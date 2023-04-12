@@ -63,5 +63,5 @@ List of parameters that can be sent under the EFXHeader:
 | Context.TellerTrnData.TellerIdent| Teller identification number.| string| Optional|
 | Context.TellerTrnData.TrnConductorData| Details of the transaction conductor at the teller line.| string| Optional Repeating|
 | TellerTrnData.TrnConductorData.TrnConductorIdent| Transaction conductor identification number.| string| Optional|
-| TellerTrnData.TrnConductorDataNoConductorReason| Type of reason when a conductor is not identified. <br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| string| Optional|
+| TellerTrnData.TrnConductorDataNoConductorReason| Type of reason when a transaction conductor is not identified. <br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| string| Optional|
 
