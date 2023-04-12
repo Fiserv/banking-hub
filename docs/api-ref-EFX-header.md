@@ -59,9 +59,9 @@ List of parameters that can be sent under the EFXHeader:
 | Context.AMPMCode| Transaction Posting Code. <br> <table><thead><td>Value</td>	<td>Description</td></thead><tbody><tr><td>AM</td>	<td>Transactions are processed on the same day</td></tr><tr><td>PM</td>	<td>Transactions are memo posted on the posting day and permanently posted next business day.</td></tr> </tbody></table> | string| Optional|
 | Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul>| string| Optional|
 | Context.AdditionalSettings|Additional information required to successfully process the transaction. <br> <b>Note:</b> Required for Cleartouch core APIs.| object| Optional|
-| Context.TellerTrnData| Teller transaction data.| string| Optional|
+| Context.TellerTrnData| Details of the teller transaction.| string| Optional|
 | Context.TellerTrnData.TellerIdent| Teller identification number.| string| Optional|
-| Context.TellerTrnData.TrnConductorData| Data element that identifies the conductor of the transaction at the teller line.| string| Optional Repeating|
-| TellerTrnData.TrnConductorData.TrnConductorIdent| Identification number of the person conducting the transaction.| string| Optional|
-| TellerTrnData.TrnConductorDataNoConductorReason| No conductor reason. Applicable when a conductor cannot be identified. <br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| string| Optional|
+| Context.TellerTrnData.TrnConductorData| Details of the transaction conductor at the teller line.| string| Optional Repeating|
+| TellerTrnData.TrnConductorData.TrnConductorIdent| Transaction conductor identification number.| string| Optional|
+| TellerTrnData.TrnConductorDataNoConductorReason| Type of reason when a conductor is not identified. <br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| string| Optional|
 
