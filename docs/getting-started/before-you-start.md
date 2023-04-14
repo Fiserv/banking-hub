@@ -6,15 +6,12 @@
 
 Before you start integration, it is important to register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test APIs using the <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a> of your choice. However, registration is not required to learn about our APIs and reference documentation.
 
-[![Video Thumbnail]][Video]   
 
-[![Video Thumbnail A]][Video]  
+[![Video Thumbnail]][Video]  
 
-[Video Thumbnail]: https://user-images.githubusercontent.com/81968767/231959746-347cd876-8cf3-45ed-a09f-ad7b24566080.png
 [Video]: https://user-images.githubusercontent.com/81968767/231950346-2b13475d-f395-4b11-8a55-2d0c93f45813.mp4
-[Video Thumbnail A]: https://user-images.githubusercontent.com/81968767/232030323-bbde320a-2bf5-4e21-97c0-8fe1a8895913.png
+[Video Thumbnail]: https://user-images.githubusercontent.com/81968767/232030323-bbde320a-2bf5-4e21-97c0-8fe1a8895913.png
 
-https://user-images.githubusercontent.com/81968767/231950346-2b13475d-f395-4b11-8a55-2d0c93f45813.mp4
 
 
 ## Register on Fiserv Developer Studio
