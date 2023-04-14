@@ -8,11 +8,15 @@ Before you start integration, it is important to register on the Fiserv Develope
 
 [![Video Thumbnail]][Video]   
 
+[![Video Thumbnail B]][Video]   
+
 [Video Thumbnail]: https://user-images.githubusercontent.com/81968767/231955451-146c19bf-edff-4dd9-885c-627863cb7678.png
+[Video Thumbnail B]: https://user-images.githubusercontent.com/81968767/231959746-347cd876-8cf3-45ed-a09f-ad7b24566080.png
 [Video]: https://user-images.githubusercontent.com/81968767/231950346-2b13475d-f395-4b11-8a55-2d0c93f45813.mp4
 
 
 https://user-images.githubusercontent.com/81968767/231950346-2b13475d-f395-4b11-8a55-2d0c93f45813.mp4
+
 
 
 
