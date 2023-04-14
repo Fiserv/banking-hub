@@ -24,7 +24,7 @@ List of parameters that can be sent under the EFXHeader:
 | Context  | Additional information related to the specific channels used by the client application. | object  | Optional |
 | Context.ClientAppName| Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.| string| Optional|
 | Context.Channel|Name of channel used by the client application, such as, Internet, Mobile, and Teller. |string | Optional|
-| Context.isOverriden|Flag to indicate the sender has overridden the previous exception. |boolean | Optional|
+| Context.isOverridden|Flag to indicate the sender has overridden the previous exception. |boolean | Optional|
 | Context.TrnIdent| Unique identifier of a transaction. | string| Optional|
 | Context.ClientDateTime| Client date and time as reported by the client application while sending the service request. <br><br> *Format: yyyy-MM-ddTHH:mm:ss.SSS* <br> *Example: 2021-01-31T23:59:59.999* |string | Optional|
 | Context.ClientTerminalSeqNum| Client-defined unique identification value of transaction. Also known as TraceNumber or Sequence in some systems. When used by a Network defined transaction, the value of this identifier is typically set to narrow character of 12. <br><br> *maxLength: 36*|string | Optional|
