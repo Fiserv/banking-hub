@@ -59,9 +59,9 @@ List of parameters that can be sent under the EFXHeader:
 | Context.AMPMCode| Transaction Posting Code. <br> <table><thead><td>Value</td>	<td>Description</td></thead><tbody><tr><td>AM</td>	<td>Transactions are processed on the same day</td></tr><tr><td>PM</td>	<td>Transactions are memo posted on the posting day and permanently posted next business day.</td></tr> </tbody></table> | string| Optional|
 | Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul>| string| Optional|
 | Context.AdditionalSettings|Additional information required to successfully process the transaction. <br> <b>Note:</b> Required for Cleartouch core APIs.| object| Optional|
-| Context.TellerTrnData| Details of the teller transaction.| string| Optional|
+| Context.TellerTrnData| Details of the teller transaction.| object| Optional|
 | Context.TellerTrnData.TellerIdent| Unique identifier of the teller.| string| Optional|
-| Context.TellerTrnData.TrnConductorData| Details of the data element that identifies the transaction conductor at the teller line.| string| Optional Repeating|
-| TellerTrnData.TrnConductorData.TrnConductorIdent| Unique identifier of the transaction conductor or an individual performing the transaction.| string| Optional|
-| TellerTrnData.TrnConductorDataNoConductorReason| Type of reason when a transaction conductor is not identified. <br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| string| Optional|
+| Context.TellerTrnData.TrnConductorData| Details of the data element that identifies the transaction conductor at the teller line.| object| Optional Repeating|
+| Context.TellerTrnData.TrnConductorData.TrnConductorIdent| Unique identifier of the transaction conductor or an individual performing the transaction.| string| Optional|
+| Context.TellerTrnData.TrnConductorData.NoConductorReason| Type of reason when a transaction conductor is not identified. <br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| enum| Optional|
 
