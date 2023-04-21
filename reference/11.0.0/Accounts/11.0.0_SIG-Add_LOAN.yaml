@@ -1,0 +1,1786 @@
+openapi: 3.0.1
+info:
+  title: Account Service
+  description: The account service helps to create and manage product accounts serviced by the financial institutions. It is also used to retrieve information about the existing accounts and maintain information of new accounts.
+  version: 11.0.0_SIG-Add_LOAN
+paths:
+  /acctservice/acctmgmt/accounts:
+    post:
+      tags:
+        - Add Account
+      summary: Add Account.
+      description: "Creates a new Checking, Savings, CD or Loan Account for one or multiple parties. Account is a product serviced by a financial institution (FI) that carries a credit or debit balance in a particular currency.<br>\n        Following are the supported accounts:\n        <ul>\n          <li>Certificate of Deposit (CDA)</li>\n          <li>Demand Deposit Account (DDA)</li>\n          <li>Savings Deposit Account (SDA)</li>\n          <li>Loan Account (LOAN)</li>\n        </ul>\n        \n        For more information about the Accounts domain, <a href=\"../docs/?path=docs/fintechs/accounts.md\" title=\"Click to open\">click here.</a><br>\n        <br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: addAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addAccountRequest'
+      responses:
+        '202':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addAccountResponse'
+        default:
+          description: 'To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addAccountResponse'
+      x-group-name: Account Service
+      x-proxy-name: Add Account
+      x-child-product-name: Accounts
+      x-core: Signature-LOAN
+    parameters:
+      - $ref: https://swaggerhub.onefiserv.net/v1/domains/Bank_Sol_Org/ESF_Reusable_Content2/2.0.0#/components/parameters/EFXHeader
+components:
+  schemas:
+    addAccountRequest:
+      properties:
+        PartyAcctRelInfo:
+          type: array
+          items:
+            properties:
+              PartyRef:
+                required:
+                  - PartyKeys
+                type: object
+                properties:
+                  PartyKeys:
+                    type: object
+                    properties:
+                      PartyId:
+                        maxLength: 36
+                        type: string
+                        description: "Unique identification number of a party record.\n\n**Note:** Refers to customer key (customer permanent identifier). \n\nMaximum length: 10 characters"
+                    description: "Unique information to identify the party record.\n\n**Note:** In signature up to 10 party relationships can be defined."
+                description: Reference details of a party that is part of the relationship with the account.
+              PartyAcctRelData:
+                type: array
+                items:
+                  required:
+                    - PartyAcctRelType
+                  properties:
+                    PartyAcctRelType:
+                      enum:
+                        - Administrator
+                        - Assumption
+                        - Beneficiary
+                        - CoTrustee
+                        - Custodian
+                        - CustodianUTMA
+                        - Executor
+                        - JointTenancy
+                        - JointTenantInCommon
+                        - Owner
+                        - PersonalRep
+                        - Related
+                        - SoleOwner
+                        - Trustee
+                      type: string
+                      description: "Type of party relationship to account.\n\n\n\n**Note:** *Required field*\n\n\n\nSome of the values are client-defined and therefore, more codes can be added to the list of valid values.\n\nParameter configuration table LMXRL0001502 can be used to transform financial institution-specific relationship types.\n\nMaximum length: 3 characters"
+                    PartyAcctRelOrder:
+                      enum:
+                        - First
+                        - Second
+                        - Third
+                        - Fourth
+                        - Fifth
+                        - Other
+                      type: string
+                      description: "Relationship order of party with an account in case of JointTenancy or JointTenantsInComman.\n\n**Note:** Party Account Relationship order is applicable only to secondary relationship types of JointTenantInCommon and JointTenancy.\n\nFor example: Relationship Type JointTenantInCommon and PartyAccount Relationship Order as First defines relationship as \"Joint and other (first secondary) Owner\".\n\nE.g.Relationship Type JointTenant and PartyAccount Relationship Order as First defines relationship as \"Joint or other (first secondary) Owner\"."
+                description: Details of the relationship of the party to the account.
+          description: Details of a relationship between party and account.
+        LoanAcctInfo:
+          type: object
+          properties:
+            AcctIdent:
+              type: array
+              items:
+                properties:
+                  AcctIdentType:
+                    enum:
+                      - AcctNum
+                    type: string
+                    description: "Type of account identifiers.\n\n"
+                  AcctIdentValue:
+                    maxLength: 36
+                    type: string
+                    description: "Account identification value.\n\n**Note:** *Required field*\n\n\n\nIf this field is not sent by the client application, ESF retrieves an account number from the signature core and use as value for this field."
+              description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. "
+            ProductIdent:
+              maxLength: 42
+              type: string
+              description: "Unique identifier of a product to indicate the processing options of account.\n\n**Note:** *Required field*\n\n\n\nMaximum length: six characters"
+            AcctType:
+              enum:
+                - LOAN
+              type: string
+              description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>."
+            InitialAmount:
+              type: object
+              properties:
+                Amt:
+                  type: number
+                  description: Amount in decimal format.
+                CurCode:
+                  required:
+                    - CurCodeValue
+                  type: object
+                  properties:
+                    CurCodeType:
+                      enum:
+                        - ISO4217-Alpha
+                      type: string
+                      description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                    CurCodeValue:
+                      type: string
+                      description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                  description: Details of currency code.
+              description: "Details of the initial amount of the loan.\n\n**Note:** *Required field*"
+            MaturityDt:
+              type: string
+              description: "Date of maturity of a loan account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Required to be provided if loan note type is Time, Term or Installment."
+              format: date
+            RelationshipMgr:
+              type: array
+              items:
+                required:
+                  - RelationshipMgrIdent
+                properties:
+                  RelationshipMgrIdent:
+                    maxLength: 36
+                    type: string
+                    description: Unique identifier of a relationship manager.
+                  RelationshipRole:
+                    enum:
+                      - Officer
+                      - SecondOfficer
+                      - ThirdOfficer
+                    type: string
+                    description: "Role of a relationship manager.\n\n**Note:** \"Officer\" role is required in Signature."
+              description: "Information about the financial institution officers who have management-related responsibilities of the account.\n\n**Note:** In Signature up to three types of relationship managers can be established."
+            OriginatingBranch:
+              maxLength: 32
+              type: string
+              description: "Branch that primarily created the account with the party.\n\n**Note:** *Required field*"
+            OEDCode:
+              enum:
+                - Director
+                - Officer
+                - Employee
+                - RelInterest
+                - MainShareHolder
+              type: string
+              description: 'Officer, employee, director code. This code is used to indicate if the party is an employee of the financial institution.'
+            ClientDefinedData:
+              type: array
+              items:
+                required:
+                  - DataIdent
+                properties:
+                  DataIdent:
+                    enum:
+                      - UserCode1
+                      - UserCode2
+                      - UserField1
+                      - UserField2
+                      - UserField3
+                      - UserField4
+                      - LNTHR01..10
+                      - LNFIV01..10
+                      - LNTEN01..10
+                      - LNTWN01..10
+                      - LNTHI01..10
+                      - LNSEV01..10
+                    type: string
+                    description: "Unique data identifier to identify the client-defined data item.\n\n**Note:** Value for this field can be:\n\n- UserCodes are Alpha length 1.\n\n- UserFields are Alpha length 11.\n\nOther than the above values, below client-defined fields can be added only if they are activated by Signature:\n\n- LNTHR01-10: User Field Alpha length 3.\n\n- LNFIV01-10: User Field Alpha length 5.\n\n- LNSEV01-10: User Field Numeric length 7.\n\n- LNTEN01-10: User Field Alpha length 10.\n\n- LNTWN01-10: User Field Alpha length 20.\n\n- LNTHI01-10: User Field Alpha length 30."
+                  Value:
+                    maxLength: 256
+                    type: string
+                    description: Value of the client-defined data item.
+              description: 'Details of the client-defined data whose value, data type and definition are defined by the client or user.'
+            AcctStmtData:
+              type: object
+              properties:
+                MailCode:
+                  type: string
+                  description: "Code of mail to sort statements.\n\n**Note:** Refers to one position user-defined code in Signature."
+                StmtRemarks:
+                  maxLength: 50
+                  type: string
+                  description: "User-defined text to appear on a user-defined statement.\n\n**Note:** This field is used for printing special handling instructions, printing static information, such as property address or other collateral information about the billing statement."
+              description: Details of the account statement processing data.
+            NoticeData:
+              type: array
+              items:
+                properties:
+                  NoticeType:
+                    enum:
+                      - RateChangeNotice
+                      - PmtChgNotice
+                      - RatePmtChgNotice
+                      - TermRateChgNotice
+                      - TermPmtChgNotice
+                      - FixedRateChgNotice
+                    type: string
+                    description: "Type of notice.\n\n\n\n"
+                  NoticeFormat:
+                    type: string
+                    description: Format for notice.
+              description: "Details of account notice processing data.\n\n**Note:** Product default values for this aggregate can be obtained from the-ESF ProdSpecInq service response.\n\n"
+            Rate:
+              type: number
+              description: "Current interest rate for the account.\n\n**Note:** *Required field*\n\n\n\n- Interest rate provided in the request must be greater than zero and must be within the product minimum rate and maximum rate values established on Signature core\n\n- Client application must send a valid Interest rate value (greater than 0) even if the Interest rate for the product is 0\n\n- Format is XXX.XXXX."
+            IntRateData:
+              type: object
+              properties:
+                RateMatrixTier:
+                  type: array
+                  items:
+                    properties:
+                      Tier:
+                        enum:
+                          - 1 through 5
+                        type: string
+                        description: Name of the tier in rate matrix.
+                      LowCurAmt:
+                        type: object
+                        properties:
+                          Amt:
+                            type: number
+                            description: "Amount in decimal format.\n\nExample: 10.00\n\n**Note:** *Required field*"
+                          CurCode:
+                            required:
+                              - CurCodeValue
+                            type: object
+                            properties:
+                              CurCodeType:
+                                enum:
+                                  - ISO4217-Alpha
+                                type: string
+                                description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                              CurCodeValue:
+                                type: string
+                                description: "Currency code value as per the ISO4217-Alpha format.\n\n\n\nPlease note that presently only USD currency code is supported."
+                            description: Details of currency code.
+                        description: Details of the minimum amount range that contains the amount value and currency code information.
+                      MarginType:
+                        enum:
+                          - Variance
+                        type: string
+                        description: Type of margin.
+                      Margin:
+                        type: number
+                        description: Margin of interest.
+                  description: "Tier details of rate matrix.\n\n**Note:** \n\n- Refers to the balance/rate table and is used when the loan rate fluctuates based on the balance of the loan. \n\n- Only applicable, if rate change control is balance rate table. "
+                BasedOnCode:
+                  type: string
+                  description: "Based on code is the source of interest rate which can be used alone or with additional factors that, when combined, calculate an interest rate.\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired to be provided if IntRate Data aggregate is sent in the request."
+              description: Details of the interest rate processing for the account.
+            RateChangeData:
+              type: array
+              items:
+                properties:
+                  RateChangeControl:
+                    enum:
+                      - Fixed
+                      - RateIndex
+                      - AtMaturity
+                      - Manual
+                      - BalanceRateTable
+                      - IndexFreq
+                      - PeriodReview
+                    type: string
+                    description: "Type of interest rate. \n\n\n\n\n\n**Note:** *Required field*\n\n\n\nThis field refers to the interest guarantee code.\n\nThe values indicate:\n\n- Fixed indicates the rate cannot change\n\n- RateIndex indicates that the rate can change when the associated index changes\n\n- PeriodReview indicates that the RateChangeRecurType dictates when the rate can change\n\n- AtMaturity indicates that the rate may change at maturity or renewal\n\n- Manual indicates that the rate can change at any time\n\n- BalanceRateTable indicates the rate can change based on the balance rate table\n\n- IndexFreq indicates that the rate can change with index at review"
+                  RateCalcMethod:
+                    enum:
+                      - Comparison
+                      - PreviousIndex
+                      - None
+                    type: string
+                    description: "Code that indicates how the system calculates the interest rate when the rate changes with Index at Review.\n\n**Note:** This field is applicable when interest guarantee code is RateChgWithIndexRev (RateIndex)."
+                  VarianceFactorType:
+                    enum:
+                      - None
+                      - Variance
+                      - Factor
+                      - Factor+Variance
+                      - VarianceXFactor
+                    type: string
+                    description: "Type of variance factor used to calculate interest rate. \n\n**Note:** Refers to the Variance/multiplier option in Signature. "
+                  RateFactor:
+                    type: number
+                    description: "Percentage of index rate used to calculate the rate changes.\n\n\n\n**Note:** Refers to index multiplier percent. \n\nThis field is required if variance factor type field value is 'Variance', ' Factor+Variance' or 'VarianceXFactor'. "
+                  RateVariance:
+                    type: number
+                    description: "Percentage difference between interest rate and index rate to adjust the interest rate.\n\n**Note:** Refers to index variable percent."
+                  UseFloorCeilingRateInd:
+                    type: boolean
+                    description: "Flag to indicate the floor ceiling rate is to be used.\n\n**Note:** Refers to the indicator that identifies whether the loan has a floor and ceiling rate.\n\nThis is a required field if rate change data aggregate is sent in the request."
+                  FloorRate:
+                    type: number
+                    description: "Rate of interest finalized from the lower range of rates.\n\n**Note:** Refers to floor interest rate percentage."
+                  CeilingRate:
+                    type: number
+                    description: "Rate of interest finalized from the higher range of rates.\n\n**Note:** Refers to ceiling interest rate percentage."
+                  FixedRateConversionDt:
+                    type: string
+                    description: Date on which the customer convert the loan to fixed rate.
+                    format: date
+                  FixedRateLeadDays:
+                    type: integer
+                    description: "Number of days before the fixed rate conversion date to notify the customer that the loan is converted to a fixed rate.\n\n**Note:** Refers to fixed conservation leading days.\n\n"
+                    format: int64
+                  RateChangeRecurType:
+                    enum:
+                      - Debit
+                      - Stmt
+                      - StmtDebit
+                      - None
+                      - Daily
+                      - Monthly
+                    type: string
+                    description: "Recurrency type to define the recurring change in interest rate.\n\n\n\n**Note:** This field refers to: \n\n- Rate change period code if guarantee code is rate change with additional debit [RateChgWithAddlDebit]\n\n- Rate review period code if interest guarantee code field has any other value"
+                  RecurInterval:
+                    type: integer
+                    description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\nThe default value is set to 1.\n\n**Note:** Refers to rate review frequency."
+                    format: int64
+                  Month:
+                    enum:
+                      - 1 thru 31
+                    type: string
+                    description: Month in which interest rate changes.
+                  LeadDays:
+                    type: integer
+                    description: "Number of days prior to the event to do a review.\n\n**Note:** Refers to rate review lead days."
+                    format: int64
+                  NextRateChangeDt:
+                    type: string
+                    description: "Next date at which the interest rate is to be adjusted.\n\n\n\nFormat: mm/dd/yyyy \n\nExample: 11/20/2021"
+                    format: date
+                  TeaserRateInd:
+                    type: boolean
+                    description: Flag to indicate the loan has a teaser interest rate.
+                  TeaserRateExpDt:
+                    type: string
+                    description: "Date when teaser rate expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** This field is required if the teaser rate indicator is 'true'. "
+                    format: date
+              description: "Details of frequency for interest rate adjustment.\n\n**Note:** *Required field*"
+            PostAddr:
+              type: array
+              items:
+                required:
+                  - AddrType
+                properties:
+                  AddrUse:
+                    enum:
+                      - Alternate
+                      - StatementPrimary
+                      - StatementAdditional
+                      - StatementAdditional1
+                      - StatementAdditional2
+                      - StatementAdditional3
+                      - StatementAdditional4
+                      - StatementAdditional5
+                      - Government
+                      - LegalTitle
+                    type: string
+                    description: "Usage of the address.\n\n**Note:** *Required field*\n\n\n\nRefers to an alternate address type. \n\nIf AddressFormatType is parsed following values are supported:\n\n- Alternate\n\n- StatementPrimary\n\n- StatementAdditional1\n\n- StatementAdditional2\n\n- StatementAdditional3\n\n- StatementAdditional4\n\n- StatementAdditional5\n\n- Government\n\n- Check \n\n\n\nIf AddressFormatType is label following values are supported:\n\n- Alternate\n\n- StatementPrimary\n\n- StatementAdditional\n\n- Government\n\n- LegalTitle\n\n\n\nLegal title is not an address and refers to the name if more than one customercustomer are related to one account. Parsed address format type does not support legal title. \n\n\n\n\n\n"
+                  AddrFormatType:
+                    enum:
+                      - Label
+                      - Parsed
+                    type: string
+                    description: "Type of address format.\n\n\n\n**Note:** Value of this field is same for all account-level addresses for a particular financial institution, therefore, if multiple account addresses are sent in the request, then either the AddressFormatType should be provided only once or the same value should be sent for each aggregate in the request.\n\n\n\nClient application should provide address data in applicable address attributes as per label and parsed address type format.\n\n\n\n "
+                  FullName1:
+                    maxLength: 96
+                    type: string
+                    description: "Full name in line 1.\n\n**Note:** *Conditionally Required field*\n\n\n\n- Refers to full name that appears in the address.\n\n- Required only when address format type is label"
+                  Addr1:
+                    maxLength: 64
+                    type: string
+                    description: "Address line 1.\n\n**Note:** If AddressFormatType is 'label', this field is the first line of address. Addr1 is required if AddressFormatType is Label. Maximum 40 characters are supported.\n\n\n\nIf AddressFormatType is 'parsed', and client application uses the Standardized address format, this field refers to the HouseNum and Street. Client application should consolidate the HouseNum and street in address line 1 as indicated in format below and send in the request.\n\nFormat: HouseNum followed by a space followed by street name.\n\nExample: 123 Main drive. \n\n"
+                  Addr2:
+                    maxLength: 64
+                    type: string
+                    description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided.\n\n**Note:** If AddressFormatType is 'Label', this field is the second line of address. Should be provided if Addr3 is sent in request. Maximum 40 characters are supported.\n\n\n\nIf AddressFormatType is 'Parsed', and client application uses the standardized address format, this field refers to the ApartmentNumType and ApartmentNum. Client application must consolidate the ApartmentNumType and ApartmentNum in address line 2 as indicated in below format and send it in the request.\n\nFormat: ApartmentNumType followed by a space followed by ApartmentNum.\n\nExample: STE 600. "
+                  Addr3:
+                    maxLength: 64
+                    type: string
+                    description: "Address line 3. \n\nTo enter Addr3, Addr2 field must be provided.\n\n**Note:** If AddressFormatType is 'Label', this field is the third line of address. Should be provided if Addr4 is sent in request. Maximum 40 characters are supported."
+                  Addr4:
+                    maxLength: 64
+                    type: string
+                    description: "Address line 4. \n\nTo enter Addr4, Addr3 field must be provided.\n\n**Note:** If AddressFormatType is 'Label', this field is the fourth line of address. Should be provided if Addr5 is sent in request. Maximum 40 characters are supported."
+                  Addr5:
+                    maxLength: 64
+                    type: string
+                    description: "Address line 5. \n\nTo enter Addr5, Addr4 field must be provided.\n\n**Note:** If AddressFormatType is 'Label', this field is the fifth line of address.\n\nMax length: 40 characters."
+                  ApartmentNum:
+                    maxLength: 15
+                    type: string
+                    description: "Number of an apartment.\n\n**Note:** Used if AddressFormatType is 'Parsed' and client application is not using the standardized address format. \n\nAt least one element of a parsed address is required if AddressFormatType is 'Parsed'. \n\nMax length: 6 characters"
+                  ApartmentNumType:
+                    enum:
+                      - APT
+                      - BLDG
+                      - DEPT
+                      - FL
+                      - HNGR
+                      - KEY
+                      - LOT
+                      - OFC
+                      - PH
+                      - PIER
+                      - RM
+                      - SLIP
+                      - SPC
+                      - STOP
+                      - STE
+                      - TRLR
+                      - UNIT
+                    type: string
+                    description: "Type of apartment number.\n\n**Note:** Used if AddressFormatType is 'Parsed' and client application is not using the standardized address format. \n\n\n\nThis field is used to identify contents of ApartmentNum field and appears before ApartmentNum in the printed address. \n\n"
+                  HouseNum:
+                    maxLength: 15
+                    type: string
+                    description: "Number of a house.\n\n**Note:** Used if AddressFormatType is 'Parsed' and client application is not using the standardized address format.\n\nAt least one element of a parsed address is required if AddressFormatType is 'Parsed'. \n\nMaximum length: 10 characters"
+                  Street:
+                    maxLength: 64
+                    type: string
+                    description: "Name of the street.\n\n**Note:** Used if AddressFormatType is 'Parsed' and client application is not using the standardized address format.\n\nAt least one element of a parsed address is required if AddressFormatType is 'Parsed'. \n\nClient application should send a value in either POBox or Street field and both should not be provided in request.   \n\n"
+                  AddrDefinedData:
+                    type: array
+                    items:
+                      required:
+                        - DataIdent
+                      properties:
+                        DataIdent:
+                          enum:
+                            - ATTN
+                            - IN CARE OF
+                            - MSC
+                            - None
+                          type: string
+                          description: "Unique data identifier to identify the client-defined data item.\n\n**Note:** Used if AddressFormatType is 'Parsed'.\n\nRefers to the identifier of the optional information and, new tag is used to identify contents of optional information line.  Based on the selection an abbreviation can appear before the optional information. This field appears above the recipient line in the printed address. "
+                        Value:
+                          maxLength: 256
+                          type: string
+                          description: "Value of the client-defined data item.\n\n**Note:** \n\n- Refers to optional informational field\n\n- Used if AddressFormatType is 'Parsed'."
+                    description: Details of the address defined.
+                  City:
+                    maxLength: 32
+                    type: string
+                    description: "Name of the city.\n\n**Note:** Used if AddressFormatType is 'Parsed'.\n\nAt least one element of a parsed address is required if AddressFormatType is 'Parsed'.  \n\nPostal town is the city for parsed account addresses.\n\n"
+                  County:
+                    maxLength: 32
+                    type: string
+                    description: "Name of the county.\n\n**Note:** Used if AddressFormatType is 'Parsed'.\n\nAt least one element of a parsed address is required if AddressFormatType is 'Parsed'.  "
+                  District:
+                    maxLength: 32
+                    type: string
+                    description: "Name of the district.\n\n**Note:** Used if AddressFormatType is 'Parsed'.\n\nAt least one element of a parsed address is required if AddressFormatType is 'Parsed'. "
+                  StateProv:
+                    type: string
+                    description: "State province name as per <a href=\"https://en.wikipedia.org/wiki/ISO_3166-2:US\" title=\"Click to open\" target=\"_blank\" >ISO 3166-2: US codes</a>.\n\n**Note:** Used if AddressFormatType is 'Parsed'.\n\nAt least one element of a parsed address is required if AddressFormatType is 'Parsed'.  \n\n\n\nMax length: 2 characters."
+                  MilitaryRegion:
+                    enum:
+                      - APO AA
+                      - APO AE
+                      - APO AP
+                      - FPO AA
+                      - FPO AE
+                      - FPO AP
+                    type: string
+                    description: "Code to indicate the military region.\n\n**Note:** \n\n- Used if AddressFormatType is 'Parsed'\n\n- For a military address, this field should be used instead of the state or city fields"
+                  PostalCode:
+                    maxLength: 11
+                    type: string
+                    description: "Postal code or zip code.\n\n**Note:** *Conditionally Required field*\n\nApplicable if value of AddressFormatType is 'Parsed' or 'Label'.\n\n\n\nPostal code provides information about the ZIP code. Format of information is in ZIP Code (5 Digit)-Additional code (4 Digit) format. Additional code of four digits is optional and provides a more specific location within a given ZIP code. If additional code is not provided, it can be represented with value as '0000'. For example, 32714-1234 or 32714-0000.\n\n\n\nNot applicable to LegalTitle.\n\nMaximum 10 characters are supported."
+                  CountryCode:
+                    required:
+                      - CountryCodeValue
+                    type: object
+                    properties:
+                      CountryCodeSource:
+                        enum:
+                          - SPCountryCode
+                        type: string
+                        description: "Standard country code format.\n\n\n\n\n\n**Note:** Used if AddressFormatType is 'Parsed'.\n\n\n\nMost of the customers are likely to use ISO3166-Alpha 2 standard, but it is a user-defined list table in core. \n\n"
+                      CountryCodeValue:
+                        type: string
+                        description: "Country code value as per the country code format set in the CountryCodeSource field.\n\n\n\nFor example, as per IRS country codes, country code of Canada is CA.\n\n**Note:** Used if AddressFormatType is 'Parsed'.\n\n\n\nThis field carries the ISO country code designated for each country. Represent the country by two letter combination. It is like an acronym that stands for a country, for example US (United States), FR (France) or IN (India), etc. \n\n\n\n"
+                    description: Country code details of the account holder.
+                  POBox:
+                    maxLength: 16
+                    type: string
+                    description: "Number of PO box.\n\n**Note:** Used if AddressFormatType is 'Parsed'.\n\n\n\nClient application should send a value in either POBox or street field but not both.  \n\n\n\nPost office box addresses are output as PO BOX NNNNNN in the printed address.\n\n\n\n"
+                  AddrType:
+                    enum:
+                      - Secondary
+                      - Seasonal
+                    type: string
+                    description: "Type of the address. \n\n\n\n**Note:** Both secondary and seasonal address types are supported for label and parsed AddrFormatType. \n\nIf AddrType is secondary and no TimeFrame (StartDt and EndDt) is provided then address is considered as permanent alternate address. \n\nIf AddrType is secondary and TimeFrame (StartDt and EndDt) is provided then address is considered as temporary alternate address that is only active during indicated period of time. \n\nIf AddrType is Seasonal then the TimeFrame (StartDt and EndDt) should be sent in request and the address is considered to as annual alternate address that means that the address is active within indicated period of time every year."
+                  TimeFrame:
+                    type: object
+                    properties:
+                      StartDt:
+                        pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+                        type: string
+                        description: "Start date and time value.\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** \n\n- Refers to the date when address is active\n\n- Signature supports yyyy-mm-dd date format"
+                      EndDt:
+                        pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+                        type: string
+                        description: "Date after which the address is not used.\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** For this field EFX supports date and time format whereas Signature supports date."
+                    description: "Details of the time frame when the address is active.\n\n**Note:** This aggregate is used for secondary or seasonal address types to indicate if address is permanent, temporary or annual. \n\nIf TimeFrame (StartDt and EndDt) is not provided for secondary address type in the request, this indicates that the address is a permanent alternate address.\n\nIf valid values for the StartDt and EndDt are provided in the TimeFrame for secondary address type in the request, this indicates that the address is an alternate address and will be active during the indicated period of time. \n\nFor Seasonal address type, it is expected that the TimeFrame (StartDt and EndDt) is sent in the request by the client application. \n\nTimeFrameis not applicable to LegalTitle address."
+                  Retention:
+                    type: boolean
+                    description: "Flag to indicate whether the address to be retained after its timeframe.\n\n**Note:** Code to indicate if a secondary address is to be deleted once the date specified in EndDt is reached.\n\nValue should be set to 'false' if the address type is secondary and the TimeFrame (StartDt and EndDt) is provided in the request. \n\nValue should not be set to 'false' for secondary address type, if TimeFrame (StartDt and EndDt) is not provided since then the address is considered to be a permanent alternate address. \n\nValue should not be set to 'false' for seasonal address type. \n\nNot applicable to LegalTitle address.\n\n\n\nIf value is not provided by the client application in this field, by default value is considered as 'true'."
+                  RevertToPartyAddr:
+                    type: boolean
+                    description: "Flag to indicate if alternate address of an account should be reverted to the party name and address.\n\n**Note:** Refers to Revert to Primary customer address (that is revert customer N/A field) and is only valid for the account level alternate address that is when the AddrUse is equal to 'Alternate' for an account. \n\n\n\nClient application should not send this field as 'true' if the address type is Seasonal or, if address type is Secondary and TimeFrame (StartDt and EndDt) is not provided in the request. "
+              description: Postal address details of the account holder.
+            Fee:
+              type: array
+              items:
+                required:
+                  - FeeType
+                properties:
+                  FeeIdent:
+                    maxLength: 36
+                    type: string
+                    description: "Unique identifier of fee.\n\n**Note:** *Conditionally Required field*\n\n\n\nRefers to a fee code that is required if Fee aggregate is sent in the request."
+                  FeeType:
+                    enum:
+                      - FeeCharge
+                    type: string
+                    description: Type of fee.
+                  FeeCalcOption:
+                    enum:
+                      - FlatFee
+                      - PctNoteAmt
+                      - PctPrincipalBal
+                      - PctAvgBal
+                      - PctAvailBal
+                      - PctAdvanceAmt
+                      - PctUnusedAvailBal
+                      - CalcProgram
+                      - None
+                    type: string
+                    description: "Option for calculation of fee.\n\n**Note:** This field is applicable if fee validation code is \"Account\"  and it is intended to override default fee calculation option for the fee code."
+                  FeeBillingOption:
+                    enum:
+                      - Bill
+                      - CompoundToBal
+                    type: string
+                    description: "Option for fee billing.\n\n**Note:** This field is required if fee validation code is account."
+                  CurAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: Amount in decimal format.
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                        description: Details of currency code.
+                    description: "Details of the currency amount.\n\n**Note:** This aggregate is applicable if fee validation code is account and if fee calculation option is Flat Fee or Calculation Program."
+                  BalPercent:
+                    type: number
+                    description: "Percentage balance to calculate the fee.\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired if fee validation code is account and if fee calculation options are:\n\n- PctNoteAmt\n\n- PctPrincipalBal\n\n- PctAvgBal\n\n- PctAvailBal\n\n- PctAdvanceAmt\n\n- PctUnusedAvailBal"
+                  MinCurAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: Amount in decimal format.
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO4217-Alpha format.\n\n\n\nPlease note that presently only USD currency code is supported."
+                        description: Details of currency code.
+                    description: "Details of minimum fee amount.\n\n**Note:** This aggregate is applicable if fee validation code is \"Account\" and fee calculation option is other than \"Flat Fee\" and \"Unused Available Balance\"."
+                  MaxCurAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: Amount in decimal format.
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO4217-Alpha format.\n\n\n\nPlease note that presently only USD currency code is supported."
+                        description: Details of currency code.
+                    description: "Details of maximum fee amount.\n\n**Note:** This aggregate is applicable if fee validation code is \"Account\" and fee calculation option is other than \"Flat Fee\" and \"Unused Available Balance\"."
+                  DailyAccrual:
+                    enum:
+                      - Standard360
+                      - Standard365
+                      - Standard366
+                      - Actual365
+                      - Actual360
+                      - Actual366
+                    type: string
+                    description: "Option to determine the method of daily interest accrual.\n\n\n\n**Note:** This field is applicable if fee validation code is \"Account\"  and is required if fee calculation code is \"Unused Available Balance\"."
+                  NoticeCode:
+                    type: string
+                    description: "Code for fee notice.\n\n**Note:** This field is applicable if fee validation code is \"Account\"."
+                  NextFeeDt:
+                    type: string
+                    description: "Date for next fee.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+                    format: date
+                  TimeFrame:
+                    type: object
+                    properties:
+                      RecurRule:
+                        type: array
+                        items:
+                          properties:
+                            RecurType:
+                              enum:
+                                - Daily
+                                - Monthly
+                                - None
+                              type: string
+                              description: 'Recurrence type indicates the pattern of recurrence. '
+                            RecurInterval:
+                              type: integer
+                              description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\nThe default value is set to 1."
+                              format: int64
+                            DayOfMonth:
+                              enum:
+                                - '1-31'
+                              type: string
+                              description: Numeric value representing the day of the month of occurrence.
+                        description: Details of the recurrence rule.
+                    description: "Details of the time frame when the address is active.\n\n**Note:** This aggregate is applicable if fee validation code is \"Account\"."
+                  FeeEarningData:
+                    type: object
+                    properties:
+                      EarningMethod:
+                        enum:
+                          - Cash
+                          - Accrual
+                          - Amortize
+                        type: string
+                        description: Earning method that determines the method of amortization for fee/costs.
+                      EffDt:
+                        pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+                        type: string
+                        description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required when the fee earning method is \"Accrual\"."
+                    description: "Details for fee earning.\n\n**Note:** This aggregate is applicable if fee validation code is account."
+                  EarlyPayoffInd:
+                    type: boolean
+                    description: Flag to indicate the fees is tied to service code with payoff transaction code.
+                  EarlyPayoffTable:
+                    type: object
+                    properties:
+                      EarlyPayoffTierType:
+                        enum:
+                          - Months
+                          - PmtsPaid
+                        type: string
+                        description: Value that indicates the tier type is based on months or full payment is paid.
+                      EarlyPayoffTierNum:
+                        type: integer
+                        description: Number of tiers in the early payoff table.
+                        format: int64
+                      EarlyPayoffTierData:
+                        type: array
+                        items:
+                          required:
+                            - TierIntervalCount
+                          properties:
+                            TierIdent:
+                              enum:
+                                - 1 through 5
+                              type: string
+                              description: Identification value of the tier.
+                            TierIntervalCount:
+                              type: integer
+                              description: "Count of the tier interval.\n\nIf the value is months:  refers to number of months between the interval.\n\nIf value is PmtPaid:  refers to number of full payments paid.\n\nValue should be integer."
+                              format: int64
+                            CurAmt:
+                              type: object
+                              properties:
+                                Amt:
+                                  type: number
+                                  description: "Amount in decimal format.\n\nExample: 10.00"
+                                CurCode:
+                                  required:
+                                    - CurCodeValue
+                                  type: object
+                                  properties:
+                                    CurCodeType:
+                                      enum:
+                                        - ISO4217-Alpha
+                                      type: string
+                                      description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                                    CurCodeValue:
+                                      type: string
+                                      description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                                  description: Details of currency code.
+                              description: Details of the currency amount.
+                            BalPercent:
+                              type: number
+                              description: "Percentage balance to calculate the fee.\n\n**Note:** Refers to fee percentage."
+                        description: "Details of the early payoff tier.\n\n**Note:** This aggregate can be repeated up to five times."
+                    description: "Details of the early payoff table to indicate whether the tier is based on months or full payment paid.\n\n**Note:** The early payoff fee table enables to specify up to five different tiers based on months elapsed or fully paid loan payments. "
+              description: "Details of recurring fee to identify the type and amount of fee charged.\n\n**Note:** Client application to provide applicable fee information if new loan account is to be charged fees.\n\nOnly Fees that are linked to a Product Type can be assigned to the loan account.\n\nESF ProdSpecInq service response can provide list of Fees linked to a specific Product Type.\n\nWhen adding a loan, Signature enables you to change the fee parameters if the fee uses an Account validation level. If the fee uses the Fee validation level, then Signature does not alow user to change any Fee parameters."
+            CreditRisk:
+              type: array
+              items:
+                required:
+                  - RiskCategory
+                properties:
+                  RiskCategory:
+                    enum:
+                      - RiskCode
+                    type: string
+                    description: 'Type of credit risk category. '
+                  InternalScore:
+                    type: string
+                    description: Internal credit risk rating to assess the level of credit risk for the loan.
+              description: Credit risk details related to the account.
+            UpdateContactCode:
+              enum:
+                - Account
+                - None
+              type: string
+              description: 'Code to indicate the account contact dates '
+            DeferredFee:
+              type: array
+              items:
+                properties:
+                  FeeIdent:
+                    maxLength: 36
+                    type: string
+                    description: "Unique identifier of fee.\n\n**Note:** Refers to Rebate Identifier. The unique identifier of the rebate on Signature core. \n\nThis is a required field if deferred fee aggregate is sent in the request. \n\nIn Signature, this field refers to a value 1 through 9 and may be used later with loan disbursement. "
+                  Desc:
+                    maxLength: 200
+                    type: string
+                    description: "Description of the fee.\n\n**Note:** Refers to rebate description"
+                  EffDt:
+                    pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+                    type: string
+                    description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** \n\n- If the Earning method field has a valid value other than 'NotUsed', then the effective date is defaulted to the origination date sent in the account add request. \n\n- If the Earning method field is not used, then this date should not be sent in the request. "
+                  EarningMethod:
+                    enum:
+                      - None
+                      - StraightLine
+                      - Rule78th
+                      - Actuarial
+                      - NotUsed
+                    type: string
+                    description: "Earning method that determines the method of amortization for fee/costs.\n\n**Note:** \n\n- Refers to Earning Code\n\n- Rebate earning code that specifies the method used to calculate the rebate earnings\n\n- This is a required field if deferred fee aggregate is sent in the request\n\n- If rebates are not being used, the value \"NotUsed\" must be passed in each EarningCode"
+                  ExpDt:
+                    type: string
+                    description: "Date after which client-defined data item expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** \n\n- If the Earning method field has a valid value other than 'NotUsed', then the effective date is defaulted to the origination date sent in the account add request. \n\n- If the Earning method field is not used then this date should not be sent in the request. "
+                    format: date
+              description: "Details of the deferred fees amount.\n\n**Note:** Refers to Rebate Aggregate. This aggregate can repeat up to 9 times. This information may later be used in loan disbursement. "
+            OriginationDt:
+              type: string
+              description: "Date of original loan note.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** If this field is not provided system defaults to current processing date."
+              format: date
+            ApprovalCode:
+              type: string
+              description: "Approval code \n\n**Note:** Refers to user-defined one position code."
+            SecuredLoanInd:
+              type: boolean
+              description: "Flag to indicate the loan is secured.\n\n**Note:** *Required field*"
+            CollateralCode:
+              type: string
+              description: "Code that identifies the collateral.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if the secured loan indicator is set to loan."
+            CollateralBalCode:
+              enum:
+                - PrincipalPlusAvailDisb
+                - CollateralValue
+                - FaceAmt
+                - PrincipalBal
+                - None
+              type: string
+              description: "Code that indicates the balance on which to calculate the collateral required amount for a loan.\n\nThis code is used in conjunction with the loan-to-value percentage.\n\n**Note:** Refers to loan-to-value type code."
+            LTVPct:
+              type: number
+              description: "Loan-To-Value percentage used with the collateral balance code field to calculate the collateral-required amount for a loan. \n\n\n\n**Note:** Signature supported format: XXX.XXXX"
+            LoanNoteType:
+              enum:
+                - Demand
+                - Time
+                - Term
+                - Installment
+              type: string
+              description: "Code that indicates the type of loan for reporting purposes.\n\n**Note:** *Required field*"
+            CapitalizationOption:
+              enum:
+                - None
+                - InterestOnInterest
+                - NegativeAmortization
+              type: string
+              description: "Option for capitalization.\n\n**Note:** *Required field*"
+            RevolvingLoanInd:
+              type: boolean
+              description: Flag to indicate the amount is available for loan disbursement.
+            Insurance:
+              type: array
+              items:
+                properties:
+                  InsuranceIdent:
+                    enum:
+                      - 1 through 3
+                    type: string
+                    description: "Unique identification for insurance record.\n\n**Note:** Signature supports three types of insurance: \n\n- Accident and Health \n\n- Life \n\n- Other"
+                  InsuranceType:
+                    enum:
+                      - Life
+                      - Other
+                      - AccidentAndHealth
+                    type: string
+                    description: "Type of insurance.\n\n**Note:** This is required field if insurance data aggregate is sent in the request."
+                  InsuranceCompany:
+                    type: string
+                    description: "Name of the insurance company.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis is required field if insurance data aggregate is sent in the request."
+                  InsuranceCalcOption:
+                    enum:
+                      - PctPrincipalBal
+                      - PctAvgBal
+                      - PctPmt
+                      - PctPrincipalBalPlusInt
+                      - PctAvgBalPlusInt
+                      - PctTotalPmtPlusFeePlusEscrow
+                      - FixedPremium
+                      - PctRemainingPmts
+                    type: string
+                    description: "Option for insurance calculation.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis is required field if insurance data aggregate is sent in the request."
+                  InsurancePolicyType:
+                    enum:
+                      - Joint
+                      - Single
+                    type: string
+                    description: "Code that indicates the type of insurance policy applicable on the loan.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis is required field if insurance data aggregate is sent in the request."
+                  OvrdRateInd:
+                    type: boolean
+                    description: "Flag that indicates to overrides joint rate or single rate field value based on the code in the Policy type field.\n\n**Note:** This field should be set to true if insurance rate override is intended."
+                  OvrdRate:
+                    type: number
+                    description: "Override rate for the student loan.\n\n**Note:** Refers to billing rate."
+                  FixedPremiumAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: "Amount in decimal format.\n\nExample: 10.00\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if the FixedPremiumAmt aggreagte is sent in the request."
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                        description: Details of currency code.
+                    description: Details of fixed premium amount.
+              description: "Details of insurance on loan.\n\n**Note:** This aggregate is required if insurance data is applicable for the loan.\n\nRequester can use EFX ProdSpecInq request before opening an account to obtain insurance data required to be provided in AcctAdd request. \n\nThis aggregate may repeat up to 3 times. "
+            InterestBilling:
+              type: object
+              properties:
+                RecurModel:
+                  type: object
+                  properties:
+                    RecurRule:
+                      type: array
+                      items:
+                        properties:
+                          RecurType:
+                            enum:
+                              - Daily
+                              - Monthly
+                            type: string
+                            description: "Recurrence type indicates the pattern of recurrence. \n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if recur rule aggregate is sent in the request."
+                          RecurInterval:
+                            type: integer
+                            description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if recur rule aggregate is sent in the request."
+                            format: int64
+                          DayOfMonth:
+                            enum:
+                              - '1-31'
+                            type: string
+                            description: Numeric value representing the day of the month of occurrence.
+                          RecurStartDate:
+                            type: string
+                            description: "Starting date of the recurrence.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+                            format: date
+                          Occurrences:
+                            type: integer
+                            description: "Occurrence of the recur rule.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required for recur rule aggregate."
+                            format: int64
+                      description: Details of the recurrence rule.
+                  description: Details of recurring model that represents a time based recurring pattern.
+              description: Information related to billing of interest.
+            LoanBilling:
+              type: object
+              properties:
+                BillingMethod:
+                  enum:
+                    - BillingNotice
+                    - CouponWithAnalysis
+                    - Coupon
+                    - DirectDebit
+                    - ACHInfo
+                    - ACHXfer
+                    - NoBillingNotice
+                    - PartialDirectDebit
+                    - NoNotice
+                  type: string
+                  description: "Method for billing of loan.\n\n**Note:** When using FTM transfers to collect loan payments, the BillCode can be either \"Bill\" to produce a billing notice or \"NoBillNotice\" to avoid producing a billing notice."
+                FromAcctKeys:
+                  required:
+                    - AcctId
+                  type: object
+                  properties:
+                    AcctId:
+                      maxLength: 36
+                      type: string
+                      description: "Unique identification number of an account record.\n\n**Note:** For ACH transfer this field refers to external account number.\n\nMaximum length: 17 characters"
+                    AcctType:
+                      enum:
+                        - DDA
+                        - SDA
+                      type: string
+                      description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>."
+                    FIIdentType:
+                      enum:
+                        - RoutingNum
+                      type: string
+                      description: "Identification type for the financial institution.\n\n**Note:** Signature supported routing number."
+                    FIIdent:
+                      maxLength: 34
+                      type: string
+                      description: "Unique identifier for a financial institute.\n\n**Note:** Refers to routing and transit number for external account.\n\nThis number is run through a check digit verification in HSP but does not have to be defined on Signature."
+                    ACHReceivingCompany:
+                      maxLength: 30
+                      type: string
+                      description: "Name of the receiver of the transaction.\n\n**Note:** Refers to a name associated with external account that can be used for identification purpose."
+                  description: Unique information to identify the checking or saving account that is debited automatically for payments.
+                ACHNoticeInd:
+                  type: boolean
+                  description: "Flag to indicate if system should generate a transfer notice every time an external transfer takes place. \n\n**Note:** This field indicates whether the system should generate a transfer notice every time an external transfer takes place or not. "
+                BillLastPmtCode:
+                  enum:
+                    - Bill
+                    - NoBillDraftTotalDue
+                    - NoBillExcludePrincipal
+                  type: string
+                  description: "Code that identifies whether to bill last payment or not.\n\n**Note:** This field is applicable to loan account transfers only if the loan has an internal auto-debit, an external ACH auto-debit or bill Code in signature is set for no billing (that is, when 'BillingMethod' in the request is 'DirectDebit', 'ExternalACHInfo', 'NoBillNotice', 'ExternalACHXfer' Or 'DirectDebitPartial')."
+                DaysDraftDelay:
+                  type: integer
+                  description: Number of days after the scheduled payment due date to generate an auto debit transaction.
+                  format: int64
+                BalloonPmtInd:
+                  type: boolean
+                  description: Flag to indicate the payment schedule has a ballon payment at maturity.
+                BillAfterMaturityInd:
+                  type: boolean
+                  description: Flag to indicate the system continues to generate the bill beyond the loan maturity date.
+              description: Information related to billing of loan.
+            IncInsurancePmtCalcInd:
+              type: boolean
+              description: "Flag to indicate to include insurance payment calculations.\n\n**Note:** *Required field*"
+            PmtPostingRestrictions:
+              type: object
+              properties:
+                PostingStatus:
+                  enum:
+                    - NoHold
+                    - AcceptNoPmt
+                    - AllowNoAdvance
+                    - NoPmtNoAdvance
+                  type: string
+                  description: Status code that indicates the account is booked and restricted from posting untill reviewed by bank officer.
+                RestrictionReasonCode:
+                  type: string
+                  description: "Code to specify the reason for payment posting restrictions.\n\n**Note:** Refers to one position user-defined code in Signature."
+              description: Details of the restrictions related to payment posting.
+            PmtSched:
+              type: array
+              items:
+                properties:
+                  PmtSchedIdent:
+                    enum:
+                      - '1-9'
+                    type: string
+                    description: "Unique identifier of the payment schedule used to identify the payment schedule number in case of multiple schedules for a loan.\n\n**Note:** Refers to the payment schedule number."
+                  RecurModel:
+                    type: object
+                    properties:
+                      RecurRule:
+                        type: array
+                        items:
+                          properties:
+                            RecurType:
+                              enum:
+                                - Daily
+                                - Monthly
+                                - Cycle
+                              type: string
+                              description: "Recurrence type indicates the pattern of recurrence. \n\n**Note:** Value \"Cycle\" is only applicable to check credit loans."
+                            RecurInterval:
+                              type: integer
+                              description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
+                              format: int64
+                            DayOfMonth:
+                              enum:
+                                - '1-31'
+                              type: string
+                              description: Numeric value representing the day of the month of occurrence.
+                            RecurStartDate:
+                              type: string
+                              description: "Starting date of the recurrence.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Do not provide this date if payment schedule recurrence type is \"Cycle\"."
+                              format: date
+                            Occurrences:
+                              type: integer
+                              description: Occurrence of the recur rule.
+                              format: int64
+                        description: Details of the recurrence rule.
+                    description: Details of recurring model that represents a time based recurring pattern.
+                  PmtAmtOption:
+                    enum:
+                      - PrincipalOnly
+                      - PrincipalAndInterest
+                      - PrincipalPlusInterest
+                      - InterestOnly
+                      - PctPrincipalOnly
+                      - PctPrincipalPlusInterest
+                    type: string
+                    description: Code that indicates the monetary distribution of payments.
+                  CurAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: "Amount in decimal format.\n\nExample: 10.00"
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                        description: Details of currency code.
+                    description: Details of the currency amount.
+                  BalPercent:
+                    type: number
+                    description: Percentage balance to calculate the fee.
+                  EscrowAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: "Amount in decimal format.\n\nExample: 10.00"
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                        description: Details of currency code.
+                    description: "Details of the interest bearing escrow amount.\n\n**Note:** Refers to interest bearing escrow."
+                  OtherEscrowAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: "Amount in decimal format.\n\nExample: 10.00"
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                        description: Details of currency code.
+                    description: "Details of other escrow amount.\n\n**Note:** Refers to non-interest bearing escrow."
+              description: "Details of payment schedule.\n\n**Note:** Up to 99 payment schedules can be added during the add new loan account."
+            ScheduleNoteInd:
+              type: boolean
+              description: "Flag to indicate the loan accrues interest based on a predetermined amortization\n\nschedule, regardless of the payment due is made."
+            PmtTermReview:
+              type: array
+              items:
+                properties:
+                  PmtTermReviewOption:
+                    enum:
+                      - None
+                      - VariablePmt
+                      - BalPmtMatrix
+                      - BalTermMatrix
+                      - VariablePmtTerm
+                    type: string
+                    description: "Option for payment term review.\n\n**Note:** In Signature, the allowed values for the payment term review option field depend on the product type parameters set up in Signature. "
+                  ReamortizationCalcBal:
+                    enum:
+                      - Principal
+                      - PrincipalCurtailments
+                      - PayoffPrincipal
+                      - PayoffPrincipalCurtailments
+                      - PrincipalOnlyIfRateChg
+                      - PrincipalCurtailmentsOnlyIfRateChg
+                      - PayoffPrincipalOnlyIfRateChg
+                      - PayoffPrincipalCurtailmentsOnlyIfRateChg
+                    type: string
+                    description: Balance used to calculate the new payment amount.
+                  ExpectedPayoffDt:
+                    type: string
+                    description: "Date to be used as maturity date in the formula of reamortization calculation for loan.\n\n**Note:** \n\n- This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\".\n\n- This field is required if payment term review option is \"Variable Payment\" or \"Variable Payment Term\". "
+                    format: date
+                  MaxTermChange:
+                    type: integer
+                    description: "Maximum term for the loan.\n\n**Note:** This field is not applicable if payment term review option is \"Variable Payment\" or \"Variable Payment Term\"."
+                    format: int64
+                  PmtTermRecurType:
+                    enum:
+                      - Daily
+                      - Monthly
+                    type: string
+                    description: "Recurrence type of payment term.\n\n**Note:** \n\n- This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\".\n\n- This field is required if payment term review option is \"Variable Payment\" or \"Variable Payment Term\". "
+                  RecurInterval:
+                    type: integer
+                    description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\nThe default value is set to 1.\n\n**Note:** \n\n- This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\".\n\n- This field is required if payment term review option is \"Variable Payment\" or \"Variable Payment Term\". "
+                    format: int64
+                  DayOfMonth:
+                    type: string
+                    description: "Numeric value representing the day of the month of occurrence.\n\n**Note:** \n\n- This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\".\n\n- This field is required if payment term review option is \"Variable Payment\" or \"Variable Payment Term\". "
+                  LeadDays:
+                    type: integer
+                    description: "Number of days prior to the event to do a review.\n\n**Note:** This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\". "
+                    format: int64
+                  NextPmtTermReviewDt:
+                    type: string
+                    description: "Date of next payment term review.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** \n\n- This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\" \n\n- This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\""
+                    format: date
+                  TermReviewExpDt:
+                    type: string
+                    description: "Date after which the loan term is  no longer reviewed for adjustment.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** \n\n- This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\".\n\n- This field is required if payment term review option is \"Variable Payment\" or \"Variable Payment Term\". "
+                    format: date
+                  PmtReviewExpDt:
+                    type: string
+                    description: "Date on which the principal and interest payment of this loan will become fixed.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** \n\n- This field is not applicable if payment term review option is \"Balance Payment Matrix\" or \"Balance Term Matrix\".\n\n- This field is required if payment term review option is \"Variable Payment\" or \"Variable Payment Term\". "
+                    format: date
+              description: 'Information about how the payment amount and term of the loan is changed and reviewed. '
+            EscrowCtrlData:
+              type: object
+              properties:
+                OverdraftCode:
+                  type: string
+                  description: Code to specify how overdraft is handled to satisfy a disbursement.
+                OverdraftLimitAmt:
+                  type: object
+                  properties:
+                    Amt:
+                      type: number
+                      description: "Amount in decimal format.\n\nExample: 10.00"
+                    CurCode:
+                      required:
+                        - CurCodeValue
+                      type: object
+                      properties:
+                        CurCodeType:
+                          enum:
+                            - ISO4217-Alpha
+                          type: string
+                          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                        CurCodeValue:
+                          type: string
+                          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                      description: Details of currency code.
+                  description: "Details of the amount specified in overdraft program.\n\n**Note:** Overdraft limit amount is required if overdraft code is \"Use Account Level Instruction\"."
+                EscrowAnalysisType:
+                  enum:
+                    - SingleItem
+                    - Aggregate
+                  type: string
+                  description: "Code to indicate the method to perform escrow analysis.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if the escrow control data aggregate is sent in the request."
+                EscrowAnalysisBalOption:
+                  enum:
+                    - IntBearingEscrow
+                    - NonInterestBearingEscrow
+                  type: string
+                  description: "Option for balance analysis.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if the escrow control data aggregate is sent in the request."
+                RecurRule:
+                  type: object
+                  properties:
+                    RecurType:
+                      enum:
+                        - Daily
+                        - Monthly
+                      type: string
+                      description: "Recurrence type indicates the pattern of recurrence. \n\n**Note:** *Required field*\n\n\n\nRefers to the code that is used with the analysis frequency field to specify how often the account is analyzed."
+                    RecurInterval:
+                      type: integer
+                      description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if recur rule aggregate is sent in the request."
+                      format: int64
+                    DayOfMonth:
+                      enum:
+                        - '1-31'
+                      type: string
+                      description: "Numeric value representing the day of the month of occurrence.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if the escrow control data aggregate is sent in the request."
+                  description: Details of the recurrence rule for analysis balance.
+                NextAnalysisDt:
+                  type: string
+                  description: "Date of next analysis.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** This field is required to be provided if escrow is applicable to the loan."
+                  format: date
+                EscrowDeficiencyOption:
+                  enum:
+                    - SpreadOverDeficiencyPeriod
+                    - SpreadInOnePeriod
+                    - None
+                  type: string
+                  description: "Option for escrow deficiency.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if the escrow control data aggregate is sent in the request."
+                DeficiencySpreadPeriods:
+                  type: integer
+                  description: Period for which deficiency spreads.
+                  format: int64
+                EscrowMinDeficiencyAmt:
+                  type: object
+                  properties:
+                    Amt:
+                      type: number
+                      description: "Amount in decimal format.\n\nExample: 10.00"
+                    CurCode:
+                      required:
+                        - CurCodeValue
+                      type: object
+                      properties:
+                        CurCodeType:
+                          enum:
+                            - ISO4217-Alpha
+                          type: string
+                          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                        CurCodeValue:
+                          type: string
+                          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                      description: Details of currency code.
+                  description: Details of the minimum amount of escrow deficiency.
+                EscrowShortageOption:
+                  enum:
+                    - SpreadOverAnalysis
+                    - SpreadOverPeriod
+                    - None
+                  type: string
+                  description: "Option for escrow shortage.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if the escrow control data aggregate is sent in the request."
+                EscrowMinShortageAmt:
+                  type: object
+                  properties:
+                    Amt:
+                      type: number
+                      description: "Amount in decimal format.\n\nExample: 10.00"
+                    CurCode:
+                      required:
+                        - CurCodeValue
+                      type: object
+                      properties:
+                        CurCodeType:
+                          enum:
+                            - ISO4217-Alpha
+                          type: string
+                          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                        CurCodeValue:
+                          type: string
+                          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                      description: Details of currency code.
+                  description: Minimum amount details of escrow shortage.
+                EscrowSurplusOption:
+                  enum:
+                    - RefundByCheck
+                    - Spread
+                    - None
+                  type: string
+                  description: "Option for escrow surplus.\n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required if the escrow control data aggregate is sent in the request."
+                EscrowMinSurplusAmt:
+                  type: object
+                  properties:
+                    Amt:
+                      type: number
+                      description: "Amount in decimal format.\n\nExample: 10.00"
+                    CurCode:
+                      required:
+                        - CurCodeValue
+                      type: object
+                      properties:
+                        CurCodeType:
+                          enum:
+                            - ISO4217-Alpha
+                          type: string
+                          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                        CurCodeValue:
+                          type: string
+                          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                      description: Details of currency code.
+                  description: Minimum amount details of escrow surplus.
+                RegulationXInd:
+                  type: boolean
+                  description: "Flag to indicate the escrow is subject to Regulation X of the Real Estate Settlement Procedures Act (RESPA).\n\n**Note:** *Conditionally Required field*\n\n\n\n- This field is a required field if escrow control data aggregate is sent in request.\n\n- Refers to RESPA loan flag"
+                EscrowPmtSched:
+                  type: object
+                  properties:
+                    EscrowAmt:
+                      type: object
+                      properties:
+                        Amt:
+                          type: number
+                          description: "Amount in decimal format.\n\nExample: 10.00"
+                        CurCode:
+                          required:
+                            - CurCodeValue
+                          type: object
+                          properties:
+                            CurCodeType:
+                              enum:
+                                - ISO4217-Alpha
+                              type: string
+                              description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                            CurCodeValue:
+                              type: string
+                              description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                          description: Details of currency code.
+                      description: "Details of the interest bearing escrow amount.\n\n**Note:** Refers to interest bearing escrow."
+                    OtherEscrowAmt:
+                      type: object
+                      properties:
+                        Amt:
+                          type: number
+                          description: "Amount in decimal format.\n\nExample: 10.00"
+                        CurCode:
+                          required:
+                            - CurCodeValue
+                          type: object
+                          properties:
+                            CurCodeType:
+                              enum:
+                                - ISO4217-Alpha
+                              type: string
+                              description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                            CurCodeValue:
+                              type: string
+                              description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                          description: Details of currency code.
+                      description: "Details of other escrow amount.\n\n**Note:** Refers to non-interest bearing escrow."
+                  description: Details of the escrow payment schedule.
+                RoundingOption:
+                  enum:
+                    - RoundUp
+                    - None
+                  type: string
+                  description: "Method of rounding when interest rate is adjusted. \n\n**Note:** Refers to escrow payment round option flag that indicates whether to increase the escrow payment (after analysis) by the amount required to round the loan payment to the nearest whole dollar amount. "
+                NewPmtPeriods:
+                  type: integer
+                  description: 'Number of payment periods (00–99) after the analysis date, when the new escrow payment amount will take effect. '
+                  format: int64
+              description: "Details of escrow control data that includes escrow analysis, overdraft escrow balance instructions and payment information for the interest bearing escrow and non-interest-interest bearing escrow balances.\n\n**Note:** \n\n- This aggregate is needed for the loan accounts that are going to collect escrow as part of the loan processing\n\n- Escrow control data is defaulted from the product defaults, when the loan request includes escrow or/and other escrow amounts in the payment schedule\n\n- The requester of a new loan can either send all escrow control data from prior EFX ProductSpecInq response or let escrow control data to be automatically defaulted. "
+            IntBearingEscrow:
+              type: object
+              properties:
+                Rate:
+                  type: number
+                  description: Current interest rate for the account.
+                AccrualMethod:
+                  enum:
+                    - Simple
+                    - Daily
+                  type: string
+                  description: Method of interest accrual.
+                DailyAccrual:
+                  enum:
+                    - Standard360
+                    - Standard365
+                    - Standard366
+                    - Actual365
+                    - Actual360
+                    - Actual366
+                  type: string
+                  description: Value that indicates how interest is accrued on daily basis.
+                IntDisposition:
+                  enum:
+                    - Check
+                    - AddToBal
+                  type: string
+                  description: 'Option to indicate the interest disposition. '
+                IntPayoffOption:
+                  enum:
+                    - Waive
+                    - ThruToday
+                    - ThruNextPmt
+                  type: string
+                  description: Code that specifies how to calculate escrow interest when the loan is paid off.
+                AccrualFrequency:
+                  type: object
+                  properties:
+                    RecurType:
+                      enum:
+                        - Daily
+                        - Monthly
+                      type: string
+                      description: 'Recurrence type indicates the pattern of recurrence. '
+                    RecurInterval:
+                      type: integer
+                      description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
+                      format: int64
+                    DayOfMonth:
+                      enum:
+                        - '1-31'
+                      type: string
+                      description: Numeric value representing the day of the month of occurrence.
+                  description: Details of accrual frequency.
+                NextIntPmtDt:
+                  type: string
+                  description: "Date of next interest payment for the account.\n\n\n\nFormat: mm/dd/yyyy \n\nExample: 11/20/2021\n\n**Note:** Refers to next escrow interest payment date that is required for the loans with the interest bearing escrow."
+                  format: date
+              description: "Details to escrow interest calculation information and payment parameters.\n\n**Note:** Product default values for this aggregate can be obtained from the ESF ProdSpecInq service response. "
+            Dealer:
+              type: array
+              items:
+                properties:
+                  DealerIdent:
+                    maxLength: 36
+                    type: string
+                    description: Unique identification of a dealer.
+                  IndirectLendingInd:
+                    type: boolean
+                    description: "Flag to indicate indirect lending.\n\n**Note:** Refers to dealer reserve flag."
+                  BankEarningRate:
+                    type: number
+                    description: Portion of the loan interest rate due to the bank. The bank earning rate must be less than or equal to the loan rate(loan contract).
+                  DealerReserveAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: "Amount in decimal format.\n\nExample: 10.00"
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                        description: Details of currency code.
+                    description: "Details of the dealer reserve amount.\n\nThis amount represents different values depending on the dealer reserve method for the loan: \n\n- As Collected/As Earned: Amount of reserve earned that is due to the dealer \n\n- Prepaid: Amount of the original prepaid reserve that has not yet been earned for the loan"
+                  ScheduledIntAmt:
+                    type: object
+                    properties:
+                      Amt:
+                        type: number
+                        description: "Amount in decimal format.\n\nExample: 10.00"
+                      CurCode:
+                        required:
+                          - CurCodeValue
+                        type: object
+                        properties:
+                          CurCodeType:
+                            enum:
+                              - ISO4217-Alpha
+                            type: string
+                            description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                          CurCodeValue:
+                            type: string
+                            description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                        description: Details of currency code.
+                    description: Details of the total amount of calculated interest at the contract rate.
+              description: Details of the dealer associated with loan.
+            LOCAdvance:
+              type: object
+              properties:
+                MinAdvanceOption:
+                  enum:
+                    - MinAmtAndChargeFee
+                    - BelowMinAmtChargeFee
+                    - MinAmtChargeNoFee
+                  type: string
+                  description: "Code that indicates the method used in making advances on lines of credit. For example: advances are subject to minimum amount and a fee charge; advances are subject to a minimum amount and there is no fee charge and the advance can be below the minimum in such case charge a fee.\n\n**Note:** This field is applicable to the loans which are tied to a fee that is tied to a service code with Per Advance (AV2) transaction code. "
+                FreeAdvanceNum:
+                  type: integer
+                  description: "Number of advances to make before charging a fee. \n\n**Note:** This field is used when value of Minimum Advance Option field is \"Minimum Amount and Charge Fee\". "
+                  format: int64
+              description: Details of the Line of Credit (LOC) advance.
+            RelatedBalanceInd:
+              type: boolean
+              description: "Flag to indicate the account belongs to related balance account processing.\n\n**Note:** *Required field*"
+            FDICCode:
+              maxLength: 3
+              type: string
+              description: "Code used in Federal Deposit Insurance Corporation (FDIC) reporting. \n\n**Note:** *Required field*"
+            FRBCode:
+              maxLength: 3
+              type: string
+              description: "Code used for Federal Reserve Board (FRB) reporting.\n\n**Note:** *Required field*"
+            IncYearEndReportCode:
+              enum:
+                - NoReport
+                - '1098'
+              type: string
+              description: "Code to report loan interest that includes in year end.\n\n**Note:** *Required field*"
+            LastInstallmentDt:
+              type: string
+              description: "Date that is one payment frequency less than loan’s first payment due date.\n\nThis information is necessary if the loan is to be sold to a secondary market.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n"
+              format: date
+            RecourseCode:
+              type: string
+              description: Recourse code that indicates the endorser/guarantor legal obligations for the loan
+            HomeMortgageDisclosure:
+              type: object
+              properties:
+                MortgageType:
+                  enum:
+                    - ARM
+                    - FMHA
+                    - HomeImprovement
+                    - MultiFamily
+                    - SecondMortgage
+                    - Construction
+                    - FHAInsured
+                    - VAGuaranteed
+                    - Conventional
+                    - HomeEquity
+                    - None
+                  type: string
+                  description: 'Code that indicates whether the loan originated, applied for, or purchased was conventional, government-guaranteed, or government-insured.'
+                PropertyType:
+                  enum:
+                    - Family1_4
+                    - MultiFamily
+                    - None
+                  type: string
+                  description: "Type of property that indicates whether the loan or application was for manufactured housing, a multifamily dwelling, or a one-to-four-family dwelling other than manufactured housing.\n\n**Note:** Refers to a dwelling code."
+                OccupantCode:
+                  enum:
+                    - Owner
+                    - NonOwner
+                    - None
+                  type: string
+                  description: Code for owner's principal dwelling out of one-to-four family dwellings that identifies the property to which the loan or application is related.
+                MortgagePointsPmtCode:
+                  enum:
+                    - PaidByCustomer
+                    - WithheldFromProceeds
+                    - None
+                  type: string
+                  description: "Code that indicates the method for loan point payment.\n\n**Note:** *Conditionally Required field*\n\n\n\n- Refers to a loan points payment flag \n\n- Required if mortgage points amount is provided"
+                MortgagePointsYTDAmt:
+                  type: object
+                  properties:
+                    Amt:
+                      type: number
+                      description: "Amount in decimal format.\n\nExample: 10.00"
+                    CurCode:
+                      required:
+                        - CurCodeValue
+                      type: object
+                      properties:
+                        CurCodeType:
+                          enum:
+                            - ISO4217-Alpha
+                          type: string
+                          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                        CurCodeValue:
+                          type: string
+                          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                      description: Details of currency code.
+                  description: "Details of the dollar amount of mortgage points paid that is\n\nreportable for the year.\n\n**Note:** This aggregate is required if the mortgage points payment code is provided."
+                PostAddr:
+                  type: object
+                  properties:
+                    CensusTract:
+                      maxLength: 20
+                      type: string
+                      description: Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+                    MSACode:
+                      type: integer
+                      description: Code that identifies a metropolitan statistical area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+                      format: int64
+                  description: Postal address details of the account holder.
+                MortgageReportingData:
+                  type: array
+                  items:
+                    properties:
+                      ReportingType:
+                        enum:
+                          - HMDA_UniversalLoanIden
+                        type: string
+                        description: Type of reporting.
+                      ReportingCode:
+                        type: string
+                        description: "Code that indicates the reporting status of the loan to FHA or FHLB\n\n**Note:** For value:\n\nHMDA Universal Loan Identifier (ULI) that identifies the HMDA Universal Loan ID. \n\nThis value is assigned by HMDA and it will be part of the loan record for the life of the loan. \n\nThe third-party Loan Origination System (LOS) will be using this tag to provide the Universal Loan Identifier. \n\n\n\nFor Loan Origination: \n\nIf a Bank/Institution has the Dates/Codes/Amounts flag to ‘Y’ during New Account Open, this new field will be shown with Dates/Code/Amounts.\n\nIf the Dates/Codes/Amounts flag is set to ‘N’, the Bank/Institution will manually enter this value after the loan is opened."
+                  description: Details of the mortgage reporting.
+              description: Details of the Home Mortgage Disclosure Act data.
+            SBAData:
+              type: object
+              properties:
+                SBAStatus:
+                  enum:
+                    - Current
+                    - Deferred
+                    - InLiquidation
+                    - PaidInFull
+                    - Transferred
+                    - PurchasedBySBA
+                    - FullyDisbursed
+                  type: string
+                  description: "Status of the SBA account.\n\n**Note:** *Required field*\n\n\n\nThe field indicates whether a loan is deferred, in liquidation, paid, transferred, purchased or fully undisbursed. "
+                SoldStatus:
+                  type: string
+                  description: "Status code that identifies how the total remittance to the FTA is calculated.\n\n**Note:** *Required field*\n\n\n\nValues are client-defined and setup in core based on understanding between FI and signature integration team."
+                GPNumber:
+                  type: integer
+                  description: "SBA assigned group number for reporting.\n\n**Note:** *Required field*\n\n\n\nThis group number is specific to the financial institute and only the value provided by SBA for the bank/financial institute is required to be sent in the request."
+                  format: int64
+                FeePct:
+                  type: number
+                  description: "Percentage of the servicing fee.\n\n**Note:** This field indicates the basis point fee percentage of the guaranteed portion of the outstanding loan balance that is due and is paid to the SBA. If not provided in the request, ESF assumes the Fee Percent to be zero."
+                GuaranteePct:
+                  type: number
+                  description: "Percentage of the guarantee issued by the SBA.\n\n**Note:** *Required field*\n\n\n\nRefers to the percentage of the loan balance that is secured by the guarantor."
+              description: "Details of the SBA data.\n\n**Note:** This aggregate is applicable only for SBA accounts and for consumers that have Signature- MOD for SBA loans.\n\nThis cannot be used unless the calling application has MOD because the base implementation for signature does not support the feature to store SBA information. Also, the SBAData fields (SBAStatus, SoldStatus, GPNumber, GuaranteePct and FeePct that is, Basis Fee Percentage) for the loan account, can be stored in signature via ESF AcctAdd, but the SBA information (SBAData) is not returned by ESF AcctInq at present. It can only be accessed directly in signature."
+            ExpectedCreditLossData:
+              type: object
+              properties:
+                CurDebtCoverageRatio:
+                  type: number
+                  description: "Current Debt Service Coverage Ratio is the current (up to date) ratio of cash available to debt servicing for interest and principal payments for the loan. It is also know as \"Debit Coverage Ratio\" (DCR).\n\nAlso, Debt Service Coverage Ratio (DSCR) is the ratio of cash accessible for servicing a Loan or an entity’s (Person or Business) debt. It is used to measure an entity’s capability to pay off a loan."
+                OrigDebtCoverageRatio:
+                  type: number
+                  description: 'The Original debt service coverage ratio (DSCR), also known as "debt coverage ratio" (DCR), is ratio of cash available to debt servicing for interest and principal payments for the Loan at origination. '
+                CurCreditScore:
+                  maxLength: 4
+                  type: string
+                  description: "Current credit score value represents the actual or the latest score registered for the loan.\n\n**Note:** In Signature, the value for this field can be a FICO, VantageScore 3.0 or any other credit score model used by the Originator System or Lending front-end solution."
+                OrigCreditScore:
+                  maxLength: 4
+                  type: string
+                  description: "Original credit score represents the score registered during credit scoring in loan origination process.\n\n**Note:** In Signature, the value for this field can be a FICO, VantageScore 3.0 or any other credit score model used by the originator system or lending front-end solution."
+                OrigFairMarketValue:
+                  type: object
+                  properties:
+                    Amt:
+                      type: number
+                      description: "Amount in decimal format.\n\nExample: 10.00\n\n**Note:** Refers to the original fair market value amount for the loan."
+                    CurCode:
+                      required:
+                        - CurCodeValue
+                      type: object
+                      properties:
+                        CurCodeType:
+                          enum:
+                            - ISO4217-Alpha
+                          type: string
+                          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+                        CurCodeValue:
+                          type: string
+                          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+                      description: Details of currency code.
+                  description: "Fair market value (FMV) is an estimate of the market value of a property. \n\nFair market value (FMV) is the most competitive price a buyer is willing to pay, and the lowest price a seller would be willing to accept for a particular property."
+              description: Information related to Current Expected Credit Loss Data (CECL)
+          description: "Details of the loan account.\n\n**Note:** Product default values for the following fields can be obtained from the ESF ProdSpecInq service response: \n\n- AcctIdentValue\n\n- ProductIdent\n\n- SecuredLoanInd\n\n- CollateralCode\n\n- CollateralBalCode\n\n- CapitalizationOption\n\n- IncInsurancePmtCalcInd\n\n- RelatedBalanceInd\n\n- FDICCode\n\n- FRBCode\n\n- IncYearEndReportCode"
+    addAccountResponse:
+      required:
+        - AcctStatusRec
+      properties:
+        Status:
+          $ref: https://swaggerhub.onefiserv.net/v1/domains/Bank_Sol_Org/ESF_Reusable-content/11.0.0#/components/schemas/StatusType
+        AcctStatusRec:
+          required:
+            - AcctKeys
+            - AcctStatus
+          type: object
+          properties:
+            AcctKeys:
+              required:
+                - AcctId
+              type: object
+              properties:
+                AcctId:
+                  maxLength: 36
+                  type: string
+                  description: Unique identification number of an account record.
+                AcctType:
+                  enum:
+                    - LOAN
+                  type: string
+                  description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>."
+              description: Unique information to identify the account record.
+            AcctStatus:
+              required:
+                - AcctStatusCode
+              type: object
+              properties:
+                AcctStatusCode:
+                  enum:
+                    - Valid
+                  type: string
+                  description: Status code of an account.
+                EffDt:
+                  pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+                  type: string
+                  description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+              description: Status details of the account.
+          description: Details of the updated status of the account.
