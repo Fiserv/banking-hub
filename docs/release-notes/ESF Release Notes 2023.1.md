@@ -6,7 +6,6 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch, DNA
 -->
 
-
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 **Get Indirect Liability  `POST /indirectLiability/secured`**
