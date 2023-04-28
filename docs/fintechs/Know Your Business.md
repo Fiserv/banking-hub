@@ -6,11 +6,11 @@ Business Identity Authentication (KYB) is the process of verifying a business’
 
 **How is it used:** Employ these APIs to create or integrate Know You Business applications with public record databases to authenticate a businesses information such as company name, address, phone, articles of incorporation, and beneficial owners.   
 
-**Potential uses:** KYB Apps that provide business customer verifucation services. 
+**Potential uses:** KYB Apps that provide business customer verification services. 
 
 Begin the integration with following services of Identity Verification domain in API Explorer:
 
-* Business Watchist 
+* Business Watchlist 
 * Business ID Authentication
 * Business Verification Address
 * Business Verification Email
