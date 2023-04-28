@@ -10,7 +10,7 @@ Business Identity Authentication (KYB) is the process of verifying a business’
 
 Begin the integration with following services of Identity Verification domain in API Explorer:
 
-* Business Wtchist 
+* Business Watchist 
 * Business ID Authentication
 * Business Verification Address
 * Business Verification Email
