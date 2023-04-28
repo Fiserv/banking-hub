@@ -1,6 +1,6 @@
 # Identity Verification 
 
-Identity Verification includes a powerful identity verification tool that helps you minimize identity fraud. Identity verficiation compares an applicant's personal identification information against public record databases to flag inconsistencies. These Know Your customer (KYC) and Know Your Business (KYB) APIs make it possible to authenticate new customers before they open an account. Identity verification also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules.
+Identity Verification includes a powerful identity verification tool that helps you minimize identity fraud. Identity verificiation compares an applicant's personal identification information against public record databases to flag inconsistencies. These Know Your customer (KYC) and Know Your Business (KYB) APIs make it possible to authenticate new customers before they open an account. Identity verification also provides a fast and efficient method for complying with Section 326 of the USA Patriot Act and FACTA Red Flag Rules.
 
 **Who is it for:** Developers creating or integrating apps that need a Know Your Customer (KYC), and Know your Business (KYB) authentication services.  
 
