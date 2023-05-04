@@ -1,17 +1,17 @@
-# Know Your Customer 
+# Consumer Identity Authentication 
 
-KYC is a standard due diligence process used by financial institutions and other financial services companies to assess and monitor customer risk and verify a customer's identity and ensures that a customer is who they say they are.   
-
-KYC is a critical process for determining customer risk and whether the customer can meet the institution’s requirements to use their services. It’s also a legal requirement to comply with Anti-Money Laundering (AML) regulations.  
+Consumer Identity Authentication (KYC) is the process of verifying a customer's identity and ensures that a customer is who they say they are. Consumer identity authentication is a standard due diligence process used by financial institutions and other financial services companies to assess and monitor customer risk. Customer identity authentication also helps determine if the customer can meet the business requirements to use their services and stay compliant with Anti-Money Laundering (AML) regulations.  
 
 **Who is it for:** Developers creating or integrating apps that need a Know Your Customer (KYC) service.  
 
-**How is it used:** Employ these APIs to create or integrate Know You Customer applications with public record databases to authenticate a customers personal information such as identity, address and phone.  
+**How is it used:** Employ these APIs to create or integrate Know You Customer applications with public record databases to authenticate a customer's personal information such as identity, address and phone.  
 
-**Potential uses:** KYC Apps that provide customer authencation services. 
+**Potential uses:** KYC Apps that provide customer authentication services. 
 
 Begin the integration with following services of the Know Your Customer domain in API Explorer:
-* Consumer Name Verification
-* SSN Verification
-* Address Verification
-* Watchlist Scan
+
+* Consumer Watchlist
+* Consumer ID Authentication
+* Consumer Verification Address
+* Consumer Verification Email
+* Consumer Verification Phone
