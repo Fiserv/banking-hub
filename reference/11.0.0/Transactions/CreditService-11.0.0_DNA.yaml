@@ -10,6 +10,41 @@ servers:
 - url: /
 paths:
   /creditservice/payments/credits:
+    put:
+      tags:
+      - Reverse Credit
+      summary: Reverse Credit.
+      description: "Reverses the previously processed credit transaction in an account. This API reverses the effect of CreditAdd transaction.<br>\n        <br>\n        For more information about the Transactions domain, <a href=\"../docs/?path=docs/fintechs/transactions.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\" title=\"Click to open\">Cash Management</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\" title=\"Click to open\">Treasury Services</a></li>\n          </ul>"
+      operationId: CreditRevOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditRevOperRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevOperResponse'
+      x-group-name: Credit Service
+      x-proxy-name: Reverse Credit
+      x-child-product-name: Transactions
+      x-core: DNA
     post:
       tags:
       - Add Credit
@@ -63,6 +98,23 @@ components:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec'
         Receipt:
           $ref: '#/components/schemas/CreditAddOperResponse_Receipt'
+    CreditRevOperRequest:
+      required:
+      - CreditInfo
+      - CreditKeys
+      properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys'
+        CreditInfo:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo'
+    CreditRevOperResponse:
+      required:
+      - CreditStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        CreditStatusRec:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -450,3 +502,87 @@ components:
           type: string
           description: 'Transaction Identification. '
       description: Receipt. Transaction receipt.
+    CreditRevOperRequest_CreditKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: "Account Identifier.  Uniquely identifies an account held at a financial institution. \n\n**Note:** Refers to the account number on which transaction is needed to be performed."
+      description: Account Keys.
+    CreditRevOperRequest_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys_AcctKeys'
+      description: Credit Keys. Used to identify the Credit record.
+    CreditRevOperRequest_CreditInfo_NetworkRefData:
+      type: object
+      properties:
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: |+
+            Client Transaction Identification used to reference a previous transaction.
+
+            **Note:** Unique identifier of the original transaction.
+
+
+
+            Refers to the original transaction number to be reversed.
+
+            DNA can accommodate 50 characters
+
+
+
+      description: |-
+        Network Transaction Reference Data. Used to identify a previous transaction to be referenced for refunds and reversals.
+
+        **Note:** The original transaction would have been posted during the same business day. Used in an auto-correct of the transaction.
+    CreditRevOperRequest_CreditInfo:
+      required:
+      - CreditType
+      type: object
+      properties:
+        CreditType:
+          type: string
+          description: |-
+            Credit Type. The type of credit transaction.
+
+            **Note:** Refers to the RtxnTypCd to be performed.
+          enum:
+          - Deposit
+        NetworkRefData:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_NetworkRefData'
+      description: 'Credit Information. Details of the credit transaction. '
+    CreditRevOperResponse_CreditStatusRec_CreditStatus:
+      required:
+      - CreditStatusCode
+      type: object
+      properties:
+        CreditStatusCode:
+          type: string
+          description: |-
+            Credit Status Code.
+
+            **Note:** Refers to "Reversed".
+          enum:
+          - Reversed
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
+
+            **Note:** Refers to Effective Date of the transaction.
+      description: Credit Status. Contains information of the current state of the object.
+    CreditRevOperResponse_CreditStatusRec:
+      required:
+      - CreditStatus
+      type: object
+      properties:
+        CreditStatus:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditStatus'
+      description: Credit Status Record. Used in responses to return results from a add, reversal of the Object.
