@@ -1,21 +1,21 @@
 ---
 openapi: 3.0.1
 info:
-  title: Auto Enrollment Service
+  title: Credit Service
   description: |-
-    Auto Enrollement Service supports operations to manage enrollment or subscription of accounts to be part of Bank Administration Institute (BAI) file format used by financial institutions to transfer financial data between the core banking system and client applications.
-    This service is only supported by Signature clients that have installed the BAI File Enrollment Solution (this is not a base feature in Signature). Every client application will have a BAICode that identifies them.  In current functionality the only enrollment allowed is Arch_Extract which is  used by the Architect Online Banking Client Application.
-  version: 11.0.0_SIG
+    The Credit service is used to add or reverse credit entry for a specified loan or deposit product account. <br>
+        This service helps to reverse from or post credit entry to the beneficiary or receiver’s account for specific types of payments including wire transfers plus fees.
+  version: 11.0.0_CT-Rev_HSA_Teller
 servers:
 - url: /
 paths:
-  /autoenrollmentservice/acctmgmt/autoenrollment:
-    post:
+  /creditservice/payments/credits:
+    put:
       tags:
-      - Add Auto Enrollment
-      summary: Add Auto Enrollment.
-      description: "Creates an auto enrollment. This operation allows client application to send one or more accounts in a single request for enrollment. There is no limitation on the number of the accounts to be sent for enrollment. <br>\nThe request may contain the value of the customer permanent identifier (customer key) to identify that a card must be created or updated in Signature using the customer key as a reference. The accounts sent in the same request will be linked to the newly created or updated card in Signature.  <br>\n        For more information about the Accounts domain, <a href=\"../docs/?path=docs/fintechs/accounts.md\" title=\"Click to open\">click here.</a><br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
-      operationId: AutoEnrollmentAddOper
+      - Reverse Credit
+      summary: Reverse Credit.
+      description: "Reverses the previously processed credit transaction in an account. This API reverses the effect of CreditAdd transaction.<br>\n        <br>\n        For more information about the Transactions domain, <a href=\"../docs/?path=docs/fintechs/transactions.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\" title=\"Click to open\">Cash Management</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\" title=\"Click to open\">Treasury Services</a></li>\n          </ul>"
+      operationId: CreditRevOper
       parameters:
       - name: EFXHeader
         in: header
@@ -27,46 +27,47 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AutoEnrollmentAddOperRequest'
+              $ref: '#/components/schemas/CreditRevOperRequest'
       responses:
         "201":
-          description: Created
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutoEnrollmentAddOperResponse'
+                $ref: '#/components/schemas/CreditRevOperResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AutoEnrollmentAddOperResponse'
-      x-group-name: Auto Enrollment Service
-      x-proxy-name: Add Auto Enrollment
-      x-child-product-name: Accounts
-      x-core: Signature
+                $ref: '#/components/schemas/CreditRevOperResponse'
+      x-group-name: Credit Service
+      x-proxy-name: Reverse Credit
+      x-child-product-name: Transactions
+      x-core: Cleartouch-HSA_Teller
 components:
   schemas:
-    AutoEnrollmentAddOperRequest:
+    CreditRevOperRequest:
       required:
-      - AutoEnrollmentInfo
+      - CreditInfo
+      - CreditKeys
       properties:
-        AutoEnrollmentInfo:
-          type: array
-          description: "Details of the auto enrollment of an account.\n\n**Note:** It is important to provide the account details and enrollment type to enroll an account. It is required to create one AutoEnrollmentInfo for each account to enroll.\n\nThe request may contain the value of the customer permanent identifier (customer key) to identify that a card must be created or updated in Signature using the customer key as a reference.\n\nOnly one customer key (PartyId) must be sent in a single AutoEnrollmentAdd request. \n\nThe accounts sent in the same request along with the customer key must have a valid relationship to the customer(Party) and will be linked to the newly created or updated card in Signature. \n\n\n\n"
-          items:
-            $ref: '#/components/schemas/AutoEnrollmentAddOperRequest_AutoEnrollmentInfo'
-    AutoEnrollmentAddOperResponse:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        CreditKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys'
+        CreditInfo:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo'
+    CreditRevOperResponse:
       required:
-      - AutoEnrollmentStatusRec
+      - CreditStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        AutoEnrollmentStatusRec:
-          type: array
-          description: "Details of the auto enrollment status record used in responses to return results from an add, modify or delete operation on the object. \n\n**Note:** The response provides an itemized list of each account's enrollment outcome. There will be one AutoEnrollmentStatusRec for each account in the request."
-          items:
-            $ref: '#/components/schemas/AutoEnrollmentAddOperResponse_AutoEnrollmentStatusRec'
+        CreditStatusRec:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -254,6 +255,14 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
     StatusType:
       title: StatusType
       required:
@@ -378,7 +387,7 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    AutoEnrollmentAddOperRequest_AcctKeys:
+    CreditRevOperRequest_CreditKeys_AcctKeys:
       required:
       - AcctId
       type: object
@@ -386,44 +395,165 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identification number of an account record.\n\n**Note:** If an invalid account identifier is provided, then the account will be reported as 'Failed' in the response. \n\n\n\n\n\n"
+          description: |-
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+            **Note:** *Required field*
         AcctType:
           type: string
-          description: "Type of an account. \n\n\n\nFor more information on account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\"  title=\"Click to open\"> Glossary</a>.\n\n**Note:** If any other account type is provided, then the account will be reported as 'Failed' in the response.  \n\n\n\n"
+          description: |-
+            Type of an account.
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+
+            **Note:** *Required field*
+
+
+
+            ESF returns an error as 700 for unsupported function, if this field is blank or an invalid value is sent in the request.
           enum:
           - DDA
-          - SDA
-          - CDA
-          - LOAN
-      description: "Unique information to identify the account record. \n\n**Note:** If the Account is already enrolled for the auto enrollment type, then the account will be reported as 'Valid' in the response. "
-    AutoEnrollmentAddOperRequest_PartyKeys:
+      description: Unique information to identify the account record.
+    CreditRevOperRequest_CreditKeys:
       type: object
-      properties:
-        PartyId:
-          maxLength: 36
-          type: string
-          description: "Unique identification number of an party record.\n\n**Note:** Refers to the customer permanent identifier (customer key). \n\nWhen a customer permanent identifier (customer key) is sent in the request, then Signature core will create or update the EFT card using that associated customer permanent identifier (customer key) as a reference. "
-      description: "Unique information to identify the party record. \n\n**Note:** Only one occurrence of PartyKeys can be sent in request and should be sent in a separate AutoEnrollmentInfo instance. That is, the AutoEnrollmentInfo instance having the PartyKeys, should not have any of occurrence of AcctKeys. \n\nIn case multiple PartyKeys aggregates are sent in request, ESF will process only the first PartyKeys instance."
-    AutoEnrollmentAddOperRequest_AutoEnrollmentInfo:
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/AutoEnrollmentAddOperRequest_AcctKeys'
-        PartyKeys:
-          $ref: '#/components/schemas/AutoEnrollmentAddOperRequest_PartyKeys'
-        AutoEnrollmentType:
-          type: string
-          description: "Type of auto enrollment. \n\n**Note:** The vlaue Arch_Extract should be provided in all AutoEnrollmentInfo aggregates (having the Accounts is enrolled) and also within the aggregate which has the PartyId.\n\n\n\nSignature supports if this service will enroll to any other auto enrollment type. So, client application must ensure that the correct value is sent in this field. \n\n"
-          enum:
-          - Arch_Extract
-    AutoEnrollmentAddOperResponse_AutoEnrollmentKeys_PartyKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys_AcctKeys'
+      description: Unique information to identify a credit record.
+    CreditRevOperRequest_CreditInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
       type: object
       properties:
-        PartyId:
-          maxLength: 36
+        CurCodeType:
           type: string
-          description: "Unique identification number of an party record.\n\n**Note:** Refers to the customer permanent identifier (customer key). "
-      description: 'Unique information to identify the party record. '
-    AutoEnrollmentAddOperResponse_AutoEnrollmentKeys_AcctKeys:
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported."
+      description: Details of currency code.
+    CreditRevOperRequest_CreditInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** *Required field*
+
+
+
+            This value (amount) is required to be provided and cannot be zero (0).
+        CurCode:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CurAmt_CurCode'
+      description: |+
+        Details of the amount to be processed in credit transaction.
+
+    CreditRevOperRequest_CreditInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      properties:
+        CompositeCurAmtType:
+          type: string
+          description: |-
+            Type of composite currency amount.
+
+            **Note:** Cleartouch supports "checking" value for this field if the account type is DDA.
+          enum:
+          - Checking
+        CurAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CurAmt'
+        SpecialHandling:
+          type: array
+          description: "Special instructions for processing the transaction amount. \n\n"
+          items: {}
+    CreditRevOperRequest_CreditInfo_FromAcctRef:
+      type: object
+      properties:
+        TrnCode:
+          type: string
+          description: |-
+            Service provider transaction code of the payment posted to the account.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            - Refers to two-digit or four-digit code
+
+            - Required if the account type is DDA
+      description: |-
+        Reference details of the account from which the funds are transferred.
+
+        Applicable when the credit funds are transferred from other accounts.
+    CreditRevOperRequest_CreditInfo_XferFromAcct:
+      required:
+      - FromAcctRef
+      properties:
+        FromAcctRef:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_FromAcctRef'
+    CreditRevOperRequest_CreditInfo:
+      required:
+      - CompositeCurAmt
+      - CreditType
+      type: object
+      properties:
+        CreditType:
+          type: string
+          description: |-
+            Type of credit transaction.
+
+            **Note:** *Required field*
+          enum:
+          - Deposit
+        Desc:
+          maxLength: 200
+          type: array
+          description: |-
+            Description of the credit transaction.
+
+            **Note:** Refers to client grenerated Reg-E description that service provider use to display on customer statement.
+
+            Maximum length: 33 characters
+          items: {}
+        PatriotActInd:
+          type: boolean
+          description: Flag to indicate that the transaction is a suspect transaction that needs to be reported.
+        ContributionType:
+          type: string
+          description: 'Type of contribution for Health Savings and Retirement (HSR) accounts. '
+        TaxIncentiveType:
+          type: string
+          description: "Type of tax incentive associated \n\n**Note:** *Conditionally Required field*\n\n\n\nThis field is required for HAS account processing."
+          enum:
+          - HAS
+        DepItemCount:
+          type: integer
+          description: "Count of the total number of cash and check items in the transaction.\n\n**Note:** \n\n- Refers to number of deposits item that are included in the transaction\n\n- Applicable for commercial deposit transaction"
+          format: int64
+        CompositeCurAmt:
+          type: array
+          description: "Details of the composition of the credited amount.\n\n**Note:** *Required field* \n\n\n\nAtleast one time this aggregate is required to be sent in the request containing the transaction amount.\n\n"
+          items:
+            $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt'
+        XferFromAcct:
+          type: array
+          description: "Details of the account  from which transfer of funds is made. \n\nApplicable when funds are transferred from one or more accounts."
+          items:
+            $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_XferFromAcct'
+      description: Details of the credit transaction.
+    CreditRevOperResponse_CreditStatusRec_CreditKeys_AcctKeys:
       required:
       - AcctId
       type: object
@@ -431,53 +561,141 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identification number of an account record.\n\n\n\n\n\n\n\n**Note:** Refers to the account number. "
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
-          description: "Type of an account. \n\n\n\nFor more information on account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\"  title=\"Click to open\"> Glossary</a>."
+          description: |-
+            Type of an account.
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
           enum:
-          - CDA
           - DDA
-          - SDA
-          - LOAN
-      description: 'Unique account information to identify the account record. '
-    AutoEnrollmentAddOperResponse_AutoEnrollmentKeys:
-      required:
-      - AutoEnrollmentType
+      description: Unique information to identify the account record.
+    CreditRevOperResponse_CreditStatusRec_CreditKeys:
       type: object
       properties:
-        PartyKeys:
-          $ref: '#/components/schemas/AutoEnrollmentAddOperResponse_AutoEnrollmentKeys_PartyKeys'
         AcctKeys:
-          $ref: '#/components/schemas/AutoEnrollmentAddOperResponse_AutoEnrollmentKeys_AcctKeys'
-        AutoEnrollmentType:
-          type: string
-          description: 'Type of auto enrollment. '
-          enum:
-          - Arch_Extract
-      description: 'Unique information to identify the auto enrollment record. '
-    AutoEnrollmentAddOperResponse_AutoEnrollmentStatus:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditKeys_AcctKeys'
+      description: Unique information to identify a credit record.
+    CreditRevOperResponse_CreditStatusRec_CreditStatus:
       required:
-      - AutoEnrollmentStatusCode
+      - CreditStatusCode
       type: object
       properties:
-        AutoEnrollmentStatusCode:
+        CreditStatusCode:
           type: string
-          description: Code to identify the current status of the auto enrollment.
+          description: |+
+            Code to specify the current status of the credit transaction.
+
           enum:
-          - Valid
-          - Failed
+          - Reversed
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the auto enrollment status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
-      description: 'Details of the auto enrollment status. '
-    AutoEnrollmentAddOperResponse_AutoEnrollmentStatusRec:
+          description: |-
+            Effective date and time when the transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.micro
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the credit transaction status.
+    CreditRevOperResponse_CreditStatusRec:
       required:
-      - AutoEnrollmentKeys
-      - AutoEnrollmentStatus
+      - CreditStatus
+      type: object
       properties:
-        AutoEnrollmentKeys:
-          $ref: '#/components/schemas/AutoEnrollmentAddOperResponse_AutoEnrollmentKeys'
-        AutoEnrollmentStatus:
-          $ref: '#/components/schemas/AutoEnrollmentAddOperResponse_AutoEnrollmentStatus'
+        CreditKeys:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditKeys'
+        CreditStatus:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditStatus'
+      description: Details of the credit transaction response that includes response keys and response status.
+    CreditRevOperResponse_Receipt_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** Refers to total transaction amount.
+      description: Details of the transaction amount.
+    CreditRevOperResponse_Receipt_WarningOrLockout:
+      required:
+      - Type
+      properties:
+        Type:
+          type: string
+          description: Type of warning or lockout that indicates whether the associated warning code is for a warning flag or a lockout flag.
+          enum:
+          - Warning
+          - Lockout
+        Code:
+          type: string
+          description: Value of the warning or lockout code.
+    CreditRevOperResponse_Receipt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+      description: Details of the currency amount.
+    CreditRevOperResponse_Receipt_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
+          type: string
+          description: Type of the balance.
+          enum:
+          - Current
+          - Sweep
+          - OverdraftBanking
+          - LineofCredit
+          - OverdraftLimit
+          - ExternalFund
+          - MMDAExcess
+        CurAmt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt_CurAmt'
+    CreditRevOperResponse_Receipt:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: Short name for the account printed on the receipt.
+        TellerIdent:
+          type: string
+          description: |-
+            Unique identifier of a teller used to run the transaction.
+
+
+
+            **Note:** Refers to teller number used to run the transaction. This number can be static number or passed through the token created by the Teller SigOn.
+        TrnAmt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt_TrnAmt'
+        WarningOrLockout:
+          type: array
+          description: Details of the account warning or lockout associated to the account.
+          items:
+            $ref: '#/components/schemas/CreditRevOperResponse_Receipt_WarningOrLockout'
+        AcctBal:
+          type: array
+          description: |-
+            Details of the account balance at the time the credit transaction posted.
+
+            **Note:** This aggregate will repeat for balances affected by the transaction.
+          items:
+            $ref: '#/components/schemas/CreditRevOperResponse_Receipt_AcctBal'
+      description: Details of the credit transaction receipt.
