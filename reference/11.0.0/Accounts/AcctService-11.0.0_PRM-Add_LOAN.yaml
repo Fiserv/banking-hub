@@ -603,7 +603,7 @@ components:
           format: int64
         DayOfMonth:
           type: string
-          description: Day of the month on which interest is paid.
+          description: Numeric value representing the day of the month of occurrence.
     addAccountRequest_LoanAcctInfo_AcctStmtData:
       type: object
       properties:
@@ -798,6 +798,12 @@ components:
             **Note:** Refers to rate adjuster.
 
             To be used when variance factor type is "Variance".
+        RateVarianceTwo:
+          type: number
+          description: |-
+            Percentage value with which the interest rate varies from its related index rate.
+
+            **Note:** Refers to second rate adjuster that is used when variance factor type is "variance" and two variances are used.
         FloorRate:
           type: number
           description: |-
@@ -867,7 +873,7 @@ components:
         DayOfMonth:
           type: string
           description: |-
-            Day of the month.
+            Numeric value representing the day of the month of occurrence.
 
             **Note:** Valid values are form 01 to 31, with 31 indicating month-end.
           enum:
@@ -1223,7 +1229,7 @@ components:
           format: int64
         DayOfMonth:
           type: string
-          description: Day of the month.
+          description: Numeric value representing the day of the month of occurrence.
         Occurrences:
           type: integer
           description: Occurrence of the recur rule.
@@ -1614,7 +1620,7 @@ components:
           description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
         EarningMethod:
           type: string
-          description: Earning method that determines the method of amortization for fee.
+          description: Earning method that determines the method of amortization for fee/costs.
         Term:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_Term'
         DeferredLoanBalance:
@@ -1724,7 +1730,7 @@ components:
           - Monthly
         DayOfMonth:
           type: string
-          description: Day of the month.
+          description: Numeric value representing the day of the month of occurrence.
       description: Details of the insurance billing frequency.
     addAccountRequest_LoanAcctInfo_FixedPremiumAmt_1:
       type: object
@@ -1863,6 +1869,29 @@ components:
             - ACHXferSDAStmt
 
       description: "Unique information to identify the checking or saving account that is debited automatically for payments.\n\n**Note:** This field is applicable for billing method listed below: \n\n- ACHXferDDA\n\n- ACHXferSDA\n\n- DirectDebitDDA\n\n- DirectDebitSDA\n\n- ACHXferDDAStmt\n\n- ACHXferSDAStmt\n\n- DirectDebitDDAStmt\n\n- DirectDebitSDAStmt"
+    addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+      description: Details of currency code.
+    addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Value of the automatic payment draft amount.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of automatic payment draft amount.
     addAccountRequest_LoanAcctInfo_LoanBilling:
       type: object
       properties:
@@ -1870,14 +1899,14 @@ components:
           type: string
           description: Method for billing of loan.
           enum:
-          - 'None '
+          - None
           - Coupon
           - BillingNotice
           - BillingByStmt
-          - 'ACHXferDDA '
+          - ACHXferDDA
           - ACHXferSDA
           - DirectDebitDDA
-          - 'DirectDebitSDA '
+          - DirectDebitSDA
           - ACHXferDDAStmt
           - ACHXferSDAStmt
           - DirectDebitDDAStmt
@@ -1922,6 +1951,8 @@ components:
 
             - ACHXferSDAStmt
 
+        AutoPmtDraftAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt'
       description: Information related to billing of loan.
     addAccountRequest_LoanAcctInfo_RecurModel_RecurRule:
       properties:
@@ -1946,7 +1977,7 @@ components:
           - "1"
         DayOfMonth:
           type: string
-          description: Day of the month.
+          description: Numeric value representing the day of the month of occurrence.
         RecurStartDate:
           type: string
           description: "Starting date of the recurrence.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
@@ -2053,6 +2084,96 @@ components:
         MaxCurAmt:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_MaxCurAmt'
       description: Details of late fee.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of the currency amount.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_MinCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of minimum fee amount.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_MaxCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of maximum fee amount.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_LowCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of the minimum amount range that contains the amount value and currency code information.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_HighCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of the maximum amount range that contains the amount value and currency code information.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_FeeTier:
+      properties:
+        LowCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_LowCurAmt'
+        HighCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_HighCurAmt'
+        CurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_CurAmt'
+        BalPercent:
+          type: number
+          description: |+
+            Percentage value of the balance.
+
+    addAccountRequest_LoanAcctInfo_DishonoredFee:
+      type: object
+      properties:
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier for the fee.
+        FeeCalcOption:
+          type: string
+          description: Option for fee calaculation.
+          enum:
+          - NoAssess
+          - FlatFee
+          - Tiered
+          - PctReversalPmtAmt
+        CurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_CurAmt'
+        BalPercent:
+          type: number
+          description: |+
+            Percentage value of the balance.
+
+        MinCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_MinCurAmt'
+        MaxCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_MaxCurAmt'
+        FeeTier:
+          type: array
+          description: Tier details of the fee.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_FeeTier'
+      description: Details of dishonered fee.
     addAccountRequest_LoanAcctInfo_PmtRecalcTerm:
       required:
       - TermUnits
@@ -2389,6 +2510,46 @@ components:
         CRAData:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_CRAData'
       description: Details of the Home Mortgage Disclosure Act data.
+    addAccountRequest_LoanAcctInfo_CreditBureauAcctData_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: "Unique identification number of a party record.\n\n**Note:** Parties with the Party Account Relationship Order of \"First\", \"Second\", and \"Third\" are considered to be main names on the account. Only one party can have \"First\" or \"Second\" or \"Third\" relationship order on the account. Therefore Party Account Relationship Order is required to be provided. \n\nTo send all 3 parties into the CreditBureauData then it has to be in sequence as below:\n\nIf client is sending the PartyId in repeating CreditBureauPartyData aggregate as sent in Party Account Relationship Order of \"First\", \"Second\", and \"Third\" then:\n\n- PartyId having PartyAcctRelOrder as \"First\" is sent in 1st instance of  LoanAcctInfo/CreditBureauAcctData/CreditBureauPartyData/PartyKeys/PartyId\n\n- PartyId having PartyAcctRelOrder as \"Second\" is sent in 2nd instance of  LoanAcctInfo/CreditBureauAcctData/CreditBureauPartyData/PartyKeys/PartyId\n\n- PartyId having PartyAcctRelOrder as \"Third\" is sent in 3rd instance of  LoanAcctInfo/CreditBureauAcctData/CreditBureauPartyData/PartyKeys/PartyId\n\n\n\nClient can send only party in the CreditBureauPartyData or he can send 2 parties in the CreditBureauData"
+      description: Unique information to identify the party record.
+    addAccountRequest_LoanAcctInfo_CreditBureauAcctData_CreditBureauPartyData:
+      required:
+      - PartyKeys
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CreditBureauAcctData_PartyKeys'
+        ECOACode:
+          type: string
+          description: |-
+            Code for Equal Credit Opportunity Act.
+
+            **Note:** Financial institutions can have more supported values other than defined enum values.
+    addAccountRequest_LoanAcctInfo_CreditBureauAcctData:
+      type: object
+      properties:
+        BureauAcctType:
+          type: string
+          description: |-
+            Type of credit bureau account.
+
+            **Note:** Refers to credit bureau type code.
+
+            This field identifies specific types of accounts with specific purposes. The type code are defined in conjunction with credit bureau standards and can be established as per Credit Bureau Metro 2 format and Premier administrator program.
+        BureauStatus:
+          type: string
+          description: "Code that specify the account status to credit bureau.\n\n**Note:** Refers to credit bureau code. \n\nReporting code values are defined as per Credit Bureau Metro 2 format and Premier administrator program.\n\n"
+        CreditBureauPartyData:
+          type: array
+          description: Details of the credit bureau party.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CreditBureauAcctData_CreditBureauPartyData'
+      description: Information related to credit bureau.
     addAccountRequest_LoanAcctInfo_StudentLoanData:
       type: object
       properties:
@@ -2535,7 +2696,7 @@ components:
           - UsePortfolio
         HandlingCode:
           type: string
-          description: Handling code to specify the handling process of the notification and statement forms.
+          description: Handling code used for special routing of all correspondence involving the account.
         OEDCode:
           type: string
           description: |-
@@ -2751,6 +2912,8 @@ components:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtSched'
         LateFee:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LateFee'
+        DishonoredFee:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee'
         PmtTermReview:
           type: array
           description: 'Information about how the payment amount and term of the loan is changed and reviewed. '
@@ -2792,6 +2955,8 @@ components:
             **Note:** For indirect loans, the Recourse Code indicates the type of recourse that the financial institution has on the loan.
         HomeMortgageDisclosure:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure'
+        CreditBureauAcctData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CreditBureauAcctData'
         StudentLoanData:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_StudentLoanData'
         SBAData:
