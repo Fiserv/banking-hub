@@ -99,3 +99,10 @@ Open a web or desktop application of Postman and follow the steps below:
   <img src="https://user-images.githubusercontent.com/81968767/145146913-16d54888-1e48-46b7-99f5-64827a78e21f.gif" />
 </kbd> <br><br>
 
+## Downloads (test)
+
+[Download File](?path=docs/resources/esf-service-swagger-release-11.0.0.2023.1%20(3).zip)
+[Postman Collection](?path=docs/resources/Banking%20Hub%20-%20Premier%20-%20Trial%20Plan%20Postman%20Collection.json)
+
+<a download="Banking%20Hub%20-%20Premier%20-%20Trial%20Plan%20Postman%20Collection.json" href="?path=docs/resources/" title="ImageName"> Download </a>
+
