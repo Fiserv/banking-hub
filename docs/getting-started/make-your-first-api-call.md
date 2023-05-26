@@ -6,7 +6,7 @@ This section describes the process to send an API request to the server and rece
 
 You can test our APIs in the Sandbox environment using third-party API testing tools, such as Postman, Apigee, JMeter and others.
 
-<!-- theme: success -->
+<!-- theme: info -->
 > #### Tip
 >
 > We recommend you to refer to the <a href="?path=docs/getting-started/know-our-standard-api-structure.md#know-our-standard-api-structure" title="Click to open">Know Our Standard API Structure</a> section to understand the API structure prior to testing the APIs in any third-party tool.
@@ -55,7 +55,7 @@ The following example illustrates the process to test an API using Postman appli
   
 Postman is a client that lets you test RESTful APIs. If you are familiar with Postman, refer to the following steps to test Fiserv APIs in the sandbox environment. 
   
-<!-- theme: success -->  
+<!-- theme: info -->  
 > #### Recommendation
 >
 > Keep the API documentation accessible to refer to the default request-payload for the request message. You may also download the Postman collection and refer to sample API requests for Premier core APIs. 
