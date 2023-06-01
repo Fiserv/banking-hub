@@ -19,7 +19,6 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <span style="font-size: 22px; ">Add Account_LOAN</span> *API Explorer > Accounts > Account Service*
 
-
 - Added the following fields in the LoanAcctInfo aggregate to add rate adjuster, credit bureau, payment split override, final payment amount and deferral addenda record:
 	- RateChangeData/RateVarianceTwo
 	- CreditBureauAcctData/BureauAcctType
@@ -32,7 +31,6 @@ titles: Premier, Precision, Signature, Cleartouch
 	- DeferredFee/DeferredFirstPmtDt
 	- DeferredFee/DeferredPmtFreq<br>
 
-
 - Added the following fields in the LoanAcctInfo aggregate to add records for AutoDraftAmount and AutoPymtDraftDate fields:
 	- LoanBilling/AutoPmtDraftAmtOption
 	- LoanBilling/AutoPmtDraftAmt
@@ -42,7 +40,7 @@ titles: Premier, Precision, Signature, Cleartouch
 	- LoanBilling/AutoPmtDraftAmt/CurCode/CurCodeValue
 	- LoanBilling/NextAutoPmtDraftDt<br>
 
-	- Added a aggregate LoanAccctInfo/DishonoredFee to support adding dishonoredfFee through AcctAdd_Loan message<br>
+- Added a aggregate LoanAccctInfo/DishonoredFee to support adding dishonoredfFee through AcctAdd_Loan message<br>
 
 - Added LoanAcctInfo/StatedAPR and LoanAcctInfo/OriginationFee/AdvanceOption fields to add record for stated APR field and to support advance option through AcctAdd_Loan message, respectively<br>
 
@@ -50,9 +48,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 - Added new call GetPortfolio to implement functionality when bank pass their sequenced number in Portfolio number field
 
-
 <span style="font-size: 22px; ">Get Account_LOAN</span> *API Explorer > Accounts > Account Service*
-
 
 - Updated to return the customer account type code that will allow an account to be identified as either a consumer or a corporate account when a customer has both under the same profile.
 
