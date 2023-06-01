@@ -3,116 +3,69 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, DNA
+titles: Premier, Precision, Signature, Cleartouch
 -->
 
 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-**Add Account `POST /accounts`**
+<span style="font-size: 22px; ">General</span>
 
 
-- Something new that was added or introduced like a documents or a services.
-
-
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-
-**Add Account `POST /accounts`**
-
-
-- Something new that was added or introduced like a documents or a services.
-
-
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-
-**Add Account `POST /accounts`**
-
-
-- Something new that was added or introduced like a documents or a services.
-
-
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-
-**Add Account `POST /accounts`**
-
-
-- Something new that was added or introduced like a documents or a services.
-
-
-**BeneficialOwnerAdd `POST ?/beneficialowner`**
-
-
-- The BeneficialOwnerAdd service implementation provides the ability to add a beneficial owner to a legal entity or a business customer. Ownership details, such as business title and/or percent allocated, can be set during the creation of this relationship. Only one record is added per service request.
-
-
-**BeneficialOwnerMod `PUT ?/beneficialowner`**
-
-
-- The BeneficialOwnerMod service implementation provides the ability to modify the beneficial ownership details of the beneficial owner such as business title and/or percent allocated. The relationship type code cannot be changed using this service operation. Only one record is modified per service request. 
-
-
-**BeneficialOwnerInq `POST /beneficialowner/secured`**
-
-
-- The BeneficialOwnerInq service implementation provides the ability to retrieve the details about the beneficial owners associated to a legal entity or a business customer like the full name of the beneficial owner, type of responsibility (control) the beneficial owner has, the percent of direct or indirect equity ownership that the beneficial owner has.
-
-
-**BeneficialOwnerDel `PUT /beneficialowner/secured`**
-
-
-- The BeneficialOwnerDel service implementation provides the ability to delete a beneficial owner to a legal entity or a business customer. Only one record is deleted per service request. 
+- Added **Get Indirect Liability** API endpoint to retrieve indirect liability relationship to a loan account. *(API Explorer > Accounts > Loan Indirect Liablity Service)*
 
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
-**GetAccount `Get/Accounts`**
+<span style="font-size: 22px; ">Add Account_LOAN</span> *API Explorer > Accounts > Account Service*
 
+- Added the following fields in the LoanAcctInfo aggregate to add rate adjuster, credit bureau, payment split override, final payment amount and deferral addenda record:
+	- RateChangeData/RateVarianceTwo
+	- CreditBureauAcctData/BureauAcctType
+	- CreditBureauAcctData/BureauStatus
+	- LoanPmtOption
+	- LateFee/FinalPmtLateFeeInd
+	- LateFee/SchedPmtLateFeeInd
+	- LateFee/IntPmtLateFeeInd
+	- DeferredFee/DeferredLoanRate
+	- DeferredFee/DeferredFirstPmtDt
+	- DeferredFee/DeferredPmtFreq<br>
 
-- As a User client should be able to see  Last Deposit Date , Last Deposit amount , Last Interest Paid Date and Last Interest Paid Amount for DDA and SDA account when the accounts are enquired.
+- Added the following fields in the LoanAcctInfo aggregate to add records for AutoDraftAmount and AutoPymtDraftDate fields:
+	- LoanBilling/AutoPmtDraftAmtOption
+	- LoanBilling/AutoPmtDraftAmt
+	- LoanBilling/AutoPmtDraftAmt/Amt
+	- LoanBilling/AutoPmtDraftAmt/CurCode
+	- LoanBilling/AutoPmtDraftAmt/CurCode/CurCodeType
+	- LoanBilling/AutoPmtDraftAmt/CurCode/CurCodeValue
+	- LoanBilling/NextAutoPmtDraftDt<br>
 
+- Added a aggregate LoanAccctInfo/DishonoredFee to support adding dishonoredfFee through AcctAdd_Loan message<br>
 
-**PartyInq `POST /parties/secured`**
+- Added LoanAcctInfo/StatedAPR and LoanAcctInfo/OriginationFee/AdvanceOption fields to add record for stated APR field and to support advance option through AcctAdd_Loan message, respectively<br>
 
+- Updated the flow to include the case PORT/CreditLine are created using values sent in the request<br>
 
-- Enhancement done to return employment details in case of a person party and return business establishment date in case of a business/organization party.
+- Added new call GetPortfolio to implement functionality when bank pass their sequenced number in Portfolio number field
 
+<span style="font-size: 22px; ">Get Account_LOAN</span> *API Explorer > Accounts > Account Service*
 
-**CardAcctRelInq `POST /cardAccounts/secured`**
+- Updated to return the customer account type code that will allow an account to be identified as either a consumer or a corporate account when a customer has both under the same profile.
 
+<!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-- The fix is done to send the AddrType correctly to the Cleartouch core.
-
-
-**CardInq `POST /cards/secured`**
-
-
-- Enhancement done to the CardInq service to return card transaction limits for the requested card.
-
-
-**PartyAcctRelInq_ByAcct `POST /partyacctrel/secured`**
-
-
-- Enhancement done to the PartyAcctRelInq_ByAcct service to return issued identification information for person or organization Customers.
-
-
-<p style="font-size: 24px; font-weight: bold;">Fixed </p>
-
-**AcctTrnInq `Get/Accounts`**
-
-
-- As the Existing AcctTrnInq_LOANs was not working when client was trying to provide the CLA accounts to retrieve the transaction history which was fixed as a part of this Defect
+Information is not available at the moment. Stay tuned for the updates.
 
 
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-**Add Account `POST /accounts`**
+Information is not available at the moment. Stay tuned for the updates.
 
+<!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-- Something new that was added or introduced like a documents or a services.
-
+Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab-end -->
