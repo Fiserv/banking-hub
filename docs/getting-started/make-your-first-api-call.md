@@ -6,7 +6,7 @@ This section describes the process to send an API request to the server and rece
 
 You can test our APIs in the Sandbox environment using third-party API testing tools, such as Postman, Apigee, JMeter and others.
 
-<!-- theme: success -->
+<!-- theme: info -->
 > #### Tip
 >
 > We recommend you to refer to the <a href="?path=docs/getting-started/know-our-standard-api-structure.md#know-our-standard-api-structure" title="Click to open">Know Our Standard API Structure</a> section to understand the API structure prior to testing the APIs in any third-party tool.
@@ -55,18 +55,38 @@ The following example illustrates the process to test an API using Postman appli
   
 Postman is a client that lets you test RESTful APIs. If you are familiar with Postman, refer to the following steps to test Fiserv APIs in the sandbox environment. 
   
-<!-- theme: success -->  
+<!-- theme: info -->  
 > #### Recommendation
 >
-> Keep the API documentation accessible to refer to the default request-payload for the request message. You may also download the Postman collection and refer to sample API requests for Premier core APIs. 
+> Keep the API documentation accessible to refer to the default request-payload for the request message. You may also download the Postman collection and refer to sample API requests from the **Resources** section. 
 
 #### Resources
+
+* **API Specifications**
+
+  [![downoad-icon-BH]][BH]  
+
+* **Postman Collection**
+
+  [![downoad-icon-PRM]][PRM]      [![downoad-icon-SIG]][PRM]  
+
+
+[downoad-icon-PRM]: https://github.com/Fiserv/banking-hub/assets/81968767/934da291-c743-41cb-9325-16cf2c8d7bda
+[PRM]: https://github.com/Fiserv/banking-hub/files/11449420/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
+
+[downoad-icon-SIG]: https://github.com/Fiserv/banking-hub/assets/81968767/b4c09878-6e73-4e9e-9171-74bcd3e4f8b6
+[SIG]: https://github.com/Fiserv/banking-hub/files/11449420/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
+
+[downoad-icon-BH]: https://github.com/Fiserv/banking-hub/assets/81968767/4c31d642-7574-413e-b02e-32f7ad1ae504
+[BH]: https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip
+
+
+<!--
 
 * [Download Banking Hub API Specifications](https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip)
 * [Download Postman Collection - Premier Core](https://github.com/Fiserv/banking-hub/files/11449420/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip "Click to Download")
 
-
-
+-->
 
 #### Prerequisite to run Postman collection
 
@@ -82,8 +102,8 @@ The attached Postman collection use variables to store and reuse few values such
       > #### Note
       > 
       > You can obtain the _API key_, _API secret_ and _Org Id_ values from the Credentials tab of My workspaces. 
- 
- <kbd>![Postman-collection-steps](https://user-images.githubusercontent.com/81968767/225672853-7c17109c-3969-4ab7-9fa5-282b335e9b72.png) </kbd>
+
+    <kbd>![Postman-collection-steps](https://user-images.githubusercontent.com/81968767/225672853-7c17109c-3969-4ab7-9fa5-282b335e9b72.png) </kbd>
 
 
 To  test an API using Postman application: 
@@ -118,3 +138,5 @@ To  test an API using Postman application:
 <kbd>
   <img src="https://user-images.githubusercontent.com/81968767/145146913-16d54888-1e48-46b7-99f5-64827a78e21f.gif" />
 </kbd>
+  
+  
