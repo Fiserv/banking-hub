@@ -75,7 +75,7 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 [PRM]: https://github.com/Fiserv/banking-hub/files/11449420/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
 
 [downoad-icon-SIG]: https://github.com/Fiserv/banking-hub/assets/81968767/b4c09878-6e73-4e9e-9171-74bcd3e4f8b6
-[SIG]: https://github.com/Fiserv/banking-hub/files/11449420/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
+[SIG]: https://github.com/Fiserv/banking-hub/files/11673336/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip
 
 [downoad-icon-BH]: https://github.com/Fiserv/banking-hub/assets/81968767/4c31d642-7574-413e-b02e-32f7ad1ae504
 [BH]: https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip
@@ -91,7 +91,7 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 #### Prerequisite to run Postman collection
 
 The attached Postman collection use variables to store and reuse few values such as Hostname, Username and Password. To update the variable values, perform the below steps in Postman.
-1.	From the **Collections** tab, select the root folder of Banking Hub Postman collection. 
+1.	From the **Collections** tab, select the root folder of Banking Hub Postman collection 
 2.	Select the **Variables** tab
 3.	Insert the variable values in the **Current value** column for the following variables:
     * **authToken_UserName**: _API key value_
