@@ -1,6 +1,6 @@
 # Make Your First API Call
 
-This section describes the process to send an API request to the server and receive a response payload. To test the APIs, use the third-party API testing tool.
+This section describes   the process to send an API request to the server and receive a response payload. To test the APIs, use the third-party API testing tool.
 
 ## Using Third-Party API Testing Tools
 
