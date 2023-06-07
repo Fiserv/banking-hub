@@ -7,7 +7,8 @@ These solutions support the detection, reporting and mitigation of financial cri
 
 API domains related to Risk and Performance Management: 
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
-- [Accounts and Transactions](?path=docs/fintechs/acct-and-transactions.md "Click to open")
+- [Accounts](?path=docs/fintechs/accounts.md "Click to open")
+- [Transactions](?path=docs/fintechs/transactions.md "Click to open")
 
 
 ## See Also
