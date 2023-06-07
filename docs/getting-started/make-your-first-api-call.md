@@ -68,7 +68,7 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 
 * **Postman Collection**
 
-  [![downoad-icon-PRM]][PRM]      [![downoad-icon-SIG]][PRM]  
+  [![downoad-icon-PRM]][PRM]      [![downoad-icon-SIG]][SIG]  
 
 
 [downoad-icon-PRM]: https://github.com/Fiserv/banking-hub/assets/81968767/934da291-c743-41cb-9325-16cf2c8d7bda
