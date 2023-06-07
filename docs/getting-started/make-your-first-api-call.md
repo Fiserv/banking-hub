@@ -1,6 +1,6 @@
 # Make Your First API Call
 
-This section describes the process to send an API request to the server and receive a response payload. To test the APIs, use the third-party API testing tool like Postman.
+This section describes the process to send an API request to the server and receive a response payload. To test the APIs, use the third-party API testing tool.
 
 ## Using Third-Party API Testing Tools
 
@@ -68,7 +68,7 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 
 * **Postman Collection**
 
-  [![downoad-icon-PRM]][PRM]      [![downoad-icon-SIG]][PRM]  
+  [![downoad-icon-PRM]][PRM]      [![downoad-icon-SIG]][SIG]  
 
 
 [downoad-icon-PRM]: https://github.com/Fiserv/banking-hub/assets/81968767/934da291-c743-41cb-9325-16cf2c8d7bda
