@@ -12,7 +12,7 @@ Cards is an API domain consisting of APIs that support the creation, maintenance
 
 Begin the integration with following services of Cards domain in API Explorer:
 * [Card Service](../api/?type=post&path=/cardservice/cards/cards)
-* [Card Account Relationship Service](../api/?type=/cardacctrelservice/cards/cardAccounts)
+* [Card Account Relationship Service](../api/?type=post&path=/cardacctrelservice/cards/cardAccounts)
 
 
 ## See Also
