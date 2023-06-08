@@ -11,12 +11,14 @@ Specific to Fiserv core account processing platforms, these APIs make it possibl
 **Potential uses:** Apps that provide customized account access or consolidated views of accounts or family finance apps that help young people pursue their financial goals with oversight from trusted adults
 
 Begin the integration with following services of Accountholder domain in API Explorer:
-* [Address Service](../api/?type=post&path=/address)
-* [Beneficiary Service](../api/?type=post&path=/beneficiaries)
-* [Party Service](../api/?type=post&path=/parties)
-* [Client Defined Field Service](../api/?type=post&path=/clientDefinedFields/secured)
-* [Party Account Relationship Service](../api/?type=post&path=/partyacctrel/secured)
-* [Party Parties Service](../api/?type=post&path=/partyparties/secured)
+* [Address Service](../api/?type=post&path=/addrservice/partyacctsvc/address)
+* [Beneficial Owner Service](../api/?type=post&path=/beneficialownerservice/parties/beneficialowner)
+* [Beneficiary Service](../api/?type=post&path=/beneficiaryservice/partyacctsvc/beneficiaries)
+* [Party Service](../api/?type=post&path=/partyservice/parties/parties)
+* [Party Account Relationship Service](../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel)
+* [Party Parties Service](../api/?type=post&path=/partypartyrelservice/parties/partyparties)
+* [Client Defined Field Service](../api/?type=post&path=/clientdefinedfieldservice/partyacctsvc/clientDefinedFields/secured)
+
 
 
 ## See Also
