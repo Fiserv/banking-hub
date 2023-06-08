@@ -12,7 +12,7 @@ These APIs can be used to access transaction data and balance information relate
 
 Begin the integration using the following services in the Transactions domain in API Explorer:
 * [Account Hold Service](../api/?type=post&path=/acctholdservice/stophold/accountHolds)
-* [Credit Service](../api/?type=/creditservice/payments/credits)
+* [Credit Service](../api/?type=post&path=/creditservice/payments/credits)
 * [Debit Service](../api/?type=post&path=/debitservice/payments/debits)
 * [Memo Tickler Service](../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler)
 * [Stop Check Service](../api/?type=post&path=/stopchkservice/stophold/stopChecks)
