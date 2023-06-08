@@ -14,7 +14,7 @@ Begin the integration using the following services in the Accounts domain in API
 * [Account Service](../api/?type=post&path=/acctservice/acctmgmt/accounts)
 * [Account Collateral Service](../api/?type=post&path=/acctcollateralrelservice/collateral/acctcollateral)
 * [Auto Enrollment Service](../api/?type=post&path=/autoenrollmentservice/acctmgmt/autoenrollment)
-* [Collateral Service](../api/?type=post&path=/autoenrollmentservice/acctmgmt/autoenrollment)
+* [Collateral Service](../api/?type=post&path=/collateralservice/collateral/collateral)
 * [Credit Line Service](../api/?type=post&path=/creditlineservice/lending/creditLines)
 * [Disbursement Service](../api/?type=post&path=/disbursementservice/lending/disbursement)
 * [Disclosure Service](../api/?type=post&path=/disclosureservice/acctmgmt/disclosures)
