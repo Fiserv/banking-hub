@@ -16,8 +16,7 @@ Before you start integration, it is important to register on the Fiserv Develope
 [Video]: https://user-images.githubusercontent.com/81968767/231950346-2b13475d-f395-4b11-8a55-2d0c93f45813.mp4
 [Video Thumbnail]: https://user-images.githubusercontent.com/81968767/232030323-bbde320a-2bf5-4e21-97c0-8fe1a8895913.png
 
-[Video1]: https://github.com/Fiserv/banking-hub/assets/81968767/fa27bdf9-d6d4-4ff6-a2ed-0bb2738fe9fd
-
+[Video1]: https://github.com/Fiserv/banking-hub/assets/81706748/a776e7c8-bea8-410e-9529-43ca3968327d
 
 
 ## Register on Fiserv Developer Studio
