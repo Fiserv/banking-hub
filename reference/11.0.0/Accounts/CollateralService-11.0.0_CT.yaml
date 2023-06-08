@@ -7,6 +7,42 @@ info:
 servers:
 - url: /
 paths:
+  /collateralservice/collateral/collateral:
+    post:
+      tags:
+      - Add Collateral
+      summary: Add Collateral.
+      description: "Creates a new collateral record for a party.\n        <br>\n        <br>\n        For more information about the Accounts domain, <a href=\"../docs/?path=docs/fintechs/accounts.md\" title=\"Click to open\">click here.</a><br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: addCollateral
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addCollateralRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addCollateralResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addCollateralResponse'
+      x-group-name: Collateral Service
+      x-proxy-name: Add Collateral
+      x-child-product-name: Accounts
+      x-core: Cleartouch
   /collateralservice/collateral/collateral/secured:
     post:
       tags:
@@ -45,6 +81,28 @@ paths:
       x-core: Cleartouch
 components:
   schemas:
+    addCollateralRequest:
+      required:
+      - CollateralInfo
+      properties:
+        PartyCollateralRelInfo:
+          type: array
+          description: |-
+            Details of the relationship between parties and the collateral item.
+
+            **Note:** This aggregate is used to link one or more parties to the collateral record.
+          items:
+            $ref: '#/components/schemas/addCollateralRequest_PartyCollateralRelInfo'
+        CollateralInfo:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo'
+    addCollateralResponse:
+      required:
+      - CollateralStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        CollateralStatusRec:
+          $ref: '#/components/schemas/addCollateralResponse_CollateralStatusRec'
     CollateralInqSecuredRequest:
       required:
       - CollateralSel
@@ -68,13 +126,17 @@ components:
       type: string
       properties:
         OrganizationId:
+          maxLength: 36
           type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
         VendorId:
+          maxLength: 255
           type: string
-          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
         Context:
           $ref: '#/components/schemas/Context'
       example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
@@ -84,67 +146,84 @@ components:
         ClientAppName:
           maxLength: 40
           type: string
-          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
         Channel:
+          maxLength: 80
           type: string
-          description: Indicates the channel used by the client application.
-        ClientDateTime:
-          type: string
-          description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
-        ClientTerminalSeqNum:
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
           maxLength: 36
           type: string
-          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
           format: int64
         TerminalIdent:
           maxLength: 36
           type: string
-          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
         TerminalAddr1:
           maxLength: 64
           type: string
+          description: Terminal address line 1.
         TerminalAddr2:
           maxLength: 64
           type: string
+          description: Terminal address line 2.
         TerminalAddr3:
           maxLength: 64
           type: string
+          description: Terminal address line 3.
         TerminalAddr4:
           maxLength: 64
           type: string
+          description: Terminal address line 4.
         TerminalCity:
           maxLength: 32
           type: string
+          description: Terminal city name.
         TerminalCounty:
           maxLength: 32
           type: string
+          description: Terminal county name.
         TerminalStateProv:
           maxLength: 32
           type: string
-          description: State Province. ISO 3166-2:US codes.
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
         TerminalPostalCode:
           maxLength: 11
           type: string
-          description: Postal Code is ZipCode in the US.
+          description: 'Postal Code where the terminal is located. '
         TerminalCountryCodeSource:
-          type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - ISO3166Numeric
-          - ISO3166Alpha3
-        TerminalCountryCodeValue:
           maxLength: 80
           type: string
-        PhoneType:
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
         PhoneNum:
           type: string
+          description: Phone number.
         PhoneExchange:
+          maxLength: 80
           type: string
+          description: Phone exchange.
         TerminalOwnerName:
           maxLength: 40
           type: string
@@ -164,47 +243,70 @@ components:
         AcquirerIdent:
           maxLength: 36
           type: string
-          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
         AcquirerCountryCodeSource:
+          maxLength: 80
           type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - US
-          - IND
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
         AcquirerCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
         MerchNum:
           maxLength: 23
           type: string
-          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
         SettlementDate:
           type: string
-          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
           format: date
         SettlementIdent:
           maxLength: 36
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: Identification of the settlement account in which the transaction will be settled.
         BusinessApplIdent:
+          maxLength: 80
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
         BranchIdent:
           maxLength: 22
           type: string
+          description: Branch identification number.
         TellerIdent:
+          maxLength: 80
           type: string
+          description: Teller identification number.
         TillIdent:
+          maxLength: 80
           type: string
+          description: Till identification number.
         AMPMCode:
           type: string
+          description: 'Transaction posting code. '
           enum:
           - AM
           - PM
         ReentryType:
           type: string
+          description: Type of re-entry.
           enum:
           - Manual
           - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
     StatusType:
       title: StatusType
       required:
@@ -261,7 +363,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -329,7 +431,439 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    CollateralInqSecuredRequest_CollateralSel_CollateralKeys:
+    addCollateralRequest_PartyRef_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of a party record.
+      description: Unique information to identify the party record.
+    addCollateralRequest_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addCollateralRequest_PartyRef_PartyKeys'
+      description: |+
+        Reference details of a party.
+
+    addCollateralRequest_PartyCollateralRelInfo:
+      required:
+      - PartyRef
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/addCollateralRequest_PartyRef'
+    addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported.\n\n"
+      description: Details of the currency code.
+    addCollateralRequest_CollateralInfo_CollateralValueAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: "Amount in decimal format.\n\n**Note:** Refers to the updated amount of the collateral. "
+        CurCode:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
+      description: Information about current value of collateral.
+    addCollateralRequest_CollateralInfo_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+          enum:
+          - ISO3166-Alpha-2
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format.
+      description: Details of the country code.
+    addCollateralRequest_CollateralInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        Addr1:
+          maxLength: 64
+          type: string
+          description: Address line 1.
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided."
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        County:
+          maxLength: 32
+          type: string
+          description: |-
+            Numeric county code of the property address.
+
+            **Note:** Max length: 3 digit
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: Postal code or zip code.
+        CountryCode:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CountryCode'
+        AddrType:
+          type: string
+          description: Type of the address.
+    addCollateralRequest_CollateralInfo_CollateralValueData_OriginalValueAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            **Note:** Refers to the original value of a collateral.
+      description: Details of the original value amount of collateral.
+    addCollateralRequest_CollateralInfo_CollateralValueData_SalePriceAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt_CurCode'
+      description: Details of the sale price amount of a collateral.
+    addCollateralRequest_CollateralInfo_CollateralValueData:
+      type: object
+      properties:
+        ValueUpdateOpt:
+          type: string
+          description: Options to update collateral values.
+        OriginalValueAmt:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueData_OriginalValueAmt'
+        OriginalValueDt:
+          type: string
+          description: Original value date.
+          format: date
+        SalePriceAmt:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueData_SalePriceAmt'
+        SalePriceDt:
+          type: string
+          description: Sale price date.
+          format: date
+        DisposalCostPercent:
+          type: number
+          description: Selling cost as a percentage value of the net appraised and collateral values
+        MarketMarginPercent:
+          type: number
+          description: |-
+            Market-assigned percentage value that is used to calculate the margin value of the collateral as per the market price.
+
+            **Note:** This field identifies the percentage subtracted from the Market Price to calculate the Collateral Value on a Commercial loan. It is client defined on other loans and valid for Commercial Inventory/Equipment or Securities types.
+      description: Details of the collateral valuation.
+    addCollateralRequest_CollateralInfo_PartialReleaseData_ReleaseAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+      description: 'Details of the most recent partial release amount of the collateral. '
+    addCollateralRequest_CollateralInfo_PartialReleaseData_LTDReleaseAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported.\n\n"
+      description: Details of the currency code.
+    addCollateralRequest_CollateralInfo_PartialReleaseData_LTDReleaseAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_PartialReleaseData_LTDReleaseAmt_CurCode'
+      description: Details of the life-to-date release amounts.
+    addCollateralRequest_CollateralInfo_PartialReleaseData:
+      type: object
+      properties:
+        ReleaseAmt:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_PartialReleaseData_ReleaseAmt'
+        ReleaseDt:
+          type: string
+          description: 'Date on which collateral''s most recent partial release happened. '
+          format: date
+        LTDReleaseAmt:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_PartialReleaseData_LTDReleaseAmt'
+      description: Information about the partial release of the collateral that an organization holds.
+    addCollateralRequest_CollateralInfo_RelationshipMgr:
+      required:
+      - RelationshipMgrIdent
+      type: object
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of a relationship manager.
+        RelationshipRole:
+          type: string
+          description: |+
+            Role of a relationship manager.
+
+          enum:
+          - Officer
+      description: Information about financial institution officers who have management-related responsibilities of the account.
+    addCollateralRequest_CollateralInfo_CommentData:
+      properties:
+        CommentDesc:
+          maxLength: 240
+          type: string
+          description: Description of the comment instance to capture additional details.
+        RelationshipMgr:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_RelationshipMgr'
+    addCollateralRequest_CollateralInfo_PropertyData_FloodData:
+      type: object
+      properties:
+        DeterminationDt:
+          type: string
+          description: |+
+            Date on which the flood prone property was determined.
+
+          format: date
+        DeterminationCompany:
+          maxLength: 60
+          type: string
+          description: Company that determines the flood zones for a property.
+        DeterminationNumber:
+          maxLength: 30
+          type: string
+          description: Number to identify the determination of flood zone for a property.
+        CommunityNumber:
+          maxLength: 60
+          type: string
+          description: Number to identify the community.
+        CommunityParticipationStat:
+          type: string
+          description: Status of a community participation in National Flood Insurance Program (NFIP) where the property is located.
+          enum:
+          - Regular
+          - NotNFIP
+          - Emergency
+          - CBRA
+        MapNumber:
+          maxLength: 30
+          type: string
+          description: Alphanumeric property map number that is assigned by the county officials to identify the property.
+        MapPanel:
+          maxLength: 30
+          type: string
+          description: Alphanumeric number of the map panel to identify a property in a Special Flood Hazard Area (SFHA).
+        MapPanelSuffixNumber:
+          maxLength: 30
+          type: string
+          description: Alphanumeric suffix number of the map panel to identify a property in a Special Flood Hazard Area (SFHA).
+        MapPanelDt:
+          type: string
+          description: "Date on which the map panel is effective.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        FloodZone:
+          maxLength: 40
+          type: string
+          description: Alphanumeric value of the flood zone for a property.
+        CBRADesignationDt:
+          type: string
+          description: "Date when a property is designated to Coastal Barrier Resources Area (CBRA).\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        LOMRDt:
+          type: string
+          description: "Date when the flood insurance is revised by Letter of Map Revision (LOMR).\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        FloodHazardArea:
+          type: string
+          description: Value that identifies if the property is located in a Special Flood Hazard Area (SFHA) as determined by the Federal Emergency Management Agency (FEMA).
+          enum:
+          - NotSecuredByRealEstate
+          - NotSFHSProperty
+          - SFHAProperty
+        FloodSvcTypeCode:
+          type: string
+          description: Code that identifies the type of flood service.
+          enum:
+          - Tracking
+      description: Details of the flood prone property.
+    addCollateralRequest_CollateralInfo_PropertyData:
+      type: object
+      properties:
+        PropertyType:
+          type: string
+          description: Type of property used for the collateral.
+        YearBuilt:
+          type: integer
+          description: Year in which the property was built.
+          format: int64
+        BuildingPermitDt:
+          type: string
+          description: "Date on which the building permit was issued.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        SurveyDt:
+          type: string
+          description: "Date on which the survey of a property is performed.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        NumberOfUnits:
+          type: integer
+          description: Number of units used to specify the property in terms of lots.
+          format: int64
+        FloodInsurWaiverCode:
+          maxLength: 30
+          type: string
+          description: Code to identify the flood insurance waiver.
+        FloodData:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_PropertyData_FloodData'
+      description: Details of the property used as collateral.
+    addCollateralRequest_CollateralInfo:
+      type: object
+      properties:
+        CollateralType:
+          type: string
+          description: "Type of collateral. \n\n**Note:** **Required field**"
+          enum:
+          - Property
+          - Vehicle
+          - Inventory
+          - DepositAccount
+          - Other
+          - LifeInsurance
+        CollateralSubType:
+          type: string
+          description: "Sub type of collateral.\n\n**Note:** Refers to the two-digit client-defined value under the collateral type for a specific collateral record. "
+        CollateralCode:
+          type: string
+          description: |-
+            Client-defined code to further classify the type of collateral.
+
+            **Note:** Max length: 4 digit
+        CollateralValueAmt:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueAmt'
+        CollateralValueDt:
+          type: string
+          description: "Date when the updated value of collateral is determined.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        CollateralDetailStatus:
+          type: string
+          description: Client-defined status of the collateral.
+        CollateralDetailStatusDt:
+          type: string
+          description: |-
+            Current status date of the collateral.
+
+
+
+            **Note:** This field can be use to record the date when the Collateral Status field is updated/changed.
+          format: date
+        PostAddr:
+          type: array
+          description: |-
+            Details of the postal address.
+
+            **Note:** Applicable only for property collateral type.
+          items:
+            $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_PostAddr'
+        Desc:
+          maxLength: 200
+          type: array
+          description: |-
+            Detailed description of the collateral.
+
+            **Note:** Collateral service supports two instances of the "Desc" field, each of maximum 60 characters.
+          items: {}
+        CollateralValueData:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CollateralValueData'
+        LastReviewDt:
+          type: string
+          description: |-
+            Date on which collateral was last reviewed.
+
+            Format: yyyy-mm-dd.
+
+            Example: 2021-11-20
+
+            **Note:** This field can identify the last date when the client confirmed that all documents related to the collateral are current and up-to-date.
+          format: date
+        NextReviewDt:
+          type: string
+          description: |-
+            Date on which collateral will be reviewed.
+
+            Format: yyyy-mm-dd.
+
+            Example: 2021-11-20
+
+
+
+            **Note:** This field can identify the next date when the client intends to confirm that all documents related to the collateral are current and up-to-date.
+          format: date
+        LastUpdateDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |+
+            Date on which collateral was last updated.
+
+            Format: yyyy-mm-dd.
+
+            Example: 2021-11-20
+
+        ControlAgreementDt:
+          type: string
+          description: "Date on which the control agreement is signed.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        Identification:
+          maxLength: 60
+          type: string
+          description: Identification used for real estate of commercial inventory or equipment types of collateral.
+        PartialReleaseData:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_PartialReleaseData'
+        UnderwritingRatio:
+          type: array
+          description: Decimal value that specifies the underwriting criteria for the collateral.
+          items: {}
+        Retention:
+          type: boolean
+          description: Flag to indicate to retain a collateral record when there are no loans attached to the collateral.
+        LoanReason:
+          maxLength: 30
+          type: string
+          description: Information to specify the purpose of loan.
+        OccupancyType:
+          maxLength: 30
+          type: string
+          description: Code to identify the type of occupancy for the property collateral.
+        CommentData:
+          type: array
+          description: Details of the general comments associated with the collateral.
+          items:
+            $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_CommentData'
+        PropertyData:
+          $ref: '#/components/schemas/addCollateralRequest_CollateralInfo_PropertyData'
+      description: Details of a collateral.
+    addCollateralResponse_CollateralStatusRec_CollateralKeys:
       required:
       - CollateralId
       type: object
@@ -339,11 +873,42 @@ components:
           type: string
           description: Unique identifier of collateral record.
       description: Unique information to identify the collateral record.
+    addCollateralResponse_CollateralStatusRec_CollateralStatus:
+      required:
+      - CollateralStatusCode
+      type: object
+      properties:
+        CollateralStatusCode:
+          type: string
+          description: Code to identify the collateral status.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Date on which the collateral status is changed.
+
+            Format: yyyy-MM-dd THH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+      description: Status details of collateral.
+    addCollateralResponse_CollateralStatusRec:
+      required:
+      - CollateralKeys
+      - CollateralStatus
+      type: object
+      properties:
+        CollateralKeys:
+          $ref: '#/components/schemas/addCollateralResponse_CollateralStatusRec_CollateralKeys'
+        CollateralStatus:
+          $ref: '#/components/schemas/addCollateralResponse_CollateralStatusRec_CollateralStatus'
+      description: Details of the collateral status record.
     CollateralInqSecuredRequest_CollateralSel:
       type: object
       properties:
         CollateralKeys:
-          $ref: '#/components/schemas/CollateralInqSecuredRequest_CollateralSel_CollateralKeys'
+          $ref: '#/components/schemas/addCollateralResponse_CollateralStatusRec_CollateralKeys'
       description: Selection criteria to retrieve collateral record.
     CollateralInqSecuredResponse_CollateralStatus:
       required:
@@ -369,6 +934,6 @@ components:
       - CollateralStatus
       properties:
         CollateralKeys:
-          $ref: '#/components/schemas/CollateralInqSecuredRequest_CollateralSel_CollateralKeys'
+          $ref: '#/components/schemas/addCollateralResponse_CollateralStatusRec_CollateralKeys'
         CollateralStatus:
           $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralStatus'
