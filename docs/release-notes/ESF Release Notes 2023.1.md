@@ -12,7 +12,7 @@ titles: Premier, Precision, Signature, Cleartouch
 <span style="font-size: 22px; ">General</span>
 
 
-- Added **Get Indirect Liability** API endpoint to retrieve indirect liability relationship to a loan account. *(API Explorer > Accounts > Loan Indirect Liablity Service)*
+- Added **Get Indirect Liability** API endpoint to retrieve indirect liability relationship to a loan account. *(API Explorer > Accounts > Loan Indirect Liability Service)*
 
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
@@ -40,7 +40,7 @@ titles: Premier, Precision, Signature, Cleartouch
 	- LoanBilling/AutoPmtDraftAmt/CurCode/CurCodeValue
 	- LoanBilling/NextAutoPmtDraftDt<br>
 
-- Added a aggregate LoanAccctInfo/DishonoredFee to support adding dishonoredfFee through AcctAdd_Loan message<br>
+- Added an aggregate LoanAccctInfo/DishonoredFee to support adding dishonoredfFee through AcctAdd_Loan message<br>
 
 - Added LoanAcctInfo/StatedAPR and LoanAcctInfo/OriginationFee/AdvanceOption fields to add record for stated APR field and to support advance option through AcctAdd_Loan message, respectively<br>
 
@@ -50,7 +50,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <span style="font-size: 22px; ">Get Account_LOAN</span> *API Explorer > Accounts > Account Service*
 
-- Updated to return the customer account type code that will allow an account to be identified as either a consumer or a corporate account when a customer has both under the same profile.
+- Updated to return the customer account type code that will allow an account to be identified as either a consumer or a corporate account when a customer has both under the same profile
 
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
