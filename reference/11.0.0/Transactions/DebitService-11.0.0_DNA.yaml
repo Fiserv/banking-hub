@@ -8,6 +8,41 @@ servers:
 - url: /
 paths:
   /debitservice/payments/debits:
+    put:
+      tags:
+      - Reverse Debit
+      summary: Reverse Debit.
+      description: "Reverses the previously processed debit transaction in an account. This API reverses the effect of DebitAdd transaction.<br>\n        <br>\n        For more information about the Transactions domain, <a href=\"../docs/?path=docs/fintechs/transactions.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\">Cash Management</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\">Treasury Services</a></li>\n          </ul>"
+      operationId: DebitRevOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DebitRevOperRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitRevOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitRevOperResponse'
+      x-group-name: Debit Service
+      x-proxy-name: Reverse Debit
+      x-child-product-name: Transactions
+      x-core: DNA
     post:
       tags:
       - Add Debit
@@ -61,6 +96,24 @@ components:
           $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec'
         Receipt:
           $ref: '#/components/schemas/DebitAddOperResponse_Receipt'
+    DebitRevOperRequest:
+      required:
+      - DebitInfo
+      properties:
+        DebitKeys:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitKeys'
+        DebitInfo:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo'
+    DebitRevOperResponse:
+      required:
+      - DebitStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        DebitStatusRec:
+          $ref: '#/components/schemas/DebitRevOperResponse_DebitStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/DebitRevOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -482,4 +535,113 @@ components:
           maxLength: 36
           type: string
           description: 'Transaction Identification. '
+      description: Receipt. Transaction receipt.
+    DebitRevOperRequest_DebitKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: "Account Identifier.  Uniquely identifies an account held at a financial institution. \n\n**Note:** Refers to the account number on which transaction is needed to be performed."
+      description: Account Keys. Used to uniquely identify an Account object.
+    DebitRevOperRequest_DebitKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitKeys_AcctKeys'
+      description: Debit Keys. Used to identify the Credit record.
+    DebitRevOperRequest_DebitInfo_CompositeCurAmt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount.
+
+            **Note:** There can be up to two occurences, one for the transaction amount and one for the fee. Since this solution supports balanced transactions, the same amount is assumed to be for any G/L offsets.
+
+
+
+            It is an optional property. If not provided then original transaction amount will be considered for reversal. If partial amount or incorrect is provided then transction shall not be processed.
+      description: Transaction Amount.
+    DebitRevOperRequest_DebitInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      type: object
+      properties:
+        CurAmt:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CompositeCurAmt_CurAmt'
+      description: 'Composite Currency Amount. Indicates the composition of the debit reverasl amount. '
+    DebitRevOperRequest_DebitInfo_NetworkRefData:
+      type: object
+      properties:
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: "Client Transaction Identification used to reference a previous transaction.\n\n**Note:** Unique identifier of the original transaction. \n\nRefers to the original transaction number to be reversed."
+      description: |-
+        Network  Reference Data. Used to identify a previous transaction to be referenced for refunds and reversals.
+
+        **Note:** The original transaction would have been posted during the same business day. Used in an auto-correct of the transaction.
+    DebitRevOperRequest_DebitInfo:
+      required:
+      - CompositeCurAmt
+      - DebitType
+      type: object
+      properties:
+        DebitType:
+          type: string
+          description: |-
+            Debit Type. Indicates the type of debit transaction being processed.
+
+            **Note:** Refers to the RtxnTypCd to be performed.
+          enum:
+          - Withdrawal
+        CompositeCurAmt:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CompositeCurAmt'
+        NetworkRefData:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_NetworkRefData'
+      description: Debit Information. Details of the debit transaction.
+    DebitRevOperResponse_DebitStatusRec_DebitStatus:
+      required:
+      - DebitStatusCode
+      type: object
+      properties:
+        DebitStatusCode:
+          type: string
+          description: |-
+            Debit Status Code.
+
+            **Note:** Refers to "Reversed".
+          enum:
+          - Reversed
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
+
+            **Note:** Refers to Effective Date of the transaction.
+      description: Debit Status. Contains information of the current state of the object.
+    DebitRevOperResponse_DebitStatusRec:
+      required:
+      - DebitStatus
+      type: object
+      properties:
+        DebitKeys:
+          $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec_DebitKeys'
+        DebitStatus:
+          $ref: '#/components/schemas/DebitRevOperResponse_DebitStatusRec_DebitStatus'
+      description: Debit Status Record. Used in responses to return results from a add and reversal of Object.
+    DebitRevOperResponse_Receipt:
+      type: object
+      properties:
+        TrnAmt:
+          $ref: '#/components/schemas/DebitAddOperResponse_Receipt_TrnAmt'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: "Transaction Identification. \n\n**Note:** Refers to the unique generated transaction number (RtxnNbr)."
       description: Receipt. Transaction receipt.
