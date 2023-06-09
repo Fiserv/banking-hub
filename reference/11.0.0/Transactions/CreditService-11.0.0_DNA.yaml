@@ -115,6 +115,8 @@ components:
           $ref: '#/components/schemas/StatusType'
         CreditStatusRec:
           $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -444,6 +446,27 @@ components:
         AcctKeys:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
       description: Account Reference. Provides reference data to an account object the transaction. This is the account being credited.
+    CreditAddOperRequest_CreditInfo_CurAmt:
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount.
+
+            **Note:** There can be up to two occurences, one for the transaction amount and one for the fee. Since this solution supports balanced transactions, the same amount is assumed to be for any G/L offsets.
+
+
+
+            DNA only accepts in Absolute Value format (positive)
+    CreditAddOperRequest_CreditInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      properties:
+        CurAmt:
+          type: array
+          description: Transaction Amount.
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt'
     CreditAddOperRequest_CreditInfo:
       required:
       - CompositeCurAmt
@@ -460,8 +483,25 @@ components:
         CompositeCurAmt:
           type: array
           description: 'Composite Currency Amount. Indicates the composition of the credit amount. '
-          items: {}
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CompositeCurAmt'
       description: Credit Information. Details of the credit transaction.
+    CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+      description: Account Keys.
+    CreditAddOperResponse_CreditStatusRec_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys'
+      description: Credit Keys. Used to identify the Credit record.
     CreditAddOperResponse_CreditStatusRec_CreditStatus:
       required:
       - CreditStatusCode
@@ -482,6 +522,8 @@ components:
       - CreditStatus
       type: object
       properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
         CreditStatus:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditStatus'
       description: Credit Status Record. Used in responses to return results from an add, modify or delete operation on the object.
@@ -518,6 +560,28 @@ components:
         AcctKeys:
           $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys_AcctKeys'
       description: Credit Keys. Used to identify the Credit record.
+    CreditRevOperRequest_CreditInfo_CompositeCurAmt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount.
+
+            **Note:** There can be up to two occurences, one for the transaction amount and one for the fee. Since this solution supports balanced transactions, the same amount is assumed to be for any G/L offsets.
+
+
+
+            It is an optional property. If not provided then original transaction amount will be considered for reversal. If partial amount or incorrect is provided then transction shall not be processed.
+      description: Transaction Amount.
+    CreditRevOperRequest_CreditInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      type: object
+      properties:
+        CurAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt_CurAmt'
+      description: 'Composite Currency Amount. Indicates the composition of the credit reverasl amount. '
     CreditRevOperRequest_CreditInfo_NetworkRefData:
       type: object
       properties:
@@ -543,6 +607,7 @@ components:
         **Note:** The original transaction would have been posted during the same business day. Used in an auto-correct of the transaction.
     CreditRevOperRequest_CreditInfo:
       required:
+      - CompositeCurAmt
       - CreditType
       type: object
       properties:
@@ -554,6 +619,8 @@ components:
             **Note:** Refers to the RtxnTypCd to be performed.
           enum:
           - Deposit
+        CompositeCurAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt'
         NetworkRefData:
           $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_NetworkRefData'
       description: 'Credit Information. Details of the credit transaction. '
@@ -583,6 +650,18 @@ components:
       - CreditStatus
       type: object
       properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
         CreditStatus:
           $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditStatus'
       description: Credit Status Record. Used in responses to return results from a add, reversal of the Object.
+    CreditRevOperResponse_Receipt:
+      type: object
+      properties:
+        TrnAmt:
+          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_TrnAmt'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: "Transaction Identification. \n\n**Note:** Refers to the unique generated transaction number (RtxnNbr)."
+      description: Receipt. Transaction receipt.
