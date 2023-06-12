@@ -72,7 +72,8 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 
 
 [downoad-icon-PRM]: https://github.com/Fiserv/banking-hub/assets/81968767/934da291-c743-41cb-9325-16cf2c8d7bda
-[PRM]: https://github.com/Fiserv/banking-hub/files/11449420/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
+[PRM]: https://github.com/Fiserv/banking-hub/files/11728540/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
+
 
 [downoad-icon-SIG]: https://github.com/Fiserv/banking-hub/assets/81968767/b4c09878-6e73-4e9e-9171-74bcd3e4f8b6
 [SIG]: https://github.com/Fiserv/banking-hub/files/11710490/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip
