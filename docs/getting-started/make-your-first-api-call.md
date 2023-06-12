@@ -110,7 +110,7 @@ The attached Postman collection use variables to store and reuse few values such
 
 To  test an API using Postman application: 
 
-1. Open a web or desktop application of Postman
+1. Open a web or desktop application of Postman.
 2.	Create a new HTTP request
 3.	Set the API method to POST or PUT, as mentioned in the API document which you want to test 
     <!-- theme: info -->
