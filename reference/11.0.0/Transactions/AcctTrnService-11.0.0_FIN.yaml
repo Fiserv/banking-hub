@@ -65,7 +65,7 @@ components:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_RecCtrlOut'
         AcctTrnRec:
           type: array
-          description: 'Account Transaction Record. '
+          description: 'Details of a transaction record that includes information, such as transaction keys, transaction status, amount, description and so on. '
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnRec'
     EFXHeader:
@@ -384,13 +384,15 @@ components:
       properties:
         MaxRecLimit:
           type: integer
-          description: Maximum Record Limit. This is the maximum number of records that the server should add to the result set which is available to satisfy this request.
+          description: |+
+            Maximum number of records that can be returned within a single response.
+
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: 'Cursor. Next Record Pointer Included in the response only if additional records are available. '
-      description: Record Control In. Allows the client to specify a maximum number of records that it is capable of processing within a single response.
+          description: Next record pointer is included in the response if additional records are available.
+      description: Maximum number of records that a client can specify to process within a single response.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys:
       required:
       - AcctId
@@ -399,29 +401,39 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
-            Account Type.
+            Type of an account.
 
-            **Note:** CDA - Certificate of deposit
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            CLA - Commercial loan account
+            **Note:** The following values indicate:
 
-            CMA - Cash management account
+            - CDA: Certificate of deposit
 
-            DDA - Demand deposit account
+            - CLA: Commercial loan account
 
-            EQU - Home equity loan
+            - CMA: Cash management account
 
-            ILA - Installment loan account
+            - DDA: Demand deposit account
 
-            LOC - Consumer line of credit
+            - EQU: Home equity loan
 
-            MMA - Money market account
+            - ILA: Installment loan account
 
-            SDA - Savings deposit account
+            - LOC: Consumer line of credit
+
+            - MMA: Money market account
+
+            - SDA: Savings deposit account
           enum:
           - CDA
           - CLA
@@ -432,37 +444,31 @@ components:
           - LOC
           - MMA
           - SDA
-      description: Account Keys.  Contains data that describes the key of the Account record.
+      description: Unique information to identify the account record.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_DtRange:
       properties:
         StartDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Start Date
-
-            **Note:** When only StartDt is provided,  the service provider defaults the EndDate with a value equal to StartDt plus 30 days.
+          description: "Start date and time value of the date range to search the transaction records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n**Note:** If only StartDt is provided, then the service provider defaults the EndDate with a value equal to StartDt plus 30 days."
         EndDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            End Date
-
-            **Note:** When only EndDt is provided, the service provider defaults the StartDt with a value equal to EndDt minus 30 days.
+          description: "End date and time value of the date range to search the transaction records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n**Note:** If only EndDt is provided, then the service provider defaults the StartDt with a value equal to EndDt minus 30 days."
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_CurAmtRange_LowCurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
-      description: Low Currency Amount.
+          description: Starting dollar amount value to retrieve transaction records based on currency amount range.
+      description: Details of the starting currency range that contains amount value and currency code information.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_CurAmtRange_HighCurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
-      description: High Currency Amount.
+          description: Ending dollar amount value to retrieve transaction records based on currency amount range.
+      description: Details of the ending currency range that contains amount value and currency code information.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_CurAmtRange:
       type: object
       properties:
@@ -470,22 +476,18 @@ components:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_CurAmtRange_LowCurAmt'
         HighCurAmt:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_CurAmtRange_HighCurAmt'
-      description: 'Currency Amount Range. Contains the range of amounts. '
+      description: Details of the amount range that contains the low currency and high currency amount to return the transaction records.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_Sort:
       properties:
         SortCriterionType:
           type: string
-          description: |+
-            Sort Criterion Type. Used to specify item used to order transactions history items.
-
+          description: "Type of criterion to sort the transaction records. \n\n"
         SortOrder:
           type: string
           description: |-
-            Sort Order. Indicates the sort value as ascending or descending.
+            Type of sorting for a transaction.
 
-
-
-            **Note:** Transactions are sorted in an ascending order (oldest to newest) by default
+            **Note:** By default, transactions are sorted in an ascending order (oldest to newest).
     AcctTrnInqOperBySecuredRequest_AcctTrnSel:
       type: object
       properties:
@@ -494,51 +496,53 @@ components:
         DtRange:
           type: array
           description: |-
-            Date Range.Contains the range of dates.
+            Details of date range that contains the start date and the end date information to return the transaction records.
 
-            **Note:** When Date Range is not provided in the request, the search is done on transactions occurred on the last 30 days.
+            **Note:** If Date Range is not provided in the request, then the search is done on transactions occurred in the last 30 days.
 
-            The  number of days within a Date Range (StartDt and EndDt) cannot exceed 365 days.
+            The number of days within a Date Range (StartDt and EndDt) cannot exceed 365 days.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_DtRange'
         CurAmtRange:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_CurAmtRange'
         DrCrType:
           type: string
-          description: Debit Credit Type.
+          description: Type of account transaction.
           enum:
           - Debit
           - Credit
         TrnSrc:
           type: array
           description: |-
-            Transaction Source. Indicates the transaction source for example: POS, ATM, etc. See list of valid enumerated values.
+            Type of transaction source.
 
-            **Note:** ACH - US Automated Clearing House
+            **Note:** The following values indicate:
 
-            ACTIMIZE - Actimize Fraud
+            - ACH: US Automated Clearing House
 
-            AFT - Canadian Automated Funds Transfer
+            - ACTIMIZE: Actimize Fraud
 
-            CORE - Finxact Core Funds Transfer
+            - AFT: Canadian Automated Funds Transfer
 
-            FEDWIRE - Wire Transfer
+            - CORE: Finxact Core Funds Transfer
 
-            SEPA - SEPA Transfer
+            - FEDWIRE: Wire Transfer
 
-            SWIFT - Electronic SWIFT Interface
+            - SEPA: SEPA Transfer
 
-            CHECK - Check
+            - SWIFT: Electronic SWIFT Interface
 
-            EFT - Electronic Funds Transfer
+            - CHECK: Check
 
-            P2P - Peer to Peer transfer
+            - EFT: Electronic Funds Transfer
 
-            RTP - Real Time Payments
+            - P2P: Peer to Peer transfer
 
-            MANUALWIRE - Manual Wire Transactions
+            - RTP: Real Time Payments
 
-            FAIM - FAIM Fedwire Transfers
+            - MANUALWIRE: Manual Wire Transactions
+
+            - FAIM: FAIM Fedwire Transfers
           items: {}
           enum:
           - ACH
@@ -557,12 +561,12 @@ components:
         Sort:
           type: array
           description: |-
-            Sort. Used to specify one or more sort criteria for transactions history items.
+            Details of the sort criteria to arrange or classify the requested transaction records.
 
-            **Note:** When to sort is explicity provided, transactions are sorted in an ascending order
+            **Note:** If the sort is explicitly provided, then transactions are sorted in an ascending order.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_Sort'
-      description: Account Transaction Selection. Used to describe the selection criteria when retrieving account transaction records.
+      description: Details of the selection criteria to retrieve the account transaction records.
     AcctTrnInqOperBySecuredResponse_RecCtrlOut:
       required:
       - SentRecCount
@@ -570,21 +574,23 @@ components:
       properties:
         SentRecCount:
           type: integer
-          description: 'Sent Record Count. Number of records matching the selection criteria that are included in this message. '
+          description: Total number of records that matched the selection criteria and returned in the response message.
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: Cursor.  Next Record Pointer Included in the response only if additional records are available. This is used in the RecCtrlIn aggregate to request more records.
-      description: Record Control Out. Used in inquiry responses to provide a client that used the RecCtrlIn aggregate in the request with information it needs to retrieve the rest of the records that matched the specified selection criteria.
+          description: Next record pointer is included in the response if additional records are available.
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
     AcctTrnInqOperBySecuredResponse_AcctTrnKeys:
       type: object
       properties:
         AcctTrnId:
           maxLength: 36
           type: string
-          description: Account Transaction Identifier. Uniquely identifies the Transaction record.
-      description: 'Account Transaction Keys. '
+          description: |+
+            Unique identification number of a transaction record.
+
+      description: Unique information to identify a transaction record.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode:
       required:
       - CurCodeValue
@@ -592,20 +598,29 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: Currency Code Type.
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
         CurCodeValue:
           type: string
-          description: Currency Code Value.
-      description: Currency Code.
+          description: |-
+            Currency code value as per the ISO currency code format set in the CurCodeType field.
+
+            For example, currency code for the US Dollar in alpha and numeric formats are:
+
+            - USD (in ISO4217-Alpha format)
+
+            - 840 (in ISO4217-Numeric format)
+
+            Presently only USD currency code is supported.
+      description: Details of currency code.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Amount in decimal format.
         CurCode:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode'
-      description: Transaction Amount. Total Transaction Amount posted to the account.
+      description: Details of the transaction amount that contains currency code and monetary value descriptions.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CurCode:
       required:
       - CurCodeValue
@@ -613,23 +628,32 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: Currency Code Type.
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: Currency Code Value.
-      description: Currency Code.
+          description: |-
+            Currency code value as per the ISO currency code format set in the CurCodeType field.
+
+            For example, currency code for the US Dollar in alpha and numeric formats are:
+
+            - USD (in ISO4217-Alpha format)
+
+            - 840 (in ISO4217-Numeric format)
+
+            Presently only USD currency code is supported.
+      description: Details of currency code.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_StmtRunningBal:
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Total transaction amount posted to the account.
         CurCode:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CurCode'
         StmtRunningBalType:
           type: string
-          description: 'Statement Running Balance Type. For Loan Accounts the supported standard balance types are Principal, Unapplied and Escrow (when supported by the SP). For Deposit Accounts the supported standard balance types are: Available, Running and Unapplied.'
+          description: "Type of account balance.\n\nFor Loan accounts, the supported standard balance types are: \n\n- Principal\n\n- Unapplied \n\n- Escrow (when supported by the SP)\n\nFor Deposit accounts, the supported standard balance types are: \n\n- Available\n\n- Running\n\n- Unapplied"
           enum:
           - Running
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_Checks:
@@ -637,71 +661,73 @@ components:
         ChkNum:
           maxLength: 22
           type: string
-          description: ' Check Number.'
+          description: Check number associated with the transaction.
         TrnImageId:
           maxLength: 36
           type: string
-          description: Transaction Image Identifier. Unique identifier that ties the transaction to a related image of the transaction.
+          description: Unique transaction image identifier that associates transaction image with the related transaction.
         TrnImageBackId:
           maxLength: 36
           type: string
-          description: Transaction Image Back Identifier. Unique identifier that ties the transaction to a related image of the transaction.
+          description: Unique transaction image back identifier that associates transaction image with the related transaction.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_BatchPostingData:
       type: object
       properties:
         SeqNum:
           type: integer
-          description: Sequence Number. Identifies the sequence number of the transaction within the batch run.
+          description: Sequence number of the transaction within a batch.
           format: int64
-      description: Batch Posting Data. Identifies the run, batch, and sequence numbers for the transaction.
+      description: Details of a transaction batch.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo:
       type: object
       properties:
         TrnCode:
           type: string
-          description: Transaction Code. The Service Provider Transaction Code posted to the account.
+          description: 'Service provider transaction code of the payment posted to the account. '
         DrCrType:
           type: string
-          description: Debit Credit Type. Indicates if the transaction history was a debit or credit to the account.
+          description: Type of account transaction.
           enum:
           - Debit
           - Credit
         TrnRevType:
           type: string
-          description: Transaction Reversal Type. Identifies if the transaction was reversed and clasiffies the type of reversal.
+          description: 'Type of transaction reversal. '
           enum:
           - Reversal
           - MatchedTransaction
         TrnSrc:
           type: string
           description: |-
-            Transaction Source. Indicates the transaction source.
+            Type of transaction source.
 
-            **Note:** ACH - US Automated Clearing House
+            **Note:** The following values indicate:
 
-            ACTIMIZE - Actimize Fraud
+            - ACH: US Automated Clearing House
 
-            AFT - Canadian Automated Funds Transfer
+            - ACTIMIZE: Actimize Fraud
 
-            CORE - Finxact Core Funds Transfer
+            - AFT: Canadian Automated Funds Transfer
 
-            FEDWIRE - Wire Transfer
+            - CORE: Finxact Core Funds Transfer
 
-            SEPA - SEPA Transfer
+            - FEDWIRE: Wire Transfer
 
-            SWIFT - Electronic SWIFT Interface
+            - SEPA: SEPA Transfer
 
-            CHECK - Check
+            - SWIFT: Electronic SWIFT Interface
 
-            EFT - Electronic Funds Transfer
+            - CHECK: Check
 
-            P2P - Peer to Peer transfer
+            - EFT: Electronic Funds Transfer
 
-            RTP - Real Time Payments
+            - P2P: Peer to Peer transfer
 
-            MANUALWIRE - Manual Wire Transactions
+            - RTP: Real Time Payments
 
-            FAIM - FAIM Fedwire Transfers
+            - MANUALWIRE: Manual Wire Transactions
+
+            - FAIM: FAIM Fedwire Transfers
           enum:
           - ACH
           - ACTIMIZE
@@ -718,57 +744,60 @@ components:
           - FAIM
         MemoPostInd:
           type: boolean
-          description: Memo Post Indicator. Indicates whether the transaction was memo posted. When True, the transaction is memo posted today and not gone yet through nightly processing.
+          description: "Flag to indicate the transaction is memo posted. \n\nIf the value is 'true', then the transaction is memo posted but pending nightly processing. "
         PostedDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Posted Date. Date the transaction was posted in the system
+          description: "Date and time value when the transaction is posted in the system. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. Date the transaction went into effect on the account.
+          description: "Effective date and time when the transaction went into effect for an account. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
         TrnDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: 'Transaction Date. Transaction date and time for this transaction as recorded on the history record. '
+          description: "Transaction date and time value when the transaction is applied to the account. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
         TrnAmt:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt'
         Desc:
           maxLength: 200
           type: array
-          description: Description.
+          description: 'Custom-defined description for the transaction. '
           items: {}
         StmtRunningBal:
           type: array
-          description: Statement Running Balance. Balance of the account after the transaction is posted.
+          description: Details of the account balance after the transaction is posted to the account.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_StmtRunningBal'
         ChkNum:
           maxLength: 22
           type: string
-          description: Check Number associated with the Transaction.
+          description: Number of checks associated with the transaction.
         Checks:
           type: array
-          description: Checks associated with the Transaction.
+          description: Details of a check associated with the transaction.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_Checks'
         BatchPostingData:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_BatchPostingData'
         ImageInd:
           type: boolean
-          description: Image Indicator. Indicatesimage(s) are availalble to the transaction.
+          description: 'Flag to indicate the related images to the transaction are available. '
         TrnImageId:
           maxLength: 36
           type: string
-          description: "Transaction Image Identifier. Unique identifier that ties the transaction to a related image of the transaction.\n\n**Note:** For check Images this is the Image Front  "
+          description: |-
+            Unique transaction image identifier that associates transaction image with the related transaction.
+
+            **Note:** For check images, this is the front view of the check.
         TrnImageBackId:
           maxLength: 36
           type: string
           description: |-
-            Transaction Image Back Identifier. Unique identifier that ties the transaction to a related image of the transaction.
+            Unique transaction image back identifier that associates transaction image with the related transaction.
 
-            **Note:** For check Images this is the Image Back
-      description: 'Account Transaction Information.  '
+            **Note:** For check images, this is the back view of the check.
+      description: Details of account transaction information. For example, transaction type, transaction amount, description, transaction code and so on.
     AcctTrnInqOperBySecuredResponse_AcctTrnStatus:
       required:
       - AcctTrnStatusCode
@@ -776,14 +805,14 @@ components:
       properties:
         AcctTrnStatusCode:
           type: string
-          description: Account Transaction Status Code. Provides the current state of the AcctTrn record.
+          description: Code to indicate the current status of the account transaction record.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: 'Effective Date. The date that an associated action takes effect. '
-      description: 'Account Transaction Status. Provides the current state of the AcctTrn record. '
+          description: "Effective date and time when the account transaction status is changed. \n\nFormat: yyyy-mm-dd\n\nExample: 2021-12-31"
+      description: Details of the transaction status that contains the effective date and status information details.
     AcctTrnInqOperBySecuredResponse_AcctTrnRec:
       required:
       - AcctTrnInfo
