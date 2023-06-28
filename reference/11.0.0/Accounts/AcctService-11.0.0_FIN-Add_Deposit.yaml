@@ -27,7 +27,7 @@ paths:
             schema:
               $ref: '#/components/schemas/addAccountRequest'
       responses:
-        "202":
+        "201":
           description: Created
           content:
             application/json:
@@ -49,12 +49,7 @@ components:
       properties:
         PartyAcctRelInfo:
           type: array
-          description: |-
-            Party Relation Information. Identifies the parties and their relationships to the the account.
-
-            **Note:** Only one customer can be sent in the request.
-
-            PartyAcctRelInfo is not required when adding additional positions.
+          description: "Details of a relationship between party and account.\n\n**Note:** \n\n- Only one customer can be sent in the request.\n\n- This aggregate is not required when additional poistions are added on the account."
           items:
             $ref: '#/components/schemas/addAccountRequest_PartyAcctRelInfo'
         DepositAcctInfo:
@@ -340,8 +335,8 @@ components:
         PartyId:
           maxLength: 150
           type: string
-          description: Party Identifier.
-      description: Party Keys. Used to identify the Party record.
+          description: Unique identification number of a party record.
+      description: Unique information to identify the party record.
     addAccountRequest_PartyRef:
       required:
       - PartyKeys
@@ -349,14 +344,16 @@ components:
       properties:
         PartyKeys:
           $ref: '#/components/schemas/addAccountRequest_PartyRef_PartyKeys'
-      description: 'Party Reference. Reference to a party that is part of the relationship. '
+      description: Reference details of a party that is part of the relationship with the account.
     addAccountRequest_PartyAcctRelData:
       required:
       - PartyAcctRelType
       properties:
         PartyAcctRelType:
           type: string
-          description: Party-to-Account Relationship. See Party-To-Account Relationship Type section for allowed values.
+          description: |+
+            Type of party relationship to account.
+
           enum:
           - Owner
           - JointTenancy
@@ -395,12 +392,12 @@ components:
           maxLength: 80
           type: string
           description: |-
-            Party-to-Account Relationship Description.
+            Description for the party to account relationship.
 
-            **Note:** It is responsibility of the client application to provide the value of the description of the relationship
+            **Note:** This field is client-defined and client application is reponsible to provide the value in the request.
         PartyAcctRelOrder:
           type: string
-          description: "Party-to-Account Relationship Order. Indicates the relationship order for JointTenancy or JointTenantsInCommon. \n\n"
+          description: Relationship order of party with an account in case of JointTenancy or JointTenantsInComman.
     addAccountRequest_PartyAcctRelInfo:
       properties:
         PartyRef:
@@ -408,22 +405,20 @@ components:
         PartyAcctRelData:
           type: array
           description: |-
-            Party-to-Account Relationship Data.
+            Details of the relationship of the party to the account.
 
-            **Note:** Only one relationship data.
+            **Note:** Only one relationship data is required to be sent in the request.
           items:
             $ref: '#/components/schemas/addAccountRequest_PartyAcctRelData'
         OwnerPercent:
           type: number
-          description: Owner Percent. Percentage of ownership the party has in the account.
+          description: Percentage value of the ownership that the party has in the account.
         TaxReportingOwnerInd:
           type: boolean
-          description: |+
-            Tax Reporting Owner Indicator. Indicates if the party is the tax reporting owner of the account.
-
+          description: Flag to indicate the party has tax responsibility on the account.
         FDICOwnership:
           type: string
-          description: "FDIC Ownership.\n\n**Note:** Valid values are:\n\n\n\nUnknown \n\nSGL - Single\n\nJNT - Joint\n\nREV - Revocable Trust\n\nIRR - Irrevocable Trust\n\nCRA - Other Retirement\n\nEBP - Employee Benefit Plan\n\nBUS - Business\n\nGOV - Government\n\nGOV2 - Government 2\n\nGOV3 - Government 3\n\nMSA - Mortgage Servicing\n\nPBA - Public Bond\n\nDIT - Depository Institution\n\nANC - Annuity Contract\n\nBIA - American Indian\n\nDOE - Department of Energy"
+          description: "Value that indicate Federal Deposit Insurance Corporation (FDIC) ownership.\n\n**Note:** Some of the valid values for this field are:\n\n- Unknown \n\n- SGL - Single\n\n- JNT - Joint\n\n- REV - Revocable Trust\n\n- IRR - Irrevocable Trust\n\n- CRA - Other Retirement\n\n- EBP - Employee Benefit Plan\n\n- BUS - Business\n\n- GOV - Government\n\n- GOV2 - Government 2\n\n- GOV3 - Government 3\n\n- MSA - Mortgage Servicing\n\n- PBA - Public Bond\n\n- DIT - Depository Institution\n\n- ANC - Annuity Contract\n\n- BIA - American Indian\n\n- DOE - Department of Energy"
     addAccountRequest_DepositAcctInfo_AcctPref_CurCode:
       required:
       - CurCodeValue
@@ -431,43 +426,44 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: Currency Code Type.
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: |-
-            Currency Code Value.
-
-            **Note:** Reporting currency of account may be different from position currency code.
-      description: |+
-        Currency Code.
-
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n\n\n**Note:** Reporting currency of account may be different from position currency code."
+      description: Details of currency code.
     addAccountRequest_DepositAcctInfo_AcctPref:
       type: object
       properties:
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctPref_CurCode'
-      description: 'Account Preferences. Used to specify the account''s preferences. '
+      description: Preferences to define the default settings such as language and region for an account.
     addAccountRequest_DepositAcctInfo_AcctIdent:
       properties:
         AcctIdentType:
           type: string
           description: |-
-            Account Identification Type. Valid values include: AcctNum, Port, AcctTypeCode.
+            Type of account identifiers.
 
-            **Note:** Finxact AcctNbr
+
+
+            **Note:** Refers to finxact account number.
           enum:
           - PORT
         AcctIdentValue:
           maxLength: 36
           type: string
           description: |-
-            Account Identification Value.
+            Account identification value.
 
-            **Note:** This value is required when additional positions are added to an account (Multi Position Account).
+            **Note:** *Conditionally Required field*
 
-            This value is also used when the sender is creating a new account and provides the Finxact account number.
+
+
+            - This value is required when additional positions are added to the account (Multi-Position Account).
+
+            - This value is also used when the sender is creating a new account and provides the Finxact account number.
     addAccountRequest_DepositAcctInfo:
       type: object
       properties:
@@ -476,34 +472,42 @@ components:
         Ownership:
           type: string
           description: |-
-            Ownership. Valid values: Individual, JointAnd, JointOr.
+            Value that indicate ownership on the account.
 
-            **Note:** Configurable by FI. Refers to acctType in Finxact.
+            **Note:** *Required field*
 
-            This field is required input.
+
+
+            This field is required to be provided in the request and is configured by the financial institution.
         AcctIdent:
           type: array
-          description: 'Account Identifier. Used as an alternative account identifier. '
+          description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. "
           items:
             $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctIdent'
         ProductIdent:
           maxLength: 42
           type: string
-          description: ' Product Identifier. Indicates the processing options of the account.'
+          description: Unique identifier of a product to indicate the processing options of account.
         AcctType:
           type: string
           description: |-
-            Account Type Value. Used to identify the application associated with the account record. This element is required when adding a new account.
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
 
-            MMA - Money market account
 
-            SDA - Savings deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            CDA - Certificate of deposit
+            **Note:** Some of the applicable account types are:
 
-            CMA - Cash management account
+            - DDA: Demand Deposit Account
+
+            - MMA: Money Market Account
+
+            - SDA: Savings Deposit Account
+
+            - CDA: Certificate of Deposit Account
+
+            - CMA: Cash Management Account
           enum:
           - DDA
           - MMA
@@ -513,40 +517,52 @@ components:
         ResponsibleBranch:
           maxLength: 32
           type: string
-          description: "Responsible Branch. Branch responsible for the relationship.\n\n**Note:** Reserve to use for account segment  "
+          description: |-
+            Branch responsible for the relationship.
+
+            **Note:** This field is reserved to be used for the account segment.
         Nickname:
           maxLength: 80
           type: string
-          description: Nickname. Indicates the nickname used by the party to more easily identify accounts.
+          description: Name that customer can assign to the account for easy identification.
         AcctTitle:
           maxLength: 255
           type: string
-          description: Account Title.Title on account typically identifies ownership or responsibility for account and manner in which ownership/responsibility is assigned (e.g. John Doe CUSTODIAN).
+          description: "Title of account. This value is typically used to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\nFor example, John Doe CUSTODIAN."
         AccountingValue:
           maxLength: 15
           type: string
-          description: "Accounting Value. The numeric value associated with the chosen Accounting Method is the Accounting Value.\n\n**Note:** Reserve to use for account segment  "
+          description: |-
+            Numeric value associated with the chosen accounting method.
+
+            **Note:** This field is reserved to be used for the account segment.
         ClassCode:
           type: string
           description: |-
-            Class Code. Used to group accounts. The Class Code controls the method of processing and reporting accounts.
+            Code to group accounts for the purpose of processing and reporting.
 
-            **Note:** Used for AcctGroup and is configurable by FI
+            **Note:** This field is used for grouping accounts and is configured by the financial institution.
         AcctTypeCode:
           type: string
-          description: "Account Type Code. Classifies the account for selection and totaling purposes. \n\n**Note:** Reserve to use for account segment  "
+          description: |-
+            Code to classify accounts for the purpose selection and totaling.
+
+            **Note:** This field is reserved to be used for the account segment.
         ReportGroupCode:
           type: string
-          description: "Report Group Code. Indicates a user defined code used to group accounts for reporting purposes.\n\n\n\n**Note:** Reserve to use for account segment  "
+          description: |-
+            Client-defined code to group the accounts for reporting purposes.
+
+            **Note:** This field is reserved to be used for the account segment.
         DocDistributionOption:
           type: string
           description: |+
-            Document Distribution Option. Indicates the distribution method when processing statements and notices.
+            Client defined method to indicate the document distribution method used for processing the notices and statement forms.
 
         CostCenter:
           type: string
-          description: "Cost Center. Cost Center to where activity of this account is reported. \n\n\n\n**Note:** Reserve to use for account segment  "
-      description: 'Deposit Account Information. The DepositAcctInfo aggregate contains the details of a Deposit Account. '
+          description: "Cost center where activity of this account is reported. \n\n**Note:** This field is reserved to be used for the account segment."
+      description: Details of the deposit account.
     addAccountResponse_AcctStatusRec_AcctKeys:
       required:
       - AcctId
@@ -555,28 +571,34 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: Unique identification number of an account record.
         AcctType:
           type: string
           description: |-
-            Account Type.
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
 
-            MMA - Money market account
 
-            SDA - Savings deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            CDA - Certificate of deposit
+            **Note:** Some of the applicable account types are:
 
-            CMA - Cash management account
+            - DDA: Demand Deposit Account
+
+            - MMA: Money Market Account
+
+            - SDA: Savings Deposit Account
+
+            - CDA: Certificate of Deposit Account
+
+            - CMA: Cash Management Account
           enum:
           - DDA
           - MMA
           - SDA
           - CDA
           - CMA
-      description: Account Keys. Used to uniquely identify an Account record.
+      description: Unique information to identify the account record.
     addAccountResponse_AcctStatusRec_AcctStatus:
       required:
       - AcctStatusCode
@@ -584,14 +606,14 @@ components:
       properties:
         AcctStatusCode:
           type: string
-          description: Account Status Code.
+          description: Status code of an account.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
-      description: Account Status.
+          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+      description: Status details of the account.
     addAccountResponse_AcctStatusRec:
       required:
       - AcctKeys
@@ -602,4 +624,4 @@ components:
           $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctKeys'
         AcctStatus:
           $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctStatus'
-      description: Account Status Record. Used in responses to return results from an add, modify or delete operation on the object.
+      description: Details of the account status record in response to the add operation.
