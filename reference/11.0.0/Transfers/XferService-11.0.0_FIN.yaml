@@ -79,6 +79,41 @@ paths:
       x-child-product-name: Transfers
       x-core: Finxact
   /xferservice/payments/transfers/secured:
+    put:
+      tags:
+      - Delete Transfer
+      summary: Delete Transfer
+      description: "Deletes the fund transfer instruction record.\n        <br><br>\n        For more information about the Transfers domain, <a href=\"../docs/?path=docs/fintechs/transfers.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/cash-mgt.md\" title=\"Click to open\">Cash Management</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/treasury-services.md\" title=\"Click to open\">Treasury Services</a></li>\n          </ul>"
+      operationId: SecuredXferDelOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecuredXferDelOperRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecuredXferDelOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecuredXferDelOperResponse'
+      x-group-name: Transfer Service
+      x-proxy-name: Delete Transfer
+      x-child-product-name: Transfers
+      x-core: Finxact
     post:
       tags:
       - Get Transfer
@@ -166,6 +201,20 @@ components:
           $ref: '#/components/schemas/StatusType'
         XferStatusRec:
           $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec'
+    SecuredXferDelOperRequest:
+      required:
+      - XferKeys
+      properties:
+        XferKeys:
+          $ref: '#/components/schemas/SecuredXferDelOperRequest_XferKeys'
+    SecuredXferDelOperResponse:
+      required:
+      - XferStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        XferStatusRec:
+          $ref: '#/components/schemas/SecuredXferDelOperResponse_XferStatusRec'
     SecuredXferInqOperRequest:
       required:
       - XferSel
@@ -180,7 +229,7 @@ components:
           $ref: '#/components/schemas/StatusType'
         XferRec:
           type: array
-          description: Transfer Record.
+          description: 'Details of transfer record. '
           items:
             $ref: '#/components/schemas/SecuredXferInqOperResponse_XferRec'
     XferListInqRequest:
@@ -201,7 +250,7 @@ components:
           $ref: '#/components/schemas/XferListInqResponse_RecCtrlOut'
         XferListRec:
           type: array
-          description: Transfer List Record.
+          description: Details of the transfer list record returned in the response for the specified search criteria.
           items:
             $ref: '#/components/schemas/XferListInqResponse_XferListRec'
     XferModOperRequest:
@@ -210,7 +259,7 @@ components:
       - XferKeys
       properties:
         XferKeys:
-          $ref: '#/components/schemas/SecuredXferInqOperRequest_XferSel_XferKeys'
+          $ref: '#/components/schemas/SecuredXferDelOperRequest_XferKeys'
         XferInfo:
           $ref: '#/components/schemas/XferModOperRequest_XferInfo'
     XferModOperResponse:
@@ -540,31 +589,41 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
-            Account Type.
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            MMA - Money market account
+            **Note:** Some of the valid values for this field are:
 
-            SDA - Savings deposit account
+            - DDA: Demand Deposit Account
 
-            CDA - Certificate of deposit
+            - MMA:  Money Market Account
 
-            CMA - Cash management account
+            - SDA: Savings Deposit Account
 
-            EQU - Home equity loan
+            - CDA: Certificate of Deposit Account
 
-            ILA - Installment loan account
+            - CMA: Cash Management Account
 
-            CLA - Commercial loan account
+            - EQU: Home Equity Loan
 
-            LOC - Consumer line of credit
+            - ILA: Installment Loan Account
 
-            MLA - Mortgage Loan Account
+            - CLA: Commercial Loan Account
+
+            - LOC: Consumer Line of Credit
+
+            - MLA: Mortgage Loan Account
           enum:
           - DDA
           - MMA
@@ -578,28 +637,22 @@ components:
           - MLA
         FIIdentType:
           type: string
-          description: Financial Institution Identification Type.
+          description: 'Unique identification number of a financial institution. '
           enum:
           - RoutingNum
         FIIdent:
           maxLength: 34
           type: string
-          description: |-
-            Financial Institution Identification.
-
-            **Note:** This information is only needed for collection order where FromAccount is a external account to FI
-      description: Account Keys. Used to uniquely identify an Account record.
+          description: "Unique identification number of a financial institution. \n\n**Note:** This field is only needed for collection order where FromAccount is a external account to financial institute."
+      description: Unique information to identify the account record.
     XferAddOperRequest_XferInfo_FromAcctRef_AcctSummInfo:
       type: object
       properties:
         AcctTitle:
           maxLength: 255
           type: string
-          description: |-
-            Account Title.Title on account typically identifies ownership or responsibility for account and manner in which ownership/responsibility is assigned (e.g. John Doe CUSTODIAN).
-
-            **Note:** This information is only needed for collection order where FromAccount is a external account to FI
-      description: Account Summary Information.
+          description: "Title of account. This value is typically used to indicate the ownership or responsibility of accountholder and manner in which the ownership or responsibility is assigned. \n\nFor example, John Doe CUSTODIAN\n\n**Note:** This field is only needed for collection order where FromAccount is a external account to financial institute."
+      description: Summary details of the account.
     XferAddOperRequest_XferInfo_FromAcctRef:
       required:
       - AcctKeys
@@ -609,7 +662,7 @@ components:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctKeys'
         AcctSummInfo:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctSummInfo'
-      description: From Account Reference. Reference to the account from where funds are transferred.
+      description: Reference account information from which the funds are transferred.
     XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys:
       required:
       - AcctId
@@ -618,31 +671,41 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
-            Account Type.
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            MMA - Money market account
+            **Note:** Some of the valid values for this field are:
 
-            SDA - Savings deposit account
+            - DDA: Demand Deposit Account
 
-            CDA - Certificate of deposit
+            - MMA:  Money Market Account
 
-            CMA - Cash management account
+            - SDA: Savings Deposit Account
 
-            EQU - Home equity loan
+            - CDA: Certificate of Deposit Account
 
-            ILA - Installment loan account
+            - CMA: Cash Management Account
 
-            CLA - Commercial loan account
+            - EQU: Home Equity Loan
 
-            LOC - Consumer line of credit
+            - ILA: Installment Loan Account
 
-            MLA - Mortgage Loan Account
+            - CLA: Commercial Loan Account
+
+            - LOC: Consumer Line of Credit
+
+            - MLA: Mortgage Loan Account
           enum:
           - DDA
           - MMA
@@ -656,28 +719,17 @@ components:
           - MLA
         FIIdentType:
           type: string
-          description: Financial Institution Identification Type.
+          description: 'Unique identification number of a financial institution. '
           enum:
           - RoutingNum
         FIIdent:
           maxLength: 34
           type: string
           description: |-
-            Financial Institution Identification.
+            Unique identification number of a financial institution.
 
-            **Note:** This information is only needed for payment order where ToAccount is a external account to FI
-      description: Account Keys. Used to uniquely identify an Account record.
-    XferAddOperRequest_XferInfo_ToAcctRef_AcctSummInfo:
-      type: object
-      properties:
-        AcctTitle:
-          maxLength: 255
-          type: string
-          description: |-
-            Account Title.Title on account typically identifies ownership or responsibility for account and manner in which ownership/responsibility is assigned (e.g. John Doe CUSTODIAN).
-
-            **Note:** This information is only needed for payment order where ToAccount is a external account to FI
-      description: Account Summary Information.
+            **Note:** This field is only needed for collection order where FromAccount is a external account to financial institute.
+      description: Unique information to identify the account record.
     XferAddOperRequest_XferInfo_ToAcctRef:
       required:
       - AcctKeys
@@ -686,8 +738,8 @@ components:
         AcctKeys:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys'
         AcctSummInfo:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef_AcctSummInfo'
-      description: To Account Reference.Reference to the account to where funds are transferred.
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctSummInfo'
+      description: Reference account information to which the funds are transferred.
     XferAddOperRequest_XferInfo_CurAmt_CurCode:
       required:
       - CurCodeValue
@@ -695,30 +747,27 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: Currency Code Type.
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n"
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: Currency Code Value.
-      description: Currency Code.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported.\n\n"
+      description: Details of currency code.
     XferAddOperRequest_XferInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Amount in decimal format.
         CurCode:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt_CurCode'
-      description: Currency Amount. Amount of the transfer.
+      description: Details of the amount to be processed.
     XferAddOperRequest_XferInfo_RecurModel_RecurRule:
       properties:
         RecurType:
           type: string
-          description: |-
-            Recurrence Type. Valid values are limited to: Daily, Monthly, Weekly, Yearly, SemiMonthly.
-
-            **Note:** Required field for a recurrent model.
+          description: "Type of recurrence. \n\n**Note:** This field is required for a recurrent model."
           enum:
           - Yearly
           - Monthly
@@ -726,11 +775,20 @@ components:
           - BusinessDaily
         RecurInterval:
           type: integer
-          description: "Recurrence Interval. Number of units between occurrences. Should be an integer. If  ‘Daily’: Number of days between occurrences. If   ‘Weekly’: Number of weeks between occurrences. If   'Monthly’: Number of months between occurrences. If   ‘Yearly’: Number of years between occurrences. If not provided, assume default value of 1, i.e. every day, every week, every month, or every year. If 'Cycle' : Number of the designated cycle. \n\n**Note:** Value 0 and 1 both mean recur interval equal to 1 but when the value is 0 the action starts on the same cycle of inception when the value is 1 skips current cycle of inceptions and starts on the next one. Value required for a recurrent model."
+          description: |-
+            Recurrence interval between two successive occurrences of transfer.
+
+            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
+
+            The default value is set to 1.
+
+            **Note:** This field is required for a recurrent model.
+
+            Value 0 and 1 both mean recur interval equal to 1 but when the value is 0 the action starts on the same cycle of inception when the value is 1 skips current cycle of inceptions and starts on the next one.
           format: int64
         DayOfMonth:
           type: string
-          description: Day Of Month.
+          description: Day of the month to define the day of transfer in the month.
           enum:
           - "1"
           - "2"
@@ -765,15 +823,18 @@ components:
           - "31"
         Occurrences:
           type: integer
-          description: "Ocurrences.\n\n**Note:** Occurences is optional. When Occurences is provided RecurEndDate should not be supplied. "
+          description: |-
+            Total number of transfer occurrences.
+
+            **Note:** This field is optional and if provided then RecurEndDate field should not be provided.
           format: int64
         RecurEndDate:
           type: string
-          description: "Recurrence End Date.\n\n**Note:** RecurEndDate is optional. When RecurEndDate is provided Occurences should not be supplied. "
+          description: "Date at which the recurrence cycle of transfer ends. \n\n\n\nFormat: yyyy-mm-dd\n\nExample: 2021-10-20\n\n**Note:** This field is optional and if provided then Occurrence field should not be provided."
           format: date
         WeekendOption:
           type: string
-          description: "Weekend Option. Describes how certain functionality, e.g. Transfers are processed on the Weekend.\n\n**Note:** Indicates the date on which it will process the event if the date it calculates  falls on a non-business day. You can define your institution’s non-business days in the\_calendar. "
+          description: "Option that indicate the functionality for weekends.\n\nFor example, tranfers are processed on weekends.\n\n**Note:** This field indicates the date on which the event is processed. If the date falls on a non-business day, then financial institution can define non-business days in the\_calendar. "
           enum:
           - NextBusinessDay
           - LastBusinessDay
@@ -783,25 +844,23 @@ components:
       properties:
         RecurRule:
           type: array
-          description: Recurrent Rule.
+          description: Details of the recurrence rule.
           items:
             $ref: '#/components/schemas/XferAddOperRequest_XferInfo_RecurModel_RecurRule'
-      description: Recurring Model. Represents a time based recurring pattern.
+      description: Details of recurring model that represents a time based recurring pattern.
     XferAddOperRequest_XferInfo_ExtendedXferData:
       type: object
       properties:
         SameDayInd:
           type: boolean
-          description: Same Day Indicator.
-      description: |+
-        Extended Transfer Data. Used to contain additional instructions for the transfer.
-
+          description: Flag to indicate the day is same.
+      description: Details of the extended transfer that contains additional instructions of the transfer.
     XferAddOperRequest_XferInfo:
       type: object
       properties:
         TransferType:
           type: string
-          description: "Transfer Type. Use to specify the type of transfer transaction.\n\n**Note:** Finxact supports types listed below. The type of order is defined based on the request fields.\n\nBookTransfer. A book transfer is a request to transfer funds between two different accounts at the same institution. \n\nCollection. \n\nPayment. A payment order is a request by a customer to debit their account at the institution operating on the Finxact Core and credit those funds to an external account held outside the institution. \n\nA collection order is a request by a customer to credit their account at the institution operating on the Finxact Core, with the corresponding debit for the funds coming from an external account held outside the institution.\n\n"
+          description: "Type of transfer transaction.\n\n**Note:** The type of order for the supported values is defined based on the request fields.\n\nSome of the values for this field means:\n\n- BookTransfer: A book transfer is a request to transfer funds between two different accounts at the same institution \n\n- Collection: A collection order is a request by a customer to credit their account at the institution operating on the Finxact Core, with the corresponding debit for the funds coming from an external account held outside the institution\n\n- Payment: A payment order is a request by a customer to debit their account at the institution operating on the Finxact Core and credit those funds to an external account held outside the institution. "
           enum:
           - FundsTransfer
           - LoanAdvance
@@ -819,33 +878,37 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective Date. The date that an associated action takes effect. Effective date of the transfer of funds.
+            Effective date and time when the transfer status is changed.
 
-            **Note:** EffDt is not provided for immediate transfers.
+            Format: yyyy-mm-ddThh:mm:ss.micro
+
+            Example: 2021-01-31T23:59:59.999
+
+            **Note:** This field is not required for immediate transfers.
         RecurModel:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_RecurModel'
         CSPRefIdent:
           maxLength: 36
           type: string
-          description: 'Customer Service Provider Reference Identifier. '
+          description: Unique cutomer service provider reference number for the transaction.
         ExtendedXferData:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ExtendedXferData'
         XferFromDesc:
           maxLength: 80
           type: array
-          description: Transfer From Description.
+          description: Description of the 'transfer from' or payer.
           items: {}
         XferToDesc:
           maxLength: 80
           type: array
-          description: Transfer To Description.
+          description: Description of the 'transfer to' or payee.
           items: {}
         OriginationSrc:
           type: string
           description: |-
-            Origination Source
+            Value of the origination source of the transaction.
 
-            **Note:** When the field is not provided is defaulted to "Internet"
+            **Note:** If the value is not provided, then by default the value is set to "Internet".
           enum:
           - Internet
           - PrearrangedPaymentOrDeposit
@@ -870,7 +933,7 @@ components:
           - TruncatedExchange
           - DestroyedCheck
           - Other
-      description: 'Trasfer Funds Information. The XferInfo aggregate contains the details of a Funds Transfer. '
+      description: Details of an automatic fund transfer.
     XferAddOperResponse_XferStatusRec_XferKeys_AcctKeys:
       required:
       - AcctId
@@ -879,31 +942,41 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
-            Account Type.
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            MMA - Money market account
+            **Note:** Some of the valid values for this field are:
 
-            SDA - Savings deposit account
+            - DDA: Demand Deposit Account
 
-            CDA - Certificate of deposit
+            - MMA:  Money Market Account
 
-            CMA - Cash management account
+            - SDA: Savings Deposit Account
 
-            EQU - Home equity loan
+            - CDA: Certificate of Deposit Account
 
-            ILA - Installment loan account
+            - CMA: Cash Management Account
 
-            CLA - Commercial loan account
+            - EQU: Home Equity Loan
 
-            LOC - Consumer line of credit
+            - ILA: Installment Loan Account
 
-            MLA - Mortgage Loan Account
+            - CLA: Commercial Loan Account
+
+            - LOC: Consumer Line of Credit
+
+            - MLA: Mortgage Loan Account
           enum:
           - DDA
           - MMA
@@ -915,7 +988,7 @@ components:
           - CLA
           - LOC
           - MLA
-      description: Account Keys. Used to uniquely identify an Account record.
+      description: Unique information to identify the account record.
     XferAddOperResponse_XferStatusRec_XferKeys:
       required:
       - AcctKeys
@@ -924,17 +997,17 @@ components:
         XferId:
           maxLength: 36
           type: string
-          description: Transfer Identifier. Identifier of the Xfer object.
+          description: Unique identification number of transfer record.
         AcctKeys:
           $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferKeys_AcctKeys'
         TransferType:
           type: string
-          description: Transfer Type.
+          description: Type of transfer.
           enum:
           - FundsTransfer
           - LoanAdvance
           - RegularPayment
-      description: 'Transfer Keys. Used to contain keys to the transfer object. '
+      description: Unique information to identify the transaction record.
     XferAddOperResponse_XferStatusRec_XferStatus:
       required:
       - XferStatusCode
@@ -942,14 +1015,24 @@ components:
       properties:
         XferStatusCode:
           type: string
-          description: Transfer Status Code.
+          description: Code to identify the status of the transfer.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
-      description: Transfer Status. Used to contain the current status of the Xfer Object.
+          description: |+
+            Effective date and time when transfer status is changed.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+      description: Status details of the transfer.
     XferAddOperResponse_XferStatusRec:
       required:
       - XferKeys
@@ -960,29 +1043,32 @@ components:
           $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferKeys'
         XferStatus:
           $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferStatus'
-      description: Trasfer Funds Status Record. Used in responses to return results from an add, modify or delete operation on the object.
-    SecuredXferInqOperRequest_XferSel_XferKeys:
+      description: Details of the fund transfer status record in response to the add operation.
+    SecuredXferDelOperRequest_XferKeys:
       type: object
       properties:
         XferId:
           maxLength: 36
           type: string
-          description: Transfer Identifier. Identifier of the Xfer object.
-      description: 'Transfer Keys. Used to contain keys to the transfer object. '
+          description: Unique identification number of transfer record.
+      description: Unique information to identify the transaction record.
+    SecuredXferDelOperResponse_XferStatusRec:
+      required:
+      - XferKeys
+      - XferStatus
+      type: object
+      properties:
+        XferKeys:
+          $ref: '#/components/schemas/SecuredXferDelOperRequest_XferKeys'
+        XferStatus:
+          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferStatus'
+      description: Details of the fund transfer status record in response to the delete operation.
     SecuredXferInqOperRequest_XferSel:
       type: object
       properties:
         XferKeys:
-          $ref: '#/components/schemas/SecuredXferInqOperRequest_XferSel_XferKeys'
-      description: Transfer Select. Funds Transfer Selection Aggregate used to select the transfer record to retrieve.
-    SecuredXferInqOperResponse_XferKeys:
-      type: object
-      properties:
-        XferId:
-          maxLength: 36
-          type: string
-          description: Transfer Identifier. Identifier of the Xfer object.
-      description: 'Transfer Keys. Used to contain keys to the transfer object.  '
+          $ref: '#/components/schemas/SecuredXferDelOperRequest_XferKeys'
+      description: "Selection criteria to retrieve the transfer records. \n\n"
     SecuredXferInqOperResponse_XferInfo_FromAcctRef_AcctKeys:
       required:
       - AcctId
@@ -991,31 +1077,41 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
-            Account Type.
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            MMA - Money market account
+            **Note:** Some of the valid values for this field are:
 
-            SDA - Savings deposit account
+            - DDA: Demand Deposit Account
 
-            CDA - Certificate of deposit
+            - MMA:  Money Market Account
 
-            CMA - Cash management account
+            - SDA: Savings Deposit Account
 
-            EQU - Home equity loan
+            - CDA: Certificate of Deposit Account
 
-            ILA - Installment loan account
+            - CMA: Cash Management Account
 
-            CLA - Commercial loan account
+            - EQU: Home Equity Loan
 
-            LOC - Consumer line of credit
+            - ILA: Installment Loan Account
 
-            MLA - Mortgage Loan Account
+            - CLA: Commercial Loan Account
+
+            - LOC: Consumer Line of Credit
+
+            - MLA: Mortgage Loan Account
           enum:
           - DDA
           - MMA
@@ -1029,14 +1125,14 @@ components:
           - MLA
         FIIdentType:
           type: string
-          description: Financial Institution Identification Type.
+          description: Unique identification number of a financial institution.
           enum:
           - RoutingNum
         FIIdent:
           maxLength: 34
           type: string
-          description: Financial Institution Identification.
-      description: Account Keys. Used to uniquely identify an Account record.
+          description: Unique identification number of a financial institution.
+      description: Unique information to identify the account record.
     SecuredXferInqOperResponse_XferInfo_FromAcctRef:
       required:
       - AcctKeys
@@ -1046,7 +1142,7 @@ components:
           $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo_FromAcctRef_AcctKeys'
         AcctSummInfo:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctSummInfo'
-      description: From Account Reference. Reference to the account from where funds are transferred.
+      description: Reference account information from which the funds are transferred.
     SecuredXferInqOperResponse_XferInfo_ToAcctRef:
       required:
       - AcctKeys
@@ -1055,13 +1151,36 @@ components:
         AcctKeys:
           $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo_FromAcctRef_AcctKeys'
         AcctSummInfo:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef_AcctSummInfo'
-      description: To Account Reference.Reference to the account to where funds are transferred.
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctSummInfo'
+      description: Reference account information to which the funds are transferred.
+    SecuredXferInqOperResponse_XferInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n"
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the U.S. Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPlease note that presently only USD currency code is supported."
+      description: Details of currency code.
+    SecuredXferInqOperResponse_XferInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo_CurAmt_CurCode'
+      description: Details of the amount to be processed.
     SecuredXferInqOperResponse_XferInfo_RecurModel_RecurRule:
       properties:
         RecurType:
           type: string
-          description: 'Recurrence Type. Valid values are limited to: Daily, Monthly, Weekly, Yearly, SemiMonthly.'
+          description: 'Type of recurrence. '
           enum:
           - Yearly
           - Monthly
@@ -1069,11 +1188,20 @@ components:
           - BusinessDaily
         RecurInterval:
           type: integer
-          description: "Recurrence Interval. Number of units between occurrences. Should be an integer. If  ‘Daily’: Number of days between occurrences. If   ‘Weekly’: Number of weeks between occurrences. If   'Monthly’: Number of months between occurrences. If   ‘Yearly’: Number of years between occurrences. If not provided, assume default value of 1, i.e. every day, every week, every month, or every year. If 'Cycle' : Number of the designated cycle. \n\n**Note:** Value 0 and 1 both mean recur interval equal to 1 but when the value is 0 the action starts on the same cycle of inception when the value is 1 skips current cycle of inceptions and starts on the next one. Value required for a recurrent model."
+          description: |-
+            Recurrence interval between two successive occurrences of transfer.
+
+            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
+
+            The default value is set to 1.
+
+            **Note:** This field is required for a recurrent model.
+
+            Value 0 and 1 both mean recur interval equal to 1 but when the value is 0 the action starts on the same cycle of inception when the value is 1 skips current cycle of inceptions and starts on the next one.
           format: int64
         DayOfMonth:
           type: string
-          description: Day Of Month.
+          description: Day of the month to define the day of transfer in the month.
           enum:
           - "1"
           - "2"
@@ -1108,15 +1236,15 @@ components:
           - "31"
         Occurrences:
           type: integer
-          description: Ocurrences.
+          description: Total number of transfer occurrences.
           format: int64
         RecurEndDate:
           type: string
-          description: Recurrence End Date.
+          description: "Date at which the recurrence cycle of transfer ends. \n\n\n\nFormat: yyyy-mm-dd\n\nExample: 2021-10-20"
           format: date
         WeekendOption:
           type: string
-          description: "Weekend Option. Describes how certain functionality, e.g. Transfers are processed on the Weekend.\n\n**Note:** Indicates the date on which it will process the event if the date it calculates  falls on a non-business day. You can define your institution’s non-business days in the\_calendar. "
+          description: "Option that indicate the functionality for weekends.\n\nFor example, tranfers are processed on weekends.\n\n**Note:** This field indicates the date on which the event is processed. If the date falls on a non-business day, then financial institution can define non-business days in the\_calendar. "
           enum:
           - NextBusinessDay
           - LastBusinessDay
@@ -1126,16 +1254,16 @@ components:
       properties:
         RecurRule:
           type: array
-          description: Recurrent Rule.
+          description: Details of the recurrence rule.
           items:
             $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo_RecurModel_RecurRule'
-      description: Recurring Model. Represents a time based recurring pattern.
+      description: Recurring model that represents a time-based recurring pattern.
     SecuredXferInqOperResponse_XferInfo:
       type: object
       properties:
         TransferType:
           type: string
-          description: "Transfer Type. Use to specify the type of transfer transaction.\n\n**Note:** BookTransfer. A book transfer is a request to transfer funds between two different accounts at the same institution. \n\nCollection. \n\nPayment. A payment order is a request by a customer to debit their account at the institution operating on the Finxact Core and credit those funds to an external account held outside the institution. \n\nA collection order is a request by a customer to credit their account at the institution operating on the Finxact Core, with the corresponding debit for the funds coming from an external account held outside the institution.\n\n"
+          description: "Type of a transfer.\n\n**Note:** The type of order for the supported values is defined based on the request fields.\n\nSome of the values for this field means:\n\n- BookTransfer: A book transfer is a request to transfer funds between two different accounts at the same institution \n\n- Collection: A collection order is a request by a customer to credit their account at the institution operating on the Finxact Core, with the corresponding debit for the funds coming from an external account held outside the institution\n\n- Payment: A payment order is a request by a customer to debit their account at the institution operating on the Finxact Core and credit those funds to an external account held outside the institution. "
           enum:
           - BookTransfer
           - Collection
@@ -1145,40 +1273,57 @@ components:
         ToAcctRef:
           $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo_ToAcctRef'
         CurAmt:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt'
+          $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo_CurAmt'
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. The date that an associated action takes effect. Effective date of the transfer of funds.
+          description: |+
+            Effective date and time when transfer status is changed.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
         RecurModel:
           $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo_RecurModel'
         CSPRefIdent:
           maxLength: 36
           type: string
-          description: 'Customer Service Provider Reference Identifier. '
+          description: Unique cutomer service provider reference number for the transaction.
         ExtendedXferData:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ExtendedXferData'
         XferFromDesc:
           maxLength: 80
           type: array
-          description: Transfer From Description.
+          description: Description of the 'transfer from' or payer.
           items: {}
         XferToDesc:
           maxLength: 80
           type: array
-          description: Transfer To Description.
+          description: Description of the 'transfer to' or payee.
           items: {}
         NextXferDt:
           type: string
-          description: 'Next transfer date. '
+          description: "Date of the next transfer. \n\n\n\nFormat: yyyy-mm-dd\n\nExample: 2021-10-20"
           format: date
         LastXferDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Last transfer date. Date last tranfer of funds took place.
+          description: |-
+            Date and time when the last transfer of funds occurred.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         OriginationSrc:
           type: string
-          description: Origination Source.
+          description: Value of the origination source of the transaction.
           enum:
           - Internet
           - PrearrangedPaymentOrDeposit
@@ -1205,7 +1350,9 @@ components:
           - Other
         XferStatusType:
           type: string
-          description: 'Transfer Status Type. Status of the transfer record. '
+          description: |+
+            Value that indicates the status type of the transfer record.
+
           enum:
           - Incomplete
           - Entered
@@ -1215,7 +1362,30 @@ components:
           - Canceled
           - Returned
           - Review
-      description: Transfer Information. The XferInfo aggregate contains the details of a Funds Transfer.
+      description: Details of a fund transfer.
+    SecuredXferInqOperResponse_XferStatus:
+      required:
+      - XferStatusCode
+      type: object
+      properties:
+        XferStatusCode:
+          type: string
+          description: Code to identify the status of the transfer.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |+
+            Effective date and time when transfer status is changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+      description: Status details of the transfer.
     SecuredXferInqOperResponse_XferRec:
       required:
       - XferInfo
@@ -1223,23 +1393,23 @@ components:
       - XferStatus
       properties:
         XferKeys:
-          $ref: '#/components/schemas/SecuredXferInqOperResponse_XferKeys'
+          $ref: '#/components/schemas/SecuredXferDelOperRequest_XferKeys'
         XferInfo:
           $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo'
         XferStatus:
-          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferStatus'
+          $ref: '#/components/schemas/SecuredXferInqOperResponse_XferStatus'
     XferListInqRequest_RecCtrlIn:
       type: object
       properties:
         MaxRecLimit:
           type: integer
-          description: Maximum Record Limit. This is the maximum number of records that the server should add to the result set which is available to satisfy this request.
+          description: 'Maximum number of records in the result set to satisy the request. '
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: 'Cursor. Next Record Pointer Included in the response only if additional records are available. '
-      description: Record Control In. Allows the client to specify a maximum number of records that it is capable of processing within a single response.
+          description: 'Next record pointer to include in the response if additional records are available. '
+      description: Maximum number of records that client can specify to process within a single response.
     XferListInqRequest_XferListSel_AcctRef_AcctKeys:
       required:
       - AcctId
@@ -1248,28 +1418,38 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
-            Account Type.
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            MMA - Money market account
+            **Note:** Some of the valid values for this field are:
 
-            SDA - Savings deposit account
+            - DDA: Demand Deposit Account
 
-            CDA - Certificate of deposit
+            - MMA:  Money Market Account
 
-            CMA - Cash management account
+            - SDA: Savings Deposit Account
+
+            - CDA: Certificate of Deposit Account
+
+            - CMA: Cash Management Account
           enum:
           - DDA
           - MMA
           - SDA
           - CDA
           - CMA
-      description: Account Keys. Used to uniquely identify an Account record.
+      description: Unique information to identify the account record.
     XferListInqRequest_XferListSel_AcctRef:
       required:
       - AcctKeys
@@ -1277,7 +1457,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/XferListInqRequest_XferListSel_AcctRef_AcctKeys'
-      description: Account Reference.  Reference to an Account object involved in a transfer.
+      description: Reference information of an account object involved in the transfer.
     XferListInqRequest_XferListSel:
       type: object
       properties:
@@ -1286,12 +1466,10 @@ components:
         IncActiveInd:
           type: boolean
           description: |-
-            Include Active Indicator
+            Flag that indicate to include active transfers.
 
-            **Note:** When the value of this field is set of false, the response will include orders that have been completed, returned or cancelled.
-
-            Default value is set to true, indicating only active transfer orders are provided in the response.
-      description: Transfer List Select.
+            **Note:** If the value is set to "False", then the response includes all the transfers that have been completed, returned or cancelled.
+      description: Selection criteria to retrieve the transfer list record.
     XferListInqResponse_RecCtrlOut:
       required:
       - SentRecCount
@@ -1299,61 +1477,130 @@ components:
       properties:
         SentRecCount:
           type: integer
-          description: 'Sent Record Count. Number of records matching the selection criteria that are included in this message. '
+          description: Total number of records that matched the selection criteria and returned in the response message.
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: 'Matched Record Count.  Next Record Pointer Included in the response only if additional records are available. '
-      description: ' Record Control Out. Used in inquiry responses to provide a client that used the RecCtrlIn aggregate in the request with information it needs to retrieve the rest of the records that matched the specified selection criteria.'
+          description: 'Next record pointer to include in the response if additional records are available. '
+      description: |+
+        Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+
     XferListInqResponse_XferKeys:
       type: object
       properties:
         XferId:
           maxLength: 36
           type: string
-          description: Transfer Identifier. Identifier of the Xfer object.
+          description: Unique identification number of transfer record.
         TransferType:
           type: string
-          description: "Transfer Type.\n\n**Note:** BookTransfer. A book transfer is a request to transfer funds between two different accounts at the same institution. \n\nCollection. \n\nPayment. A payment order is a request by a customer to debit their account at the institution operating on the Finxact Core and credit those funds to an external account held outside the institution. \n\nA collection order is a request by a customer to credit their account at the institution operating on the Finxact Core, with the corresponding debit for the funds coming from an external account held outside the institution.\n\n"
+          description: "Type of transfer.\n\n**Note:** The type of order for the supported values is defined based on the request fields.\n\nSome of the values for this field means:\n\n- BookTransfer: A book transfer is a request to transfer funds between two different accounts at the same institution \n\n- Collection: A collection order is a request by a customer to credit their account at the institution operating on the Finxact Core, with the corresponding debit for the funds coming from an external account held outside the institution\n\n- Payment: A payment order is a request by a customer to debit their account at the institution operating on the Finxact Core and credit those funds to an external account held outside the institution. "
           enum:
           - BookTransfer
           - Collection
           - Payment
-      description: 'Transfer Keys. Used to contain keys to the transfer object.  '
+      description: Unique information to identify the transaction record.
+    XferListInqResponse_XferListInfo_FromAcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+
+            **Note:** Some of the valid values for this field are:
+
+            - DDA: Demand Deposit Account
+
+            - MMA:  Money Market Account
+
+            - SDA: Savings Deposit Account
+
+            - CDA: Certificate of Deposit Account
+
+            - CMA: Cash Management Account
+
+            - EQU: Home Equity Loan
+
+            - ILA: Installment Loan Account
+
+            - CLA: Commercial Loan Account
+
+            - LOC: Consumer Line of Credit
+
+            - MLA: Mortgage Loan Account
+          enum:
+          - DDA
+          - MMA
+          - SDA
+          - CDA
+          - CMA
+          - EQU
+          - ILA
+          - CLA
+          - LOC
+          - MLA
+        FIIdentType:
+          type: string
+          description: Unique identification number of a financial institution.
+          enum:
+          - RoutingNum
+        FIIdent:
+          maxLength: 34
+          type: string
+          description: |-
+            Unique identification number of a financial institution.
+
+            **Note:** This field is only needed for collection order where FromAccount is a external account to financial institute.
+      description: Unique information to identify the account record.
     XferListInqResponse_XferListInfo_FromAcctRef:
       required:
       - AcctKeys
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctKeys'
-      description: From Account Reference. Reference to the account to where funds are transferred.
+          $ref: '#/components/schemas/XferListInqResponse_XferListInfo_FromAcctRef_AcctKeys'
+      description: Reference account information from which the funds are transferred.
     XferListInqResponse_XferListInfo_ToAcctRef:
       required:
       - AcctKeys
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctKeys'
-      description: To Account Reference.Reference to the account to where funds are transferred.
+          $ref: '#/components/schemas/XferListInqResponse_XferListInfo_FromAcctRef_AcctKeys'
+      description: Reference account information to which the funds are transferred.
     XferListInqResponse_XferListInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00.
         CurCode:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt_CurCode'
-      description: Currency Amount. Amount of the transfer
+          $ref: '#/components/schemas/SecuredXferInqOperResponse_XferInfo_CurAmt_CurCode'
+      description: Details of the amount to be processed.
     XferListInqResponse_XferListInfo_RecurModel_RecurRule:
       properties:
         RecurType:
           type: string
-          description: |-
-            Recurrence Type. Valid values are limited to: Daily, Monthly, Weekly, Yearly, SemiMonthly.
-
-            **Note:** Required field for a recurrent model.
+          description: "Type of recurrence. \n\n**Note:** This field is required for a recurrent model."
           enum:
           - Yearly
           - Monthly
@@ -1361,11 +1608,20 @@ components:
           - BusinessDaily
         RecurInterval:
           type: integer
-          description: "Recurrence Interval. Number of units between occurrences. Should be an integer. If  ‘Daily’: Number of days between occurrences. If   ‘Weekly’: Number of weeks between occurrences. If   'Monthly’: Number of months between occurrences. If   ‘Yearly’: Number of years between occurrences. If not provided, assume default value of 1, i.e. every day, every week, every month, or every year. If 'Cycle' : Number of the designated cycle. \n\n**Note:** Value 0 and 1 both mean recur interval equal to 1 but when the value is 0 the action starts on the same cycle of inception when the value is 1 skips current cycle of inceptions and starts on the next one. Value required for a recurrent model."
+          description: |-
+            Recurrence interval between two successive occurrences of transfer.
+
+            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
+
+            The default value is set to 1.
+
+            **Note:** This field is required for a recurrent model.
+
+            Value 0 and 1 both mean recur interval equal to 1 but when the value is 0 the action starts on the same cycle of inception when the value is 1 skips current cycle of inceptions and starts on the next one.
           format: int64
         DayOfMonth:
           type: string
-          description: Day Of Month.
+          description: Day of the month to define the day of transfer in the month.
           enum:
           - "1"
           - "2"
@@ -1400,18 +1656,15 @@ components:
           - "31"
         Occurrences:
           type: integer
-          description: Ocurrences.
+          description: Total number of transfer occurrences.
           format: int64
         RecurEndDate:
           type: string
-          description: |-
-            Recurrence End Date.
-
-            **Note:** Either ocurrences of recurrent end date must be supplied
+          description: "Date at which the recurrence cycle of transfer ends. \n\n\n\nFormat: yyyy-mm-dd\n\nExample: 2021-10-20\n\n**Note:** Either Ocurrence field or RecurEndDate field should be provided in the request."
           format: date
         WeekendOption:
           type: string
-          description: "Weekend Option. Describes how certain functionality, e.g. Transfers are processed on the Weekend.\n\n**Note:** Indicates the date on which it will process the event if the date it calculates  falls on a non-business day. You can define your institution’s non-business days in the\_calendar. "
+          description: "Option that indicate the functionality for weekends.\n\nFor example, tranfers are processed on weekends.\n\n**Note:** This field indicates the date on which the event is processed. If the date falls on a non-business day, then financial institution can define non-business days in the\_calendar. "
           enum:
           - NextBusinessDay
           - LastBusinessDay
@@ -1421,10 +1674,10 @@ components:
       properties:
         RecurRule:
           type: array
-          description: Recurrent Rule.
+          description: Details of the recurrence rule.
           items:
             $ref: '#/components/schemas/XferListInqResponse_XferListInfo_RecurModel_RecurRule'
-      description: Recurrent Model.
+      description: Recurring model that represents a time-based recurring pattern.
     XferListInqResponse_XferListInfo:
       required:
       - CurAmt
@@ -1440,25 +1693,42 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective Date. The date that an associated action takes effect. Effective date of the transfer of funds.
+            Effective date and time when transfer status is changed.
 
-            **Note:** EffDt is not provided for immediate transfers.
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+
+
+            **Note:** This field is not required for immediate transfers.
         RecurModel:
           $ref: '#/components/schemas/XferListInqResponse_XferListInfo_RecurModel'
         NextXferDt:
           type: string
-          description: 'Next transfer date. '
+          description: "Date of the next transfer. \n\n\n\nFormat: yyyy-mm-dd\n\nExample: 2021-10-20"
           format: date
         LastXferDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Last transfer date. Date last tranfer of funds took place.
+          description: |-
+            Date and time when the last transfer of funds occurred.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         OriginationSrc:
           type: string
           description: |-
-            Origination Source.
+            Value of the origination source of the transaction.
 
-            **Note:** Default to "Internet"
+            **Note:** By default the value for this field is "Internet".
           enum:
           - Internet
           - PrearrangedPaymentOrDeposit
@@ -1485,8 +1755,10 @@ components:
           - Other
         XferStatusType:
           type: string
-          description: 'Transfer Status Type. Status of the transfer record. '
-      description: Transfer List Information. The XferListInfo aggregate contains the summary of a Funds Transfer.
+          description: |+
+            Value that indicates the status type of the transfer record.
+
+      description: Details of the funds transfer.
     XferListInqResponse_XferListRec:
       required:
       - XferKeys
@@ -1498,7 +1770,7 @@ components:
         XferListInfo:
           $ref: '#/components/schemas/XferListInqResponse_XferListInfo'
         XferStatus:
-          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferStatus'
+          $ref: '#/components/schemas/SecuredXferInqOperResponse_XferStatus'
     XferModOperRequest_XferInfo_FromAcctRef_AcctKeys:
       required:
       - AcctId
@@ -1507,31 +1779,41 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
           description: |-
-            Account Type.
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            MMA - Money market account
+            **Note:** Some of the valid values for this field are:
 
-            SDA - Savings deposit account
+            - DDA: Demand Deposit Account
 
-            CDA - Certificate of deposit
+            - MMA:  Money Market Account
 
-            CMA - Cash management account
+            - SDA: Savings Deposit Account
 
-            EQU - Home equity loan
+            - CDA: Certificate of Deposit Account
 
-            ILA - Installment loan account
+            - CMA: Cash Management Account
 
-            CLA - Commercial loan account
+            - EQU: Home Equity Loan
 
-            LOC - Consumer line of credit
+            - ILA: Installment Loan Account
 
-            MLA - Mortgage Loan Account
+            - CLA: Commercial Loan Account
+
+            - LOC: Consumer Line of Credit
+
+            - MLA: Mortgage Loan Account
           enum:
           - DDA
           - MMA
@@ -1545,28 +1827,17 @@ components:
           - MLA
         FIIdentType:
           type: string
-          description: Financial Institution Identification Type.
+          description: Unique identification number of a financial institution.
           enum:
           - RoutingNum
         FIIdent:
           maxLength: 34
           type: string
           description: |-
-            Financial Institution Identification.
+            Unique identification number of a financial institution.
 
-            **Note:** This information is only needed for collection order where FromAccount is a external account to FI.
-      description: Account Keys. Used to uniquely identify an Account record.
-    XferModOperRequest_XferInfo_FromAcctRef_AcctSummInfo:
-      type: object
-      properties:
-        AcctTitle:
-          maxLength: 255
-          type: string
-          description: |-
-            Account Title.Title on account typically identifies ownership or responsibility for account and manner in which ownership/responsibility is assigned (e.g. John Doe CUSTODIAN).
-
-            **Note:** This information is only needed for collection order where FromAccount is a external account to FI.
-      description: Account Summary Information.
+            **Note:** This field is only needed for collection order where FromAccount is a external account to financial institute.
+      description: Unique information to identify the account record.
     XferModOperRequest_XferInfo_FromAcctRef:
       required:
       - AcctKeys
@@ -1575,90 +1846,22 @@ components:
         AcctKeys:
           $ref: '#/components/schemas/XferModOperRequest_XferInfo_FromAcctRef_AcctKeys'
         AcctSummInfo:
-          $ref: '#/components/schemas/XferModOperRequest_XferInfo_FromAcctRef_AcctSummInfo'
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctSummInfo'
       description: |-
-        From Account Reference. Reference to the account from where funds are transferred.
+        Reference account information from which the funds are transferred.
 
-        **Note:** FromAccount can only be modified for collection Orders and cannot be modified for book transfer and payment orders.
-    XferModOperRequest_XferInfo_ToAcctRef_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
-        AcctType:
-          type: string
-          description: |-
-            Account Type.
-
-            **Note:** DDA - Demand deposit account
-
-            MMA - Money market account
-
-            SDA - Savings deposit account
-
-            CDA - Certificate of deposit
-
-            CMA - Cash management account
-
-            EQU - Home equity loan
-
-            ILA - Installment loan account
-
-            CLA - Commercial loan account
-
-            LOC - Consumer line of credit
-
-            MLA - Mortgage Loan Account
-          enum:
-          - DDA
-          - MMA
-          - SDA
-          - CDA
-          - CMA
-          - EQU
-          - ILA
-          - CLA
-          - LOC
-          - MLA
-        FIIdentType:
-          type: string
-          description: Financial Institution Identification Type.
-          enum:
-          - RoutingNum
-        FIIdent:
-          maxLength: 34
-          type: string
-          description: |-
-            Financial Institution Identification.
-
-            **Note:** This information is only needed for payment order where FromAccount is a external account to FI.
-      description: Account Keys. Used to uniquely identify an Account record.
-    XferModOperRequest_XferInfo_ToAcctRef_AcctSummInfo:
-      type: object
-      properties:
-        AcctTitle:
-          maxLength: 255
-          type: string
-          description: |-
-            Account Title.Title on account typically identifies ownership or responsibility for account and manner in which ownership/responsibility is assigned (e.g. John Doe CUSTODIAN).
-
-            **Note:** This information is only needed for payment order where ToAccount is a external account to FI.
-      description: Account Summary Information.
+        **Note:** FromAccount can only be modified for collection orders and cannot be modified for book transfer and payment orders.
     XferModOperRequest_XferInfo_ToAcctRef:
       required:
       - AcctKeys
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/XferModOperRequest_XferInfo_ToAcctRef_AcctKeys'
+          $ref: '#/components/schemas/XferModOperRequest_XferInfo_FromAcctRef_AcctKeys'
         AcctSummInfo:
-          $ref: '#/components/schemas/XferModOperRequest_XferInfo_ToAcctRef_AcctSummInfo'
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctSummInfo'
       description: |-
-        To Account Reference.Reference to the account to where funds are transferred.
+        Reference account information to which the funds are transferred.
 
         **Note:** ToAccount can only be modified for book transfers and payment orders and cannot be modified for collection orders.
     XferModOperRequest_XferInfo_CurAmt_CurCode:
@@ -1668,27 +1871,27 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: Currency Code Type.
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n"
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency Code Value.\n\n**Note:** CurCodeValue from the original trasfer request cannot be modified in FINXACT "
-      description: Currency Code.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the U.S. Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPlease note that presently only USD currency code is supported.\n\n**Note:** CurCodeValue from the original trasfer request cannot be modified in Finxact."
+      description: Details of currency code.
     XferModOperRequest_XferInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Amount in decimal format.
         CurCode:
           $ref: '#/components/schemas/XferModOperRequest_XferInfo_CurAmt_CurCode'
-      description: Currency Amount. Amount of the transfer.
+      description: Details of the amount to be processed.
     XferModOperRequest_XferInfo_RecurModel_RecurRule:
       properties:
         RecurType:
           type: string
-          description: 'Recurrence Type. Valid values are limited to: Daily, Monthly, Weekly, Yearly, SemiMonthly.'
+          description: 'Type of recurrence. '
           enum:
           - Yearly
           - Monthly
@@ -1696,11 +1899,20 @@ components:
           - BusinessDaily
         RecurInterval:
           type: integer
-          description: "Recurrence Interval. Number of units between occurrences. Should be an integer. If  ‘Daily’: Number of days between occurrences. If   ‘Weekly’: Number of weeks between occurrences. If   'Monthly’: Number of months between occurrences. If   ‘Yearly’: Number of years between occurrences. If not provided, assume default value of 1, i.e. every day, every week, every month, or every year. If 'Cycle' : Number of the designated cycle. \n\n**Note:** Value 0 and 1 both mean recur interval equal to 1 but when the value is 0 the action starts on the same cycle of inception when the value is 1 skips current cycle of inceptions and starts on the next one. Value required for a recurrent model."
+          description: |-
+            Recurrence interval between two successive occurrences of transfer.
+
+            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
+
+            The default value is set to 1.
+
+            **Note:** This field is required for a recurrent model.
+
+            Value 0 and 1 both mean recur interval equal to 1 but when the value is 0 the action starts on the same cycle of inception when the value is 1 skips current cycle of inceptions and starts on the next one.
           format: int64
         DayOfMonth:
           type: string
-          description: Day Of Month.
+          description: Day of the month to define the day of transfer in the month.
           enum:
           - "1"
           - "2"
@@ -1736,17 +1948,17 @@ components:
         Occurrences:
           type: integer
           description: |-
-            Ocurrences.
+            Total number of transfer occurrences.
 
-            **Note:** Either ocurrences of recurrent end date must be supplied. Field recur end date field has precedence over the occurrences field.
+            **Note:** Either Ocurrence field or RecurEndDate field should be provided in the request. If bothe are sent, then RecurEndDate field has precedence over the Occurrence field.
           format: int64
         RecurEndDate:
           type: string
-          description: "Recurrence End Date.\n\n**Note:** RecurEndDate is optional. When RecurEndDate is provided Occurences should not be supplied. "
+          description: "Date at which the recurrence cycle of transfer ends. \n\n\n\nFormat: yyyy-mm-dd\n\nExample: 2021-10-20\n\n**Note:** This field is optional and if provided then Ocurrences field should not be provided."
           format: date
         WeekendOption:
           type: string
-          description: "Weekend Option. Describes how certain functionality, e.g. Transfers are processed on the Weekend.\n\n**Note:** Indicates the date on which it will process the event if the date it calculates  falls on a non-business day. You can define your institution’s non-business days in the calendar. "
+          description: "Option that indicate the functionality for weekends.\n\nFor example, tranfers are processed on weekends.\n\n**Note:** This field indicates the date on which the event is processed. If the date falls on a non-business day, then financial institution can define non-business days in the\_calendar. "
           enum:
           - NextBusinessDay
           - LastBusinessDay
@@ -1756,22 +1968,20 @@ components:
       properties:
         RecurRule:
           type: array
-          description: Recurrent Rule.
+          description: Details of the recurrence rule.
           items:
             $ref: '#/components/schemas/XferModOperRequest_XferInfo_RecurModel_RecurRule'
-      description: Recurring Model. Represents a time based recurring pattern.
+      description: Recurring model that represents a time-based recurring pattern.
     XferModOperRequest_XferInfo_ExtendedXferData:
       type: object
       properties:
         SameDayInd:
           type: boolean
           description: |-
-            Same Day Indicator.
+            Flag to indicate the day is same.
 
-            **Note:** isSameDayOptIn will only be used for payment order and collection order, i.e. for ordertype=2 or 3
-      description: |+
-        Extended Transfer Data. Used to contain additional instructions for the transfer.
-
+            **Note:** "isSameDayOptIn" is used for payment order and collection order (that is order type "2" or "3").
+      description: Details of additional information used to add instructions for the fund transfer.
     XferModOperRequest_XferInfo:
       type: object
       properties:
@@ -1784,28 +1994,44 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. The date that an associated action takes effect. Effective date of the transfer of funds.
+          description: |+
+            Effective date and time when transfer status is changed.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
         RecurModel:
           $ref: '#/components/schemas/XferModOperRequest_XferInfo_RecurModel'
         CSPRefIdent:
           maxLength: 36
           type: string
-          description: "Customer Service Provider Reference Identifier. \n\n**Note:** CSPRefIdent value from the original trasfer request cannot be modified in FINXACT "
+          description: |-
+            Unique cutomer service provider reference number for the transaction.
+
+            **Note:** CSPRefIdent value from the original trasfer request cannot be modified in Finxact.
         ExtendedXferData:
           $ref: '#/components/schemas/XferModOperRequest_XferInfo_ExtendedXferData'
         XferFromDesc:
           maxLength: 80
           type: array
-          description: Transfer From Description.
+          description: Description of the 'transfer from' or payer.
           items: {}
         XferToDesc:
           maxLength: 80
           type: array
-          description: Transfer To Description.
+          description: Description of the 'transfer to' or payee.
           items: {}
         OriginationSrc:
           type: string
-          description: "Origination Source.\n\n**Note:** OriginationSrc value from the original trasfer request cannot be modified in FINXACT "
+          description: |-
+            Value of the origination source of the transaction.
+
+            **Note:** OriginationSrc value from the original trasfer request cannot be modified in Finxact.
           enum:
           - Internet
           - PrearrangedPaymentOrDeposit
@@ -1832,7 +2058,12 @@ components:
           - Other
         XferStatusType:
           type: string
-          description: "Transfer Status Type. Status of the transfer record. \n\n**Note:** XferStatusType value from the original trasfer request cannot be modified in FINXACT "
+          description: |-
+            Value that indicates the status type of the transfer record.
+
+
+
+            **Note:** XferStatusType value from the original trasfer request cannot be modified in Finxact.
           enum:
           - Incomplete
           - Entered
@@ -1842,7 +2073,7 @@ components:
           - Canceled
           - Returned
           - Review
-      description: Transfer Information. The XferInfo aggregate contains the details of a Funds Transfer.
+      description: Details of a fund transfer.
     XferModOperResponse_XferStatusRec:
       required:
       - XferKeys
@@ -1850,7 +2081,7 @@ components:
       type: object
       properties:
         XferKeys:
-          $ref: '#/components/schemas/SecuredXferInqOperRequest_XferSel_XferKeys'
+          $ref: '#/components/schemas/SecuredXferDelOperRequest_XferKeys'
         XferStatus:
-          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferStatus'
-      description: Transfer Status Record. Used to contain the current status of the object.Used in responses to return results from an add, modify or delete operation on the object.
+          $ref: '#/components/schemas/SecuredXferInqOperResponse_XferStatus'
+      description: Details of the fund transfer status record in response to the update operation.
