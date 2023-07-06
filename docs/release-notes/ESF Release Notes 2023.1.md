@@ -44,7 +44,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 - Added LoanAcctInfo/StatedAPR and LoanAcctInfo/OriginationFee/AdvanceOption fields to add record for stated APR field and to support advance option through AcctAdd_Loan message, respectively<br>
 
-- Updated the flow to include the case PORT/CreditLine are created using values sent in the request.<br>
+- Updated the flow to include the case PORT/CreditLine are created using values sent in the request<br>
 
 - Added new call GetPortfolio to implement functionality when bank pass their sequenced number in Portfolio number field
 
