@@ -3,7 +3,7 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, DNA
+titles: Premier, Precision, Signature, Cleartouch
 -->
 
 
