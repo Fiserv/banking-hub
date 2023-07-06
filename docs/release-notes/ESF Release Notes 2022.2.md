@@ -121,11 +121,4 @@ Added the following API endpoints:
 
 - Updated the API to return issued identification information for person or organization customers
 
-
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-
-Information is not available at the moment. Stay tuned for the updates. 
-
-
 <!-- type: tab-end -->
