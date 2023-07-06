@@ -12,7 +12,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">General</span>
 
 
-- Added **Get Indirect Liability** API endpoint to retrieve indirect liability relationship to a loan account. *(API Explorer > Accounts > Loan Indirect Liablity Service)*
+- Added **Get Indirect Liability** API endpoint to retrieve indirect liability relationship to a loan account. *(API Explorer > Accounts > Loan Indirect Liability Service)*
 
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
