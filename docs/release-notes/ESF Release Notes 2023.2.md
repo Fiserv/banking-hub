@@ -47,7 +47,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 - Updated the flow to include the case PORT/CreditLine are created using values sent in the request<br>
 
-- Added new call GetPortfolio to implement functionality when bank pass their sequenced number in Portfolio number field
+- Added new call GetPortfolio to implement functionality when bank pass their sequenced number in Portfolio number field 
 
 
 <span style="font-size: 22px; ">Get Account_LOAN</span> *API Explorer > Accounts > Account Service*
