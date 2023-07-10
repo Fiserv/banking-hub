@@ -170,8 +170,7 @@ Added the following API endpoints:
 	- AcctTrnRec/AcctTrnInfo/Checks/ChkNum
 	- AcctTrnRec/AcctTrnInfo/Checks/TrnImageId
 	- AcctTrnRec/AcctTrnInfo/Checks/TrnImageBackId
-In Account Transaction Inquiry response, one or more checks may be send back in the response associated to a transaction record.<br>
-
+ 
 - Added the new enumeration value *MLA (Mortgage Loan Account)* for the AcctTrnSel/AcctKeys/AcctType xpath
 
 <!-- type: tab -->
