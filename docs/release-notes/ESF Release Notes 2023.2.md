@@ -3,7 +3,7 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Finxact
+titles: Finxact, DNA
 -->
 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
@@ -174,5 +174,20 @@ In Account Transaction Inquiry response, one or more checks may be send back in 
 
 - Added the new enumeration value *MLA (Mortgage Loan Account)* for the AcctTrnSel/AcctKeys/AcctType xpath
 
+<!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+
+<span style="font-size: 22px; ">General</span>
+
+
+Added the following API endpoints:
+- Get Account Details *(API Explorer > Accounts > Account Service)*
+- Update Account - Deposits *(API Explorer > Accounts > Account Service)*
+- Get Party *(API Explorer > Accountholder > Party Service)*
+- Get Party Account Relationship - ByParty *(API Explorer > Accountholder > Party Account Relationship Service)*
+- Add Credit *(API Explorer > Transactions >  Credit Service)*
+- Reverse Credit *(API Explorer > Transactions > Credit Service)*
+- Add Debit *(API Explorer > Transactions >  Debit Service)*
+- Reverse Debit *(API Explorer > Transactions > Debit Service)*
 
 <!-- type: tab-end -->
