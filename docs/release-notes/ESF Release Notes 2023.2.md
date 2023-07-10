@@ -32,7 +32,7 @@ Added the following API endpoints:
 - Get Party *(API Explorer > Accountholder > Party Service)*
 - Update Party *(API Explorer > Accountholder > Party Service)*
 - Get Party List *(API Explorer > Accountholder > Party Service)*
-- Get Port *(API Explorer > Accounts > Port Service)*
+- Get Portfolio *(API Explorer > Accounts > Portfolio Service)*
 - Get Product List *(API Explorer > Operation and Servicing > Product Service)*
 - Get Prodeuct Specification *(API Explorer > Operation and Servicing > Product Specification Service)*
 - Add Stop Check *(API Explorer > Transactions > Stop Check Service)*
