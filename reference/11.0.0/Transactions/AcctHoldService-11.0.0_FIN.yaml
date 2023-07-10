@@ -193,7 +193,7 @@ components:
           $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_RecCtrlOut'
         AcctHoldRec:
           type: array
-          description: Account Hold Record.  Used to provide information about the account hold record.
+          description: Details of the account hold response record that includes response keys, response status and response information.
           items:
             $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_AcctHoldRec'
     AcctHoldModOperRequest:
@@ -202,7 +202,7 @@ components:
       - AcctHoldKeys
       properties:
         AcctHoldKeys:
-          $ref: '#/components/schemas/AcctHoldModOperRequest_AcctHoldKeys'
+          $ref: '#/components/schemas/AcctHoldDelBySecuredPathRequest_AcctHoldKeys'
         AcctHoldInfo:
           $ref: '#/components/schemas/AcctHoldModOperRequest_AcctHoldInfo'
     AcctHoldModOperResponse:
@@ -532,29 +532,46 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
-          description: |+
-            Account Type.
+          description: |-
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
 
-            MMA - Money market account
 
-            SDA - Savings deposit account
 
-            CDA - Certificate of deposit
 
-            CMA - Cash management account
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
+
+
+
+
+            **Note:** Some of the applicable account types are:
+
+            - DDA: Demand Deposit Account
+
+            - MMA: Money Market Account
+
+            - SDA: Savings Deposit Account
+
+            - CDA: Certificate of Deposit Account
+
+            - CMA: Cash Management Account
           enum:
           - DDA
           - MMA
           - SDA
           - CDA
           - CMA
-      description: Account Keys. Used to uniquely identify an Account record.
+      description: Unique information to identify the account record.
     AcctHoldAddOperRequest_AcctHoldInfo_AcctRef:
       required:
       - AcctKeys
@@ -562,7 +579,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_AcctRef_AcctKeys'
-      description: Account Reference. Refence to the account object subject of the hold.
+      description: Reference information of an account object on which a hold is placed.
     AcctHoldAddOperRequest_AcctHoldInfo_CurAmt_CurCode:
       required:
       - CurCodeValue
@@ -570,22 +587,27 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: Currency Code Type.
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: Currency Code Value.
-      description: Currency Code.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported."
+      description: Details of currency code.
     AcctHoldAddOperRequest_AcctHoldInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
         CurCode:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt_CurCode'
-      description: Currency Amount. The amount of hold to be placed on the account.
+      description: Amount of the hold to be placed on the account.
     AcctHoldAddOperRequest_AcctHoldInfo:
       type: object
       properties:
@@ -593,27 +615,37 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_AcctRef'
         HoldType:
           type: string
-          description: 'Hold Type. Identifies the type of hold. '
+          description: Type of hold placed on the account.
           enum:
           - Hold
         CurAmt:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt'
         HoldReasonCode:
           type: string
-          description: "Hold Reason Code. \n\n**Note:** This a code upto 10 char long."
+          description: |-
+            Code to identify the reason for the hold on the account.
+
+            **Note:** Max length: 10 characters.
         ExpDt:
           type: string
-          description: Expiration Date. Expiration date of the account hold.
+          description: "Date after which the hold on an account is no longer active.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective Date. The date that the hold takes effect. \n\n**Note:** When EffDt is not provided it will default to current system date"
+          description: |-
+            Effective date and time when the hold on an account becomes active.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+
+            **Note:** When EffDt is not provided it will default to current system date.
         Memo:
           maxLength: 255
           type: string
-          description: Memo. Use for additional information about the Hold
-      description: Account Hold Information. The Account Hold Information aggregate is used to define all the business properties of the AcctHold record.
+          description: Additional information about the hold placed on the account.
+      description: Information about the business properties of the hold placed on an account.
     AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys:
       required:
       - AcctKeys
@@ -623,14 +655,14 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_AcctRef_AcctKeys'
         HoldType:
           type: string
-          description: Hold Type.  Identifies the type of hold.
+          description: Type of hold placed on the account.
           enum:
           - Hold
         AcctHoldIdent:
           maxLength: 36
           type: string
-          description: Account Hold Identifier.
-      description: Account Hold Keys. Used to identify the Account Hold record.
+          description: Unique identification number used to identify the hold record.
+      description: Unique information to identify the hold record.
     AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus:
       required:
       - AcctHoldStatusCode
@@ -638,14 +670,19 @@ components:
       properties:
         AcctHoldStatusCode:
           type: string
-          description: Account Hold Status Code.
+          description: Code that indicates the status of the account hold.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
-      description: Account Hold Status.
+          description: |-
+            Effective date and time when the account hold status changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the account hold status.
     AcctHoldAddOperResponse_AcctHoldStatusRec:
       required:
       - AcctHoldKeys
@@ -656,57 +693,27 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys'
         AcctHoldStatus:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus'
-      description: Account Hold Status Record. Use to provide the current state (or result) of the record after the operation.
-    AcctHoldDelBySecuredPathRequest_AcctHoldKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
-        AcctType:
-          type: string
-          description: |-
-            Account Type.
-
-            **Note:** DDA - Demand deposit account
-
-            MMA - Money market account
-
-            SDA - Savings deposit account
-
-            CDA - Certificate of deposit
-
-            CMA - Cash management account
-          enum:
-          - DDA
-          - MMA
-          - SDA
-          - CDA
-          - CMA
-      description: Account Keys. Used to uniquely identify an Account record.
+      description: Details of the account hold status record in response to the add operation.
     AcctHoldDelBySecuredPathRequest_AcctHoldKeys:
       required:
       - AcctKeys
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/AcctHoldDelBySecuredPathRequest_AcctHoldKeys_AcctKeys'
+          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_AcctRef_AcctKeys'
         HoldType:
           type: string
-          description: Hold Type.  Identifies the type of hold.
+          description: Type of hold placed on the account.
           enum:
           - Hold
         AcctHoldIdent:
           maxLength: 36
           type: string
           description: |-
-            Account Hold Identifier.
+            Unique identification number used to identify the hold record.
 
-            **Note:** Account Hold Identification.
-      description: Account Hold Keys. Used to identify the Account Hold record.
+            **Note:** Refers to account hold identification.
+      description: Unique information to identify the hold record.
     AcctHoldDelBySecuredPathResponse_AcctHoldStatusRec_AcctHoldStatus:
       required:
       - AcctHoldStatusCode
@@ -714,14 +721,19 @@ components:
       properties:
         AcctHoldStatusCode:
           type: string
-          description: Account Hold Status Code.
+          description: Code that indicates the status of the account hold.
           enum:
           - Deleted
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
-      description: Account Hold Status.
+          description: |-
+            Effective date and time when the account hold status changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the account hold status.
     AcctHoldDelBySecuredPathResponse_AcctHoldStatusRec:
       required:
       - AcctHoldKeys
@@ -732,7 +744,7 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys'
         AcctHoldStatus:
           $ref: '#/components/schemas/AcctHoldDelBySecuredPathResponse_AcctHoldStatusRec_AcctHoldStatus'
-      description: Account Hold Status Record. Use to provide the current state (or result) of the record after the operation.
+      description: Details of the account hold status record in response to the delete operation.
     AcctHoldInqBySecuredPathRequest_AcctHoldSel_AcctHoldKeys_AcctKeys:
       required:
       - AcctId
@@ -741,17 +753,33 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
-          description: Account Type.
+          description: |+
+            Type of an account.
+
+
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+
+
+
           enum:
           - DDA
           - MMA
           - SDA
           - CDA
           - CMA
-      description: Account Keys. Used to uniquely identify an Account record.
+      description: Unique information to identify the account record.
     AcctHoldInqBySecuredPathRequest_AcctHoldSel_AcctHoldKeys:
       required:
       - AcctKeys
@@ -761,17 +789,17 @@ components:
           $ref: '#/components/schemas/AcctHoldInqBySecuredPathRequest_AcctHoldSel_AcctHoldKeys_AcctKeys'
         HoldType:
           type: string
-          description: Hold Type.  Identifies the type of hold.
+          description: Type of hold placed on the account.
           enum:
           - Hold
         AcctHoldIdent:
           maxLength: 36
           type: string
           description: |-
-            Account Hold Identifier.
+            Unique identification number used to identify the hold record.
 
-            **Note:** Account Hold Identification.
-      description: Account Hold Keys. Used to uniquely identify the hold record.
+            **Note:** Refers to account hold identification.
+      description: Unique information to identify the hold record.
     AcctHoldInqBySecuredPathRequest_AcctHoldSel_AcctKeys:
       required:
       - AcctId
@@ -780,14 +808,30 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
-          description: Account Type.
-      description: |-
-        Account Keys. Used to uniquely identify an Account record.
+          description: |+
+            Type of an account.
 
-        **Note:** Use this selection criteria to get all active holds accociated to an account.
+
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+
+
+
+      description: |-
+        Unique information to identify the account record.
+
+        **Note:** Use AcctKeys as selection criteria to get all active holds accociated to an account.
     AcctHoldInqBySecuredPathRequest_AcctHoldSel:
       type: object
       properties:
@@ -795,7 +839,7 @@ components:
           $ref: '#/components/schemas/AcctHoldInqBySecuredPathRequest_AcctHoldSel_AcctHoldKeys'
         AcctKeys:
           $ref: '#/components/schemas/AcctHoldInqBySecuredPathRequest_AcctHoldSel_AcctKeys'
-      description: Account Hold Selection.
+      description: Details of the selection criteria used to identify holds placed on an account.
     AcctHoldInqBySecuredPathResponse_RecCtrlOut:
       required:
       - SentRecCount
@@ -803,30 +847,53 @@ components:
       properties:
         SentRecCount:
           type: integer
-          description: 'Sent Record Count. Number of records matching the selection criteria that are included in this message. '
+          description: Total number of hold records included in the response that matched the selection criteria for an account
           format: int64
-      description: ' Record Control Out. Used in inquiry responses to provide a client that used the RecCtrlIn aggregate in the request with information it needs to retrieve the rest of the records that matched the specified selection criteria.'
+      description: |+
+        Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+
+    AcctHoldInqBySecuredPathResponse_AcctHoldInfo_OrigCurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported."
+      description: Details of currency code.
     AcctHoldInqBySecuredPathResponse_AcctHoldInfo_OrigCurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
         CurCode:
-          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt_CurCode'
-      description: Original Hold Amount. The amount of hold to be placed on the account.
+          $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_AcctHoldInfo_OrigCurAmt_CurCode'
+      description: Details of the original amount of hold to be placed on the account.
     AcctHoldInqBySecuredPathResponse_AcctHoldInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
-        CurCode:
-          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt_CurCode'
-      description: |-
-        Currency Amount. The amount of hold to be placed on the account.
+          description: |-
+            Amount in decimal format.
 
-        **Note:** This is the active hold amount.
+
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_AcctHoldInfo_OrigCurAmt_CurCode'
+      description: Amount of the hold to be placed on the account.
     AcctHoldInqBySecuredPathResponse_AcctHoldInfo:
       type: object
       properties:
@@ -836,21 +903,31 @@ components:
           $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_AcctHoldInfo_CurAmt'
         ExpDt:
           type: string
-          description: Expiration Date. Expiration date of the account hold.
+          description: "Date after which the hold on an account is no longer active.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         CancelDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Cancellation Date.
+          description: |-
+            Date on which hold on the account is cancelled.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: 'Effective Date. The date that the hold takes effect. '
+          description: |-
+            Effective date and time when the hold on an account becomes active.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         Memo:
           maxLength: 255
           type: string
-          description: Memo. Use for additional information about the Hold
-      description: Account Hold Information. The AcctHoldInfo aggregate contains the details of an account hold.
+          description: Additional information about the hold placed on the account.
+      description: Information about the business properties of the hold placed on an account.
     AcctHoldInqBySecuredPathResponse_AcctHoldRec:
       required:
       - AcctHoldInfo
@@ -860,26 +937,6 @@ components:
           $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_AcctHoldInfo'
         AcctHoldStatus:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus'
-    AcctHoldModOperRequest_AcctHoldKeys:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/AcctHoldDelBySecuredPathRequest_AcctHoldKeys_AcctKeys'
-        HoldType:
-          type: string
-          description: Hold Type.  Identifies the type of hold.
-          enum:
-          - Hold
-        AcctHoldIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Account Hold Identifier.
-
-            **Note:** Account Hold Identification.
-      description: Acccount Hold Keys. Used to identify the Account Hold record.
     AcctHoldModOperRequest_AcctHoldInfo:
       type: object
       properties:
@@ -887,13 +944,13 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt'
         ExpDt:
           type: string
-          description: Expiration Date. Expiration date of the account hold.
+          description: "Date after which the hold on an account is no longer active.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         Memo:
           maxLength: 255
           type: string
-          description: Memo. Use for additional information about the Hold
-      description: Acccount Hold Information.  The Account Hold Information contains the client managed properties of the record.
+          description: Additional information about the hold placed on the account.
+      description: Information about the business properties of the hold placed on an account.
     AcctHoldModOperResponse_AcctHoldStatusRec:
       required:
       - AcctHoldKeys
@@ -904,4 +961,4 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys'
         AcctHoldStatus:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus'
-      description: Acccount Hold Status Record. Used in responses to return results from an add, modify or delete operation on the object.
+      description: Details of the account hold status record in response to the update operation.
