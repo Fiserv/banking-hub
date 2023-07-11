@@ -12,7 +12,7 @@ Supporting the creation and maintenance of a full range of deposit, savings and 
 
 Begin the integration using the following services in the Accounts domain in API Explorer:
 * [Account Service](../api/?type=post&path=/acctservice/acctmgmt/accounts)
-* [Document Service](../api/?type=post&path=/documentservice/document/document)
+* [Document Preferences Service](../api/?type=post&path=/epreferenceservice/epreference/ePreferences)
 
 ## See Also
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
