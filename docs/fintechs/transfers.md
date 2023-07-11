@@ -9,7 +9,6 @@ Transfers is an API domain consisting of funds transfer-related APIs. Specific t
 **Potential uses:** App that facilitate enterprise disbursements such as merchant rebates, loyalty rewards, employee bonuses, expense reimbursements, loan payouts and so forth or on-demand service apps that serve fast-growing services markets such as ride share, grocery or food delivery, digital insurers, travel, vacation and other industries that require the ability to move money
 
 Begin the integration with the following services from the Transfers domain in API Explorer:
-* [ACH External Transfer Service](../api/?type=post&path=/achextacctxferservice/acctmgmt/achextacctxfer)
 * [Transfer Service](../api/?type=post&path=/xferservice/payments/transfers)
 
 
@@ -17,5 +16,4 @@ Begin the integration with the following services from the Transfers domain in A
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
 - [Accounts](?path=docs/fintechs/accounts.md "Click to open")
 - [Transactions](?path=docs/fintechs/transactions.md "Click to open")
-- [Cards](?path=docs/fintechs/cards.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
