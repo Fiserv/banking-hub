@@ -12,18 +12,13 @@ Specific to Fiserv core account processing platforms, these APIs make it possibl
 
 Begin the integration with following services of Accountholder domain in API Explorer:
 * [Address Service](../api/?type=post&path=/addrservice/partyacctsvc/address)
-* [Beneficial Owner Service](../api/?type=post&path=/beneficialownerservice/parties/beneficialowner)
-* [Beneficiary Service](../api/?type=post&path=/beneficiaryservice/partyacctsvc/beneficiaries)
 * [Party Service](../api/?type=post&path=/partyservice/parties/parties)
 * [Party Account Relationship Service](../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel)
-* [Party Parties Service](../api/?type=post&path=/partypartyrelservice/parties/partyparties)
-* [Client Defined Field Service](../api/?type=post&path=/clientdefinedfieldservice/partyacctsvc/clientDefinedFields/secured)
 
 
 
 ## See Also
 - [Accounts](?path=docs/fintechs/accounts.md "Click to open")
 - [Transactions](?path=docs/fintechs/transactions.md "Click to open")
-- [Cards](?path=docs/fintechs/cards.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
 - [Transfers](?path=docs/fintechs/transfers.md "Click to open")
