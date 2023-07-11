@@ -12,28 +12,10 @@ Supporting the creation and maintenance of a full range of deposit, savings and 
 
 Begin the integration using the following services in the Accounts domain in API Explorer:
 * [Account Service](../api/?type=post&path=/acctservice/acctmgmt/accounts)
-* [Account Collateral Service](../api/?type=post&path=/acctcollateralrelservice/collateral/acctcollateral)
-* [Auto Enrollment Service](../api/?type=post&path=/autoenrollmentservice/acctmgmt/autoenrollment)
-* [Collateral Service](../api/?type=post&path=/collateralservice/collateral/collateral)
-* [Credit Line Service](../api/?type=post&path=/creditlineservice/lending/creditLines)
-* [Disbursement Service](../api/?type=post&path=/disbursementservice/lending/disbursement)
-* [Disclosure Service](../api/?type=post&path=/disclosureservice/acctmgmt/disclosures)
 * [Document Service](../api/?type=post&path=/documentservice/document/document)
-* [Document Preferences Service](../api/?type=post&path=/epreferenceservice/epreference/ePreferences)
-* [Escrow Service](../api/?type=post&path=/escrowservice/lending/escrow)
-* [Loan Indirect Liability Service](../api/?type=post&path=/loanindirectliabilityservice/lending/indirectLiability)
-* [Safe Deposit Box Service](../api/?type=post&path=/safedepositboxservice/safedepositbox/safedepositbox)
-* [Account Document Type Relationship Service](../api/?type=post&path=/acctdoctyperelservice/acctmgmt/acctdoctyperel/secured)
-* [Client Field Specification Service](../api/?type=post&path=/clientfieldspecservice/partyacctsvc/clientFieldSpec/secured)
-* [Combined Statement Service](../api/?type=post&path=/combinedstmtservice/acctmgmt/combinedstmt/secured)
-* [Multi Account Service](../api/?type=post&path=/multiacctservice/acctmgmt/accounts/list/secured)
-* [Region Service](../api/?type=post&path=/regionservice/servicing/region/secured)
-* [Safe Deposit Box Inventory Service](../api/?type=post&path=/safedepositboxinvservice/safedepositbox/safedepositboxinv/secured)
-* [Account Field Service](../api/?type=put&path=/acctfieldservice/acctmgmt/acctfield)
 
 ## See Also
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
-- [Cards](?path=docs/fintechs/cards.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
 - [Transactions](?path=docs/fintechs/transactions.md "Click to open")
 - [Transfers](?path=docs/fintechs/transfers.md "Click to open")
