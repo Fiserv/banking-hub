@@ -14,7 +14,6 @@ Begin the integration using the following services in the Transactions domain in
 * [Account Hold Service](../api/?type=post&path=/acctholdservice/stophold/accountHolds)
 * [Credit Service](../api/?type=post&path=/creditservice/payments/credits)
 * [Debit Service](../api/?type=post&path=/debitservice/payments/debits)
-* [Memo Tickler Service](../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler)
 * [Stop Check Service](../api/?type=post&path=/stopchkservice/stophold/stopChecks)
 * [Stop Item Service](../api/?type=post&path=/stopitemservice/stophold/stopitem)
 * [Account Transaction Service](../api/?type=post&path=/accttrnservice/acctmgmt/acctTrn/secured)
@@ -22,6 +21,5 @@ Begin the integration using the following services in the Transactions domain in
 ## See Also
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
 - [Accounts](?path=docs/fintechs/accounts.md "Click to open")
-- [Cards](?path=docs/fintechs/cards.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
 - [Transfers](?path=docs/fintechs/transfers.md "Click to open")
