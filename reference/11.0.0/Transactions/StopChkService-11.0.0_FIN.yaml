@@ -197,7 +197,7 @@ components:
           $ref: '#/components/schemas/stopCheckInqSecuredResponse_RecCtrlOut'
         StopChkRec:
           type: array
-          description: Stop Check Record. Used to provide information about the stop check record.
+          description: Details of the stop check record.
           items:
             $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkRec'
     stopChkModRequest:
@@ -216,7 +216,7 @@ components:
         Status:
           $ref: '#/components/schemas/StatusType'
         StopChkStatusRec:
-          $ref: '#/components/schemas/stopChkModResponse_StopChkStatusRec'
+          $ref: '#/components/schemas/stopChkAddResponse_StopChkStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -536,41 +536,56 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
-          description: |+
-            Account Type.
+          description: |-
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
 
-            MMA - Money market account
 
-            SDA - Savings deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            CDA - Certificate of deposit
+            **Note:** The following values indicate:
 
-            CMA - Cash management account
+            - DDA: Demand deposit account
 
+            - MMA: Money market account
+
+            - SDA: Savings deposit account
+
+            - CDA: Certificate of deposit
+
+            - CMA: Cash management account
           enum:
           - DDA
           - MMA
           - SDA
           - CDA
           - CMA
-      description: Account Keys. Identifies the deposit account of the stop check payment.
+      description: Unique information to identify the account that is a subject of the stop check.
     stopChkAddRequest_StopChkInfo_ChkNumRange:
       type: object
       properties:
         ChkNumStart:
           maxLength: 22
           type: string
-          description: 'Check Number Start. '
+          description: |+
+            Starting number of the check number range used for the stop check record.
+
         ChkNumEnd:
           maxLength: 22
           type: string
-          description: 'Check Number End. '
-      description: Check Number Range. Contains the range of checks to stop payment.
+          description: |+
+            Ending number of the check number range used for the stop check record.
+
+      description: Details of the check range that includes the start check number (ChkNumStart) and the end check number (ChkNumEnd) information for the stop check transaction.
     stopChkAddRequest_StopChkInfo_CurAmt_CurCode:
       required:
       - CurCodeValue
@@ -578,44 +593,44 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: Currency Code Type.
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: Currency Code Value.
-      description: Currency Code.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported.\n\n"
+      description: Details of currency code.
     stopChkAddRequest_StopChkInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Amount in decimal format.
         CurCode:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt_CurCode'
       description: |+
-        Currency Amount. Indicates the amount of the check.
+        Details of the currency amount.
 
-        **Note:** Either a single check amount  or a range of amounts may be provided in order to create a stop check record. Both can not be provided.
+        **Note:** Only a single check amount or a range of amounts should be provided to create a stop check record.
 
     stopChkAddRequest_StopChkInfo_CurAmtRange_LowCurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Amount in decimal format.
         CurCode:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt_CurCode'
-      description: Low Currency Amount.
+      description: Details of the minimum amount range that contains the amount value and currency code information.
     stopChkAddRequest_StopChkInfo_CurAmtRange_HighCurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Amount in decimal format.
         CurCode:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt_CurCode'
-      description: High Currency Amount.
+      description: Details of the maximum amount range that contains the amount value and currency code information.
     stopChkAddRequest_StopChkInfo_CurAmtRange:
       type: object
       properties:
@@ -624,21 +639,19 @@ components:
         HighCurAmt:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmtRange_HighCurAmt'
       description: |+
-        Currency Amount Range. Contains the range of amounts.
+        Details of the amount range that includes the minimum and maximum currency amount to consider for the stop check transaction.
 
-        **Note:** Either a single check amount  or a range of amounts may be provided in order to create a stop check record. Both can not be provided.
+        **Note:** Only a single check amount or a range of amounts should be provided to create a stop check record.
 
     stopChkAddRequest_StopChkInfo_TranFee_FeeAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
+          description: Amount in decimal format.
         CurCode:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt_CurCode'
-      description: |+
-        Fee Amount. Amount of the Fee.
-
+      description: Details of the stop check transaction processing fee amount.
     stopChkAddRequest_StopChkInfo_TranFee_BillingInstruction_FromAcctKeys:
       required:
       - AcctId
@@ -647,31 +660,40 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
-          description: |+
-            Account Type.
+          description: |-
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
 
-            MMA - Money market account
 
-            SDA - Savings deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            CDA - Certificate of deposit
+            **Note:** The following values indicate:
 
-            CMA - Cash management account
+            - DDA: Demand deposit account
 
+            - MMA: Money market account
+
+            - SDA: Savings deposit account
+
+            - CDA: Certificate of deposit
+
+            - CMA: Cash management account
           enum:
           - DDA
           - MMA
           - SDA
           - CDA
           - CMA
-      description: |+
-        From Account Keys.
-
+      description: Unique information to identify from account record.
     stopChkAddRequest_StopChkInfo_TranFee_BillingInstruction:
       required:
       - BillingMethod
@@ -680,13 +702,13 @@ components:
         BillingMethod:
           type: string
           description: |+
-            Billing Method.
+            Type of billing.
 
           enum:
           - DirectDebit
         FromAcctKeys:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_TranFee_BillingInstruction_FromAcctKeys'
-      description: Billing Instruction
+      description: Details of the billing instruction used to specify how to charge for the stop check transaction fee.
     stopChkAddRequest_StopChkInfo_TranFee:
       type: object
       properties:
@@ -694,14 +716,14 @@ components:
           maxLength: 36
           type: string
           description: |-
-            Fee Identification.
+            Unique identification number to identify the fee amount.
 
-            **Note:** If this value is provided the Fee Amount information is not used to determine the fee.
+            **Note:** If this value is provided, then the fee amount information is not used to determine the fee.
         FeeAmt:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_TranFee_FeeAmt'
         BillingInstruction:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_TranFee_BillingInstruction'
-      description: Transaction Fee
+      description: Information about billing details and transaction fee for a stop check transaction.
     stopChkAddRequest_StopChkInfo:
       type: object
       properties:
@@ -712,41 +734,29 @@ components:
         Name:
           maxLength: 80
           type: string
-          description: Name. Check Pay-To Name.
+          description: Name of the payee.
         CurAmt:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt'
         VariancePct:
           type: number
-          description: |-
-            Variance Percentage
-
-            **Note:** For example 10% variance is  10.
-
-
-
-            The request should not include variance percentage if the CurAmtRange describes an amount variance.
+          description: "Variance percentage by which the amount of an item may vary from the amount specified in the check amount field and still be considered as a stop or suspect. \n\n**Note:** Request should not include variance percentage if the CurAmtRange describes an amount variance."
         CurAmtRange:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmtRange'
         OrigDt:
           type: string
-          description: Check Origination Date. The date on which the customer originates the check.
+          description: "Date on which the customer originates the check.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20 "
           format: date
         StopChkDt:
           type: string
-          description: Stop Check Date. Date when the stop check was placed on the item.
+          description: "Date on which the stop check request is initiated.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20 "
           format: date
         ExpDt:
           type: string
-          description: |-
-            Check Expiration Date. Date on which the stop payment is scheduled to expire.
-
-
-
-            **Note:** If an expiration date is not provided, the stop does not expire
+          description: "Date after which stop check is scheduled to expire.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** If an expiration date is not provided, then the stop check does not expire."
           format: date
         StopChkReasonCode:
           type: string
-          description: 'Stop Check Reason Code. '
+          description: "Code to identify the reason for a stop check placed.\n\n**Note:** The following values are considered:\n\n- Lost\n\n- Stolen\n\n- Dispute\n\n- Fraud\n\n- CustomerRequest\n\n- BankRequest\n\n- Other "
           enum:
           - Lost
           - Stolen
@@ -758,13 +768,13 @@ components:
         Desc:
           maxLength: 100
           type: string
-          description: Description. Additional information, such as why the check is being stopped. Also known as reason description.
+          description: Description that specifies the reason for the stop check.
         TranFee:
           $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_TranFee'
         CardSignedInd:
           type: boolean
-          description: Card Signed Indicator. Identifies whether the customer has signed a stop payment card.
-      description: Stop Check Information. Contains the client managed properties of the Stop Check record.
+          description: Flag to indicate the customer has signed a stop payment card.
+      description: Information about the client-managed properties of the stop check record.
     stopChkAddResponse_StopChkStatusRec_StopChkKeys_AcctKeys:
       required:
       - AcctId
@@ -773,22 +783,33 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
-          description: |+
-            Account Type.
+          description: |-
+            Type of an account.
 
-            **Note:** DDA - Demand deposit account
 
-            MMA - Money market account
 
-            SDA - Savings deposit account
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
-            CDA - Certificate of deposit
+            **Note:** The following values indicate:
 
-            CMA - Cash management account
+            - DDA: Demand deposit account
 
+            - MMA: Money market account
+
+            - SDA: Savings deposit account
+
+            - CDA: Certificate of deposit
+
+            - CMA: Cash management account
           enum:
           - DDA
           - MMA
@@ -796,9 +817,9 @@ components:
           - CDA
           - CMA
       description: |-
-        Account Keys. Under this context is the account subject of the stop check.
+        Unique information to identify the account that is a subject of the stop check.
 
-        **Note:** The composition of the key includes AcctKeys when  KeyCompatiblity_Rule is "true" for the ClientAppName.
+        **Note:** Composition of the key includes AcctKeys when KeyCompatiblity_Rule is "true" for the ClientAppName.
     stopChkAddResponse_StopChkStatusRec_StopChkKeys:
       required:
       - AcctKeys
@@ -808,21 +829,22 @@ components:
           maxLength: 36
           type: string
           description: |-
-            Stop Check Identifier.  Used to uniquely identify the Stop Check Object.
+            Unique identification number to identify the stop check.
 
-            **Note:** This is the native key in Finxact
+            **Note:** Refers to the native key.
         AcctKeys:
           $ref: '#/components/schemas/stopChkAddResponse_StopChkStatusRec_StopChkKeys_AcctKeys'
         StopChkIdent:
           maxLength: 36
           type: string
           description: |-
-            Stop Check Identifier. A record identifier used in combination with account number and type to identify the stop record.
+            Unique identification code used in combination with account number and account type to identify the stop check record.
 
+            **Note:** Composition of the key includes AcctKeys when KeyCompatiblity_Rule is "true" for the ClientAppName.
+      description: |-
+        Unique information to identify a stop check record.
 
-
-            **Note:** The composition of the key includes StopChkIdent when  KeyCompatiblity_Rule is "true" for the ClientAppName.
-      description: "Stop Check Keys. Used to uniquely identify an a stop check record. \n\n**Note:** The key may vary depending on configuration. The key can be expressed as native key or a compatibility key. See KeyCompatiblity_Rule settings."
+        **Note:** Key may vary depending on the configuration. The key can be expressed as a native key (StopChkId) or as a compatibility key (AcctKeys and StopChkIdent).
     stopChkAddResponse_StopChkStatusRec_StopChkStatus:
       required:
       - StopChkStatusCode
@@ -830,14 +852,14 @@ components:
       properties:
         StopChkStatusCode:
           type: string
-          description: 'Stop Check Status Code. Current Status of the Stop Check Object. '
+          description: Code to indicate the status for the stop check record.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: 'Effective Date. The date that an associated action resulting in a change of state or status of an object took effect. '
-      description: Stop Check Status. Used to contain the current status of the Stop Check Object.
+          description: "Effective date and time when the stop check status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: Details of the stop check status.
     stopChkAddResponse_StopChkStatusRec:
       required:
       - StopChkKeys
@@ -848,473 +870,8 @@ components:
           $ref: '#/components/schemas/stopChkAddResponse_StopChkStatusRec_StopChkKeys'
         StopChkStatus:
           $ref: '#/components/schemas/stopChkAddResponse_StopChkStatusRec_StopChkStatus'
-      description: Stop Check Status Record. Used in responses to return results from a add, modify or delete to a Stop Check Object.
+      description: Details of the stop check status record in response to modify stop check record.
     stopChkCanSecuredRequest_StopChkKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: "Account Identifier.  Uniquely identifies an account held at a financial institution. \n\n**Note:** \n\n"
-        AcctType:
-          type: string
-          description: |+
-            Account Type.
-
-            **Note:** DDA - Demand deposit account
-
-            MMA - Money market account
-
-            SDA - Savings deposit account
-
-            CDA - Certificate of deposit
-
-            CMA - Cash management account
-
-          enum:
-          - DDA
-          - MMA
-          - SDA
-          - CDA
-          - CMA
-      description: |+
-        Account Keys. Under this context is the account subject of the stop check.
-
-        **Note:** AcctKeys is used by client applications using  compatibility key.
-
-    stopChkCanSecuredRequest_StopChkKeys:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        StopChkId:
-          maxLength: 36
-          type: string
-          description: |+
-            Stop Check Identifier.  Used to uniquely identify the Stop Check Object.
-
-            **Note:** This is the native key in Finxact
-
-
-
-            When StopChkId is provided in the selection request it will take precedence over any other selection criteria.
-
-        AcctKeys:
-          $ref: '#/components/schemas/stopChkCanSecuredRequest_StopChkKeys_AcctKeys'
-        StopChkIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Stop Check Identifier. A record identifier used in combination with account number and type to identify the stop record.
-
-
-
-            **Note:** StopChkIdent is used by client applications using a compatibility key.
-      description: |-
-        Stop Check Keys.
-
-        **Note:** The key can be expressed as native key (StopChkId) or a compatibility key (AcctKeys and StopChkIdent).
-    stopChkCanSecuredResponse_StopChkStatusRec_StopChkKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
-        AcctType:
-          type: string
-          description: |+
-            Account Type.
-
-            **Note:** DDA - Demand deposit account
-
-            MMA - Money market account
-
-            SDA - Savings deposit account
-
-            CDA - Certificate of deposit
-
-            CMA - Cash management account
-
-          enum:
-          - DDA
-          - MMA
-          - SDA
-          - CDA
-          - CMA
-      description: Account Keys. Under this context is the account subject of the stop check.
-    stopChkCanSecuredResponse_StopChkStatusRec_StopChkKeys:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        StopChkId:
-          maxLength: 36
-          type: string
-          description: Stop Check Identifier.  Used to uniquely identify the Stop Check Object.
-        AcctKeys:
-          $ref: '#/components/schemas/stopChkCanSecuredResponse_StopChkStatusRec_StopChkKeys_AcctKeys'
-        StopChkIdent:
-          maxLength: 36
-          type: string
-          description: |+
-            Stop Check Identifier. A record identifier used in combination with account number and type to identify the stop record.
-
-      description: 'Stop Check Keys. Used to uniquely identify an a stop check record. '
-    stopChkCanSecuredResponse_StopChkStatusRec_StopChkStatus:
-      required:
-      - StopChkStatusCode
-      type: object
-      properties:
-        StopChkStatusCode:
-          type: string
-          description: 'Stop Check Status Code. Current Status of the Stop Check Object. '
-          enum:
-          - Deleted
-        EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: 'Effective Date. The date that an associated action resulting in a change of state or status of an object took effect. '
-      description: Stop Check Status. Used to contain the current status of the Stop Check Object.
-    stopChkCanSecuredResponse_StopChkStatusRec:
-      required:
-      - StopChkKeys
-      - StopChkStatus
-      type: object
-      properties:
-        StopChkKeys:
-          $ref: '#/components/schemas/stopChkCanSecuredResponse_StopChkStatusRec_StopChkKeys'
-        StopChkStatus:
-          $ref: '#/components/schemas/stopChkCanSecuredResponse_StopChkStatusRec_StopChkStatus'
-      description: Stop Check Status Record.
-    stopCheckInqSecuredRequest_RecCtrlIn:
-      type: object
-      properties:
-        Cursor:
-          maxLength: 250
-          type: string
-          description: 'Cursor. Next Record Pointer Included in the response only if additional records are available. '
-        MaxRecLimit:
-          type: integer
-          description: Maximum Record Limit. This is the maximum number of records that the server should add to the result set which is available to satisfy this request.
-          format: int64
-      description: Record Control In. Allows the client to specify a maximum number of records that it is capable of processing within a single response.
-    stopCheckInqSecuredRequest_StopChkSel_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
-        AcctType:
-          type: string
-          description: |-
-            Account Type.
-
-            **Note:** DDA - Demand deposit account
-
-            MMA - Money market account
-
-            SDA - Savings deposit account
-
-            CDA - Certificate of deposit
-
-            CMA - Cash management account
-          enum:
-          - DDA
-          - MMA
-          - SDA
-          - CDA
-          - CMA
-      description: "Account Keys. Used to uniquely identify an Account record. \n\n**Note:** The selection is done either by stop check keys (StopChkSel/StopChkKeys) or by other selection criteria. When selection is done by other selection criteria the StopItemSel/AcctKeys is required."
-    stopCheckInqSecuredRequest_StopChkSel_ChkNumRange:
-      type: object
-      properties:
-        ChkNumEnd:
-          maxLength: 22
-          type: string
-          description: 'Check Number End. '
-        ChkNumStart:
-          maxLength: 22
-          type: string
-          description: 'Check Number Start. '
-      description: "Check Number Range.  Used to describe a range of stop checks. \n\n**Note:** Provide either one check number or a range of checks. If both are provided, check number range will take precedence."
-    stopCheckInqSecuredRequest_StopChkSel_DtRange:
-      type: object
-      properties:
-        EndDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: End Date
-        StartDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: Start Date
-      description: "Date Range.  Used to describe a range of dates. \n\n**Note:** This filter finds stops that started between the dates in the range (referst to field startDtm)."
-    stopCheckInqSecuredRequest_StopChkSel_StopChkKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
-        AcctType:
-          type: string
-          description: |+
-            Account Type.
-
-            **Note:** DDA - Demand deposit account
-
-            MMA - Money market account
-
-            SDA - Savings deposit account
-
-            CDA - Certificate of deposit
-
-            CMA - Cash management account
-
-          enum:
-          - DDA
-          - MMA
-          - SDA
-          - CDA
-          - CMA
-      description: |+
-        Account Keys. Under this context is the account subject of the stop check.
-
-        **Note:** The composition of the key includes AcckKeys when  KeyCompatiblity_Rule is "true" for the ClientAppName.
-
-    stopCheckInqSecuredRequest_StopChkSel_StopChkKeys:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        StopChkId:
-          maxLength: 36
-          type: string
-          description: |+
-            Stop Check Identifier.  Used to uniquely identify the Stop Check Object.
-
-            **Note:** This is the native key in Finxact
-
-
-
-
-
-        AcctKeys:
-          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_StopChkKeys_AcctKeys'
-        StopChkIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Stop Check Identifier. A record identifier used in combination with account number and type to identify the stop record.
-
-
-
-            **Note:** The composition of the key includes StopChkIdent when  KeyCompatiblity_Rule is "true" for the ClientAppName.
-
-
-
-            When StopChkId is provided in the selection request it will take precedence over any other selection criteria.
-      description: "Stop Check Keys. Used to uniquely identify an a stop check record. \n\n**Note:** The key may vary depending on configuration. The key can be expressed as native key (StopChkId) or a compatibility key (AcctKeys and StopChkIdent). See KeyCompatiblity_Rule settings."
-    stopCheckInqSecuredRequest_StopChkSel:
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_AcctKeys'
-        ChkNum:
-          maxLength: 22
-          type: string
-          description: "Check Number. \n\n**Note:** Provide either one check number or a range of checks. If both are provided, check number range will take precedence."
-        ChkNumRange:
-          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_ChkNumRange'
-        DtRange:
-          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_DtRange'
-        StopChkKeys:
-          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_StopChkKeys'
-      description: Stop Check Selection. Used to allow the client to specify a selection criteria for stop checks.
-    stopCheckInqSecuredResponse_RecCtrlOut:
-      required:
-      - SentRecCount
-      type: object
-      properties:
-        Cursor:
-          maxLength: 250
-          type: string
-          description: Cursor.  Next Record Pointer Included in the response only if additional records are available. This is used in the RecCtrlIn aggregate to request more records.
-        SentRecCount:
-          type: integer
-          description: 'Sent Record Count. Number of records matching the selection criteria that are included in this message. '
-          format: int64
-      description: Record Control Out. Used in inquiry responses to provide a client that used the RecCtrlIn aggregate in the request with information it needs to retrieve the rest of the records that matched the specified selection criteria.
-    stopCheckInqSecuredResponse_StopChkInfo_ChkNumRange:
-      type: object
-      properties:
-        ChkNumEnd:
-          maxLength: 22
-          type: string
-          description: 'Check Number End. '
-        ChkNumStart:
-          maxLength: 22
-          type: string
-          description: 'Check Number Start. '
-      description: Check Number Range. Contains the range of checks to stop payment.
-    stopCheckInqSecuredResponse_StopChkInfo_CurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Amount.
-        CurCode:
-          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt_CurCode'
-      description: Currency Amount. Indicates the amount of the check.
-    stopCheckInqSecuredResponse_StopChkInfo_CurAmtRange:
-      type: object
-      properties:
-        HighCurAmt:
-          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmtRange_HighCurAmt'
-        LowCurAmt:
-          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmtRange_LowCurAmt'
-      description: Currency Amount Range. Contains the range of amounts.
-    stopCheckInqSecuredResponse_StopChkInfo_TranFee:
-      type: object
-      properties:
-        FeeAmt:
-          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_TranFee_FeeAmt'
-        FeeIdent:
-          maxLength: 36
-          type: string
-          description: Fee Identification.
-      description: Transaction Fee
-    stopCheckInqSecuredResponse_StopChkInfo_VarianceAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Amount.
-        CurCode:
-          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt_CurCode'
-      description: |+
-        Variance Amount. Amount by which the amount of an item may vary from the amount specified in the Check amount field, and still be considered to be a stop or suspect.
-
-    stopCheckInqSecuredResponse_StopChkInfo:
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_AcctKeys'
-        CardSignedInd:
-          type: boolean
-          description: Card Signed Indicator. Identifies whether the customer has signed a stop payment card.
-        ChkNumRange:
-          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_ChkNumRange'
-        CurAmt:
-          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_CurAmt'
-        CurAmtRange:
-          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_CurAmtRange'
-        Desc:
-          maxLength: 100
-          type: string
-          description: Description. Additional information, such as why the check is being stopped. Also known as reason description.
-        ExpDt:
-          type: string
-          description: |+
-            Check Expiration Date. Date on which the stop payment is scheduled to expire.
-
-          format: date
-        Name:
-          maxLength: 80
-          type: string
-          description: Name. Check Pay-To Name.
-        OrigDt:
-          type: string
-          description: Check Origination Date. The date on which the customer originates the check.
-          format: date
-        StopChkDt:
-          type: string
-          description: Stop Check Date. Date when the stop check was placed on the item.
-          format: date
-        StopChkReasonCode:
-          type: string
-          description: 'Stop Check Reason Code. '
-          enum:
-          - Lost
-          - Stolen
-          - Fraud
-          - Dispute
-          - BankRequest
-          - CustomerRequest
-          - Other
-        TranFee:
-          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_TranFee'
-        VarianceAmt:
-          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_VarianceAmt'
-        VariancePct:
-          type: number
-          description: |-
-            Variance Percentage
-
-            **Note:** For example 10% variance is  10.
-      description: 'Stop Check Information. Used to contain the Stop Check information. '
-    stopCheckInqSecuredResponse_StopChkKeys:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/stopChkAddResponse_StopChkStatusRec_StopChkKeys_AcctKeys'
-        StopChkId:
-          maxLength: 36
-          type: string
-          description: |-
-            Stop Check Identifier.  Used to uniquely identify the Stop Check Object.
-
-            **Note:** This is the native key in Finxact
-        StopChkIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Stop Check Identifier. A record identifier used in combination with account number and type to identify the stop record.
-
-
-
-            **Note:** The composition of the key includes StopChkIdent when  KeyCompatiblity_Rule is "true" for the ClientAppName.
-      description: "Stop Check Keys. Used to identify the Stop Check record. \n\n**Note:** The key may vary depending on configuration. The key can be expressed as native key or a compatibility key. See KeyCompatiblity_Rule settings."
-    stopCheckInqSecuredResponse_StopChkStatus:
-      required:
-      - StopChkStatusCode
-      type: object
-      properties:
-        EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: 'Effective Date. The date that an associated action resulting in a change of state or status of an object took effect. '
-        StopChkStatusCode:
-          type: string
-          description: 'Stop Check Status Code. Current Status of the Stop Check Object. '
-          enum:
-          - Valid
-      description: Stop Check Status. Used to contain the current status of the Stop Check Object.
-    stopCheckInqSecuredResponse_StopChkRec:
-      required:
-      - StopChkInfo
-      - StopChkKeys
-      - StopChkStatus
-      properties:
-        StopChkInfo:
-          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo'
-        StopChkKeys:
-          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkKeys'
-        StopChkStatus:
-          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkStatus'
-    stopChkModRequest_StopChkKeys_AcctKeys:
       required:
       - AcctId
       type: object
@@ -1359,6 +916,437 @@ components:
         Unique information to identify the account that is a subject of the stop check.
 
         **Note:** Client application uses AcctKey with the compatibility key.
+    stopChkCanSecuredRequest_StopChkKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        StopChkId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number to identify the stop check.
+
+            **Note:** Refers to the native key.
+        AcctKeys:
+          $ref: '#/components/schemas/stopChkCanSecuredRequest_StopChkKeys_AcctKeys'
+        StopChkIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification code used in combination with account number and account type to identify the stop check record.
+
+            **Note:** Client application uses StopChkIdent with the compatibility key.
+      description: |-
+        Unique information to identify a stop check record.
+
+        **Note:** Key may vary depending on the configuration. The key can be expressed as a native key (StopChkId) or as a compatibility key (AcctKeys and StopChkIdent).
+    stopChkCanSecuredResponse_StopChkStatusRec_StopChkKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        StopChkId:
+          maxLength: 36
+          type: string
+          description: Unique identification number to identify the stop check.
+        AcctKeys:
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_AcctKeys'
+        StopChkIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification code used in combination with account number and account type to identify the stop check record.
+      description: Unique information to identify a stop check record.
+    stopChkCanSecuredResponse_StopChkStatusRec_StopChkStatus:
+      required:
+      - StopChkStatusCode
+      type: object
+      properties:
+        StopChkStatusCode:
+          type: string
+          description: Code to indicate the status for the stop check record.
+          enum:
+          - Deleted
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the stop check status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: Details of the stop check status.
+    stopChkCanSecuredResponse_StopChkStatusRec:
+      required:
+      - StopChkKeys
+      - StopChkStatus
+      type: object
+      properties:
+        StopChkKeys:
+          $ref: '#/components/schemas/stopChkCanSecuredResponse_StopChkStatusRec_StopChkKeys'
+        StopChkStatus:
+          $ref: '#/components/schemas/stopChkCanSecuredResponse_StopChkStatusRec_StopChkStatus'
+      description: Details of the stop check status record.
+    stopCheckInqSecuredRequest_RecCtrlIn:
+      type: object
+      properties:
+        Cursor:
+          maxLength: 250
+          type: string
+          description: 'Used in RecCtrlIn aggregate to request more records.  Next Record Pointer Included in the response only if additional records are available. '
+        MaxRecLimit:
+          type: integer
+          description: 'Maximum number of records in the result set to satisfy the request. '
+          format: int64
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    stopCheckInqSecuredRequest_StopChkSel_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+
+            **Note:** The following values indicate:
+
+            - DDA: Demand deposit account
+
+            - MMA: Money market account
+
+            - SDA: Savings deposit account
+
+            - CDA: Certificate of deposit
+
+            - CMA: Cash management account
+          enum:
+          - DDA
+          - MMA
+          - SDA
+          - CDA
+          - CMA
+      description: |-
+        Unique information to identify the account record.
+
+        **Note:** The selection is done either by stop check keys (StopChkSel/StopChkKeys) or by other selection criteria. If selection is done by other selection criteria, then the StopItemSel/AcctKeys is required.
+    stopCheckInqSecuredRequest_StopChkSel_ChkNumRange:
+      type: object
+      properties:
+        ChkNumEnd:
+          maxLength: 22
+          type: string
+          description: |+
+            Ending number of the check number range used for the stop check record.
+
+        ChkNumStart:
+          maxLength: 22
+          type: string
+          description: |+
+            Starting number of the check number range used for the stop check record.
+
+      description: |-
+        Details of the check range that includes the start check number (ChkNumStart) and the end check number (ChkNumEnd) information for the stop check transaction.
+
+        **Note:** Provide either one check number or a range of checks. If both are provided, then check number range will take precedence.
+    stopCheckInqSecuredRequest_StopChkSel_DtRange:
+      type: object
+      properties:
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+      description: |-
+        Details of the date range that includes the start date (StartDt) and the end date (EndDt) information.
+
+        **Note:** This field is also used to identify the stops that started within the date range.
+    stopCheckInqSecuredRequest_StopChkSel_StopChkKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        StopChkId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number to identify the stop check.
+
+            **Note:** Refers to the native key.
+
+
+
+
+
+        AcctKeys:
+          $ref: '#/components/schemas/stopChkAddResponse_StopChkStatusRec_StopChkKeys_AcctKeys'
+        StopChkIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification code used in combination with account number and account type to identify the stop check record.
+
+            **Note:** Composition of the key includes AcctKeys when KeyCompatiblity_Rule is "true" for the ClientAppName.
+
+
+
+            If StopChkId is provided in the selection request, then it will take precedence over any other selection criteria.
+      description: "Unique informatiomation to identify a stop check record. \n\n**Note:** Key may vary depending on the configuration. The key can be expressed as a native key (StopChkId) or as a compatibility key (AcctKeys and StopChkIdent)."
+    stopCheckInqSecuredRequest_StopChkSel:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_AcctKeys'
+        ChkNum:
+          maxLength: 22
+          type: string
+          description: |-
+            Number of the check used under a stop check process.
+
+            **Note:** Provide either one check number or a range of checks. If both are provided, then check number range will take precedence.
+        ChkNumRange:
+          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_ChkNumRange'
+        DtRange:
+          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_DtRange'
+        StopChkKeys:
+          $ref: '#/components/schemas/stopCheckInqSecuredRequest_StopChkSel_StopChkKeys'
+      description: Details of the client-specified selection criteria for stop check.
+    stopCheckInqSecuredResponse_RecCtrlOut:
+      required:
+      - SentRecCount
+      type: object
+      properties:
+        Cursor:
+          maxLength: 250
+          type: string
+          description: 'Used in RecCtrlIn aggregate to request more records.  Next Record Pointer Included in the response only if additional records are available. '
+        SentRecCount:
+          type: integer
+          description: Total number of records that matched the selection criteria and returned in the response message.
+          format: int64
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    stopCheckInqSecuredResponse_StopChkInfo_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+
+            **Note:** The following values indicate:
+
+            - DDA: Demand deposit account
+
+            - MMA: Money market account
+
+            - SDA: Savings deposit account
+
+            - CDA: Certificate of deposit
+
+            - CMA: Cash management account
+          enum:
+          - DDA
+          - MMA
+          - SDA
+          - CDA
+          - CMA
+      description: Unique information to identify the deposit account of the stop check payment.
+    stopCheckInqSecuredResponse_StopChkInfo_ChkNumRange:
+      type: object
+      properties:
+        ChkNumEnd:
+          maxLength: 22
+          type: string
+          description: |+
+            Ending number of the check number range used for the stop check record.
+
+        ChkNumStart:
+          maxLength: 22
+          type: string
+          description: |+
+            Starting number of the check number range used for the stop check record.
+
+      description: Details of the check range that includes the start check number (ChkNumStart) and the end check number (ChkNumEnd) information for the stop check transaction.
+    stopCheckInqSecuredResponse_StopChkInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt_CurCode'
+      description: Details of the currency amount.
+    stopCheckInqSecuredResponse_StopChkInfo_CurAmtRange:
+      type: object
+      properties:
+        HighCurAmt:
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmtRange_HighCurAmt'
+        LowCurAmt:
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmtRange_LowCurAmt'
+      description: Details of the amount range that includes the minimum and maximum currency amount to consider for the stop check transaction.
+    stopCheckInqSecuredResponse_StopChkInfo_TranFee:
+      type: object
+      properties:
+        FeeAmt:
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_TranFee_FeeAmt'
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification number to identify the fee amount.
+      description: Information about billing details and transaction fee for a stop check transaction.
+    stopCheckInqSecuredResponse_StopChkInfo_VarianceAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt_CurCode'
+      description: Variance amount is the amount by which the an item amount may vary from the amount specified in the check amount field, and still be considered to be a stop or suspect.
+    stopCheckInqSecuredResponse_StopChkInfo:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_AcctKeys'
+        CardSignedInd:
+          type: boolean
+          description: Flag to indicate the customer has signed a stop payment card.
+        ChkNumRange:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_ChkNumRange'
+        CurAmt:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_CurAmt'
+        CurAmtRange:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_CurAmtRange'
+        Desc:
+          maxLength: 100
+          type: string
+          description: Description that specifies the reason for the stop check.
+        ExpDt:
+          type: string
+          description: "Date after which stop check is scheduled to expire.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        Name:
+          maxLength: 80
+          type: string
+          description: Name of the payee.
+        OrigDt:
+          type: string
+          description: "Date on which the customer originates the check.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20 "
+          format: date
+        StopChkDt:
+          type: string
+          description: "Date on which the stop check request is initiated.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20 "
+          format: date
+        StopChkReasonCode:
+          type: string
+          description: "Code to identify the reason for a stop check placed.\n\n**Note:** The following values are considered:\n\n- Lost\n\n- Stolen\n\n- Dispute\n\n- Fraud\n\n- CustomerRequest\n\n- BankRequest\n\n- Other "
+          enum:
+          - Lost
+          - Stolen
+          - Fraud
+          - Dispute
+          - BankRequest
+          - CustomerRequest
+          - Other
+        TranFee:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_TranFee'
+        VarianceAmt:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo_VarianceAmt'
+        VariancePct:
+          type: number
+          description: 'Variance percentage by which the amount of an item may vary from the amount specified in the check amount field and still be considered as a stop or suspect. '
+      description: Information about the stop check.
+    stopCheckInqSecuredResponse_StopChkKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/stopChkAddResponse_StopChkStatusRec_StopChkKeys_AcctKeys'
+        StopChkId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number to identify the stop check.
+
+            **Note:** Refers to the native key.
+        StopChkIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification code used in combination with account number and account type to identify the stop check record.
+
+            **Note:** Composition of the key includes AcctKeys when KeyCompatiblity_Rule is "true" for the ClientAppName.
+      description: |-
+        Unique information to identify a stop check record.
+
+        **Note:** Key may vary depending on the configuration. The key can be expressed as a native key (StopChkId) or as a compatibility key (AcctKeys and StopChkIdent).
+    stopCheckInqSecuredResponse_StopChkStatus:
+      required:
+      - StopChkStatusCode
+      type: object
+      properties:
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the stop check status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+        StopChkStatusCode:
+          type: string
+          description: Code to indicate the status for the stop check record.
+          enum:
+          - Valid
+      description: Details of the stop check status.
+    stopCheckInqSecuredResponse_StopChkRec:
+      required:
+      - StopChkInfo
+      - StopChkKeys
+      - StopChkStatus
+      properties:
+        StopChkInfo:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkInfo'
+        StopChkKeys:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkKeys'
+        StopChkStatus:
+          $ref: '#/components/schemas/stopCheckInqSecuredResponse_StopChkStatus'
     stopChkModRequest_StopChkKeys:
       required:
       - AcctKeys
@@ -1373,7 +1361,7 @@ components:
             **Note:** Refers to the native key.
 
         AcctKeys:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkKeys_AcctKeys'
+          $ref: '#/components/schemas/stopChkCanSecuredRequest_StopChkKeys_AcctKeys'
         StopChkIdent:
           maxLength: 36
           type: string
@@ -1389,79 +1377,6 @@ components:
         Unique information to identify a stop check record.
 
         **Note:** Key may vary depending on the configuration. The key can be expressed as a native key (StopChkId) or as a compatibility key (AcctKeys and StopChkIdent).
-    stopChkModRequest_StopChkInfo_ChkNumRange:
-      type: object
-      properties:
-        ChkNumStart:
-          maxLength: 22
-          type: string
-          description: |+
-            Starting number of the check number range used for the stop check record.
-
-        ChkNumEnd:
-          maxLength: 22
-          type: string
-          description: |+
-            Ending number of the check number range used for the stop check record.
-
-      description: Details of the check range that includes the start check number (ChkNumStart) and the end check number (ChkNumEnd) information for the stop check transaction.
-    stopChkModRequest_StopChkInfo_CurAmt_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\">ISO 4217 codes </a> to view the list of all currency codes."
-          enum:
-          - ISO4217-Alpha
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported.\n\n"
-      description: Details of currency code.
-    stopChkModRequest_StopChkInfo_CurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Amount in decimal format.
-        CurCode:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_CurAmt_CurCode'
-      description: |+
-        Details of the currency amount.
-
-        **Note:** Only a single check amount or a range of amounts should be provided to create a stop check record.
-
-    stopChkModRequest_StopChkInfo_CurAmtRange_LowCurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Amount in decimal format.
-        CurCode:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_CurAmt_CurCode'
-      description: Details of the minimum amount range that contains the amount value and currency code information.
-    stopChkModRequest_StopChkInfo_CurAmtRange_HighCurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Amount in decimal format.
-        CurCode:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_CurAmt_CurCode'
-      description: Details of the maximum amount range that contains the amount value and currency code information.
-    stopChkModRequest_StopChkInfo_CurAmtRange:
-      type: object
-      properties:
-        LowCurAmt:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_CurAmtRange_LowCurAmt'
-        HighCurAmt:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_CurAmtRange_HighCurAmt'
-      description: |+
-        Details of the amount range that includes the minimum and maximum currency amount to consider for the stop check transaction.
-
-        **Note:** Only a single check amount or a range of amounts should be provided to create a stop check record.
-
     stopChkModRequest_StopChkInfo_TranFee_FeeAmt_CurCode:
       required:
       - CurCodeValue
@@ -1548,25 +1463,25 @@ components:
         BillingInstruction:
           $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_TranFee_BillingInstruction'
       description: |-
-        Information on billing details and transaction fee for a stop check transaction.
+        Information about billing details and transaction fee for a stop check transaction.
 
         **Note:** This field cannot be modified.
     stopChkModRequest_StopChkInfo:
       type: object
       properties:
         ChkNumRange:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_ChkNumRange'
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_ChkNumRange'
         Name:
           maxLength: 80
           type: string
           description: Name of the payee.
         CurAmt:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_CurAmt'
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmt'
         VariancePct:
           type: number
           description: "Variance percentage by which the amount of an item may vary from the amount specified in the check amount field and still be considered as a stop or suspect. \n\n**Note:** Request should not include variance percentage if the CurAmtRange describes an amount variance."
         CurAmtRange:
-          $ref: '#/components/schemas/stopChkModRequest_StopChkInfo_CurAmtRange'
+          $ref: '#/components/schemas/stopChkAddRequest_StopChkInfo_CurAmtRange'
         OrigDt:
           type: string
           description: "Date on which the customer originates the check.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20 "
@@ -1600,100 +1515,3 @@ components:
           type: boolean
           description: Flag to indicate the customer has signed a stop payment card.
       description: Information about the client-managed properties of the stop check record.
-    stopChkModResponse_StopChkStatusRec_StopChkKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-
-
-        AcctType:
-          type: string
-          description: |-
-            Type of an account.
-
-
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
-
-            **Note:** The following values indicate:
-
-            - DDA: Demand deposit account
-
-            - MMA: Money market account
-
-            - SDA: Savings deposit account
-
-            - CDA: Certificate of deposit
-
-            - CMA: Cash management account
-          enum:
-          - DDA
-          - MMA
-          - SDA
-          - CDA
-          - CMA
-      description: |-
-        Unique information to identify the account that is a subject of the stop check.
-
-        **Note:** Composition of the key includes AcctKeys when KeyCompatiblity_Rule is "true" for the ClientAppName.
-    stopChkModResponse_StopChkStatusRec_StopChkKeys:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        StopChkId:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identification number to identify the stop check.
-
-            **Note:** Refers to the native key.
-
-        AcctKeys:
-          $ref: '#/components/schemas/stopChkModResponse_StopChkStatusRec_StopChkKeys_AcctKeys'
-        StopChkIdent:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification code used in combination with account number and account type to identify the stop check record.
-
-            **Note:** Composition of the key includes AcctKeys when KeyCompatiblity_Rule is "true" for the ClientAppName.
-      description: |-
-        Unique information to identify a stop check record.
-
-        **Note:** Key may vary depending on the configuration. The key can be expressed as a native key (StopChkId) or as a compatibility key (AcctKeys and StopChkIdent).
-    stopChkModResponse_StopChkStatusRec_StopChkStatus:
-      required:
-      - StopChkStatusCode
-      type: object
-      properties:
-        StopChkStatusCode:
-          type: string
-          description: Code to indicate the status for the stop check record.
-          enum:
-          - Valid
-        EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: "Effective date and time when the stop check status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
-      description: Details of the stop check status.
-    stopChkModResponse_StopChkStatusRec:
-      required:
-      - StopChkKeys
-      - StopChkStatus
-      type: object
-      properties:
-        StopChkKeys:
-          $ref: '#/components/schemas/stopChkModResponse_StopChkStatusRec_StopChkKeys'
-        StopChkStatus:
-          $ref: '#/components/schemas/stopChkModResponse_StopChkStatusRec_StopChkStatus'
-      description: Details of the stop check status record in response to modify stop check record.
