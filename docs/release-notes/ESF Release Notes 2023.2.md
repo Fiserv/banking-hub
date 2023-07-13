@@ -90,6 +90,10 @@ Added the following API endpoints:
 - Cancel Stop Item *(API Explorer > Transactions> Stop Item Service)*
 - Get Enumeration Table -  PartyAcctRel *(API Explorer > Operations and Servicing> Enumeration Table Service)*
 - Get Product Specifications *(API Explorer > Operations and Servicing > Product Specification Service)*
+- Add Client Defined Field *(API Explorer > Accountholder > Client Defined Field Service)*
+- Get Client Defined Field *(API Explorer > Accountholder > Client Defined Field Service)*
+- Update Client Defined Field *(API Explorer > Accountholder > Client Defined Field Service)*
+- Add Account Collateral Relationship *(API Explorer > Accounts > Account Collateral Service)*
 
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
