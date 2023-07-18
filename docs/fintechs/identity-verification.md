@@ -12,7 +12,7 @@ These Know Your customer (KYC) APIs make it possible to authenticate new custome
 
 Begin the integration with following services of Identity domain in API Explorer:
 
-* [Identity Verification](../api/?type=post&path=//onboardadvisor/business/verification)
+* [Identity Verification](../api/?type=post&path=/onboardadvisor/business/verification)
 * [Watch List](../api/?type=post&path=/onboardadvisor/business/watchlist)
 * [Address Verification](../api/?type=post&path=/onboardadvisor/business/verification/address)
 
