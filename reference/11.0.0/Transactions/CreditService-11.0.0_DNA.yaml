@@ -14,7 +14,7 @@ paths:
       tags:
       - Reverse Credit
       summary: Reverse Credit.
-      description: "Reverse Credit API reverses the previously processed credit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API post a stand-alone Deposit Reversal transaction (DEPR) on the basis of the original transaction number passed in the request. Only Electronic (EL) transfers fund type is supported for reversal."
+      description: Reverse Credit API reverses the previously processed credit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API post a stand-alone Deposit Reversal transaction (DEPR) on the basis of the original transaction number passed in the request. Only Electronic (EL) transfers fund type is supported for reversal.
       operationId: CreditRevOper
       parameters:
       - name: EFXHeader
@@ -49,7 +49,7 @@ paths:
       tags:
       - Add Credit
       summary: Add Credit.
-      description: "Add Credit API creates a credit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API supports only Deposit (DEP) transaction type and Electronic (EL) transfers fund type that are real time post transactions."
+      description: Add Credit API creates a credit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API supports only Deposit (DEP) transaction type and Electronic (EL) transfers fund type that are real time post transactions.
       operationId: CreditAddOper
       parameters:
       - name: EFXHeader
@@ -436,8 +436,14 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
-      description: Account Keys. Used to uniquely identify an Account record.
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+      description: Unique information to identify the account record.
     CreditAddOperRequest_CreditInfo_AcctRef:
       required:
       - AcctKeys
@@ -445,13 +451,13 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
-      description: Account Reference. Provides reference data to an account object the transaction. This is the account being credited.
+      description: Reference information of an account that is being credited.
     CreditAddOperRequest_CreditInfo_CurAmt:
       properties:
         Amt:
           type: number
           description: |-
-            Amount.
+            Amount in decimal format.
 
             **Note:** There can be up to two occurences, one for the transaction amount and one for the fee. Since this solution supports balanced transactions, the same amount is assumed to be for any G/L offsets.
 
@@ -464,7 +470,9 @@ components:
       properties:
         CurAmt:
           type: array
-          description: Transaction Amount.
+          description: |+
+            Details of the amount to be processed in credit transaction.
+
           items:
             $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt'
     CreditAddOperRequest_CreditInfo:
@@ -475,33 +483,23 @@ components:
       properties:
         CreditType:
           type: string
-          description: Credit Type. The type of credit transaction.
+          description: Type of credit transaction.
           enum:
           - Deposit
         AcctRef:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef'
         CompositeCurAmt:
           type: array
-          description: 'Composite Currency Amount. Indicates the composition of the credit amount. '
+          description: Details of the composition of the credited amount.
           items:
             $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CompositeCurAmt'
-      description: Credit Information. Details of the credit transaction.
-    CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: 'Account Identifier.  Uniquely identifies an account held at a financial institution. '
-      description: Account Keys.
+      description: Details of the credit transaction.
     CreditAddOperResponse_CreditStatusRec_CreditKeys:
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys'
-      description: Credit Keys. Used to identify the Credit record.
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
+      description: Unique information to identify a credit record.
     CreditAddOperResponse_CreditStatusRec_CreditStatus:
       required:
       - CreditStatusCode
@@ -509,14 +507,21 @@ components:
       properties:
         CreditStatusCode:
           type: string
-          description: Credit Status Code.
+          description: |+
+            Code to specify the current status of the credit transaction.
+
           enum:
           - Posted
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
-      description: Credit Status. Contains information of the current state of the object.
+          description: |-
+            Effective date and time when the credit transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the credit transaction status.
     CreditAddOperResponse_CreditStatusRec:
       required:
       - CreditStatus
@@ -526,14 +531,16 @@ components:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
         CreditStatus:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditStatus'
-      description: Credit Status Record. Used in responses to return results from an add, modify or delete operation on the object.
+      description: Details of the credit status record in response to the add operation.
     CreditAddOperResponse_Receipt_TrnAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount.
-      description: 'Transaction Amount. '
+          description: |+
+            Amount in decimal format.
+
+      description: Details of the transaction amount.
     CreditAddOperResponse_Receipt:
       type: object
       properties:
@@ -542,8 +549,8 @@ components:
         TrnIdent:
           maxLength: 36
           type: string
-          description: 'Transaction Identification. '
-      description: Receipt. Transaction receipt.
+          description: Unique identifier to identify the credit transaction.
+      description: Details of the credit transaction receipt.
     CreditRevOperRequest_CreditKeys_AcctKeys:
       required:
       - AcctId
@@ -552,28 +559,39 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Account Identifier.  Uniquely identifies an account held at a financial institution. \n\n**Note:** Refers to the account number on which transaction is needed to be performed."
-      description: Account Keys.
+          description: |-
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+            **Note:** Refers to the account number on which transaction is needed to be performed.
+      description: Unique information to identify the account record.
     CreditRevOperRequest_CreditKeys:
       type: object
       properties:
         AcctKeys:
           $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys_AcctKeys'
-      description: Credit Keys. Used to identify the Credit record.
+      description: Unique information to identify a credit record.
     CreditRevOperRequest_CreditInfo_CompositeCurAmt_CurAmt:
       type: object
       properties:
         Amt:
           type: number
           description: |-
-            Amount.
+            Amount in decimal format.
 
             **Note:** There can be up to two occurences, one for the transaction amount and one for the fee. Since this solution supports balanced transactions, the same amount is assumed to be for any G/L offsets.
 
 
 
             It is an optional property. If not provided then original transaction amount will be considered for reversal. If partial amount or incorrect is provided then transction shall not be processed.
-      description: Transaction Amount.
+      description: |+
+        Details of the amount to be processed in credit transaction.
+
     CreditRevOperRequest_CreditInfo_CompositeCurAmt:
       required:
       - CurAmt
@@ -581,7 +599,7 @@ components:
       properties:
         CurAmt:
           $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt_CurAmt'
-      description: 'Composite Currency Amount. Indicates the composition of the credit reverasl amount. '
+      description: Details of the composition of the credited amount.
     CreditRevOperRequest_CreditInfo_NetworkRefData:
       type: object
       properties:
@@ -589,7 +607,7 @@ components:
           maxLength: 36
           type: string
           description: |+
-            Client Transaction Identification used to reference a previous transaction.
+            Unique identifier for the client transaction that is used to reference a previous transaction.
 
             **Note:** Unique identifier of the original transaction.
 
@@ -597,12 +615,12 @@ components:
 
             Refers to the original transaction number to be reversed.
 
-            DNA can accommodate 50 characters
+            Max length: 50 characters
 
 
 
       description: |-
-        Network Transaction Reference Data. Used to identify a previous transaction to be referenced for refunds and reversals.
+        Network transaction reference details that are used to identify a previous transaction to be referenced for refunds and reversals.
 
         **Note:** The original transaction would have been posted during the same business day. Used in an auto-correct of the transaction.
     CreditRevOperRequest_CreditInfo:
@@ -613,17 +631,14 @@ components:
       properties:
         CreditType:
           type: string
-          description: |-
-            Credit Type. The type of credit transaction.
-
-            **Note:** Refers to the RtxnTypCd to be performed.
+          description: Type of credit transaction.
           enum:
           - Deposit
         CompositeCurAmt:
           $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt'
         NetworkRefData:
           $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_NetworkRefData'
-      description: 'Credit Information. Details of the credit transaction. '
+      description: Details of the credit transaction.
     CreditRevOperResponse_CreditStatusRec_CreditStatus:
       required:
       - CreditStatusCode
@@ -631,20 +646,21 @@ components:
       properties:
         CreditStatusCode:
           type: string
-          description: |-
-            Credit Status Code.
+          description: |+
+            Code to specify the current status of the credit transaction.
 
-            **Note:** Refers to "Reversed".
           enum:
           - Reversed
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
+            Effective date and time when the credit transaction status is changed.
 
-            **Note:** Refers to Effective Date of the transaction.
-      description: Credit Status. Contains information of the current state of the object.
+            Format: yyyy-mm-ddThh:mm:ss.micro
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the credit transaction status.
     CreditRevOperResponse_CreditStatusRec:
       required:
       - CreditStatus
@@ -654,14 +670,24 @@ components:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
         CreditStatus:
           $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditStatus'
-      description: Credit Status Record. Used in responses to return results from a add, reversal of the Object.
+      description: Details of the credit transaction response that includes response keys and response status.
+    CreditRevOperResponse_Receipt_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+      description: Details of the transaction amount.
     CreditRevOperResponse_Receipt:
       type: object
       properties:
         TrnAmt:
-          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_TrnAmt'
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt_TrnAmt'
         TrnIdent:
           maxLength: 36
           type: string
-          description: "Transaction Identification. \n\n**Note:** Refers to the unique generated transaction number (RtxnNbr)."
-      description: Receipt. Transaction receipt.
+          description: |-
+            Unique identifier to identify the credit transaction.
+
+            **Note:** Refers to the unique generated transaction number (RtxnNbr).
+      description: Details of the credit transaction receipt.
