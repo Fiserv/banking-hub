@@ -116,7 +116,10 @@ paths:
       x-core: Cleartouch
 components:
   schemas:
-    ClientDefinedFieldAddRequest: {}
+    ClientDefinedFieldAddRequest:
+      properties:
+        ClientDefinedFieldInfo:
+          $ref: '#/components/schemas/ClientDefinedFieldAddRequest_ClientDefinedFieldInfo'
     ClientDefinedFieldAddResponse:
       required:
       - ClientDefinedFieldStatusRec
@@ -152,7 +155,7 @@ components:
         Status:
           $ref: '#/components/schemas/StatusType'
         ClientDefinedFieldStatusRec:
-          $ref: '#/components/schemas/ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec'
+          $ref: '#/components/schemas/ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -464,7 +467,7 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_PartyKeys:
+    ClientDefinedFieldAddRequest_ClientDefinedFieldInfo_PartyKeys:
       type: object
       properties:
         PartyId:
@@ -472,10 +475,69 @@ components:
           type: string
           description: Unique identification number of a party record.
       description: Unique information to identify the party record.
+    ClientDefinedFieldAddRequest_ClientDefinedFieldInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          type: string
+          description: Unique data identifier for the client-defined item.
+          enum:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+        DataType:
+          type: string
+          description: |-
+            Type of a client-defined data.
+
+            **Note:** *Required field*
+
+
+
+            The following value indicate:
+
+            - Alpha: Client defined codes
+
+            - Numeric: Client defined numbers
+
+            - Boolean: Client defined flags
+
+            - Currency: Client defined amounts
+
+            - Date: Client defined dates
+
+
+
+            Cleartouch supports maximum 4 values for each data type.
+          enum:
+          - Alpha
+          - Numeric
+          - Boolean
+          - Currency
+          - Date
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+    ClientDefinedFieldAddRequest_ClientDefinedFieldInfo:
+      required:
+      - ClientDefinedData
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldAddRequest_ClientDefinedFieldInfo_PartyKeys'
+        ClientDefinedData:
+          type: array
+          description: "Details of the client-defined data whose value, data type and definition are defined by the client or user.\n\n**Note:** This aggregate may repeat multiple times depending on the number of client defined fields that are sent in the request. \n\n\n\nIf ClientDefinedData for the given DataIdent and DataType already exists, then it will be overridden."
+          items:
+            $ref: '#/components/schemas/ClientDefinedFieldAddRequest_ClientDefinedFieldInfo_ClientDefinedData'
+      description: Information about client-defined field record associated with an account or party.
     ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldKeys:
       properties:
         PartyKeys:
-          $ref: '#/components/schemas/ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_PartyKeys'
+          $ref: '#/components/schemas/ClientDefinedFieldAddRequest_ClientDefinedFieldInfo_PartyKeys'
     ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldStatus:
       required:
       - ClientDefinedFieldStatusCode
@@ -509,12 +571,12 @@ components:
             $ref: '#/components/schemas/ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldKeys'
         ClientDefinedFieldStatus:
           $ref: '#/components/schemas/ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldStatus'
-      description: Details of the client defined field response record that includes response keys and response status.
+      description: Details of client defined field status record in response to add opertaion.
     ClientDefinedFieldInqRequest_ClientDefinedFieldSel_ClientDefinedFieldKeys:
       type: object
       properties:
         PartyKeys:
-          $ref: '#/components/schemas/ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_PartyKeys'
+          $ref: '#/components/schemas/ClientDefinedFieldAddRequest_ClientDefinedFieldInfo_PartyKeys'
       description: Unique information to identify the client-defined field record.
     ClientDefinedFieldInqRequest_ClientDefinedFieldSel:
       type: object
@@ -532,4 +594,18 @@ components:
           $ref: '#/components/schemas/ClientDefinedFieldInqRequest_ClientDefinedFieldSel_ClientDefinedFieldKeys'
         ClientDefinedFieldStatus:
           $ref: '#/components/schemas/ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldStatus'
-      description: Details of the client defined field response record that includes response keys, response status and response information.
+      description: Details of the client defined field response record that includes response keys and response status.
+    ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec:
+      required:
+      - ClientDefinedFieldKeys
+      - ClientDefinedFieldStatus
+      type: object
+      properties:
+        ClientDefinedFieldKeys:
+          type: array
+          description: Unique information to identify the client-defined field record.
+          items:
+            $ref: '#/components/schemas/ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldKeys'
+        ClientDefinedFieldStatus:
+          $ref: '#/components/schemas/ClientDefinedFieldAddResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldStatus'
+      description: Details of client defined field status record in response to update opertaion.
