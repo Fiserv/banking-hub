@@ -153,16 +153,16 @@ Added the following API endpoints:
 - Get Address - ByPartyrId *(API Explorer > Accountholder > Address Service)*
 - Update Address *(API Explorer > Accountholder > Address Service)*
 - Add Party Account Reltionship *(API Explorer > Accountholder > Party Account Relationship Service)*
-- Get Party Account Relatioship - ByAcct *(API Explorer > Accountholder > Party Account Relationship Service)*
+- Get Party Account Relationship - ByAcct *(API Explorer > Accountholder > Party Account Relationship Service)*
 - Get Party Account Relationship - ByParty *(API Explorer > Accountholder > Party Account Relationship Service)*
-- Update Party Account Relatioship *(API Explorer > Accountholder > Party Account Relationship Service)*
+- Update Party Account Relationship *(API Explorer > Accountholder > Party Account Relationship Service)*
 - Add Party *(API Explorer > Accountholder > Party Service)*
 - Get Party *(API Explorer > Accountholder > Party Service)*
 - Update Party *(API Explorer > Accountholder > Party Service)*
 - Get Party List *(API Explorer > Accountholder > Party Service)*
 - Get Portfolio *(API Explorer > Accounts > Portfolio Service)*
 - Get Product List *(API Explorer > Operation and Servicing > Product Service)*
-- Get Prodeuct Specification *(API Explorer > Operation and Servicing > Product Specification Service)*
+- Get Product Specification *(API Explorer > Operation and Servicing > Product Specification Service)*
 - Add Stop Check *(API Explorer > Transactions > Stop Check Service)*
 - Get Stop Check *(API Explorer > Transactions > Stop Check Service)*
 - Update Stop Check *(API Explorer > Transactions > Stop Check Service)*
