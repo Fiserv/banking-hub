@@ -128,7 +128,7 @@ Added the following API endpoints:
 
 <span style="font-size: 22px; ">Get Card Account Relationship</span> *API Explorer > Card > Card Account Relationship Service*
 
-- Fixed the API to send AddrType field correctly to the Cleatouch core
+- Fixed the API to send AddrType field correctly to the Cleartouch core
 
 <!-- type: tab -->
 > #### Note
