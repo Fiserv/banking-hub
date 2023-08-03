@@ -1,10 +1,10 @@
 # Release Notes 
 ### 2023_Q2
+Version 11.0.0
 <!-- 
 type: tab 
 titles: Premier, Precision, Signature, Cleartouch, Finxact
 -->
-<p style="font-size: 16px;">Version 11.0.0</p>
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 <span style="font-size: 22px; ">General</span>
@@ -55,17 +55,14 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact
 
 
 <!-- type: tab -->
-<p style="font-size: 16px;">Version 11.0.0</p>
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
-<p style="font-size: 16px;">Version 11.0.0</p>
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
-<p style="font-size: 16px;">Version 11.0.0</p>
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 <span style="font-size: 22px; ">General</span>
@@ -134,7 +131,8 @@ Added the following API endpoints:
 - Fixed the API to send AddrType field correctly to the Cleatouch core
 
 <!-- type: tab -->
-<p style="font-size: 16px;">Version 1.19</p>
+> #### Note
+> Currently Finxact supports version 1.19
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 <span style="font-size: 22px; ">General</span>
