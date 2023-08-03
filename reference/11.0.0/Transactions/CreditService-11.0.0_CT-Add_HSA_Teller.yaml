@@ -404,7 +404,7 @@ components:
           description: |-
             Type of an account.
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
 
             **Note:** *Required field*
 
@@ -444,18 +444,14 @@ components:
           description: |-
             Amount in decimal format.
 
-            Example: 10.00
-
             **Note:** *Required field*
 
 
 
-            This value (amount) is required to be provided and cannot be zero (0).
+            This value cannot be zero (0).
         CurCode:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt_CurCode'
-      description: |+
-        Details of the amount to be processed in credit transaction.
-
+      description: Details of the currency amount.
     CreditAddOperRequest_CreditInfo_RefData:
       required:
       - RefType
@@ -487,14 +483,36 @@ components:
           - Interest
         CurAmt:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt'
+        SpecialHandling:
+          type: array
+          description: "Special instructions for processing the transaction amount. \n\n"
+          items: {}
+          enum:
+          - MemoPost
+          - JournalEntry
+          - GitReporting
         RefData:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_RefData'
+    CreditAddOperRequest_CreditInfo_CashAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported."
+      description: Details of currency code.
     CreditAddOperRequest_CreditInfo_CashAmt:
       type: object
       properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
         CurCode:
-          type: object
-          description: Details of currency code.
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CashAmt_CurCode'
       description: Details of the cash in amounts.
     CreditAddOperRequest_CreditInfo_CashInData:
       required:
@@ -502,6 +520,101 @@ components:
       properties:
         CashAmt:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CashAmt'
+    CreditAddOperRequest_CreditInfo_ChkEnteredAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that at present, only USD currency code is supported."
+      description: Details of currency code.
+    CreditAddOperRequest_CreditInfo_ChkEnteredAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            **Note:** Refers to the amount of the check. The difference between all check amounts and the total transaction amount will be considered to be cash.
+        CurCode:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_ChkEnteredAmt_CurCode'
+      description: |+
+        Details of the amount entered for check.
+
+    CreditAddOperRequest_CreditInfo_FloatDetails:
+      properties:
+        FloatDays:
+          type: integer
+          description: |-
+            Number of hold days for a non-local check type.
+
+            **Note:** Max length: 2 digits
+
+            Allowed values are from 01-99 and only valid for ChkType of NonLocal.
+          format: int64
+    CreditAddOperRequest_CreditInfo_FloatData:
+      properties:
+        ExceptionFloatInd:
+          type: boolean
+          description: |-
+            Flag to indicate that exceptional float is applicable to the check.
+
+            **Note:** Applicable only for ChkTypes of Local and NonLocal.
+        FundsAvailInd:
+          type: boolean
+          description: |-
+            Flag to indicate the availability of funds.
+
+            **Note:** Applicable only for ChkTypes of Local and NonLocal that have the ExceptionFloatIndicator set to true.
+
+            If the field is set to "True", then it indicates that this transaction has the amount specified as the Next Day Availability Amount for Deposits (Parameter 02-2215) available to the customer the next day, regardless of hold status.
+        FloatDetails:
+          type: array
+          description: Details of float containing float days and check amount.
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_FloatDetails'
+    CreditAddOperRequest_CreditInfo_ChkInData:
+      required:
+      - ChkEnteredAmt
+      properties:
+        ChkEnteredAmt:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_ChkEnteredAmt'
+        ChkNum:
+          maxLength: 22
+          type: string
+          description: |-
+            Check number for the check to be included for the transaction.
+
+            **Note:** Max length: 8 digits
+
+            Check number is only allowed when the TranType = CheckCashing.
+
+            If using multiple ChkTypesand if a check number is used, then the check number should be filled on the first ChkType and not filled on the remaining ChkTypes. If it's filled on the subsequent ChkTypes, then it must be the same as the first ChkType because there can only be one check number for the entire transaction.
+        ChkType:
+          type: string
+          description: |-
+            Type of check that is included in the transaction.
+
+            **Note:** *Conditionally Required filed*
+
+            Applicable when check data is included in the transaction.
+          enum:
+          - Local
+          - NonLocal
+          - NoHold
+          - LowRisk
+        FloatData:
+          type: array
+          description: Details of the float data for the check deposit.
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_FloatData'
     CreditAddOperRequest_CreditInfo_FromAcctRef:
       type: object
       properties:
@@ -556,13 +669,13 @@ components:
           description: |-
             Description of the credit transaction.
 
-            **Note:** Refers to client grenerated Reg-E description that service provider use to display on customer statement.
+            **Note:** Refers to client generated Reg-E description that service provider use to display on customer statement.
 
             Maximum length: 33 characters
           items: {}
         PatriotActInd:
           type: boolean
-          description: "Flag to indicate that the transaction is a suspect transaction that needs to be reported.\n\n**Note:** This field indicates if the transaction is forced to high dollar report for IRS reporting. \n\nValues are:\n\n- True: Force to high dollar report\n\n- False: Do not report to high dollar report\n\nThis field is used on check cashing transaction or a HSA contibution for gift reporting.\n\nNot applicable when special handling is \"GiftReporting\"."
+          description: "Flag to indicate that the transaction is a suspect transaction that needs to be reported.\n\n**Note:** This field indicates if the transaction is forced to high dollar report for IRS reporting. \n\nValues are:\n\n- True: Force to high dollar report\n\n- False: Do not report to high dollar report\n\nThis field is used on check cashing transaction or an HSA contribution for gift reporting.\n\nNot applicable when special handling is \"GiftReporting\"."
         ContributionType:
           type: string
           description: 'Type of contribution for Health Savings and Retirement (HSR) accounts. '
@@ -578,6 +691,10 @@ components:
           description: Value that indicates the account is a tax incentive account such as Health Savings Account (HSA).
           enum:
           - HSA
+        DepItemCount:
+          type: integer
+          description: 'Count of the total number of cash and check items in the transaction. '
+          format: int64
         AcctRef:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef'
         CompositeCurAmt:
@@ -594,9 +711,14 @@ components:
           description: Details of the cash in amounts included in the credit transaction.
           items:
             $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CashInData'
+        ChkInData:
+          type: array
+          description: Details of the check amounts included in the credit transaction.
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_ChkInData'
         XferFromAcct:
           type: array
-          description: "Details of the account  from which transfer of funds is made. \n\nApplicable when funds are transferred from one or more accounts."
+          description: "Details of the account from which transfer of funds is made. \n\nApplicable when funds are transferred from one or more accounts."
           items:
             $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_XferFromAcct'
       description: Details of the credit transaction.
@@ -620,7 +742,7 @@ components:
           description: |-
             Type of an account.
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
           enum:
           - DDA
       description: Unique information to identify the account record.
@@ -648,7 +770,7 @@ components:
           description: |-
             Effective date and time when the transaction status is changed.
 
-            Format: yyyy-mm-ddThh:mm:ss.micro
+            Format: yyyy-mm-ddThh:mm:ss.SSS
 
             Example: 2021-01-31T23:59:59.999
       description: Details of the credit transaction status.
@@ -661,7 +783,7 @@ components:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
         CreditStatus:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditStatus'
-      description: Details of the credit transaction response that includes response keys and response status.
+      description: Details of the credit status record in response to the add operation.
     CreditAddOperResponse_Receipt_TrnAmt:
       type: object
       properties:
@@ -669,8 +791,6 @@ components:
           type: number
           description: |-
             Amount in decimal format.
-
-            Example: 10.00
 
             **Note:** Refers to total transaction amount.
       description: Details of the transaction amount.
@@ -695,10 +815,7 @@ components:
       properties:
         Amt:
           type: number
-          description: |-
-            Amount in decimal format.
-
-            Example: 10.00
+          description: Amount in decimal format.
       description: Details of the currency amount.
     CreditAddOperResponse_Receipt_AcctBal:
       required:

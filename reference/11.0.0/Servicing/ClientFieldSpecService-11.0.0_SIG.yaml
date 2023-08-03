@@ -3,7 +3,7 @@ openapi: 3.0.1
 info:
   title: Client Field Specification Service
   description: Client defined field specification service supports an inquiry operation to streamline the process of maintaining the client defined fields.
-  version: 11.0.0_PRM
+  version: 11.0.0_SIG
 servers:
 - url: /
 paths:
@@ -12,7 +12,7 @@ paths:
       tags:
       - Get Client Field Specifications
       summary: Get Client Field Specifications
-      description: "Get Client Field Specification API retrieves the client-defined field specifications for a customer’s account or party.<br>These are product specifications that are setup by banks."
+      description: "Retrieves the client-defined field specifications such as field label, field data type, field length etc.\n        <br>\n        For more information about the Accounts domain, <a href=\"../docs/?path=docs/fintechs/accounts.md\" title=\"Click to open\">click here.</a><br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
       operationId: ClientFieldSpecInfoSecured
       parameters:
       - name: EFXHeader
@@ -41,8 +41,8 @@ paths:
                 $ref: '#/components/schemas/ClientFieldSpecInfoSecuredResponse'
       x-group-name: Client Field Specification Service
       x-proxy-name: Get Client Field Specifications
-      x-child-product-name: Accounts
-      x-core: 'Premier '
+      x-child-product-name: Operations and Servicing
+      x-core: Signature
 components:
   schemas:
     ClientFieldSpecInfoSecuredRequest:
@@ -338,13 +338,32 @@ components:
       properties:
         DataApplType:
           type: string
-          description: Type of data application.
+          description: "Type of data application.\n\n\n\n**Note:** Refers to the application code of the user defined field. \n\n"
           enum:
-          - CDA
           - DDA
-          - LOAN
-          - Party
           - SDA
+          - CDA
+          - IRA
+          - Party
+          - LOAN
+        DataApplStatusSel:
+          type: string
+          description: |-
+            Selection criteria for status of data application.
+
+            **Note:** User-defined fields may not be enabled and set to active or inactive state.
+
+            **Active** - retrieves the active user-defined fields.
+
+            **Inactive** - retrieves inactive user-defined fields.
+
+            **Al**l - retrieves both active and inactive user-defined fields.
+
+            The value is set to **Active**.
+          enum:
+          - All
+          - Active
+          - Inactive
       description: Selection criteria to retrieve the client field specification records.
     ClientFieldSpecInfoSecuredResponse_RecCtrlOut:
       required:
@@ -355,9 +374,14 @@ components:
           type: integer
           description: Total number of records that matched the selection criteria and returned in the response message.
           format: int64
-      description: |+
-        Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+        MatchedRecCount:
+          type: integer
+          description: |-
+            Total number of records that matched the selection criteria.
 
+            **Note:** Signature returns a value "0"  when no additional records exist.
+          format: int64
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
     ClientFieldSpecInfoSecuredResponse_ClientFieldSpecKeys:
       required:
       - ClientFieldSpecId
@@ -365,70 +389,44 @@ components:
       properties:
         DataApplType:
           type: string
-          description: Type of data application.
-          enum:
-          - CDA
-          - DDA
-          - LOAN
-          - Party
-          - SDA
-        DataClassType:
-          type: string
-          description: |+
-            Client-defined class type of the data.
+          description: |-
+            Type of data application.
 
+
+
+            **Note:** Signature returns a value "0" when no additional records exist.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+          - IRA
+          - Party
+          - LOAN
         ClientFieldSpecId:
           maxLength: 36
           type: string
-          description: Unique identification number of client field specification record.
+          description: "Unique identification number of client field specification record.\n\n**Note:** Refers to the field name of the user-defined field in signature. "
       description: Unique information to identify the client field specification record.
     ClientFieldSpecInfoSecuredResponse_ClientFieldSpecInfo:
       type: object
       properties:
-        DataGroupType:
-          type: string
-          description: Type of grouping for data application and data class.
         DataType:
           type: string
-          description: |+
+          description: |-
             Client-defined data type.
 
+            **Note:** Refers to the type of data to be used.
           enum:
           - Alpha
-          - Currency
-          - CurrencySymbol
-          - Date
           - Numeric
-          - NumericSymbol
-          - Rate
-          - RateSymbol
         DataLength:
           type: integer
           description: Maximum allowed length of the client-defined data entered in the value field.
           format: int64
-        LastUpdateDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: |-
-            Date and time when the client field specification was updated.
-
-            Format: yyyy-MM-ddTHH:mm:ss.sss
-
-            Example: 2021-01-31T23:59:59.999
         Desc:
           maxLength: 100
           type: string
-          description: Description of the client defined data.
-        RequiredFlag:
-          type: boolean
-          description: |+
-            Flag to indicate a data value is required for the client-defined data.
-
-        SearchFlag:
-          type: boolean
-          description: |+
-            Flag to indicate the client-defined data can be searched.
-
+          description: "Description of the client-defined data.\n\n**Note:** Refers to short description of the user defined field.  \n\nA description of \"user defined field\" indicates the field is inactive in signature core common file definitions. \n\n \n\n"
       description: Details of the client field specification.
     ClientFieldSpecInfoSecuredResponse_ClientFieldSpecStatus:
       required:
@@ -437,11 +435,15 @@ components:
       properties:
         ClientFieldSpecStatusCode:
           type: string
-          description: Status code of a client field specification.
+          description: |+
+            Status code of a client field specification.
+
+          enum:
+          - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the client field specification status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** Date and time stamp from server."
+          description: "Effective date and time when the client field specification status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
       description: Current status of the client field specification object.
     ClientFieldSpecInfoSecuredResponse_ClientFieldSpecRec:
       required:
