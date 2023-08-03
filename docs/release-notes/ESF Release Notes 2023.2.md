@@ -1,6 +1,6 @@
 # Release Notes 
 ### 2023_Q2
-Version 11.0.0
+V 11.0.0
 <!-- 
 type: tab 
 titles: Premier, Precision, Signature, Cleartouch, Finxact
@@ -132,7 +132,8 @@ Added the following API endpoints:
 
 <!-- type: tab -->
 > #### Note
-> Currently Finxact supports version 1.19
+> Finxact supports V1.19.
+> 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 <span style="font-size: 22px; ">General</span>
