@@ -33,7 +33,7 @@ Perform the following steps to create an account on Fiserv Developer Studio:
 1.	From the top-right corner of the screen, click **Create account**
 2.	Populate the required fields and click **Next**
 3.	Follow the instructions on the screen to set up your account
-4.	Sign in to your Fiserv Developer Studio account once it is activated
+4.	Sign in to your Fiserv Developer Studio account once it is activated 
 
 ### Creating a Banking Hub Workspace
 
@@ -423,11 +423,11 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 
 * **Postman Collection**
 
-  [![downoad-icon-PRM]][PRM]      [![downoad-icon-SIG]][SIG]  
+  [![downoad-icon-PRM]][PRM]      [![downoad-icon-SIG]][SIG]     [![downoad-icon-FN]][FN]   
 
 
 [downoad-icon-PRM]: https://github.com/Fiserv/banking-hub/assets/81968767/934da291-c743-41cb-9325-16cf2c8d7bda
-[PRM]: https://github.com/Fiserv/banking-hub/files/11728540/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
+[PRM]: https://github.com/Fiserv/banking-hub/files/12247349/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
 
 
 [downoad-icon-SIG]: https://github.com/Fiserv/banking-hub/assets/81968767/b4c09878-6e73-4e9e-9171-74bcd3e4f8b6
@@ -437,8 +437,14 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 [downoad-icon-BH]: https://github.com/Fiserv/banking-hub/assets/81968767/4c31d642-7574-413e-b02e-32f7ad1ae504
 [BH]: https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip
 
+[downoad-icon-FN]: https://github.com/Fiserv/banking-hub/assets/81968767/76dd0525-220e-4c1e-90c8-b612eed002db
+[FN]:https://github.com/Fiserv/banking-hub/files/12236555/Banking.Hub.-.Finxact.1.19.-.Trial.Plan.Postman.Collection.v1.zip
+
 
 <!--
+FN: https://github.com/Fiserv/banking-hub/assets/81968767/28cc543b-7bd6-4f57-b282-725b15d289f3
+SIG: https://github.com/Fiserv/banking-hub/assets/81968767/b4c09878-6e73-4e9e-9171-74bcd3e4f8b6
+PRM: https://github.com/Fiserv/banking-hub/assets/81968767/934da291-c743-41cb-9325-16cf2c8d7bda
 
 * [Download Banking Hub API Specifications](https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip)
 * [Download Postman Collection - Premier Core](https://github.com/Fiserv/banking-hub/files/11449420/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip "Click to Download")
