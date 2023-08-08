@@ -54,6 +54,7 @@ titles: General Terms, Acronyms , Account Types, Legacy Service Name
 | ACH                   | ACH (Automated Clearing House network) is an electronic fund transfer made between banks and credit unions.                                                         |
 | CLT                   | Cleartouch                                                                                                                                                          |
 | DNA                   | DNA                                                                                                                                                                 |
+| FNX                   | Finxact                                                                                                                                                                 |
 | JSON                  | JavaScript Object Notation. A lightweight syntax that contains object and arrays, usually used to return the response from REST API.                                |
 | NACHA                 | NACHA (National Automated Clearing House Association) is an organization that sets and enforces the rules which the ACH network needs to abide by.                  |
 | PRC                   | Precision                                                                                                                                                           |
@@ -81,13 +82,16 @@ titles: General Terms, Acronyms , Account Types, Legacy Service Name
 | Term      | Description |
 | :---        | :----     | 
 | CDA| Certificate of Deposit Account. Account offered by banks and credit unions that offers an interest rate premium in exchange for the customer agreeing to deposit a lump-sum amount for a predetermined period of time.|
+| CLA | Commercial Loan Account. A debt-based funding agreement (loan) typically offered by banks and credit unions to a business. These can be secured or unsecured loans. |
 | CRD | Card (EFT Debit Card). A debit card is a card that deducts money from a designated checking account to pay for goods or services. It can be used anywhere Visa® or MasterCard® debit cards are accepted and no interest is charged. A debit card can also be used at ATMs to withdraw cash from accounts linked to that debit card. |
 | DDA | Demand Deposit Account. Account with a bank or other financial institution that allows the depositor to withdraw their funds without prior notice or with less than seven days notice. Also known as a Checking Account. |
 | DDL | Demand Deposit Loan. An overdraft banking account that is tied to a checking account. |
 | EXT | External Account. Accounts that belong to the customer in other financial institutions. They are stored for reference information. |
 | GLA | General Ledger Account. A general ledger account is an account or record used to sort, store and summarize a company's transactions. These accounts are arranged in the general ledger (and in the chart of accounts) with the balance sheet accounts appearing first followed by the income statement accounts. |
+| HSA | Health Savings Account. Is a type of savings account that lets you set aside money on a pre-tax basis to pay for qualified medical expenses. By using untaxed dollars in a HSA to pay for deductibles, copayments, coinsurance and some other expenses, you may be able to lower your overall health care costs. |
 | ILA | Installment Loan Account. A loan repaid with interest owed, in equal periodic payments of principal and interest. |
 | LEAS | Leasing. A lease is a contract outlining the terms under which one party agrees to rent property owned by another party. |
+| LIP | Loans In Process. A portion of a mortgage loan that is set aside to pay for the construction or building fees during the construction phase. These are typically used only for construction loans. The amount drawn is the interest-bearing principal. The amount remaining in LIP is non-interest bearing. |
 | LOAN | Loan Account. The loan account is used to track transactions related to the loan, which include interest, repayment, and any applicable charges. The loan account is a specific instance of a loan product, with a specified interest rate and an account number, and it is owned by a specified financial institution customer. |
 | LOC | Line of Credit. A line of credit is a preset amount of money that a bank or credit union has agreed to lend a customer. Customers can draw from the line of credit when they need it, up to the maximum amount. |
 | MLA | Mortgage Loan Account. An extension of real estate credit, usually on a long-term basis. The real estate is the lenders security. This is a loan type account. |
