@@ -379,8 +379,8 @@ components:
         AddrId:
           maxLength: 36
           type: string
-          description: Address Identifier.
-      description: 'Address Keys. Used to contain keys to the Address object. '
+          description: Unique address identifier value.
+      description: Unique information to identify the address record.
     modifyAddrRequest_AddrInfo_CountryCode:
       required:
       - CountryCodeValue
@@ -388,13 +388,13 @@ components:
       properties:
         CountryCodeSource:
           type: string
-          description: Country Code Source.  See the Country Code section for standards and allowed values for this element.
+          description: Standard country code format.
           enum:
           - ISO3166-Alpha-2
         CountryCodeValue:
           type: string
-          description: Country Code Value.
-      description: Country Code.
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: Details of the country code.
     modifyAddrRequest_AddrInfo_PostAddr:
       required:
       - AddrType
@@ -402,51 +402,43 @@ components:
         Addr1:
           maxLength: 64
           type: string
-          description: |+
-            Address Line 1.
-
+          description: Address line 1.
         Addr2:
           maxLength: 64
           type: string
-          description: Address Line 2. Addr1 must be specified to use Addr2.
+          description: Address line 2. To enter Addr2, Addr1 field must be provided.
         Addr3:
           maxLength: 64
           type: string
-          description: |+
-            Address Line 3. Addr2 must be specified to use Addr3.
-
+          description: Address line 3. To enter Addr3, Addr2 field must be provided.
         Addr4:
           maxLength: 64
           type: string
-          description: |+
-            Address Line 4. Addr3 must be specified to use Addr4.
-
+          description: Address line 4. To enter Addr4, Addr3 field must be provided.
         City:
           maxLength: 40
           type: string
-          description: City.
+          description: Name of the city.
         StateProv:
           type: string
-          description: State Province. See State Province section for allowed values.
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
         PostalCode:
           maxLength: 11
           type: string
           description: |-
-            Postal Code or ZipCode.
+            Postal code or Zip code.
 
             **Note:** Postal Code provides information about the ZIP code, if Address is a United States address. It also provides Postal Code information, if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they may be displayed as 0000.  Examples: 32714-1234 or 32714-0000
         CountryCode:
           $ref: '#/components/schemas/modifyAddrRequest_AddrInfo_CountryCode'
         AddrType:
           type: string
-          description: Address Type.
+          description: Type of address.
           enum:
           - Primary
         ForeignFlag:
           type: boolean
-          description: |+
-            Foreign Flag. Indicates the address is a foreign address.
-
+          description: Flag to indicate the given address is foreign address.
     modifyAddrRequest_AddrInfo:
       required:
       - PostAddr
@@ -454,45 +446,10 @@ components:
       properties:
         PostAddr:
           type: array
-          description: Postal Address.
+          description: Postal address details of a party.
           items:
             $ref: '#/components/schemas/modifyAddrRequest_AddrInfo_PostAddr'
-      description: |-
-        Address Information. The AddrInfo aggregate contains the details of a Address.
-
-        **Note:** Provide all address data elements.
-
-        For example if address is:
-
-            Address Line 1: 111 Main Street 
-
-            Address Line 2: Sector 4 Building 3 
-
-           PostalCode: 32725-0000
-
-           StateProv: FL
-
-           City: Daytona
-
-        And an update is made to Line 1. All address data elements need to be resent
-
-           Address Line 1: 112 Main Street 
-
-            Address Line 2: Sector 4 Building 3 
-
-           PostalCode: 32725-0000
-
-           StateProv: FL
-
-           City: Daytona
-    modifyAddrResponse_AddrStatusRec_AddrKeys:
-      type: object
-      properties:
-        AddrId:
-          maxLength: 36
-          type: string
-          description: Address Identifier.
-      description: Address Keys. Used to uniquely identify an Address record.
+      description: "Address details of a party.\n\n**Note:** To update the address, it is mandatory to send the updated field along with all other fields in the request. \n\nFor example: If a customer updated the Address Line 1 field, then all other fields that are part of address should be sent.\n\n**Previous Address**\n\nAddress Line 1: 111 Main Street \n\nAddress Line 2: Sector 4 Building 3 \n\nPostalCode: 32725-0000\n\nStateProv: FL\n\nCity: Daytona\n\n**Updated Address**\n\nAddress Line 1: 112 Local Street \n\nAddress Line 2: Sector 4 Building 3 \n\nPostalCode: 32725-0000\n\nStateProv: FL\n\nCity: Daytona"
     modifyAddrResponse_AddrStatusRec_AddrStatus:
       required:
       - AddrStatusCode
@@ -500,14 +457,21 @@ components:
       properties:
         AddrStatusCode:
           type: string
-          description: Address Status Code.
+          description: |+
+            Status code of the address.
+
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: Effective Date. The date that an associated action resulting in a change of state or status of an object took effect.
-      description: Address Status.
+          description: |-
+            Effective date and time when the address status is changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-12-31T23:59:59.999
+      description: Status details of the address.
     modifyAddrResponse_AddrStatusRec:
       required:
       - AddrKeys
@@ -515,7 +479,7 @@ components:
       type: object
       properties:
         AddrKeys:
-          $ref: '#/components/schemas/modifyAddrResponse_AddrStatusRec_AddrKeys'
+          $ref: '#/components/schemas/modifyAddrRequest_AddrKeys'
         AddrStatus:
           $ref: '#/components/schemas/modifyAddrResponse_AddrStatusRec_AddrStatus'
-      description: Address Status Record. Used to contain the current status of the object.Used in responses to return results from an add, modify or delete operation on the object.
+      description: Details of the address record in response to add operation.
