@@ -233,7 +233,7 @@ The following table lists the EFX status codes and their descriptions related to
                 <tr>
                     <td><code>810</code></td>
                     <td>Error</td>
-                    <td>Message irreversable</td>
+                    <td>Message irreversible</td>
                 </tr>
                 <tr>
                     <td><code>999</code></td>
