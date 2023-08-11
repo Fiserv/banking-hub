@@ -33,7 +33,7 @@ titles: General Terms, Acronyms , Account Types, Legacy Service Name
 | Liability             | An obligation between a guarantor and endorser under certain conditions in which loan is offered.   |
 | Memo                  | A continuous message sent to the officers from financial institution which does not require any action.     |
 | Meta Data             | A set of data that gives information of another data.                                                      |
-| Non-accrual Loan      | A loan becomes non-accural when the interest is not paid. Non-accrual loans are also referred to doubtful loans, troubled loans or sour loans.                  |
+| Non-accrual Loan      | A loan becomes non-accrual when the interest is not paid. Non-accrual loans are also referred to doubtful loans, troubled loans or sour loans.                  |
 | Open Banking          | A system that allows access and control of consumer banking and financial accounts through third party applications using APIs.     |
 | P2P Transaction       | P2P (peer-to-peer) transaction is transfer of funds between two parties done through an intermediary application.        |
 | Pagination            | Process of assigning numbers in a sequence to each page of a document.         |
