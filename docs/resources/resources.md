@@ -3,9 +3,13 @@
 ## API Specifications
 
 <!-- theme: info -->  
-> [Download API Specificiation](https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip)
+> [Download API Specificiations](https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip)
 
 ## Postman Collection
+
+<!-- theme: info -->  
+> [Download Postamn Collection for Finxact Core (v1.19)](https://github.com/Fiserv/banking-hub/files/12359747/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
+
 
 <!-- theme: info -->  
 > [Download Postamn Collection for Premier Core](https://github.com/Fiserv/banking-hub/files/11728540/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip)
@@ -14,10 +18,6 @@
 
 <!-- theme: info -->  
 > [Download Postamn Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/11710490/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
-
-
-<!-- theme: info -->  
-> [Download Postamn Collection for Finxact Core](https://github.com/Fiserv/banking-hub/files/12359747/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
 
 
 
