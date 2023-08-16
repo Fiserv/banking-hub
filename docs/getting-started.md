@@ -413,8 +413,9 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 <!-- theme: info -->  
 > #### Recommendation
 >
-> Keep the API documentation accessible to refer to the default request-payload for the request message. You may also download the Postman collection and refer to sample API requests from the **Resources** section. 
+> Keep the API documentation accessible to refer to the default request-payload for the request message. You may also download the Postman collection and refer to sample API requests from the **[Resources](?path=/docs/resources/resources.md)** section. 
 
+<!--
 #### Resources
 
 * **API Specifications**
@@ -440,6 +441,7 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 [downoad-icon-FN]: https://github.com/Fiserv/banking-hub/assets/81968767/76dd0525-220e-4c1e-90c8-b612eed002db
 [FN]: https://github.com/Fiserv/banking-hub/files/12358606/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip
 
+-->
 
 <!--
 FN: https://github.com/Fiserv/banking-hub/assets/81968767/28cc543b-7bd6-4f57-b282-725b15d289f3
