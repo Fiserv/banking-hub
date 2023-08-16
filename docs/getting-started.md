@@ -438,9 +438,7 @@ Postman is a client that lets you test RESTful APIs. If you are familiar with Po
 [BH]: https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip
 
 [downoad-icon-FN]: https://github.com/Fiserv/banking-hub/assets/81968767/76dd0525-220e-4c1e-90c8-b612eed002db
-[FN]: https://github.com/Fiserv/banking-hub/files/12260810/Banking.Hub.-.Finxact.1.19.-.Trial.Plan.Postman.Collection.zip
-
-
+[FN]: https://github.com/Fiserv/banking-hub/files/12358606/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip
 
 
 <!--
