@@ -20,7 +20,8 @@
 > [Download Postamn Collection for Finxact Core](https://github.com/Fiserv/banking-hub/files/12359747/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
 
 
---------------------------------------------------------
+
+<!--
 
 
 
@@ -44,3 +45,4 @@
 [downoad-icon-BH]: https://github.com/Fiserv/banking-hub/assets/81968767/4c31d642-7574-413e-b02e-32f7ad1ae504
 [BH]: https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip
 
+-->
