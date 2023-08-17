@@ -118,7 +118,7 @@ Added the following API endpoints:
 
 - Added the following aggregates in the API to return issued identification information for person or organization customers:
   	- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/IssuedIdent
-	- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent
+  	- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
@@ -132,7 +132,7 @@ Added the following API endpoints:
 
 <!-- type: tab -->
 > #### Note
-> Support for Finxact V1.19.
+> Support for Finxact v1.21.
 > 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
