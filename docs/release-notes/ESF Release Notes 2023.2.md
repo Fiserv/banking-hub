@@ -132,7 +132,7 @@ Added the following API endpoints:
 
 <!-- type: tab -->
 > #### Note
-> Support for Finxact V1.19.
+> Support for Finxact v1.21.
 > 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
