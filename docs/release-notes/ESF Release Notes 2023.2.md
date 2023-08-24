@@ -124,7 +124,7 @@ Added the following API endpoints:
 
 <span style="font-size: 22px; ">Get Account Transaction</span> *API Explorer > Transactions > Account Transaction Service*
 
-- Fixed Get Account Transaction-LOAN to retrieved the transaction history for CLA accounts
+- Fixed Get Account Transaction-LOAN to retrieve the transaction history for CLA accounts
 
 <span style="font-size: 22px; ">Get Card Account Relationship</span> *API Explorer > Card > Card Account Relationship Service*
 
