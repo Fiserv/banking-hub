@@ -90,7 +90,7 @@ List of parameters that can be sent under the EFXHeader:
 | Context.TellerTrnData.TellerIdent| Identifier of the teller.| string| Optional|
 | Context.TellerTrnData.TillIdent| Identifier of the till. <br> <b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
 | Context.TellerTrnData.AMPMCode| Transaction posting code. <br>Valid values are: <br> <ul><li>AM</li> <li>PM</li></ul><b>Note:</b> Applicable only for Teller Sign On. | string| Optional|
+| Context.TellerTrnData.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul><b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
 | Context.TellerTrnData.TrnConductorData| Details of the data element that identifies the transaction conductor at the teller line.| object| Optional Repeating|
 | Context.TellerTrnData.TrnConductorData.TrnConductorIdent| Identifier of the person conducting the transaction.| string| Optional|
 | Context.TellerTrnData.TrnConductorData.NoConductorReason| Reason used when a conductor cannot be identified.<br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| enum| Optional|
-| Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul><b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
