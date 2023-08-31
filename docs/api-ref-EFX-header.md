@@ -18,21 +18,22 @@ EFXHeader is a mandatory parameter that needs to be sent in the request message 
 
 > #### Note
 >
-> The following sample EFX header is applicable only for Teller Signon service:
+> The following sample EFX header is applicable only for Teller Sign On service:
 > ```
 > "EFXHeader": {
-> "OrganizationId": "999990301",
-> "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c",
-> "VendorId": "112233",
-> "Context": {
->   "TellerTrnData": {
->     "BranchIdent": "129834765"
->     "TellerIdent": "112233"
->     "TillIdent": "87643"
->     "AMPMCode": "AM"
->     "ReentryType": "Auto"
+>   "OrganizationId": "999990301",
+>   "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c",
+>   "VendorId": "112233",
+>   "Context": {
+>     "Channel": "Teller",
+>     "TellerTrnData": {
+>       "BranchIdent": "129834765",
+>       "TellerIdent": "112233",
+>       "TillIdent": "87643",
+>       "AMPMCode": "AM",
+>       "ReentryType": "Auto"
+>     }
 >   }
->  }
 > }
 > ```
 
@@ -85,11 +86,11 @@ List of parameters that can be sent under the EFXHeader:
 | Context.GroupIdent| Identifier of the group transactions.| string| Optional|
 | Context.AdditionalSettings|Additional information required to successfully process the transaction. <br> <b>Note:</b> Required for Cleartouch core APIs.| object| Optional|
 | Context.TellerTrnData| Details of the teller transaction.| object| Optional|
-| Context.TellerTrnData.BranchIdent| Identifier of the branch. <br> <b>Note:</b> Applicable only for Teller Signon.| string| Optional|
+| Context.TellerTrnData.BranchIdent| Identifier of the branch. <br> <b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
 | Context.TellerTrnData.TellerIdent| Identifier of the teller.| string| Optional|
-| Context.TellerTrnData.TillIdent| Identifier of the till. <br> <b>Note:</b> Applicable only for Teller Signon.| string| Optional|
-| Context.TellerTrnData.AMPMCode| Transaction posting code. <br>Valid values are: <br> <ul><li>AM</li> <li>PM</li></ul><b>Note:</b> Applicable only for Teller Signon. | string| Optional|
-| Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul><b>Note:</b> Applicable only for Teller Signon.| string| Optional|
+| Context.TellerTrnData.TillIdent| Identifier of the till. <br> <b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
+| Context.TellerTrnData.AMPMCode| Transaction posting code. <br>Valid values are: <br> <ul><li>AM</li> <li>PM</li></ul><b>Note:</b> Applicable only for Teller Sign On. | string| Optional|
 | Context.TellerTrnData.TrnConductorData| Details of the data element that identifies the transaction conductor at the teller line.| object| Optional Repeating|
 | Context.TellerTrnData.TrnConductorData.TrnConductorIdent| Identifier of the person conducting the transaction.| string| Optional|
 | Context.TellerTrnData.TrnConductorData.NoConductorReason| Reason used when a conductor cannot be identified.<br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| enum| Optional|
+| Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul><b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
