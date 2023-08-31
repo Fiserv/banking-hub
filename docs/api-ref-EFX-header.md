@@ -15,6 +15,28 @@ EFXHeader is a mandatory parameter that needs to be sent in the request message 
 }
 
 ```
+
+> #### Note
+>
+> The following sample EFX header is applicable only for Teller Sign On service:
+> ```
+> "EFXHeader": {
+>   "OrganizationId": "999990301",
+>   "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c",
+>   "VendorId": "112233",
+>   "Context": {
+>     "Channel": "Teller",
+>     "TellerTrnData": {
+>       "BranchIdent": "129834765",
+>       "TellerIdent": "112233",
+>       "TillIdent": "87643",
+>       "AMPMCode": "AM",
+>       "ReentryType": "Auto"
+>     }
+>   }
+> }
+> ```
+
 List of parameters that can be sent under the EFXHeader:
 |Parameter | Description | Data Type | Required|
 |---------|----------|---------|-----------|
@@ -58,13 +80,17 @@ List of parameters that can be sent under the EFXHeader:
 | Context.BusinessApplIdent| Identifier of the business application. <br>Valid values are: <table><thead><td>Value</td>	<td>Description</td></thead><tbody><tr><td>P2P</td>	<td>Person-to-Person</td></tr><tr><td>C2B</td>	<td>Consumer-to-Business</td></tr>  <tr><td>A2A</td>	<td>Account-to-Account</td></tr>  <tr><td>B2C</td>	<td>Business-to-Consumer</td></tr>  <tr><td>B2B</td>	<td>Business-to-Business</td></tr>  <tr><td>G2C</td>	<td>Government-to-Consumer</td></tr>  <tr><td>C2G</td>	<td>Consumer-to-Government</td></tr></tbody></table>| string| Optional|
 | Context.BranchIdent| Identifier of the branch. <br><br> *maxLength: 22*| string|Optional |
 | Context.TellerIdent| Identifier of the teller.| string| Optional|
-| Context.TillIdent| Identifier of the till.| String| Optional|
+| Context.TillIdent| Identifier of the till.| string| Optional|
 | Context.AMPMCode| Transaction Posting Code. <br> Valid values are: <br> <ul><li>AM</li> <li>PM</li></ul>| string| Optional|
 | Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul>| string| Optional|
-| Context.GroupIdent| Identifier of the group transactions.| String| Optional|
+| Context.GroupIdent| Identifier of the group transactions.| string| Optional|
 | Context.AdditionalSettings|Additional information required to successfully process the transaction. <br> <b>Note:</b> Required for Cleartouch core APIs.| object| Optional|
 | Context.TellerTrnData| Details of the teller transaction.| object| Optional|
+| Context.TellerTrnData.BranchIdent| Identifier of the branch. <br> <b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
 | Context.TellerTrnData.TellerIdent| Identifier of the teller.| string| Optional|
+| Context.TellerTrnData.TillIdent| Identifier of the till. <br> <b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
+| Context.TellerTrnData.AMPMCode| Transaction posting code. <br>Valid values are: <br> <ul><li>AM</li> <li>PM</li></ul><b>Note:</b> Applicable only for Teller Sign On. | string| Optional|
+| Context.TellerTrnData.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul><b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
 | Context.TellerTrnData.TrnConductorData| Details of the data element that identifies the transaction conductor at the teller line.| object| Optional Repeating|
 | Context.TellerTrnData.TrnConductorData.TrnConductorIdent| Identifier of the person conducting the transaction.| string| Optional|
 | Context.TellerTrnData.TrnConductorData.NoConductorReason| Reason used when a conductor cannot be identified.<br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| enum| Optional|
