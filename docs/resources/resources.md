@@ -17,7 +17,7 @@
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/11710490/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
+> [Download Postman Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/12516540/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
 
 
 
