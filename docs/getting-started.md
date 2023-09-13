@@ -133,9 +133,9 @@ From the Body tab, select the **x-www-form-urlencoded** radio button and enter t
 <br>
 <br>
 
-[Next - Know Our Standard API Structure](?path=docs/getting-started.md#tab-know_our_standard_api_structure)
-
 <a href="?path=docs/getting-started.md#tab-know_our_standard_api_structure" >Next - Know Our Standard API Structure</a> 
+
+[Next - Know Our Standard API Structure](?path=docs/getting-started.md#tab-know_our_standard_api_structure)
 
 <!-- type: tab -->
 
