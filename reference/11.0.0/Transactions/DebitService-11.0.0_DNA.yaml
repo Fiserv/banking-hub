@@ -12,7 +12,7 @@ paths:
       tags:
       - Reverse Debit
       summary: Reverse Debit.
-      description: Reverse Debit API reverses the previously processed debit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API post a stand-alone Withdrawal Reversal transaction (WTHR) on the basis of the original transaction number passed in the request. Only Electronic (EL) transfers fund type is supported for reversal.
+      description: Reverse Debit API reverses the previously processed debit transaction on a deposit account.<br>For DNA, this API supports reversal of the withdrawal transaction with cash-out and electronic fund types. This API does not support partial reversal of the transaction amount that was debited from the account.<br>In DNA, the general ledger accounts are set according to the transaction codes used to post the transactions.
       operationId: DebitRevOper
       parameters:
       - name: EFXHeader
@@ -47,7 +47,7 @@ paths:
       tags:
       - Add Debit
       summary: Add Debit.
-      description: Add Debit API creates a debit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API supports only Withdrawal (WTH) transaction and Electronic (EL) transfers fund type that are real time post transactions.
+      description: Add Debit API creates a one-sided transaction where monetary funds are debited/withdrawn from a deposit account.<br>For DNA, this API supports withdrawal (WTH) transaction type with cash-out fund type for real-time post-transaction.
       operationId: DebitAddOper
       parameters:
       - name: EFXHeader
@@ -94,14 +94,12 @@ components:
           $ref: '#/components/schemas/StatusType'
         DebitStatusRec:
           $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec'
-        Receipt:
-          $ref: '#/components/schemas/DebitAddOperResponse_Receipt'
     DebitRevOperRequest:
       required:
       - DebitInfo
       properties:
         DebitKeys:
-          $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec_DebitKeys'
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitKeys'
         DebitInfo:
           $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo'
     DebitRevOperResponse:
@@ -454,10 +452,7 @@ components:
       properties:
         Amt:
           type: number
-          description: |-
-            Amount in decimal format.
-
-            Example: 10.00.
+          description: Amount in decimal format.
       description: Details of the debit amount to be processed.
     DebitAddOperRequest_DebitInfo_CompositeCurAmt:
       required:
@@ -465,6 +460,19 @@ components:
       properties:
         CurAmt:
           $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CurAmt'
+    DebitAddOperRequest_DebitInfo_CashAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+      description: Details of the cash amount.
+    DebitAddOperRequest_DebitInfo_CashOutData:
+      required:
+      - CashAmt
+      properties:
+        CashAmt:
+          $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CashAmt'
     DebitAddOperRequest_DebitInfo:
       required:
       - CompositeCurAmt
@@ -473,13 +481,27 @@ components:
       properties:
         DebitType:
           type: string
-          description: |+
-            Type of debit transaction.
-
-            **Note:** Only one expected value is allowed in such integration.
-
+          description: Type of debit transaction.
           enum:
           - Withdrawal
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.micro
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** Refers to override effective date. If this field is not provided in the request, then service provider uses effective date value from user authentication data.
+        Desc:
+          maxLength: 100
+          type: array
+          description: Description of debit transaction.
+          items: {}
         AcctRef:
           $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_AcctRef'
         CompositeCurAmt:
@@ -487,8 +509,15 @@ components:
           description: Details of the composition of debited amount.
           items:
             $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CompositeCurAmt'
+        CashOutData:
+          type: array
+          description: Information to specify the cash out data that comprises the transaction.
+          items:
+            $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CashOutData'
       description: Details of the debit transaction.
     DebitAddOperResponse_DebitStatusRec_DebitKeys:
+      required:
+      - AcctKeys
       type: object
       properties:
         AcctKeys:
@@ -524,23 +553,27 @@ components:
         DebitStatus:
           $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec_DebitStatus'
       description: Details of the debit transaction response returned from add and reversal of the object.
-    DebitAddOperResponse_Receipt_TrnAmt:
+    DebitRevOperRequest_DebitKeys_AcctKeys:
+      required:
+      - AcctId
       type: object
       properties:
-        Amt:
-          type: number
-          description: Amount in decimal format.
-      description: Details of the transaction amount.
-    DebitAddOperResponse_Receipt:
-      type: object
-      properties:
-        TrnAmt:
-          $ref: '#/components/schemas/DebitAddOperResponse_Receipt_TrnAmt'
-        TrnIdent:
+        AcctId:
           maxLength: 36
           type: string
-          description: Unique identification code used to identify a previously posted transaction.
-      description: Details of the debit transaction receipt.
+          description: |-
+            Unique identification number of an account record.
+
+
+
+            **Note:** Refers to the account number on which the transaction is performed.
+      description: Unique information to identify the account record.
+    DebitRevOperRequest_DebitKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitKeys_AcctKeys'
+      description: Unique information to identify a debit record.
     DebitRevOperRequest_DebitInfo_CompositeCurAmt_CurAmt:
       type: object
       properties:
@@ -549,11 +582,11 @@ components:
           description: |-
             Amount in decimal format.
 
-            **Note:** There can be up to two occurences, one for the transaction amount and one for the fee. Since this solution supports balanced transactions, the same amount is assumed to be for any G/L offsets.
 
 
+            **Note:** This field can have two occurrences, one for the transaction amount and other for the fee amount. Since this API supports balanced transactions, the same amount is assumed for G/L offsets.
 
-            If this field is not provided, then original transaction amount will be considered for reversal. If partial amount or incorrect is provided, then transction shall not be processed.
+            This is an optional field. If not provided in the request, then the original transaction amount is considered for reversal. Also if the partial or incorrect amount is provided, then the transaction fails.
       description: Details of the debit amount to be processed.
     DebitRevOperRequest_DebitInfo_CompositeCurAmt:
       required:
@@ -562,18 +595,20 @@ components:
       properties:
         CurAmt:
           $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CompositeCurAmt_CurAmt'
-      description: Details of the composition of debited amount.
+      description: Details of the composition of the debit reversal amount.
     DebitRevOperRequest_DebitInfo_NetworkRefData:
       type: object
       properties:
         TrnIdent:
           maxLength: 36
           type: string
-          description: Unique identifier for the client transaction that is used to reference a previous transaction.
-      description: |-
-        Details of the network reference data to uniquely identify a previously posted transaction.
+          description: |-
+            Unique identifier for the original transaction that is used to reference a previous transaction.
 
-        **Note:** The original transaction would have been posted during the same business day. Used in an auto-correct of the transaction.
+
+
+            **Note:** Refers to the original transaction number to be reversed.
+      description: Details of the network reference data to uniquely identify a previously posted transaction.
     DebitRevOperRequest_DebitInfo:
       required:
       - CompositeCurAmt
@@ -585,14 +620,27 @@ components:
           description: |-
             Type of debit transaction.
 
-            **Note:** Refers to the reverse transaction type code.
+
+
+            **Note:** This field refers to reverse transaction type code to be performed.
           enum:
           - Withdrawal
         CompositeCurAmt:
           $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CompositeCurAmt'
+        CashInData:
+          type: array
+          description: Information to specify the cash-in data that comprises the transaction.
+          items:
+            $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CashOutData'
         NetworkRefData:
           $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_NetworkRefData'
       description: Details of the debit transaction.
+    DebitRevOperResponse_DebitStatusRec_DebitKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_AcctRef_AcctKeys'
+      description: Unique information to identify a debit record.
     DebitRevOperResponse_DebitStatusRec_DebitStatus:
       required:
       - DebitStatusCode
@@ -609,7 +657,7 @@ components:
           description: |-
             Effective date and time when the transaction status is changed.
 
-            Format: yyyy-mm-ddThh:mm:ss.sss
+            Format: yyyy-mm-ddThh:mm:ss.micro
 
             Example: 2021-01-31T23:59:59.999
       description: Details of the debit transaction status.
@@ -619,7 +667,7 @@ components:
       type: object
       properties:
         DebitKeys:
-          $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec_DebitKeys'
+          $ref: '#/components/schemas/DebitRevOperResponse_DebitStatusRec_DebitKeys'
         DebitStatus:
           $ref: '#/components/schemas/DebitRevOperResponse_DebitStatusRec_DebitStatus'
       description: Details of the debit transaction response returned from add and reversal of the object.
@@ -628,9 +676,7 @@ components:
       properties:
         Amt:
           type: number
-          description: |+
-            Amount in decimal format.
-
+          description: Amount in decimal format.
       description: Details of the transaction amount.
     DebitRevOperResponse_Receipt:
       type: object
@@ -641,7 +687,9 @@ components:
           maxLength: 36
           type: string
           description: |-
-            Unique identification code used to identify a previously posted transaction.
+            Unique identification code of a transaction.
 
-            **Note:** Refers to the unique generated transaction number.
+
+
+            **Note:** Refers to the unique generated transaction number (reverse transaction number).
       description: Details of the debit transaction receipt.
