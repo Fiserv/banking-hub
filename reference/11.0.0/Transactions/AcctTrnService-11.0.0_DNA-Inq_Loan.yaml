@@ -31,7 +31,19 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest'
-      responses: {}
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse'
       x-group-name: Account Transaction Service
       x-proxy-name: Get Account Transaction History
       x-child-product-name: Transactions
@@ -40,17 +52,25 @@ components:
   schemas:
     AcctTrnInqOperBySecuredRequest:
       required:
+      - AcctTrnSel
+      properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_RecCtrlIn'
+        AcctTrnSel:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel'
+    AcctTrnInqOperBySecuredResponse:
+      required:
       - AcctTrnRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
         RecCtrlOut:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_RecCtrlOut'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_RecCtrlOut'
         AcctTrnRec:
           type: array
           description: 'Details of a transaction record that includes information, such as transaction keys, transaction status, amount, description and so on. '
           items:
-            $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnRec'
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -362,7 +382,103 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    AcctTrnInqOperBySecuredRequest_RecCtrlOut:
+    AcctTrnInqOperBySecuredRequest_RecCtrlIn:
+      type: object
+      properties:
+        MaxRecLimit:
+          type: integer
+          description: |-
+            Maximum number of records that can be returned within a single response.
+
+
+
+            **Note:** In case if this field is not provided, then this API returns all the available transactions on the account as per the selection criteria.
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: "Next record pointer is included in the response if additional records exist. \n\n\n\n**Note:** Refers to time unique extension. \n\nThis field identifies the starting point from which to start the next query.\n\nCursor is provided in the previous response of Account Transaction Inquiry, if there are additional transaction records available to be returned."
+      description: Maximum number of records that a client can specify to process within a single response.
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+      description: Unique information to identify the account record.
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctTrnKeys:
+      type: object
+      properties:
+        AcctTrnId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a transaction record.
+
+
+
+            **Note:** Refers to transaction reference number and this number is a combination of account number and transaction number.
+
+            This API supports search for a particular transaction if the transaction reference number is known.
+
+            Format: <AccountNumber-TransactionNumber>
+
+            Search by account transaction identifier can only be combined with account number field.
+      description: Unique information to identify a transaction record.
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel_DtRange:
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Start date and time value of the date range to search the transaction records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n\n\n**Note:** Refers to the start date for which history should be returned. If only the start date is provided, then this API returns all the available transactions on the account up to current date. \n\nIf the value of the resulting balance is set to 'true', the start date should be provided."
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel_Sort:
+      properties:
+        SortCriterionType:
+          type: string
+          description: "Type of criterion to sort the transaction records. \n\n\n\n**Note:** If the type is not provided, then this API sets the default value to time unique extension."
+          enum:
+          - TrnNum
+          - TrnCode
+          - PostedDt
+          - EffDt
+          - TrnAmt
+        SortOrder:
+          type: string
+          description: "Sort transactions either in an ascending or descending order. \n\n\n\n**Note:** This field sorts the transactions by time unique extension based on provided value that is Ascending or Descending."
+          enum:
+          - Ascending
+          - Descending
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys'
+        AcctTrnKeys:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctTrnKeys'
+        DtRange:
+          type: array
+          description: Details of the date range that contains the start date and the end date information to return the transaction records.
+          items:
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_DtRange'
+        IncRunningBalanceInd:
+          type: boolean
+          description: "Flag to indicate the actual running balance amount is returned on all transactions.\n\n\n\n**Note:** If the value is set to 'true', then the From Date field must be provided. This flag is ignored if an account is masterline. \n\n\n\nIn case if this field is not provided, then resulting balance is not returned in the response.\n\n\n\nIf the value is set to 'false', then running balance is returned only if FromDate and ThruDate are the applied criterion and SortBy is set to null or TIMEUNIQUEEXTN."
+        Sort:
+          type: array
+          description: Details of the sort criteria to arrange or classify the requested transaction records.
+          items:
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_Sort'
+      description: Details of the selection criteria to retrieve the account transaction records.
+    AcctTrnInqOperBySecuredResponse_RecCtrlOut:
       required:
       - SentRecCount
       type: object
@@ -384,7 +500,7 @@ components:
           type: string
           description: "Next record pointer is included in the response if additional records exist. \n\n\n\n**Note:** Refers to time unique extension. \n\nIf this field is available, then the value of this field is used in the next transaction inquiry request as a cursor that indicates the starting point of the next query."
       description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    AcctTrnInqOperBySecuredRequest_AcctTrnKeys_AcctKeys:
+    AcctTrnInqOperBySecuredResponse_AcctTrnKeys_AcctKeys:
       required:
       - AcctId
       type: object
@@ -412,13 +528,13 @@ components:
           - RR
           - LEAS
       description: Unique information to identify the account record.
-    AcctTrnInqOperBySecuredRequest_AcctTrnKeys:
+    AcctTrnInqOperBySecuredResponse_AcctTrnKeys:
       required:
       - AcctKeys
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnKeys_AcctKeys'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnKeys_AcctKeys'
         AcctTrnIdent:
           maxLength: 36
           type: string
@@ -429,14 +545,14 @@ components:
 
             **Note:** Refers to transaction reference number and this number is a combination of the account number and transaction number.
       description: Unique information to identify a transaction record.
-    AcctTrnInqOperBySecuredRequest_AcctTrnInfo_TrnAmt:
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt:
       type: object
       properties:
         Amt:
           type: number
           description: Amount in decimal format.
       description: Details of the transaction amount.
-    AcctTrnInqOperBySecuredRequest_AcctTrnInfo_AcctHoldKeys:
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_AcctHoldKeys:
       type: object
       properties:
         AcctHoldId:
@@ -444,7 +560,7 @@ components:
           type: string
           description: Unique identification number to identify the account hold record.
       description: Unique information to identify the account hold record.
-    AcctTrnInqOperBySecuredRequest_AcctTrnInfo:
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo:
       type: object
       properties:
         TrnCode:
@@ -479,7 +595,7 @@ components:
           type: string
           description: Description of the enumeration value in the TrnType field.
         TrnAmt:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnInfo_TrnAmt'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt'
         ExternalTrnDesc:
           maxLength: 200
           type: string
@@ -493,7 +609,7 @@ components:
           type: string
           description: Person who approves the transaction.
         AcctHoldKeys:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnInfo_AcctHoldKeys'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_AcctHoldKeys'
         AcctTrnDtlStatus:
           type: string
           description: |-
@@ -512,7 +628,7 @@ components:
           - Waived
           - Suspended
       description: Details of account transaction information. For example, transaction type, transaction amount, description, transaction code and so on.
-    AcctTrnInqOperBySecuredRequest_AcctTrnStatus:
+    AcctTrnInqOperBySecuredResponse_AcctTrnStatus:
       required:
       - AcctTrnStatusCode
       type: object
@@ -527,15 +643,15 @@ components:
           type: string
           description: "Effective date and time when the transaction went into effect for an account. \n\nFormat: yyyy-mm-dd\n\nExample: 2021-12-31"
       description: Details of the transaction status that contains the effective date and status information.
-    AcctTrnInqOperBySecuredRequest_AcctTrnRec:
+    AcctTrnInqOperBySecuredResponse_AcctTrnRec:
       required:
       - AcctTrnInfo
       - AcctTrnKeys
       - AcctTrnStatus
       properties:
         AcctTrnKeys:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnKeys'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnKeys'
         AcctTrnInfo:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnInfo'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo'
         AcctTrnStatus:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnStatus'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnStatus'
