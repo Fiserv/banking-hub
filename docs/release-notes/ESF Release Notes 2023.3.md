@@ -12,7 +12,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 <span style="font-size: 22px; ">Get Transfer List</span> *API Explorer > Transfers > Transfer Service*
 
 
-- Updated the API to return pending transfers, as well as, the future/recurring transfer that are currently returned for DDA, SDA and CDA accounts
+- Updated the API to return pending transfers and the future/recurring transfer that are currently returned for DDA, SDA and CDA accounts
 
 
 <!-- type: tab -->
