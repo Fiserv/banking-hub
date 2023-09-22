@@ -18,7 +18,7 @@ titles: Premier, Precision, Signature, DNA, Finxact
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
-<span style="font-size: 22px; ">Update Account-DDA_SDA</span> *API Explorer > Accounts > Account Service*
+<span style="font-size: 22px; ">Update Account_DDA_SDA</span> *API Explorer > Accounts > Account Service*
 
 
 - Added the following aggregates in the API that provides information about financial literacy feature settings: 
@@ -27,7 +27,7 @@ titles: Premier, Precision, Signature, DNA, Finxact
 	- AcctRec/DepositAcctInfo/FinancialLiteracy/IsFunding
 
 
-<span style="font-size: 22px; ">Get Accounts-DDA_SDA</span> *API Explorer > Accounts > Account Service*
+<span style="font-size: 22px; ">Get Accounts_DDA_SDA</span> *API Explorer > Accounts > Account Service*
 
 
 - Added the following aggregates in the API that provides information about financial literacy feature settings: 
@@ -36,7 +36,7 @@ titles: Premier, Precision, Signature, DNA, Finxact
 	- DepositAcctInfo/FinancialLiteracy/IsFunding
 
 
-<span style="font-size: 22px; ">Add Transfer-Immediate</span> *API Explorer > Transfers > Transfer Service*
+<span style="font-size: 22px; ">Add Transfer_Immediate</span> *API Explorer > Transfers > Transfer Service*
 
 
 - Added the following new values or the XferInfo/TransferType path to support the feature of financial literacy:
