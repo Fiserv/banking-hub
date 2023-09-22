@@ -95,7 +95,7 @@ Added the following API endpoint:
 
 
 Added the following API endpoints:
-- Add Card *(Cards > Card Service > Add Card)*
-- Update Card *(Cards > Card Service > Update Card)*
-- Get Card *(Cards > Card Service > Get Card)*
+- Add Card *(API Explorer > Cards > Card Service)*
+- Update Card *(API Explorer > Cards > Card Service)*
+- Get Card *(API Explorer > Cards > Card Service)*
 <!-- type: tab-end -->
