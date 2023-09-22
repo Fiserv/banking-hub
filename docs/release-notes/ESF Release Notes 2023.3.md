@@ -3,7 +3,7 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, DNA, Finxact
+titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 -->
 
 
@@ -48,14 +48,14 @@ titles: Premier, Precision, Signature, DNA, Finxact
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-<span style="font-size: 22px; ">General</span> **
+<span style="font-size: 22px; ">General</span>
 
 
 Added the following API endpoints:
-- Add Reinvestment *(API Explorer > Accounts > Reinvestment Service > Add Reinvestment)*
-- Update Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service > Update Reinvestment Instruction)*
-- Get Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service > Get Reinvestment Instruction)*
-- Delete Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service > Delete Reinvestment Instruction)*
+- Add Reinvestment *(API Explorer > Accounts > Reinvestment Service)*
+- Update Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service)*
+- Get Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service)*
+- Delete Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service)*
 
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
@@ -65,11 +65,14 @@ Added the following API endpoints:
 
 - Updated the API to allow a client to send a customized description (FromDesc) in the request for immediate transfers based on the client's configuration. A change to the Signature core would be required to send a customized description (FromDesc) for future dated or recurring transfers.        
 
+<!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-<span style="font-size: 22px; ">General</span> **
+<span style="font-size: 22px; ">General</span>
 
 
 Added the following API endpoint:
@@ -78,7 +81,7 @@ Added the following API endpoint:
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
-<span style="font-size: 22px; ">Add Payment Notification</span> **
+<span style="font-size: 22px; ">Add Payment Notification</span>
 
 
 - Added the following new XPATHs to remove dependencies for a specific client so that the implementation can be used by all clients: 
@@ -88,7 +91,7 @@ Added the following API endpoint:
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-<span style="font-size: 22px; ">General</span> **
+<span style="font-size: 22px; ">General</span>
 
 
 Added the following API endpoints:
