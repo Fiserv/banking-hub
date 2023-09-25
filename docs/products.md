@@ -7,9 +7,7 @@ Explore and learn more about each Fiserv banking core to find the perfect develo
 <!-- theme: info -->
 > #### Did you know?
 >
-> When you sign up for a Developer Studio account, you are automatically registered for access to Fiserv core banking APIs. Begin testing a range of bank platform APIs in a free, shared environment, **all in a matter of seconds**.
-
-When you’re ready for a dedicated test environment with more capacity, easily upgrade to the **Developer Studio Connection plan** through the Credentials tab in your workspace.
+> When you sign up for a Developer Studio account, you are automatically registered for access to Fiserv core banking APIs. Begin testing a range of bank platform APIs in a free, shared environment, **all in a matter of seconds**. <br> <br> When you’re ready for a dedicated test environment with more capacity, easily upgrade to the **Developer Studio Connection plan** through the Credentials tab in your workspace.
 
 
 ## Development environment options
