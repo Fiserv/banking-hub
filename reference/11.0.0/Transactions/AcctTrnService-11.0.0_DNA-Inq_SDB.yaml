@@ -14,10 +14,7 @@ paths:
       tags:
       - Get Account Transaction History
       summary: GET Account Transaction History.
-      description: |-
-        Get Account Transaction History API retrieves the transaction history for a Safe Deposit Box Account (SDB).
-        For DNA, this API supports the option to request for a specific number of records and provides a cursor attribute in the response that is used for requesting the next set of transaction records.
-        This API also supports options to select multiple transactions within a specific date range.
+      description: Get Account Transaction History API retrieves the transaction history for a Safe Deposit Box Account (SDB).<br>For DNA, this API supports the option to request for a specific number of records and provides a cursor attribute in the response that is used for requesting the next set of transaction records.<br>This API also supports options to select multiple transactions within a specific date range.
       operationId: AcctTrnInqOperBySecured
       parameters:
       - name: EFXHeader
@@ -54,6 +51,8 @@ components:
       required:
       - AcctTrnSel
       properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_RecCtrlIn'
         AcctTrnSel:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel'
     AcctTrnInqOperBySecuredResponse:
@@ -380,6 +379,23 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
+    AcctTrnInqOperBySecuredRequest_RecCtrlIn:
+      type: object
+      properties:
+        MaxRecLimit:
+          type: integer
+          description: |-
+            Maximum number of records that can be returned within a single response.
+
+
+
+            **Note:** In case if this field is not provided, then this API returns all the available transactions on the account as per the selection criteria.
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: "Next record pointer is included in the response if additional records exist. \n\n\n\n**Note:** Refers to time unique extension. \n\nThis field identifies the starting point from which to start the next query.\n\nCursor is provided in the previous response of Account Transaction Inquiry, if there are additional transaction records available to be returned."
+      description: Details to specify the maximum number of records to be processsed within a single response.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys:
       required:
       - AcctId
@@ -396,11 +412,33 @@ components:
 
 
       description: Unique information to identify the account record.
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel_Sort:
+      properties:
+        SortCriterionType:
+          type: string
+          description: "Type of criterion to sort the transaction records. \n\n\n\n**Note:** If the type is not provided, then this API sets the default value to time unique extension."
+          enum:
+          - TrnNum
+          - TrnCode
+          - PostedDt
+          - EffDt
+          - TrnAmt
+        SortOrder:
+          type: string
+          description: "Sort transactions either in an ascending or descending order. \n\n\n\n**Note:** This field sorts the transactions by time unique extension based on provided value that is Ascending or Descending."
+          enum:
+          - Ascending
+          - Descending
     AcctTrnInqOperBySecuredRequest_AcctTrnSel:
       type: object
       properties:
         AcctKeys:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys'
+        Sort:
+          type: array
+          description: Details of the sort criteria to arrange or classify the requested transaction records.
+          items:
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_Sort'
       description: Details of the selection criteria to retrieve the account transaction records.
     AcctTrnInqOperBySecuredResponse_RecCtrlOut:
       required:
@@ -411,18 +449,6 @@ components:
           type: integer
           description: Total number of records that matched the selection criteria and returned in the response message.
           format: int64
-        MatchedRecCount:
-          type: integer
-          description: Total number of records that matched the selection criteria.
-          format: int64
-        RemainRecCount:
-          type: integer
-          description: Total number of records that matched the selection criteria that have not been sent yet.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: "Next record pointer is included in the response if additional records exist. \n\n\n\n**Note:** Refers to time unique extension. \n\nIf this field is available, then the value of this field is used in the next transaction inquiry request as a cursor that indicates the starting point of the next query."
       description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
     AcctTrnInqOperBySecuredResponse_AcctTrnKeys_AcctKeys:
       required:
@@ -462,10 +488,12 @@ components:
         Amt:
           type: number
           description: Amount in decimal format.
-        CurCode:
-          type: object
-          description: Details of the currency code.
       description: Details of the transaction amount.
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_StmtRunningBal:
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo:
       type: object
       properties:
@@ -496,8 +524,18 @@ components:
         Desc:
           maxLength: 100
           type: array
-          description: 'Custom-defined description for the transaction codes. '
+          description: |-
+            Description for the transaction codes.
+
+
+
+            **Note:** DNA allows custom-defined descriptions for transaction codes at branch level and are defined during pre-installation tasks.
           items: {}
+        StmtRunningBal:
+          type: array
+          description: Details of the account balance after the transaction is posted.
+          items:
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_StmtRunningBal'
       description: Details of account transaction information.
     AcctTrnInqOperBySecuredResponse_AcctTrnStatus:
       required:
