@@ -8,14 +8,34 @@ servers:
 - url: /
 paths:
   /acctholdservice/stophold/accountHolds:
+    put:
+      tags:
+      - Update Account Hold
+      summary: Update Account Hold.
+      description: Update Account Hold API updates information of the holds placed on the account. It edits the information related to hold such as the reason for hold, amount of hold, expiration date of the hold, hold type and so on.
+      operationId: AcctHoldModOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcctHoldModOperRequest'
+      responses: {}
+      x-group-name: Account Hold Service
+      x-proxy-name: Update Account Hold
+      x-child-product-name: Transactions
+      x-core: DNA
     post:
       tags:
       - Add Account Hold
       summary: Add Account Hold.
-      description: |-
-        Add Account Hold API creates a hold (restriction) on an accountholder’s ability to transfer or withdraw held funds from their account. <br>
-        A Financial Institution can place a hold when an account balance acts as a guarantee of funds availability or collateral. Tax authorities or a court could place holds when the account holder has unpaid debts to creditors or the government, or when there is suspicious activity detected on the account. <br>
-        For DNA, hold reason, hold amount and expiry date can be specified in the request.
+      description: Add Account Hold API creates a hold (restriction) on an accountholder’s ability to transfer or withdraw held funds from their account. <br>\nA Financial Institution can place a hold when an account balance acts as a guarantee of funds availability or collateral. Tax authorities or a court could place holds when the account holder has unpaid debts to creditors or the government, or when there is suspicious activity detected on the account. \nFor DNA, hold reason, hold amount and expiry date can be specified in the request.
       operationId: AcctHoldAddOper
       parameters:
       - name: EFXHeader
@@ -117,6 +137,20 @@ components:
           description: Details of the account hold record.
           items:
             $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_AcctHoldRec'
+    AcctHoldModOperRequest:
+      required:
+      - AcctHoldInfo
+      - AcctHoldKeys
+      - AcctHoldStatusRec
+      properties:
+        AcctHoldKeys:
+          type: object
+          description: Unique information to identify the hold record.
+        AcctHoldInfo:
+          type: object
+          description: Information about the client-managed properties of the hold placed on an account.
+        AcctHoldStatusRec:
+          $ref: '#/components/schemas/AcctHoldModOperRequest_AcctHoldStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -655,3 +689,30 @@ components:
           $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_AcctHoldInfo'
         AcctHoldStatus:
           $ref: '#/components/schemas/AcctHoldInqBySecuredPathResponse_AcctHoldStatus'
+    AcctHoldModOperRequest_AcctHoldStatusRec_AcctHoldStatus:
+      required:
+      - AcctHoldStatusCode
+      type: object
+      properties:
+        AcctHoldStatusCode:
+          type: string
+          description: Code to indicate the status of the account hold.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the account hold status is changed.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+      description: Details of the account hold status.
+    AcctHoldModOperRequest_AcctHoldStatusRec:
+      required:
+      - AcctHoldKeys
+      - AcctHoldStatus
+      type: object
+      properties:
+        AcctHoldKeys:
+          type: object
+          description: Unique information to identify the hold record.
+        AcctHoldStatus:
+          $ref: '#/components/schemas/AcctHoldModOperRequest_AcctHoldStatusRec_AcctHoldStatus'
+      description: Details of the account hold response record that includes response keys and response status.
