@@ -8,6 +8,41 @@ servers:
 - url: /
 paths:
   /addrservice/partyacctsvc/address/secured:
+    put:
+      tags:
+      - Delete Address
+      summary: Delete Address
+      description: Delete Address API deletes the existing address record except primary address record associated with an account or party.
+      operationId: deleteAddrByPut
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deleteAddrByPutRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteAddrByPutResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteAddrByPutResponse'
+      x-group-name: Address Service
+      x-proxy-name: Delete Address
+      x-child-product-name: Accountholder
+      x-core: DNA
     post:
       tags:
       - Get Address
@@ -45,6 +80,22 @@ paths:
       x-core: DNA
 components:
   schemas:
+    deleteAddrByPutRequest:
+      required:
+      - AddrKeys
+      properties:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        AddrKeys:
+          $ref: '#/components/schemas/deleteAddrByPutRequest_AddrKeys'
+    deleteAddrByPutResponse:
+      required:
+      - AddrStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        AddrStatusRec:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec'
     getAddrByPostRequest:
       required:
       - AddrSel
@@ -61,7 +112,7 @@ components:
           $ref: '#/components/schemas/getAddrByPostResponse_RecCtrlOut'
         AddrRec:
           type: array
-          description: Details of the address record that includes response keys, response status and response information.
+          description: Details of the address record.
           items:
             $ref: '#/components/schemas/getAddrByPostResponse_AddrRec'
     EFXHeader:
@@ -251,6 +302,14 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
     StatusType:
       title: StatusType
       required:
@@ -375,6 +434,93 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
+    deleteAddrByPutRequest_AddrKeys_PartyKeys:
+      required:
+      - PartyIdent
+      - PartyIdentType
+      type: object
+      properties:
+        PartyIdentType:
+          type: string
+          description: |-
+            Type of identifier for a party.
+
+
+
+            **Note:**
+
+            DNA supports the following options to retrieve party information:
+
+             - To retrieve information of an organization, OrgNum should be provided in request
+
+             - To retrieve information of a person, PersonNumber can be provided
+          enum:
+          - OrgNum
+          - PersonNum
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: Unique identifier of a party.
+      description: Unique information to identify the party record.
+    deleteAddrByPutRequest_AddrKeys:
+      required:
+      - AddrType
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/deleteAddrByPutRequest_AddrKeys_PartyKeys'
+        AddrType:
+          type: string
+          description: |-
+            Type of address.
+
+
+
+            **Note:** DNA allows multiple secondary addresses and at least one primary address. Each address has a unique AddressUseCode. DNA cannot have two same AddressUseCode that is, seasonal address (SEA) for two different addresses. This API cannot delete a primary address.
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+      description: Unique information to identify the address record.
+    deleteAddrByPutResponse_AddrStatusRec_AddrKeys:
+      type: object
+      properties:
+        AddrId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an address record.
+      description: Unique information to identify the address record.
+    deleteAddrByPutResponse_AddrStatusRec_AddrStatus:
+      required:
+      - AddrStatusCode
+      type: object
+      properties:
+        AddrStatusCode:
+          type: string
+          description: Code to identify the status of an address record.
+          enum:
+          - Deleted
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the address status is changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-12-31T23:59:59.999
+      description: Status details of the address record.
+    deleteAddrByPutResponse_AddrStatusRec:
+      required:
+      - AddrKeys
+      - AddrStatus
+      type: object
+      properties:
+        AddrKeys:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec_AddrKeys'
+        AddrStatus:
+          $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec_AddrStatus'
+      description: Details of the address record in response to delete operation.
     getAddrByPostRequest_AddrSel_PartyKeys:
       required:
       - PartyIdent
@@ -390,7 +536,7 @@ components:
 
             **Note:**
 
-            Signature supports the following options to retrieve party information:
+            DNA supports the following options to retrieve party information:
 
              - To retrieve information of an organization, OrgNum should be provided in request
 
@@ -437,7 +583,7 @@ components:
           maxLength: 60
           type: string
           description: "Unique identifier of a party.\n\n\n\n**Note:**\n\nParty identification information is displayed only when TaxID is unique. A validation message is displayed when TaxID is shared. "
-      description: Type of identifier for a party.
+      description: Unique information to identify the party record.
     getAddrByPostResponse_AddrKeys:
       type: object
       properties:
@@ -456,14 +602,14 @@ components:
           - ISO3166-Alpha-3
         CountryCodeValue:
           type: string
-          description: Number of the PO box associated with the address.
+          description: Country code value as per the country code format set in the CountryCodeSource field.
       description: Country code value as per the country code format set in the CountryCodeSource field.
     getAddrByPostResponse_AddrInfo_TimeFrame_StartDayMonth:
       type: object
       properties:
         DayOfMonth:
           type: string
-          description: Numeric value of the day in the month for occurrence of address.
+          description: Numeric value of the day in the month for occurrence of an address.
         Month:
           type: integer
           description: |-
@@ -518,16 +664,26 @@ components:
         StartDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Start date and time value to search the address records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+          description: |-
+            Start date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-12-31T23:59:59.999
         StartDayMonth:
           $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_TimeFrame_StartDayMonth'
         EndDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "End date and time value to search the address records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+          description: |-
+            End date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-12-31T23:59:59.999
         EndDayMonth:
           $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_TimeFrame_EndDayMonth'
-      description: "Start day and month for a recurring address in a specific time frame.\n\n\n\n**Note:**\n\nApplicable only for Seasonal Address. "
+      description: "Details of the time frame when the postal address is active.\n\n\n\n**Note:**\n\nApplicable only for seasonal address. "
     getAddrByPostResponse_AddrInfo_PostAddr:
       required:
       - AddrType
@@ -555,16 +711,16 @@ components:
         Addr2:
           maxLength: 64
           type: string
-          description: Address Line 2. Addr1 must be specified to use Addr2.
+          description: Address line 2. To enter Addr2, Addr1 field must be provided.
         Addr3:
           maxLength: 64
           type: string
           description: |+
-            Address Line 3. Addr2 must be specified to use Addr3.
+            Address line 3. To enter Addr3, Addr2 field must be provided.
 
         AddrDefinedData:
           type: array
-          description: "Additional information about an address.\n\n\n\n**Note:**\n\nOnly applicable, if Signature supports additional address lines. "
+          description: "Additional information about an address.\n\n\n\n**Note:**\n\nOnly applicable, if DNA supports additional address lines. "
           items: {}
         City:
           maxLength: 32
@@ -576,7 +732,7 @@ components:
         PostalCode:
           maxLength: 11
           type: string
-          description: "Postal code or Zip code.\n\nIf the address is a non-US address, the format of the ZIP code consists of five digits for the ZIP code, a hyphen and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional and when not present, they will be displayed as 0000.  \n\nExample: 32714-1234 or 32714-0000 "
+          description: Postal code or Zip code.
         CountryCode:
           $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_CountryCode'
         POBox:
@@ -592,11 +748,9 @@ components:
 
             **Note:**
 
-            Primary address is required by the service provider and will always be present in the inquiry response.
+            Primary address is required by the service provider and is always present in the inquiry response.
 
-            Only one primary and a seasonal address are applicable for each customer.
-
-            Multiple secondary addresses can be returned and AddrUse is used to further identify the secondary address.
+            Only one primary and a seasonal address are applicable for each customer. For Secondary address, address use code field is used.
 
           enum:
           - Primary
@@ -624,7 +778,7 @@ components:
 
             **Note:**
 
-            Refers to the Mail Type Code.
+            Refers to the mail type code.
         MSACode:
           type: integer
           description: |-
@@ -643,7 +797,7 @@ components:
       properties:
         PostAddr:
           type: array
-          description: Usage of the address.
+          description: Details of postal address.
           items:
             $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_PostAddr'
       description: Address details of a party.
@@ -654,7 +808,7 @@ components:
       properties:
         AddrStatusCode:
           type: string
-          description: Status code of the address.
+          description: Code to identify the status of an address record.
           enum:
           - Valid
         EffDt:
@@ -666,7 +820,7 @@ components:
             Format: yyyy-MM-ddTHH:mm:ss.SSS
 
             Example: 2021-12-31T23:59:59.999
-      description: Current status of the address.
+      description: Status details of the address record.
     getAddrByPostResponse_AddrRec:
       required:
       - AddrInfo
