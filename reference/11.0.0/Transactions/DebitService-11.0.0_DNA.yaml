@@ -12,7 +12,7 @@ paths:
       tags:
       - Reverse Debit
       summary: Reverse Debit.
-      description: Reverse Debit API reverses the previously processed debit transaction on a deposit account.<br>For DNA, this API supports reversal of the withdrawal transaction with cash-out and electronic fund types. This API does not support partial reversal of the transaction amount that was debited from the account.<br>In DNA, the general ledger accounts are set according to the transaction codes used to post the transactions.
+      description: Reverse Debit API reverses the previously processed debit transaction on a deposit account.<br>For DNA, this API supports reversal of the withdrawal transaction with cash and electronic fund types. This API does not support partial reversal of the transaction amount that was debited from the account. <br>In DNA, the general ledger accounts are set according to the transaction codes used to post the transactions.
       operationId: DebitRevOper
       parameters:
       - name: EFXHeader
@@ -47,7 +47,7 @@ paths:
       tags:
       - Add Debit
       summary: Add Debit.
-      description: Add Debit API creates a one-sided transaction where monetary funds are debited/withdrawn from a deposit account.<br>For DNA, this API supports withdrawal (WTH) transaction type with cash-out fund type for real-time post-transaction.
+      description: Add Debit API creates a debit transaction where monetary funds are debited/withdrawn from a deposit account.<br>For DNA, this API supports withdrawal (WTH) transaction type with electronic fund type or cash fund type for real-time post-transaction.
       operationId: DebitAddOper
       parameters:
       - name: EFXHeader
@@ -452,7 +452,12 @@ components:
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+
+
+            **Note:** *Required field*
       description: Details of the debit amount to be processed.
     DebitAddOperRequest_DebitInfo_CompositeCurAmt:
       required:
@@ -465,7 +470,12 @@ components:
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+
+
+            **Note:** *Required field*
       description: Details of the cash amount.
     DebitAddOperRequest_DebitInfo_CashOutData:
       required:
@@ -500,7 +510,12 @@ components:
         Desc:
           maxLength: 100
           type: array
-          description: Description of debit transaction.
+          description: |-
+            Description of debit transaction.
+
+
+
+            **Note:** If multiple descriptions are provided, DNA consider the first description and the rest are ignored.
           items: {}
         AcctRef:
           $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_AcctRef'
@@ -584,7 +599,7 @@ components:
 
 
 
-            **Note:** This field can have two occurrences, one for the transaction amount and other for the fee amount. Since this API supports balanced transactions, the same amount is assumed for G/L offsets.
+            **Note:** This field can have up to two occurrences. This occurrences is for the transaction amount. Since this API supports balanced transactions, the same amount is assumed for G/L offsets.
 
             This is an optional field. If not provided in the request, then the original transaction amount is considered for reversal. Also if the partial or incorrect amount is provided, then the transaction fails.
       description: Details of the debit amount to be processed.
@@ -596,6 +611,19 @@ components:
         CurAmt:
           $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CompositeCurAmt_CurAmt'
       description: Details of the composition of the debit reversal amount.
+    DebitRevOperRequest_DebitInfo_CashAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+      description: Details of the cash amount.
+    DebitRevOperRequest_DebitInfo_CashInData:
+      required:
+      - CashAmt
+      properties:
+        CashAmt:
+          $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CashAmt'
     DebitRevOperRequest_DebitInfo_NetworkRefData:
       type: object
       properties:
@@ -607,7 +635,11 @@ components:
 
 
 
-            **Note:** Refers to the original transaction number to be reversed.
+            **Note:** *Required field*
+
+
+
+             Refers to the original transaction number to be reversed.
       description: Details of the network reference data to uniquely identify a previously posted transaction.
     DebitRevOperRequest_DebitInfo:
       required:
@@ -622,16 +654,24 @@ components:
 
 
 
-            **Note:** This field refers to reverse transaction type code to be performed.
+            **Note:** This field refers to transaction type code (RtxnTypCd) to be performed.
           enum:
           - Withdrawal
+        EffDt:
+          type: string
+          description: |-
+            Effective date and time when the transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
         CompositeCurAmt:
           $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CompositeCurAmt'
         CashInData:
           type: array
           description: Information to specify the cash-in data that comprises the transaction.
           items:
-            $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CashOutData'
+            $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CashInData'
         NetworkRefData:
           $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_NetworkRefData'
       description: Details of the debit transaction.
@@ -691,5 +731,5 @@ components:
 
 
 
-            **Note:** Refers to the unique generated transaction number (reverse transaction number).
+            **Note:** Refers to the unique generated transaction number (RtxnNbr).
       description: Details of the debit transaction receipt.
