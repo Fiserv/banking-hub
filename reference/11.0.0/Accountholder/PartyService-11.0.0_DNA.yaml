@@ -45,6 +45,42 @@ paths:
       x-proxy-name: Get Party
       x-child-product-name: Accountholder
       x-core: DNA
+  /partyservice/parties/parties/secured/list:
+    post:
+      tags:
+      - Get Party List
+      summary: Get Party List
+      description: Get Party List API searche for parties using various search criterias. This API is an abstract object representing a smaller subset of information from the Party object that uniquely identifies a customer. This API is used by the business to get a list of customers matching some selection criteria.
+      operationId: getPartyListInqSecured
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getPartyListInqSecuredRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getPartyListInqSecuredResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getPartyListInqSecuredResponse'
+      x-group-name: Party Service
+      x-proxy-name: Get Party List
+      x-child-product-name: Accountholder
+      x-core: DNA
 components:
   schemas:
     getPartyInqSecureRequest:
@@ -61,6 +97,25 @@ components:
           $ref: '#/components/schemas/StatusType'
         PartyRec:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec'
+    getPartyListInqSecuredRequest:
+      required:
+      - PartyListSel
+      properties:
+        PartyListSel:
+          $ref: '#/components/schemas/getPartyListInqSecuredRequest_PartyListSel'
+    getPartyListInqSecuredResponse:
+      required:
+      - PartyListRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        PartyListRec:
+          type: array
+          description: |+
+            Details of the list of parties that are retrieved based on the specified search criteria.
+
+          items:
+            $ref: '#/components/schemas/getPartyListInqSecuredResponse_PartyListRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -380,13 +435,34 @@ components:
       properties:
         PartyIdentType:
           type: string
-          description: "Type of party identification.\n\n**Note:** \n\n"
+          description: |-
+            Type of party identification.
+
+
+
+            **Note:** DNA supports the following options while requesting information about party:
+
+            - For organization information, provide organization or member number or TaxID in the request
+
+            - For person information, provide person or member number or TaxID in the request
+
+
+
+            TaxID can also be shared, but in this case information is displayed only if the TaxID is unique and not shared with any other entity.
           enum:
+          - MemberNum
+          - OrgNum
           - PersonNum
+          - TaxIdent
         PartyIdent:
           maxLength: 60
           type: string
-          description: Unique number of a party in relation with the account.
+          description: |-
+            Unique identifier of a party record.
+
+
+
+            **Note:** TaxID can also be shared, but in this case information is displayed only if the TaxID is unique and not shared with any other entity.
       description: Unique information to identify the party record.
     getPartyInqSecureRequest_PartySel:
       required:
@@ -395,7 +471,7 @@ components:
       properties:
         PartyKeys:
           $ref: '#/components/schemas/getPartyInqSecureRequest_PartySel_PartyKeys'
-      description: Details of selection criteria to search a party.
+      description: Selection criteria to search a party.
     getPartyInqSecureResponse_PartyRec_PartyKeys:
       required:
       - PartyIdent
@@ -406,29 +482,165 @@ components:
           type: string
           description: Type of party identification.
           enum:
+          - OrgNum
           - PersonNum
         PartyIdent:
           maxLength: 60
           type: string
-          description: Unique number of a party in relation with the account.
+          description: Unique identifier of a party record.
       description: Unique information to identify the party record.
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_MemberData:
+      type: object
+      properties:
+        MemberGroup:
+          type: string
+          description: Value that indicates the group of a member.
+        MemberNum:
+          maxLength: 36
+          type: string
+          description: Assigned number of a member.
+      description: Details of a member.
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Unique data identifier to identify the client-defined data item.
+        DataIdentEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the DataIdent field.
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_USATaxIdCert:
+      type: object
+      properties:
+        USATaxIdCertDate:
+          type: string
+          description: |-
+            Date on which tax identifier certification was issued.
+
+
+
+            Format: yyyy-mm-dd
+          format: date
+      description: Details of the tax identifier certification.
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientResidenceCountry:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+          enum:
+          - ISO3166-Alpha-3
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+        CountryCodeValueEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the CountryCodeValue field.
+      description: Details of recipient's residency country. This field contains residence code details for tax purpose.
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_ForeignTaxData:
+      type: object
+      properties:
+        ForeignTaxForms:
+          type: string
+          description: Value that indicates the forms of a foreign tax.
+          enum:
+          - 1042S
+          - None
+        RecipientResidenceCountry:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientResidenceCountry'
+        ForeignCertDt:
+          type: string
+          description: |-
+            Date on which foreign certificate was issued.
+
+
+
+            Format: YYYY-MM-DDT00:00:00
+          format: date
+        ForeignExpDt:
+          type: string
+          description: |-
+            Date on which foreign certificate is scheduled to expire.
+
+
+
+            Format: YYYY-MM-DDT00:00:00
+          format: date
+      description: Details of the foreign tax.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo:
       type: object
       properties:
         TaxIdentType:
           type: string
-          description: |+
-            Type of tax identification.
-
-            **Note:** Refers to SSN.
-
+          description: "Type of tax identification. \n\n\n\n**Note:** Refers to Social Security Number (SSN)."
           enum:
           - SSN
         TaxIdent:
           maxLength: 12
           type: string
-          description: 'Unique identifier of tax. '
+          description: "Unique identifier of tax. \n\n\n\nExample: \"123456789\""
+        TaxIdentApplyDt:
+          type: string
+          description: |-
+            Date on which application for allocation of tax identifier number was made.
+
+
+
+            Format: yyyy-mm-dd
+          format: date
+        USATaxIdCert:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_USATaxIdCert'
+        ForeignTaxData:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_ForeignTaxData'
       description: Tax information related to a party.
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_DisclosureData:
+      properties:
+        DisclosureAckType:
+          type: string
+          description: Acknowledgment type of disclosure.
+          enum:
+          - OptedIn
+          - OptedOut
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_SecretData:
+      required:
+      - SecretIdent
+      properties:
+        SecretIdent:
+          type: string
+          description: Unique identifier of the security question used to identify the customer.
+        SecretValue:
+          maxLength: 80
+          type: string
+          description: Value of the SecretIdent field that includes customer's answer to the corresponding security question.
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PhoneNum_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard country code format.
+          enum:
+          - ISO3166-Alpha-3
+        CountryCodeValue:
+          type: string
+          description: |-
+            Country code value as per the country code format set in the CountryCodeSource field.
+
+
+
+            **Note:** Refers to the phone country code.
+      description: Details of the country code.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PhoneNum:
       required:
       - PhoneType
@@ -436,17 +648,33 @@ components:
       properties:
         PhoneType:
           type: string
-          description: "Type of a phone.\n\n**Note:** \n\n- Values are client-defined\n\n- Service provider supports multiple phone types per customer and multiple phone records per phone type"
+          description: "Type of a phone.\n\n\n\n**Note:** The values of this field are client-defined. DNA supports multiple phone types per customer and multiple phone records per phone type. "
+        PhoneTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PhoneType field.
         PhoneIdent:
           type: integer
           description: |-
             Phone identifier to serialize the phone types when more than one phone type exists.
 
+
+
             **Note:** Refers to a phone sequence number.
           format: int64
         Phone:
           type: string
-          description: Phone number.
+          description: |-
+            Phone number.
+
+
+
+            **Note:** This field may include the area code, phone number, phone extension, exchange along with foreign phone number (when phone country is other than USA), if applicable.
+        PreferredPhone:
+          type: boolean
+          description: Flag to indicate phone number is a preferred phone number to contact the party.
+        CountryCode:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PhoneNum_CountryCode'
       description: Phone number details of a party.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_CountryCode:
       required:
@@ -463,13 +691,18 @@ components:
         CountryCodeValue:
           type: string
           description: Country code value as per the country code format set in the CountryCodeSource field.
-      description: Details of country code.
+      description: Country code details of a party.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_TimeFrame_StartDayMonth:
       type: object
       properties:
         DayOfMonth:
           type: string
-          description: "Numeric value of the day in the month for occurrence of address.\n\n**Note:** Refers to the Day of Month code. "
+          description: |-
+            Numeric value of the day in the month for occurrence of address.
+
+
+
+            **Note:** In case of February, the day can be 1 till 28 or 29 (in case of leap year).
           enum:
           - "1"
           - "2"
@@ -504,15 +737,9 @@ components:
           - "31"
         Month:
           type: integer
-          description: |-
-            Numeric value of the month for the occurrence of address.
-
-            **Note:** Refers to start month code.
+          description: "Numeric value of the month for the occurrence of address.\n\n\n\n**Note:** Refers to start month code. \n\nFor example: 01 for January."
           format: int64
-      description: |-
-        Details of starting day and month for recurring address in a specific time frame.
-
-        **Note:** Time frame is displayed only if AddrType is seasonal and indicates that seasonal address occurs every year for a specific time frame.
+      description: Details of starting day and month for recurring address in a specific time frame.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_TimeFrame_EndDayMonth:
       type: object
       properties:
@@ -521,7 +748,9 @@ components:
           description: |-
             Numeric value of the day in the month for occurrence of address.
 
-            **Note:** Refers to Day of Month starting from 1 till 31. In case of February, the day can be 1 till 28 or 29 (in case of Leap Year).
+
+
+            **Note:** In case of February, the day can be 1 till 28 or 29 (in case of leap year).
           enum:
           - "1"
           - "2"
@@ -556,15 +785,9 @@ components:
           - "31"
         Month:
           type: integer
-          description: |-
-            Numeric value of the month for the occurrence of address.
-
-            **Note:** Refers to stop month code.
+          description: "Numeric value of the month for the occurrence of address.\n\n\n\n**Note:** Refers to stop month code. \n\nFor example: 05 for May."
           format: int64
-      description: |-
-        End day and month for recurring address in a specific time frame.
-
-        **Note:** Time frame is displayed only if AddrType is seasonal and indicates that seasonal address occurs every year for a specific time frame.
+      description: Details of the ending day and month for recurring address in a specific time frame.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_TimeFrame:
       type: object
       properties:
@@ -572,13 +795,11 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Start date and time value for the address time frame.
+            Start date and time value.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: YYYY-MM-DDT00:00:00
 
-            Example: 2021-01-31T23:59:59.999
-
-            **Note:** Refers to start date in date format.
+            Example: 2021-01-31T00:00:00
         StartDayMonth:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_TimeFrame_StartDayMonth'
         EndDt:
@@ -587,17 +808,17 @@ components:
           description: |-
             End date and time value.
 
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
+            Format: YYYY-MM-DDT00:00:00
 
-            Example: 2021-01-31T23:59:59.999
-
-            **Note:** Refers to end/stop date in date format.
+            Example: 2021-01-31T00:00:00
         EndDayMonth:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_TimeFrame_EndDayMonth'
       description: |-
         Details of the time frame when the address is active.
 
-        **Note:** Only applicable for seasonal address.
+
+
+        **Note:** This field is only applicable for seasonal address.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr:
       required:
       - AddrType
@@ -609,7 +830,7 @@ components:
           description: Unique identifier of an address record.
         AddrUse:
           type: string
-          description: "Usage of the address.\n\n**Note:** \n\n- Refers to address use code\n\n- Values are client-defined\n\n- This field is applicable if 'AddressType' is 'Secondary'"
+          description: "Code to indicate the usage of the address.\n\n\n\n**Note:** Refers to address use code. These codes are user-defined. \n\nThe address use field is only applicable if the address type is secondary.\n\n"
         Addr1:
           maxLength: 64
           type: string
@@ -618,6 +839,10 @@ components:
           maxLength: 64
           type: string
           description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided."
+        Addr3:
+          maxLength: 64
+          type: string
+          description: "Address line 3. \n\nTo enter Addr3, Addr2 field must be provided."
         City:
           maxLength: 32
           type: string
@@ -628,31 +853,44 @@ components:
         PostalCode:
           maxLength: 11
           type: string
-          description: Postal code or Zip code.
+          description: Postal code or zip code.
         CountryCode:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_CountryCode'
         AddrType:
           type: string
-          description: |-
+          description: |+
             Type of address.
 
 
 
-            **Note:** Primary address is required by the service provider and will always be present in the inquiry response.
+            **Note:** DNA requires primary address and it is always present in the inquiry response.
 
-            Only one primary and a seasonal address are applicable for each customer.
+            Each customer has only one primary and one seasonal address.
 
-            Multiple secondary address can be returned and AddrUse is used to further identify the secondary address.
+            The inquiry can return multiple secondary addresses. The address use field is used to further identify the type of secondary address.
+
+
+
           enum:
           - Primary
           - Secondary
           - Seasonal
         TimeFrame:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_TimeFrame'
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+        MSACode:
+          type: integer
+          description: Code that identifies a Metropolitan Statistical Area (MSA) for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+          format: int64
       description: |-
         Postal address details of a party.
 
-        **Note:** Address Format is configurable by Financial Institution (FI).
+
+
+        **Note:** Financial Institution (FI) configures the address format.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_Email:
       type: object
       properties:
@@ -662,14 +900,16 @@ components:
           description: |-
             Unique identifier of the email address.
 
-            **Note:** Refers to address number identifier.
+
+
+            **Note:** Refers to the "AddrNbr" field.
         EmailType:
           type: string
-          description: "Type of the email address.\n\n**Note:** \n\n- Client-defined values for email addresses\n\n- Service Provider supports only one Email Address per Email type\n\n\n\n"
+          description: "Type of the email address.\n\n\n\n**Note:** Refers to address use for electronic addresses or email address. \n\nThe values of this field are client-defined.\n\nDNA supports only one email address per email type.\n\n"
         EmailAddr:
           maxLength: 254
           type: string
-          description: "Email address of a party.\n\n**Note:** \n\n- Refers to email address\n\n- For example: test@gmail.com"
+          description: Email address of a party.
       description: Email address details of a party.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_Contact:
       properties:
@@ -679,48 +919,28 @@ components:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr'
         Email:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_Email'
-    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_GovIssuedIdent_CountryCode:
-      required:
-      - CountryCodeValue
-      type: object
-      properties:
-        CountryCodeSource:
-          type: string
-          description: Full name of a person.
-          enum:
-          - ISO3166-Alpha-3
-        CountryCodeValue:
-          type: string
-          description: |-
-            Country code value as per the country code format set in the CountryCodeSource field.
-
-            **Note:** Refers to country code.
-      description: Name of a person party.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_GovIssuedIdent:
       required:
       - CountryCode
       type: object
       properties:
         CountryCode:
-          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_GovIssuedIdent_CountryCode'
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_CountryCode'
         StateProv:
           type: string
           description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
-      description: 'Details of identifier issued by the government for the person party. '
+      description: Details of government-issued identifier.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_IssuedIdent:
       required:
       - IssuedIdentType
       properties:
         IssuedIdentType:
           type: string
-          description: "Type of issued identity card/document.\n\n**Note:** Service Provider does not support multiple identification documents for the same Identification Type. \n\nIdentification types are user defined.\n\n\n\n"
+          description: "Type of issued identity card/document.\n\n\n\n**Note:** DNA does not support multiple identification documents for the same identification type. \n\nFor example: A customer cannot have driver's license issued by two states. Only one drivers license is accepted.\n\nIdentification types are user-defined."
         IssuedIdentTypeEnumDesc:
           maxLength: 80
           type: string
-          description: |-
-            Description of the enumeration value in the IssuedIdentType field.
-
-            **Note:** Refers to identification type description.
+          description: Description of the enumeration value in the IssuedIdentType field.
         IssuedIdentValue:
           maxLength: 32
           type: string
@@ -733,10 +953,22 @@ components:
         IssueDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date when the identity card/document was issued.\n\n**Note:** \n\n- Refers to identification issue date.\n\n- Format: yyyy:mm:dd"
+          description: |-
+            Date when the identity card/document was issued.
+
+            Format: YYYY-MM-DDT00:00:00
+
+            Example: 2021-01-31T00:00:00
         ExpDt:
           type: string
-          description: "Date after which issued identity card/document expires.\n\n**Note:** \n\n- Refers to identification expiry date.\n\n- Format: yyyy:mm:dd"
+          description: |-
+            Date after which issued identity card/document expires.
+
+
+
+            Format: YYYY-MM-DDT00:00:00
+
+            Example: 2021-01-31T00:00:00
           format: date
         GovIssuedIdent:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_GovIssuedIdent'
@@ -746,31 +978,40 @@ components:
       properties:
         NameType:
           type: string
-          description: Full name of a person.
+          description: Type of the name.
           enum:
           - Primary
         FullName:
           maxLength: 96
           type: string
-          description: Family name or last name of a person.
+          description: |-
+            Full name of a person.
+
+
+
+            **Note:** This field may include FirstName, MiddleInitial, LastName, and Suffix.
         FamilyName:
           maxLength: 40
           type: string
-          description: First name of a person.
+          description: Family name or last name or surname of a person.
         GivenName:
           maxLength: 40
           type: string
-          description: Middle name of a person.
+          description: First name of a person.
         MiddleName:
           maxLength: 40
           type: string
-          description: Name prefix to add before the name of party.
+          description: Middle name of a person.
         NamePrefix:
           type: string
-          description: "A title befre person's name. \n\nFor example- Mr, Mrs, Dr."
+          description: A title before person's name. For example, Mr, Mrs, Dr.
         NameSuffix:
           type: string
           description: 'Name suffix to add after the name of a person. '
+        PreferredName:
+          maxLength: 96
+          type: string
+          description: "Preferred user-defined name to be used for the party.\n\n\n\n**Note:** Refers to a nickname. \n\n"
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData:
       type: object
       properties:
@@ -789,33 +1030,1013 @@ components:
           description: Name of a person party.
           items:
             $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PersonName'
-      description: Information related to person party.
+      description: Information related to a person party.
+    getPartyInqSecureResponse_PartyRec_PersonPartyInfo_Employment:
+      properties:
+        Occupation:
+          maxLength: 50
+          type: string
+          description: Name of the occupation.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo:
       type: object
       properties:
+        PartyPref:
+          type: object
+          description: Preferences of a party for the service provider to provide party-specific "parameters".
+        MemberData:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_MemberData'
+        EstablishedDt:
+          type: string
+          description: "Date on which the party record is created. Also known as \"Customer Since Date\".\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        OEDCode:
+          type: string
+          description: |+
+            Officer, employee, director code. This code is used to indicate if the party is an employee of the financial institution.
+
+          enum:
+          - Director
+          - Employee
+          - Officer
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_ClientDefinedData'
+        PartyType:
+          type: string
+          description: Type of a party.
+          enum:
+          - Customer
+          - ThirdParty
+        AddtlPartyType:
+          type: array
+          description: Additional type of a party.
+          items: {}
         TaxDataInfo:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo'
+        DisclosureData:
+          type: array
+          description: Disclosure data related to a party.
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_DisclosureData'
+        SecretData:
+          type: array
+          description: |+
+            Secret data of party that is used to validate the identity of the party in scenarios such as forgotten password.
+
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_SecretData'
+        LastUpdateDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date when the party item was last updated. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+        RiskRanking:
+          type: string
+          description: Value that indicates the ranking or level of risk assigned to the party.
+        IsValidInd:
+          type: boolean
+          description: Flag to indicate the person party is valid.
         PersonData:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData'
         BirthDt:
           type: string
-          description: "Date of birth of a person.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** \n\nRefers to Date of Birth.\n\n- Format: yyyy:mm:dd\n\n"
+          description: "Date of birth of a person.\n\n\n\nFormat: YYYY-MM-DDT00:00:00 \n\nExample: 2021-11-20T00:00:00 "
           format: date
         DeceasedDt:
           type: string
-          description: "Deceased date.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** \n\nRefers to Date of Death.\n\n- Format: yyyy:mm:dd"
+          description: "Date of death of a person.\n\n\n\nFormat: YYYY-MM-DDT00:00:00 \n\nExample: 2021-11-20T00:00:00 "
           format: date
+        Employment:
+          type: array
+          description: Employment details of the party.
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_Employment'
+        Dependents:
+          type: integer
+          description: Number of dependents.
+          format: int64
+        EducationLevel:
+          maxLength: 80
+          type: string
+          description: Level of education of the party.
+        HomeOwnership:
+          type: string
+          description: Value that indicates the party's ownership of a home.
+          enum:
+          - Own
+          - Rent
       description: Information related to a person party.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_TaxDataInfo_ForeignTaxData:
+      type: object
+      properties:
+        ForeignTaxForms:
+          type: string
+          description: Value that indicates the forms of a foreign tax.
+          enum:
+          - 1042S
+        RecipientGIIN:
+          maxLength: 19
+          type: string
+          description: 'Recipient Global Intermediary Identification Number (GIIN). IRS assigns to a Participating Foreign Financial Institution (PFFI) or Registered Deemed Compliant FFI after a financial institution’s FATCA registration is submitted and approved. '
+        ForeignCertDt:
+          type: string
+          description: |-
+            Date on which foreign certificate was issued.
+
+
+
+            Format: YYYY-MM-DDT00:00:00
+          format: date
+        ForeignExpDt:
+          type: string
+          description: |-
+            Date on which foreign certificate is scheduled to expire.
+
+
+
+            Format: YYYY-MM-DDT00:00:00
+          format: date
+      description: Details of the foreign tax.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_TaxDataInfo:
+      type: object
+      properties:
+        TaxIdentType:
+          type: string
+          description: 'Tax identification type. '
+          enum:
+          - EIN
+        TaxIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the TaxIdentType field.
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: "Unique identifier of tax. \n\n\n\n**Note:** Refers to TaxID number."
+        TaxIdentApplyDt:
+          type: string
+          description: |-
+            Date on which application for allocation of tax identifier number was made.
+
+
+
+            Format: yyyy-mm-dd
+          format: date
+        USATaxIdCert:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_USATaxIdCert'
+        ForeignTaxData:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_TaxDataInfo_ForeignTaxData'
+      description: "Tax information related to a party.\n\n\n\n**Note:** DNA supports the following two tax ID types for organizations:\n\n- FEIN \n\n- GIIN\n\nBoth tax ID types can be provided in single request. \n\nFor example: Organization can have FEIN and GIIN.\n\n"
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PhoneNum_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+          enum:
+          - ISO3166-Alpha-3
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: Details of the country code.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of a phone.\n\n\n\n**Note:** The values of this field are client-defined. DNA supports multiple phone types per customer and multiple phone records per phone type. "
+        PhoneTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PhoneType field.
+        PhoneIdent:
+          type: integer
+          description: Phone identifier to serialize the phone types when more than one phone type exists.
+          format: int64
+        Phone:
+          type: string
+          description: |-
+            Phone number.
+
+
+
+            **Note:** This field may include the area code, phone number, phone extension, exchange along with foreign phone number (when phone country is other than USA), if applicable.
+        PreferredPhone:
+          type: boolean
+          description: Flag to indicate phone number is a preferred phone number to contact.
+        CountryCode:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PhoneNum_CountryCode'
+      description: Phone number details of a party.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr_TimeFrame_StartDayMonth:
+      type: object
+      properties:
+        DayOfMonth:
+          type: string
+          description: Numeric value of the day in the month for occurrence of address.
+        Month:
+          type: integer
+          description: Numeric value of the month for the occurrence of address.
+          format: int64
+      description: Details of starting day and month for recurring address in a specific time frame.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr_TimeFrame_EndDayMonth:
+      type: object
+      properties:
+        DayOfMonth:
+          type: string
+          description: Numeric value of the day in the month for occurrence of address.
+        Month:
+          type: integer
+          description: Numeric value of the month for the occurrence of address.
+          format: int64
+      description: Details of the ending day and month for recurring address in a specific time frame.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+            Format: YYYY-MM-DDT00:00:00
+
+            Example: 2021-01-31T00:00:00
+        StartDayMonth:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr_TimeFrame_StartDayMonth'
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+            Format: YYYY-MM-DDT00:00:00
+
+            Example: 2021-01-31T00:00:00
+        EndDayMonth:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr_TimeFrame_EndDayMonth'
+      description: |-
+        Details of the time frame when the address is active.
+
+
+
+        **Note:** This field is only applicable for seasonal address.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr:
+      required:
+      - AddrType
+      type: object
+      properties:
+        AddressIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of an address record.
+        AddrUse:
+          type: string
+          description: Code to indicate the usage of the address.
+        Addr1:
+          maxLength: 64
+          type: string
+          description: Address line 1.
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided."
+        Addr3:
+          maxLength: 64
+          type: string
+          description: "Address line 3. \n\nTo enter Addr3, Addr2 field must be provided."
+        AddrDefinedData:
+          type: array
+          description: |-
+            Information related to address defined data.
+
+
+
+            **Note:** This field provides additional information about address.
+          items: {}
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: Postal code or zip code.
+        CountryCode:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_CountryCode'
+        AddrType:
+          type: string
+          description: |+
+            Type of address.
+
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr_TimeFrame'
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+        MSACode:
+          type: integer
+          description: Code that identifies a Metropolitan Statistical Area (MSA) for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+          format: int64
+      description: Postal address details of a party.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_Email:
+      type: object
+      properties:
+        EmailIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of the email address.
+        EmailType:
+          type: string
+          description: Type of the email address.
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address of a party.
+      description: Email address details of a party.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PhoneNum'
+        PostAddr:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr'
+        Email:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_Email'
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_OrgName:
+      required:
+      - NameType
+      properties:
+        NameType:
+          type: string
+          description: Type of the name.
+          enum:
+          - Primary
+        Name:
+          maxLength: 80
+          type: string
+          description: Name of the organization.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_OrgCategory_OrgCategoryCode:
+      type: object
+      properties:
+        SIC:
+          maxLength: 4
+          type: string
+          description: Standard Industry Class (SIC) code.
+        SICEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the SIC field.
+        SICSubCode:
+          maxLength: 4
+          type: string
+          description: SIC sub code.
+        SICSubCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the SICSubCode field.
+      description: Details of the organization category code.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_OrgCategory:
+      required:
+      - OrgCategoryCode
+      type: object
+      properties:
+        OrgCategoryCode:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_OrgCategory_OrgCategoryCode'
+      description: Details of the organization category.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData:
+      type: object
+      properties:
+        Contact:
+          type: array
+          description: Contact information of a party.
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_Contact'
+        OrgName:
+          type: array
+          description: Name details of the organization.
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_OrgName'
+        OrgCategory:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_OrgCategory'
+      description: Data related to an organization.
+    getPartyInqSecureResponse_PartyRec_OrgPartyInfo:
+      type: object
+      properties:
+        MemberData:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_MemberData'
+        EstablishedDt:
+          type: string
+          description: "Date on which the party record is created. Also known as \"Customer Since Date\".\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_ClientDefinedData'
+        PartyType:
+          type: string
+          description: Type of a party.
+        TaxDataInfo:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_TaxDataInfo'
+        DisclosureData:
+          type: array
+          description: Disclosure data related to a party.
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_DisclosureData'
+        NAICS:
+          maxLength: 6
+          type: array
+          description: Six-digit North American Industry Classification System (NAICS) code used to indicate the type of customer based upon standard government definitions.
+          items: {}
+        LastUpdateDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date when the party item was last updated. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+        IntReportingCode:
+          type: string
+          description: Code that indicates the interest reporting.
+          enum:
+          - 1099-INT
+          - None
+        OrgData:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData'
+      description: Information related to party when party is an organization.
+    getPartyInqSecureResponse_PartyRec_PartyStatus:
+      required:
+      - PartyStatusCode
+      type: object
+      properties:
+        PartyStatusCode:
+          type: string
+          description: Code to indicate the current status of the party.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the party status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: Information related to the current status of the party.
     getPartyInqSecureResponse_PartyRec:
       required:
       - PartyKeys
+      - PartyStatus
       type: object
       properties:
         PartyKeys:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PartyKeys'
         PersonPartyInfo:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo'
+        OrgPartyInfo:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo'
+        PartyStatus:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PartyStatus'
       description: |-
         Details of a party record.
 
-        **Note:** Service Provider provides respective services for Person and Organization inquiry.
+
+
+        **Note:** DNA has two APIs for person and organization inquiry, respectively.
+    getPartyListInqSecuredRequest_PartyListSel_PartyKeys:
+      required:
+      - PartyIdent
+      - PartyIdentType
+      type: object
+      properties:
+        PartyIdentType:
+          type: string
+          description: |-
+            Type of party identification.
+
+
+
+            **Note:** DNA supports searching by member or organization or person number. However, only one search criterion is supported in a single request. Member number is only supported for credit unions.
+          enum:
+          - MemberNum
+          - OrgNum
+          - PersonNum
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: Unique identifier of a party record.
+      description: Unique information to identify the party record.
+    getPartyListInqSecuredRequest_PartyListSel_PersonNameSel:
+      type: object
+      properties:
+        FamilyName:
+          maxLength: 40
+          type: string
+          description: |-
+            Family name or last name or surname of a person.
+
+
+
+            **Note:** DNA provides the ability to search for a person using their given name, family name, and/or soundex indicator.
+
+            The "Name" field can contain '%' for partial search, but the "SoundexNameInd" field should not be sent.
+        GivenName:
+          maxLength: 40
+          type: string
+          description: |-
+            First name of a person.
+
+
+
+            **Note:** DNA provides the ability to search for a person using their given name, family name, and/or soundex indicator.
+
+            The "Name" field can contain '%' for partial search, but the "SoundexNameInd" field should not be sent.
+      description: Details of the selection criteria based on the person name.
+    getPartyListInqSecuredRequest_PartyListSel:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/getPartyListInqSecuredRequest_PartyListSel_PartyKeys'
+        Name:
+          maxLength: 80
+          type: string
+          description: |-
+            Name of the party. This field selects records based on the person full name or organization name.
+
+
+
+            **Note:** Use this field when searching by organization or person family name.
+
+            Soundex indicator can be used in combination. The "Name" field can contain '%' for partial search, but the "SoundexNameInd" field should not be sent.
+        PersonNameSel:
+          $ref: '#/components/schemas/getPartyListInqSecuredRequest_PartyListSel_PersonNameSel'
+        SoundexNameInd:
+          type: boolean
+          description: "Flag to indicate to search for soundex values for the name.\n\n\n\n**Note:** This field is used to find the soundex value of an organization name or the soundex value of a person's first and/or last name.\n\nFor soundex to work, the corresponding field first name\\last name\\first name should have a '%' character. \n\nFor partial searches, the \"Name\" field can have '%', but the \"SoundexYN\" field should not be sent. \n\nHowever, partial searches are not supported."
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: "Unique identifier of tax. \n\n\n\nExample: \"123456789\""
+        Phone:
+          type: string
+          description: "Phone number.\n\n\n\n**Note:** DNA only supports phone number searches in the United States.\n\n\n\nExpect a phone request in the following format: \n\n+1-402-555-1212+739"
+      description: Selection criteria to search a party list.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of a phone.\n\n\n\n**Note:** The values of this field are client-defined. DNA supports multiple phone types per customer and multiple phone records per phone type. "
+        PhoneIdent:
+          type: integer
+          description: |-
+            Phone identifier to serialize the phone type when more than one phone type exists.
+
+
+
+            **Note:** Refers to a phone sequence number.
+          format: int64
+        Phone:
+          type: string
+          description: Phone number.
+        PreferredPhone:
+          type: boolean
+          description: Flag to indicate the phone number is a preferred phone number to contact the party.
+        CountryCode:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PhoneNum_CountryCode'
+      description: Phone number details of a party.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr_TimeFrame_StartDayMonth:
+      type: object
+      properties:
+        DayOfMonth:
+          type: string
+          description: Numeric value of the day in the month for occurrence of address.
+        Month:
+          type: integer
+          description: "Numeric value of the month for the occurrence of address.\n\n\n\n**Note:** Refers to start month code. \n\nFor example: 01 for January."
+          format: int64
+      description: Details of starting day and month for recurring address in a specific time frame.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr_TimeFrame_EndDayMonth:
+      type: object
+      properties:
+        DayOfMonth:
+          type: string
+          description: Numeric value of the day in the month for occurrence of address.
+        Month:
+          type: integer
+          description: "Numeric value of the month for the occurrence of address.\n\n\n\n**Note:** Refers to stop month code. \n\nFor example: 05 for May."
+          format: int64
+      description: Details of the ending day and month for recurring address in a specific time frame.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+            Format: YYYY-MM-DDT00:00:00
+
+            Example: 2021-01-31T00:00:00
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+            Format: YYYY-MM-DDT00:00:00
+
+            Example: 2021-01-31T00:00:00
+        StartDayMonth:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr_TimeFrame_StartDayMonth'
+        EndDayMonth:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr_TimeFrame_EndDayMonth'
+      description: |-
+        Details of the time frame when the address is active.
+
+
+
+        **Note:** This field is only applicable for seasonal address.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr:
+      required:
+      - AddrType
+      type: object
+      properties:
+        AddrUse:
+          type: string
+          description: "Code to indicate the usage of the address.\n\n\n\n**Note:** Refers to address use code. These codes are user-defined. \n\nThe address use field is only applicable if the address type is secondary.\n\nDNA supports only one address use code per customer.\n\n"
+        Addr1:
+          maxLength: 64
+          type: string
+          description: Address line 1.
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided."
+        Addr3:
+          maxLength: 64
+          type: string
+          description: "Address line 3. \n\nTo enter Addr3, Addr2 field must be provided."
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: Postal code or zip code.
+        CountryCode:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PhoneNum_CountryCode'
+        AddrType:
+          type: string
+          description: |+
+            Type of address.
+
+
+
+            **Note:** DNA requires a primary address and it is always present in the inquiry response.
+
+            Each customer has only one primary and one seasonal address.
+
+            The inquiry can return multiple secondary addresses. The address use field is used to further identify the type of secondary address.
+
+
+
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr_TimeFrame'
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: |-
+            Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+
+
+
+            **Note:** Applicable if the country is the United States.
+        MSACode:
+          type: integer
+          description: |-
+            Code that identifies a Metropolitan Statistical Area (MSA) for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+
+
+
+            **Note:** Applicable if the country is the United States.
+          format: int64
+      description: Postal address details of a party.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_Email:
+      type: object
+      properties:
+        EmailType:
+          type: string
+          description: "Type of the email address.\n\n\n\n**Note:** Refers to address use for electronic addresses or email address. \n\nThe values of this field are client-defined.\n\nDNA supports only one email address per email type.\n\n"
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address of a party.
+      description: Email address details of a party.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PhoneNum'
+        PostAddr:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr'
+        Email:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_Email'
+    getPartyListInqSecuredResponse_PersonPartyListInfo_MemberData:
+      type: object
+      properties:
+        MemberNum:
+          maxLength: 36
+          type: string
+          description: |-
+            Assigned member number of the person.
+
+
+
+            **Note:** Applicable only to credit unions.
+      description: Details of a member.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_SecretData:
+      required:
+      - SecretIdent
+      properties:
+        SecretIdent:
+          type: string
+          description: |-
+            Unique identifier of the security question used to identify the customer.
+
+
+
+            **Note:** The financial institution configures this identifier.
+        SecretValue:
+          maxLength: 80
+          type: string
+          description: Value of the SecretIdent field that includes the customer's answer to the corresponding security question.
+    getPartyListInqSecuredResponse_PersonPartyListInfo_PersonName:
+      required:
+      - NameType
+      type: object
+      properties:
+        NameType:
+          type: string
+          description: Type of the name.
+          enum:
+          - Primary
+        FullName:
+          maxLength: 96
+          type: string
+          description: Full name of a person.
+        FamilyName:
+          maxLength: 40
+          type: string
+          description: Family name or last name or surname of a person.
+        GivenName:
+          maxLength: 40
+          type: string
+          description: First name of a person.
+        MiddleName:
+          maxLength: 40
+          type: string
+          description: Middle name of a person.
+        NameSuffix:
+          type: string
+          description: 'Name suffix to add after the name of a person. '
+      description: Name of a person party.
+    getPartyListInqSecuredResponse_PersonPartyListInfo:
+      type: object
+      properties:
+        Contact:
+          type: array
+          description: Contact information of a party.
+          items:
+            $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_Contact'
+        TaxIdentType:
+          type: string
+          description: 'Type of tax identification. '
+          enum:
+          - SSN
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: "Unique identifier of tax. \n\n\n\nExample: \"123456789\""
+        MemberData:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_MemberData'
+        SecretData:
+          type: array
+          description: |+
+            Secret data of party that is used to validate the identity of the party in scenarios such as forgotten password.
+
+          items:
+            $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_SecretData'
+        PersonName:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PersonName'
+        BirthDt:
+          type: string
+          description: "Date of birth of a person.\n\n\n\nFormat: YYYY-MM-DDT00:00:00 \n\nExample: 2021-11-20T00:00:00 "
+          format: date
+      description: Frequently used properties of a person party.
+    getPartyListInqSecuredResponse_OrgPartyListInfo_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of a phone.\n\n\n\n**Note:** The values of this field are client-defined. DNA supports multiple phone types per customer and multiple phone records per phone type. "
+        PhoneIdent:
+          type: integer
+          description: |-
+            Phone identifier to serialize the phone type when more than one phone type exists.
+
+
+
+            **Note:** Refers to a phone sequence number.
+          format: int64
+        Phone:
+          type: string
+          description: Phone number.
+        CountryCode:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PhoneNum_CountryCode'
+      description: Phone number details of a party.
+    getPartyListInqSecuredResponse_OrgPartyListInfo_PostAddr:
+      required:
+      - AddrType
+      type: object
+      properties:
+        AddrUse:
+          type: string
+          description: "Code to indicate the usage of the address.\n\n\n\n**Note:** Refers to address use code. These codes are user-defined. \n\nThe address use field is only applicable if the address type is secondary.\n\n"
+        Addr1:
+          maxLength: 64
+          type: string
+          description: Address line 1.
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided."
+        Addr3:
+          maxLength: 64
+          type: string
+          description: "Address line 3. \n\nTo enter Addr3, Addr2 field must be provided."
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: Postal code or zip code.
+        CountryCode:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PhoneNum_CountryCode'
+        AddrType:
+          type: string
+          description: |+
+            Type of address.
+
+
+
+            **Note:** DNA requires a primary address and it is always present in the inquiry response.
+
+            Each customer has only one primary and one seasonal address.
+
+            The inquiry can return multiple secondary addresses. The address use field is used to further identify the type of secondary address.
+
+
+
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr_TimeFrame'
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: |-
+            Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+
+
+
+            **Note:** Applicable if the country is the United States.
+        MSACode:
+          type: integer
+          description: |-
+            Code that identifies a Metropolitan Statistical Area (MSA) for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+
+
+
+            **Note:** Applicable if the country is the United States.
+          format: int64
+      description: Postal address details of a party.
+    getPartyListInqSecuredResponse_OrgPartyListInfo_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_OrgPartyListInfo_PhoneNum'
+        PostAddr:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_OrgPartyListInfo_PostAddr'
+        Email:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_Email'
+    getPartyListInqSecuredResponse_OrgPartyListInfo_MemberData:
+      type: object
+      properties:
+        MemberNum:
+          maxLength: 36
+          type: string
+          description: |-
+            Assigned member number of the organization.
+
+
+
+            **Note:** Applicable only to credit unions.
+      description: Details of a member.
+    getPartyListInqSecuredResponse_OrgPartyListInfo_OrgName:
+      required:
+      - NameType
+      type: object
+      properties:
+        NameType:
+          type: string
+          description: Type of the name.
+          enum:
+          - Primary
+        Name:
+          maxLength: 80
+          type: string
+          description: Name of the organization.
+      description: Name details of the organization.
+    getPartyListInqSecuredResponse_OrgPartyListInfo:
+      type: object
+      properties:
+        PartyType:
+          type: string
+          description: "Type of a party.\n\n\n\n**Note:** An organization type defines the general purpose of the organization. \n\nFor example: Corporation, credit union, bank holding company, non-profit organization.\n\nThe values of this field are client-defined."
+        PartyTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PartyType field.
+        Contact:
+          type: array
+          description: Contact information of a party.
+          items:
+            $ref: '#/components/schemas/getPartyListInqSecuredResponse_OrgPartyListInfo_Contact'
+        MemberData:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_OrgPartyListInfo_MemberData'
+        TaxIdentType:
+          type: string
+          description: "Type of tax identification. \n\n\n\n**Note:** Refers to federal Employee Identification Number (EIN)."
+          enum:
+          - EIN
+        TaxIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the TaxIdentType field.
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: "Unique identifier of tax. \n\n\n\nExample: \"123456789\""
+        OrgName:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_OrgPartyListInfo_OrgName'
+        TaxIdentApplyDt:
+          type: string
+          description: |-
+            Date on which application for allocation of tax identifier number was made.
+
+
+
+            Format: yyyy-mm-dd
+          format: date
+        RecipientGIIN:
+          maxLength: 19
+          type: string
+          description: 'Recipient Global Intermediary Identification Number (GIIN). IRS assigns to a Participating Foreign Financial Institution (PFFI) or Registered Deemed Compliant FFI after a financial institution’s FATCA registration is submitted and approved. '
+      description: Frequently used properties of an organization party.
+    getPartyListInqSecuredResponse_PartyListRec:
+      required:
+      - PartyKeys
+      - PartyStatus
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PartyKeys'
+        PersonPartyListInfo:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo'
+        OrgPartyListInfo:
+          $ref: '#/components/schemas/getPartyListInqSecuredResponse_OrgPartyListInfo'
+        PartyStatus:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PartyStatus'
