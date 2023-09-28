@@ -14,7 +14,7 @@ paths:
       tags:
       - Add Credit
       summary: Add Credit.
-      description: Add Credit API creates a credit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API supports only Deposit (DEP) transaction type and Electronic (EL) transfers fund type that are real time post transactions.
+      description: Add Credit API creates a credit transaction where monetary funds are credited into a deposit account.<br>For DNA, this API supports only deposit transaction type with electronic fund type, cash fund type or check fund type.
       operationId: CreditAddOper
       parameters:
       - name: EFXHeader
@@ -60,8 +60,7 @@ components:
         Status:
           $ref: '#/components/schemas/StatusType'
         CreditStatusRec:
-          type: object
-          description: Details of the credit status record in response to the add operation.
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -402,9 +401,15 @@ components:
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |+
+            Transaction amount in decimal format.
+
+
+
+            **Note:** *Required field*
+
       description: |+
-        Details of the amount to be processed in credit transaction.
+        Details of the amount to be processed in the credit transaction.
 
     CreditAddOperRequest_CreditInfo_CompositeCurAmt:
       required:
@@ -412,9 +417,6 @@ components:
       properties:
         CurAmt:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt'
-        RefData:
-          type: object
-          description: Details of the reference data to further identify the amount.
     CreditAddOperRequest_CreditInfo:
       required:
       - CompositeCurAmt
@@ -428,11 +430,10 @@ components:
 
 
 
-            **Note:** For this field a valid transaction type is required to be provided.
+            **Note:** This field requires a valid transaction type code.
           enum:
           - Deposit
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
             Effective date and time when the transaction status is changed.
@@ -443,17 +444,52 @@ components:
 
 
 
-            **Note:** Refers to override effective date. If this field is not provided in the request, then service provider uses effective date value from user authentication data.
+            **Note:** Refers to override effective date. If this field is not provided in the request, then service provider uses the effective date value from user authentication data.
         Desc:
           maxLength: 200
           type: array
-          description: Description of the credit transaction.
+          description: |-
+            Description of the credit transaction.
+
+
+
+            **Note:** If multiple descriptions are provided, DNA consider the first description and the rest are ignored.
           items: {}
         AcctRef:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef'
         CompositeCurAmt:
           type: array
-          description: Details of the composition of the credited amount.
+          description: Details of the composition of the credit amount.
           items:
             $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CompositeCurAmt'
       description: Details of the credit transaction.
+    CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+      description: |+
+        Unique information to identify the account record.
+
+    CreditAddOperResponse_CreditStatusRec_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys'
+      description: Unique information to identify the credit record.
+    CreditAddOperResponse_CreditStatusRec:
+      type: object
+      properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
+      description: Details of the credit status record in response to the add operation.
