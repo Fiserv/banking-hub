@@ -6,7 +6,6 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 -->
 
-
 <p style="font-size: 24px; font-weight: bold;">What's New</p>
 
 Information is not available at the moment. Stay tuned for the updates.
@@ -19,7 +18,6 @@ Information is not available at the moment. Stay tuned for the updates.
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 <span style="font-size: 22px; ">General</span>
-
 
 Added the following API endpoints:
 - Add Reinvestment *(API Explorer > Accounts > Reinvestment Service)*
