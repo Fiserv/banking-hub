@@ -46,18 +46,6 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 
 <!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-
-<span style="font-size: 22px; ">General</span>
-
-
-Added the following API endpoints:
-- Add Reinvestment *(API Explorer > Accounts > Reinvestment Service)*
-- Update Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service)*
-- Get Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service)*
-- Delete Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service)*
-
-
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
 <span style="font-size: 22px; ">Add Transfer</span> *API Explorer > Transfers > Transfer Service*
