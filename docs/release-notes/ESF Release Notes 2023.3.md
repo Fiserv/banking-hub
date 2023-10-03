@@ -27,10 +27,6 @@ Added the following API endpoints:
 - Get Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service)*
 - Delete Reinvestment Instruction *(API Explorer > Accounts > Reinvestment Service)*
 
-
-<p style="font-size: 24px; font-weight: bold;">What's New</p>
-
-Information is not available at the moment. Stay tuned for the updates.
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 Information is not available at the moment. Stay tuned for the updates.
