@@ -10,6 +10,41 @@ servers:
 - url: /
 paths:
   /creditservice/payments/credits:
+    put:
+      tags:
+      - Reverse Credit
+      summary: Reverse Credit.
+      description: Reverse Credit API reverses the previously processed credit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API post a stand-alone Deposit Reversal transaction (DEPR) on the basis of the original transaction number passed in the request. Only Electronic (EL) transfers fund type is supported for reversal.
+      operationId: CreditRevOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditRevOperRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevOperResponse'
+      x-group-name: Credit Service
+      x-proxy-name: Reverse Credit
+      x-child-product-name: Transactions
+      x-core: DNA
     post:
       tags:
       - Add Credit
@@ -61,6 +96,25 @@ components:
           $ref: '#/components/schemas/StatusType'
         CreditStatusRec:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec'
+    CreditRevOperRequest:
+      required:
+      - CreditInfo
+      - CreditKeys
+      properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys'
+        CreditInfo:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo'
+    CreditRevOperResponse:
+      required:
+      - CreditStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        CreditStatusRec:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -493,3 +547,156 @@ components:
         CreditKeys:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
       description: Details of the credit status record in response to the add operation.
+    CreditRevOperRequest_CreditKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+            **Note:** Refers to the account number on which transaction is needed to be performed.
+
+
+
+      description: Unique information to identify the account record.
+    CreditRevOperRequest_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys_AcctKeys'
+      description: Unique information to identify a credit record.
+    CreditRevOperRequest_CreditInfo_CompositeCurAmt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            **Note:** There can be up to two occurrences, one for the transaction amount and one for the fee. Since this solution supports balanced transactions, the same amount is assumed to be for any G/L offsets.
+
+
+
+            It is an optional property. If not provided then original transaction amount will be considered for reversal. If partial amount or incorrect is provided then transaction shall not be processed.
+      description: |+
+        Details of the amount to be processed in credit transaction.
+
+    CreditRevOperRequest_CreditInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      type: object
+      properties:
+        CurAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt_CurAmt'
+      description: Details of the composition of the credited amount.
+    CreditRevOperRequest_CreditInfo_NetworkRefData:
+      type: object
+      properties:
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier for the client transaction that is used to reference a previous transaction.
+
+
+
+            **Note:** Refers to unique identifier of the original transaction.
+
+            Refers to the original transaction number to be reversed.
+
+            Max length: 50 characters
+      description: |-
+        Network transaction reference details that are used to identify a previous transaction to be referenced for refunds and reversals.
+
+
+
+        **Note:** The original transaction would have been posted during the same business day. Used in an auto-correct of the transaction.
+    CreditRevOperRequest_CreditInfo:
+      required:
+      - CompositeCurAmt
+      - CreditType
+      type: object
+      properties:
+        CreditType:
+          type: string
+          description: |-
+            Type of credit transaction.
+
+
+
+            **Note:** This field refers to the RtxnTypCd to be performed.
+          enum:
+          - Deposit
+        CompositeCurAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt'
+        NetworkRefData:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_NetworkRefData'
+      description: Details of the credit transaction.
+    CreditRevOperResponse_CreditStatusRec_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
+      description: Unique information to identify a credit record.
+    CreditRevOperResponse_CreditStatusRec_CreditStatus:
+      required:
+      - CreditStatusCode
+      type: object
+      properties:
+        CreditStatusCode:
+          type: string
+          description: |+
+            Code to specify the current status of the credit transaction.
+
+          enum:
+          - Reversed
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the credit transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the credit transaction status.
+    CreditRevOperResponse_CreditStatusRec:
+      required:
+      - CreditStatus
+      type: object
+      properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditKeys'
+        CreditStatus:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditStatus'
+      description: Details of the credit status record in response to the add operation.
+    CreditRevOperResponse_Receipt_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+      description: Details of the transaction amount.
+    CreditRevOperResponse_Receipt:
+      type: object
+      properties:
+        TrnAmt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt_TrnAmt'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier to identify the credit transaction.
+
+
+
+            **Note:** Refers to the unique generated transaction number (RtxnNbr).
+      description: Details of the credit transaction receipt.
