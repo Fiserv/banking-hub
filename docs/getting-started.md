@@ -55,7 +55,7 @@ Perform the following steps to create a workspace on Fiserv Developer Studio:
     <!-- theme: info -->
     > #### Note
     >
-    > Currently, only one workspace can be created for Banking Hub. Also, the Trial Plan is available only for a shared Premier Sandbox Environment.
+    > Currently, only one workspace can be created for Banking Hub. Also, the Trial Plan is available only for a shared Premier Sandbox Environment. <br> To know our core products [click here](?path=docs/products.md "Products"). 
     
     ![image](https://user-images.githubusercontent.com/81968767/220959037-4fb7f53e-4655-4086-a0a2-8994ee505cb0.png)
 
@@ -129,6 +129,12 @@ From the Body tab, select the **x-www-form-urlencoded** radio button and enter t
 <kbd>
     <img src="https://user-images.githubusercontent.com/85101648/221878635-c859cc8d-98a3-47a3-8e57-2299af44b26e.gif" />
 </kbd>
+
+<br>
+<br>
+
+<a href="#tab-know_our_standard_api_structure" >Next - Know Our Standard API Structure</a> 
+
 
 <!-- type: tab -->
 
@@ -350,6 +356,10 @@ The following example shows the sample response payload for **Get Party List** A
 ```
 
 To view the API documentation of **Get Party List** API in API Explorer, [click here](../api/?type=post&path=/partyservice/parties/parties/secured/list).
+
+
+
+[Next - Make Your First API Call](#tab-make_your_first_api_call)
 
 <!-- type: tab -->
 
