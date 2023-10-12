@@ -78,12 +78,6 @@ Added the following API endpoint:
 
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
 
-<span style="font-size: 22px; ">General</span>
-
-
-Added the following API endpoints:
-- Add Card *(API Explorer > Cards > Card Service)*
-- Update Card *(API Explorer > Cards > Card Service)*
-- Get Card *(API Explorer > Cards > Card Service)*
 <!-- type: tab-end -->
