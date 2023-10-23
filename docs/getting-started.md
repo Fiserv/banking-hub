@@ -516,13 +516,7 @@ To  test an API using Postman application:
   <img src="https://user-images.githubusercontent.com/81968767/145146913-16d54888-1e48-46b7-99f5-64827a78e21f.gif" />
 </kbd>
 
-<br>
-<br>
 
-<!-- theme: info -->
-> #### Note
->
-> For further inquiries and assistance, please contact our support team at [appmarketsupport@fiserv.com](mailto:appmarketsupport@fiserv.com) 
   
 
 <!-- type: tab-end -->
