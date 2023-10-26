@@ -7,7 +7,7 @@ titles: Before You Start, Know Our Standard API Structure, Make Your First API C
 <!-- theme: info -->
 > #### Note for Developers 
 >
-> The current user journey enables developers to register for a trial plan that provides access to a range of Standard Bank Platform APIs on Banking Hub. 
+> The current user journey enables developers to register for a trial plan that provides access to a range of Standard Bank Platform APIs on Banking Hub. <br><br>To get access to a dedicated test environment, optional and ancillary services, including dedicated technical services, upgrade to a paid Developer Studio subscription plan <a href="https://appmarket.fiservapps.com/company/account/create/" > here</a>.
 
 Before you start integration, it is important to register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test APIs using the <a href="?path=docs/getting-started/make-your-first-api-call.md#using-third-party-api-testing-tools" >Third-party API Testing Tools</a> of your choice. However, registration is not required to learn about our APIs and reference documentation.
 <!--
@@ -515,7 +515,8 @@ To  test an API using Postman application:
 <kbd>
   <img src="https://user-images.githubusercontent.com/81968767/145146913-16d54888-1e48-46b7-99f5-64827a78e21f.gif" />
 </kbd>
-  
+
+
   
 
 <!-- type: tab-end -->
