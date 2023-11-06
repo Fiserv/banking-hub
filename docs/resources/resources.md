@@ -8,7 +8,7 @@
 ## Postman Collection
 
 <!-- theme: info -->  
-> [Download Postman Collection for Finxact Core (v1.19)](https://github.com/Fiserv/banking-hub/files/12359747/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
+> [Download Postman Collection for Finxact Core (v1.21)](https://github.com/Fiserv/banking-hub/files/12461848/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
 
 
 <!-- theme: info -->  
@@ -17,14 +17,15 @@
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/11710490/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
+> [Download Postman Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/12516540/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
 
 
 
 <!--
 
+[Banking Hub - Finxact - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/12461848/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
 
-
+FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip
 ## API Specifications
 
   [![downoad-icon-BH]][BH]  
