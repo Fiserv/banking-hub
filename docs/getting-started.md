@@ -405,7 +405,7 @@ These credentials are important to send in API requests. **API key** and **API s
    
 An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. **API key** and **API secret** values obtained from Workspace are required to generate an access token. 
   
-To generate an access token, refer to the [Generating Access Token](?path=docs/getting-started/before-you-start.md#generating-access-token) section.
+To generate an access token, refer to the [Generating Access Token](?path=docs/getting-started.md#generating-access-token) section.
 
 
 <!-- theme: info -->
