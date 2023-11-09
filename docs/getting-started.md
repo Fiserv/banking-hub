@@ -9,7 +9,7 @@ titles: Before You Start, Know Our Standard API Structure, Make Your First API C
 >
 > The current user journey enables developers to register for a trial plan that provides access to a range of Standard Bank Platform APIs on Banking Hub. <br><br>To get access to a dedicated test environment, optional and ancillary services, including dedicated technical services, upgrade to a paid Developer Studio subscription plan <a href="https://appmarket.fiservapps.com/company/account/create/" > here</a>.
 
-Before you start integration, it is important to register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test APIs using the [Third-party API Testing Tools](#tab-make_your_first_api_call) [test](#using-third-party-api-testing-tools) of your choice. However, registration is not required to learn about our APIs and reference documentation.
+Before you start integration, it is important to register on the Fiserv Developer Studio to test the Banking Hub APIs in the Sandbox environment. You may choose to test APIs using the [Third-party API Testing Tools](#tab-make_your_first_api_call) of your choice. However, registration is not required to learn about our APIs and reference documentation.
 <!--
 
 [![Video Thumbnail]][Video]  
@@ -64,7 +64,7 @@ Every workspace has following three sections:
 * **Summary**: Displays workspace details and list of activities performed on the workspace
 * **Credentials**: Lists all active API keys. From this section, you can view or download the following details of an API key:
     * Product name: _Name of the product, for example, Banking Hub_    
-    * Org ID: _Organization ID is required to send in all API requests under the [Request Header](#request-header)_    
+    * Org ID: _Organization ID is required to send in all API requests under the [Request Header](?path=docs/getting-started.md&branch=main#request-header)_    
     * API key name: _Name of the API key_
     * API key type: _Type of API key, for example, Trial_
     * API key: _Alphanumeric value of the API key. API key is used as username while generating the access token_
@@ -180,7 +180,7 @@ If host URL of the product is https://cert.api.fiservapps.com/banking/efx/v1/, t
 ### Access Token
 
 An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. Banking Hub API uses bearer access token, and API key and API secret are required to generate an access token. A generated access token is valid for approximately 15 minutes.
-To generate an access token, refer to the [Generating Access Token](#generating-access-token) section.
+To generate an access token, refer to the [Generating Access Token](?path=docs/getting-started.md&branch=main#generating-access-token) section.
 
 
 ### Request Header
@@ -374,7 +374,7 @@ You can test our APIs in the Sandbox environment using third-party API testing t
 <!-- theme: info -->
 > #### Tip
 >
-> We recommend you to refer to the <a href="?path=docs/getting-started/know-our-standard-api-structure.md#know-our-standard-api-structure" title="Click to open">Know Our Standard API Structure</a> section to understand the API structure prior to testing the APIs in any third-party tool.
+> We recommend you to refer to the [Know Our Standard API Structure](#tab-know_our_standard_api_structure) section to understand the API structure prior to testing the APIs in any third-party tool.
 
 
 ### Prerequisites
@@ -386,7 +386,7 @@ To make an API call, you need:
 **Creating an account on Dev Studio**
 
 
-To create an account on Fiserv Developer Studio, refer to the [Register on Fiserv Developer Studio](?path=docs/getting-started/before-you-start.md#register-on-fiserv-developer-studio) section. 
+To create an account on Fiserv Developer Studio, refer to the [Register on Fiserv Developer Studio](?path=docs/getting-started.md#register-on-fiserv-developer-studio) section. 
 After successful registration, you will be able to create a workspace. You can obtain the following credentials from the workspace:
 
 * Product name  
