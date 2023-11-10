@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Transfer Service
-  description: The Transfer service supports operations related to managing the transfer of money between accounts. The service includes the description of the FROM and TO accounts, amount of the transfer, transfer fees and frequency of the transfer as it can be a one-time transfer or a recurring transfer.
-  version: 11.0.0_PRC-Add_Immediate
+  title: Client Defined Field Service
+  description: Client defined field service supports management of fields available with respect to the type of application (DDA, SDA, CDA etc.). Client defined fields are fields that can be changed in terms of purpose and definition as per the implementation method.
+  version: 11.0.0_PRC
 servers:
 - url: /
 paths:
-  /xferservice/payments/transfers:
+  /clientdefinedfieldservice/partyacctsvc/clientDefinedFields/secured:
     post:
       tags:
-      - Add Transfer
-      summary: Add Transfer
-      description: "Add Transfer API creates an immediate transfer record from one account to another account. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
-      operationId: XferAddOper
+      - Get Client Defined Field
+      summary: Get Client Defined Field.
+      description: Get Client Defined Field API retrieves the client-defined fields available for a customer’s account or party. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
+      operationId: ClientDefinedFieldInq
       parameters:
       - name: EFXHeader
         in: header
@@ -25,40 +25,95 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/XferAddOperRequest'
+              $ref: '#/components/schemas/ClientDefinedFieldInqRequest'
       responses:
-        "201":
-          description: Created
+        "200":
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/XferAddOperResponse'
+                $ref: '#/components/schemas/ClientDefinedFieldInqResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/XferAddOperResponse'
-      x-group-name: Transfer Service
-      x-proxy-name: Add Transfer
-      x-child-product-name: Transfers
-      x-core: Precision-Immediate
+                $ref: '#/components/schemas/ClientDefinedFieldInqResponse'
+      x-group-name: Client Defined Field Service
+      x-proxy-name: Get Client Defined Field
+      x-child-product-name: Operations and Servicing
+      x-core: Precision
+  /clientdefinedfieldservice/partyacctsvc/clientDefinedFields:
+    put:
+      tags:
+      - Update Client Defined Field
+      summary: Update Client Defined Field.
+      description: Update Client Defined Field API modifies the client-defined fields available for a customer’s account or party.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
+      operationId: ClientDefinedFieldMod
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientDefinedFieldModRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDefinedFieldModResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientDefinedFieldModResponse'
+      x-group-name: Client Defined Field Service
+      x-proxy-name: Update Client Defined Field
+      x-child-product-name: Operations and Servicing
+      x-core: Precision
 components:
   schemas:
-    XferAddOperRequest:
+    ClientDefinedFieldInqRequest:
       required:
-      - XferInfo
+      - ClientDefinedFieldSel
       properties:
-        XferInfo:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo'
-    XferAddOperResponse:
+        ClientDefinedFieldSel:
+          $ref: '#/components/schemas/ClientDefinedFieldInqRequest_ClientDefinedFieldSel'
+    ClientDefinedFieldInqResponse:
       required:
-      - XferStatusRec
+      - ClientDefinedFieldRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        XferStatusRec:
-          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec'
+        RecCtrlOut:
+          $ref: '#/components/schemas/ClientDefinedFieldInqResponse_RecCtrlOut'
+        ClientDefinedFieldRec:
+          $ref: '#/components/schemas/ClientDefinedFieldInqResponse_ClientDefinedFieldRec'
+    ClientDefinedFieldModRequest:
+      required:
+      - ClientDefinedFieldInfo
+      - ClientDefinedFieldKeys
+      properties:
+        ClientDefinedFieldKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldModRequest_ClientDefinedFieldKeys'
+        ClientDefinedFieldInfo:
+          $ref: '#/components/schemas/ClientDefinedFieldModRequest_ClientDefinedFieldInfo'
+    ClientDefinedFieldModResponse:
+      required:
+      - ClientDefinedFieldStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        ClientDefinedFieldStatusRec:
+          $ref: '#/components/schemas/ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -370,38 +425,7 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    XferAddOperRequest_XferInfo_FromAcctRef:
-      type: object
-      properties:
-        TrnCode:
-          type: string
-          description: |-
-            External transaction code used to indicate the type of transfer and the account.
-
-
-
-            **Note:** Precision expects an integer value for loan payment transfers, against the loan account that is debited. The field along with TransferType identifies the selector code that Precision uses to process a loan payment transfer. If no value is provided in the request, then TrnCode value of '961'  is sent to Precision, as a default configuration in ESF for loan debit.
-      description: |-
-        Reference information of an account where the funds are transferred.
-
-        **Note:** *Required field*
-
-
-
-        When transferring funds between deposit accounts, the following transfer combinations are possible: DDA to DDA, DDA to Savings, Savings to DDA, and Savings to Savings.
-
-
-
-        This operation does not support safe deposit box rental payment. Payments/Transactions to target safe deposit box account can not be carried out via XferAdd operation in immediate mode.
-
-
-
-        When making a loan advance, the following transfer combinations are possible: LOAN to DDA and LOAN to SDA. Appropriate transaction code for From and To account should be provided to allow the transfer.
-
-
-
-        When making a loan payment, the From account can be DDA or SDA and the To account must be LOAN.
-    XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys:
+    ClientDefinedFieldInqRequest_ClientDefinedFieldSel_AcctKeys:
       required:
       - AcctId
       type: object
@@ -409,10 +433,7 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: |-
-            Unique identifier of an account held at a financial institution.
-
-            **Note:** Refers to the account which gets credited.
+          description: Unique identifier of an account record.
         AcctType:
           type: string
           description: |-
@@ -420,162 +441,39 @@ components:
 
 
 
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
-
-            **Note:** *Required field*
-
-
-
-            Refers to the account type that gets credited.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
           - DDA
           - SDA
-          - LOAN
-          - SDB
-      description: |-
-        Unique information to identify the account record.
-
-        **Note:** This aggregate should be provided in the request as it contains the account identifier and type (key values) for the target account for transfer.
-    XferAddOperRequest_XferInfo_ToAcctRef:
-      required:
-      - AcctKeys
+          - CDA
+      description: Unique information to identify the account record.
+    ClientDefinedFieldInqRequest_ClientDefinedFieldSel_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: Unique identifier of a party record.
+      description: 'Unique information to identify the party record. '
+    ClientDefinedFieldInqRequest_ClientDefinedFieldSel:
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys'
-        TrnCode:
-          type: string
-          description: "External transaction code used to indicate the type of transfer and the account.\n\n\n\n**Note:** Precision expects an integer value for loan payment transfers, against the Loan account that is credited. The field along with TransferType identifies the selector code that Precision uses to process a loan payment transfer. \n\nIf no value is provided in the request, then TrnCode value of '962'  is sent to Precision, as a default configuration in ESF for loan credit."
-      description: |-
-        Reference information of an account where funds are transferred.
-
-        **Note:** *Required field*
-
-
-
-        When transferring funds between deposit accounts, the following transfer combinations are possible: DDA to DDA, DDA to Savings, Savings to DDA, and Savings to Savings.
-
-
-
-        This operation does not support safe deposit box rental payment. Payments/Transactions to target safe deposit box account can not be carried out via XferAdd operation in immediate mode.
-
-
-
-        When making a loan advance, the following transfer combination is possible: LOAN to DDA and LOAN to SDA. Provide appropriate transaction code for From and To Account for loan transfers.
-
-
-
-        When making a loan payment, the From account can be DDA or SDA and the To account must be LOAN.
-    XferAddOperRequest_XferInfo_CurAmt_CurCode:
+          $ref: '#/components/schemas/ClientDefinedFieldInqRequest_ClientDefinedFieldSel_AcctKeys'
+        PartyKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldInqRequest_ClientDefinedFieldSel_PartyKeys'
+      description: Details of the selection criteria used to identify client defined field records.
+    ClientDefinedFieldInqResponse_RecCtrlOut:
       required:
-      - CurCodeValue
+      - SentRecCount
       type: object
       properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n"
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported.\n\n\n\n**Note:** Currency code should be provided and should match the currency the account is held in."
-      description: Details of currency code.
-    XferAddOperRequest_XferInfo_CurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: "Amount in decimal format.\n\nExample: 10.00\n\n**Note:** *Required field* \n\nIt is the amount of funds being transferred."
-        CurCode:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt_CurCode'
-      description: Details of the currency amount of the transfer.
-    XferAddOperRequest_XferInfo_CurAmt_1_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n"
-          enum:
-          - ISO4217-Alpha
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported.\n\n\n\n**Note:** Only sent if fee exists on the transfer."
-      description: |-
-        Details of currency code.
-
-        **Note:** Only sent if a fee amount/charge exists.
-    XferAddOperRequest_XferInfo_CurAmt_1:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            Example: 10.00
-
-            **Note:** Only sent if fee exists on the transfer.
-        CurCode:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt_1_CurCode'
-      description: |-
-        Details of the currency amount of the transfer.
-
-        **Note:** Only sent if a fee amount/charge exists.
-    XferAddOperRequest_XferInfo_CompositeCurAmt:
-      required:
-      - CurAmt
-      properties:
-        CompositeCurAmtType:
-          type: string
-          description: |-
-            Type of composite currency amount.
-
-            **Note:** Applicable to send in case of a transaction fee.
-          enum:
-          - TransactionFee
-        CurAmt:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt_1'
-    XferAddOperRequest_XferInfo:
-      type: object
-      properties:
-        TransferType:
-          type: string
-          description: |-
-            Type of transfer transaction.
-
-            **Note:** This field is required for loan payments or transfers that is if the credit or debit account is a loan account then the relevant TransferType should be sent in the request.
-
-            It signifies the selector code Precision uses to process a loan payment transfer and is therefore required for loan transactions.
-          enum:
-          - InterestPayment
-          - PrincipalPayment
-          - RegularPayment
-        FromAcctRef:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef'
-        ToAcctRef:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef'
-        CurAmt:
-          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt'
-        CompositeCurAmt:
-          type: array
-          description: "Details of the composite currency amount used during the account transaction processing.\n\n**Note:** Consumer can send composite CurAmt if there is a fee. "
-          items:
-            $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CompositeCurAmt'
-        ExpediteInd:
-          type: boolean
-          description: "Flag to indicate the transfer is executed immediately, subjected to support in service profile. \n\n**Note:** This value must be set to true for one-time immediate transfers. "
-        XferFromDesc:
-          maxLength: 80
-          type: array
-          description: "Description used for a transfer posted by the account from where the funds are transferred.\n\nValue in this field should be identical to the value provided in XferToDesc.\n\n\n\n**Note:** Refers to reference/description. Precision supports one line of reference and upto 44 characters. This indicates the description of transfer. \n\nExample: \"FUNDS TRANSFER FROM ACCT 15871\". \n\nThis is to provide update reference/details and reason of transfer in core system. Provide account details from which transfer has originated/sourced."
-          items: {}
-        XferToDesc:
-          maxLength: 80
-          type: array
-          description: "Description used for a transfer posted for the account to where the funds are transferred.\n\nValue in this field should be identical to the value provided in XferFromDesc.\n\n\n\n**Note:** Refers to reference/description. Precision supports one line of reference and upto 44 characters. This indicates the description of transfer. \n\nExample: \"FUNDS TRANSFER TO ACCT 8769\". \n\nThis is to provide update reference/details and reason of transfer in core system. Provide account details to which transfer is targeted."
-          items: {}
-      description: "Details of a fund transfer.\n\n**Note:** This service adds a one-time transfer that does not repeat. Precision creates entries into a batch file that will post to customer accounts during the nightly process. In addition, Precision also creates a memo post of the debit and credit transactions to the accounts for a real time effect of the transfer. \n\nPrecision does not support one-time transfers to external accounts.\n\n\n\n"
-    XferAddOperResponse_XferStatusRec_XferKeys_AcctKeys:
+        SentRecCount:
+          type: integer
+          description: Total number of records that matched the selection criteria and returned in the response message.
+          format: int64
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldKeys_AcctKeys:
       required:
       - AcctId
       type: object
@@ -583,7 +481,7 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identifier of an account held at a financial institution.\n\n**Note:** Identifier that identifies the transfer's From account. "
+          description: Unique identifier of an account record.
         AcctType:
           type: string
           description: |-
@@ -591,54 +489,209 @@ components:
 
 
 
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
-
-            **Note:** Identifier that identifies the transfer's From account's account type.
-      description: |-
-        Unique information to identify an account record.
-
-        **Note:** Account details from where the transfer originated.
-    XferAddOperResponse_XferStatusRec_XferKeys:
-      required:
-      - AcctKeys
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+      description: Unique information to identify the account record.
+    ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldKeys:
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferKeys_AcctKeys'
-      description: |-
-        Unique information to identify the transaction record.
-
-        **Note:** Refers to the response aggregate containing the details of transfer.
-    XferAddOperResponse_XferStatusRec_XferStatus:
+          $ref: '#/components/schemas/ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldKeys_AcctKeys'
+        PartyKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldInqRequest_ClientDefinedFieldSel_PartyKeys'
+      description: Unique information to identify the client-defined field record.
+    ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldInfo_ClientDefinedData:
       required:
-      - XferStatusCode
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Unique data identifier to identify the client-defined data item.
+        DataType:
+          type: string
+          description: Type of a client-defined data.
+          enum:
+          - Alpha
+          - Currency
+          - CurrencySymbol
+          - Date
+          - Numeric
+          - NumericSymbol
+          - Rate
+          - RateSymbol
+        Value:
+          type: string
+          description: Description of value in the client-defined information item.
+          enum:
+          - "3"
+        RequiredFlag:
+          type: boolean
+          description: Flag to indicate data value is required for the client-defined data.
+        SearchFlag:
+          type: boolean
+          description: Flag to indicate the client-defined data can be searched.
+    ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldInfo:
+      required:
+      - ClientDefinedData
       type: object
       properties:
-        XferStatusCode:
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldInfo_ClientDefinedData'
+      description: Information about client-defined field record associated with an account or party.
+    ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldStatus:
+      required:
+      - ClientDefinedFieldStatusCode
+      type: object
+      properties:
+        ClientDefinedFieldStatusCode:
           type: string
-          description: Code to identify the current status of the transfer.
-          enum:
-          - Valid
+          description: Code to indicate the current status of the client defined field.
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective date and time when the transfer status is changed.
+            Effective date and time when the status of client defined field is changed.
 
-            Format: yyyy-mm-ddThh:mm:ss.micro
+            Format: yyyy-MM-ddTHH:mm:ss.sss
 
-            Example: 2021-01-31T23:59:59.999
-      description: |+
-        Current status details of the transfer object.
-
-    XferAddOperResponse_XferStatusRec:
+            Example: 2021-06-28T23:40:30.888
+      description: Details of the client defined field status.
+    ClientDefinedFieldInqResponse_ClientDefinedFieldRec:
       required:
-      - XferKeys
-      - XferStatus
+      - ClientDefinedFieldInfo
+      - ClientDefinedFieldKeys
+      - ClientDefinedFieldStatus
       type: object
       properties:
-        XferKeys:
-          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferKeys'
-        XferStatus:
-          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferStatus'
-      description: Fund transfer status details used in a response message to return results from an add operation.
+        ClientDefinedFieldKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldKeys'
+        ClientDefinedFieldInfo:
+          $ref: '#/components/schemas/ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldInfo'
+        ClientDefinedFieldStatus:
+          $ref: '#/components/schemas/ClientDefinedFieldInqResponse_ClientDefinedFieldRec_ClientDefinedFieldStatus'
+      description: Details of the client defined field response record that includes response keys, response status and response information.
+    ClientDefinedFieldModRequest_ClientDefinedFieldKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identifier of an account record.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+      description: Key details to identify an account record.
+    ClientDefinedFieldModRequest_ClientDefinedFieldKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldModRequest_ClientDefinedFieldKeys_AcctKeys'
+        PartyKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldInqRequest_ClientDefinedFieldSel_PartyKeys'
+      description: Unique information to identify the client-defined field record.
+    ClientDefinedFieldModRequest_ClientDefinedFieldInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Unique data identifier to identify the client-defined data item.
+        DataType:
+          type: string
+          description: Type of a client-defined data.
+          enum:
+          - Alpha
+          - Currency
+          - Date
+          - Numeric
+          - Boolean
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+    ClientDefinedFieldModRequest_ClientDefinedFieldInfo:
+      required:
+      - ClientDefinedData
+      type: object
+      properties:
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/ClientDefinedFieldModRequest_ClientDefinedFieldInfo_ClientDefinedData'
+      description: Information about client-defined field record associated with an account or party.
+    ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification code to identify an account.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+      description: Key details to identify an account record.
+    ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: Unique identification code to identify a party record.
+      description: Details of the party keys that are used to identify the party record.
+    ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldKeys:
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec_AcctKeys'
+        PartyKeys:
+          $ref: '#/components/schemas/ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec_PartyKeys'
+    ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldStatus:
+      required:
+      - ClientDefinedFieldStatusCode
+      type: object
+      properties:
+        ClientDefinedFieldStatusCode:
+          type: string
+          description: Code to indicate the current status of the client defined field.
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when  the status of client defined field associated with an account is changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-06-28T23:40:30.888
+      description: Details of the client defined field status.
+    ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec:
+      required:
+      - ClientDefinedFieldKeys
+      - ClientDefinedFieldStatus
+      type: object
+      properties:
+        ClientDefinedFieldKeys:
+          type: array
+          description: Key details to identify client defined field record.
+          items:
+            $ref: '#/components/schemas/ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldKeys'
+        ClientDefinedFieldStatus:
+          $ref: '#/components/schemas/ClientDefinedFieldModResponse_ClientDefinedFieldStatusRec_ClientDefinedFieldStatus'
+      description: Details of the client defined field response record that includes response keys and response status.
