@@ -72,12 +72,12 @@ Every workspace has following three sections:
     * API secret: _Alphanumeric value of the API secret. API secret is used as password while generating the access token_
     * Host URL: _Host URL path to send API requests_
       
-      ![image](https://github.com/Fiserv/banking-hub/assets/85101648/3832fa3e-867f-4ffd-b8ec-857418bd4fbe.png)
+      ![image](https://github.com/Fiserv/banking-hub/assets/85101648/3832fa3e-867f-4ffd-b8ec-857418bd4fbe)
 
 * **Settings**: Used to modify or delete the workspace
 
 <kbd>
-    <img src="https://github.com/Fiserv/banking-hub/assets/85101648/477d8d1b-bfca-428b-84e0-b956a78eb097.gif" />
+    <img src="https://github.com/Fiserv/banking-hub/assets/85101648/477d8d1b-bfca-428b-84e0-b956a78eb097" />
 </kbd>
               
 
