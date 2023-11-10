@@ -65,7 +65,7 @@ Every workspace has following three sections:
 * **Summary**: Displays workspace details and list of activities performed on the workspace
 * **Credentials**: Lists all active API keys. From this section, you can view or download the following details of an API key:
     * Product name: _Name of the product, for example, Banking Hub_    
-    * Org ID: _Organization ID is required to send in all API requests under the [Request Header](?path=docs/getting-started.md&branch=main#request-header)_    
+    * Org ID: _Organization ID is required to send in all API requests under the [Request Header](#tab-know_our_standard_api_structure)_    
     * API key name: _Name of the API key_
     * API key type: _Type of API key, for example, Trial_
     * API key: _Alphanumeric value of the API key. API key is used as username while generating the access token_
@@ -181,7 +181,7 @@ If host URL of the product is https://cert.api.fiservapps.com/banking/efx/v1/, t
 ### Access Token
 
 An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. Banking Hub API uses bearer access token, and API key and API secret are required to generate an access token. A generated access token is valid for approximately 15 minutes.
-To generate an access token, refer to the [Generating Access Token](?path=docs/getting-started.md&branch=main#generating-access-token) section.
+To generate an access token, refer to the "Generating Access Token" section under the [Before You Start](#tab-before_you_start) tab.
 
 
 ### Request Header
@@ -387,7 +387,7 @@ To make an API call, you need:
 **Creating an account on Dev Studio**
 
 
-To create an account on Fiserv Developer Studio, refer to the [Register on Fiserv Developer Studio](?path=docs/getting-started.md#register-on-fiserv-developer-studio) section. 
+To create an account on Fiserv Developer Studio, refer to the [Register on Fiserv Developer Studio](#tab-before_you_start) section. 
 After successful registration, you will be able to create a workspace. You can obtain the following credentials from the workspace:
 
 * Product name  
@@ -405,7 +405,7 @@ These credentials are important to send in API requests. **API key** and **API s
    
 An access token is used to authenticate your API build and allows you to use the Fiserv APIs securely. **API key** and **API secret** values obtained from Workspace are required to generate an access token. 
   
-To generate an access token, refer to the [Generating Access Token](?path=docs/getting-started.md#generating-access-token) section.
+To generate an access token, refer to the "Generating Access Token" section under the [Before You Start](#tab-before_you_start) tab.
 
 
 <!-- theme: info -->
