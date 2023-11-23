@@ -96,6 +96,8 @@ components:
           $ref: '#/components/schemas/StatusType'
         CreditStatusRec:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/CreditAddOperResponse_Receipt'
     CreditRevOperRequest:
       required:
       - CreditInfo
@@ -455,15 +457,14 @@ components:
       properties:
         Amt:
           type: number
-          description: |+
-            Transaction amount in decimal format.
+          description: |-
+            Amount in decimal format.
 
 
 
-            **Note:** *Required field*
-
+            **Note:** This field is required for Add Credit API.
       description: |+
-        Details of the amount to be processed in the credit transaction.
+        Details of the amount to be processed in credit transaction.
 
     CreditAddOperRequest_CreditInfo_CompositeCurAmt:
       required:
@@ -471,6 +472,25 @@ components:
       properties:
         CurAmt:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt'
+    CreditAddOperRequest_CreditInfo_CashAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |+
+            Cash fund amount in decimal format.
+
+
+
+            **Note:** This field is required for Add Credit API.
+
+      description: Details of the amount entered for Cash.
+    CreditAddOperRequest_CreditInfo_CashInData:
+      required:
+      - CashAmt
+      properties:
+        CashAmt:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CashAmt'
     CreditAddOperRequest_CreditInfo:
       required:
       - CompositeCurAmt
@@ -484,7 +504,7 @@ components:
 
 
 
-            **Note:** This field requires a valid transaction type code.
+            **Note:** For this field a valid transaction type is required to be provided.
           enum:
           - Deposit
         EffDt:
@@ -498,7 +518,7 @@ components:
 
 
 
-            **Note:** Refers to override effective date. If this field is not provided in the request, then service provider uses the effective date value from user authentication data.
+            **Note:** Refers to override effective date. If this field is not provided in the request, then service provider uses effective date value from user authentication data.
         Desc:
           maxLength: 200
           type: array
@@ -507,46 +527,78 @@ components:
 
 
 
-            **Note:** If multiple descriptions are provided, DNA consider the first description and the rest are ignored.
+            **Note:**  DNA supports only single description. Only first description in the array is considered and rest are ignored.
           items: {}
         AcctRef:
           $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef'
         CompositeCurAmt:
           type: array
-          description: Details of the composition of the credit amount.
+          description: Details of the composition of the credited amount.
           items:
             $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CompositeCurAmt'
+        CashInData:
+          type: array
+          description: Details of the cash in data that comprised the credit transaction.
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CashInData'
       description: Details of the credit transaction.
-    CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-
-
-      description: |+
-        Unique information to identify the account record.
-
     CreditAddOperResponse_CreditStatusRec_CreditKeys:
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys'
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
       description: Unique information to identify the credit record.
+    CreditAddOperResponse_CreditStatusRec_CreditStatus:
+      required:
+      - CreditStatusCode
+      type: object
+      properties:
+        CreditStatusCode:
+          type: string
+          description: |+
+            Code to indicate the status of the credit transaction.
+
+          enum:
+          - Posted
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the credit transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the credit status.
     CreditAddOperResponse_CreditStatusRec:
+      required:
+      - CreditStatus
       type: object
       properties:
         CreditKeys:
           $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
+        CreditStatus:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditStatus'
       description: Details of the credit status record in response to the add operation.
+    CreditAddOperResponse_Receipt_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |+
+            Amount in decimal format.
+
+      description: Details of the transaction amount.
+    CreditAddOperResponse_Receipt:
+      type: object
+      properties:
+        TrnAmt:
+          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_TrnAmt'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier to identify the credit transaction.
+      description: Details of the receipt.
     CreditRevOperRequest_CreditKeys_AcctKeys:
       required:
       - AcctId
