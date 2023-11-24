@@ -12,7 +12,7 @@ paths:
       tags:
       - Reverse Debit
       summary: Reverse Debit.
-      description: Reverse Debit API reverses the previously processed debit transaction on a deposit account.<br>For DNA, this API supports reversal of the withdrawal transaction with cash and electronic fund types. This API does not support partial reversal of the transaction amount that was debited from the account. <br>In DNA, the general ledger accounts are set according to the transaction codes used to post the transactions.
+      description: Reverse Debit API reverses the previously processed debit transaction on a deposit account.<br>For DNA, this API supports reversal of the withdrawal transaction with cash and electronic fund types. This API does not support partial reversal of the transaction amount that was debited from the account.
       operationId: DebitRevOper
       parameters:
       - name: EFXHeader
@@ -594,14 +594,7 @@ components:
       properties:
         Amt:
           type: number
-          description: |-
-            Amount in decimal format.
-
-
-
-            **Note:** This field can have up to two occurrences. This occurrences is for the transaction amount. Since this API supports balanced transactions, the same amount is assumed for G/L offsets.
-
-            This is an optional field. If not provided in the request, then the original transaction amount is considered for reversal. Also if the partial or incorrect amount is provided, then the transaction fails.
+          description: "Amount in decimal format.\n\n\n\n**Note:** This field can have two occurrences, one for the transaction amount. \n\n\n\nThis is an optional field. If not provided in the request, then the original transaction amount is considered for reversal. Also if the partial or incorrect amount is provided, then the transaction fails."
       description: Details of the debit amount to be processed.
     DebitRevOperRequest_DebitInfo_CompositeCurAmt:
       required:
@@ -639,7 +632,7 @@ components:
 
 
 
-             Refers to the original transaction number to be reversed.
+            Refers to the original transaction number to be reversed.
       description: Details of the network reference data to uniquely identify a previously posted transaction.
     DebitRevOperRequest_DebitInfo:
       required:
@@ -654,7 +647,7 @@ components:
 
 
 
-            **Note:** This field refers to transaction type code (RtxnTypCd) to be performed.
+            **Note:** This field refers to transaction type code to be performed.
           enum:
           - Withdrawal
         EffDt:
@@ -665,10 +658,23 @@ components:
             Format: yyyy-mm-ddThh:mm:ss.sss
 
             Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** Refers to override effective date. If this field is not provided in the request, then service provider uses effective date value from user authentication data.
         Desc:
           maxLength: 200
           type: array
-          description: "Description of the debit transaction. \n\n\n\n**Note:** Refers to REG-E compliant description for the FROM account. \n\nMax length: 128 characters"
+          description: |-
+            Description of the debit transaction.
+
+
+
+            **Note:** Refers to the REG-E compliant description for the transaction. Description for the from account.
+
+            If multiple descriptions are provided, then DNA considers the first description and the rest are ignored.
+
+            Max length: 80 characters
           items: {}
         CompositeCurAmt:
           $ref: '#/components/schemas/DebitRevOperRequest_DebitInfo_CompositeCurAmt'
@@ -693,7 +699,7 @@ components:
       properties:
         DebitStatusCode:
           type: string
-          description: Code to specify the status of the debit transaction.
+          description: Code to indicate the status of the debit transaction.
           enum:
           - Reversed
         EffDt:
@@ -736,5 +742,5 @@ components:
 
 
 
-            **Note:** Refers to the unique generated transaction number (RtxnNbr).
+            **Note:** Refers to the unique generated transaction number.
       description: Details of the debit transaction receipt.
