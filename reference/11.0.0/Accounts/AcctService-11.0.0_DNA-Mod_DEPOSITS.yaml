@@ -52,10 +52,7 @@ components:
         AcctKeys:
           $ref: '#/components/schemas/AccountModRequest_AcctKeys'
         DepositAcctInfo:
-          type: array
-          description: Details of the deposit account.
-          items:
-            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo'
+          $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo'
     AccountModResponse:
       required:
       - AcctStatusRec
@@ -385,7 +382,16 @@ components:
           type: string
           description: Unique identification number of an account record.
       description: Unique information to identify the account record.
-    AccountModRequest_ClientDefinedData:
+    AccountModRequest_DepositAcctInfo_AddtlTitles:
+      properties:
+        AcctTitleType:
+          type: string
+          description: Type of account title.
+        AcctTitle:
+          maxLength: 255
+          type: string
+          description: "Title of account. This value is typically used to indicate the ownership or responsibility of account and manner in which the ownership or responsibility is assigned. \n\nFor example, John Doe CUSTODIAN.\n\n\n\n**Note:** To delete additional account title lines, the client application should provide additional account title fields with no data."
+    AccountModRequest_DepositAcctInfo_ClientDefinedData:
       required:
       - DataIdent
       properties:
@@ -397,13 +403,209 @@ components:
           maxLength: 256
           type: string
           description: Value of the client-defined data item.
-    AccountModRequest_DepositAcctInfo:
+    AccountModRequest_DepositAcctInfo_PostAddr:
       properties:
+        AddressIdent:
+          type: string
+          description: |-
+            Unique address identification value.
+
+
+
+            **Note:** Refers to primary tax owner address user code. Some values can be user defined.
+          enum:
+          - PRI
+          - SEA
+    AccountModRequest_DepositAcctInfo_AcctMemoData:
+      properties:
+        AcctMemoType:
+          type: string
+          description: Type of account memo.
+          enum:
+          - Warning
+          - LockOut
+        AcctMemoCode:
+          type: string
+          description: |-
+            Code and a text message associated to a warning or memo.
+
+
+
+            **Note:** Refers to the warning or lockout code. Values of this field are user defined.
+        ExpDt:
+          type: string
+          description: |-
+            Date on which the warning IR teller message is expired.
+
+
+
+            Format: YYYY-MM-DD
+
+            Example: 2022-12-20
+          format: date
+    AccountModRequest_DepositAcctInfo_OverdraftData:
+      type: object
+      properties:
+        OverdraftEnrollOpt:
+          type: string
+          description: |-
+            Option to indicate the customer enrollment for overdraft program.
+
+
+
+            **Note:** This field is not applicable for RRA and LEAS account types.
+          enum:
+          - OptIn
+          - OptOut
+      description: Details of overdraft program.
+    AccountModRequest_DepositAcctInfo_FinancialLiterarcy:
+      type: object
+      properties:
+        IsRoundUp:
+          type: boolean
+          description: Flag to indicate the account is a roundup account. This is a reserved feature.
+        IsFunding:
+          type: boolean
+          description: Flag to indicate the account is a funding account. This is a reserved feature.
+      description: Information about financial literacy feature settings. This is a reserved feature.
+    AccountModRequest_DepositAcctInfo:
+      type: object
+      properties:
+        AcctDtlStatus:
+          type: string
+          description: Value that indicates the current status of the account.
+          enum:
+          - Active
+          - ClosedWithBalances
+          - Closed
+          - Dormant
+          - Inactive
+          - Approved
+          - Originating
+        Ownership:
+          type: string
+          description: |-
+            Value that indicates the ownership of an account.
+
+
+
+            **Note:** Some values can be user defined.
+          enum:
+          - Individual
+          - JointAnd
+          - JointOr
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account.
+
+
+
+            **Note:** Refers to the branch organization number that update is in the effect only on the next business day.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Name that customer can assign to the account for easy identification.
+        AcctTitleOption:
+          type: string
+          description: |-
+            Printing option for the account title.
+
+
+
+            **Note:** Refers to address format code. The following values indicate:
+
+            - DESC: Account Description
+
+            - TITL: Account Title
+
+            - TTDC: Account Title & Description
+
+            - STD: Standard Address Format
+
+            - TXID: Tax Id Owner
+
+            - TXDC: Tax Id Owner & Description
+        AddtlTitles:
+          type: array
+          description: Details of the additional titles.
+          items:
+            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_AddtlTitles'
+        HandlingCode:
+          type: string
+          description: |-
+            Handling code used for special routing of all correspondence involving the account.
+
+
+
+            **Note:** Refers to a mail type code.
+
+            For this field values are user defined.
+
+            The value "NONE" deletes the existing value.
         ClientDefinedData:
           type: array
           description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
           items:
-            $ref: '#/components/schemas/AccountModRequest_ClientDefinedData'
+            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_ClientDefinedData'
+        PostAddr:
+          type: array
+          description: |-
+            Details of the postal address associated to the account.
+
+
+
+            **Note:** The client application provides one instance of postal address to indicate if the primary address, seasonal address or a secondary address must be used as the account address. This address act as an address linked to the tax owner of the account.
+          items:
+            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_PostAddr'
+        DocDistributionOption:
+          type: string
+          description: |-
+            Method to indicate the document distribution method used for processing the notices and statement forms.
+
+
+
+            **Note:** Refers to delivery method code. The following values indicate:
+
+            - WWW: Electronic Banking
+
+            - WBTH: Electronic Banking and printed form
+
+            - EML: Email
+
+            - EBTH: Email and Print
+
+            - PRNT: Printed Statement
+
+
+
+            Other values can be user defined.
+
+            This field is not applicable for RRA and LEAS account types.
+        AcctMemoData:
+          type: array
+          description: |-
+            Details of the important alerts set to an account to view during account inquiry.
+
+
+
+            **Note:** This field is not applicable for RRA account type.
+          items:
+            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_AcctMemoData'
+        OverdraftData:
+          $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_OverdraftData'
+        SourceOfFunds:
+          type: string
+          description: |-
+            Source of funds for deposit account.
+
+
+
+            **Note:** the values are user defined.
+        FinancialLiterarcy:
+          $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_FinancialLiterarcy'
+      description: Details of the deposit account.
     AccountModResponse_AcctStatusRec_AcctKeys:
       required:
       - AcctId
@@ -435,14 +637,14 @@ components:
       properties:
         AcctStatusCode:
           type: string
-          description: Status code of an account.
+          description: Code to indicate the status of an account.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
-      description: Status details of the account.
+          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-dd-mmThh:mm:ss.sss\n\nExample: 2021-31-01T23:59:59.999"
+      description: Status details of an account.
     AccountModResponse_AcctStatusRec:
       required:
       - AcctKeys
