@@ -12,7 +12,7 @@ paths:
       tags:
       - Add Account
       summary: Add Account.
-      description: "Add Account API creates a new Certificate of Deposit Account (CDA).<br>Precision has the ability to insert default values defined for the selected CDA Type (Type Code).<br>This API supports the Open Verification Method (OVM), as Precision defines, to insert the default values. <br>This means, while creating a new account with the fields sent in the Add Account request, the CDA default types defined within the Precision parameters may get overridden. The override depends on the setting of the New Account Override attribute for each field where a default value is defined.<br>Precision uses the default values to populate the fields whose default value is defined but not included in the Add Account request.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: Add Account API creates a new Certificate of Deposit Account (CDA).<br>Precision has the ability to insert default values defined for the selected CDA Type (Type Code).<br>This API supports the Open Verification Method (OVM), as Precision defines, to insert the default values. <br>This means, while creating a new account with the fields sent in the Add Account request, the CDA default types defined within the Precision parameters may get overridden. The override depends on the setting of the New Account Override attribute for each field where a default value is defined.<br>Precision uses the default values to populate the fields whose default value is defined but not included in the Add Account request.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
       operationId: addAccount
       parameters:
       - name: EFXHeader
@@ -213,49 +213,8 @@ components:
       properties:
         OvrdAutoAckInd:
           type: boolean
-          description: 
-            Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -312,7 +271,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -324,6 +283,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -373,10 +348,12 @@ components:
           description: |-
             Unique identification number of a party record.
 
+
+
             **Note:** Short name key to identify the customer.
 
             Customer record should already exist in the system.
-      description: "Unique information to identify the party record.\n\n**Note:** Send this aggregate for each customer associated to deposit account. For primary customer, set PartyAcctRelInfo/PrimaryOwnerInd as 'true'. Only one primary customer is allowed. "
+      description: "Unique information to identify the party record.\n\n\n\n**Note:** Send this aggregate for each customer associated to deposit account. For primary customer, set PartyAcctRelInfo/PrimaryOwnerInd as 'true'. Only one primary customer is allowed. "
     addAccountRequest_PartyRef:
       required:
       - PartyKeys
@@ -391,11 +368,13 @@ components:
       properties:
         PartyAcctRelType:
           type: string
-          description: "Type of party relationship to account.\n\n\n\n**Note:** Values are client-defined. If values are not set up for transformation in ESF by financial institution, values are passed-through to the system.\n\nIf values are set up, ESF transforms the incoming value to the corresponding numeric value (0-99) based on transformations setup in ESF Xref for the FI (OrgId). \n\nType of relationship should be assigned to the secondary customers.  Any value sent for primary owner is ignored. \n\n\n\nNumeric values (0-99) passed in request or configured for transformation in ESF, should be set up as a valid Party-Account Relationship in Precision (Parameters-->Customer Info), for the FI - based on understanding with Precision team, at the time of onboarding. The FI (OrgId) can configure some client-defined values for transformation in ESF and additional client-defined values in that case, not set up in ESF, shall be passed-through to Precision. "
+          description: "Type of party relationship to account.\n\n\n\n\n\n\n\n**Note:** Values are client-defined. If values are not set up for transformation in ESF by financial institution, values are passed-through to the system.\n\n\n\nIf values are set up, ESF transforms the incoming value to the corresponding numeric value (0-99) based on transformations setup in ESF Xref for the FI (OrgId). \n\n\n\nType of relationship should be assigned to the secondary customers.  Any value sent for primary owner is ignored. \n\n\n\n\n\n\n\nNumeric values (0-99) passed in request or configured for transformation in ESF, should be set up as a valid Party-Account Relationship in Precision (Parameters-->Customer Info), for the FI - based on understanding with Precision team, at the time of onboarding. The FI (OrgId) can configure some client-defined values for transformation in ESF and additional client-defined values in that case, not set up in ESF, shall be passed-through to Precision. "
         OwnershipType:
           type: string
           description: |-
             Type of party ownership to an account.
+
+
 
             **Note:** Type of ownership. Primary customer is set to direct. Any value sent for the primary customer is ignored.
           enum:
@@ -408,7 +387,7 @@ components:
       properties:
         LiabilityPercent:
           type: number
-          description: "Percentage of tax liability for which the party is responsible.\n\n**Note:** If 100% of tax reporting is done under primary customer, convert as 100. \n\nIf 100% of tax reporting is done under one of the secondary customers then convert as 0 for the primary and put the 100 under the secondary customer. \n\nIf tax reporting is broken up between primary and secondary then convert values accordingly."
+          description: "Percentage of tax liability for which the party is responsible.\n\n\n\n**Note:** If 100% of tax reporting is done under primary customer, convert as 100. \n\n\n\nIf 100% of tax reporting is done under one of the secondary customers then convert as 0 for the primary and put the 100 under the secondary customer. \n\n\n\nIf tax reporting is broken up between primary and secondary then convert values accordingly."
       description: Details of the liability of owner on an account.
     addAccountRequest_PartyAcctRelInfo:
       properties:
@@ -421,7 +400,7 @@ components:
             $ref: '#/components/schemas/addAccountRequest_PartyAcctRelData'
         PrimaryOwnerInd:
           type: boolean
-          description: "Flag to indicate the owner is primary owner of an account.\n\n**Note:** Value for this field should be set to 'true' for only one party. \n\nIf value is set to 'true' for multiple parties, first instance of a party is assigned the role of primary owner.\n\nIf value of 'false' is set to all parties, first party assumed as primary owner should have PrimaryOwnerInd as 'false', else ESF would pick up the next party available (with PrimaryOwnerInd as blank/empty). \n\nFor a party assigned as Primary Owner for an account, should provide the PartyAcctRelType as a valid Account Owner/Signer relation, OwnershipType as 'Direct' and PrimaryOwnerInd as 'true' (or blank/empty).\n\nAll other parties are assigned as Secondary Owner."
+          description: "Flag to indicate the owner is primary owner of an account.\n\n\n\n**Note:** Value for this field should be set to 'true' for only one party. \n\n\n\nIf value is set to 'true' for multiple parties, first instance of a party is assigned the role of primary owner.\n\n\n\nIf value of 'false' is set to all parties, first party assumed as primary owner should have PrimaryOwnerInd as 'false', else ESF would pick up the next party available (with PrimaryOwnerInd as blank/empty). \n\n\n\nFor a party assigned as Primary Owner for an account, should provide the PartyAcctRelType as a valid Account Owner/Signer relation, OwnershipType as 'Direct' and PrimaryOwnerInd as 'true' (or blank/empty).\n\n\n\nAll other parties are assigned as Secondary Owner."
         Liability:
           $ref: '#/components/schemas/addAccountRequest_Liability'
         NamePrintOption:
@@ -429,33 +408,52 @@ components:
           description: |-
             Option to indicate the position where secondary name or title is displayed on account or, separate notice/statement is printed.
 
-            **Note:** Used to determine how a secondary customer prints on a notice or statement.  Also used to send a separate notice to secondary customer, and determine how the primary is printed on the notice.  If no value is provided, the default value of 'None' is considered.
+
+
+            **Note:** NamePrintOption determines how a secondary customer prints on a notice or statement.  Also used to send a separate notice to secondary customer, and determine how the primary is printed on the notice.  If no value is provided, the default value of 'None' is considered.
+
+
 
             Following numeric values are supported:
 
+
+
             0 - None (display on inquiry only)
+
+
 
             1 - SecondLine (print in the second name line)
 
+
+
             2 - ReplaceNameAddrLine (print in place of name/address)
+
+
 
             3 - FirstAvailAddrLine (print on the first open line)
 
+
+
             4 - PrintOutsideWindow (print outside of address window)
+
+
 
             5 - SepNoticePrimLine1 (Separate Notice, Primary on Line 1)
 
+
+
             6 - SepNoticePrimLine2 (Separate Notice, Primary on Line 2)
 
+
+
             7 - SepNoticePrimAbove (Separate Notice, Primary Above)
+
+
 
             9 - OnlyforInquiry (Do Not Print Or Display on Inquiry)
         AndorOr:
           type: string
-          description: |-
-            Conjunctions used to print names before secondary name.
-
-            **Note:** Used if a conjunction between primary and secondary customer is to be applied. Example:  Bob and Martha customer or Bob or Martha customer.  If no conjunction is desired the default will be none.
+          description: "Conjunctions used to print names before secondary name.\n\n\n\n**Note:** AndorOr is used if a conjunction between primary and secondary name. \n\nFor example:  Bob and Martha customer or Bob or Martha customer.  \n\nIf no conjunction is desired the default is none."
           enum:
           - AND
           - OR
@@ -465,7 +463,9 @@ components:
         AcctIdentType:
           type: string
           description: |+
-            Type of account identifiers.
+            Type of the account identification.
+
+
 
           enum:
           - AcctNum
@@ -473,7 +473,9 @@ components:
           maxLength: 36
           type: string
           description: |-
-            Account identification value.
+            Account identification value associated to the AcctIdentType field.
+
+
 
             **Note:** There is a parameter available in PRC that allows the financial institution to have account numbers up to 17 digits in length.
     addAccountRequest_DepositAcctInfo_InitialAmount_CurCode:
@@ -483,12 +485,12 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\n **Note:** Only USD currency code is supported.\n\n"
       description: Details of currency code.
     addAccountRequest_DepositAcctInfo_InitialAmount:
       type: object
@@ -498,15 +500,16 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
+
+
 
             **Note:** Refers to the amount of first deposit (opening balance).
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_InitialAmount_CurCode'
-      description: |-
-        Initial amount details of an account.
-
-        For example, the origination amount for a loan+F34 or a certificate value of a time deposit account.
+      description: Details of the certificate value of a time deposit account.
     addAccountRequest_DepositAcctInfo_Term:
       required:
       - TermUnits
@@ -518,7 +521,7 @@ components:
           format: int64
         TermUnits:
           type: string
-          description: "Units to define the term of the account. \n\n\n\n"
+          description: "Units to define the term of the account. \n\n\n\n\n\n\n\n"
           enum:
           - Days
           - Months
@@ -533,11 +536,15 @@ components:
           description: |-
             Unique identifier of a relationship manager.
 
+
+
             **Note:** If officer code is activated, a value should be sent unless the financial institution has built a null (N/A) value.  Officer code is always activated and required or a null (N/A) should be built for that officer.
         RelationshipRole:
           type: string
           description: |-
             Role of a relationship manager.
+
+
 
             **Note:** Only SecondOfficer, ThirdOfficer or FourthOfficer should be sent if field is activated for the module.
           enum:
@@ -549,7 +556,7 @@ components:
       properties:
         AcctTitleType:
           type: string
-          description: "Type of account title.\n\n\n\n**Note:** Maximum three titles on an account are supported.\n\nThis field refers to OwnershipType values 4 (Title), 5 (Title 2), or 6 (Title 3). Used to determine the position of AcctTitle text. Each AcctTitleType can be used only once. FirstTitle is required if SecondTitle is to be provided, and SecondTitle is required ThirdTitle is to be provided. "
+          description: "Type of account title.\n\n\n\n\n\n\n\n**Note:** Precision supports upto three titles on an account.\n\n\n\nRefers to OwnershipType values 4 (Title), 5 (Title 2), or 6 (Title 3). Used to determine the position of AcctTitle text. Each AcctTitleType can be used only once. FirstTitle is required if SecondTitle is to be provided, and SecondTitle is required ThirdTitle is to be provided. "
           enum:
           - FirstTitle
           - SecondTitle
@@ -557,11 +564,13 @@ components:
         AcctTitle:
           maxLength: 255
           type: string
-          description: "Title of an account to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\nFor example, John Doe CUSTODIAN.\n\n**Note:** Max length: 40 characters."
+          description: "Title of an account to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\n\n\nFor example, John Doe CUSTODIAN.\n\n\n\n**Note:** Max length: 40 characters."
         AcctTitleOption:
           type: string
           description: |+
             Printing option for the account title.
+
+
 
           enum:
           - SecondLine
@@ -573,7 +582,9 @@ components:
         DBAInd:
           type: boolean
           description: |-
-            Flag to indicate if the prefix DBA (Doing Business As) should be added to the title.
+            Flag to indicate the prefix DBA (Doing Business As) should be added to the title.
+
+
 
             **Note:** Only applicable to FirstTitle (4).  If DBA (Doing Business As) is to be included after the FirstTitle text, set this field to 'true'.
     addAccountRequest_DepositAcctInfo_ClientDefinedData:
@@ -584,6 +595,8 @@ components:
           type: string
           description: |-
             Unique data identifier to identify the client-defined data item.
+
+
 
             **Note:** Used to identify the user code or the user-defined fields for specified module and field type. Up to three CDA user-defined codes and a dynamic collection of CDA user -defined fields is supported. User-defined fields are grouped by data types and this is the interpretation of the prefixes such as, udl (Boolean), udi (Numeric), udd (Currency), udc (Alpha) and uddt (Date). Format for user-defined codes (eg. udl-[1..n]) requires the calling application to send the DataIdent as udl-1, udl-2, where 1..n to indicate values between 1 to 999 (i.e. udl-1, udl-2, ..... udl-999). So, occurrences of boolean user-defined field has DataIdent as udl-1, udl-2, etc. (similarly for Numeric (udi), Currency (udd), Alpha (udc) and Date (uddt) User Defined Codes).
           enum:
@@ -608,16 +621,7 @@ components:
           - Cycle
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Statement cycle code. Values are client-defined.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\n\n\nFor example:\n\n\n\n- If Daily: Number of days between occurrences\n\n\n\n- If Weekly: Number of weeks between occurrences\n\n\n\n- If Monthly: Number of months between occurrences \n\n\n\n- If Yearly: Number of years between occurrences\n\n\n\n- If Cycle: Number of the designated cycle\n\n\n\nThe default value is set to 1.\n\n\n\n**Note:** Statement cycle code. Values are client-defined."
           format: int64
     addAccountRequest_DepositAcctInfo_AcctStmtData:
       type: object
@@ -639,17 +643,37 @@ components:
 
 
 
+
+
+
+
+
+
             **Note:** Client-defined numeric values, which should be defined/setup in system (Parameters>Certificates>NoticeHandling) are supported and these values are passed as-is by ESF to if received in request.
+
+
+
+
 
 
 
             If NoticeOption is 'NoNotice', notice code is set as '0'.
 
+
+
             If NoticeOption is 'GenerateNotice' and NoticeType is 'MaturityNotice', notice code '1' is set.
+
+
 
             If NoticeOption is 'GenerateNotice' and NoticeType is 'IntNotice', notice code '2' is set.
 
+
+
             If NoticeOption is 'GenerateNotice' and both NoticeType is 'RegularNotice', then notice code '3' is set.
+
+
+
+
 
 
 
@@ -664,13 +688,13 @@ components:
           - IntPriorNotice
         NoticeOption:
           type: string
-          description: "Option for account notice. \n\n"
+          description: "Option for account notice. \n\n\n\n"
           enum:
           - NoNotice
           - GenerateNotice
         HandlingCode:
           type: string
-          description: "Handling code to specify the handling process of the notification and statement forms.\n\n**Note:** Values are client-defined and should be setup/defined in system (Parameters>Certificates>Notice Handling). \n\nIf NoticeOption is 'NoNotice' then HandlingCode is set as '0'.\n\nIf NoticeOption is 'GenerateNotice' the numeric value of HandlingCode sent in request is passed as-is by ESF to the system, if NoticeType values 'MaturityDailyNotice', 'MaturityPriorNotice', 'IntDailyNotice' or 'IntPriorNotice' are sent in request."
+          description: "Handling code to specify the handling process of the notification and statement forms.\n\n\n\n**Note:** Values are client-defined and should be setup/defined in system (Parameters>Certificates>Notice Handling). \n\nIf NoticeOption is 'NoNotice' then HandlingCode is set as '0'.\n\nIf NoticeOption is 'GenerateNotice' the numeric value of HandlingCode sent in request is passed as-is by ESF to the system, if NoticeType values 'MaturityDailyNotice', 'MaturityPriorNotice', 'IntDailyNotice' or 'IntPriorNotice' are sent in request."
     addAccountRequest_DepositAcctInfo_IntRateData:
       type: object
       properties:
@@ -679,13 +703,17 @@ components:
           description: |-
             Value of the Index, prime or LIBOR.
 
+
+
             **Note:**  Should be provided for fixed rate CD.
         AccrualMethod:
           type: string
           description: |-
             Method of interest accrual.
 
-            **Note:** This field refers to compounding method.
+
+
+            **Note:** Refers to compounding method.
           enum:
           - Simple
           - Daily
@@ -694,6 +722,8 @@ components:
           type: string
           description: |+
             Option to determine the method of daily interest accrual.
+
+
 
           enum:
           - Standard366
@@ -710,12 +740,14 @@ components:
           description: |-
             Current interest rate for the account.
 
+
+
             **Note:** Maximum 12-step rates are allowed.
     addAccountRequest_DepositAcctInfo_RateChangeData:
       properties:
         RateChangeControl:
           type: string
-          description: "Type of interest rate. \n\n\n\n\n\n**Note:** Method of earning.\n\nValue of PeriodicReview refers to variable-periodic and OnSchedule refers to variable-scheduled. "
+          description: "Type of interest rate. \n\n\n\n\n\n\n\n\n\n\n\n**Note:** Method of earning.\n\n\n\nValue of PeriodicReview refers to variable-periodic and OnSchedule refers to variable-scheduled. "
           enum:
           - BumpUp
           - Fixed
@@ -727,6 +759,8 @@ components:
           description: |-
             Collection of step rates.
 
+
+
             **Note:** Only applicable if value of RateChangeControl is 'StepFreq'. Provide only one occurrence of StepRate, along with the corresponding 'Rate' field in each 'RateChangeData' aggregate. Term/Frequency details of each step should also be sent in the corresponding RateChangeData aggregate occurrence (fields 'RateChangeRecurType' and 'RecurInterval'). Only the first instance of RateChangeDta should have the 'RateChangeIntervalOption' (Not to be sent along with each step). For each step record being set up, send a separate occurrence of 'RateChangeData' (along with the 'StepRate' and 'RateChangeRecurType'/'RecurInterval' fields as advised above). Number of 'RateChangeData' occurrences sent should be equal to the count of step records being set up.
           items:
             $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_StepRate'
@@ -734,6 +768,8 @@ components:
           type: integer
           description: |-
             Number of rate changes per term.
+
+
 
             **Note:** Number of rate changes within the interval specified in RateChangeIntervalOption field.
           format: int64
@@ -744,7 +780,11 @@ components:
 
 
 
-            **Note:** Should be provided in request only if variable rate CD have RateChangeControl 'BumpUp' or 'StepFreq'. RateTerm is applicable only for CD with RateChangeControl as 'StepFreq'. Should be sent only once for the StepFreq Certificate Deposit (in the first occurrence of RateChangeData) and not along with subsequent occurrences.
+
+
+
+
+            **Note:** Applicable only if variable rate CD have RateChangeControl 'BumpUp' or 'StepFreq'. RateTerm is applicable only for CD with RateChangeControl as 'StepFreq'. Should be sent only once for the StepFreq Certificate Deposit (in the first occurrence of RateChangeData) and not along with subsequent occurrences.
           enum:
           - FirstTermOnly
           - EachTerm
@@ -752,7 +792,9 @@ components:
         BasedOnCode:
           type: string
           description: |-
-            Internal index code, prime, LIBOR and so on.
+            Based on code is the source of interest rate which can be used alone or with additional factors that, when combined, calculate an interest rate.
+
+
 
             **Note:** Variable rate code is the client-defined rate code (numeric value). The rate code setup/defined should be passed as-is in request. Applicable for CDs with a variable rate (RateChangeControl - PeriodicReview/OnSchedule).
         BasedOnValue:
@@ -760,21 +802,27 @@ components:
           description: |-
             Value of the index, prime or LIBOR.
 
+
+
             **Note:** New rate only applicable for CD having RateChangeControl as 'OnSchedule'.
         RateVariance:
           type: number
           description: |-
             Percentage difference between interest rate and index rate to adjust the interest rate.
 
+
+
             **Note:** Rate offset for fixed rate CD or variable rate CD (RateChangeControl - PeriodReview/OnSchedule).
         ExpDt:
           type: string
-          description: "Date after which client-defined data item expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Expiration date of the rate offset. Provide this field only for fixed rate CD (RateChangeControl - Fixed)."
+          description: "Date after which client-defined data item expires.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Expiration date of the rate offset. Provide this field only for fixed rate CD (RateChangeControl - Fixed)."
           format: date
         FloorRate:
           type: number
           description: |-
             Rate of interest finalized from the lower range of rates.
+
+
 
             **Note:** Low Rate for the certificate deposit. Should be provided in request only if variable rate CD (RateChangeControl - PeriodReview/OnSchedule/BumpUp). Not applicable for fixed rate CD.
         CeilingRate:
@@ -782,17 +830,23 @@ components:
           description: |-
             Rate of interest finalized from the higher range of rates.
 
+
+
             **Note:** High Rate for the certificate deposit. Should be provided in request only if variable rate CD  (RateChangeControl - PeriodReview/OnSchedule/BumpUp). Not applicable for fixed rate CD.
         MinRateChange:
           type: number
           description: |-
             Minimum amount of rate change in interest as per review period.
 
+
+
             **Note:** Maximum rate that can be lowered in one rate change for variable rate CD (RateChangeControl - PeriodicReview/OnSchedule).
         MaxRateChange:
           type: number
           description: |-
             Maximum amount of rate change in interest as per review period.
+
+
 
             **Note:** Maximum rate that can be increased in one rate change for variable rate CD (RateChangeControl - PeriodicReview/OnSchedule).
         RateChangeRecurType:
@@ -811,24 +865,15 @@ components:
           - SemiMonthly
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Only applicable for variable rate (Scheduled) or step rate CD with RateChangeControl as 'SxtepFreq'.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\n\n\nFor example:\n\n\n\n- If Daily: Number of days between occurrences\n\n\n\n- If Weekly: Number of weeks between occurrences\n\n\n\n- If Monthly: Number of months between occurrences \n\n\n\n- If Yearly: Number of years between occurrences\n\n\n\n- If Cycle: Number of the designated cycle\n\n\n\nThe default value is set to 1.\n\n\n\n**Note:** Only applicable for variable rate (Scheduled) or step rate CD with RateChangeControl as 'SxtepFreq'."
           format: int64
         RecurStartDate:
           type: string
-          description: "Date when the rate change becomes effective.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Only applicable for variable rate CD (RateChangeControl - OnSchedule)."
+          description: "Date when the rate change becomes effective.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Only applicable for variable rate CD (RateChangeControl - OnSchedule)."
           format: date
         NextRateChangeDt:
           type: string
-          description: "Next date at which the interest rate is to be adjusted.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Only applicable for a variable rate CD (RateChangeControl - OnSchedule)."
+          description: "Next date at which the interest rate is to be adjusted.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Only applicable for a variable rate CD (RateChangeControl - OnSchedule)."
           format: date
     addAccountRequest_DepositAcctInfo_PostAddr:
       required:
@@ -837,7 +882,7 @@ components:
         NameIdent:
           maxLength: 36
           type: array
-          description: "Name identification value to identify the names related to the account address.\n\n**Note:** Used to identify primary customer's name of an account. Provide value '0' in request to use the customer-level name (which may be the CIF primary name or the CIF alternate name). Provide value '1-99' to identify the primary customer's alternate name to use for account correspondence. The alternate name should already exist for the customer. "
+          description: "Name identification value to identify the names related to the account address.\n\n\n\n**Note:** NameIdent is used to identify primary customer's name of an account. Provide value '0' in request to use the customer-level name (which may be the CIF primary name or the CIF alternate name). Provide value '1-99' to identify the primary customer's alternate name to use for account correspondence. The alternate name should already exist for the customer. "
           items: {}
         AddressIdent:
           maxLength: 36
@@ -845,11 +890,15 @@ components:
           description: |+
             Unique address identification value.
 
-            **Note:** This field is used to identify the primary customer's address to use for an account. Provide '0' in request to use the customer-level address (which may be the CIF Primary address or a CIF Alternate address). Provide '1-99' in request to identify the primary customer's alternate address to use for account correspondence. The alternate address should already exist for the customer. The effective date (start date) of alternate address to be associated to an account, cannot be updated with AcctAdd service. Consumer should call PartyMod service to update customer's information and address details.
+
+
+            **Note:** AddressIdent is used to identify the primary customer's address to use for an account. Provide '0' in request to use the customer-level address (which may be the CIF Primary address or a CIF Alternate address). Provide '1-99' in request to identify the primary customer's alternate address to use for account correspondence. The alternate address should already exist for the customer. The effective date (start date) of alternate address to be associated to an account, cannot be updated with AcctAdd service. Consumer should call PartyMod service to update customer's information and address details.
+
+
 
         AddrType:
           type: string
-          description: "Type of the address. \n\n\n\n**Note:** Address identified in AddressIdent field is the primary address associated to the deposit account."
+          description: "Type of the address. \n\n\n\n\n\n\n\n**Note:** Address identified in AddressIdent field is the primary address associated to the deposit account."
           enum:
           - Primary
     addAccountRequest_DepositAcctInfo_WithholdingData:
@@ -866,6 +915,8 @@ components:
           description: |-
             Code to identify the withholding.
 
+
+
             **Note:** Withholding codes should be created in parameters.  Parameters>Bank Information>Withholding Percents.  Only values defined in a parameter can be used in the field.
       description: Details of the withholding data used to process interest withholdings.
     addAccountRequest_DepositAcctInfo_Fee:
@@ -878,6 +929,8 @@ components:
           description: |-
             Unique identifier of fee.
 
+
+
             **Note:** Penalty code values are client-defined.
         FeeType:
           type: string
@@ -889,6 +942,8 @@ components:
           description: |+
             Processing option for fee type.
 
+
+
           enum:
           - Charge
     addAccountRequest_DepositAcctInfo_RenewalData_RenewalFrequency:
@@ -896,22 +951,18 @@ components:
       properties:
         RecurType:
           type: string
-          description: "Recurrence type indicates the pattern of recurrence. \n\n\n\n"
+          description: "Recurrence type indicates the pattern of recurrence. \n\n\n\n\n\n\n\n"
           enum:
           - Daily
           - Monthly
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\n\n\nFor example:\n\n\n\n- If Daily: Number of days between occurrences\n\n\n\n- If Weekly: Number of weeks between occurrences\n\n\n\n- If Monthly: Number of months between occurrences \n\n\n\n- If Yearly: Number of years between occurrences\n\n\n\n- If Cycle: Number of the designated cycle\n\n\n\nThe default value is set to 1."
           format: int64
       description: |-
         Time interval details between the renewals for an account.
+
+
 
         **Note:** The RenewalFrequency is displayed if a new earnings schedule for an account at renewal is built.
     addAccountRequest_DepositAcctInfo_RenewalData:
@@ -921,7 +972,7 @@ components:
       properties:
         RenewalOption:
           type: string
-          description: "Renewal option applied to the account. \n\n\n\n**Note:** Certificate deposit (CD) is not renewed by default and client application should provide the value AutomaticRenewal' in RenewalOption field to renew the account."
+          description: "Renewal option applied to the account. \n\n\n\n\n\n\n\n**Note:** Certificate deposit (CD) is not renewed by default and client application should provide the value AutomaticRenewal' in RenewalOption field to renew the account."
           enum:
           - AutomaticRenewal
           - NoRenewalAllowed
@@ -929,6 +980,8 @@ components:
           type: string
           description: |-
             Options to indicate next renewal date.
+
+
 
             **Note:** Changes in NextRenewalDateOption are supported only if DepositAcctInfo/IntDispData/PayOnMaturityInd is 'true'.
           enum:
@@ -938,6 +991,8 @@ components:
           type: string
           description: |-
             Code to identify the renewal term.
+
+
 
             **Note:** Values are client-defined.
         NextEarningDateOption:
@@ -955,15 +1010,21 @@ components:
           description: |-
             Code to specify how the interest rate and interest is calculated for the account.
 
+
+
             **Note:** Rate to be used for renewing the certificate.Values are client-defined.
         RateVariance:
           type: number
           description: |-
             Percentage difference between interest rate and index rate to adjust the interest rate.
 
+
+
             **Note:** Offset for the renewable rate.
       description: |-
         Details related to the account renewal.
+
+
 
         **Note:** If 'NextEarningDateOption' is provided, the calling application should provide the RenewalFrequency (with 'RecurType' and 'RecurInterval'). If this aggregate is not provided in the request, the certificate deposit account is not renewed.
     addAccountRequest_DepositAcctInfo_AccessLevelData:
@@ -976,6 +1037,8 @@ components:
           type: string
           description: |-
             Code to identify the access level.
+
+
 
             **Note:** Security level is assigned to limit the access to accounts by certain employees. Generally, a higher security level is assigned to employee, dormant and written off accounts.  Security levels need to be set up in parameters.
       description: Details of access level data.
@@ -990,6 +1053,8 @@ components:
           description: |-
             Unique identification number of an account record.
 
+
+
             **Note:** If the earnings handling is not equal to ACH this field refers to an existing account on the core. If the earnings handling is equal to ACH, input the account number to which the funds should be transferred.
         AcctType:
           type: string
@@ -998,7 +1063,13 @@ components:
 
 
 
+
+
+
+
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
 
             **Note:** DDA and SDA are in the same module.  Provide the value of account that is to be used.  To know if an account is CDA or DDA/SDA, check the parameters for the ProductIdent. Title on the ProductIdent indicates the type of account.
           enum:
@@ -1010,6 +1081,8 @@ components:
           description: |+
             Identification type of a financial institution.
 
+
+
           enum:
           - RoutingNum
         FIIdent:
@@ -1018,17 +1091,29 @@ components:
           description: |-
             Unique identification number of a financial institution.
 
+
+
             **Note:** *Conditionally Required field*
+
+
 
             Only used if earnings handling is equal ACH.
       description: |-
         Unique information to identify the account record.
 
-        **Note:** *Conditionally Required field*
+
+
+        **Note:** *Conditionally Required aggregate*
+
+
+
+
 
 
 
         Required to be provided if DepositAcctInfo/IntDispData/IntDisposition is 'TransferToAcct' or 'ACHXfer'.
+
+
 
         Not required if IntDisposition is "AddToBal" or "Check" or "CheckToOther".
     addAccountRequest_DepositAcctInfo_IntDispData_IntDistAcctRef:
@@ -1043,7 +1128,11 @@ components:
           description: |-
             Code to identify the ACH transaction.
 
+
+
             **Note:** *Conditionally Required field*
+
+
 
             Only used if earnings handling is equal ACH.
         ACHReceivingType:
@@ -1051,7 +1140,11 @@ components:
           description: |-
             Type of ACH account to indicate if an account is commercial or consumer.
 
+
+
             **Note:** *Conditionally Required field*
+
+
 
             Only used if earnings handling is equal ACH.
           enum:
@@ -1063,11 +1156,15 @@ components:
           description: |-
             Description of ACH company entry.
 
+
+
             **Note:** If earnings are paid to an external account, value should be provided in this field.
         SameDayInd:
           type: boolean
           description: |-
-            Flag to indicate if the ACH transaction is processed on the same day.
+            Flag to indicate the ACH transaction is processed on the same day.
+
+
 
             **Note:** Only applicable if IntDisposition is ACHXfer. This feature is configured with respect to financial institute.
       description: Details of the interest distribution account reference indicating the object where the interest is distributed.
@@ -1075,19 +1172,13 @@ components:
       properties:
         RecurType:
           type: string
-          description: "Type of recurrence. \n\n\n\n"
+          description: "Type of recurrence. \n\n\n\n\n\n\n\n"
           enum:
           - Monthly
           - Daily
         RecurInterval:
           type: integer
-          description: |+
-            Recurrence interval between two successive occurrences of interest.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\n\n\nFor example:\n\n\n\n- If Daily: Number of days between occurrences\n\n\n\n- If Weekly: Number of weeks between occurrences\n\n\n\n- If Monthly: Number of months between occurrences \n\n\n\n- If Yearly: Number of years between occurrences\n\n\n\n- If Cycle: Number of the designated cycle\n\n\n\nThe default value is set to 1."
           format: int64
         EarningsSchedType:
           type: string
@@ -1105,14 +1196,14 @@ components:
           - LastDatePeriod
         EarningsDt:
           type: string
-          description: "Date of earnings calculated by the system.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Date is calculated by system and not required to be provided in request."
+          description: "Date of earnings calculated by the system.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** This date is calculated by Precision and is usually not required be sent in the request."
           format: date
     addAccountRequest_DepositAcctInfo_IntDispData:
       type: object
       properties:
         IntDisposition:
           type: string
-          description: "Option to indicate the interest disposition. \n\n**Note:** Handling of earnings. If ACHXfer is selected, provide value in ACH fields."
+          description: "Option to indicate the interest disposition. \n\n\n\n**Note:** Handling of earnings. If ACHXfer is selected, provide value in ACH fields."
           enum:
           - TransferToAcct
           - Check
@@ -1127,14 +1218,18 @@ components:
           description: |-
             Unique identification number of payee customer used if payment is done by check to another form of customer owner.
 
+
+
             **Note:** Only applicable if IntDisposition is CheckToOther.
         PayOnMaturityInd:
           type: boolean
-          description: Flag to indicate if the interest is to be paid on maturity.
+          description: Flag to indicate the interest is paid on maturity.
         IntPmtFrequency:
           type: array
           description: |-
             Details of the time frame for pending interest rate payment.
+
+
 
             **Note:** Refers to schedule of earnings.
           items:
@@ -1145,7 +1240,7 @@ components:
       properties:
         Brand:
           type: string
-          description: "Name of the brand.\n\n**Note:** Values are client-defined. "
+          description: "Name of the brand.\n\n\n\n**Note:** Values are client-defined. "
         AcctDtlStatus:
           type: string
           description: |-
@@ -1153,17 +1248,17 @@ components:
 
 
 
+            **Note:**
 
+            In Precision, an account is created in 'New' (0) status only. ESF AcctMod service can be used to update the account status. ESF does not validate the AcctAdd request. An error is returned if an invalid status is provided. Default status of 'New' is not overridden while creating an account.
 
-            **Note:** Status of an account.
-
-            Values are defined by the system. Account is created in 'New' (0) status only. ESF AcctMod service can be used to update the account status. ESF does not validate the AcctAdd request. An error is returned if an invalid status is provided. Default status of 'New' is not overridden while creating an account.
+            Values are Precision-defined.
           enum:
           - New - 0
         AcctIdent:
           type: array
           description: |-
-            Unique identifier of an account record.
+            Information related to identifier of an account record used as alternative identifier.
 
             **Note:** If AcctIdent is not provided, system generates a new account number for an account.
           items:
@@ -1174,6 +1269,8 @@ components:
           description: |-
             Unique identifier of a product to indicate the processing options of account.
 
+
+
             **Note:** Product Identifier of product type (to set up CDA account).
         AcctType:
           type: string
@@ -1183,6 +1280,8 @@ components:
 
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
 
             **Note:** *Required field*
           enum:
@@ -1196,13 +1295,13 @@ components:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_InitialAmount'
         OpenDt:
           type: string
-          description: "Date on which the account record is created.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Input the date on which account was opened else, current date is considered as opening date by the system."
+          description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Input the date on which account was opened else, current date is considered as opening date by the system."
           format: date
         Term:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_Term'
         MaturityDt:
           type: string
-          description: "Date of maturity of a deposit account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date of maturity of a deposit account.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         RelationshipMgr:
           type: array
@@ -1212,7 +1311,12 @@ components:
         OriginatingBranch:
           maxLength: 32
           type: string
-          description: "Branch that primarily created the account with the party.\n\n**Note:** Should be an existing branch on the core.  "
+          description: |-
+            Branch in which the account is primarily created for the party.
+
+
+
+            **Note:** Branch should be an existing branch in Precision.
         Nickname:
           maxLength: 80
           type: string
@@ -1222,7 +1326,13 @@ components:
           description: |-
             Details of additional titles required for an account.
 
-            **Note:** Provide this aggregate in the AcctAdd request only if AddtlTitles (Title, Title 2 and Title 3) are required on the account. Customers to be associated with OwnershipType 'Direct', Indirect', 'Fiduciary' and 'Additional' to the account, should be sent in PartyAcctRelInfo aggregate(s).  For secondary customers, NamePrintOption and AndoOr settings, should also be sent in PartyAcctRelInfo aggregate(s).
+
+
+            **Note:** *Conditionally Required aggregate*
+
+
+
+            Applicable only if AddtlTitles (Title, Title 2 and Title 3) are required on the account. Customers to be associated with OwnershipType 'Direct', Indirect', 'Fiduciary' and 'Additional' to the account, should be sent in PartyAcctRelInfo aggregate(s).  For secondary customers, NamePrintOption and AndoOr settings, should also be sent in PartyAcctRelInfo aggregate(s).
           items:
             $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AddtlTitles'
         AccountingMethod:
@@ -1236,13 +1346,17 @@ components:
           description: |-
             Numeric value associated with the chosen accounting method.
 
+
+
             **Note:** GL code to be set up in defaults for each product identifier, if desired.  All GL codes will need to be set up in parameters to be used in this field.
         ClassCode:
           type: string
           description: |-
             Code to group accounts for the purpose of processing and reporting.
 
-            **Note:** User-defined field and can be used to define a customer, and can only be used to track opt in/opt out.
+
+
+            **Note:** This is user-defined field in PRC used to define a customer. It is also used to track Opt In/Opt Out.
         ClientDefinedData:
           type: array
           description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
@@ -1260,6 +1374,8 @@ components:
           description: |-
             Current interest rate for the account.
 
+
+
             **Note:** Total earning rate on the certificate deposit account.
         EffectiveRate:
           type: number
@@ -1271,7 +1387,9 @@ components:
           description: |-
             Details of frequency for interest rate adjustment.
 
-            **Note:** Provide this aggregate in request only for CD to specify earnings method and interest rate details.
+
+
+            **Note:** Applicable only for CD to specify earnings method and interest rate details.
           items:
             $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_RateChangeData'
         PostAddr:
@@ -1286,6 +1404,8 @@ components:
           description: |-
             Details of recurring fee to identify the type and amount of fee charged.
 
+
+
             **Note:** To override the defaults and associate a fee with new CDA account, provide the Fee aggregate with FeeIdent/FeeType in request. If fee aggregate is not provided in request,  no fee plan (fees) can be linked to the CDA account.
           items:
             $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_Fee'
@@ -1294,11 +1414,17 @@ components:
           description: |-
             Client-defined code to group the accounts for reporting purposes.
 
+
+
             **Note:** Provide the number assigned to customer in request. This number is not incremented and can be any numeric value derived from customer information file, but can be maintained at the account level.
         DocDistributionOption:
           type: string
           description: |-
             Client defined method to indicate the document distribution method used for processing the notices and statement forms.
+
+
+
+
 
 
 
@@ -1309,6 +1435,8 @@ components:
           description: |-
             Six-digit North American Industry Classification System (NAICS) code used to indicate the type of customer based upon standard government definitions.
 
+
+
             **Note:** Code to categorize the account based on the primary activity of account owner. Values are defined in parameters.
         RenewalData:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_RenewalData'
@@ -1317,19 +1445,22 @@ components:
           description: |-
             Code to identify the call report.
 
+
+
             **Note:** *Required field*
 
+
+
             The CallReportCode can be set up in defaults based on the ProductIdent, if desired.
+
+
 
             Values are to set up in parameters.
         AccessLevelData:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AccessLevelData'
         IntDispData:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_IntDispData'
-      description: |-
-        Details of the deposit account.
-
-        **Note:** Use this aggregate to add a new certificate deposit account.
+      description: "Details of the deposit account.\n\n\n\n**Note:** Applicable if a new Certificate of Deposit Account is added. "
     addAccountResponse_AcctStatusRec_AcctKeys:
       required:
       - AcctId
@@ -1346,6 +1477,10 @@ components:
 
 
 
+
+
+
+
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
           - CDA
@@ -1357,13 +1492,13 @@ components:
       properties:
         AcctStatusCode:
           type: string
-          description: Status code of an account.
+          description: Code to identify the status of an account.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Effective date and time when the account status is changed. \n\n\n\n\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
       description: Status details of the account.
     addAccountResponse_AcctStatusRec:
       required:

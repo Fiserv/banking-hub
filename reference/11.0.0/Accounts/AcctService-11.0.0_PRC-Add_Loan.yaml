@@ -12,7 +12,7 @@ paths:
       tags:
       - Add Account
       summary: Add Account.
-      description: "Add Account API creates a new Loan Account (LOAN).<br>For Precision, this API creates the new escrow record if the loan includes an escrow.<br>For both the loan account and the escrow record (if any), Precision has the ability to insert default values defined for the selected Loan Type (Product Type).<br>This API supports the Open Verification Method (OVM), as Precision defines, to insert the default values. <br>This means, while creating a new account with the fields sent in the Add Account request, the Loan default types defined within the Precision parameters may get overridden. The override depends on the setting of the New Account Override attribute for each field where a default value has been defined.<br>Precision uses the default values to populate the fields whose default value is defined but not included in the Add Account request.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: Add Account API creates a new Loan Account (LOAN).<br>For Precision, this API creates the new escrow record if the loan includes an escrow.<br>For both the loan account and the escrow record (if any), Precision has the ability to insert default values defined for the selected Loan Type (Product Type).<br>This API supports the Open Verification Method (OVM), as Precision defines, to insert the default values. <br>This means, while creating a new account with the fields sent in the Add Account request, the Loan default types defined within the Precision parameters may get overridden. The override depends on the setting of the New Account Override attribute for each field where a default value has been defined.<br>Precision uses the default values to populate the fields whose default value is defined but not included in the Add Account request.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
       operationId: addAccount
       parameters:
       - name: EFXHeader
@@ -27,7 +27,7 @@ paths:
             schema:
               $ref: '#/components/schemas/addAccountRequest'
       responses:
-        "202":
+        "201":
           description: Created
           content:
             application/json:
@@ -348,15 +348,25 @@ components:
           description: |-
             Unique identification number of a party record.
 
+
+
             **Note:** Only the primary customer is associated to the Escrow Account (same primary customer as on loan) as identified by the "PrimaryOwnerInd" field set to true in the request.
+
+
 
             Secondary customer cannot be associated to the escrow account but are directly added to the loan.
       description: |-
         Unique information to identify the party record.
 
+
+
         **Note:** This aggregate is required to be sent in the request for each party associated to the loan.
 
+
+
         Only one customer is allowed to be primary owner for the loan and "PrimaryOwnerInd" is set to true for that customer.
+
+
 
         If an escrow amount is included with the loan payment schedule, the system will create an Escrow record for the loan.
     addAccountRequest_PartyRef:
@@ -378,14 +388,22 @@ components:
 
 
 
+
+
+
+
             **Note:** Values are client-defined for this field and are passed through Precision if not set up for transformation in ESF by the financial instution. Else ESF transform the incoming value to the corresponding numeric value (0-99) based on transformation set up in ESF Xref for the financial institute (OrgId).
 
+
+
             Precision requires a relationship type to be assigned for secondary customers and any value sent for primary owner is ignored.
+
+
 
             For numeric values (0-99) passed in the request or configured for transformation in ESF should be set up as valid Party-Account Relationship in Precision (Parameters--->CustomerInfo) for the financial institute, based on the understanding with Precision team at the time of onboarding.
         OwnershipType:
           type: string
-          description: "Type of party ownership to an account.\n\n**Note:** \n\n- Refers to Ownership Type\n\n-  Value \"Direct\"  indicates the primary owner on the account\n\n- This field is used to set ownership type for each secondary customer on the account"
+          description: "Type of party ownership to an account.\n\n\n\n**Note:** \n\n\n\n- Refers to Ownership Type\n\n\n\n-  Value \"Direct\"  indicates the primary owner on the account\n\n\n\n- This field is used to set ownership type for each secondary customer on the account"
           enum:
           - Direct
           - Indirect
@@ -398,6 +416,8 @@ components:
           type: number
           description: |-
             Percentage of tax liability for which the party is responsible.
+
+
 
             **Note:** This field is used to for the escrow record, if any, and refers to Tax Percent, the percentage of IRS tax information to report for account owner. The total percentage for owner must be 100 or 0. Precision allows a percent to be set for the customer with OwnershipType = Direct
       description: Details of the liability of owner on an account.
@@ -412,7 +432,7 @@ components:
             $ref: '#/components/schemas/addAccountRequest_PartyAcctRelData'
         PrimaryOwnerInd:
           type: boolean
-          description: "Flag to indicate the owner is primary owner of an account.\n\n**Note:** This field is set as true for one party, if more than one party has this field true or no party has this field set as true then in both the cases first party instance will be assigned the role of primary customer and all the other will be considered as secondary owner.\n\nIf the first party assumed as the Primary owner "
+          description: "Flag to indicate the owner is primary owner of an account.\n\n\n\n**Note:** This field is set as true for one party, if more than one party has this field true or no party has this field set as true then in both the cases first party instance will be assigned the role of primary customer and all the other will be considered as secondary owner.\n\n\n\nIf the first party assumed as the Primary owner "
         Liability:
           $ref: '#/components/schemas/addAccountRequest_Liability'
         NamePrintOption:
@@ -420,13 +440,17 @@ components:
           description: |-
             Option to indicate the position where secondary name or title is displayed on account or, separate notice/statement is printed.
 
+
+
             **Note:** This is used to determine how a secondary customer will print on a notice or statement.  This can also be used to send a separate notice to the secondary customer, and determine how the primary on that notice will show when printed.  If no value is entered this will default to 0 - Display on Inquiry Only
     addAccountRequest_LoanAcctInfo_AcctIdent:
       properties:
         AcctIdentType:
           type: string
           description: |+
-            Type of account identifiers.
+            Type of the account identification.
+
+
 
           enum:
           - AcctNum
@@ -434,9 +458,13 @@ components:
           maxLength: 36
           type: string
           description: |-
-            Account identification value.
+            Account identification value associated to the AcctIdentType field.
+
+
 
             **Note:** This field uniquely identifies the new loan on Precision.
+
+
 
             Precision accepts up to 10 positions of values 0-9 and does not require leading zeros.
     addAccountRequest_LoanAcctInfo_InitialAmount_CurCode:
@@ -446,12 +474,12 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\n **Note:** Only USD currency code is supported.\n\n"
       description: Details of currency code.
     addAccountRequest_LoanAcctInfo_InitialAmount:
       type: object
@@ -461,7 +489,11 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
+
+
 
             **Note:** Refers to original amount, which is the total loan commitment to the borrower.
         CurCode:
@@ -474,28 +506,14 @@ components:
       properties:
         Count:
           type: integer
-          description: "Number of occurrences with respect to the specified unit value.\n\n**Note:** \n\n- If the loan is a credit line loan, value for this field is sent as \"999\" \n\n- If the loan is ballon loan, then balloon maturity date determines the loan term."
+          description: "Number of occurrences with respect to the specified unit value.\n\n\n\n**Note:** \n\n\n\n- If the loan is a credit line loan, value for this field is sent as \"999\" \n\n\n\n- If the loan is ballon loan, then balloon maturity date determines the loan term."
           format: int64
         TermUnits:
           type: string
-          description: "Units to define the term of the account. \n\n\n\n"
+          description: "Units to define the term of the account. \n\n\n\n\n\n\n\n"
           enum:
           - Months
       description: Term details for a loan account.
-    addAccountRequest_LoanAcctInfo_FeeCollectedAmt_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
-          enum:
-          - ISO4217-Alpha
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
-      description: Details of currency code.
     addAccountRequest_LoanAcctInfo_FeeCollectedAmt:
       type: object
       properties:
@@ -503,7 +521,7 @@ components:
           type: number
           description: Amount in decimal format.
         CurCode:
-          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCollectedAmt_CurCode'
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: Details of the total amount of fees collected during the new loan account processing.
     addAccountRequest_LoanAcctInfo_DateData:
       properties:
@@ -512,10 +530,15 @@ components:
           description: |+
             Values that  indicate the type of date contained in the "DateValue" field.
 
+
+
+          enum:
+          - See DateData tab.
         DateValue:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Value of the date.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Value of the date.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
+          enum:
+          - See DateData tab.
     addAccountRequest_LoanAcctInfo_RelationshipMgr:
       required:
       - RelationshipMgrIdent
@@ -541,15 +564,29 @@ components:
 
 
 
+
+
+
+
             **Note:** Refers to ownership type values that are:
+
+
 
             - 4: Title
 
+
+
             - 5: Title 2
+
+
 
             - 6: Title 3
 
+
+
             Each AcctTitleType can be used one time. First title is required to be sent before SecondTittle and SecondTitle is required to be sent before ThirdTitle.
+
+
 
             This values determine the position of the AcctTitle text.
           enum:
@@ -559,11 +596,13 @@ components:
         AcctTitle:
           maxLength: 255
           type: string
-          description: "Title of account. This value is typically used to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\nFor example, John Doe CUSTODIAN.\n\n**Note:** Refers to account title text. \n\nMax length: 40 characters"
+          description: "Title of account. This value is typically used to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\n\n\nFor example, John Doe CUSTODIAN.\n\n\n\n**Note:** Refers to account title text. \n\n\n\nMax length: 40 characters"
         AcctTitleOption:
           type: string
           description: |+
             Printing option for the account title.
+
+
 
           enum:
           - SecondLine
@@ -577,6 +616,8 @@ components:
           description: |-
             Flag to indicate the prefix DBA (Doing Business As) should be added to the title.
 
+
+
             **Note:** This field is applicable only for FirstTitle.
     addAccountRequest_LoanAcctInfo_ClientDefinedData:
       required:
@@ -587,7 +628,11 @@ components:
           description: |-
             Value that indicate the application belongs to which client-defined data.
 
+
+
             **Note:** This field identifies the module to which the user-defined field applies.
+
+
 
             The value "4" indicates "Loan".
           enum:
@@ -597,6 +642,8 @@ components:
           description: |-
             Unique data identifier to identify the client-defined data item.
 
+
+
             **Note:** This field identifies the usercode or the user-defined field for the specified module and field type.
           enum:
           - UserCode1
@@ -604,7 +651,7 @@ components:
           - UserCode3
         DataType:
           type: string
-          description: "Type of client defined data. \n\n\n\n**Note:** Refers to the field type.\n\nValues for this field refers to:\n\n- \"Alpha\" refers to character fields\n\n- \"Boolean\" refers to logical fields \n\n- \"Currency\" refers to amount fields \n\n- \"Numeric\" refers to code fields\n\nDataType is required if the DataIdent value is in between 1-999.\n\nDataType and DataIdent, together, identify which user-defined field to add to the loan's record."
+          description: "Type of client defined data. \n\n\n\n\n\n\n\n**Note:** Refers to the field type.\n\n\n\nValues for this field refers to:\n\n\n\n- \"Alpha\" refers to character fields\n\n\n\n- \"Boolean\" refers to logical fields \n\n\n\n- \"Currency\" refers to amount fields \n\n\n\n- \"Numeric\" refers to code fields\n\n\n\nDataType is required if the DataIdent value is in between 1-999.\n\n\n\nDataType and DataIdent, together, identify which user-defined field to add to the loan's record."
           enum:
           - Alpha
           - Boolean
@@ -627,24 +674,30 @@ components:
           description: |-
             Value of statement option.
 
+
+
             **Note:** Universal message codes are client-defined.
     addAccountRequest_LoanAcctInfo_AcctStmtData:
       type: object
       properties:
         LastStmtDt:
           type: string
-          description: "Date on which last statement was generated.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which last statement was generated.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         StmtPrepCode:
           type: string
           description: |-
             Code to identify if an individual statement is printed for an account.
 
+
+
             **Note:** Refers to loan statement code which is used to separate accounts into groups for statement printing. Values are client-defined.
         StmtFormat:
           type: string
           description: |-
             Format to identify the statement detail, balance options, daily summary and other values.
+
+
 
             **Note:** Refers to type of billing statement.
         StmtOptions:
@@ -659,6 +712,10 @@ components:
           type: string
           description: |+
             Type of notice.
+
+
+
+
 
 
 
@@ -678,7 +735,7 @@ components:
           - YearEndHistory
         NoticeOption:
           type: string
-          description: "Option for account notice. \n\n\n\n**Note:** RightToCure notice option values 1-9 are client-defined."
+          description: "Option for account notice. \n\n\n\n\n\n\n\n**Note:** RightToCure notice option values 1-9 are client-defined."
           enum:
           - NoNotice
           - GenerateNotice
@@ -687,11 +744,15 @@ components:
           description: |-
             Handling code used for special routing of all correspondence involving the account.
 
+
+
             **Note:** Values are client-defined.
         LeadDays:
           type: integer
           description: |-
             Number of days prior to the event to do a review.
+
+
 
             **Note:** Refers to maturity lead days and payment lead days.
           format: int64
@@ -720,10 +781,14 @@ components:
           description: |+
             Code to indicate additional accrual method instructions for the account.
 
+
+
         DailyAccrual:
           type: string
           description: |-
             Value that indicates how interest is accrued on daily basis.
+
+
 
             **Note:** Refers to days per month and days per year.
           enum:
@@ -738,6 +803,8 @@ components:
           description: |-
             Minimum interest amount that must be repaid to the account before a payoff occurs.
 
+
+
             **Note:** Refers to minimum charge.
       description: Details of the interest rate processing for the account.
     addAccountRequest_LoanAcctInfo_MaturityIntCalcData:
@@ -747,6 +814,8 @@ components:
           type: string
           description: |-
             Type of interest rate applicable to accrue interest after maturity.
+
+
 
             **Note:** Value "4" refers torate type where the rate continues according to frequency, but additional rate percentage is added offset.
           enum:
@@ -763,6 +832,8 @@ components:
           description: |-
             Value that indicate maturity interest interval.
 
+
+
             **Note:** Refers to delay days, the number of days after the loan matures until the maturity rate is effective.
           format: int64
       description: Details of the interest rate processing after account maturity.
@@ -773,11 +844,15 @@ components:
           description: |-
             Value of the base rate, the rate before additional rate points are applied.
 
+
+
             **Note:** Refers to New Index 1 or 2.
         Rate:
           type: number
           description: |-
             Current interest rate for the account.
+
+
 
             **Note:** Refers to New Rate 1 or 2.
         EffDt:
@@ -788,9 +863,17 @@ components:
 
 
 
+
+
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
+
+
             Example: 2021-01-31T23:59:59.999
+
+
 
             **Note:** Refers to Date Next 1 or 2.
     addAccountRequest_LoanAcctInfo_RateChangeData:
@@ -801,31 +884,39 @@ components:
           description: |-
             Unique identifier to identify matching plans for changing rate and payment amount.
 
+
+
             **Note:** This field identifies the adjustable rate sequence number.
+
+
 
             The system will use this number to associate to the matching ReviewPlanData/ReviewPlanIdent to build the adjutable rate schedule.
         RateChangeControl:
           type: string
-          description: "Type of interest rate. \n\n\n\n\n\n**Note:** Values for this field means:\n\n- \"IndexFreq\" means the rate changes with index changes \n\n- \"PeriodReview\" means the rate changes based on table of scheduled dates"
+          description: "Type of interest rate. \n\n\n\n\n\n\n\n\n\n\n\n**Note:** Values for this field means:\n\n\n\n- \"IndexFreq\" means the rate changes with index changes \n\n\n\n- \"PeriodReview\" means the rate changes based on table of scheduled dates"
           enum:
           - IndexFreq
           - PeriodReview
         BasedOnCode:
           type: string
-          description: "Based on code is the source of interest rate which can be used alone or with additional factors that, when combined, calculate an interest rate.\n\n**Note:** \n\n- Refers to adjustable rate code\n\n- Values are client-defined"
+          description: "Based on code is the source of interest rate which can be used alone or with additional factors that, when combined, calculate an interest rate.\n\n\n\n**Note:** \n\n\n\n- Refers to adjustable rate code\n\n\n\n- Values are client-defined"
         BasedOnValue:
           type: number
           description: |-
             Based on value is the base rate of the adjustable rate.
 
+
+
             **Note:** Refers to current index rate.
         RateVariance:
           type: number
-          description: "Percentage difference between interest rate and index rate to adjust the interest rate.\n\n**Note:** Refers to adjustable rate offset. \n\nThe variance can be positive or negative."
+          description: "Percentage difference between interest rate and index rate to adjust the interest rate.\n\n\n\n**Note:** Refers to adjustable rate offset. \n\n\n\nThe variance can be positive or negative."
         PendingRate:
           type: array
           description: |-
             Details of the pending rate of interest.
+
+
 
             **Note:** Precision supports two PendingRate instances per adjustable rate schedule. If more than two instances are sent in the request, system records only the first two instances.
           items:
@@ -860,6 +951,10 @@ components:
 
 
 
+
+
+
+
             **Note:** Refers to adjustable rates mode.
           enum:
           - BiWeekly
@@ -868,7 +963,7 @@ components:
           - SemiMonthly
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\n\n\nFor example:\n\n\n\n- If Daily: Number of days between occurrences\n\n\n\n- If Weekly: Number of weeks between occurrences\n\n\n\n- If Monthly: Number of months between occurrences \n\n\n\n- If Yearly: Number of years between occurrences\n\n\n\n- If Cycle: Number of the designated cycle. \n\n\n\nThe default value is set to 1."
           format: int64
         LeadDays:
           type: integer
@@ -882,11 +977,11 @@ components:
           - Calendar
         NextRateChangeDt:
           type: string
-          description: "Next date at which the interest rate is to be adjusted.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** *Conditionally Required field*\n\n\n\nRefers to adjustable rate data first field.\n\nThis date is required when rate change method ia set to change on scheduled dates."
+          description: "Next date at which the interest rate is to be adjusted.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** *Conditionally Required field*\n\n\n\n\n\n\n\nRefers to adjustable rate data first field.\n\n\n\nThis date is required when rate change method ia set to change on scheduled dates."
           format: date
         LastRateChangeDt:
           type: string
-          description: "Date on which the last rate was adjusted.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the last rate was adjusted.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         PriorRate:
           type: number
@@ -898,7 +993,7 @@ components:
         NameIdent:
           maxLength: 36
           type: array
-          description: "Name identification value to identify the names related to the account address.\n\n**Note:** This field identifies the primary customer's name to use for the account. \n\nSend 0 to use the customer-level name (which may be the CIF primary name or the CIF alternate name).\n\nSend 1-99 to identify the primar customer's alternate name to use for account correspondence. The alternate name must exist on the system for the customer. "
+          description: "Name identification value to identify the names related to the account address.\n\n\n\n**Note:** This field identifies the primary customer's name to use for the account. \n\n\n\nSend 0 to use the customer-level name (which may be the CIF primary name or the CIF alternate name).\n\n\n\nSend 1-99 to identify the primar customer's alternate name to use for account correspondence. The alternate name must exist on the system for the customer. "
           items: {}
         AddressIdent:
           maxLength: 36
@@ -906,7 +1001,7 @@ components:
           description: Unique address identification value.
         AddrType:
           type: string
-          description: "Type of the address. \n\n\n\n**Note:** The address identified in the AddressIdent field is considered as primary address tied to the loan account."
+          description: "Type of the address. \n\n\n\n\n\n\n\n**Note:** The address identified in the AddressIdent field is considered as primary address tied to the loan account."
           enum:
           - Primary
     addAccountRequest_LoanAcctInfo_IntReporting1099Data_CurAmt:
@@ -916,7 +1011,7 @@ components:
           type: number
           description: Amount in decimal format.
         CurCode:
-          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCollectedAmt_CurCode'
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: Details of the currency amount.
     addAccountRequest_LoanAcctInfo_IntReporting1099Data_ReportAmt:
       properties:
@@ -935,7 +1030,7 @@ components:
       properties:
         IRSReportOption:
           type: string
-          description: "Option that indicates the people must be included in the report as primary, secondary or both.\n\n**Note:** Refers to IRS notice option. "
+          description: "Option that indicates the people must be included in the report as primary, secondary or both.\n\n\n\n**Note:** Refers to IRS notice option. "
           enum:
           - Primary
           - Secondary
@@ -945,7 +1040,11 @@ components:
           description: |-
             Code that indicates why the debt was discharged.
 
+
+
             This field is applicable when it is report 1099-C or combined report 1099-CA.
+
+
 
             **Note:** Refers to identifiable event.
           enum:
@@ -962,7 +1061,7 @@ components:
           - OtherDischarge
         EventDt:
           type: string
-          description: "Date when the debt was discharged.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to date of indifiable event."
+          description: "Date when the debt was discharged.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to date of indifiable event."
           format: date
         LiabilityInd:
           type: boolean
@@ -974,7 +1073,7 @@ components:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_IntReporting1099Data_ReportAmt'
         AcquisitionDt:
           type: string
-          description: "Date of loan acquistion.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date of loan acquistion.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         DebtDesc:
           maxLength: 200
@@ -993,6 +1092,8 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
@@ -1004,6 +1105,8 @@ components:
           type: number
           description: |-
             Amount in decimal format.
+
+
 
             Example: 10.00
         CurCode:
@@ -1017,7 +1120,11 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
+
+
 
             **Note:** The highest amount for the last tier is 999999999.99
         CurCode:
@@ -1031,7 +1138,11 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
+
+
 
             **Note:** Refers to the base fee amount to charge for the tier.
         CurCode:
@@ -1043,6 +1154,8 @@ components:
           type: string
           description: |-
             Name of the tier in rate matrix.
+
+
 
             **Note:** In Presicion fee record can repeat upto 10 records.
           enum:
@@ -1061,6 +1174,8 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
       description: Details of minimum fee amount.
     addAccountRequest_LoanAcctInfo_MaxCurAmt:
@@ -1070,6 +1185,8 @@ components:
           type: number
           description: |-
             Amount in decimal format.
+
+
 
             Example: 10.00
       description: Details of maximum fee amount.
@@ -1082,12 +1199,14 @@ components:
           - Monthly
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle. \n\nThe default value is set to 1."
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\n\n\nFor example:\n\n\n\n- If Daily: Number of days between occurrences\n\n\n\n- If Weekly: Number of weeks between occurrences\n\n\n\n- If Monthly: Number of months between occurrences \n\n\n\n- If Yearly: Number of years between occurrences\n\n\n\n- If Cycle: Number of the designated cycle. \n\n\n\nThe default value is set to 1."
           format: int64
         DayOfMonth:
           type: string
           description: |-
             Numeric value representing the day of the month of occurrence.
+
+
 
             **Note:** Value for this field can only be set to 31st.
           enum:
@@ -1101,7 +1220,11 @@ components:
           description: |-
             Start date and time value.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
 
             Example: 2021-01-31T23:59:59.999
         EndDt:
@@ -1110,7 +1233,11 @@ components:
           description: |-
             End date and time value.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
 
             Example: 2021-01-31T23:59:59.999
         RecurRule:
@@ -1130,7 +1257,7 @@ components:
           format: int64
         TermUnits:
           type: string
-          description: "Units to define the term of the account. \n\n\n\n"
+          description: "Units to define the term of the account. \n\n\n\n\n\n\n\n"
           enum:
           - Months
       description: Term details for a deposit account.
@@ -1161,6 +1288,8 @@ components:
           description: |-
             Unique identifier of fee.
 
+
+
             **Note:** This field identifies which fee needs to be added, loan fee or deferred fee.
         FeePlan:
           type: string
@@ -1169,17 +1298,33 @@ components:
 
 
 
+
+
+
+
             **Note:** Refers to fee code. Additional values are client-defined.
+
+
 
             Values for this field:
 
+
+
             - FASB91Income, FASB91Expense, and PrinVariance are applicable only when FeeType is DeferredFee
+
+
 
             - MinAdvanceFee, UnusedCommitment, MinimumCharge, and MiscPayoffFee are applicable only when FeeType is FeeCharge
 
+
+
             A loan may have multiple instances of DeferredFee using the same FeePlan. Precision assigns a unique sequence number to each DeferredFee on the account.
 
+
+
             A loan can have only one fee charge per FeePlan.
+
+
 
           enum:
           - FASB91Income
@@ -1191,7 +1336,7 @@ components:
           - MiscPayoffFee
         FeeType:
           type: string
-          description: "Type of fee.\n\n**Note:** \n\n- Value \"LateFee\" refers to late charge \n\n- Value \"PayOff\" refers to payoff fee options\n\n- FeePlan is required to add a DeferredFee or FeeCharge\n\nUse DeferredFee to add a deferred fee or deferred interest charge to the account and use FeeCharge to add a fee or a memo.\n\n(A fee is charged and collected with payments or at payoff.\n\nA memo amount is stored for information only.)"
+          description: "Type of fee.\n\n\n\n**Note:** \n\n\n\n- Value \"LateFee\" refers to late charge \n\n\n\n- Value \"PayOff\" refers to payoff fee options\n\n\n\n- FeePlan is required to add a DeferredFee or FeeCharge\n\n\n\nUse DeferredFee to add a deferred fee or deferred interest charge to the account and use FeeCharge to add a fee or a memo.\n\n\n\n(A fee is charged and collected with payments or at payoff.\n\n\n\nA memo amount is stored for information only.)"
           enum:
           - LateFee
           - Payoff
@@ -1204,6 +1349,10 @@ components:
           type: string
           description: |-
             Processing option for fee type.
+
+
+
+
 
 
 
@@ -1228,11 +1377,11 @@ components:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_MaxCurAmt'
         NextFeeDt:
           type: string
-          description: "Date for next fee.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date for next fee.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         LastFeeDt:
           type: string
-          description: "Date for last fee.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date for last fee.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         TimeFrame:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_TimeFrame'
@@ -1248,11 +1397,15 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             **Note:** Refers to risk assessment amount.
+
+
 
             Either loan amount or loan percentage is accessed, not both.
         CurCode:
-          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCollectedAmt_CurCode'
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: Details of the rated loan amount.
     addAccountRequest_LoanAcctInfo_CreditRisk:
       required:
@@ -1260,7 +1413,7 @@ components:
       properties:
         RiskCategory:
           type: string
-          description: "Type of credit risk category. \n\n**Note:** RiskCode refers to Risk Rating. Precision allows mulitple Risk Rating instances. CreditScore refers to Fico score value. Precision allows one instance of Fico score. The 'RatingCode' values can be used to indicate the risk ratings (1,2,3 … etc.) for the RiskCode."
+          description: "Type of credit risk category. \n\n\n\n**Note:** RiskCode refers to Risk Rating. Precision allows mulitple Risk Rating instances. CreditScore refers to Fico score value. Precision allows one instance of Fico score. The 'RatingCode' values can be used to indicate the risk ratings (1,2,3 … etc.) for the RiskCode."
           enum:
           - CreditScore
           - RiskCode
@@ -1272,10 +1425,12 @@ components:
           description: |-
             Internal credit risk rating to assess the credit risk of customer.
 
+
+
             **Note:** Refers to Fico Score. This field should be passed in the request when the RiskCategory is 'CreditScore'
         ScoreGeneratedDt:
           type: string
-          description: "Date when risk score is generated.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date when risk score is generated.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         LoanAmt:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanAmt'
@@ -1284,7 +1439,11 @@ components:
           description: |-
             Percentage value of the rated loan.
 
+
+
             **Note:** Refers to risk assessment loan percentage.
+
+
 
             Either loan amount or loan percentage is accessed, not both.
     addAccountRequest_LoanAcctInfo_AccessLevelData:
@@ -1305,6 +1464,8 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
@@ -1314,7 +1475,7 @@ components:
       properties:
         MaxLoanPercent:
           type: number
-          description: "Maximum percentage of loan that is allowed to increase using  negative amortization processing. \n\n**Note:** Refers to balance capitalization."
+          description: "Maximum percentage of loan that is allowed to increase using  negative amortization processing. \n\n\n\n**Note:** Refers to balance capitalization."
         PaymentCap:
           type: number
           description: Percentage increase requested by customer instead of fully amortized payment.
@@ -1323,12 +1484,16 @@ components:
           description: |-
             Number of months that are elapsed before the loan is fully reamortized.
 
+
+
             **Note:** Refers to Initial Re-Amortization Frequency.
           format: int64
         ReamortizationInterval:
           type: integer
           description: |-
             Number of months that are required for full amortization.
+
+
 
             **Note:** Refers to Re-Amortization Frequency .
           format: int64
@@ -1338,10 +1503,12 @@ components:
           format: int64
         NextFullyReamortizationDt:
           type: string
-          description: "Next date for full reamortization.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Next date for full reamortization.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
       description: |-
         Information related to negative amortization.
+
+
 
         **Note:** Negative amortization is allowed only if the AccrualMethod is AmortizedBalance.
     addAccountRequest_LoanAcctInfo_Term_1:
@@ -1355,7 +1522,7 @@ components:
           format: int64
         TermUnits:
           type: string
-          description: "Units to define the term of the account. \n\n\n\n"
+          description: "Units to define the term of the account. \n\n\n\n\n\n\n\n"
           enum:
           - Months
       description: Term details for a deposit account.
@@ -1366,6 +1533,8 @@ components:
           type: number
           description: |-
             Amount in decimal format.
+
+
 
             Example: 10.00
         CurCode:
@@ -1379,7 +1548,11 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
+
+
 
             **Note:** Refers to insured amount.
         CurCode:
@@ -1393,6 +1566,8 @@ components:
           description: |-
             Unique identifier of a product to indicate the processing options of account.
 
+
+
             **Note:** For Credit Life, Accident & Heath, or Other Insurance, identifes the rate table.
         InsuranceType:
           type: string
@@ -1403,7 +1578,7 @@ components:
           - Other
         InsuranceCalcOption:
           type: string
-          description: "Option for insurance calculation.\n\n**Note:** Refers to Method which identifies the accrual method for earning insurance premiums. \n\nValue 9 cannot be used by CreditLife.\n\nValues  3, 4, and 9 cannot be used by Other insurance.  \n\nValue 5 cannot be used by Accident&Health."
+          description: "Option for insurance calculation.\n\n\n\n**Note:** Refers to Method which identifies the accrual method for earning insurance premiums. \n\n\n\nValue 9 cannot be used by CreditLife.\n\n\n\nValues  3, 4, and 9 cannot be used by Other insurance.  \n\n\n\nValue 5 cannot be used by Accident&Health."
           enum:
           - "0"
           - "1"
@@ -1434,11 +1609,13 @@ components:
           description: |-
             Number of term units for which a balloon term loan is effective.
 
+
+
             **Note:** Refers to balloon amortization term.
           format: int64
         TermUnits:
           type: string
-          description: "Units to define the balloon term of the account. \n\n\n\n"
+          description: "Units to define the balloon term of the account. \n\n\n\n\n\n\n\n"
           enum:
           - Months
       description: Term details for balloon payment.
@@ -1450,13 +1627,15 @@ components:
           description: |+
             Type of account identifiers.
 
+
+
           enum:
           - AcctNum
         AcctIdentValue:
           maxLength: 36
           type: string
           description: Account identification value.
-      description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. \n\n**Note:** Send AcctIdent when the loan payments are made from an external ACH account."
+      description: "Unique identifier of an account record.\n\n\n\nOther account identifiers used as part of the account object key. \n\n\n\n**Note:** Send AcctIdent when the loan payments are made from an external ACH account."
     addAccountRequest_LoanAcctInfo_LoanBilling_FromAcctKeys:
       required:
       - AcctId
@@ -1468,11 +1647,17 @@ components:
           description: |-
             Unique identification number of an account record.
 
+
+
             **Note:** Refers to internal account identifier.
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -1486,13 +1671,13 @@ components:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_FromAcctKeys_AcctIdent'
         FIIdentType:
           type: string
-          description: "Identification type for the financial institution.\n\n**Note:** Precision uses routing number to identify the external bank. \n\nThis field is sent if loan payments are made from external ACH account\n\n"
+          description: "Identification type for the financial institution.\n\n\n\n**Note:** Precision uses routing number to identify the external bank. \n\n\n\nThis field is sent if loan payments are made from external ACH account\n\n\n\n"
           enum:
           - RoutingNum
         FIIdent:
           maxLength: 34
           type: string
-          description: "Unique identifier for a financial institute.\n\n**Note:** Refers to ACH Bank. \n\nThis field is sent if loan payments are made from external ACH account"
+          description: "Unique identifier for a financial institute.\n\n\n\n**Note:** Refers to ACH Bank. \n\n\n\nThis field is sent if loan payments are made from external ACH account"
         TrnCode:
           type: string
           description: Code for transaction.
@@ -1501,13 +1686,19 @@ components:
           description: |-
             Code to identify the ACH transaction.
 
+
+
             **Note:** This field is sent if loan payments are made from external ACH account.
         ACHReceivingType:
           type: string
           description: |-
             Type of ACH account to indicate if an account is commercial or consumer.
 
+
+
             **Note:** Refers to ACH Type.
+
+
 
             This field is sent if loan payments are made from external ACH account.
           enum:
@@ -1519,7 +1710,7 @@ components:
           description: Description of ACH company entry.
         SameDayInd:
           type: boolean
-          description: Flag to indicate if the ACH transaction is processed on the same day.
+          description: Flag to indicate the ACH transaction is processed on the same day.
       description: Unique information to identify the checking or saving account that is debited automatically for payments.
     addAccountRequest_LoanAcctInfo_LoanBilling_AddtlPrincipalAmt:
       type: object
@@ -1528,7 +1719,7 @@ components:
           type: number
           description: Amount in decimal format.
         CurCode:
-          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCollectedAmt_CurCode'
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: Details of additional principal amount.
     addAccountRequest_LoanAcctInfo_LoanBilling:
       type: object
@@ -1538,13 +1729,19 @@ components:
           description: |-
             Code to identify coupon applicable for the account.
 
+
+
             **Note:** Values 1-99 are client-defined.
+
+
 
             Value "0" means the coupons are not used.
         HandlingCode:
           type: string
           description: |-
             Handling code used for special routing of all correspondence involving the account.
+
+
 
             **Note:** This field indicates if the coupon books requires any special handling after being processed.
         FromAcctKeys:
@@ -1553,7 +1750,7 @@ components:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AddtlPrincipalAmt'
         AutoPmtRetryOption:
           type: string
-          description: "Retry option for automatic payment.\n\n**Note:** Calling application (FI) should send the values setup in Precision as ESF does not transform the values provided in request. \n\nFor internal account transfer payments, refers to Curtailment Retry Option (send '0' in case of No Retry and '1' in case of Retry). For ACH payments, the field refers to ACH Retry (send 'yes' in case of Retry and 'no' in case of No Retry)."
+          description: "Retry option for automatic payment.\n\n\n\n**Note:** Calling application (FI) should send the values setup in Precision as ESF does not transform the values provided in request. \n\n\n\nFor internal account transfer payments, refers to Curtailment Retry Option (send '0' in case of No Retry and '1' in case of Retry). For ACH payments, the field refers to ACH Retry (send 'yes' in case of Retry and 'no' in case of No Retry)."
         DaysDraftDelay:
           type: integer
           description: Number of days after the scheduled payment due date to generate an auto debit transaction.
@@ -1566,7 +1763,7 @@ components:
       properties:
         RecurType:
           type: string
-          description: "Recurrence type indicates the pattern of recurrence. \n\n**Note:** Refers to Mode. \n\nValue \"TwiceMonthly\" refers to semimonthly."
+          description: "Recurrence type indicates the pattern of recurrence. \n\n\n\n**Note:** Refers to Mode. \n\n\n\nValue \"TwiceMonthly\" refers to semimonthly."
           enum:
           - Monthly
           - Weekly
@@ -1577,9 +1774,17 @@ components:
           description: |-
             Recurrence interval between two successive occurrences of statement generation.
 
+
+
             For example, if the recurrence type value is set to 'monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
 
+
+
             The default value is set to 1.
+
+
+
+
 
 
 
@@ -1587,14 +1792,18 @@ components:
           format: int64
         RecurStartDate:
           type: string
-          description: "Date when the rate change becomes effective.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to first payment date in schedule."
+          description: "Date when the rate change becomes effective.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to first payment date in schedule."
           format: date
         Occurrences:
           type: integer
           description: |-
             Occurrence of the recur rule.
 
+
+
             **Note:** Refers to number of payments in schedule.
+
+
 
             Precision accepts a max occurrence of 9999.
           format: int64
@@ -1615,11 +1824,15 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             **Note:** Refers to the loan payment schedule amount.
+
+
 
             This amount not include Escrow account.
         CurCode:
-          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCollectedAmt_CurCode'
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: Details of the currency amount.
     addAccountRequest_LoanAcctInfo_EscrowAmt_CurCode:
       required:
@@ -1628,19 +1841,16 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: |-
-            Currency code value as per the ISO4217-Alpha format.
-
-
-
-            Presently only USD currency code is supported.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\n **Note:** Only USD currency code is supported.\n\n"
       description: |+
         Details of currency code.
+
+
 
     addAccountRequest_LoanAcctInfo_EscrowAmt:
       type: object
@@ -1649,6 +1859,8 @@ components:
           type: number
           description: |-
             Amount in decimal format.
+
+
 
             **Note:** Refers to escrow payment schedule amount.
         CurCode:
@@ -1661,6 +1873,8 @@ components:
           description: |-
             Unique identifier of the payment schedule used to identify the payment schedule number in case of multiple schedules for a loan.
 
+
+
             **Note:** Refers to payment sequence.
           enum:
           - Is this needed on Add?
@@ -1672,14 +1886,18 @@ components:
           format: int64
         NextPmtDt:
           type: string
-          description: "Date of next interest payment for the account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date of next interest payment for the account.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         PmtAmtOption:
           type: string
           description: |-
             Option for payment amount.
 
+
+
             **Note:** Value "PrincipalAndInterest" refers to regular payment type.
+
+
 
             Applicable for loan payment schedule and does not include escrow account.
           enum:
@@ -1710,7 +1928,7 @@ components:
       properties:
         PmtDt:
           type: string
-          description: "Date on which the last payment was made.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the last payment was made.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
       description: Details of the upcoming payment.
     addAccountRequest_LoanAcctInfo_LastPmt:
@@ -1718,7 +1936,7 @@ components:
       properties:
         PmtDt:
           type: string
-          description: "Date on which the last payment was made.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the last payment was made.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
       description: Details of the last payment made.
     addAccountRequest_LoanAcctInfo_ReviewPlanData:
@@ -1729,14 +1947,16 @@ components:
           description: |-
             Unique identifier to match rate change plans and payment review plans when a system can handle the definition of multiple plans for reviewing rate and payment amount.
 
+
+
             **Note:** This field identifies the adjustable rate schedule to associate with the  review plan. The system matches the  ReviewPlanData /ReviewPlanIdent value with /RateChangeData/ReviewPlanIdent value to build the adjustable rate schedule on Precision.
         ReviewPlanStartDt:
           type: string
-          description: "Date on which the plan to review rates and payment amounts starts.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to date sequence begins."
+          description: "Date on which the plan to review rates and payment amounts starts.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to date sequence begins."
           format: date
         ReviewPlanExpDt:
           type: string
-          description: "Date on which the plan to review rates and payment amounts expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to date sequence ends."
+          description: "Date on which the plan to review rates and payment amounts expires.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to date sequence ends."
           format: date
         ActiveCondition:
           type: string
@@ -1748,6 +1968,8 @@ components:
           description: |-
             Code for prepay penalty.
 
+
+
             **Note:** Values are client-defined.
     addAccountRequest_LoanAcctInfo_EscrowCtrlData_NoticeData:
       properties:
@@ -1755,6 +1977,10 @@ components:
           type: string
           description: |+
             Type of notice.
+
+
+
+
 
 
 
@@ -1772,6 +1998,8 @@ components:
           description: |-
             Handling code used for special routing of all correspondence involving the account.
 
+
+
             **Note:** Values are client-defined.
     addAccountRequest_LoanAcctInfo_EscrowCtrlData:
       type: object
@@ -1781,6 +2009,8 @@ components:
           type: string
           description: |-
             Unique identifier for escrow control.
+
+
 
             **Note:** Refers to General Ledger code. The codes are client-defined, and each code cross-references to a GL account.
         EscrowAnalysisType:
@@ -1792,18 +2022,20 @@ components:
           - AnalyzeWithoutUpdate
         EscrowAnalysisBalOption:
           type: string
-          description: "Option for balance analysis.\n\n**Note:** Refers to Analysis Option. Values are client-defined. \n\n"
+          description: "Option for balance analysis.\n\n\n\n**Note:** Refers to Analysis Option. Values are client-defined. \n\n\n\n"
         EscrowDtlStatus:
           type: string
           description: |-
             Status of the escrow.
+
+
 
             **Note:** If no value is sent, the system will set the escrow status to Active.
           enum:
           - Active
         OpenDt:
           type: string
-          description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the account record is created.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         NoticeData:
           type: array
@@ -1813,16 +2045,18 @@ components:
       description: |-
         Details of escrow control data that includes escrow analysis, overdraft escrow balance instructions and payment information for the interest bearing escrow and non-interest-interest bearing escrow balances.
 
+
+
         **Note:** IntBearingEscrow/Index is required to estabish the escrow record for the loan.
     addAccountRequest_LoanAcctInfo_IntBearingEscrow:
       type: object
       properties:
         Rate:
           type: number
-          description: "Current interest rate for the account.\n\n**Note:** Refers to the Earnings Rate that will be applied on the escrow balance. "
+          description: "Current interest rate for the account.\n\n\n\n**Note:** Refers to the Earnings Rate that will be applied on the escrow balance. "
         Index:
           type: integer
-          description: "Code that indicate the which rate is to be used for the account.\n\n**Note:** Refers to Cycle/Rate Code.  Values are client-defined.  \n\nThis field is required to establish an escrow record on Precision."
+          description: "Code that indicate the which rate is to be used for the account.\n\n\n\n**Note:** Refers to Cycle/Rate Code.  Values are client-defined.  \n\n\n\nThis field is required to establish an escrow record on Precision."
           format: int64
         AccrualMethod:
           type: string
@@ -1850,12 +2084,16 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
+
+
 
             **Note:** Refers to prepaid amount.
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
-      description: "Details of the dealer reserve amount.\n\nThis amount represents different values depending on the dealer reserve method for the loan: \n\n- As Collected/As Earned: Amount of reserve earned that is due to the dealer \n\n- Prepaid: Amount of the original prepaid reserve that has not yet been earned for the loan"
+      description: "Details of the dealer reserve amount.\n\n\n\nThis amount represents different values depending on the dealer reserve method for the loan: \n\n\n\n- As Collected/As Earned: Amount of reserve earned that is due to the dealer \n\n\n\n- Prepaid: Amount of the original prepaid reserve that has not yet been earned for the loan"
     addAccountRequest_LoanAcctInfo_DealerFixedFeeAmt:
       type: object
       properties:
@@ -1863,6 +2101,8 @@ components:
           type: number
           description: |-
             Amount in decimal format.
+
+
 
             **Note:** Refers to dealer fixed fee.
       description: Details of the fixed fee amount paid to the dealer.
@@ -1873,7 +2113,7 @@ components:
           type: number
           description: Amount in decimal format.
         CurCode:
-          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCollectedAmt_CurCode'
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: Details of the maximum amount that can be paid to the dealer.
     addAccountRequest_LoanAcctInfo_Dealer:
       properties:
@@ -1883,11 +2123,17 @@ components:
           description: |-
             Unique identification of a dealer.
 
+
+
             **Note:** Refers to dealer number.
         DealerReserveType:
           type: string
           description: |-
             Type of dealer reserve.
+
+
+
+
 
 
 
@@ -1897,11 +2143,15 @@ components:
           description: |-
             Value of the annual percentage rate at which a dealer earns interest.
 
+
+
             **Note:** Refers to dealer rate.
         DealerReserveMethod:
           type: string
           description: |-
             Method for dealer reserve.
+
+
 
             **Note:** Precision supports Prepaid. Refers to the amount paid to the dealer up front. Valid for all  Dealer Reserve Types except 3 - Simple Interest or Dealer Condition = F - Floor Plan.
           enum:
@@ -1948,7 +2198,7 @@ components:
       properties:
         Amt:
           type: number
-          description: "Amount in decimal format.\n\nExample: 10.00\n\n**Note:** Refers to loan limit amount for credit limit or advance limit loan. "
+          description: "Amount in decimal format.\n\n\n\nExample: 10.00\n\n\n\n**Note:** Refers to loan limit amount for credit limit or advance limit loan. "
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: Details of the limit amount associated with the LOC advance.
@@ -1990,13 +2240,19 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             Example: 10.00
+
+
 
             **Note:** Refers to points paid.
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: |-
         Details of the dollar amount of mortgage points paid that is
+
+
 
         reportable for the year.
     addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_PostAddr:
@@ -2025,7 +2281,7 @@ components:
           description: Postal code or zip code.
         AddrType:
           type: string
-          description: "Type of the address. \n\n"
+          description: "Type of the address. \n\n\n\n"
           enum:
           - Primary
         CensusTract:
@@ -2049,6 +2305,8 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
             **Note:** Refers to CRA gross annual income.
         CurCode:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_EscrowAmt_CurCode'
@@ -2065,7 +2323,11 @@ components:
           description: |-
             Code that indicates the reporting status of the loan to FHA or FHLB
 
+
+
             **Note:** Refers to consumer mortgage which identifies that the account require statements.
+
+
 
             Values are client-defined.
     addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_CRAData:
@@ -2078,6 +2340,8 @@ components:
           type: string
           description: |-
             Category for CRA repporting.
+
+
 
             **Note:** Refers to CRA record ID.
           enum:
@@ -2129,12 +2393,16 @@ components:
           description: |-
             Value that indicates the type of real state code.
 
+
+
             Some real state codes require 1098 Tax Form to be generated.
+
+
 
             **Note:** RealEstateCode is a Client-Defined field with default value as 0 (that is used for a loan account which does not correspond to a real estate loan). FI should setup the Real Estate Codes directly in Precision (Parameters --> Loans -->Real Estate Codes). Values 1-19 would generate the IRS form 1098 with details of interest/expenses on mortgage in Precision (for purpose of reporting), while values 20-99 won’t generate the IRS 1098 form.
         InsurancePaidAmt:
           type: number
-          description: "Amount of mortgage insurance paid on this real estate loan at the time of origination.\n\nThis information may be included on the 1098 form for the year if the Real Estate code produces 1098 Tax Form. "
+          description: "Amount of mortgage insurance paid on this real estate loan at the time of origination.\n\n\n\nThis information may be included on the 1098 form for the year if the Real Estate code produces 1098 Tax Form. "
         PostAddr:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_PostAddr'
         FIPSStateCode:
@@ -2159,6 +2427,8 @@ components:
           description: |-
             Unique identification number of a party record.
 
+
+
             **Note:** Refers to the Credit Bureau Party Id for the customer that you want to set credit bureau fields for on the loan.  The first customer will set the primary loan customer credit bureau information and any additional customers sent will have the secondary credit bureau information set.  This field will be required in Precision to ensure the credit bureau information is assigned to the correct customer.
       description: Unique information to identify the party record.
     addAccountRequest_LoanAcctInfo_CreditBureauAcctData_CountryCode:
@@ -2173,7 +2443,13 @@ components:
 
 
 
+
+
+
+
             For example, as per IRS country codes, country code of Canada is CA.
+
+
 
             **Note:** Values are defined by the user (free-form text).
       description: Country code details of the account holder.
@@ -2188,11 +2464,15 @@ components:
           description: |-
             Flag to indicate the customer is to be included in the credit bureau report.
 
+
+
             **Note:** This field is applicable for secondary customers.
         BureauTransactionType:
           type: string
           description: |-
             Type of bureau transaction.
+
+
 
             **Note:** Refers to credit bureau consumer transaction type.
         ECOACode:
@@ -2202,6 +2482,8 @@ components:
           type: string
           description: |-
             Code for credit bureau consumer.
+
+
 
             **Note:** Refers to consumer information indicator.
         CountryCode:
@@ -2217,6 +2499,8 @@ components:
           description: |-
             Value that indicates the address is in use.
 
+
+
             **Note:** Refers to address indicator.
         CommentDesc:
           maxLength: 240
@@ -2230,12 +2514,18 @@ components:
 
 
 
+
+
+
+
             Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+
 
             Example: 2021-01-31T23:59:59.999
         NotificationDt:
           type: string
-          description: "Date when the bankruptcy notification is received.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date when the bankruptcy notification is received.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         BankruptcyInd:
           type: boolean
@@ -2257,21 +2547,27 @@ components:
           description: |-
             Frequency of loan payments.
 
+
+
             **Note:** Refers to terms frequency.
         BalloonPmtAmt:
           type: number
           description: |-
             Amount of balloon payment amount.
 
+
+
             **Note:** Refers to reported balloon payment amount.
         FirstDelinquencyDt:
           type: string
-          description: "Date for first deliquency date.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to FCRA Compliance date."
+          description: "Date for first deliquency date.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to FCRA Compliance date."
           format: date
         PmtRating:
           type: string
           description: |-
             Payment Rating
+
+
 
             **Note:** Values are client-efined.
         CreditBureauPartyData:
@@ -2291,6 +2587,8 @@ components:
           description: |-
             Code to specify borrower's academic status or loan status.
 
+
+
             **Note:** Values are client-defined.
       description: Details of the student loan data.
     addAccountRequest_LoanAcctInfo_ForbearanceConditions:
@@ -2299,7 +2597,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when forbearance conditions are changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Effective date and time when forbearance conditions are changed. \n\n\n\n\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
         ConditionType:
           type: string
           description: Type of conditions.
@@ -2316,7 +2614,7 @@ components:
           type: number
           description: Amount in decimal format.
         CurCode:
-          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCollectedAmt_CurCode'
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
       description: Amount of penalty due to the FTA.
     addAccountRequest_LoanAcctInfo_SBAData:
       type: object
@@ -2326,6 +2624,8 @@ components:
           type: string
           description: |-
             Name of the district.
+
+
 
             **Note:** Values are client-defined.
         SBAStatus:
@@ -2358,13 +2658,19 @@ components:
           description: |-
             Percentage of the servicing fee.
 
+
+
             **Note:** Refers to servicing fee percent.
         BasisPointFeeAmt:
           type: number
           description: |-
             Amount of basis point fee that is used to calculate the fee that is due to the SBA.
 
+
+
             **Note:** Value should be in decimal.
+
+
 
             Example: ".99999"
         GuaranteePct:
@@ -2378,11 +2684,15 @@ components:
       properties:
         Brand:
           type: string
-          description: "Name of the brand.\n\n**Note:** Values are client-defined. \n\nThis field applies to the Loan account only. If an escrow record is created for this loan, it will be established with the default brand for the escrow type, if defined.\n\n\n\n"
+          description: "Name of the brand.\n\n\n\n**Note:** Values are client-defined. \n\n\n\nThis field applies to the Loan account only. If an escrow record is created for this loan, it will be established with the default brand for the escrow type, if defined.\n\n\n\n\n\n\n\n"
         AcctDtlStatus:
           type: string
           description: |-
             Current status of an account.
+
+
+
+
 
 
 
@@ -2397,7 +2707,12 @@ components:
           - Closed
         AcctIdent:
           type: array
-          description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. \n\n**Note:** If AcctIdent is not sent, then the system will generate a new account number for the loan."
+          description: |-
+            Information related to identifier of an account record used as alternative identifier.
+
+
+
+            **Note:** If AcctIdent is not sent, then the system will generate a new account number for the loan.
           items:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AcctIdent'
         ProductIdent:
@@ -2406,19 +2721,33 @@ components:
           description: |-
             Unique identifier of a product to indicate the processing options of account.
 
+
+
             **Note:** *Required field*
+
+
+
+
 
 
 
             - Refers to Loan Type code
 
+
+
             - Values from 1-99 are client defined
+
+
 
             - Required to open a new account on Precision
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -2429,21 +2758,21 @@ components:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount'
         OpenDt:
           type: string
-          description: "Date on which the account record is created.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         IntAccrualStartDt:
           type: string
-          description: "Start date for interest accrual.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** \n\n- This date cannot be more than six months from the OpenDt in case of SimpleAccrualMethod or AmortizedAccrualMethod. Otherwise this date should be same as OpenDt\n\n- If this date is not provided, then Precision uses the current processing date "
+          description: "Start date for interest accrual.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** \n\n\n\n- This date cannot be more than six months from the OpenDt in case of SimpleAccrualMethod or AmortizedAccrualMethod. Otherwise this date should be same as OpenDt\n\n\n\n- If this date is not provided, then Precision uses the current processing date "
           format: date
         ClosedDt:
           type: string
-          description: "Date on which the account is closed.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the account is closed.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         Term:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_Term'
         MaturityDt:
           type: string
-          description: "Date of maturity of a loan account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date of maturity of a loan account.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         FeeCollectedAmt:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCollectedAmt'
@@ -2453,15 +2782,23 @@ components:
           description: |+
             Last contact date when the Financial Institution contacted the customer for loan account.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
+
+
             Example: 2021-01-31T23:59:59.999
+
+
 
         DateData:
           type: array
           description: Details of additional date types and values associated with the account.
           items:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DateData'
+          enum:
+          - Remove this aggregate
         RelationshipMgr:
           type: array
           description: Information about the financial institution officers who have management-related responsibilities of the account.
@@ -2471,9 +2808,13 @@ components:
           maxLength: 32
           type: string
           description: |-
-            Branch that primarily created the account with the party
+            Branch in which the account is primarily created for the party.
+
+
 
             **Note:** This field is applicable for both loan and escrow record, if any.
+
+
 
             If escrow record is created for the loan, then the branch for loan is same for escrow record.
         Nickname:
@@ -2484,6 +2825,8 @@ components:
           type: string
           description: |+
             Printing option for the account title.
+
+
 
           enum:
           - SecondLine
@@ -2502,14 +2845,18 @@ components:
           description: |-
             Handling code used for special routing of all correspondence involving the account.
 
+
+
             **Note:** This field will be depricated in the future. Instead of using this field, use "DocDistributionOption" field. If both fields are sent in the request system will use the value sent in the "DocDistributionOption" field.
         AccountingMethod:
           type: string
-          description: "Method to define which accounts are integrated into the general ledger. \n\n**Note:** Refers to general ledger code. The codes are client-defined, and each code cross-references to a GL account."
+          description: "Method to define which accounts are integrated into the general ledger. \n\n\n\n**Note:** Refers to general ledger code. The codes are client-defined, and each code cross-references to a GL account."
         ClassCode:
           type: string
           description: |-
             Code to group accounts for the purpose of processing and reporting.
+
+
 
             **Note:** Refers to customer type.
 
@@ -2541,6 +2888,8 @@ components:
           description: |-
             Details of frequency for interest rate adjustment.
 
+
+
             **Note:** Precision supports the ability to add multiple adjustable rate schedules.
           items:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_RateChangeData'
@@ -2549,6 +2898,8 @@ components:
           description: |-
             Postal address details of the account holder.
 
+
+
             **Note:** Precision supports the ability for one of the primary owner's postal addresses to be assigned at the account-level. If more than one PostAddr instance is sent in the request, the system will record only the first instance.
           items:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PostAddr'
@@ -2556,6 +2907,10 @@ components:
           type: string
           description: |-
             Code for interest reporting.
+
+
+
+
 
 
 
@@ -2579,20 +2934,20 @@ components:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CreditRisk'
         RiskRanking:
           type: string
-          description: "Ranking value to indicate the level of risk ranging from low to high.\n\n**Note:** This field should be passed in the request if the RiskCategory is : RiskCode, RatingCode1, \n\nRatingCode2, RatingCode3 and/or any other Risk Rating."
+          description: "Ranking value to indicate the level of risk ranging from low to high.\n\n\n\n**Note:** This field should be passed in the request if the RiskCategory is : RiskCode, RatingCode1, \n\n\n\nRatingCode2, RatingCode3 and/or any other Risk Rating."
         ReportGroupCode:
           type: string
-          description: "Client-defined code to group the accounts for reporting purposes.\n\n**Note:** Refers to customer number. \n\nValues are client-defined."
+          description: "Client-defined code to group the accounts for reporting purposes.\n\n\n\n**Note:** Refers to customer number. \n\n\n\nValues are client-defined."
         DocDistributionOption:
           type: string
-          description: "Client defined method to indicate the document distribution method used for processing the notices and statement forms.\n\n\n\n**Note:** Refers to DeliveryCode. \n\nWhen a statement or notice is produced for loan account, the system uses the Delivery code to determine which director class of service code is generated in the statement or notice footer.\n\nValues are client-defined. \n\n\n\n"
+          description: "Client defined method to indicate the document distribution method used for processing the notices and statement forms.\n\n\n\n\n\n\n\n**Note:** Refers to DeliveryCode. \n\n\n\nWhen a statement or notice is produced for loan account, the system uses the Delivery code to determine which director class of service code is generated in the statement or notice footer.\n\n\n\nValues are client-defined. \n\n\n\n\n\n\n\n"
         NAICS:
           maxLength: 6
           type: string
           description: Six-digit North American Industry Classification System (NAICS) code used to indicate the type of customer based upon standard government definitions.
         CallReportCode:
           type: string
-          description: "The three-digit purpose code used to group notes for call reporting.\n\n**Note:** Values are client-defined. "
+          description: "The three-digit purpose code used to group notes for call reporting.\n\n\n\n**Note:** Values are client-defined. "
         AccessLevelData:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AccessLevelData'
         TimesExtendedNum:
@@ -2603,10 +2958,10 @@ components:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtReserveAmt'
         PurchasedLoanCode:
           type: string
-          description: "Code for purchased loan.\n\n\n\n**Note:** Values 1-99 are client-defined. \n\nValue \"0\" means the loan has not been purchased."
+          description: "Code for purchased loan.\n\n\n\n\n\n\n\n**Note:** Values 1-99 are client-defined. \n\n\n\nValue \"0\" means the loan has not been purchased."
         LastRenewalDt:
           type: string
-          description: "Date at which last renewal of an account occurred.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date at which last renewal of an account occurred.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         PurposeDesc:
           maxLength: 80
@@ -2617,7 +2972,11 @@ components:
           description: |-
             Flag to indicate the loan is secured.
 
+
+
             This field identifies the loan is collateralized by assigning to the lender the rights to an asset pledged by the borrower.
+
+
 
             **Note:** Refers to Repossess, if repossession take place on the loan.
         CollateralCode:
@@ -2625,13 +2984,19 @@ components:
           description: |-
             Code that identifies the collateral is secured.
 
+
+
             **Note:** Values 1-99 are client-defined.
+
+
 
             Value "0" indicates the loan is not secured.
         LoanNoteType:
           type: string
           description: |-
             Code that indicates the type of loan for reporting purposes.
+
+
 
             **Note:** Refers to repayment method.
           enum:
@@ -2644,6 +3009,8 @@ components:
           description: |-
             Option for capitalization.
 
+
+
             **Note:** Refers to allow negative amortization.
           enum:
           - None
@@ -2655,6 +3022,8 @@ components:
           description: |-
             Option that indicate the credit/advance limit for the loan.
 
+
+
             **Note:** Refers to loan limit code.
           enum:
           - SingleAdvance
@@ -2665,6 +3034,8 @@ components:
           description: |-
             Details of insurance on loan.
 
+
+
             **Note:** Precision supports up to three instances of Insurance. One for each InsuranceType: Credit Life, Accident & Health, and Other.
           items:
             $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_Insurance'
@@ -2672,14 +3043,18 @@ components:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_BalloonTerm'
         BalloonAmortMaturityDt:
           type: string
-          description: "Maturity date of balloon amortization.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Maturity date of balloon amortization.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         CreditLineCode:
           type: string
           description: |-
             Code for credit line.
 
+
+
             **Note:** Values 1-99 are client-defined.
+
+
 
             Value "0" indicates the loan is not a credit line account.
         CreditLineCycle:
@@ -2687,11 +3062,13 @@ components:
           description: |-
             Cycle for the credit line.
 
+
+
             **Note:** Values are client-defined.
           format: int64
         NextAnniversaryFeeDt:
           type: string
-          description: "Next anniversary fee date for credit line.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Next anniversary fee date for credit line.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         LoanBilling:
           $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling'
@@ -2699,6 +3076,8 @@ components:
           type: array
           description: |-
             Details of payment schedule.
+
+
 
             **Note:** If an escrow record needs to be established for the loan, at least one PmtSched instance must include an EscrowAmt. When EscrowAmt is included in a PmtSched instance, the system will add the payment schedule to the Escrow record for this loan account, using the same details used to build the loan payment schedule.
           items:
@@ -2723,7 +3102,11 @@ components:
           description: |-
             Details of review plan.
 
+
+
             A plan that boundles together the RateChange and PmtTermReview and specifies the period in which this plan is active.
+
+
 
             **Note:** Refers to loan adjustable sequence schedules for adjustable rates.
           items:
@@ -2762,6 +3145,8 @@ components:
       description: |-
         Details of the loan account.
 
+
+
         **Note:** Use this service to add a new loan account. The Precision Permanent Finance feature is not currently supported by this service.
     addAccountResponse_AcctStatusRec_AcctKeys:
       required:
@@ -2776,6 +3161,10 @@ components:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 

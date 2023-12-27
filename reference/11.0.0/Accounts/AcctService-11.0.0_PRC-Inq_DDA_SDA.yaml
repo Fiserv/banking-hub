@@ -12,7 +12,7 @@ paths:
       tags:
       - Get Accounts
       summary: Get Accounts.
-      description: "Get Account API retrieves the details of the Demand Deposit Account (DDA) and Saving Account (SDA), such as date data, fee data, and statement cycles and handling.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: Get Account API retrieves the details of the Demand Deposit Account (DDA) and Saving Account (SDA), such as date data, fee data, and statement cycles and handling.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
       operationId: getAccountsSecured
       parameters:
       - name: EFXHeader
@@ -91,6 +91,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -301,7 +302,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -385,9 +386,19 @@ components:
 
 
 
+
+
+
+
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
+
+
             **Note:** *Required field*
+
+
+
+
 
 
 
@@ -403,7 +414,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel_AcctKeys'
-      description: Details of selected account.
+      description: Details of the selection criteria used for account inquiry.
     getAccountsSecuredResponse_AcctRec_AcctKeys:
       required:
       - AcctId
@@ -417,6 +428,10 @@ components:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -437,25 +452,31 @@ components:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\n **Note:** Only USD currency code is supported.\n\n"
       description: Details of currency code.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_InitialAmount:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
         CurCode:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_InitialAmount_CurCode'
-      description: |-
-        Initial amount details of an account.
-
-        For example, the origination amount for a loan+F34 or a certificate value of a time deposit account.
+      description: Details of the certificate value of a time deposit account.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_DateData:
       properties:
         DateType:
           type: string
-          description: "Type of dates to be referenced to fetch the transaction records.  \n\n"
+          description: |+
+            Values that  indicate the type of date contained in the "DateValue" field.
+
+
+
         DateValue:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
@@ -464,7 +485,13 @@ components:
 
 
 
+
+
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
 
             Example: 2021-01-31T23:59:59.999
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_RelationshipMgr:
@@ -477,6 +504,8 @@ components:
           description: |-
             Unique identifier of a relationship manager.
 
+
+
             **Note:** Values are client-defined by application type and officer type (1, 2, 3 or 4).
         RelationshipMgrIdentEnumDesc:
           maxLength: 80
@@ -484,9 +513,7 @@ components:
           description: Description of the enumeration value in the RelationshipMgrIdent field.
         RelationshipRole:
           type: string
-          description: |+
-            Role of a relationship manager.
-
+          description: Role of a relationship manager.
           enum:
           - Officer
           - SecondOfficer
@@ -501,11 +528,27 @@ components:
 
 
 
-            **Note:** Type of ownership values 4, 5 and 6 that can be used for account titling.
+
+
+
+
+            **Note:** Refers to ownership type codes to be used for account title values:
+
+
+
+            - 4: Title (name on the account)
+
+
+
+            - 5: Title 2 (name on the account)
+
+
+
+            - 6: Title 3 (name on the account)
         AcctTitle:
           maxLength: 255
           type: string
-          description: "Title of an account to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\nFor example, John Doe CUSTODIAN"
+          description: "Title of an account to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\n\n\nFor example, John Doe CUSTODIAN"
         AcctTitleOption:
           type: string
           description: |+
@@ -513,10 +556,16 @@ components:
 
 
 
+
+
+
+
         DBAInd:
           type: boolean
           description: |-
-            Flag to indicate if the prefix DBA (Doing Business As) should be added to the title.
+            Flag to indicate the prefix DBA (Doing Business As) should be added to the title.
+
+
 
             **Note:** Only applicable to first three allowed title rows.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_ClientDefinedData:
@@ -525,7 +574,7 @@ components:
       properties:
         DataIdent:
           type: string
-          description: "Unique data identifier to identify the client-defined data item.\n\n**Note:** Precisions supports up to three DDA / SDA user-defined codes and a dynamic collection of DDA/SDA user-defined fields. \n\nUser-defined fields are grouped by data types and is interpreted by the prefixes as: udl-Boolean, udi-Numeric, udd-Currency, udc-Alpha \n\nand uddt- Date."
+          description: "Unique data identifier to identify the client-defined data item.\n\n\n\n**Note:** Precisions supports up to three DDA / SDA user-defined codes and a dynamic collection of DDA/SDA user-defined fields. \n\n\n\nUser-defined fields are grouped by data types and is interpreted by the prefixes as: udl-Boolean, udi-Numeric, udd-Currency, udc-Alpha and uddt- Date."
           enum:
           - UserCode1
           - UserCode2
@@ -537,7 +586,7 @@ components:
           - udc-[1..n]
         DataType:
           type: string
-          description: "Type of client defined data. \n\n\n\n\n\n**Note:** Refers to field type.\n\nValue refers to: \n\n- Alpha refers to character fields.\n\n- Boolean refers to logical fields.\n\n- Currency refers to amount fields.\n\n- Numeric refers to code fields."
+          description: "Type of client defined data. \n\n\n\n\n\n\n\n\n\n\n\n**Note:** Refers to field type.\n\n\n\nValue refers to: \n\n\n\n- Alpha refers to character fields.\n\n\n\n- Boolean refers to logical fields.\n\n\n\n- Currency refers to amount fields.\n\n\n\n- Numeric refers to code fields."
           enum:
           - Alpha
           - Boolean
@@ -549,6 +598,8 @@ components:
           type: string
           description: |-
             Value of the client-defined data item.
+
+
 
             **Note:** List values are client defined for UserCode1, UserCode2, and UserCode 3.
         DataLength:
@@ -566,7 +617,7 @@ components:
       properties:
         RecurType:
           type: string
-          description: "Recurrence type indicates the pattern of recurrence. \n\n\n\n\n\n**Note:** Precision processes DDA statements using \"Cycle\" only.\n\n"
+          description: "Recurrence type indicates the pattern of recurrence. \n\n\n\n**Note:** Precision processes DDA statements using \"Cycle\" only.\n\n\n\n"
           enum:
           - Cycle
         RecurTypeEnumDesc:
@@ -575,16 +626,7 @@ components:
           description: Description of the enumeration value in the RecurType field
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of statement generation.
-
-            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Refers to client-defined statement  cycle code.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\n\n\nFor example:\n\n\n\n- If Daily: Number of days between occurrences\n\n\n\n- If Weekly: Number of weeks between occurrences\n\n\n\n- If Monthly: Number of months between occurrences \n\n\n\n- If Yearly: Number of years between occurrences\n\n\n\n- If Cycle: Number of the designated cycle. \n\n\n\nThe default value is set to 1.\n\n\n\n**Note:** Refers to client-defined statement  cycle code."
           format: int64
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctStmtData_StmtOptions:
       properties:
@@ -611,12 +653,14 @@ components:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctStmtData_StmtTimeFrame'
         LastStmtDt:
           type: string
-          description: "Date on which last statement was generated.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which last statement was generated.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         StmtPrepCode:
           type: string
           description: |-
             Code to identify if an individual statement is printed for an account.
+
+
 
             **Note:** Code for statement type. Values are client defined. 9999 means no imaging included with statements.
         CombinedStmtCode:
@@ -630,11 +674,15 @@ components:
           description: |-
             Option to indicate if the physical items are enclosed with an account statement.
 
+
+
             **Note:** Refers to statement return items indicator.
         MailCode:
           type: string
           description: |-
             Code of mail to sort statements.
+
+
 
             **Note:** Code to indicate the method to handle statements for an account. User-defined field and if no value is provided, by default, '0 - No Special Handling' is considered.
         StmtOptions:
@@ -649,6 +697,10 @@ components:
           type: string
           description: |+
             Type of account notice.
+
+
+
+
 
 
 
@@ -668,7 +720,7 @@ components:
           - ACHPrenote
         NoticeOption:
           type: string
-          description: "Option for account notice. \n\n"
+          description: "Option for account notice. \n\n\n\n"
           enum:
           - NoNotice
           - GenerateNotice
@@ -677,7 +729,11 @@ components:
           description: |-
             Handling code to specify the handling process of the notification and statement forms.
 
+
+
             **Note:** Refers to client-defined notice handling code assigned to a notice that prints for the account.
+
+
 
             "0" indicates no special handling.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntRateData_LowCurAmt_CurCode:
@@ -687,24 +743,24 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\n\n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: |-
-            Currency code value as per the ISO4217-Alpha format.
-
-
-
-            Please note that presently only USD currency code is supported.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\n **Note:** Only USD currency code is supported.\n\n"
       description: Details of currency code.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntRateData_LowCurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
         CurCode:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntRateData_LowCurAmt_CurCode'
       description: Details of the minimum amount range that contains the amount value and currency code information.
@@ -713,9 +769,14 @@ components:
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
         CurCode:
-          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_InitialAmount_CurCode'
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntRateData_LowCurAmt_CurCode'
       description: Details of the maximum amount range that contains the amount value and currency code information.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntRateData_RateMatrixTier:
       properties:
@@ -742,6 +803,8 @@ components:
           description: |-
             Tier details of rate matrix.
 
+
+
             **Note:** Ten balance range records are allowed and each record consists of from and to amount, offset, rate and index rate.
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntRateData_RateMatrixTier'
@@ -751,7 +814,9 @@ components:
         BasedOnCode:
           type: string
           description: |-
-            Internal index code, Prime, LIBOR and so on.
+            Based on code is the source of interest rate which can be used alone or with additional factors that, when combined, calculate an interest rate.
+
+
 
             **Note:** Refers to earnings rate index.
         RateVariance:
@@ -759,7 +824,7 @@ components:
           description: Percentage difference between interest rate and index rate to adjust the interest rate.
         ExpDt:
           type: string
-          description: "Date after which client-defined-defined data item expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date after which client-defined-defined data item expires.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         FloorRate:
           type: number
@@ -772,7 +837,12 @@ components:
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
         CurCode:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_InitialAmount_CurCode'
       description: Details of the currency amount.
@@ -785,6 +855,8 @@ components:
           type: string
           description: |+
             Type of account balance.
+
+
 
           enum:
           - Hold
@@ -825,7 +897,12 @@ components:
           - CTD
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
         Count:
           type: integer
           description: Number of occurrences with respect to the specified unit value.
@@ -836,6 +913,18 @@ components:
           description: |+
             Date of the last occurrence.
 
+
+
+    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_FinancialLiteracy:
+      type: object
+      properties:
+        IsRoundUp:
+          type: boolean
+          description: Flag to indicate the daily debit activity for the account is reported for the round up calculations.
+        IsFunding:
+          type: boolean
+          description: Flag to indicate the account is used for funding transactions.
+      description: "Information about financial literacy feature settings. \n\n**Note:** Financial literacy is a reserved feature in Cleartouch."
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_TranCounter:
       required:
       - TranCounterType
@@ -864,72 +953,56 @@ components:
           description: |-
             Unique address identification value.
 
-            **Note:** Alternate address identifier of an account. Value of '0' indicates that customer-level address is used by primary customer for an account.
+
+
+            **Note:** Alternate address identifier of an account. Value of '0' indicates that customer-level address is used by primary customer for the account.
         AddrFormatType:
           type: string
           description: |+
             Type of address format.
 
+
+
         Addr1:
           maxLength: 64
           type: string
-          description: Address in line 1.
+          description: Address line 1.
         Addr2:
           maxLength: 64
           type: string
-          description: |-
-            Address in line 2.
-
-            Addr1 must be specified to use Addr2.
+          description: "Address line 2. \n\n\n\nTo enter Addr2, Addr1 field must be provided."
         Addr3:
           maxLength: 64
           type: string
-          description: |+
-            Address Line 3. Addr2 must be specified to use Addr3.
-
+          description: "Address line 3. \n\n\n\nTo enter Addr3, Addr2 field must be provided."
         Addr4:
           maxLength: 64
           type: string
-          description: |+
-            Address Line 4. Addr3 must be specified to use Addr4.
-
+          description: "Address line 4. \n\n\n\nTo enter Addr4, Addr3 field must be provided."
         Addr5:
           maxLength: 64
           type: string
-          description: |+
-            Address Line 5. Addr4 must be specified to use Addr5.
-
+          description: "Address line 5. \n\n\n\nTo enter Addr5, Addr4 field must be provided."
         Addr6:
           maxLength: 64
           type: string
-          description: |+
-            Address Line 6. Addr5 must be specified to use Addr6.
-
+          description: "Address line 6. \n\n\n\nTo enter Addr6, Addr5 field must be provided."
         AddrType:
           type: string
-          description: "Type of the address. \n\n\n\n**Note:** Secondary refers to alternate address of an account. Primary indicates the customer's CIF address is used for the account (which may be the CIF primary address or a CIF alternate address).\n\n"
+          description: "Type of the address. \n\n\n\n\n\n\n\n**Note:** Value for this field indicates:\n\n\n\n- Primary indicates the customer's CIF address used for the account (that may be the CIF Primary address or a CIF alternate address)\n\n\n\n- Secondary indicates alternate address for the account"
           enum:
-          - 'Primary '
+          - Primary
           - Secondary
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_TimeFrame_RecurRule:
       properties:
         RecurType:
           type: string
-          description: "Type of recurrence that indicates the pattern of recurrence. \n\n\n\n"
+          description: "Type of recurrence that indicates the pattern of recurrence. \n\n\n\n\n\n\n\n"
           enum:
           - Monthly
         RecurInterval:
           type: integer
-          description: |-
-            Recurrence interval between two successive occurrences of fee.
-
-            For example, if the recurrence type value is set to 'monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
-
-            The default value is set to 1.
-
-
-
-            **Note:** Frequency to assess the miscellaneous fee. RecurType (such as monthly) is determined by the service charge code.
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\n\n\nFor example:\n\n\n\n- If Daily: Number of days between occurrences\n\n\n\n- If Weekly: Number of weeks between occurrences\n\n\n\n- If Monthly: Number of months between occurrences \n\n\n\n- If Yearly: Number of years between occurrences\n\n\n\n- If Cycle: Number of the designated cycle\n\n\n\nThe default value is set to 1.\n\n\n\n**Note:** Frequency to assess the miscellaneous fee. RecurType (such as monthly) is determined by the service charge code."
           format: int64
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_TimeFrame:
       type: object
@@ -940,9 +1013,15 @@ components:
           description: |-
             Start date and time value.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
+
+
             Example: 2021-01-31T23:59:59.999
+
+
 
             **Note:** Miscellaneous fee start date.
         EndDt:
@@ -951,9 +1030,15 @@ components:
           description: |-
             End date and time value.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
+
+
             Example: 2021-01-31T23:59:59.999
+
+
 
             **Note:** Refers to miscellaneous fee end date.
         RecurRule:
@@ -970,6 +1055,8 @@ components:
           description: |-
             Code to provide the reason for waive of fees.
 
+
+
             **Note:** Misceallneous fees waive reason. Values are client-defined. Value of '0' indicates fee is not waved.
       description: Method used to waive fees.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_Fee:
@@ -982,7 +1069,11 @@ components:
           description: |-
             Unique identifier of the fee.
 
+
+
             **Note:** Refers to the fee code for miscellaneous fees.
+
+
 
             Values are client-defined.
         FeeType:
@@ -999,6 +1090,10 @@ components:
           type: string
           description: |-
             Processing option for fee type.
+
+
+
+
 
 
 
@@ -1022,7 +1117,11 @@ components:
           description: |-
             Code to identify the access level.
 
+
+
             **Note:** Refers to security code for CDA.
+
+
 
             Values are client-defined.
       description: Details of access level data.
@@ -1037,7 +1136,11 @@ components:
           description: |-
             Unique identification number of an account record.
 
+
+
             **Note:** Applicable if value of RewardType is "Transfers Cents".
+
+
 
             Also applicable if RewardType is "Cash Back", if DispositionType is "Transfer To Account".
         AcctType:
@@ -1047,19 +1150,25 @@ components:
 
 
 
+
+
+
+
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
 
             **Note:** Not applicable if RewardType is 'Transfer Cents'.
           enum:
           - DDA
-          - 'CDA '
+          - CDA
           - SDA
       description: Details of the reward associated with an account.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_RewardsData:
       properties:
         RewardType:
           type: string
-          description: "Type of reward.\n\n**Note:** Two types of rewards are supported:\n\nCash back rewards are set up under the earnings code.\n\nTransfer cents rewards are available as per parameter -transfer the cents set up. "
+          description: "Type of reward.\n\n\n\n**Note:** Two types of rewards are supported:\n\n\n\nCash back rewards are set up under the earnings code.\n\n\n\nTransfer cents rewards are available as per parameter -transfer the cents set up. "
           enum:
           - TransferCents
           - CashBack
@@ -1068,7 +1177,11 @@ components:
           description: |-
             Type of reward disposition to indicate the method for converting reward to cash.
 
+
+
             **Note:** Values 'Transfer To Account' and 'Capitalize' are applicable to reward type "Cash Back".
+
+
 
             Values for reward type "Transfer Cents" are client-defined.
           enum:
@@ -1080,6 +1193,8 @@ components:
           type: integer
           description: |-
             Period during which the promotional offers are active.
+
+
 
             **Note:**  Number of periods rewards are paid even if the conditions are not met. Only applicable if reward type is "Cash Back".
           format: int64
@@ -1094,7 +1209,7 @@ components:
           description: Unique identification number of an account record.
         AcctType:
           type: string
-          description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>.\n\n**Note:** \n\n- \"GLA\"  and \"LOAN\" apply to ACH transfer only\n\n- \"CDA\" applies to internal transfer only"
+          description: "Type of an account.\n\n\n\n\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>.\n\n\n\n**Note:** \n\n\n\n- \"GLA\"  and \"LOAN\" apply to ACH transfer only\n\n\n\n- \"CDA\" applies to internal transfer only"
           enum:
           - DDA
           - SDA
@@ -1103,16 +1218,16 @@ components:
           - GLA
         FIIdentType:
           type: string
-          description: |+
-            Identification type of a financial institution.
-
+          description: Identification type for the financial institution.
           enum:
           - AcctRec/DepositAcctInfo/ClubPayoffData
         FIIdent:
           maxLength: 34
           type: string
           description: |-
-            Unique identification number of a financial institution.
+            Unique identifier for a financial institute.
+
+
 
             **Note:** Refers to ACH bank.
       description: Unique information to identify the account record.
@@ -1129,10 +1244,10 @@ components:
         ACHCompanyEntryDesc:
           maxLength: 30
           type: string
-          description: ' Details of the API response messages.'
+          description: Description of ACH company entry.
         SameDayInd:
           type: boolean
-          description: Flag to indicate if the ACH transaction is processed on the same day.
+          description: Flag to indicate the ACH transaction is processed on the same day.
       description: Details of the interest distribution account reference indicating the object where the interest is distributed.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntDispData:
       type: object
@@ -1149,7 +1264,7 @@ components:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntDispData_IntDistAcctRef'
         NextIntPmtDt:
           type: string
-          description: "Date of next interest payment for the account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date of next interest payment for the account.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
       description: Details of the interest disposition for the account.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_ClubPayoffData_ClubPayoffAcctRef_AcctKeys_AcctIdent:
@@ -1157,19 +1272,19 @@ components:
       properties:
         AcctIdentType:
           type: string
-          description: |+
-            Type of account identifiers.
-
+          description: Type of the account identification.
           enum:
           - AcctNum
         AcctIdentValue:
           maxLength: 36
           type: string
           description: |-
-            Account identification value.
+            Account identification value associated to the AcctIdentType field.
+
+
 
             **Note:** Refers to account identification of ACH transfer.
-      description: Unique identifier of an account record.
+      description: Information related to identifier of an account record used as alternative identifier.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_ClubPayoffData_ClubPayoffAcctRef_AcctKeys:
       required:
       - AcctId
@@ -1185,6 +1300,8 @@ components:
           type: string
           description: |+
             Identification type of a financial institution.
+
+
 
           enum:
           - RoutingNum
@@ -1205,6 +1322,8 @@ components:
           description: |-
             Code to identify the ACH transaction.
 
+
+
             **Note:** Returns the account type for ACH transfer.
         ACHReceivingType:
           type: string
@@ -1215,7 +1334,7 @@ components:
           description: Description of ACH company entry.
         SameDayInd:
           type: boolean
-          description: Flag to indicate if the ACH transaction is processed on the same day.
+          description: Flag to indicate the ACH transaction is processed on the same day.
       description: Reference information of the account where the payoff of a club savings account is being distributed.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_ClubPayoffData:
       required:
@@ -1241,6 +1360,8 @@ components:
           description: |-
             Option to indicate the customer enrollment for overdraft program.
 
+
+
             **Note:** Overdraft program to identify if the system will track overdraft occurrences for customers who are opted-in to an overdraft program.
           enum:
           - ODTracking
@@ -1250,9 +1371,11 @@ components:
           description: |-
             Type of balance verification.
 
+
+
             **Note:** Refers to decision balance.
           enum:
-          - 'Current '
+          - Current
           - Collected
         OverdraftLimitReviewOption:
           type: string
@@ -1264,9 +1387,11 @@ components:
         WaiveOverdraftInd:
           type: boolean
           description: |-
-            Flag to indicate if waive is to be overdrafted.
+            Flag to indicate the waive is overdrafted.
 
-            **Note:** Waive interest charge. If true, OD interest charge is calculated and waived.
+
+
+            **Note:** Refers to waive interest charge. If true, OD interest charge is calculated and waived.
       description: Details of overdraft program.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_SvcChgData_SvcChgMethod:
       properties:
@@ -1279,7 +1404,9 @@ components:
           description: |-
             Service charge code on the account.
 
-            **Note:** Service charge code. Values are client-defined. Service charge code definition determines how frequently service charges are assessed on the account.
+
+
+            **Note:** Refers to service charge code. Values are client-defined. Service charge code definition determines how frequently service charges are assessed on the account.
           format: int64
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_SvcChgData_AcctKeys:
       required:
@@ -1294,6 +1421,10 @@ components:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -1321,6 +1452,8 @@ components:
           description: |-
             Unique identification number of an account record.
 
+
+
             **Note:** If present, service charges are posted to the account instead of the account that accrued the charges. This should be an internal DDA or savings account.
         AcctType:
           type: string
@@ -1329,7 +1462,13 @@ components:
 
 
 
+
+
+
+
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
 
             **Note:** For the alternate service charge account, DDA represents either DDA or savings.
           enum:
@@ -1356,6 +1495,8 @@ components:
           description: |-
             Details of accounts associated with the service charge.
 
+
+
             **Note:** Refers to relate by account.
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_SvcChgData_SvcChgRelatedAcct'
@@ -1366,6 +1507,8 @@ components:
           description: |-
             Code to identify the service charge to be waived off.
 
+
+
             **Note:** Reason for waive. Values are client-defined. Value of '0' means service charge has not been waived.
           format: int64
         SvcChgWaiveCycles:
@@ -1374,12 +1517,14 @@ components:
           format: int64
         LastSvcChgDt:
           type: string
-          description: "Date when the service charge is last updated.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date when the service charge is last updated.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         IncAcctRelSvcChgInd:
           type: boolean
           description: |-
-            Flag to indicate if an account is included in related account service charges.
+            Flag to indicate the account is included in related account service charges.
+
+
 
             **Note:** If true, system determines which of the primary owner accounts to consider to calculate service charge. Service charge code definition specifies which module and account types to consider.
       description: Details of the service charge associated with an account.
@@ -1391,7 +1536,13 @@ components:
           description: |+
             Status of regulation CC.
 
-            **Note:** The RegCC refers to float code.
+
+
+            **Note:** The RegCC refers to float code in Precision.
+
+
+
+
 
 
 
@@ -1411,6 +1562,8 @@ components:
           description: |+
             Type of a phone.
 
+
+
           enum:
           - ContactPhone
         PhoneIdent:
@@ -1418,7 +1571,11 @@ components:
           description: |-
             Unique identifier of phone.
 
+
+
             Use if more than one occurrence of a phone type (for example, 5 mobile phones) is available. This element serializes the phones.
+
+
 
             **Note:** Used to identify which of the primary customer's phone numbers to be used for account reconciliation.
           format: int64
@@ -1447,9 +1604,13 @@ components:
           description: |-
             Value of the client-defined data item.
 
+
+
             **Note:** The UserDefined1 supports 3-digit integer, UserDefined2 supports 5-digit integer and UserDefined3 supports 12 character alphanumeric.
       description: |-
         Details of user-defined data.
+
+
 
         **Note:** Account reconciliation user defined 1 through user defined 3.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctReconciliation_PositivePay_Contact_PhoneNum:
@@ -1462,6 +1623,8 @@ components:
           description: |+
             Type of a phone.
 
+
+
           enum:
           - PositivePayFax
         PhoneIdent:
@@ -1469,7 +1632,11 @@ components:
           description: |-
             Unique identifier of phone.
 
+
+
             Use if more than one occurrence of a phone type (for example, 5 Mobile phones) is available. This element serializes the phones.
+
+
 
             **Note:** Used to identify the primary customer's phone used to fax the manual positive pay exception report.
           format: int64
@@ -1493,6 +1660,8 @@ components:
           type: number
           description: |-
             Amount of tolerance.
+
+
 
             **Note:** The IB Ppay amount difference tolerance.
         Contact:
@@ -1538,11 +1707,15 @@ components:
           description: |-
             Name of the brand.
 
+
+
             **Note:** Values are client defined.
         AcctDtlStatus:
           type: string
           description: |+
             Current status of an account.
+
+
 
           enum:
           - NoDebitPost
@@ -1563,7 +1736,11 @@ components:
           description: |-
             Unique identifier of a product to indicate the processing options of account.
 
+
+
             **Note:** Client-defined value for the account type.
+
+
 
             DDA type definitions on Precision determines whether the account is checking or saving.
         Desc:
@@ -1572,36 +1749,44 @@ components:
           description: Description of the product used to set up the account.
         TaxIncentiveType:
           type: string
-          description: "Type of tax incentive. \n\n\n\n**Note:** IRA plan of primary customer associated with an account. Tax incentive type is defined in the customer's plan.\n\nValue of '0' indicates that account is not associated to a plan."
+          description: "Type of tax incentive. \n\n\n\n\n\n\n\n**Note:** IRA plan of primary customer associated with an account. Tax incentive type is defined in the customer's plan.\n\n\n\nValue of '0' indicates that account is not associated to a plan."
         InitialAmount:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_InitialAmount'
         OpenDt:
           type: string
-          description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the account record is created.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         ClosedDt:
           type: string
-          description: "Date on which the account is closed.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the account is closed.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         ClosedReasonCode:
           type: string
           description: |-
             Code to indicate the reason for account closure.
 
+
+
             **Note:** Values are client defined.
         LastContactDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |+
-            Last contact date when the Financial Institution contacted the customer for this account.
+            Last contact date when the financial institution contacted the customer for the account.
+
+
 
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
+
+
             Example: 2021-01-31T23:59:59.999
+
+
 
         DateData:
           type: array
-          description: Details of additional date types and values associated with the account.
+          description: Details to identify additional date types and values associated to the loan account.
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_DateData'
         RelationshipMgr:
@@ -1612,7 +1797,7 @@ components:
         OriginatingBranch:
           maxLength: 32
           type: string
-          description: Branch that primarily created the account with the party.
+          description: Branch in which the account is primarily created for the party.
         OriginatingBranchEnumDesc:
           maxLength: 80
           type: string
@@ -1628,10 +1813,10 @@ components:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AddtlTitles'
         AccountingMethod:
           type: string
-          description: "Method to define which accounts are integrated into the general ledger. \n\n**Note:** \n\n- Refers to general ledger code\n\n- Codes are user-defined and link to the GL account."
+          description: "Method to define which accounts are integrated into the general ledger. \n\n\n\n**Note:** \n\n\n\n- Refers to general ledger code\n\n\n\n- Codes are user-defined and link to the GL account."
         ClassCode:
           type: string
-          description: "Code to group accounts for the purpose of processing and reporting.\n\n**Note:** \n\n- Refers to customer type.\n\n- Values are client-defined."
+          description: "Code to group accounts for the purpose of processing and reporting.\n\n\n\n**Note:** \n\n\n\n- Refers to customer type.\n\n\n\n- Values are client-defined."
         ClientDefinedData:
           type: array
           description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
@@ -1672,10 +1857,14 @@ components:
           description: Accounting period data details such as last interest payment, nonsufficient funds, overdraft activity year to date, current month and cycle to date.
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPeriodData'
+        FinancialLiteracy:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_FinancialLiteracy'
         TranCounter:
           type: array
           description: |-
             Details of transaction counter.
+
+
 
             **Note:** This aggregate contains details of RegD6 transactions (transfers and withdrawls) for the statement cycle.
           items:
@@ -1700,10 +1889,12 @@ components:
           description: |-
             Client-defined code to group the accounts for reporting purposes.
 
-            **Note:** Refers to customer name.
+
+
+            **Note:** Refers to customer number.
         DocDistributionOption:
           type: string
-          description: "Client defined method to indicate the document distribution method used for processing the notices and statement forms.\n\n\n\n**Note:** \n\n- Refers to statement delivery code \n\n- Values are client-defined"
+          description: "Client defined method to indicate the document distribution method used for processing the notices and statement forms.\n\n\n\n\n\n\n\n**Note:** \n\n\n\n- Refers to statement delivery code \n\n\n\n- Values are client-defined"
         DocDistributionOptionEnumDesc:
           maxLength: 80
           type: string
@@ -1714,18 +1905,20 @@ components:
           description: Six-digit North American Industry Classification System (NAICS) code used to indicate the type of customer based upon standard government definitions.
         RestrictedInd:
           type: boolean
-          description: Flag to indicate if an account is restricted for view.
+          description: Flag to indicate the account is restricted for view.
         RestrictedDesc:
           maxLength: 80
           type: string
           description: 'Description of the reason for restricted view. '
         NOWEnabledInd:
           type: boolean
-          description: Flag to indicate if NOW is enabled.
+          description: Flag to indicate NOW is enabled.
         CallReportCode:
           type: string
           description: |-
             Code to identify the call report.
+
+
 
             **Note:** Values are client defined.
         AccessLevelData:
@@ -1743,7 +1936,7 @@ components:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_OverdraftData'
         ChargeOffCode:
           type: string
-          description: "Code to indicate the charge off.\n\n**Note:** Write off code. Values are client-defined. Value of '0' indicates the account is not a write-off. "
+          description: "Code to indicate the charge off.\n\n\n\n**Note:** Write off code. Values are client-defined. Value of '0' indicates the account is not a write-off. "
         SvcChgData:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_SvcChgData'
         RegCCData:
@@ -1758,13 +1951,11 @@ components:
       properties:
         AcctStatusCode:
           type: string
-          description: Status code of an account.
-          enum:
-          - Valid
+          description: Code to indicate the status of an account.
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Effective date and time when the account status is changed. \n\n\n\n\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
       description: Status details of the account.
     getAccountsSecuredResponse_AcctRec:
       required:
@@ -1779,6 +1970,8 @@ components:
         AcctStatus:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_AcctStatus'
       description: |-
-        Details of an account record.
+        Details of the account record.
+
+
 
         **Note:** For the users which have restriction from viewing the selected accounts for a channel that is bank-employee facing (such as Engage), the system will return only AcctKeys, RestrictedInd, and RestrictedDesc.
