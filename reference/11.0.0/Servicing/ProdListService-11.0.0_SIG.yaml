@@ -72,13 +72,17 @@ components:
       type: string
       properties:
         OrganizationId:
+          maxLength: 36
           type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
         VendorId:
+          maxLength: 255
           type: string
-          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
         Context:
           $ref: '#/components/schemas/Context'
       example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
@@ -88,67 +92,84 @@ components:
         ClientAppName:
           maxLength: 40
           type: string
-          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
         Channel:
+          maxLength: 80
           type: string
-          description: Indicates the channel used by the client application.
-        ClientDateTime:
-          type: string
-          description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
-        ClientTerminalSeqNum:
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
           maxLength: 36
           type: string
-          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
           format: int64
         TerminalIdent:
           maxLength: 36
           type: string
-          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
         TerminalAddr1:
           maxLength: 64
           type: string
+          description: Terminal address line 1.
         TerminalAddr2:
           maxLength: 64
           type: string
+          description: Terminal address line 2.
         TerminalAddr3:
           maxLength: 64
           type: string
+          description: Terminal address line 3.
         TerminalAddr4:
           maxLength: 64
           type: string
+          description: Terminal address line 4.
         TerminalCity:
           maxLength: 32
           type: string
+          description: Terminal city name.
         TerminalCounty:
           maxLength: 32
           type: string
+          description: Terminal county name.
         TerminalStateProv:
           maxLength: 32
           type: string
-          description: State Province. ISO 3166-2:US codes.
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
         TerminalPostalCode:
           maxLength: 11
           type: string
-          description: Postal Code is ZipCode in the US.
+          description: 'Postal Code where the terminal is located. '
         TerminalCountryCodeSource:
-          type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - ISO3166Numeric
-          - ISO3166Alpha3
-        TerminalCountryCodeValue:
           maxLength: 80
           type: string
-        PhoneType:
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
         PhoneNum:
           type: string
+          description: Phone number.
         PhoneExchange:
+          maxLength: 80
           type: string
+          description: Phone exchange.
         TerminalOwnerName:
           maxLength: 40
           type: string
@@ -168,47 +189,70 @@ components:
         AcquirerIdent:
           maxLength: 36
           type: string
-          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
         AcquirerCountryCodeSource:
+          maxLength: 80
           type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - US
-          - IND
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
         AcquirerCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
         MerchNum:
           maxLength: 23
           type: string
-          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
         SettlementDate:
           type: string
-          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
           format: date
         SettlementIdent:
           maxLength: 36
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: Identification of the settlement account in which the transaction will be settled.
         BusinessApplIdent:
+          maxLength: 80
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
         BranchIdent:
           maxLength: 22
           type: string
+          description: Branch identification number.
         TellerIdent:
+          maxLength: 80
           type: string
+          description: Teller identification number.
         TillIdent:
+          maxLength: 80
           type: string
+          description: Till identification number.
         AMPMCode:
           type: string
+          description: 'Transaction posting code. '
           enum:
           - AM
           - PM
         ReentryType:
           type: string
+          description: Type of re-entry.
           enum:
           - Manual
           - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
     StatusType:
       title: StatusType
       required:
@@ -265,7 +309,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -338,12 +382,12 @@ components:
       properties:
         MaxRecLimit:
           type: integer
-          description: "Maximum number of records that can be returned within a single response.\n\n**Note:** By default, Signature returns up to 10 records at one time for this message. A maximum of 50 records can be returned by Signature for this message. Client application can send a different value in this field to retrieve a different number of records. For example, request 10 or 20 records per response. \n\n\n\n"
+          description: "Maximum number of records that can be returned within a single response.\n\n\n\n**Note:** Up to 10 records at one time for this message are returned in the response. A maximum of 50 records can be returned for this message. Client application can send a different value in this field to retrieve a different number of records. For example, request 10 or 20 records per response. \n\n\n\n\n\n\n\n"
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n\n\nFor more than 250 posted transactions, ESF returns Cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.\n\n**Note:** The value received in the Signature response for the cursor field may be passed in this field to fetch the next set of records from Signature. \n\n"
+          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n\n\nFor more than 250 posted transactions, This API returns the  Cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.\n\n\n\n**Note:** The value received in the response for the cursor field passed in this field to fetch the next set of records from Signature. \n\n\n\n"
       description: Maximum number of records that client can specify to process within a single response.
     ProductListInqOperByPathSecuredRequest_ProductListSel:
       type: object
@@ -355,7 +399,9 @@ components:
 
 
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary </a>.
+
+
 
             **Note:** *Required field*
           enum:
@@ -365,7 +411,12 @@ components:
           - LOAN
         IncNonActiveInd:
           type: boolean
-          description: Flag to indicate the search should include only active products or active and inactive products.
+          description: |-
+            Flag to indicate the search should include inactive product.
+
+
+
+            **Note:** Applicable, if the search includes only active products or active and inactive products.
       description: Selection criteria details to search for required product list.
     ProductListInqOperByPathSecuredResponse_RecCtrlOut:
       required:
@@ -378,19 +429,29 @@ components:
           format: int64
         MatchedRecCount:
           type: integer
-          description: "Number of records that matches the requested selection criteria.\n\n**Note:** A value of '99' in this field indicates that there are more records in Signature that have not been retrieved in the response. \n\nA value of '0' in this field indicates that no additional records exist. \n\n\n\n\n\n"
+          description: "Number of records that matches the requested selection criteria.\n\n\n\n**Note:** A value of '99' in this field indicates that there are more records in Signature that are not retrieved in the response. \n\n\n\nA value of '0' in this field indicates that no additional records exist. \n\n\n\n\n\n\n\n\n\n\n\n"
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n\n\nFor more than 250 posted transactions, ESF returns Cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.\n\n**Note:** Client application may send the cursor value received in this field as part of the subsequent request to retrieve the additional records. \n\n"
+          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n\n\nFor more than 250 posted transactions, this API returns Cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.\n\n\n\n**Note:** Value received in the response for the Cursor field is passed in this field to fetch the next set of records, if the additional transaction records are provided in the previous response of Account transaction Inquiry. \n\n\n\n"
       description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    ProductListInqOperByPathSecuredResponse_ProductKeys_SvcIdent:
+      type: object
+      properties:
+        SvcNbr:
+          maxLength: 36
+          type: string
+          description: Service Number.
+      description: "Service Identifier that provides a unique reference to a service. \n\n**Note:** SvcIdent is used for Multi-System Service (MSS)."
     ProductListInqOperByPathSecuredResponse_ProductKeys:
       required:
       - AcctType
       - ProductIdent
       type: object
       properties:
+        SvcIdent:
+          $ref: '#/components/schemas/ProductListInqOperByPathSecuredResponse_ProductKeys_SvcIdent'
         AcctType:
           type: string
           description: |-
@@ -398,7 +459,7 @@ components:
 
 
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary </a>.
           enum:
           - CDA
           - DDA
@@ -408,7 +469,7 @@ components:
         ProductIdent:
           maxLength: 42
           type: string
-          description: "Unique identifier of a product record.\n\n**Note:** Refers to Product Id/Product code. \n\n"
+          description: "Unique identifier of a product record.\n\n\n\n**Note:** Refers to Product Id or Product Code. \n\n\n\n"
       description: Unique information to identify a product record.
     ProductListInqOperByPathSecuredResponse_ProductListInfo:
       type: object
@@ -426,7 +487,7 @@ components:
 
 
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary </a>.
           enum:
           - CDA
           - IRA
@@ -443,7 +504,19 @@ components:
           description: Description of the product used to set up the account.
         AcctUse:
           type: string
-          description: "Type of an account usage.\n\n**Note:** This field is used to indicate the type of customer/party the product is oriented to. \n\n\n\nApplicable only for deposit products.\n\n\n\n"
+          description: |+
+            Type of an account usage.
+
+
+
+            **Note:**Refers to the type of customer or party to which the product is oriented to. Applicable only for deposit products.
+
+
+
+
+
+
+
           enum:
           - Business
           - Personal
@@ -452,6 +525,8 @@ components:
           type: string
           description: |-
             Type of tax incentive.
+
+
 
             **Note:** Applicable only for deposit products.
           enum:
@@ -464,7 +539,7 @@ components:
           enum:
           - Active
           - Inactive
-      description: Information of the product list .
+      description: Information of the product list.
     ProductListInqOperByPathSecuredResponse_ProductStatus:
       required:
       - ProductStatusCode
@@ -484,6 +559,8 @@ components:
 
 
             Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+
 
             Example: 2021-01-31T23:59:59.999
       description: Details of the product status.
