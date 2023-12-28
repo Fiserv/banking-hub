@@ -50,6 +50,8 @@ components:
       required:
       - AcctHoldInfo
       properties:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
         AcctHoldInfo:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo'
     AcctHoldAddOperResponse:
@@ -249,6 +251,14 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
     StatusType:
       title: StatusType
       required:
@@ -381,11 +391,17 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identification number of an account record.\n\n\n\n\n\n\n\n**Note:** Refers to the account number against which the hold is placed. \n\nMax length: 12 characters"
+          description: "Unique identification number of an account record.\n\n\n\n**Note:** Refers to the account number on which the hold is placed. \n\nMax length: 12 characters"
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
 
             **Note:** *Required field*
           enum:
@@ -412,17 +428,24 @@ components:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
+          description: |-
+            Currency code value as per the ISO currency code format set in the CurCodeType field.
+
+            **Note:** Only USD currency code is supported.
       description: Details of currency code.
     AcctHoldAddOperRequest_AcctHoldInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: "Amount in decimal format.\n\n\n\nExample: 10.00\n\n**Note:** Client application must sent an amount if the hold type is \"Hold\". \n\n"
+          description: "Amount in decimal format.\n\n\n\nExample: 10.00\n\n\n\n**Note:** Applicable if the HoldType value is set to \"Hold\". \n\n\n\n"
         CurCode:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt_CurCode'
-      description: Currency amount details of the hold to be placed on the account.
+      description: |+
+        Details of the hold placed on an account.
+
+        **Note:** Only USD currency code is supported.
+
     AcctHoldAddOperRequest_AcctHoldInfo:
       type: object
       properties:
@@ -438,11 +461,11 @@ components:
         HoldReason:
           maxLength: 80
           type: array
-          description: "Reason for placing the hold on an account.\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired for holds placed through Teller application. \n\nMax length: 40 characters"
+          description: "Description of the reason for placing the hold on an account. \n\n**Note:** *Conditionally Required field*\n\nRequired for holds placed through Teller application.\n\nMax Length: 60 characters"
           items: {}
         ExpDt:
           type: string
-          description: "Date after which the hold on an account is no longer active and the funds are made available.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired for holds placed through Teller application. "
+          description: "Date after which the hold on an account is no longer active and the funds are available for transactions.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** *Conditionally Required field*\n\nRequired for holds placed through Teller application. "
           format: date
       description: Information about the business properties of the hold placed on an account.
     AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys_AcctKeys:
@@ -458,14 +481,15 @@ components:
 
 
 
-
-
-
-
             **Note:** Refers to the account number.
         AcctType:
           type: string
-          description: Type of an account.
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
           - DDA
           - SDA
@@ -490,7 +514,7 @@ components:
       properties:
         AcctHoldStatusCode:
           type: string
-          description: Current status of the account hold.
+          description: Code to indicate the status of the account hold record.
           enum:
           - Valid
         EffDt:
@@ -499,10 +523,12 @@ components:
           description: |-
             Effective date and time when the transaction was initiated.
 
-            Format: {yyyy-MM-ddTHH:mm:ss.sss}
 
-            Example: 2021-06-28T23:40:30.888
-      description: Details of the account hold status.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+      description: Status details of the account hold record.
     AcctHoldAddOperResponse_AcctHoldStatusRec:
       required:
       - AcctHoldKeys
@@ -513,7 +539,7 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys'
         AcctHoldStatus:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus'
-      description: Details of the account hold response record that includes response keys and response status.
+      description: Details of the account hold status record in response to add operation.
     AcctHoldAddOperResponse_Receipt_CurAmt:
       type: object
       properties:
@@ -534,6 +560,9 @@ components:
         BalType:
           type: string
           description: Type of account balance.
+          enum:
+          - Memo
+          - Avail
         CurAmt:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_Receipt_CurAmt'
     AcctHoldAddOperResponse_Receipt:
@@ -545,7 +574,7 @@ components:
           description: Name on the receipt.
         OpenDt:
           type: string
-          description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the account record is created.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         AcctBal:
           type: array
