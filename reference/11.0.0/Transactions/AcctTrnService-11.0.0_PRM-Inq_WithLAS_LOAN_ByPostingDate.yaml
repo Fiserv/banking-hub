@@ -14,7 +14,7 @@ paths:
       tags:
       - Get Account Transaction History
       summary: GET Account Transaction History.
-      description: "Get Account Transaction History API retrieves the transaction history for Loan account (LOAN) based on the date range.<br>For Premier, this API returns transactions and transaction comments for both memo post (pending) transactions and hard post transactions on the Premier Loan Accounting System (LAS).  It also returns the reversed transaction. It provides the ability to request for only pending, only posted or both type of transactions. If requested, running balance is available for posted transactions when the original sort order is not altered. Transactions loaded in LAS are not deleted even if statements are run. This API is available for the clients who have purchased Premier Loan Accounting System (LAS). No parameter configuration is needed for this API. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: Get Account Transaction History API retrieves the transaction history for Loan account (LOAN) based on the date range.<br>For Premier, this API returns transactions and transaction comments for both memo post (pending) transactions and hard post transactions on the Premier Loan Accounting System (LAS).  It also returns the reversed transaction. It provides the ability to request for only pending, only posted or both type of transactions. If requested, running balance is available for posted transactions when the original sort order is not altered. Transactions loaded in LAS are not deleted even if statements are run. This API is available for the clients who have purchased Premier Loan Accounting System (LAS). No parameter configuration is needed for this API. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
       operationId: AcctTrnInqOperBySecured
       parameters:
       - name: EFXHeader
@@ -384,12 +384,17 @@ components:
       properties:
         MaxRecLimit:
           type: integer
-          description: "Maximum number of records that can be returned within a single response.\n\n\n\n**Note:** This field can be used to control the number of records returned by LAS. \n\nIf the field is not present in the request, then LAS returns maximum 250 records when search is carried out using 'PeriodType' or DtRange aggregate (StartDt and EndDt fields). \n\nAll MemoPost transactions from Premier are returned in response to the first request to ESF (that is when cursor is not provided). \n\nIf MaxRecLimit is not provided, then all transactions from LAS are also returned. If the calling application requests pagination of records on subsequent requests (that is Cursor is provided), then MemoPost transactions from Premier are not returned. Only LAS transactions are returned in that case (with maximum number of LAS records being equal to MaxRecLimit, sent in request). \n\nFor example, if Premier has 20 MemoPost transactions and LAS has 100 Posted transactions, then first request to ESF (without a cursor) would result in returning all transactions from Premier. However, if MaxRecLimit is provided (say 10), then additional 10 transactions from LAS would be returned as well. When cursor is provided in next call, next set of LAS transactions are returned (with maximum number being equal to MaxRecLimit). Results are filtered based on other search criteria provided in request (TrnPostType and so on)."
+          description: "Maximum number of records that can be returned within a single response.\n\n**Note:** \n\n- If parameter configuration \"MaxRec_Count\" is set up for the organization and MaxRecLimit is not provided, ESF uses parameter configuration setup to determine the number of transactions to be returned in the response. If MaxRecLimit is provided in the request, then default MaxRecLimit in parameter configuration is overridden by the value of MaxRecLimit provided in the request\n\n- Consumer is advised to provide the same value in MaxRecLimit during each request in order to receive the next set of posted transactions. Not providing MaxRecLimit in a consistent manner may result in missed transactions or transactions returned repetitively"
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: "Next record pointer is included in the response if more than 250 posted transactions records exist. \n\nIf there are more than 250 posted transactions, ESF will return cursor value in the RecCtrlOut/Cursor field. This field should be passed in the subsequent request within this (RecCtrlIn/Cursor) field to retrieve the next set of posted transactions. This feature is not applicable for memo post transactions."
+          description: |-
+            Next record pointer to include in the response if additional records are available.
+
+            If there are more than 250 posted transactions, ESF will return cursor value in the RecCtrlOut/Cursor field. This field should be passed in the subsequent request within this (RecCtrlIn/Cursor) field to retrieve the next set of posted transactions. This feature is not applicable for memo post transactions.
+
+            **Note:** Calling Application should sent RecCtrlIn/Cursor value along with other parameters in the subsequent request to retrieve the next set of transactions, if the RecCtrlOut/Cursor is returned, indicating that more record exist on the system. If all transactions have been returned by LAS, Cursor is not sent back to the calling application. Only hard-posted transactions returned by LAS can be paginated using cursor, as memoposts available in Premier cannot be paginated response (all records are returned).
       description: Maximum number of records that client can specify to process within a single response.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys:
       required:
@@ -406,14 +411,15 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
-          description: |-
-            Type of an account.
-
-
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          description: Type of an account.
           enum:
           - LOAN
       description: Unique information to identify the account record.
@@ -421,7 +427,7 @@ components:
       properties:
         DateType:
           type: string
-          description: "Type of dates to be referenced to fetch the transaction records. \n\n"
+          description: 'Type of dates to be referenced to fetch the transaction records. '
           enum:
           - PostedDt
         StartDt:
@@ -436,14 +442,14 @@ components:
       properties:
         SortCriterionType:
           type: string
-          description: "Type of criterion to sort the transaction records. \n\n\n\n**Note:** For subsequent request based on cursor, calling application needs to maintain the original /SortCriterionType\n\n\n\nWhen search is performed using PeriodType and SortCriterionType is not provided in the request, the transaction records in response are sorted on the basis of 'PostedDt'. For PeriodType, SortCriterionType of only 'PostedDt' is supported. When PeriodType search criteria is used in request to filter transactions, the default SortOrder used by core (if field is not provided in the request) is 'Descending'.\n\n\n\nFor search based on DtRange aggregate - 'PostedDt', 'TrnCode' and 'TrnAmt' SortCriterionType can be used. If SortCriterionType is not provided, but SortOrder is provided, SortCriterionType defaults to PostedDt.\n\n\n\nIf transactions are requested for sorting on TrnAmt, in case one/more transactions do not have a TrnAmt in LAS, the system would time-out trying to sort the transactions on the specified field and an error would be returned back to calling application."
+          description: "Type of criterion to sort the transaction records. \n\n**Note:** For subsequent request based on cursor, calling application needs to maintain the original /SortCriterionType.\n\nFor PeriodType, SortCriterionType of only 'PostedDt' is supported. When search is performed using PeriodType and SortCriterionType is not provided in the request, the transaction records in response are sorted on the basis of 'PostedDt' and by default the SortOrder is \"Descending\".\n\nFor search based on DtRange aggregate, then following SortCriterionType are used: \n\n- PostedDt\n\n- TrnCode\n\n- TrnAmt  \n\nIf SortCriterionType is not provided, but SortOrder is provided, SortCriterionType defaults to PostedDt. \n\nIf transactions are requested for sorting on TrnAmt, in case one/more Transactions do not have a TrnAmt in LAS, the system would time-out while trying to sort the transactions on the specified field and an Error would be returned back to calling application."
           enum:
           - PostedDt
           - TrnCode
           - TrnAmt
         SortOrder:
           type: string
-          description: Sort transactions either in an ascending or descending order. For example, order transaction by the latest or the oldest posted date.
+          description: Sort transactions either in an ascending or the descending order. For example, order transaction by the latest posted date or by the oldest posted date.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel:
       type: object
       properties:
@@ -451,14 +457,15 @@ components:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys'
         DtRange:
           type: array
-          description: "Details of date range that contains the start date and the end date information to return the transaction records.\n\nTo fetch the transactions for a specific number of days, use AcctTrnSel/PeriodType field.\n\n**Note:** To retrieve transactions for a single date, pass the same date in StartDt and EndDt. "
+          description: |-
+            Details of date range that contains the start date and the end date information to return the transaction records.
+
+            To fetch the transactions for a specific number of days, use AcctTrnSel/PeriodType field.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_DtRange'
         TrnPostType:
           type: string
-          description: |+
-            Type of posted transaction.
-
+          description: Type of transaction posting used to request all transactions, only memo post transactions or all transactions excluding memo post transactions.
           enum:
           - MemoPostOnly
           - ExcludeMemoPost
@@ -466,22 +473,18 @@ components:
         IncRunningBalanceInd:
           type: boolean
           description: |-
-            Flag to indicate the actual StmtRunningBal amount is returned on all transactions.
+            Flag to indicate the running balance is included for transactions.
 
-            **Note:** In case of value 'false', the core returns transactions with StmtRunningBal as '0'.
-
-
-
-            Default value is 'true' if this field is not provided in the request.
+            **Note:** If this field is not provided in the request, then by default the value is set to "True" and if the value is true the actual "StmtRunningBal" is retruned on all transactions. If the value is set to "False", the core returns transaction with "StmtRunningBal" as "0".
         IncReversalTrnInd:
           type: boolean
-          description: "Flag to indicates the reversed transactions are returned as part of transaction history records.\n\n**Note:** Premier supports this selection criteria only for transactions from LAS system.\n\n\n\nIf the value is 'false', then reversals will be excluded  from the response. \n\n\n\nIf the field is not provided in the request, then by default reversals are returned in response."
+          description: "Flag to include reversed transactions. This indicates the reversed transactions are returned as part of transaction history records.\n\n**Note:** If the IncReversalTrnInd field is not sent in request, then the number of records returned by core includes - all pending transactions (MemoPosts) from premier and all posted transactions present in AMS (including reversals). \n\nIf the IncReversalTrnInd field is sent as ‘true’ in request, then the number of records returned by core includes - all pending transactions (MemoPosts) from premier and all reversals present in AMS. \n\nIf the IncReversalTrnInd field is sent as 'false', then the number of records returned by core includes - all pending transactions (MemoPosts) from premier and all posted transactions present in AMS (excluding reversals). "
         Sort:
           type: array
           description: |-
             Details of the sort criteria to arrange or classify the requested transaction records.
 
-            **Note:** When search is performed using DateRange parameters, calling application is required to pass the sort aggregate fields.
+            **Note:** LAS supported sort criteria is mentioned in Sort/SortCriterionType field. Calling application is required to pass the Sort aggregate fields when search is performed using DateRange parameters and using PeriodType.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_Sort'
       description: Details of the selection criteria to retrieve the account transaction records.
@@ -495,63 +498,43 @@ components:
           description: |-
             Total number of records that matched the selection criteria and returned in the response message.
 
-            **Note:** In this field, ESF will return sum of total number of pending transactions on PRM system and posted transactions on LAS system.
+            **Note:** SentRecCount indicates the total number of records being returned in the response. It is the total number of posted transactions with completed nightly processing + number of memo posted transactions
           format: int64
         MatchedRecCount:
           type: integer
           description: |-
             Number of records that matches the requested selection criteria.
 
-            **Note:** Refers to the total matching posted transactions on LAS system for the selection criteria. This field does not include the transactions in Premier.
+            **Note:** Refers to total matching posted transactions on LAS system for the selection criteria and does not include the transactions in Premier.
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: "Next record pointer included in the response if more than 250 posted transaction records exist. \n\nIf there are more than 250 posted transactions, ESF will return cursor value in the RecCtrlOut/Cursor field. This field should be passed in the subsequent request within this (RecCtrlIn/Cursor) field to retrieve the next set of posted transactions. This feature is not applicable for memo post transactions.\n\n**Note:** If this filed is available, then the calling application passes the value of this filed back into RecCtrlIn/Cursor to get additional requested records."
+          description: "Next record pointer is included in the response if more than 250 posted transactions records exist. \n\nIf there are more than 250 posted transactions, ESF will return cursor value in the RecCtrlOut/Cursor field. This field should be passed in the subsequent request within this (RecCtrlIn/Cursor) field to retrieve the next set of posted transactions. This feature is not applicable for memo post transactions.\n\n**Note:** If records are available, the calling application pass the value in RecCtrlIn/Cursor to get requested additional records."
       description: |-
         Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
 
-        **Note:** Pagination is supported only for LAS transactions and not for premier.
-    AcctTrnInqOperBySecuredResponse_AcctTrnKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-
-
-        AcctType:
-          type: string
-          description: |-
-            Type of an account.
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
-          enum:
-          - LOAN
-      description: Unique information to identify the account record.
+        **Note:** Pagination is supported only for LAS transactions and not for Premier.
     AcctTrnInqOperBySecuredResponse_AcctTrnKeys:
       required:
       - AcctKeys
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnKeys_AcctKeys'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys'
         AcctTrnIdent:
           maxLength: 36
           type: string
           description: |-
-            Unique identification code to identify an account transaction record.
+            Identification code to uniquely identify an account transaction record.
 
             Value of this field cannot be used to look up the transactions in navigator/user interface.
 
-            **Note:** AcctTrnIdent is returned for MemoPost (Premier) and Posted (LAS) transactions. This field can be used in combination with the Institution number, Account Number and Account Type to uniquely identify a transaction.
+            **Note:** For memo posted transactions this is a record key.
+
+            Premier does not provide unique transaction identifier for posted transactions.
+
+            Transaction posting date and occurrence will be returned as transaction identifier.
       description: Unique information to identify a transaction record.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode:
       required:
@@ -560,13 +543,13 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported."
-      description: 'Details of the currency code. '
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
+      description: Details of currency code.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt:
       type: object
       properties:
@@ -577,33 +560,14 @@ components:
 
 
 
+
+
+
+
             Example: 10.00
         CurCode:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode'
-      description: Details of the transaction amount that contains currency code and monetary value descriptions.
-    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CurAmt_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
-          enum:
-          - ISO4217-Alpha
-        CurCodeValue:
-          type: string
-          description: |-
-            Currency code value as per the ISO currency code format set in the CurCodeType field.
-
-            For example, currency code for the US Dollar in alpha and numeric formats are:
-
-            - USD (in ISO4217-Alpha format)
-
-            - 840 (in ISO4217-Numeric format)
-
-            Presently only USD currency code is supported.
-      description: Details of currency code.
+      description: Details of the total transaction amount posted to the account.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CurAmt:
       type: object
       properties:
@@ -612,9 +576,15 @@ components:
           description: |-
             Amount in decimal format.
 
+
+
+
+
+
+
             Example: 10.00
         CurCode:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CurAmt_CurCode'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode'
       description: Details of the currency amount that contains monetary value of the transaction.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CompositeCurAmt:
       required:
@@ -622,9 +592,7 @@ components:
       properties:
         CompositeCurAmtType:
           type: string
-          description: |+
-            Type of composite currency amount.
-
+          description: Type of composite currency amount.
           enum:
           - Principal
           - Fees
@@ -637,111 +605,108 @@ components:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CurAmt'
         SpecialHandling:
           type: array
-          description: 'Special instructions that are used for processing the transaction amount. '
+          description: Special instructions that are used for processing the transaction amount.
           items: {}
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_StmtRunningBal:
       properties:
         Amt:
           type: number
-          description: Amount in decimal format.
+          description: |-
+            Amount in decimal format.
+
+
+
+
+
+
+
+            Example: 10.00
         CurCode:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CurAmt_CurCode'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode'
         StmtRunningBalType:
           type: string
           description: |-
-            Type of statement running balance.
+            Type of the account balance.
 
-            **Note:** Premier supports '*' or special character in the amount for the loan account balance. In such cases, ESF sets the balance to "Unapplied".
+            **Note:** Premier supports '*' or special character in the Amount for the loan account balance. In such cases, the balance is set to "Unapplied".
 
-            For all other balances, ESF sets the value to "Principal".
+            For all other balances, the value is set to Principal.
 
+            Principal and Running balance for loan accounts in Premier ideally are same.
 
-
-            Principal and Running balance for loan accounts in Premier are same.
+            The value "running" will be deprecated for the future releases.
           enum:
           - Running
           - Unapplied
           - Principal
-    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_SplitRateAmt_CurCode:
-      required:
-      - CurCodeValue
-      type: object
-      properties:
-        CurCodeType:
-          type: string
-          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n"
-          enum:
-          - ISO4217-Alpha
-        CurCodeValue:
-          type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported.\n\n"
-      description: Details of currency code.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_SplitRateAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: Dollar amount (principal portion) at which the loan amount splits. The loan amount above the split is charged with RateOverSplit interest and below the split is charged with RateUnderSplit interest rate.
+          description: |-
+            Amount in decimal format.
+
+
+
+
+
+
+
+            Example: 10.00
         CurCode:
-          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_SplitRateAmt_CurCode'
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode'
       description: Details of split amount for a loan that contains dollar amount value at which the loan splits into two parts.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo:
       type: object
       properties:
         TrnCode:
           type: string
-          description: "Service provider transaction code of the payment posted to the account. \n\nPending transactions do not have a transaction code. "
+          description: 'Service provider transaction code of the payment posted to the account. '
         DrCrType:
           type: string
-          description: Type of account transaction in the history.
+          description: Value that indicates if the account transaction is either debit or credit to the account.
         DrCrTypeEnumDesc:
           maxLength: 80
           type: string
-          description: 'Description of the enumeration value in the DrCrType field. '
+          description: Description of the enumeration value provided in the DrCrType field.
         TrnRevType:
           type: string
-          description: |+
-            Type of reversal transaction.
+          description: |-
+            Value that classifies the transaction reversal type.
 
-            **Note:** This field identifies the:
+            **Note:** TrnRevType identifies the following:
 
-            - original transaction, which was reversed and ESF represents it as MatchedTransaction.
+            - original transaction, which was reversed and it is represented by ESF as MatchedTransaction
 
-            - reversal transaction, which ESF represents as Reversal.
-
-
+            - reversal transaction, which is represented by ESF as Reversal
 
             Applicable only for posted transactions.
-
-
-
-
-
-
-
           enum:
           - MatchedTransaction
           - Reversal
         TrnRevTypeEnumDesc:
           maxLength: 80
           type: string
-          description: 'Description of the enumeration value in the TrnRevType field. '
+          description: Description of the enumeration value provided in the TrnRevType field.
         MemoPostInd:
           type: boolean
-          description: "Flag to indicate the transaction is memo posted. \n\nIf the value is set to 'true', then the transaction is memo posted but pending nightly processing. \n\nIf the value is set to 'false', then the transaction is not memo posted; it is a posted transaction."
+          description: "Flag to indicate the transaction is memo posted. \n\n**Note:** For memo-post transactions in Premier, the field is returned as 'true'. For transactions that have posted and completed the nightly processing in LAS, the field is returned as 'false'."
         PostedDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date and time value when the transaction is posted in the system. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Date and time value when the transaction is posted in the system. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the transaction went into effect for an account. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time when the transaction went into effect for an account. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
         PrincipalPaidToDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Most recent date and time until when the principal amount is paid. Applicable for LOAN account type.
+            Date and time when the principal amount is paid.
+
+
 
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
@@ -749,21 +714,23 @@ components:
         IntPaidToDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
+          description: "Date and time when the loan interest is paid. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+        TrnDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
           description: |-
-            Most recent date and time until when the loan interest is paid. Applicable for LOAN account type.
+            Date and time value when the transaction is recorded on the history record.
+
+
 
             Format: yyyy-MM-ddTHH:mm:ss.sss
 
             Example: 2021-12-31T23:59:59.999
-        TrnDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: "Transaction date and time value when the transaction is applied to the account. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
         TrnAmt:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt'
         CompositeCurAmt:
           type: array
-          description: Details of the composite currency amount.
+          description: Details of composite currency amount used to specify the individual transaction amounts that comprised the transaction.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CompositeCurAmt'
         Desc:
@@ -774,11 +741,9 @@ components:
         StmtRunningBal:
           type: array
           description: |-
-            Details of the statement running balance.
+            Account balance after the transaction is posted to the account.
 
-            This value indicated the account balance after the transaction is posted to the account.
-
-            **Note:** Principal balance is only available for archived transactions and pending transactions do not have a principal balance. The aggregate is always returned in response. If the value of the IncRunningBalanceInd field is 'false' in request, then core returns transactions with StmtRunningBal/Amt as '0', else actual running balance amount is returned on all transactions.
+            **Note:** Applicable for posted transactions only.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_StmtRunningBal'
         ChkNum:
@@ -787,10 +752,10 @@ components:
           description: Check number associated with the transaction.
         RateOverSplit:
           type: number
-          description: Interest rate applied to the principal balance. If a split amount is used, this rate applies to the principal that exceeds the split amount.
+          description: Interest rate that is applied to the principal balance. If a split amount is used, this rate applies to the principal that exceeds the split amount.
         RateUnderSplit:
           type: number
-          description: Interest rate applied to the principal balance. If a split amount is used, this rate applies to the principal that is less than the split amount.
+          description: Interest rate that is applied to the principal balance. If a split amount is used, this rate applies to the principal that is less than the split amount.
         SplitRateAmt:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_SplitRateAmt'
         ExternalTrnCode:
@@ -798,12 +763,12 @@ components:
           description: 'External transaction code provided by the payment service provider that is posted to the account. '
         ImageInd:
           type: boolean
-          description: "Flag to indicate the related images to the transaction are available. \n\n\n\nApplicable only for posted transactions.\n\n**Note:** ImageInd is returned as 'true' if an image document (for example, Check Image/Picture file) for the transaction is available in core system, else 'false' is returned."
+          description: "Flag to indicate the related images to the transaction are available. \n\n**Note:** Image Indicator is returned as 'true' if an image document (for e.g. check image/deposit slip image/picture file) is available in image archive system. \n\nOtherwise Image Indicator is set to 'false'.\n\nApplicable for posted transactions only."
         TrnImageId:
           maxLength: 36
           type: string
-          description: "Unique transaction image identifier that associates transaction image with the related transaction. \n\n\n\nApplicable only for posted transactions.\n\n**Note:** TrnImageId returns the unique transaction number in core, for the account. This field can be used to retrieve a document for a particular transaction in provider system (through keyword search using ESF document services)."
-      description: Details of account transaction information. For example, transaction type, transaction amount, description, transaction code and so on.
+          description: "Unique transaction image identifier that associates transaction image with the related transaction. \n\n**Note:** TrnImageId returns the unique transaction number in core, for the account. This field can be used to retrieve a document for a particular transaction in provider system (via keyword search using ESF document services)."
+      description: Information related to account transaction such as transaction type, transaction amount, description, transaction code and so on.
     AcctTrnInqOperBySecuredResponse_AcctTrnStatus:
       required:
       - AcctTrnStatusCode
@@ -811,19 +776,14 @@ components:
       properties:
         AcctTrnStatusCode:
           type: string
-          description: Current status code of the account transaction record.
+          description: Current status of the account transaction record.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Effective date and time when the status of the transaction is last confirmed.
-
-            Format: yyyy-MM-ddTHH:mm:ss.sss
-
-            Example: 2021-12-31T23:59:59.999
-      description: Details of the account transaction status.
+          description: "Effective date and time when the transaction went into effect for an account. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
+      description: Details of the transaction status that contains the effective date and status information details.
     AcctTrnInqOperBySecuredResponse_AcctTrnRec:
       required:
       - AcctTrnInfo

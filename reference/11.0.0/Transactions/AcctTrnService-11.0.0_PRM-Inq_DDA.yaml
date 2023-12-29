@@ -14,7 +14,7 @@ paths:
       tags:
       - Get Account Transaction History
       summary: GET Account Transaction History.
-      description: "Get Account Transaction History API retrieves the transaction history for Demand Deposit Account (DDA).<br>For Premier, this API returns both memo post (pending) transactions and hard posted transactions for the current and previous statement cycle only from the Core and not from an auxiliary storage like AMS. It also returns reversed transactions. This API does not include a selection criterion to filter pending vs posted transactions and does not return running balances. <br>No parameter configuration is needed for this API. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: Get Account Transaction History API retrieves the transaction history for Demand Deposit Account (DDA).<br>For Premier, this API returns both memo post (pending) transactions and hard posted transactions for the current and previous statement cycle only from the Core and not from an auxiliary storage like AMS. It also returns reversed transactions. This API does not include a selection criterion to filter pending vs posted transactions and does not return running balances. <br>No parameter configuration is needed for this API. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
       operationId: AcctTrnInqOperBySecured
       parameters:
       - name: EFXHeader
@@ -310,7 +310,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -384,7 +384,12 @@ components:
         Cursor:
           maxLength: 250
           type: string
-          description: "Next record pointer is included in the response if more than 250 posted transactions records exist. \n\nIf there are more than 250 posted transactions, ESF will return cursor value in the RecCtrlOut/Cursor field. This field should be passed in the subsequent request within this (RecCtrlIn/Cursor) field to retrieve the next set of posted transactions. This feature is not applicable for memo post transactions.\n\n**Note:** Initial request of transaction history should not have a 'Cursor' field provided. If more than 250 posted transactions exist on the account, Premier will provide the next cursor value in the response to indicate that there is more transactions to be returned."
+          description: |-
+            Next record pointer to include in the response if additional records are available.
+
+            If there are more than 250 posted transactions, ESF will return cursor value in the RecCtrlOut/Cursor field. This field should be passed in the subsequent request within this (RecCtrlIn/Cursor) field to retrieve the next set of posted transactions. This feature is not applicable for memo post transactions.
+
+            **Note:** Initial request of transaction history should not have a 'Cursor' field provided. If more than 250 posted transactions exist on the account, Premier will provide the next cursor value in the response to indicate that there is more transactions to be returned.
       description: Maximum number of records that client can specify to process within a single response.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys:
       required:
@@ -401,6 +406,12 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
           description: Type of an account.
@@ -412,6 +423,13 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys'
+        TrnPostType:
+          type: string
+          description: Type of transaction posting used to request all transactions, only memo post transactions or all transactions excluding memo post transactions.
+          enum:
+          - MemoPostOnly
+          - ExcludeMemoPost
+          - All
       description: Details of the selection criteria to retrieve the account transaction records.
     AcctTrnInqOperBySecuredResponse_AcctTrnKeys_AcctKeys:
       required:
@@ -428,10 +446,18 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
@@ -448,7 +474,7 @@ components:
           maxLength: 36
           type: string
           description: |-
-            Unique identification code to identify an account transaction record.
+            Identification code to uniquely identify an account transaction record.
 
             Value of this field cannot be used to look up the transactions in navigator/user interface.
 
@@ -467,12 +493,12 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported."
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
       description: Details of currency code.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt:
       type: object
@@ -484,10 +510,14 @@ components:
 
 
 
+
+
+
+
             Example: 10.00
         CurCode:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode'
-      description: Details of the transaction amount that contains currency code and monetary value descriptions.
+      description: Details of the total transaction amount posted to the account.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CheckFloatAmt_CurCode:
       required:
       - CurCodeValue
@@ -495,13 +525,13 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported.\n\n"
-      description: Details of currency code, defined in currency code type and value.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\n\n\n\n\nPresently only USD currency code is supported.\n\n\n\n"
+      description: Details of currency code.
     AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CheckFloatAmt:
       type: object
       properties:
@@ -539,37 +569,47 @@ components:
       properties:
         TrnCode:
           type: string
-          description: "Service provider transaction code of the payment posted to the account. \n\nPending transactions do not have a transaction code. "
+          description: 'Service provider transaction code of the payment posted to the account. '
         DrCrType:
           type: string
-          description: Indicates if the account transaction is either debit or credit.
+          description: Value that indicates if the account transaction is either debit or credit to the account.
           enum:
           - Debit
           - Credit
         TrnRevType:
           type: string
-          description: "Classifies the transaction reversal type.\n\nApplicable only for posted transactions. \n\n**Note:** TrnRevType identifies:\n\n- original transaction, which was reversed and it is represented by ESF as MatchedTransaction.\n\n- reversal transaction, which is represented by ESF as Reversal.\n\n\n\nApplicable only for posted transactions."
+          description: |-
+            Value that classifies the transaction reversal type.
+
+            **Note:** TrnRevType identifies the following:
+
+            - original transaction, which was reversed and it is represented by ESF as MatchedTransaction.
+
+            - reversal transaction, which is represented by ESF as Reversal.
+
+            Applicable only for posted transactions.
           enum:
           - Reversal
           - MatchedTransaction
+          - Waived
         MemoPostInd:
           type: boolean
-          description: "Flag to indicate the transaction is memo posted. \n\nIf the value is set to 'true', then the transaction is memo posted but pending nightly processing. \n\nIf the value is set to 'false', then the transaction is not memo posted; it is a posted transaction."
+          description: "Flag to indicate the transaction is memo posted. \n\n\n\nIf the value is set to 'true', then the transaction is memo posted but pending nightly processing. \n\n\n\nIf the value is set to 'false', then the transaction is not memo posted; it is a posted transaction."
         PostedDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date and time value when the transaction is posted in the system. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Date and time value when the transaction is posted in the system. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the transaction went into effect for an account. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time when the transaction went into effect for an account. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
         TrnDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Transaction date and time value when the transaction is applied to the account. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n**Note:** Oldest memoposted transaction is returned first in the response. Premier does not support sort order for memoposted transactions, Memoposted transactions are always returned in ascending order as per date and timestamp of when transaction memoposted to the account. "
+          description: "Date and time value when the transaction is recorded on the history record. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n**Note:** Oldest memoposted transaction is returned first in the response. Premier does not support sort order for memoposted transactions, Memoposted transactions are always returned in ascending order as per date and timestamp of when transaction memoposted to the account. "
         TrnType:
           type: string
-          description: "For deposit account (DDA and SDA) types, this field identifies health banking (HSA) contribution or distribution transactions type. \n\n**Note:** Applicable to premier health banking (HSA) clients only. It identifies HSA transaction contribution and distribution type.\n\nNot applicable for memo posted transactions.\n\n\n\n"
+          description: "For deposit account (DDA and SDA) types, this field identifies health banking (HSA) contribution or distribution transactions type. \n\n**Note:** Applicable to premier health banking (HSA) clients only. It identifies HSA transaction contribution and distribution type.\n\nNot applicable for memo posted transactions.\n\n\n\n\n\n\n\n"
           enum:
           - YTDContribution
           - PriorYrContribution
@@ -605,7 +645,7 @@ components:
         Desc:
           maxLength: 200
           type: array
-          description: "Custom-defined description for the transaction codes. \n\n**Note:** Premier allows bank to define custom description for transaction codes .\n\nPin order for transaction descriptions to display correctly, premier API version should be configured to match the core version.\n\nE.g. If PRM core is at 10.0, ESF should be configuerred to use PRM 10.0 API."
+          description: "Custom-defined description for the transaction codes. \n\n**Note:** Premier allows bank to define custom description for transaction codes .\n\nPin order for transaction descriptions to display correctly, premier API version should be configured to match the core version.\n\nFor example, If PRM core is at 10.0, ESF should be configuerred to use PRM 10.0 API."
           items: {}
         ChkNum:
           maxLength: 22
@@ -616,17 +656,17 @@ components:
           description: "External transaction code provided by the payment service provider that is posted to the account. \n\n**Note:** Applicable for posted transactions only."
         ImageInd:
           type: boolean
-          description: "Flag to indicate the related images to the transaction are available. \n\n\n\nApplicable only for posted transactions.\n\n**Note:** Image Indicator is returned as 'true' if an image document (for e.g. check image/deposit slip image/picture file) is available in image archive system. \n\nOtherwise Image Indicator is set to 'false'.\n\nApplicable for posted transactions only."
+          description: "Flag to indicate the related images to the transaction are available. \n\n**Note:** Image Indicator is returned as 'true' if an image document (for e.g. check image/deposit slip image/picture file) is available in image archive system. \n\nOtherwise Image Indicator is set to 'false'.\n\nApplicable for posted transactions only."
         TrnImageId:
           maxLength: 36
           type: string
-          description: "Unique transaction image identifier that associates transaction image with the related transaction. \n\n\n\nApplicable only for posted transactions.\n\n**Note:** Applicable for posted transactions only. \n\nTransaction image Identifier refers to a trace number, which is unique number assigned to the transaction per account. \n\nIt can be used to retrieve a document for a particular transaction from archive system (via keyword search using ESF document services).\n\nIt can be returned as 0. Applicable for internal premier transactions, like interest posting transactions, service charge transactions and etc."
+          description: "Unique transaction image identifier that associates transaction image with the related transaction. \n\n**Note:** Applicable for posted transactions only. \n\nTransaction image Identifier refers to a trace number, which is unique number assigned to the transaction per account. \n\nIt can be used to retrieve a document for a particular transaction from archive system (via keyword search using ESF document services).\n\nIt can be returned as 0. Applicable for internal premier transactions, like interest posting transactions, service charge transactions and so on."
         FloatData:
           type: array
-          description: "Details of the float data that contains float type and details for a transaction. \n\n**Note:** Applicable only for deposit accounts such as DDA and SDA. The float data at the transaction-level is available, if any of following conditions are satisfied: \n\n1) Account is an analysis account with analysis code value greater then 199\n\n 2) Account is set up to earn interest based on the account available balance. This is defined under premier Specifications Deposit Rate Index parameter.\n\n3) Effective Date of the current interest is defined for the account."
+          description: "Details of the float data that contains float type and details for a transaction. \n\n**Note:** Applicable only for deposit accounts such as DDA and SDA. The float data at the transaction-level is available, if any of following conditions are satisfied: \n\n- Account is an analysis account with analysis code value greater then 199\n\n- Account is set up to earn interest based on the account available balance. This is defined under premier Specifications Deposit Rate Index parameter\n\n- Effective Date of the current interest is defined for the account"
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_FloatData'
-      description: Details of account transaction information. For example, transaction type, transaction amount, description, transaction code and so on.
+      description: Information related to account transaction such as transaction type, transaction amount, description, transaction code and so on.
     AcctTrnInqOperBySecuredResponse_AcctTrnStatus:
       required:
       - AcctTrnStatusCode
@@ -643,7 +683,11 @@ components:
           description: |-
             Effective date and time when the status of the transaction is last confirmed.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
 
             Example: 2021-12-31T23:59:59.999
       description: Details of the transaction status that contains the effective date and status information details.
