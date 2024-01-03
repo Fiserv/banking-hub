@@ -100,11 +100,11 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 	- LoanAcctInfo/DishonoredFee/FeeTier/CurAmt/CurCode/CurCodeValue
 	- LoanAcctInfo/DishonoredFee/FeeTier/BalPercent
  
- - Updated the allowed enum values to "16" and "45" for the LoanAcctInfo/RateChangeData/RoundingOption XPATH
+- Updated the allowed enum values to "16" and "45" for the LoanAcctInfo/RateChangeData/RoundingOption XPATH
  
- - Updated the allowed enum value to "FactorPlusVariance" for the LoanAcctInfo/RateChangeData/VarianceFactorType XPATH 
+- Updated the allowed enum value to "FactorPlusVariance" for the LoanAcctInfo/RateChangeData/VarianceFactorType XPATH 
    
- - Updated the allowed enum values to the following values for the LoanAcctInfo/RateChangeData/RoundingFactor XPATH:
+- Updated the allowed enum values to the following values for the LoanAcctInfo/RateChangeData/RoundingFactor XPATH:
    	- 0.5000
    	- 0.2000
    	- 0.0500
