@@ -57,7 +57,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 	- LoanAcctInfo/DeferredFee/FeeCostData/PriorCostAmt
 	- LoanAcctInfo/DeferredFee/FeeCostData/Rate
 	- LoanAcctInfo/LoanBilling/AutoPmtDraftAmtOption
-   	- LoanAcctInfo/LoanBilling/AutoPmtDraftAmt
+	- LoanAcctInfo/LoanBilling/AutoPmtDraftAmt
 	- LoanAcctInfo/LoanBilling/AutoPmtDraftAmt/Amt
 	- LoanAcctInfo/LoanBilling/AutoPmtDraftAmt/CurCode
 	- LoanAcctInfo/LoanBilling/AutoPmtDraftAmt/CurCode/CurCodeType
