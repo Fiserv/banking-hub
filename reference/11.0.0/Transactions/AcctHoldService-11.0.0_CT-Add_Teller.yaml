@@ -3,9 +3,9 @@ openapi: 3.0.1
 info:
   title: Account Hold Service
   description: The account hold service helps to manage and support operations that are related to the holding of funds for a product account. It also restricts the accountholder’s ability to withdraw funds.
-  version: 11.0.0_SIG-Add_Teller
+  version: 11.0.0_CT-Add_Teller
 servers:
-- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/AcctHoldService/11.0.0_SIG-Add_Teller
+- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/AcctHoldService/11.0.0_CT-Add_Teller
   description: SwaggerHub API Auto Mocking
 paths:
   /acctholdservice/stophold/accountHolds:
@@ -13,7 +13,7 @@ paths:
       tags:
       - Add Account Hold
       summary: Add Account Hold.
-      description: "Add Account Hold API creates a hold (restriction) on an account holder’s ability to transfer or withdraw held funds from their account. <br>This API is used when the user is using the Teller identifier to generate the request and is included in the ESF header. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Adds a restriction on an accountholder’s ability to transfer or withdraw funds from their account. Generally, a bank or similar authority places hold to transfer or withdraw funds form the account when:\n          <ul> <li>  Account balance act as a guarantee or collateral</li>\n          <li>Tax authorities or court places hold on such balance</li>\n          <li>Cheque amount is substantial and suspicious </li></ul>\n          <br>\n          For more information about the Transactions domain, <a href=\"../docs/?path=docs/fintechs/transactions.md\" title=\"Click to open\">click here.</a> <br><br>\n        <b>Relates to:</b>\n            <ul> \n              <li><a href=\"./docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n              <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            </ul>"
       operationId: AcctHoldAddOper
       parameters:
       - name: EFXHeader
@@ -43,27 +43,21 @@ paths:
       x-group-name: Account Hold Service
       x-proxy-name: Add Account Hold
       x-child-product-name: Transactions
-      x-core: Signature-Teller
+      x-core: Cleartouch-Teller
 components:
   schemas:
     AcctHoldAddOperRequest:
       required:
       - AcctHoldInfo
       properties:
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
         AcctHoldInfo:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo'
     AcctHoldAddOperResponse:
       required:
       - AcctHoldStatusRec
       properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
         AcctHoldStatusRec:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec'
-        Receipt:
-          $ref: '#/components/schemas/AcctHoldAddOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -251,138 +245,6 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
-    OvrdExceptionDataType:
-      title: OvrdExceptionDataType
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
-      description: Details of the exceptions that can be manually acknowledged by the client.
-    StatusType:
-      title: StatusType
-      required:
-      - Severity
-      - StatusCode
-      - StatusDesc
-      - SvcProviderName
-      type: object
-      properties:
-        Id:
-          type: string
-          description: Status identification number.
-        StatusCode:
-          maxLength: 20
-          type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: |-
-            Name of a service provider. Possible values are:
-              -  Cleartouch
-              -  DNA
-              -  Precision
-              -  Premier
-              -  Signature
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: Server status code of the service provider's application.
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
-        SubjectRole:
-          type: string
-          description: Authorization level required to override, such as Teller and Supervisor.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
-        ContentHTML:
-          type: string
-          description: Response status in HTML format. This parameter returns only in some cases.
-        AdditionalStatus:
-          type: array
-          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
-          items:
-            $ref: '#/components/schemas/AdditionalStatusType'
-      description: Details of the API response messages.
-    SeverityType:
-      title: SeverityType
-      type: string
-      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
-      enum:
-      - Error
-      - Warning
-      - Info
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
-    AdditionalStatusType:
-      title: AdditionalStatusType
-      type: object
-      properties:
-        StatusCode:
-          maxLength: 20
-          type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: |-
-            Name of a service provider. Possible values are:
-              - Cleartouch
-              - DNA
-              - Precision
-              - Premier
-              - Signature
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: 'Server status code of the service provider''s application.  '
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
     AcctHoldAddOperRequest_AcctHoldInfo_AcctRef_AcctKeys:
       required:
       - AcctId
@@ -391,19 +253,16 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identification number of an account record.\n\n\n\n**Note:** Refers to the account number on which the hold is placed. \n\nMax length: 12 characters"
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
         AcctType:
           type: string
-          description: |-
-            Type of an account.
-
-
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
-
-
-
-            **Note:** *Required field*
+          description: Type of an account.
           enum:
           - DDA
           - SDA
@@ -428,24 +287,17 @@ components:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: |-
-            Currency code value as per the ISO currency code format set in the CurCodeType field.
-
-            **Note:** Only USD currency code is supported.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported."
       description: Details of currency code.
     AcctHoldAddOperRequest_AcctHoldInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: "Amount in decimal format.\n\n\n\nExample: 10.00\n\n\n\n**Note:** Applicable if the HoldType value is set to \"Hold\". \n\n\n\n"
+          description: "Amount in decimal format.\n\n\n\nExample: 10.00\n\n**Note:** The hold amount must have a valid value greater than 0. "
         CurCode:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt_CurCode'
-      description: |+
-        Details of the hold placed on an account.
-
-        **Note:** Only USD currency code is supported.
-
+      description: Amount of the hold to be placed on the account.
     AcctHoldAddOperRequest_AcctHoldInfo:
       type: object
       properties:
@@ -453,59 +305,37 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_AcctRef'
         HoldType:
           type: string
-          description: Type of hold placed on the account.
+          description: |-
+            Type of hold.
+
+            **Note:** *Required field*
           enum:
           - Hold
         CurAmt:
           $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt'
+        HoldReasonCode:
+          type: string
+          description: Code to identify the reason for the hold on the account.
         HoldReason:
           maxLength: 80
           type: array
-          description: "Description of the reason for placing the hold on an account. \n\n**Note:** *Conditionally Required field*\n\nRequired for holds placed through Teller application.\n\nMax Length: 60 characters"
+          description: |-
+            Description of the reason of the hold.
+
+            **Note:** The HoldReason field is required when the HoldReasonCode field has any value from 01 to 69.
           items: {}
         ExpDt:
           type: string
-          description: "Date after which the hold on an account is no longer active and the funds are available for transactions.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** *Conditionally Required field*\n\nRequired for holds placed through Teller application. "
+          description: "Date after which the hold on an account is no longer active and the funds are made available.\n\nFormat: yyyy-mm-dd. \n\nExample: 2021-11-20."
           format: date
       description: Information about the business properties of the hold placed on an account.
-    AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identification number of an account record.
-
-
-
-            **Note:** Refers to the account number.
-        AcctType:
-          type: string
-          description: |-
-            Type of an account.
-
-
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
-          enum:
-          - DDA
-          - SDA
-      description: Unique information to identify the account record.
     AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys:
       required:
       - AcctKeys
       type: object
       properties:
         AcctKeys:
-          $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys_AcctKeys'
-        HoldType:
-          type: string
-          description: Type of hold placed on the account.
-          enum:
-          - Hold
+          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_AcctRef_AcctKeys'
       description: Unique information to identify the hold record.
     AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus:
       required:
@@ -514,21 +344,19 @@ components:
       properties:
         AcctHoldStatusCode:
           type: string
-          description: Code to indicate the status of the account hold record.
+          description: Code to indicate the current status of the account hold.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Effective date and time when the transaction was initiated.
+            Effective date and time when the status of the account hold is changed.
 
+            Format: YYYY-MM-DDThh:mm:ss.SSS
 
-
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
-
-            Example: 2021-01-31T23:59:59.999
-      description: Status details of the account hold record.
+            Example: 2021-06-28T23:40:30.888
+      description: Details of the account hold status.
     AcctHoldAddOperResponse_AcctHoldStatusRec:
       required:
       - AcctHoldKeys
@@ -539,46 +367,4 @@ components:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys'
         AcctHoldStatus:
           $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus'
-      description: Details of the account hold status record in response to add operation.
-    AcctHoldAddOperResponse_Receipt_CurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-
-
-            Example: 10.00
-      description: Details of the currency amount.
-    AcctHoldAddOperResponse_Receipt_AcctBal:
-      required:
-      - BalType
-      - CurAmt
-      properties:
-        BalType:
-          type: string
-          description: Type of account balance.
-          enum:
-          - Memo
-          - Avail
-        CurAmt:
-          $ref: '#/components/schemas/AcctHoldAddOperResponse_Receipt_CurAmt'
-    AcctHoldAddOperResponse_Receipt:
-      type: object
-      properties:
-        Name:
-          maxLength: 80
-          type: string
-          description: Name on the receipt.
-        OpenDt:
-          type: string
-          description: "Date on which the account record is created.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
-          format: date
-        AcctBal:
-          type: array
-          description: Account balance details of the account on which hold is placed.
-          items:
-            $ref: '#/components/schemas/AcctHoldAddOperResponse_Receipt_AcctBal'
-      description: Receipt of the transaction.
+      description: Details of the account hold response record that includes response keys and response status.

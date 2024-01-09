@@ -3,7 +3,7 @@ openapi: 3.0.1
 info:
   title: Account Service
   description: The account service helps to create and manage product accounts serviced by the financial institutions. It is also used to retrieve information about the existing accounts and maintain information of new accounts.
-  version: 11.0.0_CT-Inq_DDA
+  version: 11.0.0_CT-Inq_DDA_Teller
 servers:
 - url: /
 paths:
@@ -42,7 +42,7 @@ paths:
       x-group-name: Account Service
       x-proxy-name: Get Account Details
       x-child-product-name: Accounts
-      x-core: Cleartouch-DDA
+      x-core: Cleartouch-DDA_Teller
 components:
   schemas:
     getAccountsSecuredRequest:
@@ -91,6 +91,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -301,7 +302,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -380,11 +381,17 @@ components:
           description: |-
             Unique identification number of an account record.
 
-            **Note:** Used to specify the primary account for this request.
+
+
+            **Note:** This field is used to specify the primary account for this request.
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -399,7 +406,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel_AcctKeys'
-      description: Details of selected account.
+      description: Details of the selection criteria used for account inquiry.
     getAccountsSecuredResponse_AcctRec_AcctKeys:
       required:
       - AcctId
@@ -408,11 +415,20 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identification number of an account record.\n\n**Note:** Account number for the account requested. "
+          description: |-
+            Unique identification number of an account record.
+
+
+
+            **Note:** Account number for the account requested.
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -424,7 +440,20 @@ components:
       properties:
         DateType:
           type: string
-          description: "Type of dates to be referenced to fetch the transaction records.  \n\n**Note:** Valid values refer to following:\n\nLastTrn - last time the account was either credited or debited.\n\nLastPrc - process through date."
+          description: |-
+            Values that indicate the type of date contained in the "DateValue" field.
+
+
+
+
+
+
+
+            **Note:** Valid values refer to following:
+
+            - LastTrn: last time the account was either credited or debited
+
+            - LastPrc: process through date
           enum:
           - LastFileMaint
           - LastTrn
@@ -436,10 +465,7 @@ components:
         DateValue:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Value of the date.
-
-            **Note:** Format is: yyyy-mm-dd
+          description: "Value of the date.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_RelationshipMgr:
       required:
       - RelationshipMgrIdent
@@ -465,7 +491,7 @@ components:
       properties:
         RecurType:
           type: string
-          description: 'Recurrence type indicates the pattern of recurrence. '
+          description: Recurrence type indicates the pattern of recurrence.
           enum:
           - Cycle
           - Daily
@@ -479,13 +505,16 @@ components:
           description: Description of the enumeration value in the RecurType field.
         RecurInterval:
           type: integer
-          description: |+
+          description: |-
             Recurrence interval between two successive occurrences of statement generation.
+
+
 
             For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
 
-            The default value is set to 1.
 
+
+            The default value is set to 1.
           format: int64
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctStmtData:
       type: object
@@ -497,7 +526,7 @@ components:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctStmtData_StmtTimeFrame'
         LastStmtDt:
           type: string
-          description: "Date on which last statement was generated.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which last statement was generated.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         CombinedStmtIdent:
           maxLength: 36
@@ -526,7 +555,7 @@ components:
       properties:
         BalType:
           type: string
-          description: Client-defined balance type.
+          description: Type of account balance.
           enum:
           - Current
           - Avail
@@ -544,7 +573,7 @@ components:
       properties:
         AcctAmtType:
           type: string
-          description: Type of amount.
+          description: Type of amount in account.
           enum:
           - BelowBalanceThreshold
           - LowBal - New
@@ -561,8 +590,8 @@ components:
           - Credit
           - Debit
           - AvgAvail
-          - 'DaysNSF '
-          - 'DaysOverdraft '
+          - DaysNSF
+          - DaysOverdraft
           - Deposit
         AcctAmtTypeEnumDesc:
           maxLength: 80
@@ -575,7 +604,7 @@ components:
           - CTD
           - YTD
           - PriorYr
-          - 'Prior12Months '
+          - Prior12Months
           - RollingYTD - NEW
           - PriorTwoCycle - NEW
         AcctPeriodTypeEnumDesc:
@@ -593,7 +622,7 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
-            Last occurrence date.
+            Date of the last occurrence.
 
 
 
@@ -625,9 +654,7 @@ components:
           - XferFee - NEW
         FeeOption:
           type: string
-          description: |+
-            Processing option for fee type.
-
+          description: Processing option for fee type.
           enum:
           - Charge
           - Waive
@@ -641,12 +668,7 @@ components:
       properties:
         RelationshipPricingRateOpt:
           type: string
-          description: |-
-            Option used to indicate the information about conditions of an account that should pay the relationship pricing rate.
-
-            **Note:** Refers to preferred rate option.
-
-            Values supported are 0 to 9.
+          description: "Option used to indicate the information about conditions of an account that should pay the relationship pricing rate.\n\n\n\n**Note:** \n\n- Refers to preferred rate option\n\n- Supported values are 0 to 9"
       description: Details of the relationship pricing account.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CashMgmtRelData_SweepAcctKeys:
       required:
@@ -664,6 +686,10 @@ components:
 
 
 
+
+
+
+
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
           - DDA
@@ -678,12 +704,10 @@ components:
       properties:
         CashMgmtRelType:
           type: string
-          description: 'Code to indicate the relationship of the account within a Cash Management Relationship (CMR) structure. Account can be a master account, zero balance account, a concentration account or a final investment account. '
+          description: Code to indicate the relationship of the account within a Cash Management Relationship (CMR) structure. Account can be a master account, zero balance account, a concentration account or a final investment account.
         SweepAcctKeys:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CashMgmtRelData_SweepAcctKeys'
-      description: |+
-        Details of cash management relationship.
-
+      description: Details of cash management relationship.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctMemoData:
       properties:
         AcctMemoIdent:
@@ -692,7 +716,7 @@ components:
           description: Account memo identifier used to arrange multiple memos and warnings in a sequence.
         AcctMemoType:
           type: string
-          description: "Type of account memo. \n\n\n\n**Note:** Value of teller refers to teller override."
+          description: "Type of account memo. \n\n\n\n**Note:** Value \"Teller\" refers to teller override."
           enum:
           - Teller
           - Warning
@@ -707,10 +731,7 @@ components:
           description: Type of access level data.
         AccessLevelCode:
           type: string
-          description: |-
-            Code to identify the access level.
-
-            **Note:** Used to identify the inquiry access level for an employee account.
+          description: Code to identify the inquiry access level to an employee account.
       description: Details of access level date.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_IntDispData:
       type: object
@@ -720,6 +741,10 @@ components:
           type: string
           description: |-
             Date of last interest payment.
+
+
+
+
 
 
 
@@ -743,7 +768,7 @@ components:
           description: Description of the enumeration value in AuthLimitOption field.
         OptInOutDt:
           type: string
-          description: 'Date on which the ATM and POS are opted in. '
+          description: "Date on which the ATM and POS are opted in.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
       description: Method to process overdraft transactions (transactions exceeding available balance) carried out at ATM and POS systems.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_OverdraftData:
@@ -797,6 +822,10 @@ components:
 
 
 
+
+
+
+
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
           - SDA
@@ -814,7 +843,7 @@ components:
       properties:
         RecurType:
           type: string
-          description: 'Recurrence type indicates the pattern of recurrence. '
+          description: Recurrence type indicates the pattern of recurrence.
           enum:
           - Daily
           - Weekly
@@ -845,11 +874,7 @@ components:
       properties:
         AcctDtlStatus:
           type: string
-          description: |+
-            Current status of an account.
-
-
-
+          description: Current status of an account.
           enum:
           - Active
           - Closed
@@ -864,10 +889,10 @@ components:
         Desc:
           maxLength: 200
           type: string
-          description: Description of debit transaction.
+          description: Description of the product used to set up the account.
         TaxIncentiveType:
           type: string
-          description: "Type of tax incentive. \n\n\n\n**Note:** Used to indicate if the account holds Health Savings Account (HSA) funds."
+          description: Type of tax incentive used to indicate if the account holds Health Savings Account (HSA) funds.
           enum:
           - HSA
         TaxIncentiveTypeEnumDesc:
@@ -876,7 +901,7 @@ components:
           description: Description of the enumeration value in the TaxIncentiveType field.
         AcctUse:
           type: string
-          description: 'Usage of the account. Institutions in U.S should use this field for regulation D reporting purpose. '
+          description: Usage of the account. Institutions in U.S should use this field for regulation D reporting purpose.
           enum:
           - Business
           - Retail
@@ -901,16 +926,14 @@ components:
         OriginatingBranch:
           maxLength: 32
           type: string
-          description: Branch that primarily created the account with the party.
+          description: Branch in which the account is primarily created for the party.
         OriginatingBranchEnumDesc:
           maxLength: 80
           type: string
           description: Description of the enumeration value in OriginatingBranch field.
         AcctTitleOption:
           type: string
-          description: |+
-            Printing option for the account title.
-
+          description: Printing option for the account title.
         OEDCodeEnumDesc:
           maxLength: 80
           type: string
@@ -922,10 +945,7 @@ components:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctStmtData'
         Rate:
           type: number
-          description: |-
-            Current interest rate for the account.
-
-            **Note:** Used to contain the interest rate last accrued on an account.
+          description: Last accrued interest rate aaplicable for the account.
         AcctBal:
           type: array
           description: Amount of balance present in a financial institution account.
@@ -941,7 +961,9 @@ components:
           description: |-
             Withholding option to identify the type of tax to be withheld for the party.
 
-            **Note:** Values 0 - 9 are allowed.
+
+
+            **Note:** Allowed values are 0 to 9.
         WithholdingOptionEnumDesc:
           maxLength: 80
           type: string
@@ -956,12 +978,12 @@ components:
           description: |-
             Client defined restrictions for transactions applied to the account during the transaction posting.
 
+
+
             **Note:** Refers to lockout.
         DocDistributionOption:
           type: string
-          description: |+
-            Client defined method to indicate the document distribution method used for processing the notices and statement forms.
-
+          description: Client defined method to indicate the document distribution method used for processing the notices and statement forms.
         DocDistributionOptionEnumDesc:
           maxLength: 80
           type: string
@@ -991,10 +1013,7 @@ components:
       properties:
         AcctStatusCode:
           type: string
-          description: |-
-            Status code of an account.
-
-            **Note:** Refers to internal EFX status.
+          description: Code to indicate the status of an account.
           enum:
           - Valid
         EffDt:

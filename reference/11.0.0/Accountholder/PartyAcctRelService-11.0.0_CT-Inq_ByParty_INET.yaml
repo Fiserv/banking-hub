@@ -12,7 +12,7 @@ paths:
       tags:
       - Get Party Account Relationship
       summary: Get Party Account Relationship
-      description: "Retrieves the relationship-related information between Party and account, such as:<br>\n          <ul>\n          <li>List of all Parties (person or organization) related to an account</li> \n          <li>List of all accounts related to a Party</li>\n          </ul>\n        For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a>\n        <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/riskMgt.md\" title=\"Click to open\">Risk and Performance Management</a></li>\n          </ul>"
+      description: "Retrieves the relationship-related information between Party and account, such as:<br>\n          <ul>\n          <li>List of all Parties (person or organization) related to an account</li> \n          <li>List of all accounts related to a Party</li>\n          </ul>\n          \n        For more information about the Accountholder domain, <a href=\"../docs/?path=docs/fintechs/accountholder.md\" title=\"Click to open\">click here.</a>\n        <br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/deposits.md\" title=\"Click to open\">Deposits</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/riskMgt.md\" title=\"Click to open\">Risk and Performance Management</a></li>\n          </ul>"
       operationId: PartyAcctRelInqBySecured
       parameters:
       - name: EFXHeader
@@ -383,37 +383,12 @@ components:
         Cursor:
           maxLength: 250
           type: string
-          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\nFor more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.\n\n**Note:** To get the next set of account records, client application may send the value received in the prior response in the Cursor field, back to Cleartouch using this field. "
+          description: |-
+            Next record pointer to include in the response if more than 250 posted transaction records exist.
+
+            For more than 250 posted transactions, ESF returns a cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within the RecCtrlIn/Cursor field.
       description: Maximum number of records to be processed within a single response as specified by the client.
     PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys:
-      type: object
-      properties:
-        PartyId:
-          maxLength: 150
-          type: string
-          description: "Unique identification number of a party record.\n\n**Note:** *Required field*\n\n\n\nRefer to the customer number. Cleartouch supports nine digits in this field. "
-      description: Unique information to identify the party record.
-    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel:
-      type: object
-      properties:
-        PartyKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys'
-      description: Selection criteria for a party-to-account relationship inquiry.
-    PartyAcctRelInqBySecuredResponse_RecCtrlOut:
-      required:
-      - SentRecCount
-      type: object
-      properties:
-        SentRecCount:
-          type: integer
-          description: "Total number of records that matched the selection criteria and returned in the response message.\n\n**Note:** By default, Cleartouch returns a maximum number of records in a single response. If more account records are available for a party, then Cleartouch will return a value in the Cursor field to allow the client application to retrieve the next set of account records. \n\n"
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: "Next record pointer to include in the response if additional records are available. \n\n**Note:** Client application may use this value and send it in the next request to get the next set of account records. "
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_PartyKeys:
       type: object
       properties:
         PartyId:
@@ -422,7 +397,52 @@ components:
           description: |-
             Unique identification number of a party record.
 
-            **Note:** Refer to the customer number. Cleartouch supports nine digits in this field.
+
+
+            **Note:** **Required field**
+
+            Refers to customer number.
+
+            Max length: 9 digits
+      description: Unique information to identify the party record.
+    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys'
+        IncPartyInfoInd:
+          type: boolean
+          description: |-
+            Flag to indicate a subset of frequently used properties of party information is included in response. By default the value is set to "false".
+
+
+
+            If "true" is selected, the information of the party appears only once in the first instance of a record to avoid unnecessary repetition. If the account makes the selection, the party information summary is always provided.
+      description: Selection criteria for a party-to-account relationship inquiry.
+    PartyAcctRelInqBySecuredResponse_RecCtrlOut:
+      required:
+      - SentRecCount
+      type: object
+      properties:
+        SentRecCount:
+          type: integer
+          description: "Total number of records that matched the selection criteria and returned in the response message.\n\n\n\n**Note:** Cleartouch returns a maximum number of records by default in a single response. If more account records are available for a party, then Cleartouch will return a value in the cursor field to allow the client application to retrieve the next set of account records. "
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: |-
+            Next record pointer to include in the response if more than 250 posted transaction records exist.
+
+            For more than 250 posted transactions, ESF returns a cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within the RecCtrlIn/Cursor field.
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 150
+          type: string
+          description: "Unique identification number of a party record.\n\n\n\n**Note:** Refer to the customer number. \n\nMax length: 9 digits"
       description: Unique information to identify the party record.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys:
       required:
@@ -432,10 +452,10 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identification number of an account record.\n\n\n\n\n\n\n\n**Note:** Refers to account number. Cleartouch supports 18 digits in this field. "
+          description: "Unique identification number of an account record.\n\n\n\n**Note:** Refers to account number. \n\nMax length: 18 digits \n\n\n\n\n\n"
         AcctType:
           type: string
-          description: "Type of an account.\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\"  title=\"Click to open\"> Glossary</a>.\n\n**Note:** Cleartouch supports additional user defined account types. "
+          description: "Type of an account.\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\"  title=\"Click to open\"> Glossary</a>.\n\n\n\n**Note:** Cleartouch supports additional user-defined account types. "
           enum:
           - DDA
           - SDA
@@ -452,6 +472,132 @@ components:
         AcctKeys:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys'
       description: Unique information to identify the party-to-account relationship record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 150
+          type: string
+          description: Unique identification number of a party record.
+      description: Unique information to identify the party record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PersonName:
+      required:
+      - NameType
+      type: object
+      properties:
+        NameType:
+          type: string
+          description: Type of the name.
+          enum:
+          - Primary
+        FullName:
+          maxLength: 96
+          type: string
+          description: Full name of the person.
+        FamilyName:
+          maxLength: 60
+          type: string
+          description: Family name or last name of the person.
+        GivenName:
+          maxLength: 60
+          type: string
+          description: First name of the person.
+        MiddleName:
+          maxLength: 60
+          type: string
+          description: Middle name of the person.
+      description: Name of a person party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo:
+      type: object
+      properties:
+        PartyType:
+          type: string
+          description: Type of the party.
+          enum:
+          - Consumer
+        TaxIdentType:
+          type: string
+          description: Type of tax identification.
+          enum:
+          - SSN
+          - EIN
+          - Foreign
+          - None
+          - Other
+        TaxIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the TaxIdentType field.
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: |-
+            Unique identifier of tax.
+
+            Example: "123456789"
+        PersonName:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PersonName'
+      description: Frequently used properties of a person party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_OrgName:
+      required:
+      - NameType
+      type: object
+      properties:
+        NameType:
+          type: string
+          description: Type of the name.
+          enum:
+          - Primary
+        Name:
+          maxLength: 80
+          type: string
+          description: Organization name details.
+      description: Organization name details.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo:
+      type: object
+      properties:
+        PartyType:
+          type: string
+          description: Type of the party.
+          enum:
+          - Corporate
+        TaxIdentType:
+          type: string
+          description: Type of tax identification.
+          enum:
+          - SSN
+          - EIN
+          - Foreign
+          - None
+          - Other
+        TaxIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the TaxIdentType field.
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: |-
+            Unique identifier of tax.
+
+            Example: "123456789"
+        OrgName:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_OrgName'
+      description: Information related to a party when a party is an organization.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PartyKeys'
+        PersonPartyListInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo'
+        OrgPartyListInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo'
+      description: |+
+        Reference details of a party object that is part of the relationship.
+
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt:
       type: object
       properties:
@@ -469,7 +615,7 @@ components:
       properties:
         BalType:
           type: string
-          description: "Type of the balance.\n\n**Note:** If a loan account is a line of credit then the available balance may contain an amount. \n\n"
+          description: "Type of the balance.\n\n\n\n**Note:** If a loan account is a line of credit, then the available balance may contain an amount. "
           enum:
           - Avail
           - Current
@@ -478,6 +624,52 @@ components:
           - LoanExposure
         CurAmt:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctPeriodData:
+      required:
+      - AcctAmtType
+      properties:
+        AcctAmtType:
+          type: string
+          description: |-
+            Type of amount.
+
+
+
+            **Note:** The following values represents:
+
+            - Deposit (LTD): The amount of the last credit posted to the account
+
+            - IntPaid (YTD): The amount of interest paid year-to-date from January through the current date
+
+            - IntPaid (PriorYr): The amount of interest paid last year (January – December)
+
+            - LoanPmt (LTD): The loan’s regular payment amount (principal + interest + escrow)
+
+            - PmtDue (CTD): The total payment amount due to bring the account current
+          enum:
+          - Deposit
+          - IntEarned
+          - IntPaid
+          - LoanPmt
+          - PmtDue
+        AcctPeriodType:
+          type: string
+          description: Type of account period.
+          enum:
+          - LTD
+          - CTD
+          - YTD
+          - PriorYr
+        LastOccurInd:
+          type: boolean
+          description: Flag to indicate the last occurrence.
+        Amt:
+          type: number
+          description: 'Amount in decimal format. '
+        LastOccuranceDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Date of last occurrence.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_PostAddr:
       required:
       - AddrType
@@ -489,7 +681,7 @@ components:
         Addr2:
           maxLength: 64
           type: string
-          description: Address line 2. To input Addr2, Addr1 field must be provided.
+          description: Address line 2. To enter Addr2, Addr1 field must be provided.
         City:
           maxLength: 40
           type: string
@@ -500,7 +692,7 @@ components:
         PostalCode:
           maxLength: 11
           type: string
-          description: "Postal code or zip code.\n\n**Note:** PostalCode provides the information for the ZIP code, as well as the additional 4 digits code. The four additional digits determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they are represented with 0000.  \n\nFor example: 32714-1234 or 32714-0000 \n\n"
+          description: "Postal code or zip code.\n\n\n\n**Note:** PostalCode provides the information for the ZIP code, as well as the additional 4 digit code. The four additional digits determine a more specific location within a given ZIP code. The four additional digits are optional and when not present they are represented with 0000.  \n\nFor example: 32714-1234 or 32714-0000 "
         AddrType:
           type: string
           description: Type of address.
@@ -511,7 +703,7 @@ components:
       properties:
         AcctDtlStatus:
           type: string
-          description: "Current status of the account.\n\n**Note:** Financial institutions have the option to retrieve only the active or all the accounts (active and closed) by setting up the bank level parameter on Cleartouch core. \n\nIf the bank has the parameter set to not return closed accounts (parameter = 0), then the closed accounts will not be returned in this ESF response and when set to return closed accounts (parameter = 1), then the closed accounts will be returned in the ESF response. "
+          description: "Current status of the account.\n\n\n\n**Note:** Financial institutions have the option to retrieve only the active accounts or all the accounts (active and closed) by setting up the bank level parameter on the Cleartouch core. \n\nIf the bank has the parameter set to not return closed accounts (parameter =0) on the Cleartouch core, then the closed accounts are not returned in this ESF response. If the bank has the parameter set to return closed accounts (parameter = 1), then the closed accounts are returned in the ESF response. "
           enum:
           - Active
           - Closed
@@ -522,14 +714,23 @@ components:
         ProductIdent:
           maxLength: 42
           type: string
-          description: "Unique identifier of a product to indicate the processing options of an account.\n\n**Note:** Refers to product type and is three digits long. "
+          description: |-
+            Unique identifier of a product to indicate the processing options of an account.
+
+
+
+            **Note:** Refers to Product type.
+
+            Max length: 3 digits
         Desc:
           maxLength: 200
           type: string
-          description: |2-
-             Client-defined description of the product used to set up the account.
+          description: |-
+            Description of the product used to set up the account.
 
-            **Note:** Represents the client defined description of the product with which the account is initially created.
+
+
+            **Note:** Represents the client-defined description of the product with which the account is initially created.
         OpenDt:
           type: string
           description: "Date on which the account record was created.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
@@ -543,17 +744,36 @@ components:
           description: Current rate of the account.
         AcctBal:
           type: array
-          description: 'Details of the account balance a financial insititution carries. '
+          description: Details of the account balance at the time of the debit transaction was posted.
           items:
             $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctBal'
+        AcctPeriodData:
+          type: array
+          description: Accounting period data details such as last interest payment, nonsufficient funds, overdraft activity year to date, current month and cycle to date.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctPeriodData'
         PostAddr:
           type: array
           description: Details of the postal addresses associated to the account.
           items:
             $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_PostAddr'
+        ElectronicBankingOpt:
+          type: string
+          description: Option that indicates the services that are available through electronic banking.
+          enum:
+          - InquiryOnly
+          - Enabled
+          - Disable
+          - CreditOnly
+          - DebitOnly
         AcctMajorType:
           type: string
-          description: "Type of major account.\n\n**Note:** These are static values in Cleartouch and the values supported in Cleartouch for this field are given below: \n\n- Commercial loan \n\n- Consumer loan \n\n- Mortgage loan \n\n- Checking account \n\n- Certificate account \n\n- Retirement certificate \n\n- Retirement account \n\n- Statement savings \n\n- Passbook savings\n\n"
+          description: |-
+            Type of major account.
+
+
+
+            **Note:** Values are static in Cleartouch.
       description: Summary details of an account.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef:
       type: object
@@ -564,6 +784,8 @@ components:
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo:
       type: object
       properties:
+        PartyRef:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef'
         Nickname:
           maxLength: 80
           type: string
@@ -578,14 +800,14 @@ components:
       properties:
         PartyAcctRelStatusCode:
           type: string
-          description: 'Code to identify the current status of the party-to-account relationship. '
+          description: 'Code to indicate the status of the party-to-account relationship. '
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the party-to-account relationship is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
-      description: Details of party-to-account relationship status.
+          description: "Effective date and time when the status of the party-to-account relationship is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+      description: Status details of party-to-account relationship.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelRec:
       required:
       - PartyAcctRelInfo
