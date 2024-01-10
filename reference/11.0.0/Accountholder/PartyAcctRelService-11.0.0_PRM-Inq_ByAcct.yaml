@@ -12,7 +12,7 @@ paths:
       tags:
       - Get Party Account Relationship
       summary: Get Party Account Relationship
-      description: Get Party Account Relationship By Account API provides the list of all parties (Persons or Organizations) related to the account. <br> For Premier, this API provides the information about relationship type between Account and each Party. It also provides the unique Party identifier and a subset of information about each Party. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
+      description: Get Party Account Relationship By Account API provides the list of all parties (Persons or Organizations) related to the account. <br> For Premier, this API provides the information about relationship type between Account and each Party. It also provides the unique Party identifier and a subset of information about each Party.  <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>.
       operationId: PartyAcctRelInqBySecured
       parameters:
       - name: EFXHeader
@@ -49,8 +49,6 @@ components:
       required:
       - PartyAcctRelSel
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_RecCtrlIn'
         PartyAcctRelSel:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel'
     PartyAcctRelInqBySecuredResponse:
@@ -59,11 +57,9 @@ components:
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_RecCtrlOut'
         PartyAcctRelRec:
           type: array
-          description: "Details of the party-to-account relationship record.\n\n**Note:** By default, operation will return all party-account relationships that exist in core. For improved performance, the consumer has an option to limit the number of associated party-account relationships in EFX response by updating the configuration in ESF for the Financial Institution. "
+          description: "Details of the party-to-account relationship record.\n\n\n\n**Note:** By default, this API returns all party-account relationships that exist in core. For improved performance, the consumer has an option to limit the number of associated party-account relationships in EFX response by updating the configuration in ESF for the Financial Institution. "
           items:
             $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelRec'
     EFXHeader:
@@ -309,7 +305,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -377,18 +373,6 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    PartyAcctRelInqBySecuredRequest_RecCtrlIn:
-      type: object
-      properties:
-        MaxRecLimit:
-          type: integer
-          description: Maximum number of records in the result set to satisfy the request. If no value is specified, the maximum value of 250 records is sent.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: Next record pointer in the response only when additional records are available.
-      description: Maximum number of records to be processed within a single response as specified by the client.
     PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_AcctKeys:
       required:
       - AcctId
@@ -402,10 +386,16 @@ components:
 
 
 
+
+
+
+
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
           enum:
@@ -423,30 +413,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_AcctKeys'
-      description: Selection criteria for a party-to-account relationship inquiry.
-    PartyAcctRelInqBySecuredResponse_RecCtrlOut:
-      required:
-      - SentRecCount
-      type: object
-      properties:
-        SentRecCount:
-          type: integer
-          description: Total number of records that matched the selection criteria and returned in the response message.
-          format: int64
-        MatchedRecCount:
-          type: integer
-          description: Number of records that matches the selection criteria.
-          format: int64
-        Cursor:
-          maxLength: 250
-          type: string
-          description: |-
-            Next record pointer to include in the response if more than 250 posted transaction records exist.
-
-            For more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.
-
-            **Note:** Premier will return up to 250 records. If there are more records, then cursor tags will be populated.
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+      description: Details of the selection criteria for a party-to-account relationship inquiry.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_PartyKeys:
       type: object
       properties:
@@ -455,13 +422,28 @@ components:
           type: string
           description: Unique identification number of a party record.
       description: Unique information to identify the party record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_SvcIdent:
+      type: object
+      properties:
+        SvcNbr:
+          maxLength: 36
+          type: string
+          description: Number of a service.
+      description: |-
+        Unique identifier of a service that provides a unique reference.
+
+
+
+        **Note:** Multi-System Service (MSS) uses this aggregate.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_AcctIdent:
       type: object
       properties:
         AcctIdentType:
           type: string
           description: |-
-            Type of account.
+            Type of account identification.
+
+
 
             **Note:** PORT refers to a portfolio. The field returns the portfolio account number that is associated to the account.
           enum:
@@ -476,6 +458,8 @@ components:
       - AcctId
       type: object
       properties:
+        SvcIdent:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_SvcIdent'
         AcctId:
           maxLength: 36
           type: string
@@ -486,10 +470,18 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
           enum:
@@ -500,6 +492,7 @@ components:
           - CLOC
           - SDA
           - SDB
+          - PORT
         AcctIdent:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_AcctIdent'
       description: Details of the account keys to identify an account record.
@@ -536,12 +529,31 @@ components:
           description: Phone number to search the party records.
         PreferredPhone:
           type: boolean
-          description: Flag to indicate if the phone number is preferred contact number.
+          description: Flag to indicate the phone number is a preferred contact number.
         PhoneDesc:
           maxLength: 30
           type: string
           description: Description of the phone.
       description: Phone number details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_RelationshipMgr:
+      required:
+      - RelationshipMgrIdent
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of a relationship manager.
+        RelationshipRole:
+          type: string
+          description: |-
+            Role of a relationship manager.
+
+
+
+            **Note:** The value "Officer" refers to responsibility code and "ReferralOfficer" refers to referral responsibility code.
+          enum:
+          - Officer
+          - ReferralOfficer
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_CountryCode:
       required:
       - CountryCodeValue
@@ -556,6 +568,8 @@ components:
           type: string
           description: |-
             Country code value as per the country code format set in the CountryCodeSource field.
+
+
 
             **Note:** Values are client-defined in premier.
         CountryCodeValueEnumDesc:
@@ -572,52 +586,103 @@ components:
           description: |-
             Start date and time value.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
 
             Example: 2021-01-31T23:59:59.999
 
+
+
             **Note:** Applicable for seasonal address type only.
 
-            The seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address start year. The month and the day of the month will show the actual seasonal address start date.
+
+
+            The seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address start year. The month and the day of the month shows the actual seasonal address start date.
         EndDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
             End date and time value.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
 
             Example: 2021-01-31T23:59:59.999
 
+
+
             **Note:** Applicable for seasonal address type only.
+
+
 
             The seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address end year.
 
-            The month and the day of the month will show the actual seasonal address end date.
+
+
+            The month and the day of the month shows the actual seasonal address end date.
       description: Details of the time frame when the address is active.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr:
       required:
       - AddrType
       type: object
       properties:
+        OpenDt:
+          type: string
+          description: "Date on which the account record is created.\n\nFormat: YYYY-MM-DD \n\nExample: 2021-11-20"
+          format: date
+        RelationshipMgr:
+          type: array
+          description: Information about the financial institution officers who have management-related responsibilities of the account.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_RelationshipMgr'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account with the party.
+
+
+
+            **Note:** Refers to branch region associated to the address record.
+        ResponsibleBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch responsible for the relationship.
+
+
+
+            **Note:** Refers to accounting branch associated to the address record.
         AddressIdent:
           maxLength: 36
           type: string
           description: |-
             Unique identifier of an address record.
 
+
+
             **Note:** Primary and related seasonal address or secondary and related seasonal address shares the same identifier.
         AddrUse:
           type: string
-          description: "Code to indicate the use of address.\n\n**Note:** Each of address types can have different uses, For example, personal, home, business and other user-defined uses. \n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to that primary address use is home as well. The same applies to secondary address and seasonal address related to it address use.\n\nAddress use as tax is only applicable for secondary address type.\n\nAdditional address use values may be client defined."
+          description: "Value to indicate the use of address.\n\n\n\n**Note:** Each address types can have different uses, for example, personal, home, business and other user-defined uses. \n\n\n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to that primary address use is home as well. The same applies to secondary address and seasonal address related to it address use.\n\n\n\nAddress use as tax is only applicable for secondary address type.\n\n\n\nAdditional address use values may be client defined."
           enum:
           - Business
           - Home
           - Personal
           - Tax
+        AddrUseEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the AddrUse field.
         AddrFormatType:
           type: string
-          description: Format type of the address.
+          description: Type of address format.
           enum:
           - Label
         Addr1:
@@ -628,7 +693,9 @@ components:
           maxLength: 64
           type: string
           description: |-
-            Address line 2. To input Addr2, Addr1 field must be provided.
+            Address line 2. To enter Addr2, Addr1 field must be provided.
+
+
 
             **Note:** Applicable if enabled on premier in the CIS miscellaneous (institution) specifications.
         City:
@@ -641,30 +708,67 @@ components:
         PostalCode:
           maxLength: 11
           type: string
-          description: |+
-            Postal code or zip code.
-
-            **Note:** Postal code provides information about the ZIP code, if address is a United States address. It also provides postal code information, if address is a non-US address. The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional. Examples: 32714-1234 or 32714-0000 or 32714.
-
-
-
-            Postal codes for non-US addresses are simply a string of characters.
-
+          description: "Postal code or zip code.\n\n\n\n**Note:** Postal code provides information about the ZIP code, if address is a United States address. It also provides postal code information, if address is a non-US address. The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional. \n\nExamples: 32714-1234 or 32714-0000 or 32714.\n\n\n\nPostal codes for non-US addresses are simply a string of characters.\n\n\n\n"
         CountryCode:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_CountryCode'
         AddrType:
           type: string
-          description: "Type of the address.\n\n**Note:** Premier supports primary address type, multiple secondary address types and multiple seasonal address types for the customer. \n\nSeasonal address cannot exist as an independent address record in premier, therefore it shares address identifier and address use with either primary or secondary address.\n\n\n\n"
+          description: "Type of the address.\n\n\n\n**Note:** Premier supports primary address type, multiple secondary address types and multiple seasonal address types for the customer. \n\n\n\nSeasonal address cannot exist as an independent address record in premier, therefore it shares address identifier and address use with either primary or secondary address.\n\n\n\n\n\n\n\n"
           enum:
           - Primary
           - Secondary
           - Seasonal
         TimeFrame:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_TimeFrame'
+        Retention:
+          type: boolean
+          description: |-
+            Flag to indicate the party is to be retained based on service provider criteria.
+
+
+
+            **Note:** Retention code indicated if address record should be retained or can be deleted when no accounts, tax addenda, or any other relationships exist for the address record.
+
+
+
+            During the account opening process, new address record is created with retention code as true. If account opening workflow fails due to an error, ESF is unable to delete the address. If it is successful prior to error, the address remains on the system even if the account is not created.
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+        CensusBlock:
+          maxLength: 20
+          type: string
+          description: Census block number assigned by the U.S. Postal Service to uniquely identify each carrier delivery point.
         ForeignFlag:
           type: boolean
-          description: Flag to indicate if the given address is foreign address.
-      description: "Postal address details of the party.\n\n**Note:** Customer for premier can have one primary address type, multiple secondary address types and multiple seasonal address types. However, seasonal address cannot exist as an independent address record in premier. \n\nSeasonal address always shares Address identifier with primary address or one of the secondary addresses.\n\nIf primary address record or a secondary address record has Seasonal address related to it, then ESF displays them as a separate postal address instances.\n\nEach of Address Types can have different address uses, for example, Personal, Home, Business and other user-defined address uses. \n\nAddress Use is always the same for Primary and related Seasonal address. For example, if Primary Address Use is Home, then Seasonal address, related to the Primary address is Home as well. The same applies to Address Use for Secondary address and related Seasonal addresses.\n\nAddress Use as Tax is only applicable for Secondary Address Type."
+          description: Flag to indicate the given address is a foreign address.
+        HandlingCode:
+          type: string
+          description: "Handling code to specify the handling process of the notification and statement forms.\n\n\n\n**Note:** Refers to the client defined special routing information for the customer correspondence. "
+        HandlingCodeOption:
+          type: string
+          description: |-
+            Notification and statement forms handling code option for the postal address.
+
+
+
+            **Note:** The "HandlingCodeOption" field identifies the types of customer correspondence that prints handling messages, as defined by the HandlingCode.
+          enum:
+          - StatementsNoticesChecks
+          - Statements
+          - StatementsNotices
+          - StatementsChecks
+          - Notices
+          - NoticesChecks
+          - Checks
+          - DoNotPrint
+          - UsePortfolio
+        MSACode:
+          type: integer
+          description: Code that identifies a Metropolitan Statistical area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+          format: int64
+      description: "Postal address details of the party.\n\n\n\n**Note:** For Premier, customer can have one primary address type, multiple secondary address types and multiple seasonal address types. However, seasonal address cannot exist as an independent address record in premier. \n\n\n\nSeasonal address always shares address identifier with primary address or one of the secondary addresses.\n\n\n\nIf primary address record or a secondary address record has seasonal address related to it, then ESF displays them as a separate postal address instances.\n\n\n\nEach of Address Types can have different address uses, for example, Personal, Home, Business and other user-defined address uses. \n\n\n\nAddress Use is always the same for Primary and related Seasonal address. For example, if Primary Address Use is Home, then Seasonal address, related to the Primary address is Home as well. The same applies to Address Use for Secondary address and related Seasonal addresses.\n\n\n\nAddress Use as Tax is only applicable for Secondary Address Type."
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Email:
       type: object
       properties:
@@ -674,13 +778,15 @@ components:
           description: |-
             Unique identifier of the email address.
 
-            **Note:** Up to 10 occurrences of an email address and web URLs combination may be associated to a customer.
+
+
+            **Note:** A customer may have up to 10 occurrences of an email address and web URL combination.
         EmailType:
           type: string
           description: Type of the email address.
           enum:
           - Business
-          - Home
+          - Person
         EmailAddr:
           maxLength: 254
           type: string
@@ -688,7 +794,9 @@ components:
         PreferredEmail:
           type: boolean
           description: |-
-            Flag to indicate if the email address is the preferred email address of contact.
+            Flag to indicate the email address is the preferred email address of contact.
+
+
 
             **Note:** Refers to the primary contact indicator.
       description: Email address details of a party.
@@ -700,9 +808,9 @@ components:
           description: |-
             Unique identifier of the web address.
 
-            Use when you have more than one occurrence of a web address type. This element serializes the web addresses.
 
-            **Note:** Up to 10 occurrences of an email address and web URLs combination may be associated to a customer.
+
+            **Note:** A customer may have up to 10 occurrences of an email address and web URL combination.
           format: int64
         WebAddrType:
           type: string
@@ -732,7 +840,9 @@ components:
           description: |-
             Type of identity card/document issued.
 
-            **Note:** Values are client-defined.
+
+
+            **Note:** Refers to the ID type and values are client-defined.
         IssuedIdentTypeEnumDesc:
           maxLength: 80
           type: string
@@ -744,10 +854,7 @@ components:
         IssuedIdentValue:
           maxLength: 32
           type: string
-          description: |-
-            Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
-
-            Example: 3762849726.
+          description: Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
         Issuer:
           maxLength: 32
           type: string
@@ -755,15 +862,19 @@ components:
         IssueDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date on which the identity card/document was issued. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Date on which the identity card/document was issued. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
         ExpDt:
           type: string
           description: |-
-            Date after which the account becomes inactive.
+            Date after which the identity card/document becomes inactive.
 
-            Format: yyyy-MM-ddTHH:mm:ss.sss
 
-            Example: 2021-01-31T23:59:59.999
+
+            Format: yyyy-mm-dd.
+
+
+
+            Example: 2021-11-20.
           format: date
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_SecretData:
       required:
@@ -771,7 +882,7 @@ components:
       properties:
         SecretIdent:
           type: string
-          description: "Unique identifier of the security question used to identify the customer.\n\n\n\n**Note:** More than one security question may be recorded. If the customer creates a unique security question using FreeFormQuestion, then FreeFormAnswer should also be added. "
+          description: "Unique identifier of the security question used to identify the customer.\n\n\n\n\n\n\n\n**Note:** More than one security question may be recorded. If the customer creates a unique security question using FreeFormQuestion, then FreeFormAnswer should also be added. "
           enum:
           - MaidenName
           - PlaceOfBirth
@@ -787,6 +898,10 @@ components:
           type: string
           description: |-
             Value of the SecretIdent field that includes customer's answer to the corresponding security question.
+
+
+
+
 
 
 
@@ -827,11 +942,15 @@ components:
           description: |+
             Preferred name of the person.
 
+
+
         LegalName:
           maxLength: 96
           type: string
           description: |-
             Name that identifies a person for legal or any other official purposes.
+
+
 
             **Note:** Refers to IRS Name.
       description: Name details of a person party.
@@ -841,7 +960,9 @@ components:
         PartyType:
           type: string
           description: |-
-            Type of the party used for further classification of party types.
+            Type of the party.
+
+
 
             **Note:** Refers to Customer Type, indicating the personal customer's relationship to the financial institution.
           enum:
@@ -867,9 +988,11 @@ components:
         Contact:
           type: array
           description: |-
-            Contact information of a party (person or organization).
+            Contact information of a party (person).
 
-            **Note:** By default, operation returns all contact aggregates within each relationship aggregate. However for performance considerations, the number can be configured in ESF for the Institution and a maximum number of contacts within each relationship record can be returned (as per requirement).
+
+
+            **Note:** By default, this API returns all contact aggregates within each relationship aggregate. However for performance considerations, the number can be configured in ESF for the Institution and a maximum number of contacts within each relationship record can be returned (as per requirement).
           items:
             $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Contact'
         TaxIdentType:
@@ -887,6 +1010,8 @@ components:
           type: string
           description: |-
             Unique identifier of tax.
+
+
 
             Example: "123456789".
         IssuedIdent:
@@ -912,11 +1037,17 @@ components:
 
 
 
+
+
+
+
             Format: yyyy-mm-dd.
+
+
 
             Example: 2021-11-20.
           format: date
-      description: Frequently used properties of a person party.
+      description: Details of the person party list that contains frequently used properties of a person party.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PhoneNum:
       required:
       - PhoneType
@@ -924,7 +1055,7 @@ components:
       properties:
         PhoneType:
           type: string
-          description: Type of a phone.
+          description: Type of phone.
           enum:
           - Home
           - Work
@@ -942,7 +1073,7 @@ components:
           description: Phone number to search the party records.
         PreferredPhone:
           type: boolean
-          description: Flag to indicate if the phone number is a preferred phone number to contact.
+          description: Flag to indicate the phone number is a preferred contact number.
         PhoneDesc:
           maxLength: 30
           type: string
@@ -957,38 +1088,79 @@ components:
           description: |-
             Start date and time value.
 
+
+
             Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
 
             Example: 2021-01-31T23:59:59.999
 
+
+
             **Note:** Applicable for seasonal address type only.
 
-            The seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address start year. The month and the day of the month will show the actual seasonal address start date.
+
+
+            The seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address start year. The month and the day of the month shows the actual seasonal address start date.
         EndDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "End date and time value.\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** Applicable for seasonal address type only.   \n\nThe seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address end year.\n\nThe month and the day of the month will show the actual seasonal address end date."
+          description: "End date and time value.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999\n\n\n\n**Note:** Applicable for seasonal address type only.   \n\n\n\nThe seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address end year.\n\n\n\nThe month and the day of the month shows the actual seasonal address end date."
       description: Details of the time frame when the address is active.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr:
       required:
       - AddrType
       type: object
       properties:
+        OpenDt:
+          type: string
+          description: "Date on which the account record is created.\n\nFormat: YYYY-MM-DD \n\nExample: 2021-11-20"
+          format: date
+        RelationshipMgr:
+          type: array
+          description: Information about the financial institution officers who have management-related responsibilities of the account.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_RelationshipMgr'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account with the party.
+
+
+
+            **Note:** Refers to branch region associated to the address record.
+        ResponsibleBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch responsible for the relationship.
+
+
+
+            **Note:** Refers to accounting branch associated to the address record.
         AddressIdent:
           maxLength: 36
           type: string
           description: |-
             Unique identifier of an address record.
 
+
+
             **Note:** Primary and related seasonal address or secondary and related seasonal address shares this identifier.
         AddrUse:
           type: string
-          description: "Code to indicate the use of address.\n\n**Note:** Each of Address Types can have different uses, For example, Personal, Home, Business and other user-defined uses. \n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to that primary address use is home as well. The same applies to secondary address and seasonal address related to it address use.\n\nAddress use as tax is only applicable for secondary address type.\n\nAdditional address use values may be client defined."
+          description: "Value to indicate the use of address.\n\n\n\n**Note:** Each address types can have different uses, for example, personal, home, business and other user-defined uses. \n\n\n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to that primary address use is home as well. The same applies to secondary address and seasonal address related to it address use.\n\n\n\nAddress use as tax is only applicable for secondary address type.\n\n\n\nAdditional address use values may be client defined."
           enum:
           - Business
           - Home
           - Personal
           - Tax
+        AddrUseEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the AddrUse field.
         AddrFormatType:
           type: string
           description: Type of address format.
@@ -1002,7 +1174,9 @@ components:
           maxLength: 64
           type: string
           description: |-
-            Address line 2. To input Addr2, Addr1 field must be provided.
+            Address line 2. To enter Addr2, Addr1 field must be provided.
+
+
 
             **Note:** Applicable if enabled on premier in the CIS miscellaneous (institution) specifications.
         City:
@@ -1018,27 +1192,80 @@ components:
           description: |+
             Postal code or zip code.
 
+
+
             **Note:** Postal Code provides information about the ZIP code, if Address is a United States address. It also provides Postal Code information, if address is a non-US address. The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional. Examples: 32714-1234 or 32714-0000 or 32714.
+
+
+
+
 
 
 
             Postal codes for non-US addresses are simply a string of characters.
 
+
+
         CountryCode:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_CountryCode'
         AddrType:
           type: string
-          description: "Type of the address.\n\n**Note:** Premier supports primary address type, multiple secondary address types and multiple seasonal address types for the customer. \n\nSeasonal address cannot exist as an independent address record in premier, therefore it shares address identifier and address use with either primary or secondary address.\n\n\n\n"
+          description: "Type of the address.\n\n\n\n**Note:** Premier supports primary address type, multiple secondary address types and multiple seasonal address types for the customer. \n\n\n\nSeasonal address cannot exist as an independent address record in premier, therefore it shares address identifier and address use with either primary or secondary address.\n\n\n\n\n\n\n\n"
           enum:
           - Primary
           - Secondary
           - Seasonal
         TimeFrame:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr_TimeFrame'
+        Retention:
+          type: boolean
+          description: |-
+            Flag to indicate the party is to be retained based on service provider criteria.
+
+
+
+            **Note:** Retention code indicated if address record should be retained or can be deleted when no accounts, tax addenda, or any other relationships exist for the address record.
+
+
+
+            During the account opening process, new address record is created with retention code as true. If account opening workflow fails due to an error, ESF is unable to delete the address. If it is successful prior to error, the address remains on the system even if the account is not created.
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+        CensusBlock:
+          maxLength: 20
+          type: string
+          description: Census block number assigned by the U.S. Postal Service to uniquely identify each carrier delivery point.
         ForeignFlag:
           type: boolean
-          description: Flag to indicate if the given address is foreign address.
-      description: "Postal address details of a party.\n\n**Note:** Customer for Premier can have one Primary Address Type, multiple Secondary Address Types and multiple Seasonal Address Types. However, Seasonal Address cannot exist as an independent Address record in Premier. \n\nSeasonal address always shares Address identifier with Primary address or one of the Secondary addresses.\n\nIf Primary address record or a Secondary Address record has Seasonal address related to it, then ESF displays them as a separate Postal Address instances.\n\nEach of address types can have different address uses, for example, personal, home, business and other user-defined address uses. \n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to the primary address is home as well. The same applies to address use for secondary address and related seasonal addresses.\n\nAddress use as tax is only applicable for secondary address type."
+          description: Flag to indicate the given address is a foreign address.
+        HandlingCode:
+          type: string
+          description: "Handling code to specify the handling process of the notification and statement forms.\n\n\n\n**Note:** Code that indicate the client defined special routing information for the customer correspondence. "
+        HandlingCodeOption:
+          type: string
+          description: |-
+            Notification and statement forms handling code option for the postal address.
+
+
+
+            **Note:** Option to identify the types of customer correspondence that prints handling messages, as defined by the HandlingCode.
+          enum:
+          - StatementsNoticesChecks
+          - Statements
+          - StatementsNotices
+          - StatementsChecks
+          - Notices
+          - NoticesChecks
+          - Checks
+          - DoNotPrint
+          - UsePortfolio
+        MSACode:
+          type: integer
+          description: Code that identifies a Metropolitan Statistical area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+          format: int64
+      description: "Postal address details of the party.\n\n\n\n**Note:** For Premier, customer can have one primary address type, multiple secondary address types and multiple seasonal address types. However, seasonal address cannot exist as an independent address record in premier. \n\n\n\nSeasonal address always shares address identifier with primary address or one of the secondary addresses.\n\n\n\nIf primary address record or a secondary address record has seasonal address related to it, then ESF displays them as a separate postal address instances.\n\n\n\nEach of Address Types can have different address uses, for example, Personal, Home, Business and other user-defined address uses. \n\n\n\nAddress Use is always the same for Primary and related Seasonal address. For example, if Primary Address Use is Home, then Seasonal address, related to the Primary address is Home as well. The same applies to Address Use for Secondary address and related Seasonal addresses.\n\n\n\nAddress Use as Tax is only applicable for Secondary Address Type."
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Email:
       type: object
       properties:
@@ -1048,45 +1275,28 @@ components:
           description: |-
             Unique identifier of the email address.
 
-            **Note:** Up to 10 occurrences of an email address and web URLs combination may be associated to a customer.
+
+
+            **Note:** A customer may have up to 10 occurrences of an email address and web URL combination.
         EmailType:
           type: string
           description: Type of the email address.
           enum:
           - Business
-          - Home
+          - Person
         EmailAddr:
           maxLength: 254
           type: string
           description: |-
             Email address to search the party records.
 
+
+
             **Note:** Refers to the primary contact indicator.
         PreferredEmail:
           type: boolean
-          description: Flag to indicate if the email address is preferred address to contact.
+          description: Flag to indicate the email address is the preferred email address of contact.
       description: Email address details of a party.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_WebAddr:
-      type: object
-      properties:
-        WebAddrIdent:
-          type: integer
-          description: |-
-            Unique identifier of the web address.
-
-            Use when you have more than one occurrence of a web address type. This element serializes the web addresses.
-
-            **Note:** Up to 10 occurrences of an email address and web URLs combination may be associated to a customer.
-          format: int64
-        WebAddrType:
-          type: string
-          description: Type of web address.
-          enum:
-          - Work
-        WebAddrLink:
-          type: string
-          description: Link or URL of web address.
-      description: Web address details of a party.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Contact:
       properties:
         PhoneNum:
@@ -1096,7 +1306,7 @@ components:
         Email:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Email'
         WebAddr:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_WebAddr'
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_WebAddr'
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_IssuedIdent:
       required:
       - IssuedIdentType
@@ -1106,7 +1316,9 @@ components:
           description: |-
             Type of identity card/document issued.
 
-            **Note:** Values are client-defined.
+
+
+            **Note:** Refers to the ID type and values are client-defined.
         IssuedIdentTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1118,10 +1330,7 @@ components:
         IssuedIdentValue:
           maxLength: 32
           type: string
-          description: |-
-            Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
-
-            Example: 3762849726.
+          description: Unique identification number of the issued identity card/document of a party.
         Issuer:
           maxLength: 32
           type: string
@@ -1129,13 +1338,17 @@ components:
         IssueDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date on which the identity card/document was issued. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Date on which the identity card/document was issued. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
         ExpDt:
           type: string
           description: |-
             Date after which the identity card/document becomes inactive.
 
+
+
             Format: yyyy-mm-dd.
+
+
 
             Example: 2021-11-20.
           format: date
@@ -1145,7 +1358,7 @@ components:
       properties:
         SecretIdent:
           type: string
-          description: "Unique identifier of the security question used to identify the customer.\n\n**Note:** More than one security question may be recorded. If the customer creates a unique security question using FreeFormQuestion, then FreeFormAnswer should also be added. "
+          description: "Unique identifier of the security question used to identify the customer.\n\n\n\n**Note:** More than one security question may be recorded. If the customer creates a unique security question using FreeFormQuestion, then FreeFormAnswer should also be added. "
           enum:
           - MaidenName
           - PlaceOfBirth
@@ -1161,6 +1374,10 @@ components:
           type: string
           description: |-
             Value of the SecretIdent field that includes customer's answer to the corresponding security question.
+
+
+
+
 
 
 
@@ -1182,18 +1399,22 @@ components:
         Name:
           maxLength: 80
           type: string
-          description: Organization name details.
+          description: Name of the organization.
         PreferredName:
           maxLength: 96
           type: string
           description: |+
-            Preferred name of the person.
+            Preferred name of the organization.
+
+
 
         LegalName:
           maxLength: 96
           type: string
           description: |-
-            Name that identifies a person for legal or any other official purposes.
+            Name that identifies an organization for legal or any other official purposes.
+
+
 
             **Note:** Refers to IRS name.
       description: Organization name details.
@@ -1203,9 +1424,11 @@ components:
         PartyType:
           type: string
           description: |-
-            Type of the party used for further classification of party types.
+            Type of the party.
 
-            **Note:** Refers to customer type, indicating the customer's relationship to the financial institution.
+
+
+            **Note:** Refers to Customer Type, indicating the personal customer's relationship to the financial institution.
           enum:
           - Unknown
           - Personal-Prospect
@@ -1229,7 +1452,9 @@ components:
         Contact:
           type: array
           description: |-
-            Contact details of a party (person or organization).
+            Contact details of a party (organization).
+
+
 
             **Note:** By default, operation returns all contact aggregates within each relationship aggregate. However for performance considerations, the number can be configured in ESF for the Institution and a maximum number of contacts within each relationship record can be returned (as per requirement).
           items:
@@ -1250,6 +1475,8 @@ components:
           description: |-
             Unique identifier of tax.
 
+
+
             Example: "123456789".
         IssuedIdent:
           type: array
@@ -1260,6 +1487,8 @@ components:
           type: array
           description: |+
             Client-defined secret data of party that is used to validate the identity of the party in scenarios such as forgotten password.
+
+
 
           items:
             $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_SecretData'
@@ -1284,6 +1513,8 @@ components:
       description: |+
         Reference details of a party object that is part of the relationship.
 
+
+
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyAcctRelData:
       required:
       - PartyAcctRelType
@@ -1293,9 +1524,21 @@ components:
           description: |+
             Relationship type between the party and account.
 
+
+
             **Note:** In addition to service provider defined values, financial institutions can support additional user-defined relationship types.
 
+
+
             Relationship types as PrimaryPortfolioName and SecondaryPortfolioName are applicable for party to portfolio relationships only.
+
+
+
+
+
+
+
+
 
 
 
@@ -1326,7 +1569,7 @@ components:
           description: Description of the relationship of the party to the account.
         PartyAcctRelOrder:
           type: string
-          description: "Relationship order of party with an account in case of JointTenancy or JointTenantsInComman. \n\n**Note:** Parties with the party account relationship order as \"First\", \"Second\", and \"Third\" are considered to be main names on the account and most commonly applies to party relationship types as OwnerSigner, signer and owner.\n\n\"Other\" relationship order is commonly used for relationships other then OwnerSigner, signer and owner.\n\n"
+          description: "Relationship order of party with an account in case of JointTenancy or JointTenantsInComman. \n\n\n\n**Note:** Parties with the party account relationship order as \"First\", \"Second\" and \"Third\" are considered main names on the account and most commonly applies to party relationship types as OwnerSigner, signer and owner.\n\n\n\n\"Other\" relationship order is commonly used for relationships other than OwnerSigner, signer and owner.\n\n\n\n"
           enum:
           - First
           - Second
@@ -1337,20 +1580,18 @@ components:
       - AcctId
       type: object
       properties:
+        SvcIdent:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_SvcIdent'
         AcctId:
           maxLength: 36
           type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-
-
+          description: Unique identification number of an account record.
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
           enum:
@@ -1361,6 +1602,7 @@ components:
           - CLOC
           - SDA
           - SDB
+          - PORT
       description: Unique information to identify the account record.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo:
       type: object
@@ -1371,7 +1613,9 @@ components:
         ElectronicBankingOpt:
           type: string
           description: |-
-            Option used to indicate the services available via electronic banking.
+            Option that indicates the services that are available through electronic banking.
+
+
 
             **Note:** Refers to electronic banking restriction.
           enum:
@@ -1407,17 +1651,21 @@ components:
           description: Percentage of ownership the party has in the account.
         OwnerInd:
           type: boolean
-          description: "Flag to indicate if the party is an owner of the account. \n\n**Note:** Do not apply to portfolio relationships."
+          description: "Flag to indicate the party is an owner of the account. \n\n\n\n**Note:** Do not apply to portfolio relationships."
         PrimaryOwnerInd:
           type: boolean
           description: |-
             Flag to indicate the account owner is primary owner.
 
-            **Note:** This field identifies the first name on the account.
+
+
+            **Note:** The "PrimaryOwnerInd" field identifies the first name on the account.
         TaxReportingOwnerInd:
           type: boolean
           description: |-
-            Flag to indicate if the party has tax responsibility on the account.
+            Flag to indicate the party has tax responsibility on the account.
+
+
 
             **Note:** Do not apply to portfolio relationships.
         Nickname:
@@ -1430,7 +1678,7 @@ components:
           description: Full name of the party.
         PortHasCreditLineInd:
           type: boolean
-          description: "Flag to indicate the presence of a credit line associated to the port. \n\nApplies only for portfolio account types.\n\n**Note:** Applicable only for portfolio account types. "
+          description: "Flag to indicate the presence of a credit line associated to the port. \n\n\n\n**Note:** Applicable only for portfolio account types. "
         AcctRef:
           $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef'
       description: 'Details of a relationship between party and account. '
@@ -1441,13 +1689,13 @@ components:
       properties:
         PartyAcctRelStatusCode:
           type: string
-          description: 'Code to identify the current status of the party-to-account relationship. '
+          description: 'Code to indicate the current status of the party-to-account relationship. '
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the party-to-account relationship status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time when the status of the party-to-account relationship is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
       description: Details of party-to-account relationship status.
     PartyAcctRelInqBySecuredResponse_PartyAcctRelRec:
       required:

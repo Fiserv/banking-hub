@@ -33,7 +33,7 @@ Begin the integration using the following services in the Accounts domain in API
 
 ## See Also
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
-- [Cards](?path=docs/fintechs/cards.md "Click to open")
+- [Debit Cards](?path=docs/fintechs/cards.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
 - [Transactions](?path=docs/fintechs/transactions.md "Click to open")
 - [Transfers](?path=docs/fintechs/transfers.md "Click to open")

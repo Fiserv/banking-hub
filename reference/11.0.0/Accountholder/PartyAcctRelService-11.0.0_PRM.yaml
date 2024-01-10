@@ -258,49 +258,8 @@ components:
       properties:
         OvrdAutoAckInd:
           type: boolean
-          description: 
-            Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -357,7 +316,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -369,6 +328,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -424,10 +399,18 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
           enum:
@@ -438,6 +421,8 @@ components:
           - SDA
           - SDB
           - CLOC
+          - ILA
+          - IRA
       description: Unique information to identify the account record.
     PartyAcctRelModRequest_PartyAcctRelKeys:
       type: object
@@ -460,16 +445,19 @@ components:
       properties:
         PartyKeys:
           $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_PartyRef_PartyKeys'
-      description: |+
-        Reference details of a party object that is part of the relationship with an account.
-
+      description: Reference details of a party object that is part of the relationship.
     PartyAcctRelModRequest_PartyAcctRelInfo_PartyAcctRelData:
       required:
       - PartyAcctRelType
       properties:
         PartyAcctRelType:
           type: string
-          description: "Type of relationship between the party and an account.\n\n**Note:** Premier uses client-defined values. \n\nTrustee is interchangeable with fiduciary."
+          description: |-
+            Type of party-to-account relationship.
+
+
+
+            **Note:** Premier uses client-defined values and additional values can also be client-defined. The value "Trustee" is interchangeable with the value "Fiduciary".
           enum:
           - Owner
           - Signer
@@ -483,7 +471,19 @@ components:
           - DoingBusinessAs
         PartyAcctRelOrder:
           type: string
-          description: "Relationship order of party with an account in case of JointTenancy or JointTenantsInComman. \n\n**Note:** This field indicates the order of the parties as they display on the inquiry screen. First, second, and third can only exist once. Multiple \"Other\" are allowed. It is possible to have one relationship as 'First' and all remaining relationships as 'Other'.\n\nPremier requires PartyAcctRelOrder as First to always be present."
+          description: |+
+            Relationship order of party with an account in case of JointTenancy or JointTenantsInComman.
+
+
+
+            **Note:** The "PartyAcctRelOrder" field indicates the order of the parties as they appear on the inquiry screen. The first, second, and third positions can only exist once. There can be multiple "Other" options. It is possible to have one relationship as 'First' and the remaining relationship as 'Other'.
+
+
+
+            Premier requires the value of this field as "First" to be present at all times.
+
+
+
           enum:
           - First
           - Second
@@ -497,31 +497,37 @@ components:
         PartyAcctRelData:
           type: array
           description: |-
-            Details of the relationship of the party to an account.
+            Details of the relationship of the party to the account.
 
-            **Note:** The scope of this service is to change display or inquiry names for the accounts, as well as the order of these names, tax ownership, and relationship of the party to the account. Statement or mailing address relationships are not modified within this service.
+
+
+            **Note:** The scope of this API includes changing the display or inquiry names of the accounts, the order of these names, tax ownership and the party's relationship to the account. This API does not modify statement or postal address relationships.
           items:
             $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_PartyAcctRelData'
         TaxReportingOwnerInd:
           type: boolean
           description: |-
-            Flag to indicate if the party has tax responsibility on the account.
-
-            **Note:** *Required field*
+            Flag to indicate whether the party is the tax reporting owner of the account.
 
 
 
-            Only one name can be denoted per account. If the indicator is set to true for multiple names, then only first one with the indicator on will be considered as the tax reporting owner. If no party has the indicator set to true, then the first party will be selected as the tax owner indicator.
+            **Note:** Each account can have only one name. If the value of this field is "true" for multiple names, then only the first name is considered as the Tax Reporting Owner. If no party has the value as "true", then the first party is selected as the tax owner indicator.
 
 
 
-            Tax reporting party can only be set as owner or a signer. 
+            Premier requires this field to be present at all times.
+
+
+
+            The tax reporting party can only be an Owner or a Signer.
       description: |-
         Details of a relationship between party and account.
 
-        **Note:** Multiple PartyAcctRelInfo can be sent in the request, each one to describe one customer at a time.
 
-        This service expects the end state of the customer relationships to the account be sent in the request. For any relationship not present, ESF will assume that the relationship is no longer needed and it will be removed from the account.
+
+        **Note:** The "PartyAcctRelInfo" field can be sent multiple times in the request, where each filed describes one customer at a time.
+
+        This API expects the request to include the end status of the customer relationships to the account. If a relationship is not there, then ESF assumes that relationship is no longer required and removes it from the account.
     PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelStatus:
       required:
       - PartyAcctRelStatusCode
@@ -529,13 +535,13 @@ components:
       properties:
         PartyAcctRelStatusCode:
           type: string
-          description: Status code for party to account relationship record.
+          description: Code to indicate the status of the party-to-account relationship.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time value when the party to account relationship status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time when the status of the party-to-account relationship is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
       description: Status details of relationship between party and an account.
     PartyAcctRelModResponse_PartyAcctRelStatusRec:
       required:
@@ -544,7 +550,4 @@ components:
       properties:
         PartyAcctRelStatus:
           $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelStatus'
-      description: |-
-        Updated status and response details due to add, modify and delete operation on relationship between party and an account.
-
-        **Note:** Premier requires PartyAcctRelOrder as First to always be present.
+      description: Status details of the party-to-account relationship record.

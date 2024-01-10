@@ -3,7 +3,7 @@ openapi: 3.0.1
 info:
   title: Account Service
   description: The account service helps to create and manage product accounts serviced by the financial institutions. It is also used to retrieve information about the existing accounts and maintain information of new accounts.
-  version: 11.0.0_CT-Inq_Deposits
+  version: 11.0.0_CT-Inq_Deposits_INET
 servers:
 - url: /
 paths:
@@ -42,7 +42,7 @@ paths:
       x-group-name: Account Service
       x-proxy-name: Get Account Details
       x-child-product-name: Accounts
-      x-core: Cleartouch-Deposits
+      x-core: Cleartouch-Deposits_INET
 components:
   schemas:
     getAccountsSecuredRequest:
@@ -91,6 +91,7 @@ components:
           type: string
           description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
         TrnIdent:
+          maxLength: 36
           type: string
           description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
         ClientDateTime:
@@ -301,7 +302,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -369,6 +370,31 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
+    getAccountsSecuredRequest_AcctSel_AcctKeys_AcctIdent:
+      type: object
+      properties:
+        AcctIdentType:
+          type: string
+          description: Type of the account identification.
+          enum:
+          - PartyId
+        AcctIdentValue:
+          maxLength: 36
+          type: string
+          description: |-
+            Account identification value associated to the AcctIdentType field.
+
+
+
+            **Note:** *Required field*
+
+            Refers to nine-digit customer number.
+      description: |-
+        Information related to identifier of an account record used as alternative identifier.
+
+
+
+        **Note:** Architect specific functionality to retrieve the AcctPeriodData.
     getAccountsSecuredRequest_AcctSel_AcctKeys:
       required:
       - AcctId
@@ -387,16 +413,18 @@ components:
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
+
+
             **Note:** *Required field*
-
-
 
             Type of account associated with the requested account.
 
-            If Invalid AcctType is provided, 'Unsupported Function' error would be returned by ESF.
+            "Unsupported Function" error is returned if an invalid AcctType is provided in the request.
           enum:
           - DDA
           - SDA
+        AcctIdent:
+          $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel_AcctKeys_AcctIdent'
       description: Unique information to identify the account record.
     getAccountsSecuredRequest_AcctSel:
       required:
@@ -405,7 +433,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/getAccountsSecuredRequest_AcctSel_AcctKeys'
-      description: Details of selected account.
+      description: Details of the selection criteria used for account inquiry.
     getAccountsSecuredResponse_AcctRec_AcctKeys:
       required:
       - AcctId
@@ -419,6 +447,10 @@ components:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -437,16 +469,20 @@ components:
           description: |-
             Number of occurrences with respect to the specified unit value.
 
+
+
             **Note:** Maximum value is 999.
           format: int64
         TermUnits:
           type: string
-          description: "Units to define the term of the account. \n\n\n\n"
+          description: Units to define the term of the account.
           enum:
           - Days
           - Months
       description: |-
         Term details for a deposit account.
+
+
 
         **Note:** Applicable for savings account type-certificate of deposit classification.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt_CurCode:
@@ -456,17 +492,12 @@ components:
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: |-
-            Currency code value as per the ISO4217-Alpha format.
-
-
-
-            Please note that presently only USD currency code is supported.
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\n **Note:** Only USD currency code is supported.\n\n"
       description: Details of currency code.
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt:
       type: object
@@ -485,18 +516,24 @@ components:
         BalType:
           type: string
           description: |-
-            Client-defined balance type.
+            Type of account balance.
+
+
+
+
+
+
 
             **Note:** Value "AvailCredit" is applicable for demand deposit account.
           enum:
           - InterestAccrued
-          - 'Current '
-          - 'Avail '
+          - Current
+          - Avail
           - Sweep
           - Hold
-          - 'BalanceLastStatement '
-          - 'Float '
-          - 'AvailCredit '
+          - BalanceLastStatement
+          - Float
+          - AvailCredit
         CurAmt:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_CurAmt'
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPeriodData:
@@ -505,20 +542,54 @@ components:
       properties:
         AcctAmtType:
           type: string
-          description: "Type of amount.\n\n**Note:** Values applicable for demand deposit account type: \n\n- IntPaid (PriorYr, YTD)\n\n- SvcCharge (YTD)\n\n\n\nValues applicable for savings account type:\n\n- IntPaid (PriorYr, YTD)\n\n- FederalWithholding (PriorYr, YTD)"
+          description: "Type of amount in account.\n\n\n\n**Note:** Values applicable for demand deposit account type: \n\n\n\n- IntPaid (PriorYr, YTD)\n\n\n\n- SvcCharge (YTD)\n\n\n\n\n\n\n\nValues applicable for savings account type:\n\n\n\n- IntPaid (PriorYr, YTD)\n\n\n\n- FederalWithholding (PriorYr, YTD)"
           enum:
-          - 'IntPaid '
+          - IntPaid
           - SvcCharge
-          - 'FederalWithholding '
+          - FederalWithholding
+          - Deposit
+          - IntEarned
         AcctPeriodType:
           type: string
           description: Type of the account period.
           enum:
-          - 'YTD '
+          - YTD
           - PriorYr
+          - LTD
+          - CTD
+        LastOccurInd:
+          type: boolean
+          description: Flag to indicate the last occurrence of the accounting period.
         Amt:
           type: number
           description: Amount in decimal format.
+        LastOccuranceDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Last occurrence date of the accounting period.
+
+
+
+
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+
+
+            Example: 2021-01-31T23:59:59.999
+    getAccountsSecuredResponse_AcctRec_DepositAcctInfo_FinancialLiteracy:
+      type: object
+      properties:
+        IsRoundUp:
+          type: boolean
+          description: Flag to indicate the daily debit activity for the account is reported for the round up calculations.
+        IsFunding:
+          type: boolean
+          description: Flag to indicate the account is used for funding transactions.
+      description: "Information about financial literacy feature settings. \n\n**Note:** Financial literacy is a reserved feature in Cleartouch."
     getAccountsSecuredResponse_AcctRec_DepositAcctInfo:
       type: object
       properties:
@@ -529,39 +600,39 @@ components:
 
 
 
-
-
             **Note:** Cleartouch banks have the option to provide Internet access for closed accounts until those accounts are purged from the system. If the bank uses this option, the requested information for a closed account will be returned.
 
             For banks that do not use this option ESF error"2350 -Account Closed" will be returned.
           enum:
           - Active
-          - 'Closed '
+          - Closed
           - Dormant
-          - 'Matured '
+          - Matured
         ProductIdent:
           maxLength: 42
           type: string
           description: |-
             Unique identifier of a product to indicate the processing options of account.
 
+
+
             **Note:** Valid values are 01 to 99.
         Desc:
           maxLength: 200
           type: string
-          description: Description of debit transaction.
+          description: Description of the product used to set up the account.
         TaxIncentiveType:
           type: string
-          description: "Type of tax incentive. \n\n\n\n**Note:** Value \"HAS\" is applicable for demand deposit account only."
+          description: "Type of tax incentive. \n\n\n\n**Note:** Value \"HSA\" is applicable for demand deposit account only."
           enum:
           - HSA
           - None
         AcctUse:
           type: string
-          description: 'Usage of the account. Institutions in U.S should use this field for regulation D reporting purpose. '
+          description: Usage of the account. Institutions in U.S should use this field for regulation D reporting purpose.
           enum:
-          - 'Business '
-          - 'Retail '
+          - Business
+          - Retail
         OpenDt:
           type: string
           description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
@@ -570,13 +641,15 @@ components:
           $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_Term'
         MaturityDt:
           type: string
-          description: "Date of maturity of a deposit account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Applicable for savings account type-certificate of deposit classification."
+          description: "Date of maturity of a deposit account.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n\n\n**Note:** Applicable for savings account type-certificate of deposit classification."
           format: date
         OriginatingBranch:
           maxLength: 32
           type: string
           description: |-
-            Branch that primarily created the account with the party.
+            Branch in which the account is primarily created for the party.
+
+
 
             **Note:** This field contains the three digit originating branch number for an account.
         Nickname:
@@ -585,10 +658,15 @@ components:
           description: Name that customer can assign to the account for easy identification.
         ClassCode:
           type: string
-          description: "Code to group accounts for the purpose of processing and reporting.\n\n**Note:** Values are 01 through 99. "
+          description: |-
+            Code to group accounts for the purpose of processing and reporting.
+
+
+
+            **Note:** Values are 01 through 99.
         Rate:
           type: number
-          description: "Current interest rate for the account.\n\n**Note:** \n\n- Maximum value is 999.999"
+          description: "Current interest rate for the account.\n\n\n\n**Note:** \n\n\n\n- Maximum value is 999.999"
         AcctBal:
           type: array
           description: Amount of balance present in a financial institution account.
@@ -599,6 +677,8 @@ components:
           description: Accounting period data details such as last interest payment, nonsufficient funds, overdraft activity year to date, current month, and cycle to date.
           items:
             $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_AcctPeriodData'
+        FinancialLiteracy:
+          $ref: '#/components/schemas/getAccountsSecuredResponse_AcctRec_DepositAcctInfo_FinancialLiteracy'
       description: Details of the deposit account.
     getAccountsSecuredResponse_AcctRec_AcctStatus:
       required:
@@ -607,13 +687,13 @@ components:
       properties:
         AcctStatusCode:
           type: string
-          description: Status code of an account.
+          description: Code to indicate the status of an account.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Effective date and time when the account status is changed. \n\n\n\n\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\n\n\nExample: 2021-01-31T23:59:59.999"
       description: Status details of the account.
     getAccountsSecuredResponse_AcctRec:
       required:

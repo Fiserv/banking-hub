@@ -61,7 +61,7 @@ Added the following API endpoints:
 	- PartyRec/OrgPartyInfo/OrgEstablishDt
 
 
-<span style="font-size: 22px; ">Get Card</span> *API Explorer > Cards > Card Service*
+<span style="font-size: 22px; ">Get Card</span> *API Explorer > Debit Cards > Card Service*
 
 
 - Added the CardRec/CardInfo/CardTrnLimit aggregate to return card transaction limits for the requested card
@@ -80,7 +80,7 @@ Added the following API endpoints:
 
 - Fixed Get Account Transaction-LOAN to retrieve the transaction history for CLA accounts
 
-<span style="font-size: 22px; ">Get Card Account Relationship</span> *API Explorer > Card > Card Account Relationship Service*
+<span style="font-size: 22px; ">Get Card Account Relationship</span> *API Explorer > Debit Cards > Card Account Relationship Service*
 
 - Fixed the API to send AddrType field correctly to the Cleartouch core
 

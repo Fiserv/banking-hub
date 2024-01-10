@@ -15,9 +15,9 @@ paths:
   /memoticklerservice/partyacctsvc/memotickler:
     put:
       tags:
-      - Update Memo Trickler
-      summary: Update Memo Trickler.
-      description: "Update Memo Ticker API modifies an existing memo or tickler associated for an account or a customer (party). <br>For Signature, this API deletes the field value from the memo tickler record if the final state of the record is not sent in the request. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      - Update Memo Tickler
+      summary: Update Memo Tickler.
+      description: "Update Memo Tickler API modifies an existing memo or tickler associated for an account or a customer (party). <br>For Signature, this API deletes the field value from the memo tickler record if the final state of the record is not sent in the request. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
       operationId: MemoTicklerModOper
       parameters:
       - name: EFXHeader
@@ -52,7 +52,7 @@ paths:
       tags:
       - Add Memo Tickler
       summary: Add Memo Tickler.
-      description: "Add Memo Ticker API adds a new memo or tickler to an account or a customer (party). <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Add Memo Tickler API adds a new memo or tickler to an account or a customer (party). <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
       operationId: MemoTicklerAddOper
       parameters:
       - name: EFXHeader
@@ -88,7 +88,7 @@ paths:
       tags:
       - Delete Memo Tickler
       summary: Delete Memo Tickler.
-      description: "Delete Memo Ticker API deletes an existing memo or tickler for an account or a customer (party). <br>Only one memo or tickler can be deleted per request. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Delete Memo Tickler API deletes an existing memo or tickler for an account or a customer (party). <br>Only one memo or tickler can be deleted per request. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
       operationId: delMemoTicklerSecured
       parameters:
       - name: EFXHeader
@@ -123,7 +123,7 @@ paths:
       tags:
       - Get Memo Tickler
       summary: Get Memo Tickler.
-      description: "Get Memo Ticker API retrieves and searches information about one particular memo or tickler or list of memos and ticklers associated to an account or party (customer). <br>For Signature, when the memo tickler identifier is not sent in the request, this API returns the list of memo or ticklers associated to the account or party based upon the search criteria fields sent in the request. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Get Memo Tickler API retrieves and searches information about one particular memo or tickler or list of memos and ticklers associated to an account or party (customer). <br>For Signature, when the memo tickler identifier is not sent in the request, this API returns the list of memo or ticklers associated to the account or party based upon the search criteria fields sent in the request. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
       operationId: getMemoTicklerSecured
       parameters:
       - name: EFXHeader
@@ -202,10 +202,7 @@ components:
           $ref: '#/components/schemas/getMemoTicklerSecuredResponse_RecCtrlOut'
         MemoTicklerRec:
           type: array
-          description: |-
-            Information about the memo tickler record.
-
-            **Note:** Maximum repetitions: 37 times.
+          description: "Information about the memo tickler record.\n\n\n\n**Note:** Maximum repetitions: 37 times when search criteria is provided to retrieve all memos and ticklers linked to a party or an account. "
           items:
             $ref: '#/components/schemas/getMemoTicklerSecuredResponse_MemoTicklerRec'
     MemoTicklerModOperRequest:
@@ -231,13 +228,17 @@ components:
       type: string
       properties:
         OrganizationId:
+          maxLength: 36
           type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
         TrnId:
-          maxLength: 30
+          maxLength: 36
           type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
         VendorId:
+          maxLength: 255
           type: string
-          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
         Context:
           $ref: '#/components/schemas/Context'
       example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
@@ -247,67 +248,84 @@ components:
         ClientAppName:
           maxLength: 40
           type: string
-          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
         Channel:
+          maxLength: 80
           type: string
-          description: Indicates the channel used by the client application.
-        ClientDateTime:
-          type: string
-          description: Client date and time as reported by the client application that is making the service request.
-          format: date-time
-        ClientTerminalSeqNum:
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
           maxLength: 36
           type: string
-          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
         OriginatorType:
           type: integer
-          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
           format: int64
         TerminalIdent:
           maxLength: 36
           type: string
-          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
         TerminalAddr1:
           maxLength: 64
           type: string
+          description: Terminal address line 1.
         TerminalAddr2:
           maxLength: 64
           type: string
+          description: Terminal address line 2.
         TerminalAddr3:
           maxLength: 64
           type: string
+          description: Terminal address line 3.
         TerminalAddr4:
           maxLength: 64
           type: string
+          description: Terminal address line 4.
         TerminalCity:
           maxLength: 32
           type: string
+          description: Terminal city name.
         TerminalCounty:
           maxLength: 32
           type: string
+          description: Terminal county name.
         TerminalStateProv:
           maxLength: 32
           type: string
-          description: State Province. ISO 3166-2:US codes.
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
         TerminalPostalCode:
           maxLength: 11
           type: string
-          description: Postal Code is ZipCode in the US.
+          description: 'Postal Code where the terminal is located. '
         TerminalCountryCodeSource:
-          type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - ISO3166Numeric
-          - ISO3166Alpha3
-        TerminalCountryCodeValue:
           maxLength: 80
           type: string
-        PhoneType:
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
         PhoneNum:
           type: string
+          description: Phone number.
         PhoneExchange:
+          maxLength: 80
           type: string
+          description: Phone exchange.
         TerminalOwnerName:
           maxLength: 40
           type: string
@@ -327,47 +345,70 @@ components:
         AcquirerIdent:
           maxLength: 36
           type: string
-          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
         AcquirerCountryCodeSource:
+          maxLength: 80
           type: string
-          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
-          enum:
-          - US
-          - IND
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
         AcquirerCountryCodeValue:
+          maxLength: 20
           type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
         MerchNum:
           maxLength: 23
           type: string
-          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
         SettlementDate:
           type: string
-          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
           format: date
         SettlementIdent:
           maxLength: 36
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: Identification of the settlement account in which the transaction will be settled.
         BusinessApplIdent:
+          maxLength: 80
           type: string
-          description: This is the identification of the settlement account in which the transaction will be settled.
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
         BranchIdent:
           maxLength: 22
           type: string
+          description: Branch identification number.
         TellerIdent:
+          maxLength: 80
           type: string
+          description: Teller identification number.
         TillIdent:
+          maxLength: 80
           type: string
+          description: Till identification number.
         AMPMCode:
           type: string
+          description: 'Transaction posting code. '
           enum:
           - AM
           - PM
         ReentryType:
           type: string
+          description: Type of re-entry.
           enum:
           - Manual
           - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
     StatusType:
       title: StatusType
       required:
@@ -424,7 +465,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -507,6 +548,12 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
           description: |-
@@ -514,9 +561,19 @@ components:
 
 
 
+
+
+
+
             For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Gloassary</a>.
 
+
+
             **Note:** *Condionally Required field*
+
+
+
+
 
 
 
@@ -530,6 +587,8 @@ components:
       description: |-
         Unique information to identify the account record.
 
+
+
         **Note:** AcctKeys are used to add a memo/tickler associated to an account.
     MemoTicklerAddOperRequest_MemoTicklerInfo_PartyKeys:
       type: object
@@ -540,11 +599,17 @@ components:
           description: |-
             Unique identification number of a party record.
 
+
+
             **Note:** Refers to the customer permanent identifier or customer key in signature.
+
+
 
             Maximum length: 10 characters.
       description: |-
         Unique information to identify the party record.
+
+
 
         **Note:** PartyKeys used to add a memo or tickler associated to the party (customer).
     MemoTicklerAddOperRequest_MemoTicklerInfo_RelationshipMgr:
@@ -557,7 +622,11 @@ components:
           description: |-
             Unique identifier of a relationship manager.
 
+
+
             **Note:** Refers to primary officer code or secondary officer code.
+
+
 
             Maximum length: five characters.
         RelationshipRole:
@@ -571,7 +640,7 @@ components:
       properties:
         DeliveryMethod:
           type: string
-          description: "Delivery method of a reminder.\n\n\n\n**Note:** Applicable to ticklers and indicate how the reminder for the tickler is reported to the user.\n\nValid values are: \n\n- Report: The tickler appears on a report printed during nightly processing.\n\n- Notice: The tickler appears as a notice printed during nightly processing.\n\n- Message queue: The tickler appears as a message in the user’s message queue.\n\n- Report and queue: The tickler appears as a message in the user’s message queue and on a report printed during nightly processing.\n\n- Notice and queue: The tickler appears as a message in the user’s message queue and as a notice printed during nightly processing."
+          description: "Delivery method of a reminder.\n\n\n\n\n\n\n\n**Note:** Applicable to ticklers and indicate how the reminder for the tickler is reported to the user.\n\n\n\nValid values are: \n\n\n\n- Report: The tickler appears on a report printed during nightly processing.\n\n\n\n- Notice: The tickler appears as a notice printed during nightly processing.\n\n\n\n- Message queue: The tickler appears as a message in the user’s message queue.\n\n\n\n- Report and queue: The tickler appears as a message in the user’s message queue and on a report printed during nightly processing.\n\n\n\n- Notice and queue: The tickler appears as a message in the user’s message queue and as a notice printed during nightly processing."
           enum:
           - Report
           - Notice
@@ -580,7 +649,7 @@ components:
           - NoticeAndMessage
         DeliveryDestination:
           type: string
-          description: "Delivery destination of the tickler.\n\n\n\n**Note:** Value that indicates the specific user or officer who should receive this particular tickler.\n\nThe value of 'AllOfficers' indicates that the tickler will be sent to all the officers. "
+          description: "Delivery destination of the tickler.\n\n\n\n\n\n\n\n**Note:** Value that indicates the specific user or officer who should receive this particular tickler.\n\n\n\nThe value of 'AllOfficers' indicates that the tickler will be sent to all the officers. "
           enum:
           - User
           - Officer
@@ -592,13 +661,13 @@ components:
       properties:
         RecurType:
           type: string
-          description: "Type recurrence.\n\n**Note:** Applicable to ticklers and is used to define the reocurrence of ticklers like daily or monthly. "
+          description: "Type recurrence.\n\n\n\n**Note:** Applicable to ticklers and is used to define the reocurrence of ticklers like daily or monthly. "
           enum:
           - Daily
           - Monthly
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences  of memo or tickler. \n\nIf value is: \n\n- Daily: Number of days between occurrences.\n\n- Weekly: Number of weeks between occurrences.\n\n- Monthly: Number of months between occurrences.\n\n- Yearly:  Number of years between occurrences.\n\n- Cycle:  Number of the designated cycle.   \n\nIf not provided, default value is  1, i.e. every day, every week, every month, or every year. \n\n**Note:** Applicable to ticklers and is used to define the interval of the reocurrence of ticklers.\n\nMaximum length: three characters.\n\nValid values: 000 to 999."
+          description: "Recurrence interval between two successive occurrences  of memo or tickler. \n\n\n\nIf value is: \n\n\n\n- Daily: Number of days between occurrences.\n\n\n\n- Weekly: Number of weeks between occurrences.\n\n\n\n- Monthly: Number of months between occurrences.\n\n\n\n- Yearly:  Number of years between occurrences.\n\n\n\n- Cycle:  Number of the designated cycle.   \n\n\n\nIf not provided, default value is  1, i.e. every day, every week, every month, or every year. \n\n\n\n**Note:** Applicable to ticklers and is used to define the interval of the reocurrence of ticklers.\n\n\n\nMaximum length: three characters.\n\n\n\nValid values: 000 to 999."
           format: int64
       description: Details of the recurrence rule.
     MemoTicklerAddOperRequest_MemoTicklerInfo_Duration:
@@ -609,13 +678,17 @@ components:
           description: |-
             Number of alert days for ticklers.
 
+
+
             **Note:** Valid values for count in signature are 000 to 999.
+
+
 
             Applicable to tickler only.
           format: int64
         Unit:
           type: string
-          description: "Unit of duration.\n\n**Note:** Signature only supports the value of 'Days' for this field. "
+          description: "Unit of duration.\n\n\n\n**Note:** Signature only supports the value of 'Days' for this field. "
           enum:
           - Days
       description: Duration of the memo/ tickler.
@@ -631,13 +704,23 @@ components:
           description: |-
             Type of memo tickler.
 
+
+
             **Note:** *Required field*
+
+
+
+
 
 
 
             Refers to the alert category or item class in signature.
 
+
+
             Required to be provided to add a memo/tickler.
+
+
 
             Maximum length: 10 characters
         MemoTicklerTypeDesc:
@@ -646,13 +729,23 @@ components:
           description: |-
             Description of the type of the memo tickler.
 
+
+
             **Note:** *Required field*
+
+
+
+
 
 
 
             Refers to the alert category description or item class description in signature.
 
+
+
             Required to be provided to add a memo/tickler.
+
+
 
             Maximum length: 50 characters
         MemoTicklerTitle:
@@ -661,7 +754,11 @@ components:
           description: |-
             Tittle of the memo tickler.
 
+
+
             **Note:** Refers to alert tittle or item id in signature.
+
+
 
             Required to be provided to add a memo/tickler.
         MemoTicklerUse:
@@ -669,19 +766,33 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Required to be provided to add a memo/tickler.
 
+
+
             Values for this field means:
 
-            - Memo: A message that requires no action.
 
-            - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
-            - Tickler: A one-time or recurring message that may require an action.
+            - Memo: A message that requires no action
 
-            - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
+
+
+            - Required view memo: A message that presents a popup window when you access a customer or an account record
+
+
+
+            - Tickler: A one-time or recurring message that may require an action
+
+
+
+            - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record
           enum:
           - Memo
           - Tickler
@@ -692,7 +803,11 @@ components:
           description: |-
             User ID of the user who created the memo/tickler.
 
+
+
             **Note:** Value must be a valid user id setup in signature core.
+
+
 
             Maximum length: 10 characters.
         MemoTicklerText:
@@ -701,9 +816,15 @@ components:
           description: |-
             Description of the memo tickler.
 
+
+
             **Note:** Refers to message field in signature.
 
+
+
             Only two repetitions are mapped and accepted in signature.
+
+
 
             Maximum length: 50 characters.
           items: {}
@@ -713,9 +834,15 @@ components:
           description: |-
             Additional description of memo or tickler.
 
+
+
             **Note:** Refers to additional message data field in signature.
 
+
+
             Multiple repetitions of this with 80 characters each can be sent for a total of 600 characters.
+
+
 
             Maximum length: 600 charcters
           items: {}
@@ -724,7 +851,11 @@ components:
           description: |-
             Information about the financial institution officers who have management-related responsibilities of the account.
 
+
+
             **Note:** Signature supports only two instances of this aggregate.
+
+
 
             One for the relationship role of 'Officer' and one for relationship role of 'SecondOfficer'.
           items:
@@ -734,11 +865,15 @@ components:
           description: |-
             Flag to indicate the memo/tickler is private.
 
+
+
             **Note:** A private memo/tickler is use only by the user who created it and hence is not available for view by any other user.
         ActionRequiredCode:
           type: string
           description: |-
             Code to identify if the tickler require user action.
+
+
 
             **Note:** Applicable to ticklers only.
           enum:
@@ -750,13 +885,13 @@ components:
           $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo_RecurRule'
         NextMemoTicklerDt:
           type: string
-          description: "Date on which next memo tickler is reported.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to the next date on which this tickler will take effect for recurring ticklers. \n\nApplicable to ticklers only."
+          description: "Date on which next memo tickler is reported.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to the next date on which this tickler will take effect for recurring ticklers. \n\n\n\nApplicable to ticklers only."
           format: date
         Duration:
           $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo_Duration'
         ExpDt:
           type: string
-          description: "Date after which a memo and tickler becomes inactive.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date after which a memo and tickler becomes inactive.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         UpdateContactCode:
           type: string
@@ -766,7 +901,7 @@ components:
           - Account
           - All
           - None
-      description: "Details of memo tickler.\n\n**Note:** Memo or Tickler can be created at the account level or at the party (customer) level in signature depending on the information sent in the request.\n\nEither the AcctKeys or the PartyKeys is sent in the add request. "
+      description: "Details of memo tickler.\n\n\n\n**Note:** Memo or Tickler can be created at the account level or at the party (customer) level in signature depending on the information sent in the request.\n\n\n\nEither the AcctKeys or the PartyKeys is sent in the add request. "
     MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerKeys_AcctKeys:
       required:
       - AcctId
@@ -782,10 +917,20 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -806,6 +951,8 @@ components:
           description: |-
             Unique identification number of a party record.
 
+
+
             **Note:** Refers to the customer permanent identifier or customer key in signature.
       description: Unique information to identify the party record.
     MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerKeys:
@@ -820,15 +967,27 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Values for this field means:
 
+
+
             - Memo: A message that requires no action.
+
+
 
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -842,11 +1001,17 @@ components:
           description: |-
             Unique identification code to identify a memo tickler.
 
+
+
             **Note:** Refers to Alert identifier and is used to identify the memo or tickler record on Signature.
+
+
 
             This field is system generated and cannot be modified.
       description: |-
         Unique information to identify a memo tickler record.
+
+
 
         **Note:** Either the account keys or the party keys will be returned in the response based on the keys that were sent in the request.
     MemoTicklerAddOperResponse_MemoTicklerStatusRec_MemoTicklerStatus:
@@ -862,7 +1027,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time value when the status of memo tickler is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time value when the status of memo tickler is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\n\n\nExample: 2021-12-31T23:59:59.999"
       description: Status details of a memo tickler.
     MemoTicklerAddOperResponse_MemoTicklerStatusRec:
       required:
@@ -892,6 +1057,14 @@ components:
 
 
 
+
+
+
+
+
+
+
+
             **Note:** Maximum length: 12 characters.
         AcctType:
           type: string
@@ -900,9 +1073,19 @@ components:
 
 
 
+
+
+
+
             For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Gloassary</a>.
 
+
+
             **Note:** *Condionally Required field*
+
+
+
+
 
 
 
@@ -916,6 +1099,8 @@ components:
       description: |-
         Unique information to identify the account record.
 
+
+
         **Note:** AcctKeys are used to delete a memo or tickler associated to an account.
     delMemoTicklerSecuredRequest_MemoTicklerKeys_PartyKeys:
       type: object
@@ -926,9 +1111,13 @@ components:
           description: |-
             Unique identification number of a party record.
 
+
+
             **Note:** Refers to the customer permanent identifier or customer key in signature.
       description: |-
         Unique information to identify the party record.
+
+
 
         **Note:** PartyKeys used to add a memo or tickler associated to the party (customer).
     delMemoTicklerSecuredRequest_MemoTicklerKeys:
@@ -943,15 +1132,27 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Values for this field means:
 
+
+
             - Memo: A message that requires no action.
+
+
 
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -965,15 +1166,25 @@ components:
           description: |-
             Unique identification code to identify a memo tickler.
 
+
+
             **Note:** *Required field*
+
+
+
+
 
 
 
             Refers to alert identifier and required to be provided when deleting a memo or tickler.
 
+
+
             Maximum length: 10 characters.
       description: |-
         Unique information to identify the memo tickler record.
+
+
 
         **Note:** Client application must send either the AcctKeys or PartyKeys (not both) in the request.
     delMemoTicklerSecuredResponse_MemoTicklerStatusRec_MemoTicklerKeys:
@@ -988,15 +1199,27 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Values for this field means:
 
+
+
             - Memo: A message that requires no action.
+
+
 
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -1010,9 +1233,13 @@ components:
           description: |-
             Unique identification code to identify a memo tickler.
 
+
+
             **Note:** Refers to alert identifier.
       description: |-
         Unique information to identify a memo tickler record.
+
+
 
         **Note:** Either the account keys or the party keys will be returned in the response based on the keys that were sent in the request.
     delMemoTicklerSecuredResponse_MemoTicklerStatusRec_MemoTicklerStatus:
@@ -1028,7 +1255,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time value when the status of memo tickler is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time value when the status of memo tickler is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\n\n\nExample: 2021-12-31T23:59:59.999"
       description: Status details of a memo tickler.
     delMemoTicklerSecuredResponse_MemoTicklerStatusRec:
       required:
@@ -1046,12 +1273,12 @@ components:
       properties:
         MaxRecLimit:
           type: integer
-          description: "Maximum number of records that can be returned within a single response.\n\n**Note:** Signature may return up to 37 records at one time for this message. \n\nClient application can send a different value in this field to retrieve a different number of records, for example, request 10 or 20 records per response."
+          description: "Maximum number of records that can be returned within a single response.\n\n\n\n**Note:**Up to 37 records at a time.\n\nClient application can send a different value in this field to retrieve a different number of records. \n\nFor example: request 10 or 20 records per response."
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n**Note:** The value received in the Signature response for the cursor field may be passed in this field to fetch the next set of records from signature. "
+          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n\n\n**Note:** Value received in the response for the Cursor field is passed in this field to fetch the next set of records, if the additional transaction records are provided in the previous response of Account transaction Inquiry. "
       description: Maximum number of records that client can specify to process within a single response.
     getMemoTicklerSecuredRequest_MemoTicklerSel_MemoTicklerKeys_AcctKeys:
       required:
@@ -1068,6 +1295,12 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
           description: |-
@@ -1075,9 +1308,11 @@ components:
 
 
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Gloassary</a>.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            **Note:** *Condionally Required field*
+
+
+            **Note:** *Conditionally Required field*
 
 
 
@@ -1101,15 +1336,27 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Values for this field means:
 
+
+
             - Memo: A message that requires no action.
+
+
 
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -1123,20 +1370,27 @@ components:
           description: |-
             Unique identification code to identify a memo tickler.
 
+
+
             **Note:** *Conditionally Required field*
+
+
+
+
 
 
 
             Refers to alert identifier and required to be provided when inquiring about a specific memo tickler.
 
+
+
             Maximum length: 10 characters.
-      description: |+
+      description: |-
         Unique information to identify a memo tickler record.
 
-        **Note:** Client applications use this aggregate when inquiring about a specific memo or tickler. Either AcctKeys or PartyKeys (not both) should be sent in the request.
 
-        In order to search for a specific memo or tickler, the memo tickler identifier is required to be sent in the request.
 
+        **Note:** Client applications use this aggregate when inquiring about a specific memo or tickler. Either AcctKeys or PartyKeys (not both) should be sent in the request. The memo tickler identifier is required to be sent in the request to search for a specific memo or tickler.
     getMemoTicklerSecuredRequest_MemoTicklerSel_AcctKeys:
       required:
       - AcctId
@@ -1150,9 +1404,11 @@ components:
 
 
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Gloassary</a>.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            **Note:** Required to be provided when inquirring about all the memo and ticklers associated to an account.
+
+
+            **Note:** Required to be provided when inquiring about all the memo and ticklers associated to an account.
         AcctType:
           type: string
           description: |-
@@ -1160,9 +1416,11 @@ components:
 
 
 
-            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Gloassary</a>.
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            **Note:** Required to be provided when inquirring about all the memo and ticklers associated to an account.
+
+
+            **Note:** Required to be provided when inquiring about all the memo and ticklers associated to an account.
           enum:
           - DDA
           - SDA
@@ -1174,10 +1432,6 @@ components:
 
 
 
-
-
-
-
         **Note:** Client application use AcctKeys when inquiring about all the memos and ticklers associated to an account.
     getMemoTicklerSecuredRequest_MemoTicklerSel_PartyKeys:
       type: object
@@ -1185,13 +1439,8 @@ components:
         PartyId:
           maxLength: 36
           type: string
-          description: |-
-            Unique identification number of a party record.
-
-            **Note:** Refers to the customer permanent identifier or customer key in signature.
-
-            Maximum length: 10 characters.
-      description: "Unique information to identify the party record.\n\n**Note:** Client application use this aggregate when inquiring about all the memos /ticklers associated to the party (customer). "
+          description: "Unique identification number of a party record.\n\n\n\n**Note:** Refers to the customer permanent identifier or customer key in signature. This field should bee sent in the request when inquiring about all the memo and ticklers associated to a party. \n\n\n\nMax Length: 10 characters."
+      description: "Unique information to identify the party record.\n\n\n\n**Note:** Client application use this aggregate when inquiring about all the memos /ticklers associated to the party (customer). "
     getMemoTicklerSecuredRequest_MemoTicklerSel_RelationshipMgr:
       required:
       - RelationshipMgrIdent
@@ -1202,9 +1451,11 @@ components:
           description: |-
             Unique identifier of a relationship manager.
 
+
+
             **Note:** Refers to primary officer code or secondary officer code.
 
-            Maximum length: five characters.
+            Max Length:5 characters
         RelationshipRole:
           type: string
           description: Role of a relationship manager.
@@ -1224,32 +1475,54 @@ components:
           description: |-
             Type of memo tickler.
 
-            **Note:** Refers to alert category or item class in signature.
 
-            Maximum length: 10 characters.
+
+            **Note:** Refers to alert category or item class in signature. "MemoTicklerType" value is provided as an additional search criteria field while retrieving all memos and ticklers linked to a party or an account.
+
+
+
+            Max Length: 10 characters.
         MemoTicklerTitle:
           maxLength: 50
           type: string
           description: |-
-            Short description assigned to  memo/tickler as tittle.
+            Short description for memo or tickler as tittle.
 
-            **Note:** Refers to alert tittle or item id in signature.
+
+
+            **Note:** "MemoTicklerTitle" is an alert tittle or item id in signature. "MemoTicklerTitle" value is provided as an additional search criteria field while retrieving all memos and ticklers linked to a party or an account.
         MemoTicklerUse:
           type: string
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
 
-            Values for this field means:
+
+
+            Applicable values means:
+
+
 
             - Memo: A message that requires no action.
 
+
+
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
+
+
 
             - Tickler: A one-time or recurring message that may require an action.
 
+
+
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
+
+
+
+            "MemoTicklerUse" value is provided as an additional search criteria field while retrieving all memos and ticklers linked to a party or an account.
           enum:
           - Memo
           - Tickler
@@ -1257,15 +1530,20 @@ components:
           - TicklerRequired
         CreatedBy:
           type: string
-          description: "User ID of the user who created the memo/tickler.\n\n**Note:** If a memo or tickler is \"private\", then only the user who created the memo/tickler can view it. "
+          description: "User ID of the user who created the memo/tickler.\n\n\n\n**Note:** If a memo or tickler is \"private\", then only the user who created the memo/tickler can view it. \n\n \"CreatedBy\" value is provided as an additional search criteria field while retrieving all memos and ticklers linked to a party or an account."
         RelationshipMgr:
           type: array
-          description: Information about the financial institution officers who have management-related responsibilities of the account.
+          description: |-
+            Information about the financial institution officers who have management-related responsibilities of the account.
+
+
+
+            **Note:** "RelationshipMgr" aggregate value is provided as an additional search criteria field while retrieving all memos and ticklers linked to a party or an account.
           items:
             $ref: '#/components/schemas/getMemoTicklerSecuredRequest_MemoTicklerSel_RelationshipMgr'
         NextMemoTicklerDt:
           type: string
-          description: "Date on which next memo tickler is reported.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to the next date on which this tickler will take effect for recurring ticklers. "
+          description: "Date on which next memo tickler is reported.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to the next date on which this tickler will take effect for recurring ticklers. \n\n\"NextMemoTicklerDt\" value is provided as an additional search criteria field while retrieving all memos and ticklers linked to a party or an account."
           format: date
       description: Details of selected memo tickler.
     getMemoTicklerSecuredResponse_RecCtrlOut:
@@ -1279,14 +1557,16 @@ components:
           format: int64
         MatchedRecCount:
           type: integer
-          description: "Number of records that matches the requested selection criteria.\n\n**Note:** A value of  \"99\" indicates that there are more records in signature that have not been retrieved in the response.\n\nA value of \"0\" indicates that no additional records exist. "
+          description: "Number of records that matches the requested selection criteria.\n\n\n\n**Note:** A value of  \"99\" indicates that there are more records in signature that have not been retrieved in the response.\n\n\n\nA value of \"0\" indicates that no additional records exist. "
           format: int64
         Cursor:
           maxLength: 250
           type: string
-          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n**Note:** Client application may send the cursor value received in this field as part of the subsequent request to retrieve the additional records. "
+          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n\n\n**Note:** Cursor value received in this field can be sent as a part of subsequent request to retrieve the additional records. "
       description: |+
         Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+
+
 
     getMemoTicklerSecuredResponse_MemoTicklerKeys_AcctKeys:
       required:
@@ -1298,6 +1578,12 @@ components:
           type: string
           description: |+
             Unique identification number of an account record.
+
+
+
+
+
+
 
 
 
@@ -1330,15 +1616,27 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Values for this field means:
 
+
+
             - Memo: A message that requires no action.
+
+
 
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -1352,9 +1650,13 @@ components:
           description: |-
             Unique identification code to identify a memo tickler.
 
-            **Note:** Refers to Alert identifier and is a system generated number assigned by signature.
+
+
+            **Note:** Refers to alert identifier and is a system generated number assigned by signature.
       description: |-
         Unique information to identify a memo tickler record.
+
+
 
         **Note:** Either the account keys or the party keys will be returned in the response based on the keys that were sent in the request.
     getMemoTicklerSecuredResponse_MemoTicklerInfo_RelationshipMgr:
@@ -1367,7 +1669,9 @@ components:
           description: |-
             Unique identifier of a relationship manager.
 
-            **Note:** Refers to primary officer code or secondary officer code.
+
+
+            **Note:** Refers to primary or secondary officer code.
         RelationshipRole:
           type: string
           description: Role of a relationship manager.
@@ -1379,7 +1683,7 @@ components:
       properties:
         DeliveryMethod:
           type: string
-          description: "Delivery method of a reminder.\n\n\n\n**Note:** Applicable to ticklers and indicate how the reminder for the tickler is reported to the user.\n\nValid values are: \n\n- Report: The tickler appears on a report printed during nightly processing.\n\n- Notice: The tickler appears as a notice printed during nightly processing.\n\n- Message queue: The tickler appears as a message in the user’s message queue.\n\n- Report and queue: The tickler appears as a message in the user’s message queue and on a report printed during nightly processing.\n\n- Notice and queue: The tickler appears as a message in the user’s message queue and as a notice printed during nightly processing.\n\n\n\nThis field is only returned in the response when the inquiry request is for a specific Memo or Tickler. "
+          description: "Delivery method of a reminder.\n\n\n\n**Note:** Applicable to ticklers and indicate how the reminder for the tickler is reported to the user.\n\n\n\nValid values are: \n\n\n\n- Report: The tickler appears on a report printed during nightly processing.\n\n\n\n- Notice: The tickler appears as a notice printed during nightly processing.\n\n\n\n- Message queue: The tickler appears as a message in the user’s message queue.\n\n\n\n- Report and queue: The tickler appears as a message in the user’s message queue and on a report printed during nightly processing.\n\n\n\n- Notice and queue: The tickler appears as a message in the user’s message queue and as a notice printed during nightly processing.\n\n\n\nThis field is only returned in the response when the inquiry request is for a specific Memo or Tickler. "
           enum:
           - Report
           - Notice
@@ -1388,7 +1692,7 @@ components:
           - NoticeAndMessage
         DeliveryDestination:
           type: string
-          description: "Delivery destination of the tickler.\n\n\n\n**Note:** Value that indicates the specific user or officer who should receive this particular tickler.\n\nThe value of 'AllOfficers' indicates that the tickler will be sent to all the officers. \n\nThis field is returned in the response only when the inquiry request is for a specific memo or tickler. "
+          description: "Delivery destination of the tickler.\n\n\n\n**Note:** Value that indicates the specific user or officer who should receive this particular tickler.\n\n\n\nThe value of 'AllOfficers' indicates that the tickler will be sent to all the officers. \n\n\n\nThis field is returned in the response only when the inquiry request is for a specific memo or tickler. "
           enum:
           - User
           - Officer
@@ -1400,13 +1704,13 @@ components:
       properties:
         RecurType:
           type: string
-          description: "Recurrence type indicates the pattern of recurrence.\n\n**Note:** Applicable to ticklers and is used to define the reocurrence of ticklers like daily or monthly. \n\nThis field is returned only when the inquiry request is for a specific memo or tickler. "
+          description: "Pattern of recurrence.\n\n\n\n**Note:** Applicable to ticklers and is used to define the reoccurrence of ticklers like daily or monthly. \n\n\n\nApplicable only when the inquiry request is for a specific memo or tickler. "
           enum:
           - Daily
           - Monthly
         RecurInterval:
           type: integer
-          description: "Recurrence interval between two successive occurrences  of memo or tickler. \n\nIf value is: \n\n- Daily: Number of days between occurrences .\n\n- Weekly: Number of weeks between occurrences.\n\n- Monthly: Number of months between occurrences.\n\n- Yearly:  Number of years between occurrences.\n\n- Cycle:  Number of the designated cycle.   \n\nIf not provided, default value is  1, i.e. every day, every week, every month, or every year. \n\n**Note:** Applicable to ticklers and is used to define the interval of the reocurrence of ticklers.\n\nMaximum length: three characters\n\nValid values: 000 to 999.\n\n\n\nThis field is returned only when the inquiry request is for a specific memo or tickler. "
+          description: "Recurrence interval between two successive occurrences  of memo or tickler. \n\n\n\nIf value is: \n\n\n\n- Daily: Number of days between occurrences .\n\n\n\n- Weekly: Number of weeks between occurrences.\n\n\n\n- Monthly: Number of months between occurrences.\n\n\n\n- Yearly:  Number of years between occurrences.\n\n\n\n- Cycle:  Number of the designated cycle.   \n\n\n\nIf not provided, default value is  1, i.e. every day, every week, every month, or every year. \n\n\n\n**Note:** Applicable to ticklers and is used to define the interval of the reoccurrence of ticklers.\n\n\n\nMax Length: 3 characters\n\n\n\nValid values: 000 to 999.\n\n\n\nThis field is returned only when the inquiry request is for a specific memo or tickler. "
           format: int64
       description: Details of recurrence rule.
     getMemoTicklerSecuredResponse_MemoTicklerInfo_Duration:
@@ -1417,13 +1721,15 @@ components:
           description: |-
             Number of alert days for ticklers.
 
+
+
             **Note:** Valid values for count in signature are 000 to 999.
 
             Applicable to tickler only.
           format: int64
         Unit:
           type: string
-          description: "Unit of duration.\n\n**Note:** Signature only supports the value of 'days' for this field. "
+          description: Unit of duration.
           enum:
           - Days
       description: Duration of the memo/ tickler.
@@ -1435,7 +1741,11 @@ components:
           description: |-
             Type of memo tickler.
 
+
+
             **Note:** Refers to alert category or item class in signature.
+
+
 
             Maximum length: 10 characters.
         MemoTicklerTypeDesc:
@@ -1444,6 +1754,8 @@ components:
           description: |-
             Description of the type of the memo tickler.
 
+
+
             **Note:** Refers to alert category description or item class description in signature.
         MemoTicklerTitle:
           maxLength: 50
@@ -1451,21 +1763,35 @@ components:
           description: |-
             Title of the memo tickler.
 
+
+
             **Note:** Refers to alert tittle or item id in signature.
         MemoTicklerUse:
           type: string
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Values for this field means:
 
+
+
             - Memo: A message that requires no action.
+
+
 
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -1476,19 +1802,19 @@ components:
         CreateDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date on which tickler is created.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which tickler is created.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
         CreatedBy:
           type: string
-          description: User ID of the user who created the memo/tickler.
+          description: User ID of the user who created the memo or tickler.
         MemoTicklerText:
           maxLength: 100
           type: array
-          description: "Description of the memo tickler.\n\n**Note:** Refers to the message field in signature. \n\nThis field is only returned in the response when the inquiry request is for a specific memo or tickler."
+          description: "Description of the memo tickler.\n\n\n\n**Note:** Refers to the message field in signature. "
           items: {}
         MemoTicklerExtendedText:
           maxLength: 80
           type: array
-          description: "Additional description of memo or tickler.\n\n**Note:** Refers to additional message data field in signature.\n\nMultiple repetitions of this with 80 characters each can be sent for a total of 600 characters.\n\nMaximum length: 600 charcters.\n\n\n\nThis field is only returned in the response when the inquiry request is for a specific memo or tickler. "
+          description: "Additional description of memo or tickler.\n\n\n\n**Note:** Refers to additional message data field in signature.\n\n\n\nMultiple repetitions of this with 80 characters each can be sent for a total of 600 characters.\n\n\n\nMax Length: 600 characters\n\n\n\nThis field is only returned in the response when the inquiry request is for a specific memo or tickler. "
           items: {}
         RelationshipMgr:
           type: array
@@ -1503,13 +1829,19 @@ components:
           description: |-
             Flag to indicate the memo/tickler is private.
 
-            **Note:** A private memo/tickler is use only by the user who created it and hence is not available for view by any other user.
+
+
+            **Note:** A private memo or tickler used only by the user who created it and not available for view to any other user.
         ActionRequiredCode:
           type: string
           description: |-
             Code to identify if the tickler require user action.
 
+
+
             **Note:** This field is returned in the response only when the inquiry request is for a specific memo or tickler.
+
+
 
             Applicable only to ticklers.
           enum:
@@ -1521,24 +1853,24 @@ components:
           $ref: '#/components/schemas/getMemoTicklerSecuredResponse_MemoTicklerInfo_RecurRule'
         NextMemoTicklerDt:
           type: string
-          description: "Date on which next memo tickler is reported.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to the next date on which this tickler will take effect for recurring ticklers. "
+          description: "Date on which next memo tickler is reported.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to the next date on which this tickler will take effect for recurring ticklers. "
           format: date
         Duration:
           $ref: '#/components/schemas/getMemoTicklerSecuredResponse_MemoTicklerInfo_Duration'
         ExpDt:
           type: string
-          description: "Date after which a memo and tickler becomes inactive.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date after which a memo or tickler becomes inactive.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         MaintBy:
           type: string
-          description: User who maintains the memo or tickler.
+          description: User who maintains the memo or tickler records.
         MaintDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date on which the memo or tickler was last updated.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date on which the memo or tickler was last updated.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
         MemoTicklerDtlStatus:
           type: string
-          description: Detailed status of the memo/tickler.
+          description: Detailed status of the memo or tickler.
           enum:
           - Active
           - Inactive
@@ -1560,7 +1892,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time value when the status of memo tickler is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time value when the status of memo tickler is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\n\n\nExample: 2021-12-31T23:59:59.999"
       description: Status details of a memo tickler reported.
     getMemoTicklerSecuredResponse_MemoTicklerRec:
       required:
@@ -1591,6 +1923,14 @@ components:
 
 
 
+
+
+
+
+
+
+
+
             **Note:** Maximum length: 12 characters.
         AcctType:
           type: string
@@ -1599,7 +1939,13 @@ components:
 
 
 
+
+
+
+
             For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Gloassary</a>.
+
+
 
             **Note:** Required to be provided if the account identifier (AcctId) is sent in the aggregate.
           enum:
@@ -1608,7 +1954,7 @@ components:
           - CDA
           - SDB
           - LOAN
-      description: "Unique information to identify the account record.\n\n**Note:** This aggregate should be used for modifying a memo or tickler associated to an account. "
+      description: "Unique information to identify the account record.\n\n\n\n**Note:** This aggregate should be used for modifying a memo or tickler associated to an account. "
     MemoTicklerModOperRequest_MemoTicklerKeys:
       type: object
       properties:
@@ -1621,17 +1967,31 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
+
+
 
 
 
             Values for this field means:
 
+
+
             - Memo: A message that requires no action.
+
+
 
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -1645,13 +2005,21 @@ components:
           description: |-
             Unique identification code to identify a memo tickler.
 
+
+
             **Note:** Refers to Alert identifier and is used to identify the memo or tickler record on signature.
 
+
+
             Required to be provided when modifying a memo or a tickler.
+
+
 
             This field is system generated and cannot be modified.
       description: |-
         Unique information to identify the memo tickler record.
+
+
 
         **Note:** Client application must send either the AcctKeys or PartyKeys (not both) in the request.
     MemoTicklerModOperRequest_MemoTicklerInfo:
@@ -1662,9 +2030,15 @@ components:
           description: |-
             Type of memo tickler.
 
+
+
             **Note:** Refers to alert category or item class in signature.
 
+
+
             This field cannot be modified but is required to be provided to process modify request.
+
+
 
             Maximum length: 10 characters.
         MemoTicklerTypeDesc:
@@ -1673,9 +2047,15 @@ components:
           description: |-
             Description of the type of the memo tickler.
 
+
+
             **Note:** Refers to the alert category description or item class description in signature.
 
+
+
             Required to be provided to process modify request.
+
+
 
             Maximum length: 50 characters.
         MemoTicklerTitle:
@@ -1684,7 +2064,11 @@ components:
           description: |-
             Title of the memo tickler.
 
+
+
             **Note:** Refers to alert tittle or item id in signature.
+
+
 
             Required to be provided to modify a memo/tickler.
         MemoTicklerUse:
@@ -1692,17 +2076,31 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Required to be provided to modify a memo/tickler.
 
+
+
             Values for this field means:
+
+
 
             - Memo: A message that requires no action.
 
+
+
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -1716,9 +2114,15 @@ components:
           description: |-
             Description of the memo tickler.
 
+
+
             **Note:** Refers to message field in signature.
 
+
+
             Only two repetitions are mapped and accepted in signature.
+
+
 
             Maximum length: 50 characters.
           items: {}
@@ -1728,9 +2132,15 @@ components:
           description: |-
             Additional description of memo or tickler.
 
+
+
             **Note:** Refers to additional message data field in signature.
 
+
+
             Multiple repetitions of this with 80 characters each can be sent for a total of 600 characters.
+
+
 
             Maximum length: 600 characters.
           items: {}
@@ -1739,7 +2149,11 @@ components:
           description: |-
             Information about the financial institution officers who have management-related responsibilities of the account.
 
+
+
             **Note:** Signature supports only two instances of this aggregate.
+
+
 
             One for the relationship role of 'Officer' and one for relationship role of 'SecondOfficer'.
           items:
@@ -1749,11 +2163,15 @@ components:
           description: |-
             Flag to indicate the memo/tickler is private.
 
+
+
             **Note:** A private memo/tickler is use only by the user who created it and hence is not available for view by any other user.
         ActionRequiredCode:
           type: string
           description: |-
             Code to identify if the tickler require user action.
+
+
 
             **Note:** Applicable to ticklers only.
           enum:
@@ -1765,13 +2183,13 @@ components:
           $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo_RecurRule'
         NextMemoTicklerDt:
           type: string
-          description: "Date on which next memo tickler is reported.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to the next date on which this tickler will take effect for recurring ticklers. \n\nApplicable to ticklers only.\n\nThis date cannot be deleted and can only be updated."
+          description: "Date on which next memo tickler is reported.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Refers to the next date on which this tickler will take effect for recurring ticklers. \n\n\n\nApplicable to ticklers only.\n\n\n\nThis date cannot be deleted and can only be updated."
           format: date
         Duration:
           $ref: '#/components/schemas/MemoTicklerAddOperRequest_MemoTicklerInfo_Duration'
         ExpDt:
           type: string
-          description: "Date after which a memo and tickler becomes inactive.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date after which a memo and tickler becomes inactive.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
           format: date
         MaintBy:
           type: string
@@ -1792,10 +2210,20 @@ components:
 
 
 
+
+
+
+
+
+
         AcctType:
           type: string
           description: |-
             Type of an account.
+
+
+
+
 
 
 
@@ -1819,15 +2247,27 @@ components:
           description: |-
             Usage of the memo tickler.
 
+
+
             **Note:** Refers to the code that indicate the type of the alert. Also know as item type in signature.
+
+
 
             Values for this field means:
 
+
+
             - Memo: A message that requires no action.
+
+
 
             - Required view memo: A message that presents a popup window when you access a customer or an account record.
 
+
+
             - Tickler: A one-time or recurring message that may require an action.
+
+
 
             - Required view tickler: A one-time or recurring message that presents a popup window when you access a customer or an account record.
           enum:
@@ -1841,9 +2281,13 @@ components:
           description: |-
             Unique identification code to identify a memo tickler.
 
+
+
             **Note:** Refers to alert identifier.
       description: |-
         Unique information to identify a memo tickler record.
+
+
 
         **Note:** Either the account keys or the party keys will be returned in the response based on the keys that were sent in the request.
     MemoTicklerModOperResponse_MemoTicklerStatusRec:
