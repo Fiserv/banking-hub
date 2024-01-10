@@ -21,4 +21,3 @@ Begin the integration with following services of Cards domain in API Explorer:
 - [Transactions](?path=docs/fintechs/transactions.md "Click to open")
 - [Operations and Servicing](?path=docs/fintechs/servicing.md "Click to open")
 - [Transfers](?path=docs/fintechs/transfers.md "Click to open")
-
