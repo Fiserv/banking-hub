@@ -1,19 +1,20 @@
 ---
 openapi: 3.0.1
 info:
-  title: Party Account Relationship Service
-  description: Party account relationship service manages the nature of relationship between a party and a product account. It is used to indicate the primary contact and tax responsible parties as well as state the relationship type between the party and an account.
-  version: 11.0.0_DNA-Inq_ByParty
+  title: Branch Service
+  description: The branch service supports operations to manage branch information.
+  version: 11.0.0_DNA
 servers:
 - url: /
 paths:
-  /partyacctrelservice/partyacctrel/partyacctrel/secured:
-    post:
+  /branchservice/servicing/branch:
+    put:
       tags:
-      - Get Party Account Relationship
-      summary: Get Party Account Relationship
-      description: Get Party Account Relationship By Party API provides the list of all accounts related to the Party (Persons or Organizations).<br>For DNA, this API also retrieves the information about the relationship of the Party to the Account, account balances and statuses.
-      operationId: PartyAcctRelInqBySecured
+      - Update Branch
+      summary: Update an existing branch
+      description: |-
+        Update Branch API updates branch information within the financial institution.<br> For DNA, this API allows to update loaction, contact and email details for the branch. <br>A tailor user consent also known as override token is required to create a branch.
+      operationId: putBranch
       parameters:
       - name: EFXHeader
         in: header
@@ -25,47 +26,89 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest'
+              $ref: '#/components/schemas/putBranchRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse'
+                $ref: '#/components/schemas/putBranchResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse'
-      x-group-name: Party Account Relationship Service
-      x-proxy-name: Get Party Account Relationship
-      x-child-product-name: Accountholder
-      x-core: DNA-ByParty
+                $ref: '#/components/schemas/putBranchResponse'
+      x-group-name: Branch Service
+      x-proxy-name: Update Branch
+      x-child-product-name: Operations and Servicing
+      x-core: DNA
+    post:
+      tags:
+      - Add Branch
+      summary: Adds a branch
+      description: Add Branch API creates a new branch within the financial institution.<br>For DNA, this API contains information related to location, contact and email for the branch.<br>A tailor user consent also known as override token is required to create a branch.
+      operationId: addBranch
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addBranchRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addBranchResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addBranchResponse'
+      x-group-name: Branch Service
+      x-proxy-name: Add Branch
+      x-child-product-name: Operations and Servicing
+      x-core: DNA
 components:
   schemas:
-    PartyAcctRelInqBySecuredRequest:
+    addBranchRequest:
       required:
-      - PartyAcctRelSel
+      - BranchInfo
       properties:
-        RecCtrlIn:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_RecCtrlIn'
-        PartyAcctRelSel:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel'
-    PartyAcctRelInqBySecuredResponse:
+        BranchInfo:
+          $ref: '#/components/schemas/addBranchRequest_BranchInfo'
+    addBranchResponse:
       required:
-      - PartyAcctRelRec
+      - BranchStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        RecCtrlOut:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_RecCtrlOut'
-        PartyAcctRelRec:
-          type: array
-          description: Details of the party-to-account relationship record.
-          items:
-            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelRec'
+        BranchStatusRec:
+          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec'
+    putBranchRequest:
+      required:
+      - BranchInfo
+      properties:
+        BranchInfo:
+          $ref: '#/components/schemas/putBranchRequest_BranchInfo'
+    putBranchResponse:
+      required:
+      - BranchStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        BranchStatusRec:
+          $ref: '#/components/schemas/putBranchResponse_BranchStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -377,335 +420,176 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    PartyAcctRelInqBySecuredRequest_RecCtrlIn:
+    addBranchRequest_BranchInfo_CountryCode:
+      required:
+      - CountryCodeValue
       type: object
       properties:
-        MaxRecLimit:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: Details of country code.
+    addBranchRequest_BranchInfo_PhoneNum:
+      required:
+      - PhoneType
+      properties:
+        PhoneType:
+          type: string
+          description: Type of phone.
+        PhoneIdent:
           type: integer
           description: |-
-            Maximum number of records that can be returned within a single response.
+            Phone identifier to serialize the phone types when more than one phone type exists.
 
-
-
-            **Note:** This field identifies the maximum number of rows to return. In this case, if this field is not provided, then all the associated accounts with the party are retuner in the response.
-
-
-
-            This field is required for pagination logic.
+            For example, if the five mobile phones are provided then this field serializes each mobile phone.
           format: int64
-        Cursor:
-          maxLength: 250
+        Phone:
           type: string
-          description: "Next record pointer is included in the response if additional records exist. \n\n\n\n**Note:** In case to retrieve the next set of records, this field is provided in the subsequent requests that the client application has made. \n\nCursor is not applicable for the first request."
-      description: Maximum number of records to be processed within a single response as specified by the client.
-    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys:
+          description: Phone number of the branch.
+        CountryCode:
+          $ref: '#/components/schemas/addBranchRequest_BranchInfo_CountryCode'
+    addBranchRequest_BranchInfo_Email:
+      properties:
+        EmailType:
+          type: string
+          description: Type of email.
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address of the branch.
+    addBranchRequest_BranchInfo_FIData:
+      properties:
+        FIIdent:
+          maxLength: 34
+          type: string
+          description: Unique identification number of a financial institution.
+    addBranchRequest_BranchInfo:
+      type: object
+      properties:
+        RegionIdent:
+          maxLength: 22
+          type: string
+          description: Unique identifier of the branch region.
+        BranchCode:
+          maxLength: 80
+          type: string
+          description: Code associated to the branch.
+        BranchName:
+          maxLength: 40
+          type: string
+          description: Name of the branch.
+        PhoneNum:
+          type: array
+          description: Phone number details of a branch.
+          items:
+            $ref: '#/components/schemas/addBranchRequest_BranchInfo_PhoneNum'
+        Email:
+          type: array
+          description: Email details of the branch.
+          items:
+            $ref: '#/components/schemas/addBranchRequest_BranchInfo_Email'
+        FIData:
+          type: array
+          description: Financial details of the branch.
+          items:
+            $ref: '#/components/schemas/addBranchRequest_BranchInfo_FIData'
+      description: Details of a branch.
+    addBranchResponse_BranchStatusRec_BranchKeys:
       required:
-      - PartyIdent
-      - PartyIdentType
+      - BranchIdent
       type: object
       properties:
-        PartyIdentType:
+        BranchIdent:
+          maxLength: 22
           type: string
-          description: Type of party identification.
-          enum:
-          - OrgNum
-          - PersonNum
-        PartyIdent:
-          maxLength: 60
-          type: string
-          description: Unique identifier of a party record.
-      description: Unique information to identify the party record.
-    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel:
-      type: object
-      properties:
-        PartyKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys'
-        ExcludeClosedAcctInd:
-          type: boolean
-          description: Flag to indicate that the closed accounts are not included.
-      description: Selection criteria for a party-to-account relationship inquiry.
-    PartyAcctRelInqBySecuredResponse_RecCtrlOut:
+          description: Unique identifier of a branch.
+      description: Unique information to identify the branch record.
+    addBranchResponse_BranchStatusRec_BranchStatus:
       required:
-      - SentRecCount
+      - BranchStatusCode
       type: object
       properties:
-        SentRecCount:
+        BranchStatusCode:
+          type: string
+          description: Code to specify the status of the branch.
+      description: Status details of the branch.
+    addBranchResponse_BranchStatusRec:
+      required:
+      - BranchKeys
+      - BranchStatus
+      type: object
+      properties:
+        BranchKeys:
+          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchKeys'
+        BranchStatus:
+          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchStatus'
+      description: Details of the branch status record in response to the add operation.
+    putBranchRequest_BranchInfo_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: Details of country code.
+    putBranchRequest_BranchInfo_PhoneNum:
+      required:
+      - PhoneType
+      properties:
+        PhoneType:
+          type: string
+          description: Type of phone.
+        PhoneIdent:
           type: integer
-          description: Total number of records that matched the selection criteria and returned in the response message.
+          description: |-
+            Phone identifier to serialize the phone types when more than one phone type exists.
+
+            For example, if the five mobile phones are provided then this field serializes each mobile phone.
           format: int64
-      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys:
-      required:
-      - AcctId
+        Phone:
+          type: string
+          description: Phone number of the branch.
+        CountryCode:
+          $ref: '#/components/schemas/putBranchRequest_BranchInfo_CountryCode'
+    putBranchRequest_BranchInfo:
       type: object
       properties:
-        AcctId:
-          maxLength: 36
+        RegionIdent:
+          maxLength: 22
           type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-
-
-        AcctType:
+          description: Unique identifier of the branch region.
+        BranchName:
+          maxLength: 40
           type: string
-          description: |-
-            Type of an account.
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
-          enum:
-          - DDA
-          - SDA
-          - CDA
-          - EXT
-          - LOAN
-          - RRA
-          - LEAS
-          - RET
-          - ILA
-          - CLA
-          - MLA
-          - RET
-          - MLN
-          - RRA
-      description: Details of the account keys to identify an account record.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys:
-      type: object
-      properties:
-        PartyKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys'
-        AcctKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys'
-      description: Unique information to identify the party-to-account relationship record.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyAcctRelData:
-      required:
-      - PartyAcctRelType
-      properties:
-        PartyAcctRelType:
-          type: string
-          description: "Relationship type between the party and account.\n\n\n\n**Note:** The following values imply:\n\n- Owner: Refers to tax reported owner\n\n- OwnerSigner: Refers to tax reported owner and tax reported signer\n\n\n\nThis field displays all the available relationships between party and account including tax relationships. \n\nFinancial institution defines all additional relationship types, which are not tax-related."
-          enum:
-          - Owner
-          - OwnerSigner
-        PartyAcctRelDesc:
-          maxLength: 80
-          type: string
-          description: Description of the relationship of the party to the account.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-
-
-        AcctType:
-          type: string
-          description: |-
-            Type of an account.
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
-          enum:
-          - DDA
-          - SDA
-          - CDA
-          - EXT
-          - LOAN
-          - RRA
-          - LEAS
-          - RET
-          - ILA
-          - CLA
-          - MLA
-          - MLN
-          - RRA
-      description: Details of the account keys to identify an account record.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctStmtData:
-      type: object
-      properties:
-        StmtTimeFrame:
+          description: Name of the branch.
+        PhoneNum:
           type: array
-          description: Details of the time frame of the statement.
-          items: {}
-      description: Processing details of the account statement.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Amount in decimal format.
-      description: Details of the currency amount.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctBal:
-      required:
-      - BalType
-      - CurAmt
-      properties:
-        BalType:
-          type: string
-          description: |-
-            Type of the balance.
-
-
-
-            **Note:** The following values imply:
-
-            - Avail: Refers to the available balance
-
-            - Current: Refers to the current balance
-          enum:
-          - Avail
-          - Current
-        CurAmt:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt'
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_PmtCompositeAmt:
-      required:
-      - CurAmt
-      properties:
-        CurAmt:
-          type: object
-          description: Details of the currency amount.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt:
-      type: object
-      properties:
-        PmtCompositeAmt:
-          type: array
-          description: Details of the composite payment amount.
+          description: Phone number details of a branch.
           items:
-            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_PmtCompositeAmt'
-      description: |-
-        Details of the due payments.
-
-        Due payments refer to the oldest billed payment described in terms of date and amounts. Related balances are PastDue ( the sum of all past due bill payments) and PmtDue. If the loan is current, then due payment is the current bill payment.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo:
-      type: object
-      properties:
-        AcctDtlStatus:
-          type: string
-          description: Current status of the account.
-          enum:
-          - Active
-          - Approved
-          - ChargedOff
-          - Closed
-          - Dormant
-          - Inactive
-          - NonAccrual
-          - ClosedWithBalances
-          - Assumed
-          - Originating
-          - Denied
-        AcctDtlStatusEnumDesc:
-          maxLength: 80
-          type: string
-          description: Description of the enumeration value in the AcctDtlStatus field.
-        ProductIdent:
-          maxLength: 42
-          type: string
-          description: |-
-            Unique identifier of a product to indicate the processing options of an account.
-
-
-
-            **Note:** In the case of the external accounts, this field represents the external application number.
-        Desc:
-          maxLength: 200
-          type: string
-          description: Client-defined description of the product used to set up the account.
-        OpenDt:
-          type: string
-          description: |-
-            Date on which the account record was created.
-
-            Format: YYYY-MM-DD
-
-            Example: 2021-11-20
-          format: date
-        ClosedReasonCode:
-          type: string
-          description: Code to indicate the reason for the closure of an account.
-        AcctStmtData:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctStmtData'
-        IntRateData:
-          type: object
-          description: Details used to define interest rate processing data.
-        AcctBal:
+            $ref: '#/components/schemas/putBranchRequest_BranchInfo_PhoneNum'
+        Email:
           type: array
-          description: 'Details of the account balance a financial institution carries. '
+          description: Email details of the branch.
           items:
-            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctBal'
-        AcctPeriodData:
+            $ref: '#/components/schemas/addBranchRequest_BranchInfo_Email'
+        FIData:
           type: array
-          description: Accounting period details such as last interest payment, nonsufficient funds, overdraft activity year to date, current month and cycle to date.
-          items: {}
-        IsValidInd:
-          type: boolean
-          description: Flag to indicate the account is valid.
-        DuePmt:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt'
-      description: Summary details of an account.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctKeys'
-        AcctSummInfo:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo'
-      description: Reference information of an account object that is part of the relationship.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo:
-      type: object
-      properties:
-        PartyAcctRelData:
-          type: array
-          description: Details of the relationship of the party to the account.
+          description: Financial details of the branch.
           items:
-            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyAcctRelData'
-        PrimaryOwnerInd:
-          type: boolean
-          description: Flag to indicate the account owner is the primary owner.
-        TaxReportingOwnerInd:
-          type: boolean
-          description: Flag to indicate the party has tax responsibility on the account.
-        TaxReportingSignerInd:
-          type: boolean
-          description: Flag to indicate the party is a tax reported signer on the account.
-        AcctRef:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef'
-      description: 'Details of a relationship between party and account. '
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelStatus:
+            $ref: '#/components/schemas/addBranchRequest_BranchInfo_FIData'
+      description: Details of a branch.
+    putBranchResponse_BranchStatusRec:
       required:
-      - PartyAcctRelStatusCode
+      - BranchKeys
+      - BranchStatus
       type: object
       properties:
-        PartyAcctRelStatusCode:
-          type: string
-          description: 'Code to identify the current status of the party-to-account relationship. '
-          enum:
-          - Valid
-        EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: "Effective date and time when the party-to-account relationship status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-12-31T23:59:59.999"
-      description: Details of party-to-account relationship status.
-    PartyAcctRelInqBySecuredResponse_PartyAcctRelRec:
-      required:
-      - PartyAcctRelInfo
-      - PartyAcctRelKeys
-      - PartyAcctRelStatus
-      properties:
-        PartyAcctRelKeys:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys'
-        PartyAcctRelInfo:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo'
-        PartyAcctRelStatus:
-          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelStatus'
+        BranchKeys:
+          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchKeys'
+        BranchStatus:
+          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchStatus'
+      description: Details of the branch status record in response to the update operation.
