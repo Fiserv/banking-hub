@@ -1,6 +1,6 @@
-# Cards
+# Debit Cards
 
-Cards is an API domain consisting of APIs that support the creation, maintenance and retrieval of card records. Specific to card records that reside on a Fiserv core account processing platform, these APIs enable users to add, retrieve, modify or delete a debit card associated with an account, and can also be used to retrieve or modify a list of the cards associated with a particular accountholder or account. They also make it possible to retrieve the product specifications that define the relationship between a card and an account. 
+Debit Cards is an API domain consisting of APIs that support the creation, maintenance and retrieval of card records. Specific to card records that reside on a Fiserv core account processing platform, these APIs enable users to add, retrieve, modify or delete a debit card associated with an account, and can also be used to retrieve or modify a list of the cards associated with a particular accountholder or account. They also make it possible to retrieve the product specifications that define the relationship between a card and an account. 
 
 **Who is it for:** Developers creating or integrating apps that access information about card accounts and transactions maintained on a Fiserv core account processing platform
 
@@ -10,7 +10,7 @@ Cards is an API domain consisting of APIs that support the creation, maintenance
 
 
 
-Begin the integration with following services of Cards domain in API Explorer:
+Begin the integration with following services of Debit Cards domain in API Explorer:
 * [Card Service](../api/?type=post&path=/cardservice/cards/cards)
 * [Card Account Relationship Service](../api/?type=post&path=/cardacctrelservice/cards/cardAccounts)
 
