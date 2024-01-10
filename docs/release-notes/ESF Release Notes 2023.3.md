@@ -248,6 +248,9 @@ Added the following API endpoints:
 Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
+> #### Note
+> Support for Finxact v1.21.
+> 
 <p style="font-size: 24px; font-weight: bold;">What's New</p>
 
 <span style="font-size: 22px; ">General</span>
