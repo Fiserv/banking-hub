@@ -77,7 +77,7 @@ Following are the few examples of business-critical attributes.
 ## Step 5 - Generate and Use DPoP Token for Token API Call
 •	Consumer should generate the DPoP token for the token API call using the library created in the previous step (passing the token API URL and http method and other required attributes for the library)
 
-Request Response 1
+<a href="Request-Response-1.txt" download>Request Response 1</a>
  
 ## Step 6 - Generate and Use DPoP Token for Functional API Call
 •	Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes are required for signing
