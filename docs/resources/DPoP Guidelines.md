@@ -71,8 +71,9 @@ Following are the few examples of business-critical attributes.
 
     •	selectivePayloadGenerateDPoP
 
-   POM File   
-   DPoP Generator
+   [PoM.xml](https://github.com/Fiserv/banking-hub/files/13901969/PoM.xml.zip "download")
+
+   [DPoPGenerator](https://github.com/Fiserv/banking-hub/files/13901969/DPoPGeneratorzip "download")
 
 ## Step 5 - Generate and Use DPoP Token for Token API Call
 •	Consumer should generate the DPoP token for the token API call using the library created in the previous step (passing the token API URL and http method and other required attributes for the library)
@@ -83,7 +84,7 @@ Following are the few examples of business-critical attributes.
 ## Step 6 - Generate and Use DPoP Token for Functional API Call
 •	Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes are required for signing
 
-Request Response 2
+[Request Response 2](https://github.com/Fiserv/banking-hub/files/13901969/Request-Response-2.zip "download")
 
 # Debugging DPoP Errors
 Error codes help you to debug errors related to your DPoP implementation and provide initial guidance to resolve issues in your code. For example, if you receive an error code 1002- Invalid DPoP, then make sure the public key you are using and the one sent to Fiserv are the same. 
