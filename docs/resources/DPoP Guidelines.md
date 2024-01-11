@@ -15,13 +15,13 @@ To implement the DPoP Security, follow the listed steps.
 2.	(Optional step) Reference commands to generate an RSA Public/Private Key pair using OpenSSL 
 openssl genrsa -out private_key.pem 4096
 openssl rsa -pubout -in private_key.pem -out public_key.pem
-
+![image](https://github.com/Fiserv/banking-hub/assets/135122880/284b796f-16f2-4316-9c86-b177d400a758)
 Figure 1: Generating Public/Private Key Pair
 
 ## Step 2 - Onboarding of the Consumer
 1.	Register consumer with public key through AppMarket from Fiserv
 2.	AppMarket will store and return the consumer key and share with the consumer
- 
+ ![image](https://github.com/Fiserv/banking-hub/assets/135122880/912df1f0-3b80-4e06-8e36-09de51e9466a)
 Figure 2: Process of Onboarding of the Customer
 
 ## Step 3 - Select the Style for signing DPoP Token
@@ -73,6 +73,7 @@ Following are the few examples of business-critical attributes.
     •	formUrlEncodedPayloadGenerateDPoP
 
     •	selectivePayloadGenerateDPoP
+https://github.com/Fiserv/banking-hub/blob/develop-Dec_Release/docs/resources/Pom.md.xml
 
 ## Step 5 - Generate and Use DPoP Token for Token API Call
 •	Consumer should generate the DPoP token for the token API call using the library created in the previous step (passing the token API URL and http method and other required attributes for the library)
