@@ -71,7 +71,7 @@ Following are the few examples of business-critical attributes.
 
     •	selectivePayloadGenerateDPoP
 
-   [PoM.xml](docs/resources/PoM.xml.zip "download")
+   [PoM.xml](https://github.com/Fiserv/banking-hub/files/PoM.xml.zip "download")
 
    [DPoPGenerator](https://github.com/Fiserv/banking-hub/files/13901969/DPoPGeneratorzip "download")
 
