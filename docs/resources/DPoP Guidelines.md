@@ -71,7 +71,7 @@ Following are the few examples of business-critical attributes.
 
     •	selectivePayloadGenerateDPoP
 
-   POM File
+   POM File   
    DPoP Generator
 
 ## Step 5 - Generate and Use DPoP Token for Token API Call
