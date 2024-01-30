@@ -13,13 +13,16 @@ paths:
       - Update Branch
       summary: Update an existing branch
       description: |-
-        Update Branch API updates branch information within the financial institution.<br> For DNA, this API allows to update loaction, contact and email details for the branch. <br>A tailor user consent also known as override token is required to create a branch.
+        Update Branch API updates branch information within the financial institution.<br>
+        For DNA, this API allows to update loaction, contact and email details for the branch. <br>A tailor user consent also known as override token is required to create a branch.
       operationId: putBranch
       parameters:
       - name: EFXHeader
         in: header
         description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
         required: true
+        style: simple
+        explode: false
         schema:
           $ref: '#/components/schemas/EFXHeader'
       requestBody:
@@ -55,6 +58,8 @@ paths:
         in: header
         description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
         required: true
+        style: simple
+        explode: false
         schema:
           $ref: '#/components/schemas/EFXHeader'
       requestBody:
@@ -87,28 +92,58 @@ components:
       properties:
         BranchInfo:
           $ref: '#/components/schemas/addBranchRequest_BranchInfo'
+    StatusType_DNA:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Example value is:
+              -  DNA
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        AdditionalStatus:
+          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
     addBranchResponse:
       required:
       - BranchStatusRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: '#/components/schemas/StatusType_DNA'
         BranchStatusRec:
           $ref: '#/components/schemas/addBranchResponse_BranchStatusRec'
-    putBranchRequest:
-      required:
-      - BranchInfo
-      properties:
-        BranchInfo:
-          $ref: '#/components/schemas/putBranchRequest_BranchInfo'
-    putBranchResponse:
-      required:
-      - BranchStatusRec
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
-        BranchStatusRec:
-          $ref: '#/components/schemas/putBranchResponse_BranchStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -294,144 +329,21 @@ components:
           - Auto
         AdditionalSettings:
           type: object
-          additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
-    StatusType:
-      title: StatusType
+    putBranchRequest:
       required:
-      - Severity
-      - StatusCode
-      - StatusDesc
-      - SvcProviderName
-      type: object
+      - BranchInfo
       properties:
-        Id:
-          type: string
-          description: Status identification number.
-        StatusCode:
-          maxLength: 20
-          type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: |-
-            Name of a service provider. Possible values are:
-              -  Cleartouch
-              -  DNA
-              -  Precision
-              -  Premier
-              -  Signature
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: Server status code of the service provider's application.
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
-        SubjectRole:
-          type: string
-          description: Authorization level required to override, such as Teller and Supervisor.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
-        ContentHTML:
-          type: string
-          description: Response status in HTML format. This parameter returns only in some cases.
-        AdditionalStatus:
-          type: array
-          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
-          items:
-            $ref: '#/components/schemas/AdditionalStatusType'
-      description: Details of the API response messages.
-    SeverityType:
-      title: SeverityType
-      type: string
-      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
-      enum:
-      - Error
-      - Warning
-      - Info
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
-    AdditionalStatusType:
-      title: AdditionalStatusType
-      type: object
-      properties:
-        StatusCode:
-          maxLength: 20
-          type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: |-
-            Name of a service provider. Possible values are:
-              - Cleartouch
-              - DNA
-              - Precision
-              - Premier
-              - Signature
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: 'Server status code of the service provider''s application.  '
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
-    addBranchRequest_BranchInfo_CountryCode:
+        BranchInfo:
+          $ref: '#/components/schemas/putBranchRequest_BranchInfo'
+    putBranchResponse:
       required:
-      - CountryCodeValue
-      type: object
+      - BranchStatusRec
       properties:
-        CountryCodeSource:
-          type: string
-          description: Standard format of country code.
-        CountryCodeValue:
-          type: string
-          description: Country code value as per the country code format set in the CountryCodeSource field.
-      description: Details of country code.
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        BranchStatusRec:
+          $ref: '#/components/schemas/putBranchResponse_BranchStatusRec'
     addBranchRequest_BranchInfo_PhoneNum:
       required:
       - PhoneType
@@ -439,18 +351,12 @@ components:
         PhoneType:
           type: string
           description: Type of phone.
-        PhoneIdent:
-          type: integer
-          description: |-
-            Phone identifier to serialize the phone types when more than one phone type exists.
-
-            For example, if the five mobile phones are provided then this field serializes each mobile phone.
-          format: int64
         Phone:
           type: string
           description: Phone number of the branch.
-        CountryCode:
-          $ref: '#/components/schemas/addBranchRequest_BranchInfo_CountryCode'
+        PreferredPhone:
+          type: boolean
+          description: Value that indicates the phone number is the preferred phone number to contact the party.
     addBranchRequest_BranchInfo_Email:
       properties:
         EmailType:
@@ -460,23 +366,9 @@ components:
           maxLength: 254
           type: string
           description: Email address of the branch.
-    addBranchRequest_BranchInfo_FIData:
-      properties:
-        FIIdent:
-          maxLength: 34
-          type: string
-          description: Unique identification number of a financial institution.
     addBranchRequest_BranchInfo:
       type: object
       properties:
-        RegionIdent:
-          maxLength: 22
-          type: string
-          description: Unique identifier of the branch region.
-        BranchCode:
-          maxLength: 80
-          type: string
-          description: Code associated to the branch.
         BranchName:
           maxLength: 40
           type: string
@@ -491,12 +383,19 @@ components:
           description: Email details of the branch.
           items:
             $ref: '#/components/schemas/addBranchRequest_BranchInfo_Email'
-        FIData:
-          type: array
-          description: Financial details of the branch.
-          items:
-            $ref: '#/components/schemas/addBranchRequest_BranchInfo_FIData'
       description: Details of a branch.
+    StatusType_DNA_AdditionalStatus:
+      type: object
+      properties:
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
     addBranchResponse_BranchStatusRec_BranchKeys:
       required:
       - BranchIdent
@@ -505,7 +404,7 @@ components:
         BranchIdent:
           maxLength: 22
           type: string
-          description: Unique identifier of a branch.
+          description: Unique identifier of a branch record.
       description: Unique information to identify the branch record.
     addBranchResponse_BranchStatusRec_BranchStatus:
       required:
@@ -514,8 +413,8 @@ components:
       properties:
         BranchStatusCode:
           type: string
-          description: Code to specify the status of the branch.
-      description: Status details of the branch.
+          description: Code to indicate the status of the branch record.
+      description: Status details of the branch record.
     addBranchResponse_BranchStatusRec:
       required:
       - BranchKeys
@@ -527,15 +426,6 @@ components:
         BranchStatus:
           $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchStatus'
       description: Details of the branch status record in response to the add operation.
-    putBranchRequest_BranchInfo_CountryCode:
-      required:
-      - CountryCodeValue
-      type: object
-      properties:
-        CountryCodeValue:
-          type: string
-          description: Country code value as per the country code format set in the CountryCodeSource field.
-      description: Details of country code.
     putBranchRequest_BranchInfo_PhoneNum:
       required:
       - PhoneType
@@ -548,20 +438,14 @@ components:
           description: |-
             Phone identifier to serialize the phone types when more than one phone type exists.
 
-            For example, if the five mobile phones are provided then this field serializes each mobile phone.
+            For example, if five mobile phones are provided then this field serializes each mobile phone.
           format: int64
         Phone:
           type: string
           description: Phone number of the branch.
-        CountryCode:
-          $ref: '#/components/schemas/putBranchRequest_BranchInfo_CountryCode'
     putBranchRequest_BranchInfo:
       type: object
       properties:
-        RegionIdent:
-          maxLength: 22
-          type: string
-          description: Unique identifier of the branch region.
         BranchName:
           maxLength: 40
           type: string
@@ -576,11 +460,6 @@ components:
           description: Email details of the branch.
           items:
             $ref: '#/components/schemas/addBranchRequest_BranchInfo_Email'
-        FIData:
-          type: array
-          description: Financial details of the branch.
-          items:
-            $ref: '#/components/schemas/addBranchRequest_BranchInfo_FIData'
       description: Details of a branch.
     putBranchResponse_BranchStatusRec:
       required:
@@ -593,3 +472,13 @@ components:
         BranchStatus:
           $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchStatus'
       description: Details of the branch status record in response to the update operation.
+  parameters:
+    EFXHeader:
+      name: EFXHeader
+      in: header
+      description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/EFXHeader'
