@@ -12,7 +12,7 @@ paths:
       tags:
       - Update Party Account Relationship
       summary: Update Party Account Relationship
-      description: "Update Party Account Relationship API modifies the relationship records and other information related to the relationships between the selected account and the parties (Persons or Organizations) associated with that account.\n        <br><br>\n        To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Update Party Account Relationship API modifies the relationship records and other information related to the relationships between the selected account and the parties (Persons or Organizations) associated with that account.<br><br>To download the API Specifications and Postman Collection, click <a href="../docs/?path=docs/resources/resources.md" title="Click to open">Resources</a>."
       operationId: PartyAcctRelMod
       parameters:
       - name: EFXHeader
@@ -47,7 +47,7 @@ paths:
       tags:
       - Add Party Account Relationship
       summary: Add Party Account Relationship
-      description: "Add Party Account Relationship API adds a relationship as an owner or non-owner between a party and an account. This API also used to represent the primary contact and tax responsible parties. <br>A party can be associated with multiple accounts and an account can be associated with multiple parties.<br><br>\n        To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Add Party Account Relationship API adds a relationship as an owner or non-owner between a party and an account. This API also used to represent the primary contact and tax responsible parties. <br>A party can be associated with multiple accounts and an account can be associated with multiple parties.<br><br>To download the API Specifications and Postman Collection, click <a href="../docs/?path=docs/resources/resources.md" title="Click to open">Resources</a>."
       operationId: PartyAcctRelAdd
       parameters:
       - name: EFXHeader
@@ -78,6 +78,42 @@ paths:
       x-proxy-name: Add Party Account Relationship
       x-child-product-name: Accountholder
       x-core: Finxact
+  /partyacctrelservice/partyacctrel/partyacctrel/secured:
+    put:
+      tags:
+      - Delete Party Account Relationship
+      summary: Delete Party Account Relationship
+      description: "Delete Party Account Relationship API deletes the relationship record of a party with an account.<br><br> To download the API Specifications and Postman Collection, click <a href="../docs/?path=docs/resources/resources.md" title="Click to open">Resources</a>."
+      operationId: PartyAcctRelDel
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyAcctRelDelRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelDelResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelDelResponse'
+      x-group-name: Party Account Relationship Service
+      x-proxy-name: Delete Party Account Relationship
+      x-child-product-name: Accountholder
+      x-core: Finxact
 components:
   schemas:
     PartyAcctRelAddRequest:
@@ -94,6 +130,20 @@ components:
           $ref: '#/components/schemas/StatusType'
         PartyAcctRelStatusRec:
           $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec'
+    PartyAcctRelDelRequest:
+      required:
+      - PartyAcctRelKeys
+      properties:
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelDelRequest_PartyAcctRelKeys'
+    PartyAcctRelDelResponse:
+      required:
+      - PartyAcctRelStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        PartyAcctRelStatusRec:
+          $ref: '#/components/schemas/PartyAcctRelDelResponse_PartyAcctRelStatusRec'
     PartyAcctRelModRequest:
       required:
       - PartyAcctRelInfo
@@ -429,7 +479,7 @@ components:
           maxLength: 150
           type: string
           description: Unique identification number of a party record.
-      description: 'Unique information to identify the party record. '
+      description: Unique information to identify the party record.
     PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef:
       required:
       - PartyKeys
@@ -479,16 +529,9 @@ components:
           - Authorized
           - Conservator
           - Purchaser
-        PartyAcctRelDesc:
-          maxLength: 80
-          type: string
-          description: |-
-            Relationship description of the party to the account.
-
-            **Note:** *Required field*
         PartyAcctRelOrder:
           type: string
-          description: 'Relationship order of party with an account in case of JointTenancy or JointTenantsInComman. '
+          description: 'Relationship order of party with an account in case of JointTenancy or JointTenantsInCommon. '
           enum:
           - First
           - Second
@@ -496,6 +539,23 @@ components:
           - Fourth
           - Fifth
           - Other
+    PartyAcctRelAddRequest_PartyAcctRelInfo_Beneficiary:
+      type: object
+      properties:
+        BeneficiaryPercent:
+          type: number
+          description: Percentage of account balance that is conditionally allocated to the beneficiary.
+      description: Details of beneficiary. Use this field only when the relationship type is beneficiary.
+    PartyAcctRelAddRequest_PartyAcctRelInfo_Liability:
+      type: object
+      properties:
+        LiabilityPercent:
+          type: number
+          description: Percentage of account balance allocated to the liable party.
+        LiabilityAmt:
+          type: number
+          description: 'Amount of the account balance allocated to the liable party. '
+      description: Details of liability that typically apply to borrowers, co-borrowers and guarantors.
     PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef_AcctKeys:
       required:
       - AcctId
@@ -504,11 +564,7 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
+          description: Unique identification number of an account record.
         AcctType:
           type: string
           description: |-
@@ -516,17 +572,17 @@ components:
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            **Note:** Some of the valid values for this field are:
 
-            - DDA: Demand Deposit Account
 
-            - MMA:  Money Market Account
+            **Note:** The following values indicate:
+
+            - DDA:  Demand Deposit Account
+
+            - MMA: Money Market Account
 
             - SDA: Savings Deposit Account
 
-            - CDA: Certificate of Deposit Account
-
-            - CMA: Cash Management Account
+            - CDA: Certificate of Deposit
 
             - EQU: Home Equity Loan
 
@@ -542,7 +598,6 @@ components:
           - MMA
           - SDA
           - CDA
-          - CMA
           - EQU
           - ILA
           - CLA
@@ -556,7 +611,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef_AcctKeys'
-      description: 'Information of an account object that is part of the relationship with an account. '
+      description: 'Reference information of an account object that is part of the relationship with an account. '
     PartyAcctRelAddRequest_PartyAcctRelInfo:
       type: object
       properties:
@@ -564,39 +619,31 @@ components:
           $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef'
         PartyAcctRelData:
           type: array
-          description: |-
-            Unique information about the party and account relationship.
-
-            **Note:** Only one relationship data is required to be sent in the required.
+          description: "Information about the party and account relationship. \n\n\n\n**Note:** **Required field**\n\nOnly one relationship can be sent in the request."
           items:
             $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_PartyAcctRelData'
         OwnerPercent:
           type: number
-          description: Percentage of ownership the party has in the account.
-        TaxReportingOwnerInd:
+          description: 'Percentage of ownership the party has in the account. '
+        Beneficiary:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_Beneficiary'
+        Liability:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_Liability'
+        AuthorizedSignerInd:
           type: boolean
-          description: Flag to indicate the party has tax responsibility of the account.
-        FDICOwnership:
+          description: Value that indicates the party is an authorized signer.
+        Nickname:
+          maxLength: 80
           type: string
-          description: Relationship of party with FDIC.
+          description: Friendly description of the account assigned by the party.
         AcctRef:
           $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef'
       description: |-
         Details of a relationship between party and account.
 
-        **Note:** *Required Field*
 
 
-
-        One request per customer.
-    PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_PartyKeys:
-      type: object
-      properties:
-        PartyId:
-          maxLength: 150
-          type: string
-          description: Unique identification number of a party record.
-      description: Unique information to identify the party record.
+        **Note:** Only one customer can be sent in the request.
     PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys:
       required:
       - AcctId
@@ -605,11 +652,7 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
+          description: Unique identification number of an account record.
         AcctType:
           type: string
           description: |-
@@ -617,17 +660,17 @@ components:
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            **Note:** Some of the valid values for this field are:
 
-            - DDA: Demand Deposit Account
 
-            - MMA:  Money Market Account
+            **Note:** The following values indicate:
+
+            - DDA:  Demand Deposit Account
+
+            - MMA: Money Market Account
 
             - SDA: Savings Deposit Account
 
-            - CDA: Certificate of Deposit Account
-
-            - CMA: Cash Management Account
+            - CDA: Certificate of Deposit
 
             - EQU: Home Equity Loan
 
@@ -643,7 +686,6 @@ components:
           - MMA
           - SDA
           - CDA
-          - CMA
           - EQU
           - ILA
           - CLA
@@ -654,7 +696,7 @@ components:
       type: object
       properties:
         PartyKeys:
-          $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_PartyKeys'
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef_PartyKeys'
         AcctKeys:
           $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys'
       description: Unique information to identify the relationship between a party and an account.
@@ -671,7 +713,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the party-to-account relationship status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+          description: "Effective date and time when the party account relationship status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
       description: 'Status details of a party-to-account relationship. '
     PartyAcctRelAddResponse_PartyAcctRelStatusRec:
       required:
@@ -684,6 +726,48 @@ components:
         PartyAcctRelStatus:
           $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelStatus'
       description: Status details of the party-to-account relationship record.
+    PartyAcctRelDelRequest_PartyAcctRelKeys_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 150
+          type: string
+          description: Unique identification number of a party record.
+      description: 'Unique information to identify the party record. '
+    PartyAcctRelDelRequest_PartyAcctRelKeys:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelDelRequest_PartyAcctRelKeys_PartyKeys'
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef_AcctKeys'
+      description: Unique information to identify the relationship between a party and an account.
+    PartyAcctRelDelResponse_PartyAcctRelStatusRec_PartyAcctRelStatus:
+      required:
+      - PartyAcctRelStatusCode
+      type: object
+      properties:
+        PartyAcctRelStatusCode:
+          type: string
+          description: Code to indicate the status of a party-to-account relationship.
+          enum:
+          - Deleted
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the party account relationship status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: 'Status details of a party-to-account relationship. '
+    PartyAcctRelDelResponse_PartyAcctRelStatusRec:
+      required:
+      - PartyAcctRelKeys
+      - PartyAcctRelStatus
+      type: object
+      properties:
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys'
+        PartyAcctRelStatus:
+          $ref: '#/components/schemas/PartyAcctRelDelResponse_PartyAcctRelStatusRec_PartyAcctRelStatus'
+      description: Status details of the party-to-account relationship record.
     PartyAcctRelModRequest_PartyAcctRelKeys_PartyKeys:
       type: object
       properties:
@@ -691,7 +775,10 @@ components:
           maxLength: 150
           type: string
           description: Unique identification number of a party record.
-      description: "Unique information to identify the party record. \n\n**Note:** *Required Field*\n\n"
+      description: |-
+        Unique information to identify the party record.
+
+        **Note:** **Required filed**
     PartyAcctRelModRequest_PartyAcctRelKeys_AcctKeys:
       required:
       - AcctId
@@ -700,11 +787,7 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
+          description: Unique identification number of an account record.
         AcctType:
           type: string
           description: |-
@@ -712,17 +795,17 @@ components:
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            **Note:** Some of the valid values for this field are:
+
+
+            **Note:** The following values indicate:
 
             - DDA: Demand Deposit Account
 
-            - MMA:  Money Market Account
+            - MMA: Money Market Account
 
             - SDA: Savings Deposit Account
 
-            - CDA: Certificate of Deposit Account
-
-            - CMA: Cash Management Account
+            - CDA: Certificate of Deposit
 
             - EQU: Home Equity Loan
 
@@ -738,13 +821,12 @@ components:
           - MMA
           - SDA
           - CDA
-          - CMA
           - EQU
           - ILA
           - CLA
           - LOC
           - MLA
-      description: "Unique information to identify the account record. \n\n**Note:** *Required Field*\n\n"
+      description: "Unique information to identify the account record. \n\n\n\n**Note:** **Required field**"
     PartyAcctRelModRequest_PartyAcctRelKeys:
       type: object
       properties:
@@ -752,120 +834,157 @@ components:
           $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelKeys_PartyKeys'
         AcctKeys:
           $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelKeys_AcctKeys'
-      description: Unique information to identify the relationship between party and an account.
+      description: Information to identify the relationship between a party and an account.
     PartyAcctRelModRequest_PartyAcctRelInfo_PartyAcctRelData:
       required:
       - PartyAcctRelType
       properties:
         PartyAcctRelType:
           type: string
-          description: "Relationship type between the party and account.\n\n**Note:** \n\n- Other values for this field may be supported by the financial institution\n\n- Use value \"Delete\" to remove a relationship"
+          description: "Relationship type between the party and account.\n\n\n\n**Note:** Party account relationship type cannot be modified. "
           enum:
-          - Authorized
+          - Owner
+          - JointTenancy
           - BeneficialOwner
           - Beneficiary
-          - Borrower
-          - Church
-          - CoBorrower
-          - Conservator
           - ContingentBeneficiary
-          - Corporation
-          - Custodian
-          - Delete
-          - DoingBusinessAs
-          - Estate
+          - Trustee
+          - Guarantor
+          - Minor
+          - PowerOfAttorney
+          - Signer
           - Executor
           - Fiduciary
-          - Guarantor
-          - Guardian
-          - IOLTA
-          - JointTenancy
+          - Borrower
+          - CoBorrower
+          - Custodian
+          - DoingBusinessAs
+          - Corporation
+          - Partnership
+          - SoleProprietorship
           - LimitedLiabilityCompany
           - LimitedLiabilityPartnership
-          - Minor
           - Organization
-          - Owner
-          - Partnership
-          - PowerOfAttorney
+          - Church
+          - IOLTA
           - PublicFundsEntity
-          - Purchaser
-          - RepresentativePayee
-          - RestrictedOwner
-          - Signer
-          - SoleProprietorship
           - Trust
-          - Trustee
-        PartyAcctRelDesc:
-          maxLength: 80
-          type: string
-          description: |-
-            Relationship description of the party to the account.
-
-            **Note:** When changes are done to the party account relationship type (PartyAcctRelType), the sender provides an update description of the relationship.
+          - Estate
+          - Guardian
+          - RestrictedOwner
+          - RepresentativePayee
+          - Authorized
+          - Conservator
+          - Purchaser
         PartyAcctRelOrder:
           type: string
-          description: 'Relationship order of party with an account in case of JointTenancy or JointTenantsInComman. '
+          description: 'Relationship order of party with an account in case of JointTenancy or JointTenantsInCommon. '
+          enum:
+          - First
+          - Second
+          - Third
+          - Fourth
+          - Fifth
+          - Other
+    PartyAcctRelModRequest_PartyAcctRelInfo_Beneficiary:
+      type: object
+      properties:
+        BeneficiaryPercent:
+          type: number
+          description: Percentage of account balance that is conditionally allocated to the beneficiary.
+      description: Details of the beneficiary. Use this only when the relationship type is beneficiary.
+    PartyAcctRelModRequest_PartyAcctRelInfo_Liability:
+      type: object
+      properties:
+        LiabilityPercent:
+          type: number
+          description: Percentage of account balance allocated to the liable party.
+        LiabilityAmt:
+          type: number
+          description: 'Amount of the account balance allocated to the liable party. '
+      description: Details of liability. These details typically apply to borrowers, co-borrowers and guarantors.
     PartyAcctRelModRequest_PartyAcctRelInfo:
       type: object
       properties:
         PartyAcctRelData:
           type: array
-          description: Unique information about the party and account relationship.
+          description: 'Information about the party and account relationship. A party can only be related to the account once. For that reason in the body request only instance of PartyAcctRelData must be provided. '
           items:
             $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_PartyAcctRelData'
         OwnerPercent:
           type: number
           description: Percentage of ownership the party has in the account.
-        TaxReportingOwnerInd:
+        Beneficiary:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_Beneficiary'
+        Liability:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_Liability'
+        AuthorizedSignerInd:
           type: boolean
-          description: Flag to indicate the party has tax responsibility of the account.
-        FDICOwnership:
+          description: Value that indicates the party is an authorized signer.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Friendly description of the account assigned by the party.
+        RemoveInd:
+          type: boolean
+          description: 'Indicator to remove a relationship from the account. When a party is removed, a remove date field is set with a current time. The record is available when party account relationships are retrieved and the removal date is shown. '
+      description: Details of a relationship between party and account.
+    PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
           type: string
           description: |-
-            Relationship of party with FDIC.
+            Type of an account.
 
-            **Note:** Some of the valid values for this field are:
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
-            - Unknown
 
-            - SGL:  Single
 
-            - JNT: Joint
+            **Note:** The following values indicate:
 
-            - REV: Revocable Trust
+            - DDA: Demand Deposit Account
 
-            - IRR: Irrevocable Trust
+            - MMA: Money Market Account
 
-            - CRA: Other Retirement
+            - SDA: Savings Deposit Account
 
-            - EBP: Employee Benefit Plan
+            - CDA: Certificate of Deposit
 
-            - BUS: Business
+            - EQU: Home Equity Loan
 
-            - GOV: Government
+            - ILA: Installment Loan Account
 
-            - GOV2: Government 2
+            - CLA: Commercial Loan Account
 
-            - GOV3: Government 3
+            - LOC: Consumer Line of Credit
 
-            - MSA: Mortgage Servicing
-
-            - PBA: Public Bond
-
-            - DIT: Depository Institution
-
-            - ANC: Annuity Contract
-
-            - BIA: American Indian
-
-            - DOE: Department of Energy
-      description: Details of a relationship between party and account.
+            - MLA: Mortgage Loan Account
+          enum:
+          - DDA
+          - MMA
+          - SDA
+          - CDA
+          - EQU
+          - ILA
+          - CLA
+          - LOC
+          - MLA
+      description: 'Unique information to identify the account record. '
     PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys:
       type: object
       properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef_PartyKeys'
         AcctKeys:
-          $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys'
-      description: Unique information to identify the relationship between party and an account.
+          $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys'
+      description: Unique information to identify the relationship between a party and an account.
     PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelStatus:
       required:
       - PartyAcctRelStatusCode
@@ -880,7 +999,7 @@ components:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: "Effective date and time when the party-to-account relationship status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
-      description: Details of the party-to-account relationship status.
+      description: 'Status details of a party-to-account relationship. '
     PartyAcctRelModResponse_PartyAcctRelStatusRec:
       required:
       - PartyAcctRelKeys
