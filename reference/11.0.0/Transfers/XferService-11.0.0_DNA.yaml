@@ -1,21 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Branch Service
-  description: The branch service supports operations to manage branch information.
+  title: Transfer Service
+  description: The Transfer service supports operations related to managing the transfer of money between accounts. The service includes the description of the FROM and TO accounts, amount of the transfer, transfer fees and frequency of the transfer as it can be a one-time transfer or a recurring transfer.
   version: 11.0.0_DNA
 servers:
 - url: /
 paths:
-  /branchservice/servicing/branch:
-    put:
+  /xferservice/payments/transferlist/secured:
+    post:
       tags:
-      - Update Branch
-      summary: Update an existing branch
-      description: |-
-        Update Branch API updates branch information within the financial institution.<br>
-        For DNA, this API allows to update loaction, contact and email details for the branch. <br>A tailor user consent also known as override token is required to create a branch.
-      operationId: putBranch
+      - Get Transfer List
+      summary: Get Transfer List
+      description: Get Transfer List API retrieves a list of transfers for the specified account.
+      operationId: XferListInq
       parameters:
       - name: EFXHeader
         in: header
@@ -29,69 +27,32 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/putBranchRequest'
+              $ref: '#/components/schemas/XferListInqRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/putBranchResponse'
+                $ref: '#/components/schemas/XferListInqResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/putBranchResponse'
-      x-group-name: Branch Service
-      x-proxy-name: Update Branch
-      x-child-product-name: Operations and Servicing
-      x-core: DNA
-    post:
-      tags:
-      - Add Branch
-      summary: Adds a branch
-      description: Add Branch API creates a new branch within the financial institution.<br>For DNA, this API contains information related to location, contact and email for the branch.<br>A tailor user consent also known as override token is required to create a branch.
-      operationId: addBranch
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/addBranchRequest'
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/addBranchResponse'
-        default:
-          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/addBranchResponse'
-      x-group-name: Branch Service
-      x-proxy-name: Add Branch
-      x-child-product-name: Operations and Servicing
+                $ref: '#/components/schemas/XferListInqResponse'
+      x-group-name: Transfer Service
+      x-proxy-name: Get Transfer List
+      x-child-product-name: Transfers
       x-core: DNA
 components:
   schemas:
-    addBranchRequest:
+    XferListInqRequest:
       required:
-      - BranchInfo
+      - XferListSel
       properties:
-        BranchInfo:
-          $ref: '#/components/schemas/addBranchRequest_BranchInfo'
+        XferListSel:
+          $ref: '#/components/schemas/XferListInqRequest_XferListSel'
     StatusType_DNA:
       title: StatusType
       required:
@@ -136,14 +97,19 @@ components:
       - Error
       - Warning
       - Info
-    addBranchResponse:
+    XferListInqResponse:
       required:
-      - BranchStatusRec
+      - XferListRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType_DNA'
-        BranchStatusRec:
-          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec'
+        RecCtrlOut:
+          $ref: '#/components/schemas/XferListInqResponse_RecCtrlOut'
+        XferListRec:
+          type: array
+          description: Details of the transfer list record returned in the response for the specified search criteria.
+          items:
+            $ref: '#/components/schemas/XferListInqResponse_XferListRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -330,60 +296,30 @@ components:
         AdditionalSettings:
           type: object
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
-    putBranchRequest:
+    XferListInqRequest_XferListSel_AcctRef_AcctKeys:
       required:
-      - BranchInfo
-      properties:
-        BranchInfo:
-          $ref: '#/components/schemas/putBranchRequest_BranchInfo'
-    putBranchResponse:
-      required:
-      - BranchStatusRec
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType_DNA'
-        BranchStatusRec:
-          $ref: '#/components/schemas/putBranchResponse_BranchStatusRec'
-    addBranchRequest_BranchInfo_PhoneNum:
-      required:
-      - PhoneType
-      properties:
-        PhoneType:
-          type: string
-          description: Type of phone.
-        Phone:
-          type: string
-          description: Phone number of the branch.
-        PreferredPhone:
-          type: boolean
-          description: Value that indicates the phone number is the preferred phone number to contact the party.
-    addBranchRequest_BranchInfo_Email:
-      properties:
-        EmailType:
-          type: string
-          description: Type of email.
-        EmailAddr:
-          maxLength: 254
-          type: string
-          description: Email address of the branch.
-    addBranchRequest_BranchInfo:
+      - AcctId
       type: object
       properties:
-        BranchName:
-          maxLength: 40
+        AcctId:
+          maxLength: 36
           type: string
-          description: Name of the branch.
-        PhoneNum:
-          type: array
-          description: Phone number details of a branch.
-          items:
-            $ref: '#/components/schemas/addBranchRequest_BranchInfo_PhoneNum'
-        Email:
-          type: array
-          description: Email details of the branch.
-          items:
-            $ref: '#/components/schemas/addBranchRequest_BranchInfo_Email'
-      description: Details of a branch.
+          description: Unique identification number of an account record.
+      description: Unique information to identify the account record.
+    XferListInqRequest_XferListSel_AcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/XferListInqRequest_XferListSel_AcctRef_AcctKeys'
+      description: Reference information of the account that is involved in the transfer.
+    XferListInqRequest_XferListSel:
+      type: object
+      properties:
+        AcctRef:
+          $ref: '#/components/schemas/XferListInqRequest_XferListSel_AcctRef'
+      description: Details of the selection criteria to retrieve the transfer list record.
     StatusType_DNA_AdditionalStatus:
       type: object
       properties:
@@ -396,82 +332,169 @@ components:
           type: string
           description: Description of the server status code of the service provider's application.
       description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
-    addBranchResponse_BranchStatusRec_BranchKeys:
+    XferListInqResponse_RecCtrlOut:
       required:
-      - BranchIdent
+      - SentRecCount
       type: object
       properties:
-        BranchIdent:
-          maxLength: 22
+        SentRecCount:
           type: string
-          description: Unique identifier of a branch record.
-      description: Unique information to identify the branch record.
-    addBranchResponse_BranchStatusRec_BranchStatus:
-      required:
-      - BranchStatusCode
-      type: object
-      properties:
-        BranchStatusCode:
-          type: string
-          description: Code to indicate the status of the branch record.
-      description: Status details of the branch record.
-    addBranchResponse_BranchStatusRec:
-      required:
-      - BranchKeys
-      - BranchStatus
-      type: object
-      properties:
-        BranchKeys:
-          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchKeys'
-        BranchStatus:
-          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchStatus'
-      description: Details of the branch status record in response to the add operation.
-    putBranchRequest_BranchInfo_PhoneNum:
-      required:
-      - PhoneType
-      properties:
-        PhoneType:
-          type: string
-          description: Type of phone.
-        PhoneIdent:
+          description: Total number of records matching the selection criteria and included in the response messages.
+          enum:
+          - 1-999
+        MatchedRecCount:
           type: integer
-          description: |-
-            Phone identifier to serialize the phone types when more than one phone type exists.
-
-            For example, if five mobile phones are provided then this field serializes each mobile phone.
+          description: Total number of records that matched the selection criteria.
           format: int64
-        Phone:
+        Cursor:
+          maxLength: 250
           type: string
-          description: Phone number of the branch.
-    putBranchRequest_BranchInfo:
-      type: object
-      properties:
-        BranchName:
-          maxLength: 40
-          type: string
-          description: Name of the branch.
-        PhoneNum:
-          type: array
-          description: Phone number details of a branch.
-          items:
-            $ref: '#/components/schemas/putBranchRequest_BranchInfo_PhoneNum'
-        Email:
-          type: array
-          description: Email details of the branch.
-          items:
-            $ref: '#/components/schemas/addBranchRequest_BranchInfo_Email'
-      description: Details of a branch.
-    putBranchResponse_BranchStatusRec:
+          description: Next record pointer value included in the response if additional records are available.
+      description: |-
+        Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+
+        **Note:** Service provider does not support record control for transfer list inquiry. Up to 999 transfer records can be returned in the response. All transfer addendums available on the account are also returned with the response.
+    XferListInqResponse_XferKeys:
       required:
-      - BranchKeys
-      - BranchStatus
+      - AcctKeys
       type: object
       properties:
-        BranchKeys:
-          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchKeys'
-        BranchStatus:
-          $ref: '#/components/schemas/addBranchResponse_BranchStatusRec_BranchStatus'
-      description: Details of the branch status record in response to the update operation.
+        AcctKeys:
+          $ref: '#/components/schemas/XferListInqRequest_XferListSel_AcctRef_AcctKeys'
+        XferIdent:
+          type: string
+          description: |-
+            Unique identifier of a transfer record.
+
+            **Note:** XferIdent referrs to addenda number.
+          enum:
+          - 1-999
+        TransferType:
+          type: string
+          description: Type of transfer.
+      description: Unique information to identify the transfer record.
+    XferListInqResponse_XferListInfo_FromAcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/XferListInqRequest_XferListSel_AcctRef_AcctKeys'
+        TrnCode:
+          type: string
+          description: Transaction code of the transfer.
+      description: Reference details of the account from which the funds are transferred.
+    XferListInqResponse_XferListInfo_ToAcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/XferListInqRequest_XferListSel_AcctRef_AcctKeys'
+        TrnCode:
+          type: string
+          description: Code for the transaction.
+      description: Reference details of the account to which the funds are transferred.
+    XferListInqResponse_XferListInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+      description: Details of the amount to be processed for the transfer.
+    XferListInqResponse_XferListInfo_RecurModel_RecurRule:
+      properties:
+        RecurType:
+          type: string
+          description: Type of recurrence.
+          enum:
+          - Cycle
+          - Monthly
+          - Quarterly
+          - Yearly
+          - Weekly
+          - TwiceMonthly
+          - Once
+          - InterestCycle
+          - Maturity
+        recurTypeEnumDesc:
+          type: integer
+          description: "Interval of recurrence is the number of units between occurrences. Its value is required be an integer. \n\nIf  ‘Daily’: Number of days between occurrences. \n\nIf   ‘Weekly’: Number of weeks between occurrences. \n\nIf   'Monthly’: Number of months between occurrences. \n\nIf   ‘Yearly’: Number of years between occurrences. \n\nIf not provided, default value of 1 is assumed, i.e. every day, every week, every month, or every year. If 'Cycle' : Number of the designated cycle. "
+          format: int64
+    XferListInqResponse_XferListInfo_RecurModel:
+      type: object
+      properties:
+        RecurRule:
+          type: array
+          description: Details about the recurrence rule.
+          items:
+            $ref: '#/components/schemas/XferListInqResponse_XferListInfo_RecurModel_RecurRule'
+      description: Details of recurring time-based payment module for an automatic transfer of funds.
+    XferListInqResponse_XferListInfo:
+      required:
+      - CurAmt
+      type: object
+      properties:
+        FromAcctRef:
+          $ref: '#/components/schemas/XferListInqResponse_XferListInfo_FromAcctRef'
+        ToAcctRef:
+          $ref: '#/components/schemas/XferListInqResponse_XferListInfo_ToAcctRef'
+        CurAmt:
+          $ref: '#/components/schemas/XferListInqResponse_XferListInfo_CurAmt'
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Starting date and time value of the fund transfers.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Ending date and time value of the fund transfers.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+        RecurModel:
+          $ref: '#/components/schemas/XferListInqResponse_XferListInfo_RecurModel'
+        Nickname:
+          maxLength: 80
+          type: string
+          description: |-
+            User-friendly name set up by the end-user to  identify the transfer record.
+
+            **Note:** Refers to the transfer description.
+      description: Details of the fund transfer list.
+    XferListInqResponse_XferStatus:
+      required:
+      - XferStatusCode
+      type: object
+      properties:
+        XferStatusCode:
+          type: string
+          description: Code to indicate the status of the transfer record.
+          enum:
+          - Valid
+      description: Status details of the transfer record.
+    XferListInqResponse_XferListRec:
+      required:
+      - XferKeys
+      - XferListInfo
+      - XferStatus
+      properties:
+        XferKeys:
+          $ref: '#/components/schemas/XferListInqResponse_XferKeys'
+        XferListInfo:
+          $ref: '#/components/schemas/XferListInqResponse_XferListInfo'
+        XferStatus:
+          $ref: '#/components/schemas/XferListInqResponse_XferStatus'
   parameters:
     EFXHeader:
       name: EFXHeader
