@@ -6,6 +6,9 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch, Finxact
 -->
 
+<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
+
+- Updated Postman collection of Premier core.   *Documentation > Resources > Postman Collection*
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
