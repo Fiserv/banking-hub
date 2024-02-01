@@ -53,6 +53,14 @@ Information is not available at the moment. Stay tuned for the updates.
 Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
+> #### Note
+> Support for Finxact v1.21.
+> 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
-Information is not available at the moment. Stay tuned for the updates.
+
+<span style="font-size: 22px; ">General</span>
+
+
+Added the following API endpoint:
+- Get Multiple Accounts *(API Explorer > Accounts > Multi Account Service)*
 <!-- type: tab-end -->
