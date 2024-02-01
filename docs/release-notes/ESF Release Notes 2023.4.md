@@ -12,32 +12,32 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact
 <span style="font-size: 22px; ">Add Account-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
-- Resolved an issue that was causing errors during the addition of Deferral Addenda<br>
-- Addressed an issue where errors were occurring in the response when DeferCost is added through product defaults
+- Fixed the error occurring while adding Deferral Addenda<br>
+- Fixed the response error that occurred while adding DeferCost through product defaults
 
 
 <span style="font-size: 22px; ">Update Account-SDA</span> *API Explorer > Accounts > Account Service*
 
 
-- Users can now update addresses without encountering errors. The fix ensures a seamless process for updating address information
+- Fixed the error that occurred during address update
 
 
 <span style="font-size: 22px; ">Update Account-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
-- Resolved an error related to credit bureau data
+- Fixed an error related to credit bureau data
 
 
 <span style="font-size: 22px; ">Get Account Details-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
-- Fixed an issue with the "OriginatingBranchEnumDesc" field that was causing incorrect values to be fetched
+- Fixed the issue with the "OriginatingBranchEnumDesc" field so that it displays the correct value
 
 
 <span style="font-size: 22px; ">Get Account Transaction History-DDL</span> *API Explorer > Transactions > Account Transaction Service*
 
 
-- Addressed an inquiry error occurring in AMS 2.0 specifically when making inquiries on DDL account types
+- Fixed an inquiry error that occurred in AMS 2.0 while inquiring on DDL account types
 
 
 <!-- type: tab -->
@@ -52,7 +52,7 @@ Information is not available at the moment. Stay tuned for the updates.
 
 - Fixed the inquiry error, which was displaying only the first payment schedule even when the inquiry is made for multiple payment schedules<br>
 - Fixed the invalid notice error. This error was occuring when the "NoticeData" aggregate is passed<br>
-- Addressed an issue where the account was not getting created when SBA data is provided
+- Fixed an issue where the account was not getting created when SBA data is provided
 
 
 <span style="font-size: 22px; ">Get Account Details-DDA</span> *API Explorer > Accounts > Account Service*
@@ -64,7 +64,7 @@ Information is not available at the moment. Stay tuned for the updates.
 <span style="font-size: 22px; ">Get Account Transaction History</span> *API Explorer > Transactions > Account Transaction Service*
 
 
-- Addressed an internal server error in response when the "RecCtrlIn" field is not provided in the request
+- Fixed an internal server error in response when the "RecCtrlIn" field is not provided in the request
 
 
 <span style="font-size: 22px; ">Get Account Transaction History-LOAN</span> *API Explorer > Transactions > Account Transaction Service*
@@ -91,7 +91,6 @@ Added the following API endpoints:
 - Add Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)*
 - Delete Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)*
 - Get Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)*
-- Get Multiple Accounts *(API Explorer > Accounts > Multi Account Service)*
 - Add Beneficiary *(API Explorer > Accountholder > Beneficiary Service)*
 - Delete Beneficiary *(API Explorer > Accountholder > Beneficiary Service)*
 - Get Beneficiary *(API Explorer > Accountholder > Beneficiary Service)*
