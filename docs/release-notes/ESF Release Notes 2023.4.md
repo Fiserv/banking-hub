@@ -12,32 +12,32 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact
 <span style="font-size: 22px; ">Add Account-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
-- Fixed the error occurring while adding Deferral Addenda<br>
-- Fixed the error in response when DeferCost is added through product defaults
+- Resolved an issue that was causing errors during the addition of Deferral Addenda<br>
+- Addressed an issue where errors were occurring in the response when DeferCost is added through product defaults
 
 
 <span style="font-size: 22px; ">Update Account-SDA</span> *API Explorer > Accounts > Account Service*
 
 
-- Fixed the error encountered while updating the address
+- Users can now update addresses without encountering errors. The fix ensures a seamless process for updating address information
 
 
 <span style="font-size: 22px; ">Update Account-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
-- Fixed the error for credit bureau data
+- Resolved an error related to credit bureau data
 
 
 <span style="font-size: 22px; ">Get Account Details-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
-- Fixed the issue with the "OriginatingBranchEnumDesc" field that was fetching the wrong values
+- Fixed an issue with the "OriginatingBranchEnumDesc" field that was causing incorrect values to be fetched
 
 
 <span style="font-size: 22px; ">Get Account Transaction History-DDL</span> *API Explorer > Transactions > Account Transaction Service*
 
 
-- Fixed the inquiry error in AMS 2.0 when inquiry was made on DDL account type
+- Addressed an inquiry error occurring in AMS 2.0 specifically when making inquiries on DDL account types
 
 
 <!-- type: tab -->
@@ -51,8 +51,8 @@ Information is not available at the moment. Stay tuned for the updates.
 
 
 - Fixed the inquiry error, which was displaying only the first payment schedule even when the inquiry is made for multiple payment schedules<br>
-- Fixed the invalid notice errors when the "NoticeData" aggregate is passed<br>
-- Fixed the issue of account creation when SBA Data is provided
+- Fixed the invalid notice error. This error was occuring when the "NoticeData" aggregate is passed<br>
+- Addressed an issue where the account was not getting created when SBA data is provided
 
 
 <span style="font-size: 22px; ">Get Account Details-DDA</span> *API Explorer > Accounts > Account Service*
@@ -64,13 +64,13 @@ Information is not available at the moment. Stay tuned for the updates.
 <span style="font-size: 22px; ">Get Account Transaction History</span> *API Explorer > Transactions > Account Transaction Service*
 
 
-- Fixed the internal server error in response when the "RecCtrlIn" field is not provided in the request
+- Addressed an internal server error in response when the "RecCtrlIn" field is not provided in the request
 
 
 <span style="font-size: 22px; ">Get Account Transaction History-LOAN</span> *API Explorer > Transactions > Account Transaction Service*
 
 
-- Fixed the issue of returning 15 records irrespective of the limit defined in the "MaxRecLimit" field
+- Fixed the issue that was returning 15 records despite the limit defined in the "MaxRecLimit" field
 
 
 <!-- type: tab -->
