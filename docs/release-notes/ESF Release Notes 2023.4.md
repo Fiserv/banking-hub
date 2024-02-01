@@ -91,7 +91,6 @@ Added the following API endpoints:
 - Add Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)*
 - Delete Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)*
 - Get Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)*
-- Get Multiple Accounts *(API Explorer > Accounts > Multi Account Service)*
 - Add Beneficiary *(API Explorer > Accountholder > Beneficiary Service)*
 - Delete Beneficiary *(API Explorer > Accountholder > Beneficiary Service)*
 - Get Beneficiary *(API Explorer > Accountholder > Beneficiary Service)*
