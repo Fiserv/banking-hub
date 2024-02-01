@@ -168,13 +168,11 @@ Added the following API endpoints:
 	- PartyAcctRelInfo/Beneficiary/BeneficiaryPercent
 	- PartyAcctRelInfo/Liability
 	- PartyAcctRelInfo/Liability/LiabilityAmt
-	- PartyAcctRelInfo/Nickname
-	- PartyAcctRelInfo/PartyAcctRelData/HasAccessRights
+	- PartyAcctRelInfo/Nickname	
 - Updated exception handling for the "PartyAcctRelInfo/AcctRef/AcctKeys/AcctType" XPATH
 - Removed the enum value "CMA" for the following XPATHs:
 	- PartyAcctRelInfo/AcctRef/AcctKeys/AcctType
 	- PartyAcctRelStatusRec/PartyAcctRelKeys/AcctKeys/AcctType
-- Removed the "PartyAcctRelInfo/PartyAcctRelData/HasAccessRights" XPATH
 
 
 <span style="font-size: 22px; ">Add Party</span> *API Explorer > Accountholder > Party Service*
