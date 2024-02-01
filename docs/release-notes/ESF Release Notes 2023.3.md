@@ -3,7 +3,7 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
+titles: Premier, Precision, Signature, Cleartouch, Finxact
 -->
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
@@ -198,7 +198,7 @@ Added the following API endpoints:
 <span style="font-size: 22px; ">Add Transfer</span> *API Explorer > Transfers > Transfer Service*
 
 
-- Updated the API to allow a client to send a customized description (FromDesc) in the request for immediate transfers based on the client's configuration. A change to the Signature is required to send a customized description (FromDesc) for future dated or recurring transfers.        
+- Updated the API to allow a client to send a customized description (FromDesc) in the request for immediate transfers based on the client's configuration. A change to the Signature is required to send a customized description (FromDesc) for future dated or recurring transfers        
 
 
 <span style="font-size: 22px; ">Get Party Account Relationship-ByAcct</span> *API Explorer > Accountholder > Party Account Relationship Service*
@@ -240,12 +240,6 @@ Added the following API endpoints:
 
 
 - Added the new CardAcctRelRec/CardAcctRelInfo/OtherAcctRel XPATH in the response
-
-
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New</p>
-
-Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
 > #### Note
