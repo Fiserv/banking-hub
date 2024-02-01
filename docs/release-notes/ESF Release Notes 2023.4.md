@@ -124,8 +124,7 @@ Added the following API endpoints:
 
 
 - Added the following new API endpoints:
-	- PartyAcctRelInfo/Nickname
-	- PartyAcctRelInfo/TaxReportingSignerInd
+	- PartyAcctRelRec/PartyAcctRelInfo/Nickname
 	- PartyAcctRelRec/PartyAcctRelInfo/Beneficiary
 	- PartyAcctRelRec/PartyAcctRelInfo/Beneficiary/BeneficiaryPercent
 	- PartyAcctRelRec/PartyAcctRelInfo/Liability
