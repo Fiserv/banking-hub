@@ -1,21 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Credit Service
-  description: |-
-    The Credit service is used to add or reverse credit entry for a specified loan or deposit product account. <br>
-        This service helps to reverse from or post credit entry to the beneficiary or receiver’s account for specific types of payments including wire transfers plus fees.
-  version: 11.0.0_CT-Add_MLA_Teller
+  title: Multi Account Service
+  description: The multi account service supports an inquiry operation that allows retrieving information of multiple product accounts in a single consumer request.
+  version: 11.0.0_FIN
 servers:
 - url: /
 paths:
-  /creditservice/payments/credits:
+  /multiacctservice/acctmgmt/accounts/list/secured:
     post:
       tags:
-      - Add Credit
-      summary: Add Credit.
-      description: "Add Credit API creates one-sided monetary transactions that are credited to the Mortgage Loan Account (MLA) either by cash, check, envelope deposits, merchandise returns, or any other payment types. This API is generally used for a Teller transaction. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
-      operationId: CreditAddOper
+      - Get Multiple Accounts
+      summary: Get Multiple Accounts.
+      description: Get Multi-Account API retrieves the account-related information of one or more accounts in single request call. This API supports various account types for deposit and loans products.<br> <br> To download the API Specifications and Postman Collection, click <a href="../docs/?path=docs/resources/resources.md" title="Click to open">Resources</a>.
+      operationId: MultiAcctInqOperBySecuredPost
       parameters:
       - name: EFXHeader
         in: header
@@ -27,44 +25,43 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreditAddOperRequest'
+              $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostRequest'
       responses:
-        "203":
-          description: Created
+        "200":
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditAddOperResponse'
+                $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditAddOperResponse'
-      x-group-name: Credit Service
-      x-proxy-name: Add Credit
-      x-child-product-name: Transactions
-      x-core: Cleartouch-MLA_Teller
+                $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse'
+      x-group-name: Multi Account Service
+      x-proxy-name: ' Get Transaction History'
+      x-child-product-name: Accounts
+      x-core: Finxact
 components:
   schemas:
-    CreditAddOperRequest:
+    MultiAcctInqOperBySecuredPostRequest:
       required:
-      - CreditInfo
+      - MultiAcctSel
       properties:
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        CreditInfo:
-          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo'
-    CreditAddOperResponse:
+        MultiAcctSel:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostRequest_MultiAcctSel'
+    MultiAcctInqOperBySecuredPostResponse:
       required:
-      - CreditStatusRec
+      - MultiAcctRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        CreditStatusRec:
-          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec'
-        Receipt:
-          $ref: '#/components/schemas/CreditAddOperResponse_Receipt'
+        MultiAcctRec:
+          type: array
+          description: Details of multiple account records.
+          items:
+            $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -252,14 +249,6 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
-    OvrdExceptionDataType:
-      title: OvrdExceptionDataType
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
-      description: Details of the exceptions that can be manually acknowledged by the client.
     StatusType:
       title: StatusType
       required:
@@ -384,7 +373,38 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys:
+    MultiAcctInqOperBySecuredPostRequest_MultiAcctSel_AcctKeys:
+      required:
+      - AcctId
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
+          type: string
+          description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>.\n\n\n\n**Note:** The following values indicate: \n\n- DDA: Demand Deposit Account\n\n- MMA: Money Market Account\n\n- SDA: Savings Deposit Account\n\n- EQU: Home Equity Loan\n\n- ILA: Installment Loan Account\n\n- CLA: Commercial Loan Account\n\n- LOC: Consumer Line of Credit\n\n- MLA: Mortgage Loan Account"
+          enum:
+          - DDA
+          - MMA
+          - SDA
+          - EQU
+          - ILA
+          - CLA
+          - LOC
+          - MLA
+    MultiAcctInqOperBySecuredPostRequest_MultiAcctSel:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          type: array
+          description: Unique information to identify the account record.
+          items:
+            $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostRequest_MultiAcctSel_AcctKeys'
+      description: Selection criteria details to select multiple accounts.
+    MultiAcctInqOperBySecuredPostResponse_AcctKeys:
       required:
       - AcctId
       type: object
@@ -392,52 +412,41 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-
-
+          description: Unique identification number of an account record.
         AcctType:
           type: string
-          description: |-
-            Type of an account.
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
-
-            **Note:** *Required field*
-
-
-
-            ESF returns an error as 700 for unsupported function, if this field is blank or an invalid value is sent in the request.
+          description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>.\n\n\n\n**Note:** The following values indicate: \n\n- DDA: Demand Deposit Account\n\n- MMA: Money Market Account\n\n- SDA: Savings Deposit Account\n\n- CDA: Certificate of Deposit Account\n\n- EQU: Home Equity Loan\n\n- ILA: Installment Loan Account\n\n- CLA: Commercial Loan Account\n\n- LOC: Consumer Line of Credit\n\n- MLA: Mortgage Loan Account"
           enum:
-          - LIP
+          - DDA
+          - MMA
+          - SDA
+          - CDA
+          - EQU
+          - ILA
+          - CLA
+          - LOC
           - MLA
       description: Unique information to identify the account record.
-    CreditAddOperRequest_CreditInfo_AcctRef:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
-      description: Reference information of an account that is being credited.
-    CreditAddOperRequest_CreditInfo_CurAmt_CurCode:
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_CurAmt_CurCode:
       required:
       - CurCodeValue
       type: object
       properties:
         CurCodeType:
           type: string
-          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
           enum:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported."
+          description: |-
+            Currency code value as per the ISO currency code format set in the CurCodeType field.
+
+
+
+            **Note:** Finxact supports U.S. Dollars. This field should contain the "USD" value, which is case sensitive.
       description: Details of currency code.
-    CreditAddOperRequest_CreditInfo_CurAmt:
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_CurAmt:
       type: object
       properties:
         Amt:
@@ -445,282 +454,116 @@ components:
           description: |-
             Amount in decimal format.
 
-            **Note:** *Required field*
 
 
-
-            This value cannot be zero (0).
+            Example: 10.00
         CurCode:
-          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt_CurCode'
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_CurAmt_CurCode'
       description: Details of the currency amount.
-    CreditAddOperRequest_CreditInfo_CompositeCurAmt:
-      required:
-      - CurAmt
-      properties:
-        CompositeCurAmtType:
-          type: string
-          description: |-
-            Type of composite currency amount.
-
-            **Note:** Enum values for this field are applicable for mortgage accounts.
-          enum:
-          - AdjustmentFee
-          - ClosingFee
-          - Collateral
-          - DealerInterest
-          - DealerDisability
-          - DealerLife
-          - DealerMiscellaneous
-          - Disability
-          - Escrow
-          - FASBCurrentFee
-          - FASBFee
-          - FASBManualFee
-          - InactivityFee
-          - Interest
-          - LateFee
-          - Life
-          - MaintenanceFee
-          - Miscellaneous
-          - MiscellaneousFee
-          - NSFFee
-          - OverlimitFee
-          - Principal
-          - ReturnedPaymentFee
-          - StopChkFee
-          - Unmployment
-        CurAmt:
-          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt'
-        SpecialHandling:
-          type: array
-          description: "Special instructions for processing the transaction amount. \n\n\n\n**Note:** The value \"MemoPost\" is used for a memo posted on a US check cashing whereby the available balance in the account is reduced by the check amount until the item is run through evening item processing batch transmission."
-          items: {}
-          enum:
-          - Memopost
-    CreditAddOperRequest_CreditInfo:
-      required:
-      - CompositeCurAmt
-      - CreditType
-      type: object
-      properties:
-        CreditType:
-          type: string
-          description: Type of credit transaction.
-          enum:
-          - Payment         ItemizedPmt              Credit
-        EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: "Effective date and time of the credit transaction.\n\nFormat: yyyy-mm-ddThh:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** This field indicates the effective date for the transaction other than the current processing day. "
-        Desc:
-          maxLength: 200
-          type: array
-          description: |-
-            Description of the credit transaction.
-
-            **Note:** Refers to client generated Reg-E description that service provider use to display on customer statement.
-
-            Maximum length: 33 characters
-          items: {}
-        PatriotActInd:
-          type: boolean
-          description: "Flag to indicate that the transaction is a suspect transaction that needs to be reported.\n\n**Note:** This field indicates if the transaction is forced to high dollar report for IRS reporting. \n\nValues are:\n\n- True: Force to high dollar report\n\n- False: Do not report to high dollar report\n\nThis field is used on check cashing transaction or an HSA contribution for gift reporting.\n\nNot applicable when special handling is \"GiftReporting\"."
-        AcctRef:
-          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef'
-        CompositeCurAmt:
-          type: array
-          description: |+
-            Details of the composition of the credited amount.
-
-            **Note:** Atleast one time this aggregate is required to be sent in the request containing the transaction amount.
-
-          items:
-            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CompositeCurAmt'
-      description: Details of the credit transaction.
-    CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-
-
-        AcctType:
-          type: string
-          description: |-
-            Type of an account.
-
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open"> Glossary</a>.
-          enum:
-          - LIP, MLA
-      description: Unique information to identify the account record.
-    CreditAddOperResponse_CreditStatusRec_CreditKeys:
-      type: object
-      properties:
-        AcctKeys:
-          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys_AcctKeys'
-      description: Unique information to identify a credit record.
-    CreditAddOperResponse_CreditStatusRec_CreditStatus:
-      required:
-      - CreditStatusCode
-      type: object
-      properties:
-        CreditStatusCode:
-          type: string
-          description: |+
-            Code to specify the current status of the credit transaction.
-
-          enum:
-          - Posted
-        EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
-          type: string
-          description: |-
-            Effective date and time when the transaction status is changed.
-
-            Format: yyyy-mm-ddThh:mm:ss.SSS
-
-            Example: 2021-01-31T23:59:59.999
-      description: Details of the credit transaction status.
-    CreditAddOperResponse_CreditStatusRec:
-      required:
-      - CreditStatus
-      type: object
-      properties:
-        CreditKeys:
-          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
-        CreditStatus:
-          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditStatus'
-      description: Details of the credit status record in response to the add operation.
-    CreditAddOperResponse_Receipt_TrnAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            **Note:** Refers to total transaction amount.
-      description: Details of the transaction amount.
-    CreditAddOperResponse_Receipt_WarningOrLockout:
-      required:
-      - Type
-      properties:
-        Type:
-          type: string
-          description: |-
-            Type of warning or lockout that indicates whether the associated warning code is for a warning flag or a lockout flag.
-
-            **Note:** Only "warnings" are returned in this field.
-          enum:
-          - Warning
-          - Lockout
-        Code:
-          type: string
-          description: Value of the warning or lockout code.
-    CreditAddOperResponse_Receipt_CurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Amount in decimal format.
-      description: Details of the currency amount.
-    CreditAddOperResponse_Receipt_AcctBal:
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_AcctBal:
       required:
       - BalType
       - CurAmt
       properties:
         BalType:
           type: string
-          description: Type of the balance.
+          description: "Type of account balance. \n\n\n\n**Note:** For deposit, following are the account balances:\n\n- InterestAccrued\n\n- Ledger\n\n- Current\n\n- Avail\n\n- Sweep\n\n- AvailCredit\n\n- Hold\n\n- CreditLimit\n\n- BalanceLastStatement\n\n- CustCollected\n\n\n\nFor loan, following are the account balances:\n\n- CreditLimit\n\n- Principal\n\n- InterestDue\n\n- Ledger\n\n- AvailCredit\n\n- Orig\n\n- PmtDue\n\n- ChargeOff\n\n- PayOffAmt"
           enum:
+          - InterestAccrued
+          - Ledger
           - Current
+          - Avail
           - Sweep
-          - OverdraftBanking
-          - LineofCredit
-          - OverdraftLimit
-          - ExternalFund
-          - MMDAExcess
+          - AvailCredit
+          - Hold
+          - CreditLimit
+          - BalanceLastStatement
+          - CustCollected
+          - Principal
+          - InterestDue
+          - Orig
+          - PmtDue
+          - ChargeOff
+          - PayOffAmt
         CurAmt:
-          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_CurAmt'
-    CreditAddOperResponse_Receipt_ReceiptDtl_CurAmt:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_CurAmt'
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo:
       type: object
       properties:
-        Amt:
-          type: number
-          description: |-
-            Amount in decimal format.
-
-            Example: 10.00.
-
-            **Note:** Refers to the amount applied to the element indicated in CompositeReceiptAmt/CompositeCurAmtType.
-      description: |+
-        Details of the amount to be processed in credit transaction.
-
-    CreditAddOperResponse_Receipt_ReceiptDtl_CompositeCurAmt:
-      required:
-      - CurAmt
-      properties:
-        CompositeCurAmtType:
+        ProductIdent:
+          maxLength: 42
           type: string
-          description: Type of composite currency amount.
-          enum:
-          - DealerInterest Escrow Interest Principal LateFee Fee Unemployment Life Disability
-        CurAmt:
-          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_ReceiptDtl_CurAmt'
-        SpecialHandling:
-          type: array
-          description: "Special instructions for processing the transaction amount. \n\n\n\n**Note:** This field indicates whether the associated amount in CompositeReceiptAmt/CurAmt/Amt was waived or collected."
-          items: {}
-          enum:
-          - Collect
-          - Waive
-    CreditAddOperResponse_Receipt_ReceiptDtl:
-      type: object
-      properties:
-        CompositeCurAmt:
-          type: array
-          description: Details of the composition of the credited amount.
-          items:
-            $ref: '#/components/schemas/CreditAddOperResponse_Receipt_ReceiptDtl_CompositeCurAmt'
-      description: Details of a receipt.
-    CreditAddOperResponse_Receipt:
-      type: object
-      properties:
-        Name:
-          maxLength: 80
+          description: Unique identifier of a product. This value is used to indicate the processing options of the account.
+        Desc:
+          maxLength: 100
           type: string
-          description: Short name for the account printed on the receipt.
-        TellerIdent:
-          type: string
-          description: |-
-            Unique identifier of a teller used to run the transaction.
-
-
-
-            **Note:** Refers to teller number used to run the transaction. This number can be static number or passed through the token created by the Teller SigOn.
-        TrnAmt:
-          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_TrnAmt'
-        WarningOrLockout:
-          type: array
-          description: Details of the account warning or lockout associated to the account.
-          items:
-            $ref: '#/components/schemas/CreditAddOperResponse_Receipt_WarningOrLockout'
+          description: 'Description of the product to set up the account. '
         AcctBal:
           type: array
-          description: |-
-            Details of the account balance at the time the credit transaction posted.
-
-            **Note:** This aggregate will repeat for balances affected by the transaction.
+          description: Details of the balance present in a financial institution account.
           items:
-            $ref: '#/components/schemas/CreditAddOperResponse_Receipt_AcctBal'
-        ReceiptDtl:
-          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_ReceiptDtl'
-      description: Details of the credit transaction receipt.
+            $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_AcctBal'
+        AcctDtlStatus:
+          type: string
+          description: |-
+            Code to indicate the current account status.
+
+
+
+            **Note:** For deposit, following are the account status:
+
+            - Active
+
+            - Closed
+
+            - Dormant
+
+            - Escheated
+
+            - Inactive
+
+
+
+            For loan, following are the account status:
+
+            - Active
+
+            - Closed
+
+            - Dormant
+
+            - Inactive
+          enum:
+          - Active
+          - Closed
+          - Dormant
+          - Escheated
+          - Inactive
+      description: Detailed information of multiple accounts filtered.
+    MultiAcctInqOperBySecuredPostResponse_AcctStatus:
+      required:
+      - AcctStatusCode
+      type: object
+      properties:
+        AcctStatusCode:
+          type: string
+          description: Code to indicate the status of the account.
+          enum:
+          - Valid
+          - Invalid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: Status details of the account.
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctRec:
+      required:
+      - AcctKeys
+      - AcctStatus
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_AcctKeys'
+        MultiAcctInfo:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo'
+        AcctStatus:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_AcctStatus'
