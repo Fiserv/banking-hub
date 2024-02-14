@@ -126,6 +126,7 @@ Added the following API endpoints:
 - Delete Party Address *(API Explorer > Accountholder > Party Service)*
 - Delete Party Email *(API Explorer > Accountholder > Party Service)*
 - Delete Party Phone *(API Explorer > Accountholder > Party Service)*
+- Get Multiple Accounts *(API Explorer > Accounts > Multi Account Service)*
 
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
