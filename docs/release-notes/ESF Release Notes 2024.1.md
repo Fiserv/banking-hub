@@ -16,6 +16,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 - Fixed the error in the "LoanAcctInfo/RevolvingLoanInd" field when using the "SingleAdvance" and "AdvanceLimit" values<br>
 - Fixed the code issue that occurred while account creation when the value of the "MSACode" field is 39740<br>
 - Fixed the issue of the date format in the "LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt" XPATH
+- Fixed the error "Date Opened is Required Error" that occurred while adding a LOAN account in CERT without providing the "OpenDt" field. Now the "OpenDt" field (LoanAcctInfo/OpenDt) is added and marked as required field to add a LOAN account
 
 
 <span style="font-size: 22px; ">Update Account-LOAN</span> *API Explorer > Accounts > Account Service*
@@ -30,7 +31,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 	- NAICS
 	- RateIndex
 - Fixed the issue with overriding the value of the "ReportPurposeCode" field sent in the request. The code was not updating in the "GetLASForChange" field
-Fixed the issue with date updates in the "LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt" XPATH
+- Fixed the issue with date updates in the "LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt" XPATH
 
 
 <span style="font-size: 22px; ">Add Account-CDA, Get Account Details-CDA</span> *API Explorer > Accounts > Account Service*
@@ -38,8 +39,10 @@ Fixed the issue with date updates in the "LoanAcctInfo/HomeMortgageDisclosure/HA
 
 - Fixed the issue of returning an incorrect value for the "ClientdefinedData/ExpDt" field in Get Account Details-CDA API, which is being passed in Add Account-CDA API
 
-
 <!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
+
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
@@ -73,4 +76,14 @@ Fixed the issue with date updates in the "LoanAcctInfo/HomeMortgageDisclosure/HA
 
 
 <!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
+
+<!-- type: tab -->
+> #### Note
+> Support for Finxact v1.21.
+> 
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
+
 <!-- type: tab-end -->
