@@ -1,6 +1,6 @@
-# Products
+# Providers
 
-Fiserv offers instant access to core banking APIs within Fiserv development environments for **simplified integration**. Development environments for three banking cores are available today, and more will be available soon. 
+A Provider is a Fiserv Platform or a Product that enables data integration with APIs. Fiserv offers instant access to core banking APIs and surround products within Fiserv development environments for **simplified integration**.  Development environments for three banking cores are available today, and more will be available soon.
 
 Explore and learn more about each Fiserv banking core to find the perfect development environment to reach an audience of institutions that focus on retail, commercial, community, small business or corporate banking.
 
@@ -12,7 +12,7 @@ Explore and learn more about each Fiserv banking core to find the perfect develo
 
 ## Development environment options
 
-Choose a development environment from three banking core platforms, currently supported: Finxact, Premier and Signature. Select one core now and add another other to your dedicated plan at any time.
+Choose a development environment from three banking core platforms, currently supported: Finxact, Premier and Signature. Select one core now and add another to your dedicated plan at any time.
 
 ### Finxact
 A next-generation, cloud-native platform with an emphasis on agility, scalability and modernization. 
