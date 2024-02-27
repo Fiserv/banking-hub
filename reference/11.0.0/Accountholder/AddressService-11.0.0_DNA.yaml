@@ -7,6 +7,78 @@ info:
 servers:
 - url: /
 paths:
+  /addrservice/partyacctsvc/address:
+    put:
+      tags:
+      - Update Address
+      summary: Update Address
+      description: Update Address API modifies the existing address details such as primary, seasonal and secondary address details.<br>For DNA, secondary address details are updated using the address use code.
+      operationId: modifyAddr
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/modifyAddrRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/modifyAddrResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/modifyAddrResponse'
+      x-group-name: Address Service
+      x-proxy-name: Update Address
+      x-child-product-name: Accountholder
+      x-core: DNA
+    post:
+      tags:
+      - Add Address
+      summary: Add Address
+      description: |
+        Add Address API creates a new address (primary, seasonal or secondary) record.<br>This API can also link a newly created address record to the existing party.<br>Secondary address is added using the address use code.
+      operationId: addAddress
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addAddressRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addAddressResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addAddressResponse'
+      x-group-name: Address Service
+      x-proxy-name: Add Address
+      x-child-product-name: Accountholder
+      x-core: DNA
   /addrservice/partyacctsvc/address/secured:
     put:
       tags:
@@ -80,6 +152,22 @@ paths:
       x-core: DNA
 components:
   schemas:
+    addAddressRequest:
+      required:
+      - AddrInfo
+      properties:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        AddrInfo:
+          $ref: '#/components/schemas/addAddressRequest_AddrInfo'
+    addAddressResponse:
+      required:
+      - AddrStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        AddrStatusRec:
+          $ref: '#/components/schemas/addAddressResponse_AddrStatusRec'
     deleteAddrByPutRequest:
       required:
       - AddrKeys
@@ -93,7 +181,7 @@ components:
       - AddrStatusRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: '#/components/schemas/StatusType_DNA'
         AddrStatusRec:
           $ref: '#/components/schemas/deleteAddrByPutResponse_AddrStatusRec'
     getAddrByPostRequest:
@@ -107,7 +195,7 @@ components:
       - AddrRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: '#/components/schemas/StatusType_DNA'
         RecCtrlOut:
           $ref: '#/components/schemas/getAddrByPostResponse_RecCtrlOut'
         AddrRec:
@@ -115,6 +203,25 @@ components:
           description: Details of the address record.
           items:
             $ref: '#/components/schemas/getAddrByPostResponse_AddrRec'
+    modifyAddrRequest:
+      required:
+      - AddrInfo
+      - AddrKeys
+      properties:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        AddrKeys:
+          $ref: '#/components/schemas/modifyAddrRequest_AddrKeys'
+        AddrInfo:
+          $ref: '#/components/schemas/modifyAddrRequest_AddrInfo'
+    modifyAddrResponse:
+      required:
+      - AddrStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        AddrStatusRec:
+          $ref: '#/components/schemas/modifyAddrResponse_AddrStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -310,7 +417,7 @@ components:
           type: boolean
           description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    StatusType:
+    StatusType_DNA:
       title: StatusType
       required:
       - Severity
@@ -319,9 +426,6 @@ components:
       - SvcProviderName
       type: object
       properties:
-        Id:
-          type: string
-          description: Status identification number.
         StatusCode:
           maxLength: 20
           type: string
@@ -336,12 +440,8 @@ components:
           maxLength: 1024
           type: string
           description: |-
-            Name of a service provider. Possible values are:
-              -  Cleartouch
+            Name of a service provider. Example value is:
               -  DNA
-              -  Precision
-              -  Premier
-              -  Signature
         ServerStatusCode:
           maxLength: 20
           type: string
@@ -350,25 +450,8 @@ components:
           maxLength: 255
           type: string
           description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
-        SubjectRole:
-          type: string
-          description: Authorization level required to override, such as Teller and Supervisor.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
-        ContentHTML:
-          type: string
-          description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
-          type: array
-          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
-          items:
-            $ref: '#/components/schemas/AdditionalStatusType'
+          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
       description: Details of the API response messages.
     SeverityType:
       title: SeverityType
@@ -378,62 +461,170 @@ components:
       - Error
       - Warning
       - Info
-    SubjectElementType:
-      title: SubjectElementType
+    addAddressRequest_AddrInfo_PartyKeys:
+      required:
+      - PartyIdent
+      - PartyIdentType
       type: object
       properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
-    AdditionalStatusType:
-      title: AdditionalStatusType
-      type: object
-      properties:
-        StatusCode:
-          maxLength: 20
-          type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
+        PartyIdentType:
           type: string
           description: |-
-            Name of a service provider. Possible values are:
-              - Cleartouch
-              - DNA
-              - Precision
-              - Premier
-              - Signature
-        ServerStatusCode:
+            Type of party identifier.
+
+
+
+            **Note:** To request party information, provide the following:
+
+            - "OrgNum" value when the party is an organization
+
+            - "PersonNum" value when the party is a person
+          enum:
+          - OrgNum
+          - PersonNum
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: Unique identifier of a party record.
+      description: Unique information to identify a party record.
+    addAddressRequest_AddrInfo_AddrRelRef:
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addAddressRequest_AddrInfo_PartyKeys'
+    addAddressRequest_AddrInfo_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+          enum:
+          - SPCountryCode
+        CountryCodeValue:
+          type: string
+          description: "Country code value as per the country code format set in the CountryCodeSource field.\n\n\n\n**Note:** Values are user-defined. "
+      description: Details of country code.
+    addAddressRequest_AddrInfo_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Start date and time value.\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999\n\n\n\n**Note:** *Conditionally Required field*\n\nApplicable only for Seasonal Address Type. DNA saves the information of end month and end day for seasonal address. Every year,  it starts on the same start date and ends on the same end date. \n\nFor Year, 9999 value can be provided. "
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** *Conditionally Required field*
+
+            Applicable only for seasonal address type. In DNA, the seasonal address begins on the same start and same end date of a year therefore the year value can be provided as 9999.
+      description: Details of the time frame when the postal address is active.
+    addAddressRequest_AddrInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        AddrUse:
+          type: string
+          description: Usage of the address.
+        Addr1:
+          maxLength: 64
+          type: string
+          description: "Address line 1. \n\n**Note:** Address line field is the combination of the address line and the address line type code. AddressLineTypeCd is four characters long and is followed by first \"_\" from left to right.\n\nFormat: addressLineTypeCode1_ addressLine1\n\n"
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided.\n\n**Note:** Address line field is the combination of the address line and the address line type code. AddressLineTypeCd is four characters long and is followed by first \"_\" from left to right.\n\nFormat: addressLineTypeCode2_ addressLine2"
+        Addr3:
+          maxLength: 64
+          type: string
+          description: "Address line 3. \n\nTo enter Addr3, Addr2 field must be provided.\n\n**Note:** Address line field is the combination of the address line and the address line type code. AddressLineTypeCd is four characters long and is followed by first \"_\" from left to right.\n\nFormat: addressLineTypeCode3_ addressLine3"
+        City:
+          maxLength: 32
+          type: string
+          description: "Name of the city.\n\n**Note:** *Required field*\n\nDNA supports 20 characters for city name including spaces. Therefore it is recommended to provide an abbreviated city name if the name exceeds 20 characters. \n\nDNA supports an appended total length of 40 characters (including spaces) for City, StateProv and PostalCode fields. "
+        StateProv:
+          type: string
+          description: |-
+            State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+
+            **Note:** *Conditionally Required field*
+
+            Applicable when the country is the United States.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: "Postal code or Zip code.\n\n**Note:** *Conditionally Required field*\n\nApplicable when the country is the United States.\n\nFor the US address this field is a Zip code. Zip code format is five digits, a hyphen, and additional for digits that determine a more specific location within a given ZIP code. The four additional digits are optional and commonly represented as 0000.  \n\nExample: 32714-1234 or 32714-0000 \n\nFor non-US addresses, this field refers to postal code and is a string of characters."
+        CountryCode:
+          $ref: '#/components/schemas/addAddressRequest_AddrInfo_CountryCode'
+        AddrType:
+          type: string
+          description: |-
+            Type of postal address.
+
+            **Note:** DNA supports primary and seasonal address records. Seasonal address record cannot exist as a single record and is associated to the primary address record. Accordingly primary address record is required when creating an address record. In DNA, seasonal address record and time frame details are optional.
+          enum:
+          - Primary
+          - Seasonal
+          - Secondary
+        TimeFrame:
+          $ref: '#/components/schemas/addAddressRequest_AddrInfo_TimeFrame'
+        CensusTract:
           maxLength: 20
           type: string
-          description: 'Server status code of the service provider''s application.  '
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
-        SubjectElement:
+          description: Census tract number assigned by the U.S. Census Bureau to identify the geographic location.
+        MSACode:
+          type: integer
+          description: "Code that identifies a Metropolitan Statistical Area for postal delivery purposes. \n\nThis code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes."
+          format: int64
+    addAddressRequest_AddrInfo:
+      required:
+      - PostAddr
+      type: object
+      properties:
+        AddrRelRef:
           type: array
-          description: Information about the elements that caused the status.
+          description: |-
+            Relationship details of the address associated to the party.
+
+
+
+            **Note:** AddrRelRef aggregate is used to associate a new address to the existing party or parties. Only a secondary address type can be added to the party.
           items:
-            $ref: '#/components/schemas/SubjectElementType'
+            $ref: '#/components/schemas/addAddressRequest_AddrInfo_AddrRelRef'
+        PostAddr:
+          type: array
+          description: Postal address details of the party.
+          items:
+            $ref: '#/components/schemas/addAddressRequest_AddrInfo_PostAddr'
+      description: Address details of a party.
+    addAddressResponse_AddrStatusRec_AddrStatus:
+      required:
+      - AddrStatusCode
+      type: object
+      properties:
+        AddrStatusCode:
+          type: string
+          description: Code to indicate the status of the address record.
+          enum:
+          - Valid
+      description: Status details of the address record.
+    addAddressResponse_AddrStatusRec:
+      required:
+      - AddrStatus
+      type: object
+      properties:
+        AddrStatus:
+          $ref: '#/components/schemas/addAddressResponse_AddrStatusRec_AddrStatus'
+      description: Details of the address status record in response to add operation.
     deleteAddrByPutRequest_AddrKeys_PartyKeys:
       required:
       - PartyIdent
@@ -481,6 +672,9 @@ components:
           - Primary
           - Secondary
           - Seasonal
+        AddrUse:
+          type: string
+          description: "Usage of the address.\n\n\n\n**Note:** \n\n- Refers to AddressUseCode\n\n- Values are user-defined and cannot be blank or null\n\n- Applicable only if the address type is a secondary address"
       description: Unique information to identify the address record.
     deleteAddrByPutResponse_AddrStatusRec_AddrKeys:
       type: object
@@ -762,7 +956,7 @@ components:
           maxLength: 20
           type: string
           description: |-
-            Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+            Census tract number assigned by the U.S. Census Bureau to identify the geographic location.
 
 
 
@@ -833,3 +1027,159 @@ components:
           $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo'
         AddrStatus:
           $ref: '#/components/schemas/getAddrByPostResponse_AddrStatus'
+    modifyAddrRequest_AddrKeys_PartyKeys:
+      required:
+      - PartyIdent
+      - PartyIdentType
+      type: object
+      properties:
+        PartyIdentType:
+          type: string
+          description: |-
+            Type of identifier for a party.
+
+
+
+            **Note:** To request party information, provide the following:
+
+            - "OrgNum" value when the party is an organization
+
+            - "PersonNum" value when the party is a person
+          enum:
+          - OrgNum
+          - PersonNum
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: Unique identifier of a party record.
+      description: Unique information to identify the party record.
+    modifyAddrRequest_AddrKeys:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/modifyAddrRequest_AddrKeys_PartyKeys'
+      description: Unique information to identify the address record.
+    modifyAddrRequest_AddrInfo_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** *Conditionally Required field*
+
+            Applicable only for seasonal address type. In DNA, the seasonal address begins on the same start and same end date of a year therefore the year value can be provided as 9999.
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** *Conditionally Required field*
+
+            Applicable only for seasonal address type. In DNA, the seasonal address begins on the same start and same end date of a year therefore the year value can be provided as 9999.
+      description: Details of the time frame when the postal address is active.
+    modifyAddrRequest_AddrInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        AddrUse:
+          type: string
+          description: |-
+            Usage of the address.
+
+
+
+            **Note:** AddrUse is an address use code applicable for secondary address type. Otherwise the address is updated as per the address type code.
+        Addr1:
+          maxLength: 64
+          type: string
+          description: "Address line 1. \n\n**Note:** Address line field is the combination of the address line and the address line type code. AddressLineTypeCd is four characters long and is followed by first \"_\" from left to right.\n\nFormat: addressLineTypeCode1_ addressLine1"
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided.\n\n**Note:** Address line field is the combination of the address line and the address line type code. AddressLineTypeCd is four characters long and is followed by first \"_\" from left to right.\n\nFormat: addressLineTypeCode2_ addressLine2"
+        Addr3:
+          maxLength: 64
+          type: string
+          description: "Address line 3. \n\nTo enter Addr3, Addr2 field must be provided.\n\n**Note:** Address line field is the combination of the address line and the address line type code. AddressLineTypeCd is four characters long and is followed by first \"_\" from left to right.\n\nFormat: addressLineTypeCode3_ addressLine3"
+        City:
+          maxLength: 32
+          type: string
+          description: "Name of the city.\n\n**Note:** *Required field*\n\nDNA supports 20 characters for city name including spaces. Therefore it is recommended to provide an abbreviated city name if the name exceeds 20 characters. \n\nDNA supports an appended total length of 40 characters (including spaces) for City, StateProv and PostalCode fields. "
+        StateProv:
+          type: string
+          description: |-
+            State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+
+            **Note:** *Conditionally Required field*
+
+            Applicable when the country is the United States.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: "Postal code or Zip code.\n\n**Note:** *Conditionally Required field*\n\nApplicable when the country is the United States.\n\nFor the US address this field is a Zip code. Zip code format is five digits, a hyphen, and additional for digits that determine a more specific location within a given ZIP code. The four additional digits are optional and commonly represented as 0000.  \n\nExample: 32714-1234 or 32714-0000 \n\nFor non-US addresses, this field refers to postal code and is a string of characters."
+        CountryCode:
+          $ref: '#/components/schemas/addAddressRequest_AddrInfo_CountryCode'
+        AddrType:
+          type: string
+          description: Type of postal address.
+          enum:
+          - Primary
+          - Seasonal
+          - Secondary
+        TimeFrame:
+          $ref: '#/components/schemas/modifyAddrRequest_AddrInfo_TimeFrame'
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census tract number assigned by the U.S. Census Bureau to identify the geographic location.
+        MSACode:
+          type: integer
+          description: "Code that identifies a Metropolitan Statistical Area for postal delivery purposes. \n\nThis code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes."
+          format: int64
+    modifyAddrRequest_AddrInfo:
+      required:
+      - PostAddr
+      type: object
+      properties:
+        PostAddr:
+          type: array
+          description: Postal address details of the party.
+          items:
+            $ref: '#/components/schemas/modifyAddrRequest_AddrInfo_PostAddr'
+      description: Information of the address.
+    modifyAddrResponse_AddrStatusRec:
+      required:
+      - AddrStatus
+      type: object
+      properties:
+        AddrStatus:
+          $ref: '#/components/schemas/addAddressResponse_AddrStatusRec_AddrStatus'
+      description: Details of the address status record in response to update operation.
+    StatusType_DNA_AdditionalStatus:
+      type: object
+      properties:
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
