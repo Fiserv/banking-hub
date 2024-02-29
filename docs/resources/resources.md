@@ -106,7 +106,6 @@ Following are the few examples of business-critical attributes.
 
     •	organizationId
 
-    •	SelectivePayloadMap - Map 
 
 <!-- theme: info -->
 > #### Note
@@ -120,10 +119,13 @@ Following are the few examples of business-critical attributes.
 
 ## Step 4 - Create DPoP Generator Library on Consumer Side
 1.	Use the below JAVA code (DPoPGenerator.java) to create the library or use below code as a reference in consumer existing code
-2.	Update the following details in the JAVA code (DPoPGenerator.java) 
-2.1	Replace with your private/public key pair (String privateKey, String publicKey)
-2.2	Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod)
-2.3	Enable one or more of the following functions based on the selection in the step 3.2 and replace with actual values 
+2.	Update the following details in the JAVA code (DPoPGenerator.java)
+   
+    2.1. Replace with your private/public key pair (String privateKey, String publicKey)
+  	
+    2.2. Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod) 
+  	
+    2.3. Enable one or more of the following functions based on the selection in the step 3.2 and replace with actual values
 
     •	noPayloadGenerateDPoP
 
