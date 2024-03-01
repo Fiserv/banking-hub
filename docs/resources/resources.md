@@ -8,10 +8,12 @@
 ## Postman Collection
 
 <!-- theme: info -->  
-> [Download Postman Collection for DNA Core](https://github.com/Fiserv/banking-hub/files/14447763/EFX.Collection_DNA.zip)
+> [Download Postman Collection for DNA Core](https://github.com/Fiserv/banking-hub/files/14461530/EFX.Collection.for.DS.zip)
 
 
 <!--
+
+DNA 1 March 24 -- https://github.com/Fiserv/banking-hub/files/14447763/EFX.Collection_DNA.zip
 
 [Banking Hub - Finxact - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/12461848/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
 
