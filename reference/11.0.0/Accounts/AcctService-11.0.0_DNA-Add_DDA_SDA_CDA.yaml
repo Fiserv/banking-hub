@@ -12,7 +12,7 @@ paths:
       tags:
       - Add Account
       summary: Add Account.
-      description: Add Account API creates a new deposit account such as Certificate of Deposit Account (CDA), Demand Deposit Account (DDA), Savings Deposit Account (SDA) and Regulatory Accounts (RRA) for one or more existing parties (Person or Organization). <br>For DNA, this API does not support opening of external account or retirement plan account. However this API allows to link a new retirement account to an existing Retirement Plan account.
+      description: "Add Account API creates a new deposit account such as Certificate of Deposit Account (CDA), Demand Deposit Account (DDA), Savings Deposit Account (SDA) and Regulatory Accounts (RRA) for one or more existing parties (Person or Organization). <br>For DNA, this API does not support opening of external account or retirement plan account. However this API allows to link a new retirement account to an existing Retirement Plan account. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
       operationId: addAccount
       parameters:
       - name: EFXHeader
@@ -298,7 +298,7 @@ components:
       properties:
         PartyAcctRelType:
           type: string
-          description: "Type of party to account relationship.\n\n\n\n**Note:** Values for this field are:\n\n- OwnerSigner: refers to tax reported owner and tax reported signer relationship. Only one party on the account can have OwnerSigner relationship and is applicable only if the party is a person party\n\n- Owner: refers to tax reported owner relationship. This relationship is used if the tax reported owner is not the tax reported signer for the account. For example an organisation account and minor account can exist without tax reported signer relationship. In case of organisation account, the CEO have non tax signer relationship and in case of minor account, the parent of the minor have non tax signer relationship. \n\n\n\nEither OwnerSigner or Owner is required to be provided when opening an account. Only one party on the account can have owner relationship. \n\nAll additional relationship types which are not tax related are defined by financial institution. Some of the comman examples are beneficiary, joint owner, trustee, WWW access role, mobile banking access and so on. Same party can have multiple relationship to the account."
+          description: "Type of party to account relationship.\n\n\n\n**Note:** *Required field*\n\n\n\nIn DNA party to account reletionship field is mapped for account role codes that specify the type of roles a party (person/organization) have on the account. Person or organization parties are linked to the account through assigned roles and each account must have atleast one party with account role as \"Tax Reported For Role\".\n\nMaximum length for account role code is four characters (letters and/or numbers). \n\nFor example: \"OWN\" (Owner), \"SIGN\" (OwnerSigner) and other client-defined values.\n\n"
           enum:
           - OwnerSigner
           - Owner
@@ -311,6 +311,17 @@ components:
           description: Details of the relationship of the party to the account.
           items:
             $ref: '#/components/schemas/addAccountRequest_PartyAcctRelData'
+        TaxReportingOwnerInd:
+          type: boolean
+          description: |-
+            Value that indicates the party is the tax reporting owner of the account.
+
+
+
+            **Note:** At least one party is required to be the tax reporting owner.
+        TaxReportingSignerInd:
+          type: boolean
+          description: "Value that indicates the party is the tax reporting signer of the account.\n\n\n\n**Note:** Tax reporting signer indicator detemines if tax reporting owner can transact on the account. "
     addAccountRequest_DepositAcctInfo_AddtlTitles:
       properties:
         AcctTitle:
@@ -332,6 +343,7 @@ components:
     addAccountRequest_DepositAcctInfo_PostAddr:
       properties:
         AddressIdent:
+          maxLength: 36
           type: string
           description: |-
             Unique address identification value.
@@ -339,15 +351,8 @@ components:
 
 
             **Note:** Refers to tax owner address use code.
-          enum:
-          - PRI
-          - SEA
     addAccountRequest_DepositAcctInfo_AcctMemoData:
       properties:
-        AcctMemoIdent:
-          maxLength: 36
-          type: string
-          description: Account memo identifier used to arrange multiple memos and warnings in a sequence.
         AcctMemoType:
           type: string
           description: "Type of account memo. \n\n"
@@ -364,20 +369,20 @@ components:
 
 
 
-            Format: YYYY-MM-DDT00:00:00
+            Format: YYYY-MM-DD
 
-            Example: 2023-03-13T00:00:00
+            Example: 2023-03-13
           format: date
     addAccountRequest_DepositAcctInfo_OverdraftData:
       type: object
       properties:
         OverdraftEnrollOpt:
           type: string
-          description: Option that indicate the enrollment for an overdraft.
+          description: Option that indicates the account is enrolled for an overdraft facility.
           enum:
           - OptIn
           - OptOut
-      description: Details of the overdraft associated to the account.
+      description: Details of the overdraft associated to the account. An overdraft is a financial arrangement that a bank provides to its customers. Customers can Optin or Optout for the overdraft service.
     addAccountRequest_DepositAcctInfo:
       type: object
       properties:
@@ -392,7 +397,7 @@ components:
 
 
 
-            This field is required to be provided when opening an account.
+            Applicable when opening an account.
           enum:
           - Individual
           - JointAnd
@@ -423,9 +428,9 @@ components:
 
 
 
-            Format: YYYY-MM-DDT00:00:00
+            Format: YYYY-MM-DD
 
-            Example: 2023-03-13T00:00:00
+            Example: 2023-03-13
           format: date
         MaturityDt:
           type: string
@@ -434,9 +439,9 @@ components:
 
 
 
-            Format: YYYY-MM-DDT00:00:00
+            Format: YYYY-MM-DD
 
-            Example: 2023-03-13T00:00:00
+            Example: 2023-03-13
           format: date
         OriginatingBranch:
           maxLength: 32
@@ -448,7 +453,24 @@ components:
           description: Name that customer can assign to the account for easy identification.
         AcctTitleOption:
           type: string
-          description: "Printing option for the account title.\n\n\n\n**Note:** This field refers to address format code. \n\nValues for this field refers to:\n\n- DESC: Account description\n\n- TITL: Account title\n\n- TTDC: Account title and description\n\n- STD: Standard address format\n\n- TXID: Tax ID owner\n\n- TXDC: Tax ID owner and description"
+          description: |-
+            Printing option for the account title.
+
+
+
+            **Note:** Values for this field refers to:
+
+            - DESC: Account description
+
+            - TITL: Account title
+
+            - TTDC: Account title and description
+
+            - STD: Standard address format
+
+            - TXID: Tax ID owner
+
+            - TXDC: Tax ID owner and description
           enum:
           - DESC
           - TITL
@@ -486,12 +508,20 @@ components:
             $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctMemoData'
         IsPassbookInd:
           type: boolean
-          description: Flag to indicate the account is a passbook account.
+          description: Value that indicates the account is a passbook account.
         OverdraftData:
           $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_OverdraftData'
         SourceOfFunds:
           type: string
-          description: Value that indicate the source of funds.
+          description: |+
+            Value that indicates the source of funds.
+
+
+
+            **Note:** Values are user-defined.
+
+
+
       description: Details of the deposit account.
     StatusType_DNA_AdditionalStatus:
       type: object
