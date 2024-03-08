@@ -9,18 +9,95 @@ info:
 servers:
 - url: /
 paths:
+  /partyservice/parties/parties:
+    put:
+      tags:
+      - Update Party
+      summary: Update Party
+      description: Update Party API modifies the party information.<br>Party referres to a person or organization. Client application must indicate whether a party is a person or organization by providing the value of "PartyIdentType" field, party identifier and applicable person or organization information data. <br>To update party information, the client application should include the final state of the party record. If there is no existing party information in the Update Party API request, it is assumed that it has been deleted from the system of records.<br>DNA provides very limited options for deleting party information.
+      operationId: UpdateParty
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePartyRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePartyResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePartyResponse'
+      x-group-name: Party Service
+      x-proxy-name: Update Party
+      x-child-product-name: Accountholder
+      x-core: DNA
+    post:
+      tags:
+      - Add Party
+      summary: Add Party.
+      description: Add Party API creates a new party record.<br>The party object is an abstract object that represents a customer who does business with a financial institution. A party object can be a person or organization that has some relationship with the bank. This relationship could be as a customer, prospect, third party and so on. The "PartyType" field defines this relationship in EFX.<br><br>A party (person or organization) shares some common characteristics, such as credit rating, credit limit, address, phone number, fax number or e-mail address and therefore, can be treated in the same manner. This information is specified in the "PartyInfo" abstract aggregate. Additionally, organizations and people can have some unique characteristic, such as name, tax exemption, birth date or gender and therefore cannot be treated in the same manner. This information is specified in the extended aggregate "PersonPartyInfo" and "OrgPartyInfo". The party object is not present in the message. Instead, one of the extended aggregates is substituted.
+      operationId: addParty
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addPartyRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addPartyResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addPartyResponse'
+      x-group-name: Party Service
+      x-proxy-name: Add Party
+      x-child-product-name: Accountholder
+      x-core: DNA
   /partyservice/parties/parties/secured:
     post:
       tags:
       - Get Party
       summary: Get Party
-      description: Get Party API retrieves the information related to the party record.<br>Party refers to a person or organization, who has a relationship with the financial institution.<br>For DNA, this API supports person or organization party. Information about the party or organization record is provided in dedicated 'PersonParty' and 'OrgParty' aggregate, respectively, in the response.
+      description: Get Party API retrieves the information related to the party record. <br>A party refers to a person or organization who has a relationship with the financial institution. This relationship could be as a customer, prospect, third party and so on depending upon the 'PartyType' field.<br>For DNA, this API retrieves information for person or organization party in the 'Partyinfo' aggregate for common attributes such as credit rating, credit limit, address, phone number, fax number and e-mail address. The specific attributes to person party or organization party are specified in the extended PersonPartyInfo or OrgPartyInfo aggregates.
       operationId: getPartyInqSecure
       parameters:
       - name: EFXHeader
         in: header
         description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
         required: true
+        style: simple
+        explode: false
         schema:
           $ref: '#/components/schemas/EFXHeader'
       requestBody:
@@ -50,13 +127,15 @@ paths:
       tags:
       - Get Party List
       summary: Get Party List
-      description: 'Get Party List API retrieves information related to a list of parties (Person, Organization and Member) matching a specific selection criteria. <br> For DNA this API supports search by partial name, phone number, tax identification number and member number. The information about the party in the response is provided in the dedicated Person (if the party is a person party) or Organization (if the party is an organization) aggregate. '
+      description: Get Party List API retrieves information related to a list of parties (Person, Organization and Member) matching a specific selection criteria. <br>This API supports search by partial name, phone number, tax identification number and member number. The information about the party in the response is provided in the dedicated Person (if the party is a person party) or Organization (if the party is an organization) aggregate.
       operationId: getPartyListInqSecured
       parameters:
       - name: EFXHeader
         in: header
         description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
         required: true
+        style: simple
+        explode: false
         schema:
           $ref: '#/components/schemas/EFXHeader'
       requestBody:
@@ -83,39 +162,64 @@ paths:
       x-core: DNA
 components:
   schemas:
-    getPartyInqSecureRequest:
-      required:
-      - PartySel
+    addPartyRequest:
       properties:
-        PartySel:
-          $ref: '#/components/schemas/getPartyInqSecureRequest_PartySel'
-    getPartyInqSecureResponse:
+        PersonPartyInfo:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo'
+        OrgPartyInfo:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo'
+    StatusType_DNA:
+      title: StatusType
       required:
-      - PartyRec
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Example value is:
+              -  DNA
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        AdditionalStatus:
+          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    addPartyResponse:
+      required:
+      - PartyStatusRec
       properties:
         Status:
           $ref: '#/components/schemas/StatusType_DNA'
-        PartyRec:
-          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec'
-    getPartyListInqSecuredRequest:
-      required:
-      - PartyListSel
-      properties:
-        PartyListSel:
-          $ref: '#/components/schemas/getPartyListInqSecuredRequest_PartyListSel'
-    getPartyListInqSecuredResponse:
-      required:
-      - PartyListRec
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType_DNA'
-        PartyListRec:
-          type: array
-          description: |+
-            Details of the list of parties that are retrieved based on the specified search criteria.
-
-          items:
-            $ref: '#/components/schemas/getPartyListInqSecuredResponse_PartyListRec'
+        PartyStatusRec:
+          $ref: '#/components/schemas/addPartyResponse_PartyStatusRec'
     EFXHeader:
       required:
       - OrganizationId
@@ -301,33 +405,677 @@ components:
           - Auto
         AdditionalSettings:
           type: object
-          additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
-    StatusType_DNA:
-      title: StatusType
+    getPartyInqSecureRequest:
       required:
-      - Severity
-      - StatusCode
-      - StatusDesc
-      - SvcProviderName
+      - PartySel
+      properties:
+        PartySel:
+          $ref: '#/components/schemas/getPartyInqSecureRequest_PartySel'
+    getPartyInqSecureResponse:
+      required:
+      - PartyRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        PartyRec:
+          $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec'
+    getPartyListInqSecuredRequest:
+      required:
+      - PartyListSel
+      properties:
+        PartyListSel:
+          $ref: '#/components/schemas/getPartyListInqSecuredRequest_PartyListSel'
+    getPartyListInqSecuredResponse:
+      required:
+      - PartyListRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        PartyListRec:
+          type: array
+          description: |+
+            Details of the list of parties that are retrieved based on the specified search criteria.
+
+          items:
+            $ref: '#/components/schemas/getPartyListInqSecuredResponse_PartyListRec'
+    UpdatePartyRequest:
+      required:
+      - PartyKeys
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addPartyResponse_PartyStatusRec_PartyKeys'
+        PersonPartyInfo:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo'
+        OrgPartyInfo:
+          $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo'
+    UpdatePartyResponse:
+      required:
+      - PartyStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        PartyStatusRec:
+          $ref: '#/components/schemas/UpdatePartyResponse_PartyStatusRec'
+    addPartyRequest_PersonPartyInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Unique data identifier to identify the address line component.
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+    addPartyRequest_PersonPartyInfo_TaxDataInfo_USATaxIdCert:
       type: object
       properties:
-        StatusCode:
-          maxLength: 20
+        USATaxIdCertDate:
           type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
+          description: "Date of the tax identifier certification.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n\n\n**Note:** Either USATaxIdCertDate or ForeignCertDt can be provided."
+          format: date
+      description: Details of the USA Tax ID Certification.
+    addPartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeValue:
           type: string
           description: |-
-            Name of a service provider. Example value is:
-              -  DNA
+            Country code value as per the country code format set in the CountryCodeSource field.
+
+
+
+            **Note:** Refers to residence country for federal tax purposes.
+      description: Tax recipient country code. Use <a href="https://www.irs.gov/e-file-providers/foreign-country-code-listing-for-modernized-e-file">IRS country code table</a>.
+    addPartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData:
+      type: object
+      properties:
+        RecipientCountryCode:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode'
+        ForeignCertDt:
+          type: string
+          description: "Date of the foreign tax certification.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n\n\n**Note:** Either USATaxIdCertDate or ForeignCertDt can be provided."
+          format: date
+        ForeignExpDt:
+          type: string
+          description: "Date after which the foreign tax ID expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+      description: Data related to the taxes paid to a foreign government as a result of foreign income tax withholdings.
+    addPartyRequest_PersonPartyInfo_TaxDataInfo:
+      type: object
+      properties:
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: |-
+            Unique identifier of tax.
+
+
+
+            Example: "123456789"
+        TaxIdentApplyDt:
+          type: string
+          description: "Date of application for the ID number.\n\n\n\nFormat: YYYY-MM-DD \n\nExample: 2021-11-20"
+          format: date
+        USATaxIdCert:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_TaxDataInfo_USATaxIdCert'
+        ForeignTaxData:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData'
+      description: Tax information related to a party.
+    addPartyRequest_PersonPartyInfo_DisclosureData:
+      properties:
+        DisclosureAckType:
+          type: string
+          description: |-
+            Acknowledgement type of disclosure.
+
+
+
+            **Note:** When adding a person party if this field is not provided in the request, then by default DNA sets this field to "OptedIn".
+          enum:
+          - OptedIn
+          - OptedOut
+    addPartyRequest_PersonPartyInfo_SecretData:
+      properties:
+        SecretValue:
+          maxLength: 80
+          type: string
+          description: Value of the SecretIdent field that includes customer's answer to the corresponding security question.
+    addPartyRequest_PersonPartyInfo_PersonData_PhoneNum_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: |-
+        Country code details of a party.
+
+
+
+        **Note:** DNA requires country code details when adding a non US based phone number.
+    addPartyRequest_PersonPartyInfo_PersonData_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of a phone.\n\n\n\n**Note:** \n\n- DNA supports multiple PhoneTypes per party and multiple phone records per PhoneType\n\n- Values are client-defined\n\n"
+        Phone:
+          type: string
+          description: Phone number of the party.
+        CountryCode:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_PhoneNum_CountryCode'
+      description: Phone number details of a party.
+    addPartyRequest_PersonPartyInfo_PersonData_Email:
+      type: object
+      properties:
+        EmailType:
+          type: string
+          description: "Type of the email address.\n\n\n\n**Note:** \n\n- Refers to address use for electronic addresses \n\n- Values are client-defined\n\n- DNA support only one email address per EmailType "
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address of a party.
+      description: Email address details of a party.
+    addPartyRequest_PersonPartyInfo_PersonData_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_PhoneNum'
+        Email:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_Email'
+    addPartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: |+
+            Standard format of country code.
+
+          enum:
+          - ISO3166-Alpha-3
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: "Details of the country where the identification was issued. \n\n\n\n**Note:** CountryCode is required for non US addresses."
+    addPartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent:
+      required:
+      - CountryCode
+      type: object
+      properties:
+        CountryCode:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent_CountryCode'
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+      description: Details of government-issued identifier.
+    addPartyRequest_PersonPartyInfo_PersonData_IssuedIdent:
+      required:
+      - IssuedIdentType
+      properties:
+        IssuedIdentType:
+          type: string
+          description: "Type of issued identity card/document.\n\n\n\n**Note:** DNA does not support multiple identification document for the same identification type. For example party can not have two driver license issued by two states. \n\nValues are client-defined."
+        IssuedIdentValue:
+          maxLength: 32
+          type: string
+          description: |-
+            Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
+
+
+
+            Example: 3762849726
+        IssueDt:
+          type: string
+          description: |-
+            Date when the identity card/document was issued.
+
+
+
+            Format: yyyy-mm-dd
+
+            Example: 2021-01-31
+          format: date
+        ExpDt:
+          type: string
+          description: "Date after which issued identity card/document expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        GovIssuedIdent:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent'
+    addPartyRequest_PersonPartyInfo_PersonData_PersonName:
+      required:
+      - NameType
+      properties:
+        NameType:
+          type: string
+          description: Type of the name.
+          enum:
+          - Primary
+        FamilyName:
+          maxLength: 40
+          type: string
+          description: |-
+            Family name or last name of a person.
+
+
+
+            **Note:** Applicable when adding a new person party.
+        GivenName:
+          maxLength: 40
+          type: string
+          description: |-
+            First name of a person.
+
+
+
+            **Note:** Applicable when adding a new person party.
+        MiddleName:
+          maxLength: 40
+          type: string
+          description: |-
+            Middle name of a person.
+
+
+
+            **Note:** Middle name or middle intial is an optional field.
+        NamePrefix:
+          type: string
+          description: A title before person's name. For example, Mr, Mrs, Dr.
+        NameSuffix:
+          type: string
+          description: 'Name suffix to add after the name of a person. '
+        PreferredName:
+          maxLength: 96
+          type: string
+          description: |-
+            Preferred user-defined name to be used for the party.
+
+            **Note:** Refers to nickname of a person.
+    addPartyRequest_PersonPartyInfo_PersonData:
+      type: object
+      properties:
+        Contact:
+          type: array
+          description: Contact information of a party.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_Contact'
+        IssuedIdent:
+          type: array
+          description: Details of identification data of a party. Party can be a person or an organization.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_IssuedIdent'
+        PersonName:
+          type: array
+          description: Name of a person party.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_PersonName'
+      description: Information related to person party.
+    addPartyRequest_PersonPartyInfo_Employment:
+      properties:
+        Occupation:
+          maxLength: 50
+          type: string
+          description: |-
+            Occupation of the party.
+
+
+
+            **Note:** Values are client-defined.
+    addPartyRequest_PersonPartyInfo:
+      type: object
+      properties:
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_ClientDefinedData'
+        TaxDataInfo:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_TaxDataInfo'
+        DisclosureData:
+          type: array
+          description: Disclosure data related to a party.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_DisclosureData'
+        SecretData:
+          type: array
+          description: |+
+            Client-defined secret data of party that is used to validate the identity of the party in scenarios such as forgotten password.
+
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_SecretData'
+        RiskRanking:
+          type: string
+          description: "Level of risk assigned to a party. \n\n\n\n**Note:** Values are client-defined."
+        PersonData:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData'
+        BirthDt:
+          type: string
+          description: "Date of birth of a person.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        DeceasedDt:
+          type: string
+          description: "Date of death of the party. Valid only for a person party.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        Employment:
+          type: array
+          description: Employment details of the party.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_Employment'
+        Dependents:
+          type: integer
+          description: Number of dependents related to the party.
+          format: int64
+        EducationLevel:
+          maxLength: 80
+          type: string
+          description: |-
+            Education level of the party.
+
+
+
+            **Note:** Values are client-defined.
+        HomeOwnership:
+          type: string
+          description: Code to identify if the party owns a home.
+          enum:
+          - Own
+          - Rent
+      description: Information related to a person party.
+    addPartyRequest_OrgPartyInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Unique data identifier to identify the client-defined data item.
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+    addPartyRequest_OrgPartyInfo_TaxDataInfo_USATaxIdCert:
+      type: object
+      properties:
+        USATaxIdCertDate:
+          type: string
+          description: "Date of the tax identifier certification.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+      description: Details of the USA Tax ID Certification.
+    addPartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeValue:
+          type: string
+          description: |-
+            Country code value as per the country code format set in the CountryCodeSource field.
+
+
+
+            **Note:** Refers to residence country for federal tax purposes.
+      description: Tax recipient country code. Use <a href="https://www.irs.gov/e-file-providers/foreign-country-code-listing-for-modernized-e-file">IRS country code table </a>.
+    addPartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData:
+      type: object
+      properties:
+        RecipientCountryCode:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode'
+        ForeignCertDt:
+          type: string
+          description: "Date of the foreign tax certification.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        ForeignExpDt:
+          type: string
+          description: "Date after which the foreign tax expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+      description: Data related to the taxes paid to a foreign government as a result of foreign income tax withholdings.
+    addPartyRequest_OrgPartyInfo_TaxDataInfo:
+      type: object
+      properties:
+        TaxIdentType:
+          type: string
+          description: "Type of tax identification. \n\n\n\n**Note:** Refers to Federal Employee Identification Number (FEIN)."
+          enum:
+          - EIN
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: "Unique identifier of tax. \n\n\n\nExample: \"123456789\""
+        TaxIdentApplyDt:
+          type: string
+          description: "Date on which the organization applied for the Tax ID number. \n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        USATaxIdCert:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_TaxDataInfo_USATaxIdCert'
+        ForeignTaxData:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData'
+      description: |-
+        Tax information related to a party.
+
+
+
+        **Note:** DNA requires atleast Federal Employee Identification Number (FEIN) or Global Intermediary Identification Number (GIIN) to be provided when adding a new organization party.
+    addPartyRequest_OrgPartyInfo_DisclosureData:
+      properties:
+        DisclosureAckType:
+          type: string
+          description: |-
+            Acknowledgment type of disclosure.
+
+
+
+            **Note:** When adding a organization party if this field is not provided in the request, then by default DNA set this field to "OptedIn".
+          enum:
+          - OptedIn
+          - OptedOut
+    addPartyRequest_OrgPartyInfo_OrgData_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of a phone.d\n\n\n\n**Note:** \n\n- DNA supports multiple PhoneTypes per party and multiple phone records per PhoneType\n\n- Values are client-defined"
+        Phone:
+          type: string
+          description: Phone number of the organization.
+        CountryCode:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_PhoneNum_CountryCode'
+      description: Phone number details of a party.
+    addPartyRequest_OrgPartyInfo_OrgData_Email:
+      type: object
+      properties:
+        EmailType:
+          type: string
+          description: "Type of the email address.\n\n\n\n**Note:** \n\n- Refers to address use for electronic addresses \n\n- Values are client-defined\n\n- DNA support only one email address per EmailType"
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address of a party.
+      description: |-
+        Email address details of a party.
+
+
+
+        **Note:** Parameter configuration is required to add an email address for an organization.
+    addPartyRequest_OrgPartyInfo_OrgData_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_PhoneNum'
+        Email:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_Email'
+    addPartyRequest_OrgPartyInfo_OrgData_GovIssuedIdent_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: |-
+        Country code details of a party.
+
+
+
+        **Note:** CountryCode is required for non US addresses.
+    addPartyRequest_OrgPartyInfo_OrgData_GovIssuedIdent:
+      required:
+      - CountryCode
+      type: object
+      properties:
+        CountryCode:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_GovIssuedIdent_CountryCode'
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+      description: Details of government-issued identifier.
+    addPartyRequest_OrgPartyInfo_OrgData_IssuedIdent:
+      required:
+      - IssuedIdentType
+      properties:
+        IssuedIdentType:
+          type: string
+          description: |-
+            Type of issued identity card/document.
+
+
+
+            **Note:** DNA does not support multiple identification document for the same identification type.
+
+            Values are client-defined.
+        IssuedIdentValue:
+          maxLength: 32
+          type: string
+          description: |-
+            Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
+
+
+
+            Example: 3762849726
+        IssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Date on which the identification was issued.
+
+
+
+            Format: yyyy-mm-dd
+
+            Example: 2021-01-31
+        ExpDt:
+          type: string
+          description: "Date after which issued identity card/document expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        GovIssuedIdent:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_GovIssuedIdent'
+    addPartyRequest_OrgPartyInfo_OrgData_OrgName:
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: |-
+            Name of the organization.
+
+
+
+            **Note:** Applicable when adding a new organization party.
+    addPartyRequest_OrgPartyInfo_OrgData_OrgCategory_OrgCategoryCode:
+      type: object
+      properties:
+        SIC:
+          maxLength: 4
+          type: string
+          description: |+
+            Standard Industrial Classification (SIC) code of the organization.
+
+        SICSubCode:
+          maxLength: 4
+          type: string
+          description: Standard Industrial Classification (SIC) sub code of the organization.
+      description: Code to specify the category of the organization.
+    addPartyRequest_OrgPartyInfo_OrgData_OrgCategory:
+      required:
+      - OrgCategoryCode
+      type: object
+      properties:
+        OrgCategoryCode:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_OrgCategory_OrgCategoryCode'
+      description: Category details of the organization.
+    addPartyRequest_OrgPartyInfo_OrgData:
+      type: object
+      properties:
+        Contact:
+          type: array
+          description: Contact information of a party.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_Contact'
+        IssuedIdent:
+          type: array
+          description: Details of identification data for a party. Party can be a person or an organization.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_IssuedIdent'
+        OrgName:
+          type: array
+          description: Name details of the organization.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_OrgName'
+        OrgCategory:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData_OrgCategory'
+      description: Data related to an organization.
+    addPartyRequest_OrgPartyInfo:
+      type: object
+      properties:
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_ClientDefinedData'
+        PartyType:
+          type: string
+          description: |-
+            Type of a party.
+
+
+
+            **Note:** Applicable when adding a new organization party. An organization type defines the general purpose of the organization like corporation, credit union, bank holding company, non-profit organization and so on. Values are client-defined.
+        TaxDataInfo:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_TaxDataInfo'
+        DisclosureData:
+          type: array
+          description: Disclosure data related to a party.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_DisclosureData'
+        NAICS:
+          maxLength: 6
+          type: array
+          description: Six-digit North American Industry Classification System (NAICS) code used to indicate the type of customer based upon standard government definitions.
+          items: {}
+        IntReportingCode:
+          type: string
+          description: |-
+            Code to indicate the organization party is reported for interest report 1099.
+
+
+
+            **Note:** Applicable when adding a new oraganization party.
+          enum:
+          - None
+          - 1099-INT
+        OrgData:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_OrgData'
+      description: Information related to party when party is an organization.
+    StatusType_DNA_AdditionalStatus:
+      type: object
+      properties:
         ServerStatusCode:
           maxLength: 20
           type: string
@@ -336,17 +1084,52 @@ components:
           maxLength: 255
           type: string
           description: Description of the server status code of the service provider's application.
-        AdditionalStatus:
-          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
-      description: Details of the API response messages.
-    SeverityType:
-      title: SeverityType
-      type: string
-      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
-      enum:
-      - Error
-      - Warning
-      - Info
+      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+    addPartyResponse_PartyStatusRec_PartyKeys:
+      required:
+      - PartyIdent
+      - PartyIdentType
+      type: object
+      properties:
+        PartyIdentType:
+          type: string
+          description: Type of party identification.
+          enum:
+          - OrgNum
+          - PersonNum
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: Unique identifier for a party.
+      description: Unique information to identify the party record.
+    addPartyResponse_PartyStatusRec_PartyStatus:
+      required:
+      - PartyStatusCode
+      type: object
+      properties:
+        PartyStatusCode:
+          type: string
+          description: Code to indicate the status of the party record.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the party status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: |+
+        Status details of the party record.
+
+    addPartyResponse_PartyStatusRec:
+      required:
+      - PartyKeys
+      - PartyStatus
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addPartyResponse_PartyStatusRec_PartyKeys'
+        PartyStatus:
+          $ref: '#/components/schemas/addPartyResponse_PartyStatusRec_PartyStatus'
+      description: Details of the party status record in response to add operation.
     getPartyInqSecureRequest_PartySel_PartyKeys:
       required:
       - PartyIdent
@@ -441,12 +1224,7 @@ components:
       properties:
         USATaxIdCertDate:
           type: string
-          description: |-
-            Date on which tax identifier certification was issued.
-
-
-
-            Format: yyyy-mm-dd
+          description: "Date on which tax identifier certification was issued.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
       description: Details of the tax identifier certification.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientResidenceCountry:
@@ -480,21 +1258,11 @@ components:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientResidenceCountry'
         ForeignCertDt:
           type: string
-          description: |-
-            Date on which foreign certificate was issued.
-
-
-
-            Format: YYYY-MM-DDT00:00:00
+          description: "Date on which foreign certificate was issued.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         ForeignExpDt:
           type: string
-          description: |-
-            Date on which foreign certificate is scheduled to expire.
-
-
-
-            Format: YYYY-MM-DDT00:00:00
+          description: "Date on which foreign certificate is scheduled to expire.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
       description: Details of the foreign tax.
     getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo:
@@ -511,12 +1279,7 @@ components:
           description: "Unique identifier of tax. \n\n\n\nExample: \"123456789\""
         TaxIdentApplyDt:
           type: string
-          description: |-
-            Date on which application for allocation of tax identifier number was made.
-
-
-
-            Format: yyyy-mm-dd
+          description: "Date on which application for allocation of tax identifier number was made.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         USATaxIdCert:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_USATaxIdCert'
@@ -717,9 +1480,11 @@ components:
           description: |-
             Start date and time value.
 
-            Format: YYYY-MM-DDT00:00:00
 
-            Example: 2021-01-31T00:00:00
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         StartDayMonth:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_TimeFrame_StartDayMonth'
         EndDt:
@@ -728,9 +1493,11 @@ components:
           description: |-
             End date and time value.
 
-            Format: YYYY-MM-DDT00:00:00
 
-            Example: 2021-01-31T00:00:00
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         EndDayMonth:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_TimeFrame_EndDayMonth'
       description: |-
@@ -773,7 +1540,7 @@ components:
         PostalCode:
           maxLength: 11
           type: string
-          description: Postal code or zip code.
+          description: "Postal code or zip code.\n\n\n\n**Note:** ZIP+4 is used if country is USA. "
         CountryCode:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_PostAddr_CountryCode'
         AddrType:
@@ -873,22 +1640,10 @@ components:
         IssueDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Date when the identity card/document was issued.
-
-            Format: YYYY-MM-DDT00:00:00
-
-            Example: 2021-01-31T00:00:00
+          description: "Date when the identity card/document was issued.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
         ExpDt:
           type: string
-          description: |-
-            Date after which issued identity card/document expires.
-
-
-
-            Format: YYYY-MM-DDT00:00:00
-
-            Example: 2021-01-31T00:00:00
+          description: "Date after which issued identity card/document expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         GovIssuedIdent:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData_GovIssuedIdent'
@@ -1021,11 +1776,11 @@ components:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_PersonData'
         BirthDt:
           type: string
-          description: "Date of birth of a person.\n\n\n\nFormat: YYYY-MM-DDT00:00:00 \n\nExample: 2021-11-20T00:00:00 "
+          description: "Date of birth of a person.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         DeceasedDt:
           type: string
-          description: "Date of death of a person.\n\n\n\nFormat: YYYY-MM-DDT00:00:00 \n\nExample: 2021-11-20T00:00:00 "
+          description: "Date of death of a person.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         Employment:
           type: array
@@ -1061,21 +1816,11 @@ components:
           description: 'Recipient Global Intermediary Identification Number (GIIN). IRS assigns to a Participating Foreign Financial Institution (PFFI) or Registered Deemed Compliant FFI after a financial institution’s FATCA registration is submitted and approved. '
         ForeignCertDt:
           type: string
-          description: |-
-            Date on which foreign certificate was issued.
-
-
-
-            Format: YYYY-MM-DDT00:00:00
+          description: "Date on which foreign certificate was issued.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         ForeignExpDt:
           type: string
-          description: |-
-            Date on which foreign certificate is scheduled to expire.
-
-
-
-            Format: YYYY-MM-DDT00:00:00
+          description: "Date on which foreign certificate is scheduled to expire.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
       description: Details of the foreign tax.
     getPartyInqSecureResponse_PartyRec_OrgPartyInfo_TaxDataInfo:
@@ -1096,12 +1841,7 @@ components:
           description: "Unique identifier of tax. \n\n\n\n**Note:** Refers to TaxID number."
         TaxIdentApplyDt:
           type: string
-          description: |-
-            Date on which application for allocation of tax identifier number was made.
-
-
-
-            Format: yyyy-mm-dd
+          description: "Date on which application for allocation of tax identifier number was made.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
           format: date
         USATaxIdCert:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_TaxDataInfo_USATaxIdCert'
@@ -1247,9 +1987,11 @@ components:
           description: |-
             Start date and time value.
 
-            Format: YYYY-MM-DDT00:00:00
 
-            Example: 2021-01-31T00:00:00
+
+            Format: YYYY-MM-DDThh:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         StartDayMonth:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr_TimeFrame_StartDayMonth'
         EndDt:
@@ -1258,9 +2000,11 @@ components:
           description: |-
             End date and time value.
 
-            Format: YYYY-MM-DDT00:00:00
 
-            Example: 2021-01-31T00:00:00
+
+            Format: YYYY-MM-DDThh:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         EndDayMonth:
           $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_OrgPartyInfo_OrgData_PostAddr_TimeFrame_EndDayMonth'
       description: |-
@@ -1447,7 +2191,7 @@ components:
         LastUpdateDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date when the party item was last updated. \n\n\n\nFormat: YYYY-MM-DDThh:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Date and time value when the party item was last updated. \n\n\n\nFormat: YYYY-MM-DDThh:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
         IntReportingCode:
           type: string
           description: Code that indicates the interest reporting.
@@ -1627,18 +2371,22 @@ components:
           description: |-
             Start date and time value.
 
-            Format: YYYY-MM-DDT00:00:00
 
-            Example: 2021-01-31T00:00:00
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         EndDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |-
             End date and time value.
 
-            Format: YYYY-MM-DDT00:00:00
 
-            Example: 2021-01-31T00:00:00
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
         StartDayMonth:
           $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PostAddr_TimeFrame_StartDayMonth'
         EndDayMonth:
@@ -1830,7 +2578,14 @@ components:
           $ref: '#/components/schemas/getPartyListInqSecuredResponse_PersonPartyListInfo_PersonName'
         BirthDt:
           type: string
-          description: "Date of birth of a person.\n\n\n\nFormat: YYYY-MM-DDT00:00:00 \n\nExample: 2021-11-20T00:00:00 "
+          description: |-
+            Date of birth of a person.
+
+
+
+            Format: YYYY-MM-DD
+
+            Example: 2021-11-20
           format: date
       description: Frequently used properties of a person party.
     getPartyListInqSecuredResponse_OrgPartyListInfo_PhoneNum:
@@ -2041,15 +2796,536 @@ components:
           $ref: '#/components/schemas/getPartyListInqSecuredResponse_OrgPartyListInfo'
         PartyStatus:
           $ref: '#/components/schemas/getPartyListInqSecuredResponse_PartyStatus'
-    StatusType_DNA_AdditionalStatus:
+    UpdatePartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData:
       type: object
       properties:
-        ServerStatusCode:
-          maxLength: 20
+        RecipientCountryCode:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode'
+        ForeignExpDt:
           type: string
-          description: Server status code of the service provider's application.
-        ServerStatusDesc:
-          maxLength: 255
+          description: "Date after which the foreign tax expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+      description: Data related to the taxes paid to a foreign government as a result of foreign income tax withholdings.
+    UpdatePartyRequest_PersonPartyInfo_TaxDataInfo:
+      type: object
+      properties:
+        TaxIdent:
+          maxLength: 12
           type: string
-          description: Description of the server status code of the service provider's application.
-      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          description: |-
+            Unique identifier of tax ID.
+
+
+
+            Example: "123456789"
+        TaxIdentApplyDt:
+          type: string
+          description: "Date of the tax identifier application.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        USATaxIdCert:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_TaxDataInfo_USATaxIdCert'
+        ForeignTaxData:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData'
+      description: |-
+        Tax information related to a party.
+
+
+
+        **Note:** To update tax identification details, DNA only allows updation and not deletion of the tax data.
+    UpdatePartyRequest_PersonPartyInfo_SecretData:
+      properties:
+        SecretValue:
+          maxLength: 80
+          type: string
+          description: |-
+            Value of the SecretIdent field that includes customer's answer to the corresponding security question.
+
+
+
+            **Note:** Refers to customer keyword.
+    UpdatePartyRequest_PersonPartyInfo_PersonData_PhoneNum_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: |-
+        Country code details of a party.
+
+
+
+        **Note:** DNA requires country code details when adding or updating a non US based phone number.
+    UpdatePartyRequest_PersonPartyInfo_PersonData_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of a phone.\n\n\n\n**Note:** \n\n- DNA supports multiple PhoneTypes per party and multiple phone records per PhoneType\n\n- Values are client-defined\n\n"
+        PhoneIdent:
+          type: string
+          description: "Phone identifier to serialize the phone types when more than one phone type exists.\n\n\n\n**Note:** In DNA, PhoneIdent is a system assigned phone sequence number to identify a phone number. Calling application should provide phone sequence number when updating or deleteing the existing phone number record. "
+        Phone:
+          type: string
+          description: Phone number of the party.
+        CountryCode:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_PhoneNum_CountryCode'
+      description: Phone number details of a party.
+    UpdatePartyRequest_PersonPartyInfo_PersonData_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_PhoneNum'
+        Email:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_Email'
+    UpdatePartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+      description: |-
+        Country code details of a party.
+
+
+
+        **Note:** If country code details are not provided it is assumed the party is a US based party.
+    UpdatePartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent:
+      required:
+      - CountryCode
+      type: object
+      properties:
+        CountryCode:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent_CountryCode'
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+      description: Details of government-issued identifier.
+    UpdatePartyRequest_PersonPartyInfo_PersonData_IssuedIdent:
+      required:
+      - IssuedIdentType
+      properties:
+        IssuedIdentType:
+          type: string
+          description: "Type of issued identity card/document.\n\n\n\n**Note:** DNA does not support multiple identification document for the same identification type. For example party can not have two driver license issued by two states. \n\nValues are client-defined."
+        IssuedIdentValue:
+          maxLength: 32
+          type: string
+          description: |-
+            Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
+
+
+
+            Example: 3762849726
+        IssueDt:
+          type: string
+          description: |-
+            Date when the identity card/document was issued.
+
+
+
+            Format: yyyy-mm-dd
+
+            Example: 2021-01-31
+          format: date
+        ExpDt:
+          type: string
+          description: "Date after which issued identity card/document expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        GovIssuedIdent:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent'
+    UpdatePartyRequest_PersonPartyInfo_PersonData_PersonName:
+      properties:
+        FamilyName:
+          maxLength: 40
+          type: string
+          description: |-
+            Family name or last name of a person.
+
+
+
+            **Note:** *Required Field*
+        GivenName:
+          maxLength: 40
+          type: string
+          description: |-
+            First name of a person.
+
+
+
+            **Note:** *Required Field*
+        MiddleName:
+          maxLength: 40
+          type: string
+          description: |-
+            Middle name of a person.
+
+
+
+            **Note:** Middle name or middle intial is an optional field.
+        NamePrefix:
+          type: string
+          description: A title before person's name. For example, Mr, Mrs, Dr.
+        NameSuffix:
+          type: string
+          description: 'Name suffix to add after the name of a person. '
+        PreferredName:
+          maxLength: 96
+          type: string
+          description: |-
+            Preferred user-defined name to be used for the party.
+
+            **Note:** Refers to nickname of a person.
+    UpdatePartyRequest_PersonPartyInfo_PersonData:
+      type: object
+      properties:
+        Contact:
+          type: array
+          description: Contact information of a party.
+          items:
+            $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_Contact'
+        IssuedIdent:
+          type: array
+          description: Details of issued identity card/document of a party.
+          items:
+            $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_IssuedIdent'
+        PersonName:
+          type: array
+          description: |-
+            Name details of a person party.
+
+
+
+            **Note:** DNA allows only updation in the name details for the person party.
+          items:
+            $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_PersonName'
+      description: Information related to person party.
+    UpdatePartyRequest_PersonPartyInfo:
+      type: object
+      properties:
+        PartyPref:
+          type: object
+          description: Preferences of a party for the service provider to provide party-specific "parameters".
+        ClientDefinedData:
+          type: array
+          description: |-
+            Client-defined data where value, data type and definition are defined by the client or user.
+
+
+
+            **Note:** DNA does not support deletion of the client-defined data.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_ClientDefinedData'
+        TaxDataInfo:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_TaxDataInfo'
+        SecretData:
+          type: array
+          description: |+
+            Client-defined secret data of party that is used to validate the identity of the party in scenarios such as forgotten password.
+
+
+
+            **Note:** DNA supports only one secret data record per person party.
+
+          items:
+            $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_SecretData'
+        RiskRanking:
+          type: string
+          description: "Level of risk assigned to a party. \n\n\n\n**Note:** Values are client-defined."
+        PersonData:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData'
+        BirthDt:
+          type: string
+          description: "Date of birth of a person.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        DeceasedDt:
+          type: string
+          description: "Date of death of the party. Valid only for a person party.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        Employment:
+          type: array
+          description: |-
+            Employment details of the party.
+
+
+
+            **Note:** DNA supports only one employment record per person party.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_Employment'
+        Dependents:
+          type: integer
+          description: Number of dependents related to the party.
+          format: int64
+        HomeOwnership:
+          type: string
+          description: |-
+            Code to identify the home ownership. Party can own or rent a home.
+
+
+
+            **Note:** HomeOwnership field cannot be sent as blank or null. DNA allows to update this field.
+          enum:
+          - Own
+          - Rent
+      description: Information related to a person party.
+    UpdatePartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData:
+      type: object
+      properties:
+        RecipientCountryCode:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_TaxDataInfo_ForeignTaxData_RecipientCountryCode'
+        ForeignCertDt:
+          type: string
+          description: "Date of the foreign tax certification.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n\n\n**Note:** Either USATaxIdCertDate or ForeignCertDt can be provided."
+          format: date
+        ForeignExpDt:
+          type: string
+          description: "Date after which the foreign tax expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+      description: Data related to the taxes paid to a foreign government as a result of foreign income tax withholdings.
+    UpdatePartyRequest_OrgPartyInfo_TaxDataInfo:
+      type: object
+      properties:
+        TaxIdentType:
+          type: string
+          description: "Type of tax identification. \n\n\n\n**Note:** Refers to Federal Employee Identification Number (FEIN)."
+          enum:
+          - EIN
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: |-
+            Unique identifier of tax.
+
+
+
+            Example: "123456789"
+        TaxIdentApplyDt:
+          type: string
+          description: "Date of the tax identifier application.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        USATaxIdCert:
+          $ref: '#/components/schemas/addPartyRequest_OrgPartyInfo_TaxDataInfo_USATaxIdCert'
+        ForeignTaxData:
+          $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_TaxDataInfo_ForeignTaxData'
+      description: |-
+        Tax information related to a party.
+
+
+
+        **Note:** To update tax identification details, DNA only allows updation of the ForeignExpDt field.
+    UpdatePartyRequest_OrgPartyInfo_OrgData_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of a phone.\n\n\n\n**Note:** \n\n- DNA supports multiple PhoneTypes per party and multiple phone records per PhoneType\n\n- Values are client-defined\n\n"
+        PhoneIdent:
+          type: integer
+          description: "Phone identifier to serialize the phone types when more than one phone type exists.\n\n\n\n**Note:** In DNA, PhoneIdent is a system assigned phone sequence number to identify a phone number. Calling application should provide phone sequence number when updating or deleting the existing phone number record. "
+          format: int64
+        Phone:
+          type: string
+          description: Phone number of the party.
+        CountryCode:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent_CountryCode'
+      description: Phone number details of a party.
+    UpdatePartyRequest_OrgPartyInfo_OrgData_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_OrgData_PhoneNum'
+        Email:
+          $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_PersonData_Email'
+    UpdatePartyRequest_OrgPartyInfo_OrgData_IssuedIdent:
+      required:
+      - IssuedIdentType
+      properties:
+        IssuedIdentType:
+          type: string
+          description: "Type of issued identity card/document.\n\n\n\n**Note:** DNA does not support multiple identification document for the same identification type. For example party can not have two driver license issued by two states. \n\nValues are client-defined."
+        IssuedIdentValue:
+          maxLength: 32
+          type: string
+          description: |-
+            Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
+
+
+
+            Example: 3762849726
+        IssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Date when the identity card/document was issued.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+        ExpDt:
+          type: string
+          description: "Date after which issued identity card/document expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        GovIssuedIdent:
+          $ref: '#/components/schemas/UpdatePartyRequest_PersonPartyInfo_PersonData_GovIssuedIdent'
+    UpdatePartyRequest_OrgPartyInfo_OrgData_OrgName:
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: Name of the organization.
+    UpdatePartyRequest_OrgPartyInfo_OrgData_OrgCategory_OrgCategoryCode:
+      type: object
+      properties:
+        SIC:
+          maxLength: 4
+          type: string
+          description: |+
+            Standard Industrial Classification (SIC) code of the organization.
+
+        SICSubCode:
+          maxLength: 4
+          type: string
+          description: Standard Industrial Classification (SIC) sub code of the organization.
+        RoutingNum:
+          type: integer
+          description: |-
+            Routing number of the organization party.
+
+
+
+            **Note:** Applicable if the organization party is a financial institution. DNA does not support option to inquire an organization's routing number, if required can be fetched using DNA UI.
+          format: int64
+      description: Code to specify the category of the organization.
+    UpdatePartyRequest_OrgPartyInfo_OrgData_OrgCategory:
+      required:
+      - OrgCategoryCode
+      type: object
+      properties:
+        OrgCategoryCode:
+          $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_OrgData_OrgCategory_OrgCategoryCode'
+      description: Category details of the organization.
+    UpdatePartyRequest_OrgPartyInfo_OrgData:
+      type: object
+      properties:
+        Contact:
+          type: array
+          description: Contact information of a party.
+          items:
+            $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_OrgData_Contact'
+        IssuedIdent:
+          type: array
+          description: |-
+            Details of issued identity card/document of a party.
+
+
+
+            **Note:** DNA does not allow to inquire for issue identification data, if required can be fetched using DNA UI.
+          items:
+            $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_OrgData_IssuedIdent'
+        OrgName:
+          type: array
+          description: |-
+            Name details of the organization.
+
+
+
+            **Note:** DNA allows only updation in the name details for the organization party.
+          items:
+            $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_OrgData_OrgName'
+        OrgCategory:
+          $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_OrgData_OrgCategory'
+      description: Data related to an organization.
+    UpdatePartyRequest_OrgPartyInfo:
+      type: object
+      properties:
+        ClientDefinedData:
+          type: array
+          description: |-
+            Client-defined data where value, data type and definition are defined by the client or user.
+
+
+
+            **Note:** DNA does not support deletion of the client-defined data.
+          items:
+            $ref: '#/components/schemas/addPartyRequest_PersonPartyInfo_ClientDefinedData'
+        PartyType:
+          type: string
+          description: |-
+            Type of a party.
+
+
+
+            **Note:** An organization type defines the general purpose of the organization like corporation, credit union, bank holding company, non-profit organization and so on. Values are client-defined.
+        TaxDataInfo:
+          $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_TaxDataInfo'
+        DisclosureData:
+          type: array
+          description: |-
+            Disclosure data related to a party.
+
+
+
+            **Note:** DNA support only one Disclosure data record per organization party.
+          items:
+            $ref: '#/components/schemas/getPartyInqSecureResponse_PartyRec_PersonPartyInfo_DisclosureData'
+        NAICS:
+          maxLength: 6
+          type: array
+          description: Six-digit North American Industry Classification System (NAICS) code used to indicate the type of customer based upon standard government definitions.
+          items: {}
+        IntReportingCode:
+          type: string
+          description: |-
+            Code to indicate the organization party is reported for interest report 1099.
+
+
+
+            **Note:** Applicable when adding a new oraganization party.
+          enum:
+          - None
+          - 1099-INT
+        OrgData:
+          $ref: '#/components/schemas/UpdatePartyRequest_OrgPartyInfo_OrgData'
+      description: Information related to party when party is an organization.
+    UpdatePartyResponse_PartyStatusRec_PartyKeys:
+      required:
+      - PartyIdent
+      - PartyIdentType
+      type: object
+      properties:
+        PartyIdentType:
+          type: string
+          description: Type of party identification.
+          enum:
+          - Not
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: Unique identifier for a party.
+      description: Unique information to identify the party record.
+    UpdatePartyResponse_PartyStatusRec:
+      required:
+      - PartyKeys
+      - PartyStatus
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/UpdatePartyResponse_PartyStatusRec_PartyKeys'
+        PartyStatus:
+          $ref: '#/components/schemas/addPartyResponse_PartyStatusRec_PartyStatus'
+      description: Details of the party status record in response to update operation.
+  parameters:
+    EFXHeader:
+      name: EFXHeader
+      in: header
+      description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/EFXHeader'
