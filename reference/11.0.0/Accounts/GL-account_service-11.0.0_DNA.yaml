@@ -1,19 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Collateral Service
-  description: "Collateral service manages creation/addition, modification, deletion, and inquiry request related to collateral. \n    <br>\nIt is implemented in the CollateralService service domain."
+  title: GLAccount Service
+  description: General Ledger Account Service retrieves information about general ledger account and positions.
   version: 11.0.0_DNA
 servers:
 - url: /
 paths:
-  /collateralservice/collateral/collateral/secured:
+  /glAccounts/secured:
     post:
       tags:
-      - Get Collateral
-      summary: Get Collateral.
-      description: "Get Collateral API retrieves the existing collateral records. <br>For DNA, this API retrieves the collateral information and excludes information about deposit accounts used as a collateral. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
-      operationId: CollateralInqSecured
+      - Get GLAccount
+      summary: Get GLAccount.
+      description: "Get GL Account API retrieves a list of all the General Ledger accounts or General Ledger positions. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: getGLAccountSecured
       parameters:
       - name: EFXHeader
         in: header
@@ -25,49 +25,62 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CollateralInqSecuredRequest'
+              $ref: '#/components/schemas/getGLAccountSecuredRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CollateralInqSecuredResponse'
+                $ref: '#/components/schemas/getGLAccountSecuredResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CollateralInqSecuredResponse'
-      x-group-name: Collateral Service
-      x-proxy-name: Get Collateral
+                $ref: '#/components/schemas/getGLAccountSecuredResponse'
+      x-group-name: GL Account Service
+      x-proxy-name: Get GL Account Details
       x-child-product-name: Accounts
       x-core: DNA
 components:
   schemas:
-    CollateralInqSecuredRequest:
-      required:
-      - CollateralSel
+    getGLAccountSecuredRequest:
       properties:
-        RecCtrlIn:
-          type: object
-          description: Maximum number of records that a client can specify to process within a single response.
-        CollateralSel:
-          $ref: '#/components/schemas/CollateralInqSecuredRequest_CollateralSel'
-    CollateralInqSecuredResponse:
-      required:
-      - CollateralRec
+        $pageLimit:
+          type: integer
+          description: "Maximum number of records that can be returned within a single response. Used for both page base and cursor base pagination. \n\n\n\n**Note:** For inquiry, the \"pageLimit\" field cannot be used in combination with the \"accountNumber\" field.\n\nIf this field is not provided, then it returns default number of records that is 20."
+          format: int64
+        $pageOffset:
+          type: integer
+          description: |-
+            Starting point of the result set. This field is required for page base pagination.
+
+
+
+            **Note:** For inquiry, the "pageOffset" field cannot be used in combination with the "accountNumber" field.
+          format: int64
+        accountNumber:
+          type: string
+          description: "Account number of general ledger. \n\n\n\n**Note:**  If the request includes the account number and segment id, then response is based on the account number.\n\n\n\nIf the account number and segment id are present in the request, then response is generated on the basis of account number."
+        segments:
+          type: array
+          description: Details of account number segments. Segments further classify the account number.
+          items:
+            $ref: '#/components/schemas/getGLAccountSecuredRequest_segments'
+    getGLAccountSecuredResponse:
       properties:
         Status:
           $ref: '#/components/schemas/StatusType_DNA'
-        RecCtrlOut:
-          type: object
-          description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
-        CollateralRec:
+        page:
+          type: integer
+          description: Page number of the current page. Used for page base pagination.
+          format: int64
+        glAccounts:
           type: array
-          description: 'Details of the collateral record. '
+          description: 'Details of general ledger accounts. '
           items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralRec'
+            $ref: '#/components/schemas/getGLAccountSecuredResponse_glAccounts'
     EFXHeader:
       required:
       - OrganizationId
@@ -299,272 +312,74 @@ components:
       - Error
       - Warning
       - Info
-    CollateralInqSecuredRequest_CollateralSel_CollateralKeys:
+    getGLAccountSecuredRequest_segments:
       required:
-      - CollateralId
-      type: object
+      - id
+      - value
       properties:
-        CollateralId:
-          maxLength: 36
+        id:
           type: string
-          description: |+
-            Unique identifier of a collateral record.
-
-
-
-      description: 'Unique information to identify the collateral record. '
-    CollateralInqSecuredRequest_CollateralSel:
-      type: object
-      properties:
-        CollateralKeys:
-          $ref: '#/components/schemas/CollateralInqSecuredRequest_CollateralSel_CollateralKeys'
-      description: "Selection criteria to retrieve collateral record.\n\n\n\n**Note:**\n\n- All selection criteria in the request are passed through the multiple standards \n\n- Precedence is given to the \"CollateralId\" field, if it is present in the set of data that is sent and thus \"GetCollateralForInquiry\" is called"
-    CollateralInqSecuredResponse_CollateralKeys_CollateralIdent:
-      properties:
-        CollateralIdentType:
+          description: Unique identifier of the segment.
+        value:
+          maxLength: 256
           type: string
-          description: 'Type of collateral identification. '
-    CollateralInqSecuredResponse_CollateralKeys:
+          description: |-
+            Value of the segment.
+
+
+
+            **Note:** If the request does not include the account number and segment id, then all records in the response are available. Else the response is based on the requested parameter.
+    getGLAccountSecuredResponse_segments:
       required:
-      - CollateralId
-      type: object
+      - id
+      - value
       properties:
-        CollateralIdent:
+        id:
+          type: string
+          description: Unique identifier for the segment.
+        value:
+          maxLength: 256
+          type: string
+          description: Value of the segment.
+    getGLAccountSecuredResponse_positions:
+      required:
+      - number
+      - segments
+      properties:
+        number:
+          type: string
+          description: Full number of the general ledger account. This number is used during general ledger credit and debit posting.
+        segments:
           type: array
-          description: Details of the collateral identifier.
+          description: Details of account number segments. Segments further classify the account number.
           items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralKeys_CollateralIdent'
-        CollateralId:
-          maxLength: 36
-          type: string
-          description: 'Unique identification number to identify the collateral record. '
-      description: Unique information to identify the collateral record.
-    CollateralInqSecuredResponse_CollateralInfo_PostAddr:
-      properties:
-        AddrLocationEnumDesc:
-          maxLength: 80
-          type: string
-          description: Description of the address location.
-    CollateralInqSecuredResponse_CollateralInfo_CollateralValueData_UnitPrice_PricePerUnitAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: "Amount in decimal format. \n\nExample: 10.00\n\n"
-      description: 'Details of the amount per unit price. '
-    CollateralInqSecuredResponse_CollateralInfo_CollateralValueData_UnitPrice:
+            $ref: '#/components/schemas/getGLAccountSecuredResponse_segments'
+    getGLAccountSecuredResponse_glAccounts:
       required:
-      - UnitNum
-      type: object
+      - class
+      - name
+      - number
       properties:
-        PricePerUnitAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralValueData_UnitPrice_PricePerUnitAmt'
-        UnitNum:
-          type: integer
-          description: Number of collateral units.
-          format: int64
-      description: 'Details of the collateral unit price. '
-    CollateralInqSecuredResponse_CollateralInfo_CollateralValueData_PurchasePriceAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: "Amount in decimal format. \n\nExample: 10.00\n\n"
-      description: Details of the purchase price amount.
-    CollateralInqSecuredResponse_CollateralInfo_CollateralValueData:
-      type: object
-      properties:
-        PreviousValueDt:
+        number:
           type: string
-          description: "Date on which the collateral was valued previously. \n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20  "
-          format: date
-        PurchasePriceDt:
+          description: Account number of the general ledger.
+        name:
           type: string
-          description: "Date of the collateral purchase price. \n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20  "
-          format: date
-        UnitPrice:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralValueData_UnitPrice'
-        PurchasePriceAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralValueData_PurchasePriceAmt'
-      description: Details of the collateral value.
-    CollateralInqSecuredResponse_CollateralInfo_CollateralFilingData:
-      properties:
-        FilingBook:
-          maxLength: 30
+          description: 'Account name of the general ledger. '
+        class:
           type: string
-          description: 'Book of collateral filing. '
-        FilingPage:
-          maxLength: 30
-          type: string
-          description: 'Page number of the record in collateral filing. '
-    CollateralInqSecuredResponse_CollateralInfo_VehicleData:
-      type: object
-      properties:
-        Make:
-          maxLength: 30
-          type: string
-          description: Manufacturer of the vehicle.
-        Model:
-          maxLength: 40
-          type: string
-          description: 'Model name of the vehicle. '
-        TitleNum:
-          maxLength: 30
-          type: string
-          description: |+
-            Registration number of the vehicle.
-
-        ModelYear:
-          type: integer
-          description: 'Year of the vehicle model. '
-          format: int64
-        Color:
-          maxLength: 20
-          type: string
-          description: 'Color of the vehicle. '
-        ConditionCode:
-          type: string
-          description: User-defined code to indicate the physical status of collateral.
-        Mileage:
-          type: integer
-          description: 'Mileage of the vehicle. '
-          format: int64
-      description: 'Details of the vehical kept as collateral. '
-    CollateralInqSecuredResponse_CollateralInfo_PropertyData_FloodData:
-      type: object
-      properties:
-        DeterminationDt:
-          type: string
-          description: "Date on which the flood prone property was determined. \n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20 "
-          format: date
-        CommunityNumber:
-          maxLength: 60
-          type: string
-          description: 'Number to identify the community. '
-        MapNumber:
-          maxLength: 30
-          type: string
-          description: Alphanumeric property map number that is assigned by the county officials to identify the property.
-        MapPanel:
-          maxLength: 30
-          type: string
-          description: |+
-            Alphanumeric number of the map panel to identify a property in a Special Flood Hazard Area (SFHA).
-
-
-
-        FloodZone:
-          maxLength: 40
-          type: string
-          description: |+
-            Alphanumeric value of the flood zone for a property.
-
-
-
-        TrackCompany:
-          type: string
-          description: Company that tracks the specified zone.
-      description: 'Details of the flood prone property. '
-    CollateralInqSecuredResponse_CollateralInfo_PropertyData_MarketValueAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: "Amount in decimal format. \n\nExample: 10.00"
-      description: 'Details of the market value of the property used as collateral. '
-    CollateralInqSecuredResponse_CollateralInfo_PropertyData_LegalData:
-      type: object
-      properties:
-        Lot:
-          maxLength: 60
-          type: string
-          description: Description of the lot applicable for the property kept as collateral.
-        Parcel:
-          maxLength: 60
-          type: string
-          description: Description of the parcel.
-      description: 'Details of the legal information related to property. '
-    CollateralInqSecuredResponse_CollateralInfo_PropertyData:
-      type: object
-      properties:
-        PropertyType:
-          type: string
-          description: "Type of property used for the collateral. \n\n\n\n"
+          description: Classification of the general ledger account.
           enum:
-          - MultiFamily
-          - ManufactedHousing
-          - Family1_4
-        SquareFt:
-          type: integer
-          description: 'Square footage of a property. '
-          format: int64
-        FloodData:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_PropertyData_FloodData'
-        MarketValueAmt:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_PropertyData_MarketValueAmt'
-        LegalData:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_PropertyData_LegalData'
-      description: Details of the property used as collateral.
-    CollateralInqSecuredResponse_CollateralInfo_CommodityData:
-      type: object
-      properties:
-        CUSIPNum:
-          maxLength: 30
-          type: string
-          description: Unique CUSIP (Committee on Uniform Securities Identification Procedures) number to identify the commodity.
-        Symbol:
-          maxLength: 20
-          type: string
-          description: 'Symbol to identify the commodity. '
-      description: |+
-        Details of the investment commodity used as collateral.
-
-    CollateralInqSecuredResponse_CollateralInfo:
-      type: object
-      properties:
-        CollateralDesc:
-          maxLength: 254
-          type: string
-          description: 'Description of the collateral. '
-        OccupancyType:
-          maxLength: 30
-          type: string
-          description: "Client-defined code to identify the type of occupancy for the property collateral. \n\n\n\n**Note:** Applicable if the collateral type is \"Basic\". This field indicates how the borrower uses the collateral."
-        PropertyTypeCode:
-          type: string
-          description: |+
-            User-defined classification code that indicates the type of property.
-
-
-
-        PostAddr:
+          - Asset
+          - Liabity
+          - Capital
+          - Revenue
+          - Expense
+        positions:
           type: array
-          description: "Details of the postal address. \n\n\n\n"
+          description: 'Details about the positions of the general ledger accounts. '
           items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_PostAddr'
-        CollateralValueData:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralValueData'
-        CollateralFilingData:
-          type: array
-          description: Details of collateral filing to identify the type of formal filings initiated by the organization for a collateral item.
-          items:
-            $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CollateralFilingData'
-        VehicleData:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_VehicleData'
-        PropertyData:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_PropertyData'
-        CommodityData:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo_CommodityData'
-      description: 'Details of a collateral.  '
-    CollateralInqSecuredResponse_CollateralRec:
-      required:
-      - CollateralInfo
-      - CollateralKeys
-      properties:
-        CollateralKeys:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralKeys'
-        CollateralInfo:
-          $ref: '#/components/schemas/CollateralInqSecuredResponse_CollateralInfo'
+            $ref: '#/components/schemas/getGLAccountSecuredResponse_positions'
     StatusType_DNA_AdditionalStatus:
       type: object
       properties:
