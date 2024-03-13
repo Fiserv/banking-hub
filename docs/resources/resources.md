@@ -11,7 +11,7 @@ titles: Downloads, Guidelines
 # Postman Collection
 
 <!-- theme: info -->  
-> [Download Postman Collection for Finxact Core (v1.23)](https://github.com/Fiserv/banking-hub/files/13785041/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
+> [Download Postman Collection for Finxact Core (v1.23)](https://github.com/Fiserv/banking-hub/files/14585882/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
 
 
 <!-- theme: info -->  
@@ -23,7 +23,12 @@ titles: Downloads, Guidelines
 
 
 
+
 <!--
+
+changed on 13 march: [Banking Hub - Finxact - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/14585882/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
+(https://github.com/Fiserv/banking-hub/files/13785041/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
+
 [Banking Hub - Finxact - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/13785041/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
 
 Premier core old: https://github.com/Fiserv/banking-hub/files/13785021/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
