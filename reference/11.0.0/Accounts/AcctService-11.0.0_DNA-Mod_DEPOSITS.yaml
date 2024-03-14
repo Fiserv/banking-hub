@@ -1,0 +1,601 @@
+---
+openapi: 3.0.1
+info:
+  title: Account Service
+  description: The account service helps to create and manage product accounts serviced by the financial institutions. It is also used to retrieve information about the existing accounts and maintain information of new accounts.
+  version: 11.0.0_DNA-Mod_DEPOSITS
+servers:
+- url: /
+paths:
+  /acctservice/acctmgmt/accounts:
+    put:
+      tags:
+      - Update Account
+      summary: Update Account.
+      description: "Update Account API modifies details for the deposit accounts such as Certificate of Deposit Account (CDA), Demand Deposit Account (DDA), Savings Deposit Account (SDA) and Regulatory Accounts (RRA). <br>For DNA, this API does not require to provide final state of the account record in order to update account information. Standalone aggregates can be provided in the request and are updated per request. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: AccountMod
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountModRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountModResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountModResponse'
+      x-group-name: Account Service
+      x-proxy-name: Update Account
+      x-child-product-name: Accounts
+      x-core: DNA-Deposits
+components:
+  schemas:
+    AccountModRequest:
+      required:
+      - AcctKeys
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/AccountModRequest_AcctKeys'
+        DepositAcctInfo:
+          $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo'
+    StatusType_DNA:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Example value is:
+              -  DNA
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        AdditionalStatus:
+          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    AccountModResponse:
+      required:
+      - AcctStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        AcctStatusRec:
+          $ref: '#/components/schemas/AccountModResponse_AcctStatusRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    AccountModRequest_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+      description: Unique information to identify the account record.
+    AccountModRequest_DepositAcctInfo_AddtlTitles:
+      properties:
+        AcctTitleType:
+          type: string
+          description: Type of account title.
+        AcctTitle:
+          maxLength: 255
+          type: string
+          description: "Title of account. This value is typically used to indicate the ownership or responsibility of account and manner in which the ownership or responsibility is assigned. \n\nFor example, John Doe CUSTODIAN.\n\n\n\n**Note:** To delete additional account title lines, the client application should provide additional account title fields with no data."
+    AccountModRequest_DepositAcctInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Unique data identifier to identify the client-defined data item.
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+    AccountModRequest_DepositAcctInfo_PostAddr:
+      properties:
+        AddressIdent:
+          type: string
+          description: |-
+            Unique address identification value.
+
+
+
+            **Note:** Refers to primary tax owner address user code. Some values can be user defined.
+          enum:
+          - PRI
+          - SEA
+    AccountModRequest_DepositAcctInfo_AcctMemoData:
+      properties:
+        AcctMemoType:
+          type: string
+          description: Type of account memo.
+          enum:
+          - Warning
+          - LockOut
+        AcctMemoCode:
+          type: string
+          description: |-
+            Code and a text message associated to a warning or memo.
+
+
+
+            **Note:** Refers to the warning or lockout code. Values of this field are user defined.
+        ExpDt:
+          type: string
+          description: |-
+            Date on which the warning IR teller message is expired.
+
+
+
+            Format: YYYY-MM-DD
+
+            Example: 2022-12-20
+          format: date
+    AccountModRequest_DepositAcctInfo_OverdraftData:
+      type: object
+      properties:
+        OverdraftEnrollOpt:
+          type: string
+          description: |-
+            Option to indicate the customer enrollment for overdraft program.
+
+
+
+            **Note:** This field is not applicable for RRA and LEAS account types.
+          enum:
+          - OptIn
+          - OptOut
+      description: Details of overdraft program.
+    AccountModRequest_DepositAcctInfo_FinancialLiterarcy:
+      type: object
+      properties:
+        IsRoundUp:
+          type: boolean
+          description: Flag to indicate the account is a roundup account. This is a reserved feature.
+        IsFunding:
+          type: boolean
+          description: Flag to indicate the account is a funding account. This is a reserved feature.
+      description: Information about financial literacy feature settings. This is a reserved feature.
+    AccountModRequest_DepositAcctInfo:
+      type: object
+      properties:
+        AcctDtlStatus:
+          type: string
+          description: Value that indicates the current status of the account.
+          enum:
+          - Active
+          - ClosedWithBalances
+          - Closed
+          - Dormant
+          - Inactive
+          - Approved
+          - Originating
+        Ownership:
+          type: string
+          description: |-
+            Value that indicates the ownership of an account.
+
+
+
+            **Note:** Some values can be user defined.
+          enum:
+          - Individual
+          - JointAnd
+          - JointOr
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account.
+
+
+
+            **Note:** Refers to the branch organization number that update is in the effect only on the next business day.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Name that customer can assign to the account for easy identification.
+        AcctTitleOption:
+          type: string
+          description: |-
+            Printing option for the account title.
+
+
+
+            **Note:** Refers to address format code. The following values indicate:
+
+            - DESC: Account Description
+
+            - TITL: Account Title
+
+            - TTDC: Account Title & Description
+
+            - STD: Standard Address Format
+
+            - TXID: Tax Id Owner
+
+            - TXDC: Tax Id Owner & Description
+        AddtlTitles:
+          type: array
+          description: Details of the additional titles.
+          items:
+            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_AddtlTitles'
+        HandlingCode:
+          type: string
+          description: |-
+            Handling code used for special routing of all correspondence involving the account.
+
+
+
+            **Note:** Refers to a mail type code.
+
+            For this field values are user defined.
+
+            The value "NONE" deletes the existing value.
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_ClientDefinedData'
+        PostAddr:
+          type: array
+          description: |-
+            Details of the postal address associated to the account.
+
+
+
+            **Note:** The client application provides one instance of postal address to indicate if the primary address, seasonal address or a secondary address must be used as the account address. This address act as an address linked to the tax owner of the account.
+          items:
+            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_PostAddr'
+        DocDistributionOption:
+          type: string
+          description: |-
+            Method to indicate the document distribution method used for processing the notices and statement forms.
+
+
+
+            **Note:** Refers to delivery method code. The following values indicate:
+
+            - WWW: Electronic Banking
+
+            - WBTH: Electronic Banking and printed form
+
+            - EML: Email
+
+            - EBTH: Email and Print
+
+            - PRNT: Printed Statement
+
+
+
+            Other values can be user defined.
+
+            This field is not applicable for RRA and LEAS account types.
+        AcctMemoData:
+          type: array
+          description: |-
+            Details of the important alerts set to an account to view during account inquiry.
+
+
+
+            **Note:** This field is not applicable for RRA account type.
+          items:
+            $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_AcctMemoData'
+        OverdraftData:
+          $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_OverdraftData'
+        SourceOfFunds:
+          type: string
+          description: |-
+            Source of funds for deposit account.
+
+
+
+            **Note:** the values are user defined.
+        FinancialLiterarcy:
+          $ref: '#/components/schemas/AccountModRequest_DepositAcctInfo_FinancialLiterarcy'
+      description: Details of the deposit account.
+    StatusType_DNA_AdditionalStatus:
+      type: object
+      properties:
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+    AccountModResponse_AcctStatusRec_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+          - RRA
+          - LEAS
+      description: Unique information to identify the account record.
+    AccountModResponse_AcctStatusRec_AcctStatus:
+      required:
+      - AcctStatusCode
+      type: object
+      properties:
+        AcctStatusCode:
+          type: string
+          description: Code to indicate the status of an account.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-dd-mmThh:mm:ss.sss\n\nExample: 2021-31-01T23:59:59.999"
+      description: Status details of an account.
+    AccountModResponse_AcctStatusRec:
+      required:
+      - AcctKeys
+      - AcctStatus
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/AccountModResponse_AcctStatusRec_AcctKeys'
+        AcctStatus:
+          $ref: '#/components/schemas/AccountModResponse_AcctStatusRec_AcctStatus'
+      description: Details of the updated status of the account.
+  parameters:
+    EFXHeader:
+      name: EFXHeader
+      in: header
+      description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/EFXHeader'
