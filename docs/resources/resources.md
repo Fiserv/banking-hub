@@ -22,9 +22,12 @@ titles: Downloads, Guidelines
 > [Download Postman Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/12516540/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
 
 
-
+<!-- theme: info -->  
+> [Download Postman Collection for DNA Core](https://github.com/Fiserv/banking-hub/files/14461530/EFX.Collection.for.DS.zip)
 
 <!--
+
+Added DNA on 14 March 24 -- https://github.com/Fiserv/banking-hub/files/14447763/EFX.Collection_DNA.zip
 
 changed on 13 march: [Banking Hub - Finxact - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/14585882/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
 (https://github.com/Fiserv/banking-hub/files/13785041/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
