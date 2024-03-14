@@ -1,0 +1,731 @@
+---
+openapi: 3.0.1
+info:
+  title: Credit Service
+  description: |-
+    The Credit service is used to add or reverse credit entry for a specified loan or deposit product account. <br>
+        This service helps to reverse from or post credit entry to the beneficiary or receiver’s account for specific types of payments including wire transfers plus fees.
+  version: 11.0.0_DNA
+servers:
+- url: /
+paths:
+  /creditservice/payments/credits:
+    put:
+      tags:
+      - Reverse Credit
+      summary: Reverse Credit.
+      description: "Reverse Credit API reverses the previously processed credit transaction for the Certificate of Deposit Account (CDA), Demand Deposit Account (DDA) and Savings Deposit Account (SDA).<br>For DNA, this API post a stand-alone Deposit Reversal transaction (DEPR) on the basis of the original transaction number passed in the request. Only Electronic (EL) transfers fund type is supported for reversal.  <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: CreditRevOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditRevOperRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevOperResponse'
+      x-group-name: Credit Service
+      x-proxy-name: Reverse Credit
+      x-child-product-name: Transactions
+      x-core: DNA
+    post:
+      tags:
+      - Add Credit
+      summary: Add Credit.
+      description: "Add Credit API creates a credit transaction where monetary funds are credited into a deposit account.<br>For DNA, this API supports only deposit transaction type with electronic fund type, cash fund type or check fund type. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: CreditAddOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditAddOperRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditAddOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditAddOperResponse'
+      x-group-name: Credit Service
+      x-proxy-name: Add Credit
+      x-child-product-name: Transactions
+      x-core: DNA
+components:
+  schemas:
+    CreditAddOperRequest:
+      required:
+      - CreditInfo
+      properties:
+        CreditInfo:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo'
+    StatusType_DNA:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Example value is:
+              -  DNA
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        AdditionalStatus:
+          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    CreditAddOperResponse:
+      required:
+      - CreditStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        CreditStatusRec:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/CreditAddOperResponse_Receipt'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    CreditRevOperRequest:
+      required:
+      - CreditInfo
+      - CreditKeys
+      properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys'
+        CreditInfo:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo'
+    CreditRevOperResponse:
+      required:
+      - CreditStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        CreditStatusRec:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt'
+    CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+      description: Unique information to identify the account record.
+    CreditAddOperRequest_CreditInfo_AcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
+      description: Reference information of an account that is being credited.
+    CreditAddOperRequest_CreditInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Transaction amount in decimal format.
+
+
+
+            **Note:** *Required field*
+      description: |+
+        Details of the amount to be processed in credit transaction.
+
+    CreditAddOperRequest_CreditInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      properties:
+        CurAmt:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CurAmt'
+    CreditAddOperRequest_CreditInfo_CashAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |+
+            Cash fund amount in decimal format.
+
+
+
+            **Note:** *Required field*
+
+      description: Details of the amount entered for cash.
+    CreditAddOperRequest_CreditInfo_CashInData:
+      required:
+      - CashAmt
+      properties:
+        CashAmt:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CashAmt'
+    CreditAddOperRequest_CreditInfo:
+      required:
+      - CompositeCurAmt
+      - CreditType
+      type: object
+      properties:
+        CreditType:
+          type: string
+          description: |-
+            Type of credit transaction.
+
+
+
+            **Note:** For this field a valid transaction type is required to be provided.
+          enum:
+          - Deposit
+        EffDt:
+          type: string
+          description: |-
+            Effective date and time when the transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** Refers to override effective date. If this field is not provided in the request, then service provider uses effective date value from user authentication data.
+        Desc:
+          maxLength: 200
+          type: array
+          description: |-
+            Description of the credit transaction.
+
+
+
+            **Note:**  DNA supports only single description. Only first description in the array is considered and rest are ignored.
+          items: {}
+        AcctRef:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef'
+        CompositeCurAmt:
+          type: array
+          description: Details of the composition of the credited amount.
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CompositeCurAmt'
+        CashInData:
+          type: array
+          description: Details of the cash in data that comprised the credit transaction.
+          items:
+            $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_CashInData'
+      description: Details of the credit transaction.
+    StatusType_DNA_AdditionalStatus:
+      type: object
+      properties:
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+    CreditAddOperResponse_CreditStatusRec_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditAddOperRequest_CreditInfo_AcctRef_AcctKeys'
+      description: Unique information to identify the credit record.
+    CreditAddOperResponse_CreditStatusRec_CreditStatus:
+      required:
+      - CreditStatusCode
+      type: object
+      properties:
+        CreditStatusCode:
+          type: string
+          description: |+
+            Code to indicate the status of the credit transaction.
+
+          enum:
+          - Posted
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the credit transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+      description: Status details of the credit transaction.
+    CreditAddOperResponse_CreditStatusRec:
+      required:
+      - CreditStatus
+      type: object
+      properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
+        CreditStatus:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditStatus'
+      description: Details of the credit status record in response to the add operation.
+    CreditAddOperResponse_Receipt_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |+
+            Amount in decimal format.
+
+      description: Details of the transaction amount.
+    CreditAddOperResponse_Receipt:
+      type: object
+      properties:
+        TrnAmt:
+          $ref: '#/components/schemas/CreditAddOperResponse_Receipt_TrnAmt'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier to identify the credit transaction.
+      description: Details of the receipt.
+    CreditRevOperRequest_CreditKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+            **Note:** Refers to the account number on which the transaction takes place.
+
+
+
+      description: Unique information to identify the account record.
+    CreditRevOperRequest_CreditKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditKeys_AcctKeys'
+      description: Unique information to identify a credit record.
+    CreditRevOperRequest_CreditInfo_CompositeCurAmt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            **Note:** Amount (Amt) can have two occurrences, one for transaction amount and other for the fee. This API supports balanced transactions which is assumed to be for G/L offsets. If the Amt value is not provided then original transaction amount is considered for reversal. Also if the partial or incorrect amount is provided, then the transaction fails.
+      description: |+
+        Details of the amount to be processed in credit transaction.
+
+    CreditRevOperRequest_CreditInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      type: object
+      properties:
+        CurAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt_CurAmt'
+      description: Composition details of the credited reversal amount.
+    CreditRevOperRequest_CreditInfo_CashAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+      description: Amount of cash dispensed as part of the credit transaction.
+    CreditRevOperRequest_CreditInfo_CashOutData:
+      required:
+      - CashAmt
+      properties:
+        CashAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CashAmt'
+    CreditRevOperRequest_CreditInfo_NetworkRefData:
+      type: object
+      properties:
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier for the client transaction that is used to reference a previous transaction.
+
+
+
+            **Note:** Refers to unique identifier of the original transaction that is an original transaction number to be reversed.
+
+            Max length: 50 characters
+      description: |-
+        Network transaction reference details that are used to identify a previous transaction to be referenced for refunds and reversals.
+
+
+
+        **Note:** Applicable for original transaction posted during the same business day and is used in an auto-correct of the transaction.
+    CreditRevOperRequest_CreditInfo:
+      required:
+      - CompositeCurAmt
+      - CreditType
+      type: object
+      properties:
+        CreditType:
+          type: string
+          description: |-
+            Type of credit transaction.
+
+
+
+            **Note:** Refers to transaction type code to be performed.
+          enum:
+          - Deposit
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.micro
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** Refers to override effective date. If this field is not provided in the request, then service provider uses effective date value from user authentication data.
+        Desc:
+          maxLength: 200
+          type: array
+          description: |-
+            Description of the transaction.
+
+
+
+            **Note:**  Refers to REG-E compliant description for the transaction. DNA supports only single description. Only first description in the array is considered and rest are ignored.
+          items: {}
+        CompositeCurAmt:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CompositeCurAmt'
+        CashOutData:
+          type: array
+          description: Cash-Out data that specify the amount of cash dispensed as part of the transaction.
+          items:
+            $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_CashOutData'
+        NetworkRefData:
+          $ref: '#/components/schemas/CreditRevOperRequest_CreditInfo_NetworkRefData'
+      description: Details of the credit transaction.
+    CreditRevOperResponse_CreditStatusRec_CreditStatus:
+      required:
+      - CreditStatusCode
+      type: object
+      properties:
+        CreditStatusCode:
+          type: string
+          description: |+
+            Code to indicate the status of the credit transaction record.
+
+          enum:
+          - Reversed
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the credit transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+      description: Status details of the credit transaction record.
+    CreditRevOperResponse_CreditStatusRec:
+      required:
+      - CreditStatus
+      type: object
+      properties:
+        CreditKeys:
+          $ref: '#/components/schemas/CreditAddOperResponse_CreditStatusRec_CreditKeys'
+        CreditStatus:
+          $ref: '#/components/schemas/CreditRevOperResponse_CreditStatusRec_CreditStatus'
+      description: Details of the credit status record in response to the rev operation.
+    CreditRevOperResponse_Receipt_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+      description: Details of the transaction amount.
+    CreditRevOperResponse_Receipt:
+      type: object
+      properties:
+        TrnAmt:
+          $ref: '#/components/schemas/CreditRevOperResponse_Receipt_TrnAmt'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier to identify the credit transaction.
+
+
+
+            **Note:** Refers to the unique generated transaction number (RtxnNbr).
+      description: Details of the credit transaction receipt.
+  parameters:
+    EFXHeader:
+      name: EFXHeader
+      in: header
+      description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/EFXHeader'
