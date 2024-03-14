@@ -40,7 +40,7 @@ A highly customizable platform ideal for larger retail and commercial financial 
 -	Can be run on premise or in a hosted environment
 -	Supports real-time account processing, merger and acquisition strategies and disparate system integration 
 
-### DNA® (coming soon)
+### DNA®
 A flexible, real-time platform that supports institutions of all sizes, including those with >$50 billion in assets.
 -	Serves financial institutions, challenger institutions and credit unions
 -	Open architecture supports easy integration with Fiserv and third-party solutions
