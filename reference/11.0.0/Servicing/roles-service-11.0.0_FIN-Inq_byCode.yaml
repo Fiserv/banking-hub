@@ -1,20 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Transaction Codes Service
-  description: Transaction Codes Service
-  version: 11.0.0_FIN
+  title: Roles Service
+  description: The Roles service supports operations managing user roles.
+  version: 11.0.0_FIN-Inq_byCode
 servers:
-- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/TransactionCode/11.0.0_FIN
-  description: SwaggerHub API Auto Mocking
+- url: /
 paths:
-  /servicing/transactionCodes:
+  /servicing/roles/{code}:
     post:
       tags:
-      - Get Transaction Codes List
-      summary: Get Transaction Codes List
-      description: "Get Transaction Codes List API retrieves a list of all transaction codes including details for each transaction code.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
-      operationId: getTrasactionCodes
+      - Get User Roles
+      summary: Get Roles
+      description: "Get Roles API retrieves details of a user role such as role, role description and corresponding override capabilities.<br><b>Prerequisites for using this service:</b> In Finxact, when defining exceptions, the property trnRoleIncl- Transaction Role Include is used to establish the roles that can override the transaction. This means that Finxact banks should avoid using trnRoleExcl - Transaction Role Excluded when defining roles that can override the transaction.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: getUserRoles
       parameters:
       - name: EFXHeader
         in: header
@@ -26,59 +25,39 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/getTrasactionCodesRequest'
+              $ref: '#/components/schemas/getUserRolesRequest'
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTrasactionCodesResponse'
+                $ref: '#/components/schemas/getUserRolesResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTrasactionCodesResponse'
-      x-group-name: Transaction Codes Service
-      x-proxy-name: Get Transaction Codes List
-      x-child-product-name: Transactions
-      x-core: Finxact
+                $ref: '#/components/schemas/getUserRolesResponse'
+      x-group-name: Roles Service
+      x-proxy-name: Get Roles
+      x-child-product-name: Operations and Servicing
+      x-core: Finxact-ByCode
 components:
   schemas:
-    getTrasactionCodesRequest:
+    getUserRolesRequest:
+      required:
+      - code
       properties:
-        pageLimit:
-          type: integer
-          description: Maximum number of records to retrieve in the result set used for the page and cursor base pagination.
-          format: int64
-        pageOffset:
-          type: integer
-          description: Start point of the result set, required for the page base pagination.
-          format: int64
-        cursor:
+        code:
           type: string
-          description: Next record pointer to include in the response if additional records are available. Applicable for the cursor base pagination.
-    getTrasactionCodesResponse:
+          description: Code to identify the user role.
+    getUserRolesResponse:
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        page:
-          type: integer
-          description: Number of the current page applicable for page base pagination.
-          format: int64
-        totalPages:
-          type: integer
-          description: Total number of pages applicable for page base pagination.
-          format: int64
-        cursor:
-          type: string
-          description: Next record pointer value included in the response for available additional records. Applicable for cursor base pagination.
-        transactionCodes:
-          type: array
-          description: Details of the transaction codes.
-          items:
-            $ref: '#/components/schemas/getTrasactionCodesResponse_transactionCodes'
+        role:
+          $ref: '#/components/schemas/getUserRolesResponse_role'
     EFXHeader:
       required:
       - OrganizationId
@@ -390,74 +369,54 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    getTrasactionCodesResponse_entryDefinitions:
-      required:
-      - isDebit
-      properties:
-        entryName:
-          maxLength: 200
-          type: string
-          description: Name of the transaction code entry.
-        isDebit:
-          type: boolean
-          description: Value that indicates the transaction code is a debit entry.
-        isGLEntry:
-          type: boolean
-          description: Value that indicates the transaction code is a general ledger entry.
-        glAccountNumber:
-          type: string
-          description: Number of the General Ledger Account (GLA).
-        currencyCode:
-          maxLength: 3
-          type: string
-          description: Code to indicate the currency.
-        description:
-          maxLength: 200
-          type: string
-          description: Description of the transaction code entry.
-        isGLDetail:
-          type: boolean
-          description: 'Value that indicates the entry is the general ledger entry detail. '
-        isReversalGLDetail:
-          type: boolean
-          description: 'Value that indicates the entry is the reversal general ledger entry detail. '
-        feeIdent:
-          maxLength: 80
-          type: string
-          description: Unique identifier of the fee.
-    getTrasactionCodesResponse_transactionCodes:
+    getUserRolesResponse_role_roleExceptions:
       required:
       - code
       - description
+      - severity
       properties:
         code:
-          maxLength: 15
+          maxLength: 80
           type: string
-          description: Code of the transaction.
+          description: Code that indicates a role exception.
         description:
           maxLength: 200
           type: string
-          description: Description of the transaction code.
-        networks:
+          description: Description of the role exception.
+        isSystem:
+          type: boolean
+          description: 'Value that indicates the exception is a system exception. Financial institutions can also create the exceptions. '
+        severity:
+          type: string
+          description: Value that describes the severity of the role exception.
+          enum:
+          - Override
+          - Warning
+          - Error
+        entities:
           type: array
-          description: Value that indicates the network where the transaction code is applied.
+          description: Type of entities where the exception applies.
           items: {}
           enum:
-          - CORE
-          - ACH
-          - ACTIMIZE
-          - AFT
-          - FEDWIRE
-          - SEPA
-          - SWIFT
-          - CHECK
-          - EFT
-          - P2P
-          - RTP
-          - MANUALWIRE
-          - FAIM
-        entryDefinitions:
+          - Portfolio
+          - Account
+          - Party
+    getUserRolesResponse_role:
+      required:
+      - code
+      - description
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code that identify the user role.
+        description:
+          maxLength: 200
+          type: string
+          description: Description of the user role.
+        roleExceptions:
           type: array
-          description: Details of the transaction code entries.
+          description: Details of role exceptions.
           items:
-            $ref: '#/components/schemas/getTrasactionCodesResponse_entryDefinitions'
+            $ref: '#/components/schemas/getUserRolesResponse_role_roleExceptions'
+      description: Details of user roles.
