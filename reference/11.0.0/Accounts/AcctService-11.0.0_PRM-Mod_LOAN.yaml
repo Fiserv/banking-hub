@@ -474,7 +474,7 @@ components:
           description: Value of the client-defined data item.
         DataLength:
           type: integer
-          description: Length of the client defined data.
+          description: "Length of the client defined data.\n\n\n**Note:** It is expected that client should send exact data length mentioned in the DataLength field or the length mentioned in the LoanAcctInfo/ClientDefinedData/Value field, which is mapped to Value at PRM side."
           format: int64
         ExpDt:
           type: string
@@ -1524,14 +1524,14 @@ components:
           - SDA
         FIIdentType:
           type: string
-          description: Type of identification for a financial institution.
+          description: "Identification type for the financial institution.\n\n\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired to be provided for the following billing methods:\n\n\n\n- ACHXferDDA\n\n\n\n- ACHXferSDA\n\n\n\n- ACHXferDDAStmt\n\n\n\n- ACHXferSDAStmt"
           enum:
           - RoutingNum
         FIIdent:
           maxLength: 34
           type: string
-          description: Unique identification number of a financial institution.
-      description: Unique information to identify from account record.
+          description: "Unique identification number of a financial institution.\n\n\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired to be provided for the following billing methods:\n\n\n\n- ACHXferDDA\n\n\n\n- ACHXferSDA\n\n\n\n- ACHXferDDAStmt\n\n\n\n- ACHXferSDAStmt"
+      description: "Unique information to identify the checking or saving account that is debited automatically for payments.\n\n\n\n**Note:** The FromAcctKeys field is applicable for the following billing method:\n\n\n\n- ACHXferDDA\n\n\n\n- ACHXferSDA\n\n\n\n- DirectDebitDDA\n\n\n\n- DirectDebitSDA\n\n\n\n- ACHXferDDAStmt\n\n\n\n- ACHXferSDAStmt\n\n\n\n- DirectDebitDDAStmt\n\n\n\n- DirectDebitSDAStmt"
     AccountModRequest_LoanAcctInfo_LoanBilling:
       type: object
       properties:
@@ -1542,9 +1542,9 @@ components:
           - None
           - Coupon
           - BillingNotice
-          - Debit Demand Deposit
-          - Debit Savings
-          - BillByStmt
+          - DirectDebitDDA
+          - DirectDebitSDA
+          - BillingByStmt
           - ACHXferDDA
           - ACHXferSDA
           - DirectDebitDDAStmt
@@ -1565,7 +1565,7 @@ components:
 
 
 
-            This field is required to be provided for the billing methods listed below:
+            This field is required to be provided for the following billing methods:
 
 
 
@@ -1588,7 +1588,7 @@ components:
         Desc:
           maxLength: 200
           type: string
-          description: Description of client defined data.
+          description: "Description of the ACH debits.\n\n\n\n**Note:** Refers to ACH description.\n\nApplicable for the following billing methods:\n\n\n\n- ACHXferDDA\n\n\n\n- ACHXferSDA\n\n\n\n- ACHXferDDAStmt\n\n\n\n- ACHXferSDAStmt"
       description: Details of billing associated to loan.
     AccountModRequest_LoanAcctInfo_RecurModel_RecurRule:
       properties:
@@ -2000,7 +2000,7 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the account status is changed. \n\n\n\n\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
+          description: "Effective date and time when the account status is changed. \n\n\n\n\n\n\n\nFormat: yyyy-dd-mm\n\n\n\nExample: 2021-31-01"
         HAMPOption:
           type: string
           description: Option for Home Affordable Modification Program (HAMP).
@@ -2501,12 +2501,7 @@ components:
             **Note:** This field uses the Premier Maximum Credit Code.  We want to use the RevolvingLoanCode as the primary field for the Maximum Credit Code.  However, this field is available for integrations currently using this field.
         RevolvingLoanCode:
           type: string
-          description: |-
-            Type of revolving loan.
-
-
-
-            **Note:** This should be used to make changes to the Maximum Credit Code field.  If both the RevolvingLoanInd and RevolvingLoanCode are sent, it will default to use the RevolvingLoanCode.
+          description: "Type of revolving loan.\n\n\n\n**Note:** This should be used to make changes to the Maximum Credit Code field.  If both the RevolvingLoanInd and RevolvingLoanCode are sent, it will default to use the RevolvingLoanCode.\n\n Revolving loans (CreditLimit or AdvanceLimit) cannot be updated during modifications from original non-revolving loans (SingleAdvance). \n Similarly, non-revolving loans (SingleAdvance) cannot be updated during modifications from original revolving loans (CreditLimit or AdvanceLimit).\n\n The initial loan amount is initialized in the field Original Cash Proceeds upon creation of a single advance loan. It is not possible to modify the initial loan amount field in the Original Cash Proceeds field, nor it is set up for revolving loans."
           enum:
           - SingleAdvance
           - CreditLimit
