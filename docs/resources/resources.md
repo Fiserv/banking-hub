@@ -1,4 +1,4 @@
-[Banking Hub - Premier - Trial Plan Postman Collection_V1.postman_collection.json](https://github.com/Fiserv/banking-hub/files/14895996/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.postman_collection.json)<!-- 
+<!-- 
 type: tab 
 titles: Downloads, Guidelines
 -->
