@@ -9,11 +9,11 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
+- Updated Postman collection of Premier core.   *Documentation > Resources > Postman Collection*
+
 <span style="font-size: 22px; ">Get Transaction Account-LAS, Get Transaction Account-AMS</span> *API Explorer > Transactions > Account Transaction Service*
 
-
 - Updated the "ChkNum" field to return the values of the client-defined "TrnCode" and "ExternalTrnCode" fields for memopost transactions
-
 
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
@@ -292,6 +292,11 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 
 <!-- type: tab -->
+
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+
+- Added Postman collection of Precision core.   *Documentation > Resources > Postman Collection*
+
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
 <span style="font-size: 22px; ">Get Transaction Account - Deposits</span> *API Explorer > Accounts > Account Transaction Service*
