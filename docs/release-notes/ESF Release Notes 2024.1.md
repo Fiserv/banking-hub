@@ -7,7 +7,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA, Portico
 -->
 
 
-<p style="font-size: 24px; font-weight: bold;">What'New </p>
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
 Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
