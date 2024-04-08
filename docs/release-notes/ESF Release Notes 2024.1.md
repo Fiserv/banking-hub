@@ -34,7 +34,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
     - Consumer Loan
     - NotApplicable
 
-- Fixed the error in the "LoanAcctInfo/RevolvingLoanInd" field when using the "SingleAdvance" and "AdvanceLimit" values. Updated the field description of the "LoanAcctInfo/RevolvingLoanInd" field
+- Fixed the error in the "LoanAcctInfo/RevolvingLoanInd" field when using the "SingleAdvance" and "AdvanceLimit" values for the "LoanAcctInfo/RevolvingLoanCode" field. 
 
 - Fixed the error of the "OpenDt" field (LoanAcctInfo/PostAddr/OpenDt) which was marked as a required field and hence restricting to create a loan account. Now the field is marked as optional in request and does not restrict the user to create a loan account
 
@@ -295,7 +295,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-- Added Postman collection of Precision core.   *Documentation > Resources > Postman Collection*
+- Added Postman collection for Precision core.   *Documentation > Resources > Postman Collection*
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
@@ -303,6 +303,12 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 
 - Updated the "AcctTrnRec/AcctTrnInfo/Desc" field that returns the second line of the truncated description in the response
+
+
+<span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
+
+
+- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
@@ -336,6 +342,15 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 
 <!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
+
+
+<span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
+
+
+- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+
+
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
 <span style="font-size: 22px; ">Get Card</span> *API Explorer > Debit Cards > Card Service*
@@ -350,11 +365,18 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
-<span style="font-size: 22px; ">Get Card</span> *API Explorer > Transfers > Transfer Service*
+<span style="font-size: 22px; ">Add Transfer</span> *API Explorer > Transfers > Transfer Service*
 
 - Added the enum value "CLA" in the following fields to allow transfers from commercial loan accounts (CLA) to checking and savings accounts (DDA/SDA):
     - XferInfo/FromAcctRef/AcctKeys/AcctType
     - XferStatusRec/XferKeys/AcctKeys/AcctType
+
+
+<span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
+
+
+- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
