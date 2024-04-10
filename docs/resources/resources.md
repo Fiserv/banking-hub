@@ -15,7 +15,12 @@ titles: Downloads, Guidelines
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for Premier Core](https://github.com/Fiserv/banking-hub/files/14125603/Premier.-.Trial.Plan.Postman.Collection.zip)
+> [Download Postman Collection for Premier Core](https://github.com/Fiserv/banking-hub/files/14896029/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.postman_collection.zip)
+
+
+<!-- theme: info -->  
+> [Download Postman Collection for Precision Core](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip)
+
 
 
 <!-- theme: info -->  
@@ -26,6 +31,8 @@ titles: Downloads, Guidelines
 > [Download Postman Collection for DNA Core](https://github.com/Fiserv/banking-hub/files/14461530/EFX.Collection.for.DS.zip)
 
 <!--
+changed on 7 april (this link is to the old file, updated file is linked above): (https://github.com/Fiserv/banking-hub/files/14125603/Premier.-.Trial.Plan.Postman.Collection.zip)
+
 FNX with credentials: https://github.com/Fiserv/banking-hub/files/14585882/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip
 Added DNA on 14 March 24 -- https://github.com/Fiserv/banking-hub/files/14447763/EFX.Collection_DNA.zip
 

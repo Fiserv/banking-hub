@@ -40,14 +40,14 @@ EFXHeader is a mandatory parameter that needs to be sent in the request message 
 List of parameters that can be sent under the EFXHeader:
 |Parameter | Description | Data Type | Required|
 |---------|----------|---------|-----------|
-|OrganizationId | Unique identifier to represent the financial institution or holding company.| string | Required |
-| TrnId | Transaction UUID (Universal Unique Identifier) of the current message. <br><br> *maxLength: 36*| string | Optional|
-| VendorId | Fiserv provided unique vendor identification number.| string| Optional |
+|OrganizationId | Unique identifier to represent the financial institution or holding company. <br><b>Note:</b> ‘OrganizationId’ can be an alphanumeric value in combination of upper case (A-Z) or lower case (a-z) with digits (0-9). <br>For example, 999990308, 039095237SF and PrmOrg10 <br><br>*Max length: 30* | string | Required |
+| TrnId | Transaction UUID (Universal Unique Identifier) of the current message. <br><b>Note:</b> ‘TrnId’ can be a free formatted value. <br>For example, 01333456782132, getParty-2024-03-22T03:14:31.811Z, 8824de2a-1bf1-4809-9b10-09324ad1279 <br><br>*Max length: 36*| string | Optional|
+| VendorId | Fiserv provided unique vendor identification number. <br><b>Note:</b> ‘VendorId’ can be an alphanumeric value in combination of upper case (A-Z) or lower case (a-z) with digits (0-9). <br>For example, Fiserv, NCRCSP, 039095237SF <br><br>*Max length: 255*| string| Optional |
 | MultiSystemInd | Feature enabled for Multi-System Service (MSS) used internally.| boolean | Optional |
 | SvcNbr | For organizations processing the Multi-System Service  feature (MSS), this identifies the Service Provider (account processor).<br><br> *maxLength: 36* | string | Optional |
 | Context  | Additional information related to the specific channels. | object  | Optional |
-| Context.ClientAppName| Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.| string| Optional|
-| Context.Channel|Name of channel used by the client application, such as, Online, Branch, Phone, EFT and Teller. |string | Optional|
+| Context.ClientAppName| Name of the client application that is used to send the service request, such as Architect, Commercial Center and others. <br><b>Note:</b> ‘Context.ClientAppName’ can be an alphanumeric value in combination of upper case (A-Z) or lower case (a-z) with digits (0-9), hyphen and underscore.| string| Optional|
+| Context.Channel|Name of channel used by the client application, such as, Online, Branch, Phone, EFT and Teller. <br><b>Note:</b> ‘Context.Channel’ can be an alphanumeric value in combination of upper case (A-Z) or lower case (a-z) with digits (0-9), hyphen and underscore. |string | Optional|
 | Context.isOverridden|Flag to indicate the sender has overridden the previous exception. |boolean | Optional|
 | Context.TrnIdent| Client-defined unique identification value of the transaction.  <br>Also known as 'TraceNumber' or 'Sequence' in some systems. When used by a network defined transaction, the value of this identifier is typically set to narrow character of 12. | string | Optional|
 | Context.ClientDateTime| Client date and time as reported by the client application while sending the service request. <br><br> *Format: YYYY-MM-DD* <br> *Example: 2022-12-31* |string | Optional|
