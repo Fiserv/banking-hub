@@ -90,11 +90,13 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 - Fixed the "PledgeDt" field to add the correct date while creating a relationship of a collateral with an account
 
+- Fixed the issue of "DataType mismatch error"  returned in the response for "AcctCollateralRelInfo/LienPosition field", when not provided in the request. Error handling is done to return a valid error  in case this required field is not provided
+
 
 <span style="font-size: 22px; ">Add Collateral</span> *API Explorer > Accounts > Collateral Service*
 
 
-- Fixed the issue of address visibility. Now, the existing address is visible on the Navigator UI for the new collateral record
+- Fixed the issue of adding an existing address while creating a new collateral record. Now, the existing address is visible on Navigator UI for the collateral record  
 
 
 <span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
@@ -258,7 +260,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 <p style="font-size: 24px; font-weight: bold;">Known Issues </p>
 
-<span style="font-size: 22px; ">Get Account-LOAN</span> *API Explorer > Accounts > Account Service*
+<span style="font-size: 22px; ">Get Account-CDA</span> *API Explorer > Accounts > Account Service*
 
 
 - Added the following enum values for the "AcctBal/BalType" field:
