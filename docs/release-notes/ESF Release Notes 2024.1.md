@@ -20,9 +20,9 @@ Information is not available at the moment. Stay tuned for the updates.
 <span style="font-size: 22px; ">Update Account - DDA_SDA</span> *API Explorer > Accounts > Account Service*
 
 
-- Removed the enum value "AnalysisOffset" from the "DepositAcctInfo/SvcChgData/SvcChgMethod/SvcChgMethodType" field to resolve the following issues:
-    - Null pointer exception while passing the "SvcChgData" aggregate
-    - Partial success when the "DepositAcctInfo/ProdIntRateId" and "DepositAcctInfo/AcctStmtData" aggregates are provided
+- Removed the enum value "AnalysisOffset" from the "DepositAcctInfo/SvcChgData/SvcChgMethod/SvcChgMethodType" field to resolve the following:
+    - Fixed "null pointer exception" issue while passing the "SvcChgData" aggregate
+    - Fixed "partial success" issue when the "DepositAcctInfo/ProdIntRateId" and "DepositAcctInfo/AcctStmtData" aggregates are provided
 
 
 <!-- type: tab -->
