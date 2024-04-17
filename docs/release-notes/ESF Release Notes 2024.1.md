@@ -17,7 +17,7 @@ Information is not available at the moment. Stay tuned for the updates.
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
-<span style="font-size: 22px; ">Update Account - DDA_SDA</span> *API Explorer > Accounts > Account Service*
+<span> <a style="font-size: 22px; " href="..developer.fiserv.com/product/BankingHub/api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"><b>Update Account - DDA_SDA</b></a></span>
 
 
 - Removed the enum value "AnalysisOffset" from the "DepositAcctInfo/SvcChgData/SvcChgMethod/SvcChgMethodType" field to resolve the following:
