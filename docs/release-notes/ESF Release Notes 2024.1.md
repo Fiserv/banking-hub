@@ -15,7 +15,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 - Updated the "ChkNum" field to return the values of the client-defined "TrnCode" and "ExternalTrnCode" fields for memopost transactions
 
-<span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
+<span> <a style="font-size: 22px; " href="../api/?type=post&path=/documentservice/document/document" title="Click to open"><b>Add Document</b></a></span>
 
 
 - Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
