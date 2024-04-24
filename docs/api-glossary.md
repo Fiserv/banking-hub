@@ -59,6 +59,7 @@ titles: General Terms, Acronyms , Account Types, Legacy Service Name
 | PRM                   | Premier                                                                                                                                                             |
 | PRT                   | Portico                                                                                                                                                             |
 | SIG                   | Signature                                                                                                                                                           |
+| EPOC                  |        Enterprise Platform for Online Commerce                                                                                                                                        |
 | EFX                   | A web service message framework used for exchange of information between service-providers, clients and vendors.                                                    |                                                                     |
 | ESF                   | Enterprise Service Framework (ESF) is designed to enable multiple Fiserv products/systems to communicate with one another.                                          |
 | JSON                  | JavaScript Object Notation. A lightweight syntax that contains object and arrays, usually used to return the response from REST API.                                |
