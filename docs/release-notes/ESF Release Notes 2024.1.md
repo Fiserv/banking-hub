@@ -90,13 +90,16 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 - Fixed the "PledgeDt" field to add the correct date while creating a relationship of a collateral with an account
 
-- Fixed the issue of "DataType mismatch error"  returned in the response for "AcctCollateralRelInfo/LienPosition field", when not provided in the request. Error handling is done to return a valid error  in case this required field is not provided
+- Fixed the issue of "DataType mismatch error"  returned in the response for "AcctCollateralRelInfo/LienPosition field", when not provided in the request. Error handling is done to return a valid error  in case this required field is not provided. Updated the "Note" for this field
 
 
 <span style="font-size: 22px; ">Add Collateral</span> *API Explorer > Accounts > Collateral Service*
 
 
-- Fixed the issue of adding an existing address while creating a new collateral record. Now, the existing address is visible on Navigator UI for the collateral record  
+- Fixed the issue of adding an existing address while creating a new collateral record. Now, the existing address is visible on Navigator UI for the collateral record
+
+- Fixed an issue in the "LienPosition" field (AcctCollateralRelInfo/LienPosition), where the API returned a data type mismatch error if this field was not included in the request. This field is required for the core. Error handling is done to return a valid error provided by the core in case this required field is not provided.   
+    
 
 
 <span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
@@ -119,6 +122,11 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
     - PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/AddrUseEnumDesc
     - PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
     - PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
+
+- Fixed an issue in the "PostalCode" field where the field "StatProv" was not returned in the response when the postal code was unavailable for the party address<br>
+**Impacted fields:**
+    - PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/StateProv
+    - PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/StateProv
 
 
 
@@ -342,6 +350,36 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 - Fixed the issue with the "DepositAcctInfo/ClientDefinedData/DataIdent" where the client-defined value was getting passed as "0" in the request
 
+<span style="font-size: 22px; ">Update Party</span> *API Explorer > Accountholder > Party Service*
+
+
+- Fixed an issue in the "ClientDefinedData" aggregate where the API was returning an internal server error and DataTypes such as Date and Boolean were not sent to the core correctly<br>
+**Impacted fields:**
+    - PersonPartyInfo/ClientDefinedData
+    - PersonPartyInfo/ClientDefinedData/DataIdent
+    - PersonPartyInfo/ClientDefinedData/DataType
+    - PersonPartyInfo/ClientDefinedData/Value
+    - OrgPartyInfo/ClientDefinedData
+    - OrgPartyInfo/ClientDefinedData/DataIdent
+    - OrgPartyInfo/ClientDefinedData/DataType
+    - OrgPartyInfo/ClientDefinedData/Value
+
+<span style="font-size: 22px; ">Add Party</span> *API Explorer > Accountholder > Party Service*
+
+
+- Fixed and issue in the "InternetBankingFileOpt" aggregate where the field "AccessLevelCode" was not sent to the core for AccessLevelType as Vendor2 or Vendor3<br>
+**Impacted fields:**
+    - PersonPartyInfo/InternetBankingIdent
+    - PersonPartyInfo/InternetBankingFileOpt
+    - PersonPartyInfo/InternetBankingFileOpt/Vendor
+    - PersonPartyInfo/InternetBankingFileOpt/Vendor/AccessLevelType
+    - PersonPartyInfo/InternetBankingFileOpt/Vendor/AccessLevelCode
+    - OrgPartyInfo/InternetBankingIdent
+    - OrgPartyInfo/InternetBankingFileOpt
+    - OrgPartyInfo/InternetBankingFileOpt/Vendor
+    - OrgPartyInfo/InternetBankingFileOpt/Vendor/AccessLevelType
+    - OrgPartyInfo/InternetBankingFileOpt/Vendor/AccessLevelCode
+
 
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
@@ -362,6 +400,13 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 **Impacted fields:**
     - CardRec/CardKeys/CardId
     - CardRec/CardKeys/CardSeqNum
+ 
+<span style="font-size: 22px; ">Update Account - DDA_SDA</span> *API Explorer > Accounts > Account Service*
+
+- Removed the enum value "AnalysisOffset" from the "DepositAcctInfo/SvcChgData/SvcChgMethod/SvcChgMethodType" field to resolve the following:
+    - Fixed "null pointer exception" issue while passing the "SvcChgData" aggregate
+    - Fixed "partial success" issue when the "DepositAcctInfo/ProdIntRateId" and "DepositAcctInfo/AcctStmtData" aggregates are provided
+
 
 
 <!-- type: tab -->
