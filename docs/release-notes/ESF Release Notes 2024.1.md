@@ -15,14 +15,8 @@ Information is not available at the moment. Stay tuned for the updates.
 Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">Fixed </p>
-
-<span> <a style="font-size: 22px; " href="..developer.fiserv.com/product/BankingHub/api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"><b>Update Account - DDA_SDA</b></a></span>
-
-
-- Removed the enum value "AnalysisOffset" from the "DepositAcctInfo/SvcChgData/SvcChgMethod/SvcChgMethodType" field to resolve the following:
-    - Fixed "null pointer exception" issue while passing the "SvcChgData" aggregate
-    - Fixed "partial success" issue when the "DepositAcctInfo/ProdIntRateId" and "DepositAcctInfo/AcctStmtData" aggregates are provided
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
 
 
 <!-- type: tab -->
