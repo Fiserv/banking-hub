@@ -55,28 +55,26 @@ titles: General Terms, Acronyms , Account Types, Legacy Service Name
 | CLT                   | Cleartouch                                                                                                                                                          |
 | DNA                   | DNA                                                                                                                                                                 |
 | FNX                   | Finxact                                                                                                                                                                 |
-| JSON                  | JavaScript Object Notation. A lightweight syntax that contains object and arrays, usually used to return the response from REST API.                                |
-| NACHA                 | NACHA (National Automated Clearing House Association) is an organization that sets and enforces the rules which the ACH network needs to abide by.                  |
 | PRC                   | Precision                                                                                                                                                           |
 | PRM                   | Premier                                                                                                                                                             |
 | PRT                   | Portico                                                                                                                                                             |
 | SIG                   | Signature                                                                                                                                                           |
-| EFT Card              | Electronic Fund Transfer card (EFT card) is a plastic card that is used to transfer funds electronically.                                                           |
-| EFX                   | A web service message framework used for exchange of information between service-providers, clients and vendors.                                                    |
-| Escrow Account        | A third-party account used to manage and disburse the funds to an ultimate party or an account.                                                                     |
+| EPOC                  |        Enterprise Platform for Online Commerce                                                                                                                                        |
+| EFX                   | A web service message framework used for exchange of information between service-providers, clients and vendors.                                                    |                                                                     |
 | ESF                   | Enterprise Service Framework (ESF) is designed to enable multiple Fiserv products/systems to communicate with one another.                                          |
-| Fees                  | Amount charged for a service.                                                                                                                                       |
-| Financial Institution | An organization that manages financial and monetary transactions such as deposits, loans and currency exchange.                                                     |
-| GL Accounts           | General Ledger accounts (GL accounts) include all the transaction-related data required to produce the income statement, balance sheet and other financial reports. |
-| Liability             | An obligation between a guarantor and endorser under certain conditions in which loan is offered.                                                                   |
-| Memo                  | A continuous message sent to the officers from financial institution which does not require any action.                                                             |
-| Open Banking          | A system that allows access and control of consumer banking and financial accounts through third party applications using APIs.                                     |
-| P2P Transaction       | P2P (peer-to-peer) transaction is transfer of funds between two parties done through an intermediary application.                                                   |
-| Party                 | A person or organization who has a relationship with the financial institution.                                                                                     |
-| Sandbox               | A testing environment that simulates a production environment to test the application prior to deploying it into the production.                                    |
-| Service Provider      | An organization that provides services to an individual or an organization. For example, Financial Institution.                                                     |
-| Tickler               | A one-time or recurring message sent to the officers from financial institutions which may require an action.                                                       |
-| Xfer                  | Transfer of money between accounts.                                                                                                                                 |
+| JSON                  | JavaScript Object Notation. A lightweight syntax that contains object and arrays, usually used to return the response from REST API.                                |
+| NACHA                 | NACHA (National Automated Clearing House Association) is an organization that sets and enforces the rules which the ACH network needs to abide by.                  |
+| EFT Card              | Electronic Fund Transfer card (EFT card) is a plastic card that is used to transfer funds electronically.                                                           |
+| MSA                 |       Metropolitan Statistical Area                                               
+| OMB                  |    U.S. Office of Management and Budget                                       |
+| MSS                 |    Multi System Service                                       |      
+| RPA                  |                  Robotic Process Automation                                    |
+| FCRM                  |             Financial Crime Risk Management                                      |
+| ITIN                  |        Individual Taxpayer Identification Number                                 |
+| PFFI                 |              Participating Foreign Financial Institution                          |
+| EIN                |         Employer Identification Number                         |
+| SSN               |         Social Security Number                          |
+| OFAC              |         Office of Foreign Assets Control                        |
 <!-- type: tab -->
 
 | Term      | Description |

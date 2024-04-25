@@ -1,0 +1,2459 @@
+---
+openapi: 3.0.0
+info:
+  title: Fraud
+  description: Fraud API enable financial institutions to manage and mitigate fraud losses as well as give cardholders additional security for their cards.
+  version: 2.0.0
+servers:
+- url: https://card.api.fiservapps.com/cs/fraud
+  description: Production url
+- url: https://card-sandbox.api.fiservapps.com/cs/fraud
+  description: Sandbox url
+security:
+- BearerAuth: []
+tags:
+- name: Case
+  description: Resources to search and update  fraud case details.
+- name: Verification
+  description: Digital providers have the ability to request verification of a cardholder via an Text, Voice or Email OTP.
+paths:
+  /v3/verification/search:
+    post:
+      tags:
+      - Verification
+      summary: Retrieves media addresses and methods that can be used for cardholder verification. Possible methods are Voice, Text and Email. Media addresses are semi-masked for cardholder's confidentiality.
+      operationId: getVerificationOptionV3
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'Retrieve an access token through the Access Token API. Access token is required in every request. Refer to documentation on access token  (https://card.developer.fiserv.com/apis/token).Tokens expire after 15 minutes. Provide the value as follows in the header. Authorization: Bearer <Access Token Value>'
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: Bearer USlfM8dilzKZPcuGGP3BfVLd7Snk
+      - name: userId
+        in: header
+        description: Optional. User on behalf of whom the request is being made. userId must be alphanumeric.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: johndoe
+      - name: x-fapi-financial-id
+        in: header
+        description: Required. Provide 8 digit client id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: "12345678"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerificationSearchRequestV3'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationSearchResponsev3'
+        "400":
+          description: Invalid Request
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Error'
+        "401":
+          description: Unauthorized access
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401Error'
+        "403":
+          description: Forbidden
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Error'
+        "404":
+          description: Not Found
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404Error'
+        "405":
+          description: Method Not Allowed
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "406":
+          description: Unacceptable
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "409":
+          description: Resource conflict
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/409Error'
+        "415":
+          description: Unsupported Media Type
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/415Error'
+        "422":
+          description: Unprocessable Entity
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "429":
+          description: Too Many Requests
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "500":
+          description: Internal Server Error
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  errorResponse:
+                    code: 500-01
+                    message: internal server error
+                    developerInfo:
+                      developerMessage: internal server error
+                      moreInfo: There was a problem handling your request.  Please try again.  If the problem persists please contact Fiserv ETSD at 888-243-2543 (unique messageID included below)
+                      messageid: 25557-84290371-1
+      deprecated: false
+      x-group-name: Verification Service
+      x-proxy-name: Get Contact info to send OTP
+      x-child-product-name: Debit Cards
+      x-core: Finxact-EPOC
+  /v2/verification/otp:
+    post:
+      tags:
+      - Verification
+      summary: Generate a one time passcode for Cardholder verification. Generated passcode expires in 10 mins and is delivered to selected media address.
+      operationId: passcodeGenerationV2
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'Retrieve an access token through the Access Token API. Access token is required in every request. Refer to documentation on access token  (https://card.developer.fiserv.com/apis/token).Tokens expire after 15 minutes. Provide the value as follows in the header. Authorization: Bearer <Access Token Value>'
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: Bearer USlfM8dilzKZPcuGGP3BfVLd7Snk
+      - name: userId
+        in: header
+        description: Optional. User on behalf of whom the request is being made. userId must be alphanumeric.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: johndoe
+      - name: x-fapi-financial-id
+        in: header
+        description: Required. Provide 8 digit client id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: "12345678"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasscodeGenerateRequestV2'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasscodeGenerateResponse'
+        "400":
+          description: Invalid Request
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Error'
+        "401":
+          description: Unauthorized access
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401Error'
+        "403":
+          description: Forbidden
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Error'
+        "404":
+          description: Not Found
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404Error'
+        "405":
+          description: Method Not Allowed
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "406":
+          description: Unacceptable
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "409":
+          description: Resource conflict
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/409Error'
+        "415":
+          description: Unsupported Media Type
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/415Error'
+        "422":
+          description: Unprocessable Entity
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "429":
+          description: Too Many Requests
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "500":
+          description: Internal Server Error
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  errorResponse:
+                    code: 500-01
+                    message: internal server error
+                    developerInfo:
+                      developerMessage: internal server error
+                      moreInfo: There was a problem handling your request. Please try again. If the problem persists please contact Fiserv ETSD at 888-243-2543 (unique messageID included below)
+                      messageid: 25557-84290371-1
+      deprecated: false
+      x-group-name: Verification Service
+      x-proxy-name: Generate OTP
+      x-child-product-name: Debit Cards
+      x-core: Finxact-EPOC
+  /v2/verification/validation:
+    post:
+      tags:
+      - Verification
+      summary: Validation of a one time passcode sent to a selected media address and method. Note passcode expires in 10 minutes.
+      operationId: otpValidationV2
+      parameters:
+      - name: Authorization
+        in: header
+        description: 'Retrieve an access token through the Access Token API. Access token is required in every request. Refer to documentation on access token  (https://card.developer.fiserv.com/apis/token).Tokens expire after 15 minutes. Provide the value as follows in the header. Authorization: Bearer <Access Token Value>'
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: Bearer USlfM8dilzKZPcuGGP3BfVLd7Snk
+      - name: userId
+        in: header
+        description: Optional. User on behalf of whom the request is being made. userId must be alphanumeric.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: johndoe
+      - name: x-fapi-financial-id
+        in: header
+        description: Required. Provide 8 digit client id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: "12345678"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidationRequestV2'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+        "400":
+          description: Invalid Request
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Error'
+        "401":
+          description: Unauthorized access
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401Error'
+        "403":
+          description: Forbidden
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Error'
+        "404":
+          description: Not Found
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404Error'
+        "405":
+          description: Method Not Allowed
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "406":
+          description: Unacceptable
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "409":
+          description: Resource conflict
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/409Error'
+        "415":
+          description: Unsupported Media Type
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/415Error'
+        "422":
+          description: Unprocessable Entity
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "429":
+          description: Too Many Requests
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+        "500":
+          description: Internal Server Error
+          headers:
+            x-fapi-interaction-id:
+              $ref: '#/components/headers/interactionId'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  errorResponse:
+                    code: 500-01
+                    message: internal server error
+                    developerInfo:
+                      developerMessage: internal server error
+                      moreInfo: There was a problem handling your request. Please try again.  If the problem persists please contact Fiserv ETSD at 888-243-2543 (unique messageID included below)
+                      messageid: 25557-84290371-1
+      x-group-name: Verification Service
+      x-proxy-name: Validate OTP
+      x-child-product-name: Debit Cards
+      x-core: Finxact-EPOC
+components:
+  schemas:
+    cardAuthInfoRequestV1:
+      required:
+      - jwt
+      - otp
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: |
+            Unique number assigned to each cardholder record. Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber will be used. Maximum length 19 digits.
+          format: numeric
+          example: "4000200030004000"
+        nonTransToken:
+          type: string
+          description: |
+            Non-transactional token associated with a card. Non-transactional token associated with a card.
+            Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber is used. Length can be between 16 and 19.
+          format: alphanumeric
+          example: piUVBJKZGfks4000
+        memberNumber:
+          maxLength: 1
+          type: string
+          description: |
+            Unique number associated with each member of the card. Based on the card prefix setup. If the member number is not passed, defaults to 0 (zero).  Applies to debit cards only.
+          format: numeric
+          example: "0"
+        otp:
+          type: string
+          description: Unique reference number. Serves as acknowledgement of successful passcode generation.
+          example: "123456"
+        jwt:
+          type: string
+          description: Javascript Web Token (JWT), JWT provided for one card can only be used to set the PIN for that particular card. Valid for 15 minutes only.
+          example: eyJ0eXAiOiJKV1QiLCJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.WrliT8nLQOTRnXldrYj0brobAyi6M7-U8_iHovmTH1VAZksc4mOGQCfaSx-sbDNjdkpeznR8lU1sHOX26qom94jBO6uePEw1cBbTHLpOSEPDYiWS6SzTgxguF7zT2g5Ui1HHi2GKgPtH5L0XC_QqP5TIs3A15fqpAnvMaSwW9O_GDRzxnsUDCgEZCkwQOuEpWYDbM7r7yKrfAlkWKOHOlZuUtvJvg3k8p-1qwKpuGexhWXQdgKsWphBWbMzbindOIefIo4VTrOVMxWOdP_bLNId0E0CBLxSpRHX1u3EeAjUykUdifT2CP4bb6kbJf4pp0dRc_uPZGJLj7faPyq6UeQ.zTLJMNI8bjGh-KBy.FW0W0ihL2sj7pYin2iY1gavS4W-yPswjKmrb6-ROwHgEOscfeGGLmUihzoV6vy9KvTJ9ytnIPqh-K94UsShUJ0-KgsY4_eWyUwx4IYpYaJkPeUVd4ni_1eZMBy6-hPr3n39DES_kXfnv3MJOiZZj0I-GJXw99WBV7xhl7KZcFKyMXYnszyboV8Xi2iZqHglvEoYRjKLvOlEq2j4pJoMRVfBB8oIOZm6uyCaOnyuWuE_Lg1HeuNMnHddTm8gexDAfwj3WYHkJazsN1PZVhPZVImyKwCNM.TOYk3lw2SKYamQL7XiLXlg
+      description: |
+        The OTP and JWT token are mandatory in the request in order to validate and provide expiration date and CV2 in the response.
+    cardAuthInfoResponseV1:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: |
+            Unique number assigned to each cardholder record. Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber will be used. Maximum length 19 digits.
+          format: alphanumeric
+          example: "4000200030004000"
+        CV2:
+          type: string
+          description: Card CV2
+          example: "282"
+        expirationDate:
+          type: string
+          description: Card Expiration Date.
+          format: MM/YY
+          example: 10/28
+    "4xxError":
+      type: object
+      properties:
+        type:
+          type: string
+          description: An URI reference that identifies the problem type
+          example: https://card.developer.fiserv.com/cards/error#invalid-request
+        title:
+          type: string
+          description: Short summary of the problem.
+          example: Invalid Request
+        detail:
+          type: string
+          description: Specific explanation to the occurrence of the problem.
+          example: We had a problem getting your credit and debit card information.
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurrence of the problem.
+          example: /v1/cards/details
+        status:
+          type: number
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          example: 400
+    "400Error":
+      type: object
+      properties:
+        type:
+          type: string
+          description: An URI reference that identifies the problem type
+          example: Input Validation Exception
+        title:
+          type: string
+          description: Short summary of the problem.
+          example: Bad Request
+        detail:
+          type: string
+          description: Specific explanation to the occurence of the problem.
+          example: CONTENT-TYPE header required. Supported content-type is application/json
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurence of the problem.
+          example: /api/basepath
+        status:
+          type: number
+          description: The HTTP status code generated by the origin server for this occurance of the problem.
+          example: 400
+    "401Error":
+      type: object
+      properties:
+        type:
+          type: string
+          description: An URI reference that identifies the problem type
+          example: https://card.developer.fiserv.com/cards/error#unauthorized
+        title:
+          type: string
+          description: Short summary of the problem.
+          example: Unauthorized
+        detail:
+          type: string
+          description: Specific explanation to the occurence of the problem.
+          example: Invalid Access Token.
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurence of the problem.
+          example: /api/basepath
+        status:
+          type: number
+          description: The HTTP status code generated by the origin server for this occurance of the problem.
+          example: 401
+    "403Error":
+      type: object
+      properties:
+        type:
+          type: string
+          description: An URI reference that identifies the problem type
+          example: https://card.developer.fiserv.com/cards/error#forbidden
+        title:
+          type: string
+          description: Short summary of the problem.
+          example: Forbidden
+        detail:
+          type: string
+          description: Specific explanation to the occurence of the problem.
+          example: Authorization failure.
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurence of the problem.
+          example: /api/basepath
+        status:
+          type: number
+          description: The HTTP status code generated by the origin server for this occurance of the problem.
+          example: 403
+    "404Error":
+      type: object
+      properties:
+        type:
+          type: string
+          description: An URI reference that identifies the problem type
+          example: Resource does not exists
+        title:
+          type: string
+          description: Short summary of the problem.
+          example: Resource Not Found
+        detail:
+          type: string
+          description: Specific explanation to the occurence of the problem.
+          example: No matching search results found or you do not have sufficient access rights to get search results matching your criteria.
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurence of the problem.
+          example: /api/basepath
+        status:
+          type: number
+          description: The HTTP status code generated by the origin server for this occurance of the problem.
+          example: 404
+    "409Error":
+      type: object
+      properties:
+        type:
+          type: string
+          description: An URI reference that identifies the problem type
+          example: Http Resource conflict error
+        title:
+          type: string
+          description: Short summary of the problem.
+          example: Resource conflict
+        detail:
+          type: string
+          description: Specific explanation to the occurence of the problem.
+          example: Card is already present with the same status.
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurence of the problem.
+          example: /api/basepath
+        status:
+          type: number
+          description: The HTTP status code generated by the origin server for this occurance of the problem.
+          example: 409
+    "415Error":
+      type: object
+      properties:
+        type:
+          type: string
+          description: An URI reference that identifies the problem type
+          example: https://card.developer.fiserv.com/cards/error#unsupported-mediatype
+        title:
+          type: string
+          description: Short summary of the problem.
+          example: Unsupported Media Type
+        detail:
+          type: string
+          description: Specific explanation to the occurence of the problem.
+          example: Unsupported Media Type.
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurence of the problem.
+          example: /api/basepath
+        status:
+          type: number
+          description: The HTTP status code generated by the origin server for this occurance of the problem.
+          example: 415
+    AssociatedRulesAndTransactions:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Transaction ID
+          example: "0000001234"
+        createdCase:
+          type: boolean
+          description: It indicates if the case is triggered by the transaction or not.
+          example: true
+        reactivatedCase:
+          type: boolean
+          description: It indicates if the case is re-activated or not
+          example: false
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/RulesItems'
+    AuthTransactionItems:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Transaction ID
+          example: "0000001234"
+        disposition:
+          type: string
+          description: Indicates if the Transaction is identified as Fraud or Not Fraud
+          example: Not Fraud
+        cardNumber:
+          type: string
+          description: Masked card number of the primary cardholder.
+          example: 400020XXXXXX4000
+        transactionDateTime:
+          type: string
+          description: Transaction date and time
+          format: date-time
+        amount:
+          type: string
+          description: Transaction Amount
+          example: "25.05"
+        authDecision:
+          type: string
+          description: Authorization Decision
+          example: D
+        cardPresent:
+          type: boolean
+          description: Indicates if a card is present
+          example: true
+        baseScore:
+          type: string
+          description: Base Score
+          example: "0"
+        adaptiveScore:
+          type: string
+          description: Adaptive score
+          example: "0"
+        scoreUsed:
+          type: string
+          description: Score used
+          example: Base & Adaptive
+        mcc:
+          type: string
+          description: Transaction Merchant Category Code
+          example: "1111"
+        merchantName:
+          type: string
+          description: Merchant Name
+          example: Home Supply
+        countryCode:
+          type: string
+          description: Three-digit ISO 3166-1 Country Code.
+          example: "840"
+        countryAlpha:
+          type: string
+          description: Two-letter ISO 3166-1 Country Alpha
+          example: US
+        actionStrategy:
+          type: string
+          description: Action Strategy
+          example: A1
+        authReason:
+          type: string
+          description: Authorization Reason
+          example: O
+        authResponse:
+          type: string
+          description: Authorization Response
+          example: "090"
+        authSubResponse:
+          type: string
+          description: Authorization Sub-Response
+          example: G
+        cv:
+          type: string
+          description: CV
+          example: I
+        cardCapacity:
+          type: string
+          description: Card Capacity
+          example: "1"
+        eci:
+          type: string
+          description: ECI
+          example: "0"
+        entryMode:
+          type: string
+          description: Entry Mode
+          example: U
+        mcEMSReasonCode:
+          type: string
+          description: MC EMS Reason Code
+          example: "45"
+        mcEMSScore:
+          type: string
+          description: MC EMS score
+          example: "0"
+        memberNumber:
+          type: string
+          description: Card Member Number
+          example: "0"
+        merchantCity:
+          type: string
+          description: Merchant City
+          example: New Jersey
+        merchantIdentifier:
+          type: string
+          description: Merchant Identifier
+          example: Home Supply
+        merchantPostalCode:
+          type: string
+          description: Merchant Postal Code
+          example: "12345"
+        merchantState:
+          type: string
+          description: Merchant State
+          example: NJ
+        messageType:
+          type: string
+          description: Message Type
+          example: "136"
+        pin:
+          type: string
+          description: PIN indicator
+          example: X
+        realTimeResponse:
+          type: string
+          description: Real-Time response
+          example: "4250"
+        starScore:
+          type: string
+          description: Star Score
+          example: "0"
+        tokenAssuranceLevel:
+          type: string
+          description: Token Assurance Level
+          example: "23"
+        tokenId:
+          type: string
+          description: Token ID
+          example: "5046490000000004"
+        tokenRequestorId:
+          type: string
+          description: Token Requestor ID
+          example: "12345678901"
+        tokenizationIndicator:
+          type: string
+          description: Tokenization Indicator
+          example: S
+        transType:
+          type: string
+          description: Transaction Type
+          example: I
+        transactionPOS:
+          type: string
+          description: Transaction Point Of Sale
+          example: "2"
+        vaaRCC1:
+          type: string
+          description: VAA RCC1. Applicable for Visa cards.
+          example: "12"
+        vaaRCC2:
+          type: string
+          description: VAA RCC2. Applicable for Visa cards.
+          example: "34"
+        vaaRCC3:
+          type: string
+          description: VAA RCC3. Applicable for Visa cards.
+          example: "56"
+        vaaRRC:
+          type: string
+          description: VAA RRC. Applicable for Visa cards.
+          example: "34"
+        vaaRTD:
+          type: string
+          description: VAA RTD. Applicable for Visa cards.
+          example: "2"
+        vaaScore:
+          type: string
+          description: VAA Score. Applicable for Visa cards.
+          example: "12"
+    AuthTransactionsResponse:
+      type: object
+      properties:
+        authTransactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthTransactionItems'
+      description: Returns authorization transactions associated to a case. Transactions will be returned in chronological order from most recent to least recent.
+    CaseDetails:
+      type: object
+      properties:
+        logo:
+          type: string
+          description: Unique 4-character alphanumeric identifier assigned by Fiserv for the institution.
+          example: APIP
+        cardNumber:
+          type: string
+          description: Masked card number of the primary cardholder, not including a member number.
+          example: 400020XXXXXX4000
+        caseNumber:
+          type: string
+          description: The case number provided to the cardholder.
+          example: "999999999"
+        caseTenant:
+          maxLength: 2
+          type: string
+          description: The code associated with the case. If the caseTenant is not passed it is defaulted to 60.
+          example: "60"
+        caseCreatedDateTime:
+          type: string
+          description: Date and time case was created.
+          format: date-time
+        name:
+          type: string
+          description: Selected cardholder's name.
+          example: Alex Smith
+        otherName:
+          type: string
+          description: Alternate name for the cardholder, such as primary cardholder's mother's maiden name.
+          example: Smith
+        fraudApproach:
+          type: string
+          description: Fraud approach chosen by the institution to define the score at which a case is created. Valid values could be 'Custom', 'Minimum', 'Average', 'Moderate', 'Aggressive', 'No Maturation'
+          example: Custom
+        languagePreference:
+          type: string
+          description: Cardholder's language preference. Either Engish or Spanish
+          example: English
+        newReactivatedIndication:
+          type: string
+          description: |-
+            Indicates if this is a new case or reactivated case.
+            New case is the first time the information is being reviewed. If there is a HIGH RISK label on the case a special rule forced the case creation.
+            Reactivated case was previously processed but has been reopened due to recent additional suspect transactions. Reactivated cases will also display a HIGH RISK label.
+          example: New
+        currentCardStatus:
+          type: string
+          description: Provides the current status of the Card. Valid Values could be 'Active', 'Abused', 'Closed', 'Customer Request', 'Damaged','Expired','Insufficient Funds','Lost','Pre-Activated','Revoked','Reserved','Restricted','Stolen','VIP'
+          example: Active
+        currentCaseStatus:
+          type: string
+          description: Current case status.
+          example: OPEN
+        actionStrategy:
+          maxLength: 2
+          type: string
+          description: Strategy code that details actions to be taken on each case. See EnFact manual for the questions that define these actions. only 2 chars are allowed.
+          example: A1
+        currentContactChannel:
+          type: array
+          description: |-
+            List of contact channels defined in the Action Strategy for fraud notifications. Values:
+            SMS CH: Cardholder 2-way text notification. Text can be Standard, that is requiring Accepted Enrollment Status before any text can be sent, or Premium
+
+            Email CH: Cardholder email address
+
+            Phone CH: Cardholder contact number; calls are made to each phone number provided
+
+            FI SMS: Financial institution 1-way text notifications
+
+            FI Email: Financial institution email address
+          example:
+          - Email CH
+          - SMS CH
+          items:
+            type: string
+        homePhone:
+          maxLength: 16
+          type: string
+          description: Cardholder's primary phone number. Max 16 digits
+          example: "1005550001"
+        workPhone:
+          maxLength: 16
+          type: string
+          description: Cardholder's primary work phone number. Max 16 digits
+          example: "1005550001"
+        cellPhone:
+          maxLength: 16
+          type: string
+          description: Cardholder's primary cell phone number. Max 16 digits
+          example: "1005550001"
+        emailAddress:
+          maxLength: 50
+          type: string
+          description: Cardholder's email address.
+          format: Alphanumeric and special characters
+          example: alexsmith@example.com
+        textAddress:
+          maxLength: 20
+          type: string
+          description: Cardholder's text address.
+          format: Alphanumeric and special characters
+          example: "1005550001"
+        enrollmentStatus:
+          type: string
+          description: |-
+            Indicates where the cardholder's text address request is in the enrollment process. If your institution is signed up for Standard texting, the cardholder must send an Accepted response for enrollment before the system can text a fraud alert to the phone number. If an enrollment request is not initiated but a text address is available in the Contact Information section, the Enrollment Status displays as Created. This field is blank only when the Text Address field is blank.  Valid values are
+            'Accepted'—Cardholder responded Yes to the enrollment message. 'Created'—Set at initiation of batch processing.
+
+            'Declined'—Cardholder responded No to the enrollment message or STOP to receiving any text message including fraud text alerts.
+
+            'Error'—Errors during CWSi enrollment process.
+
+            'Rejected'—Errors during batch enrollment process. Example of reasons for Error or Rejected status is Number may be invalid, LAN line that cannot receive text, or non-US phone number.
+
+            'Invalid'-Enrollment message not sent to the cardholder since card is not active with status of Lost, Stolen, Counterfeit, Closed, or Expired.
+
+            'Pending'—Set at creation by CWSi or by batch to indicate record is forwarded to the delivery processing system.
+
+            'Sent'—Enrollment message sent to the cardholder.
+
+            'Timed Out'—Cardholder did not respond to the enrollment message within the allotted 72-hour enrollment window.
+          example: Sent
+        enrollmentDate:
+          type: string
+          description: Date on which the enrollment status was last changed to the status displayed in the Enrollment Status field. If an enrollment request is not initiated, the field comes blank.
+          example: 2021-07-20T07:00:00.000+0000
+        createScore:
+          maxLength: 3
+          type: string
+          description: Transaction score that initiated case creation.
+          example: "0"
+        highScore:
+          maxLength: 3
+          type: string
+          description: Highest transaction score associated with the case.
+          example: "430"
+        usedForEnfact:
+          $ref: '#/components/schemas/EnfactIndicators'
+    CaseDetailsRequest:
+      required:
+      - caseNumber
+      type: object
+      properties:
+        caseNumber:
+          maxLength: 12
+          minLength: 1
+          pattern: '[0-9]{1,12}'
+          type: string
+          description: The case number provided to the cardholder.
+          example: "999999999"
+        caseTenant:
+          maxLength: 2
+          type: string
+          description: The code associated with the case. If the caseTenant is not passed it is defaulted to 60.
+          example: "60"
+      description: Provide the case number for which you need the details.
+    CaseHistoryItems:
+      type: object
+      properties:
+        createdDateTime:
+          type: string
+          description: Date and time when the action was created.
+          format: date-time
+        requestedDateTime:
+          type: string
+          description: Date and time when the action was requested.
+          format: date-time
+        requestedUser:
+          type: string
+          description: user who initiated the request.
+          example: Smith
+        description:
+          type: string
+          description: Description of the action.
+          example: No Contact Found due to INVALID data.
+    CaseHistoryRequest:
+      required:
+      - caseNumber
+      type: object
+      properties:
+        caseNumber:
+          maxLength: 12
+          minLength: 1
+          pattern: '[0-9]{1,12}'
+          type: string
+          description: The case number provided to the cardholder.
+          example: "999999999"
+        caseTenant:
+          maxLength: 2
+          type: string
+          description: The code associated with the case. If the caseTenant is not passed it is defaulted to 60.
+          example: "60"
+        pageLimit:
+          maximum: 250
+          minimum: 1
+          type: integer
+          description: The number of entries returned per page.
+          example: 50
+          default: 250
+        pageOffset:
+          minimum: 1
+          type: integer
+          description: 'The page to be returned. Note: The starting record of the response will be the pagelimit multiplied by the pageoffset.'
+          example: 1
+          default: 1
+      description: Provide the case number for which you need the History details.
+    CaseHistoryResponse:
+      type: object
+      properties:
+        caseHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/CaseHistoryItems'
+      description: Returns the history comments associated to the case.
+    CaseRulesRequest:
+      required:
+      - caseNumber
+      type: object
+      properties:
+        caseNumber:
+          maxLength: 12
+          minLength: 1
+          pattern: '[0-9]{1,12}'
+          type: string
+          description: The case number provided to the cardholder.
+          example: "999999999"
+        caseTenant:
+          maxLength: 2
+          type: string
+          description: The code associated with the case. If the caseTenant is not passed it is defaulted to 60.
+          example: "60"
+      description: Provide the case number for which you need the associated rule details.
+    CaseRulesResponse:
+      type: object
+      properties:
+        associatedRulesAndTransactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssociatedRulesAndTransactions'
+      description: Returns the rules fired for a case and transactions associated with it.
+    CaseSearchCaseDetails:
+      type: object
+      properties:
+        logo:
+          type: string
+          description: Unique 4-character alphanumeric identifier assigned by Fiserv for the institution.
+          example: APIP
+        cardNumber:
+          type: string
+          description: Masked Card number of the primary cardholder.
+          example: 400020XXXXXX4000
+        caseTenant:
+          maxLength: 2
+          type: string
+          description: The code associated with the case. If the caseTenant is not passed it is defaulted to 60.
+          example: "60"
+        caseNumber:
+          type: string
+          description: The case number provided to the cardholder.
+          example: "999999999"
+        caseCreatedDateTime:
+          type: string
+          description: Date and time case was created.
+          format: date-time
+        caseStatus:
+          type: string
+          description: Current case status.
+          example: OPEN
+        name:
+          type: string
+          description: Selected cardholder's name.
+          example: Alex Smith
+        caseClosedDateTime:
+          type: string
+          description: Date and time case was closed.
+          format: date-time
+        archived:
+          type: string
+          description: Indicates if case is archived. You can only view an archived case and not update. Valid values are No, Yes
+          example: "No"
+        baseCreateScore:
+          maxLength: 3
+          type: string
+          description: Core EnFact transaction score that initiated case creation, if the institution selected either Base or Both as the Score Used. Max 3 digits
+          example: "0"
+        baseHighScore:
+          maxLength: 3
+          type: string
+          description: Highest transaction score associated with the case using the core EnFact model scoring. Max 3 digits
+          example: "430"
+        taxId1:
+          type: string
+          description: Last 4 digits of a business ID for a business card or the last 4 digits of the Social Security number (SSN) of the primary cardholder. When available, this field is used to confirm cardholder identity.
+          example: "1234"
+        taxId2:
+          type: string
+          description: Last 4 digits of a business ID for a business card or the last 4 digits of the SSN of the secondary cardholder.
+          example: "1234"
+        homePhone:
+          maxLength: 16
+          type: string
+          description: Phone1, Cardholder's primary phone number. Max 16 digits
+          example: "1005550001"
+        secondaryPhone:
+          maxLength: 16
+          type: string
+          description: Phone2, Cardholder's secondary  phone number. Max 16 digits, applicable for only legacy card management system cards.
+          example: "1005550001"
+        workPhone:
+          maxLength: 16
+          type: string
+          description: Phone3, Cardholder's primary work phone number. Max 16 digits
+          example: "1005550001"
+        cellPhone:
+          maxLength: 16
+          type: string
+          description: Phone4, Cardholder's primary cell phone number. Max 16 digits
+          example: "1005550001"
+        addressLine1:
+          maxLength: 40
+          type: string
+          description: First line of the cardholder's address.
+          example: 123 Any Street
+        addressLine2:
+          maxLength: 40
+          type: string
+          description: Address line for cardholder's additional address information.
+          example: 123 Any Lane
+        city:
+          maxLength: 40
+          type: string
+          description: City of the cardholder's address.
+          example: New Jersey
+        state:
+          type: string
+          description: State code of the cardholder's address.
+          example: NJ
+        postalCode:
+          type: string
+          description: Postal code of the cardholder's address.
+          example: "12345"
+        actionStrategy:
+          maxLength: 2
+          type: string
+          description: Strategy code that details actions to be taken on each case. See EnFact manual for the questions that define these actions. only 2 chars are allowed.
+          example: A1
+        adaptiveCreateScore:
+          maxLength: 3
+          type: string
+          description: Adaptive Analytics EnFact transaction score that initiated case creation, if the institution selected either Adaptive or Both as the Score Used. Max 3 digits
+          example: "0"
+        adaptiveHighScore:
+          maxLength: 3
+          type: string
+          description: Highest transaction score associated with the case using the Adaptive Analytics EnFact model.. Max 3 digits
+          example: "430"
+        primaryBirthDate:
+          type: string
+          description: Primary cardholder's date of birth.
+          format: date
+        otherBirthDate:
+          type: string
+          description: Birth date of the individual listed in the Other Name field.
+          format: date
+        cardStatusAtCaseCreate:
+          type: string
+          description: Status of the card when the case was originally opened. Valid values are 'Active', 'Closed', 'Expired', 'Insufficient Funds', 'Issued', 'Not Active' 'Lost', 'Pre-Activated' 'Restricted', 'Stolen'
+          example: Active
+        cardTrackerSeverity:
+          type: string
+          description: |-
+            Provides the level of severity if, and when, a card has been compromised. Valid values are
+            'Blank'=Card is not compromised.
+
+            'A'=Fraud warning clients only. Cards have high risk of becoming fraudulent. Recommended action- reissue.
+
+            'B'=Fraud warning clients only. Cards have medium risk of becoming fraudulent. Recommended actions- are Reissue for aggressive fraud strategies, providing the maximum fraud savings possible for the issuer in the long term. Blocking, monitoring, or selective reissue for less aggressive fraud strategies, minimizing customer impact.
+            'C'=Fraud warning clients only. Cards have low risk of becoming fraudulent. Recommended actions- Blocking, monitoring, or selective reissue.
+
+            'D'=Fraud warning clients only. Reserved for future use. '1'=Severe level of compromise consisting of full track date, card number, PIN, CVV/CVC, CVV2/CVC2, and cardholder personal data.
+
+            '2'=Compromised card number, expiration date, CVV/CVC, and CVV2/CVC2. '3'=Compromised card number and expiration date.
+
+            '4'=Compromised card number only.
+
+            '5'=User-defined level for any card number. Use this value even if the card has not been compromised.
+
+            '6'=Alert was sent for this card and then retracted. No compromise. Note- If the card appears in multiple alerts, the highest severity rating is displayed in this field.
+          example: "5"
+        fraudApproach:
+          type: string
+          description: Fraud approach chosen by the institution to define the score at which a case is created. Valid values could be 'Custom', 'Minimum', 'Average', 'Moderate', 'Aggressive', 'No Maturation'.
+          example: Minimum
+        memberNumber:
+          type: string
+          description: Unique 3-digit member number associated with the cardholder record.
+          example: "0"
+        highTransactionDateTime:
+          type: string
+          description: High Transaction Date
+          format: date-time
+        lastAnalyst:
+          type: string
+          description: Last Analyst
+          example: Analyst
+        lastFraudCode:
+          type: string
+          description: Last Fraud Code
+          example: CASE_FRAUD_TYPE_APP_FRD
+        lastName:
+          type: string
+          description: Cardholder's last name
+          example: Smith
+        lastScore:
+          type: string
+          description: Last Score
+          example: "0"
+        lastTransactionDateTime:
+          type: string
+          description: Last Transaction Date
+          format: date-time
+        OriginalAnalyst:
+          type: string
+          description: Original Analyst
+          example: Analyst
+        scoreToUse:
+          type: string
+          description: Case level score used at case create. Values could be 'Adaptive' or 'Base'.
+          example: Base
+        rules:
+          type: string
+          description: Rules
+          example: RuleManager Case Create
+    CaseSearchRequest:
+      required:
+      - fromDateTime
+      - toDateTime
+      type: object
+      properties:
+        fromDateTime:
+          type: string
+          description: Refines the search based on the From date
+          format: date-time
+        toDateTime:
+          type: string
+          description: Refines the search based on the To date
+          format: date-time
+        caseTenant:
+          maxLength: 2
+          type: string
+          description: The code associated with the case. If the caseTenant is not passed it is defaulted to 60.
+          example: "60"
+        caseNumber:
+          maxLength: 12
+          pattern: '[0-9]{0,12}'
+          type: string
+          description: The case number provided to the cardholder. Partial search is supported.
+          example: "999999999"
+        cardNumber:
+          pattern: '[0-9]{0,19}'
+          type: string
+          description: Card number of the primary cardholder. Partial search is supported.
+          format: numeric
+          example: "4000200030004000"
+        caseStatus:
+          type: string
+          description: |-
+            Provide a case status to refine your search criteria.
+
+            'ALL_ACTIVE'—Cases with any Active status value. 'ALL_CLOSED'—Cases with any Closed status value. 'ACTIVE_PENDING'—Cases ready for the EnFact Notifications automations to begin. 'ACTIVE_CALL_CENTER'—Cases being sent to the Call Center for review. 'ACTIVE_CALLBACK'—Cases defined by Call Center for future review by the Call Center. 'ACTIVE_FI_INVESTIGATING'—Cases controlled by the institution. No further actions will be taken by EnFact Notification automation or the Call Center. 'CLOSED_CONFIRMED_FRAUD'—Case is closed with the disposition of fraud. 'CLOSED_NO_FRAUD'—Cases is closed with the disposition of not fraud. 'CLOSED_UNCONFIRMED_FRAUD'—Case is closed but no final disposition was confirmed. The institution must review these cases and set them to either a No Fraud or Confirmed Fraud status. 'OPEN'—New case opened by a user for review for the first time.
+          example: OPEN
+          enum:
+          - ALL_ACTIVE
+          - ALL_CLOSED
+          - ACTIVE_PENDING
+          - ACTIVE_CALL_CENTER
+          - ACTIVE_CALLBACK
+          - ACTIVE_FI_INVESTIGATING
+          - CLOSED_CONFIRMED_FRAUD
+          - CLOSED_NO_FRAUD
+          - CLOSED_UNCONFIRMED_FRAUD
+          - OPEN
+        lastName:
+          maxLength: 60
+          type: string
+          description: Cardholder's lastname. Partial search is supported.
+          format: lastName
+          example: smith
+        lastFourSsnOrTaxid:
+          maxLength: 4
+          minLength: 4
+          pattern: '[0-9]{4}'
+          type: string
+          description: Last 4 digits of the business ID for a business card or the last 4 digits of the Social Security number (SSN) of the primary cardholder.
+          example: "1234"
+        phoneNumber:
+          maxLength: 16
+          pattern: '[0-9+().#-]{0,16}'
+          type: string
+          description: Any phone number associated with a cardholder’s record. The number should match the entry in the Card Management system, including parenthesis, dashes, or other characters.  Partial search such as '1420' to find '(555)123-1420' supported.
+          example: "1005550001"
+        city:
+          maxLength: 40
+          pattern: "[,'\"a-zA-Z\r\n\t\f\v.-]{0,40}"
+          type: string
+          description: City of the cardholder's primary address. Partial search is supported on this field value.
+          example: New Jersey
+        state:
+          maxLength: 3
+          pattern: '[A-Za-z]{0,3}'
+          type: string
+          description: State code of the cardholder's primary address. Partial search is supported.
+          example: NJ
+        postalCode:
+          maxLength: 10
+          pattern: "[a-zA-Z0-9\r\n\t\f\v. -]{0,10}"
+          type: string
+          description: Postal code of the cardholder's primary address. Partial search is supported.
+          example: "12345"
+        pageLimit:
+          maximum: 250
+          minimum: 1
+          type: integer
+          description: The number of entries returned per page.
+          example: 50
+          default: 250
+        pageOffset:
+          minimum: 1
+          type: integer
+          description: 'The page to be returned. Note: The starting record of the response will be the pagelimit multiplied by the pageoffset.'
+          example: 1
+          default: 1
+      description: Some of the search fields support partial search, such as 'an' to find 'andrew' or 'stan'.  Returns only cases that match all fields when the request contains values for more than one field.
+    CaseSearchResponse:
+      type: object
+      properties:
+        caseSearchResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/CaseSearchCaseDetails'
+      description: Cases will be returned in chronological order from most recent to least recent. Please further refine your search criteria if you are unable to find a case.
+    CaseTransactionsRequest:
+      required:
+      - caseNumber
+      type: object
+      properties:
+        caseNumber:
+          maxLength: 12
+          minLength: 1
+          pattern: '[0-9]{1,12}'
+          type: string
+          description: The case number provided to the cardholder.
+          example: "999999999"
+        caseTenant:
+          maxLength: 2
+          type: string
+          description: The code associated with the case. If the caseTenant is not passed it is defaulted to 60.
+          example: "60"
+        pageLimit:
+          maximum: 250
+          minimum: 1
+          type: integer
+          description: The number of entries returned per page. This is applicable only when requesting Deposit and Payment Transactions. This is ignored for Authorization Transactions.
+          example: 50
+          default: 250
+        pageOffset:
+          minimum: 1
+          type: integer
+          description: 'The page to be returned. Note: The starting record of the response will be the pagelimit multiplied by the pageoffset. This is applicable only when requesting Deposit and Payment Transactions. This is ignored for Authorization Transactions.  '
+          example: 1
+          default: 1
+      description: Provide the case number for which you need the Transaction details. Authorization Transactions are limited to show upto 500 records. Non-Authorization transactions are shown as requested in the pageLimit fields.
+    EnfactIndicators:
+      type: object
+      properties:
+        homePhone:
+          type: boolean
+          description: Indicates if a Cardholder's home phone number is enabled to receive alerts
+          example: true
+        cellPhone:
+          type: boolean
+          description: Indicates if a Cardholder's cell phone number is enabled to receive alerts
+          example: true
+        workPhone:
+          type: boolean
+          description: Indicates if a Cardholder's work phone number is enabled to receive alerts
+          example: true
+        emailAddress:
+          type: boolean
+          description: Indicates if a Cardholder's email address is enabled to receive alerts
+          example: true
+        textAddress:
+          type: boolean
+          description: Indicates if a Cardholder's text address is enabled to receive alerts
+          example: true
+      description: Media types for which the cardholder can receive alerts.
+    NonAuthTransactionItems:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Transaction ID
+          example: "1111115678"
+        disposition:
+          type: string
+          description: Indicates if the Transaction is identified as Fraud or Not Fraud
+          example: Not Fraud
+        cardNumber:
+          type: string
+          description: Masked card number of the primary cardholder.
+          example: 400020XXXXXX4000
+        transactionDateTime:
+          type: string
+          description: Transaction date and time
+          format: date-time
+        amount:
+          type: string
+          description: Transaction Amount
+          example: "25.05"
+        authDecision:
+          type: string
+          description: Authorization Decision
+          example: D
+        merchantName:
+          type: string
+          description: Merchant Name
+          example: Home Supply
+        countryCode:
+          type: string
+          description: Three-digit ISO 3166-1 Country Code.
+          example: "840"
+        countryAlpha:
+          type: string
+          description: Two-letter ISO 3166-1 Country Alpha
+          example: US
+        actionStrategy:
+          type: string
+          description: Action Strategy
+          example: A1
+        authReason:
+          type: string
+          description: Authorization Reason
+          example: O
+        authResponse:
+          type: string
+          description: Authorization Response
+          example: "090"
+        authSubResponse:
+          type: string
+          description: Authorization Sub-Response
+          example: G
+        memberNumber:
+          type: string
+          description: Card Member Number
+          example: "0"
+        transactionCity:
+          type: string
+          description: Transaction City
+          example: New Jersey
+        merchantIdentifier:
+          type: string
+          description: Merchant Identifier
+          example: Home Supply
+        transactionPostalCode:
+          type: string
+          description: Transaction Postal Code
+          example: "12345"
+        transactionState:
+          type: string
+          description: Transaction State
+          example: NJ
+        messageType:
+          type: string
+          description: Message Type
+          example: "136"
+        realTimeResponse:
+          type: string
+          description: Real-Time response
+        transType:
+          type: string
+          description: Transaction Type
+          example: I
+        transactionPOS:
+          type: string
+          description: Transaction Point Of Sale
+          example: "2"
+        vaaRCC1:
+          type: string
+          description: VAA RCC1. Applicable for Visa cards.
+          example: "42"
+        vaaRCC2:
+          type: string
+          description: VAA RCC2. Applicable for Visa cards.
+          example: "23"
+        vaaRCC3:
+          type: string
+          description: VAA RCC3. Applicable for Visa cards.
+          example: "11"
+        vaaRRC:
+          type: string
+          description: VAA RRC. Applicable for Visa cards.
+          example: "51"
+        vaaRTD:
+          type: string
+          description: VAA RTD. Applicable for Visa cards.
+          example: "2"
+    NonAuthTransactionsResponse:
+      type: object
+      properties:
+        depositAndPaymentTransactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/NonAuthTransactionItems'
+      description: Returns Deposit and Payment transactions associated to a case. Transactions will be returned in chronological order from most recent to least recent.
+    PasscodeGenerateRequest:
+      required:
+      - cardNumber
+      - mediaAddress
+      - mediaType
+      type: object
+      properties:
+        cardNumber:
+          maxLength: 19
+          minLength: 16
+          type: string
+          description: Card number of primary cardholder.
+          format: numeric
+          example: "4000200030004000"
+        cardMemberNumber:
+          type: string
+          description: Member number of the cardholder.
+          example: "0"
+          default: "0"
+        mediaType:
+          type: string
+          description: Possible values for media type are voice, text, email.
+          example: TEXT
+          enum:
+          - VOICE
+          - TEXT
+          - EMAIL
+        mediaAddress:
+          type: string
+          description: Value of the selected mediatype.
+          example: '******7366'
+    PasscodeGenerateRequestV2:
+      required:
+      - cardNumber
+      - mediaAddress
+      - mediaType
+      type: object
+      properties:
+        cardNumber:
+          maxLength: 19
+          minLength: 16
+          type: string
+          description: Card number of primary cardholder.
+          format: numeric
+          example: "4000200030004000"
+        memberNumber:
+          type: string
+          description: Member number of the cardholder.
+          example: "0"
+          default: "0"
+        mediaType:
+          type: string
+          description: Possible values for media type are voice, text, email.
+          example: TEXT
+          enum:
+          - VOICE
+          - TEXT
+          - EMAIL
+        mediaAddress:
+          type: string
+          description: Value of the selected mediatype.
+          example: '******7366'
+    PasscodeGenerateResponse:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: Semi-masked card number of the primary cardholder.
+          example: '***********4000'
+        memberNumber:
+          type: string
+          description: Member number of the cardholder.
+          example: "0"
+        otpId:
+          type: string
+          description: Unique reference number. Serves as acknowledgement of successful passcode generation.
+          example: "1234567"
+        status:
+          type: string
+          description: SUCCESS or FAILURE.
+          example: SUCCESS
+        statusDescription:
+          type: string
+          description: Additional information about status.
+          example: SUCCEEDED
+        mediaType:
+          type: string
+          description: Possible values for media type are voice, text, email.
+          example: TEXT
+          enum:
+          - VOICE
+          - TEXT
+          - EMAIL
+        mediaAddress:
+          type: string
+          description: Value of the selected mediatype.
+          example: '******7366'
+    PasscodeGenerateRequestV3:
+      required:
+      - mediaAddress
+      - mediaType
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: |
+            Unique number assigned to each cardholder record. Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber will be used. Maximum length 19 digits.
+          format: numeric
+          example: "4000200030004000"
+        nonTransToken:
+          type: string
+          description: |
+            Non-transactional token associated with a card. Non-transactional token associated with a card.
+            Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber is used. Length can be between 16 and 19.
+          format: alphanumeric
+          example: piUVBJKZGfks4000
+        memberNumber:
+          maxLength: 1
+          type: string
+          description: |
+            Unique number associated with each member of the card. Based on the card prefix setup. If the member number is not passed, defaults to 0 (zero).  Applies to debit cards only.
+          format: numeric
+          example: "0"
+        jwtTokenFlag:
+          type: boolean
+          description: |
+            Javascript Web Token Flag (JWT), Indicates JWT to be created or not.
+          example: true
+          default: false
+        mediaType:
+          type: string
+          description: Possible values for media type are voice, text, email.
+          example: TEXT
+          enum:
+          - VOICE
+          - TEXT
+          - EMAIL
+        mediaAddress:
+          type: string
+          description: Value of the selected mediatype.
+          example: '******0001'
+    PasscodeGenerateResponsev3:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: |
+            Unique number assigned to each cardholder record. Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber will be used. Maximum length 19 digits.
+          format: numeric
+          example: 400020XXXXXX4000
+        nonTransToken:
+          type: string
+          description: |
+            Non-transactional token associated with a card. Non-transactional token associated with a card.
+            Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber is used. Length can be between 16 and 19.
+          format: alphanumeric
+          example: piUVBJKZGfks4000
+        memberNumber:
+          type: string
+          description: |
+            Unique number associated with each member of the card. Based on the card prefix setup. If the member number is not passed, defaults to 0 (zero).  Applies to debit cards only.
+          format: numeric
+          example: "0"
+        otpId:
+          type: string
+          description: Unique reference number. Serves as acknowledgement of successful passcode generation.
+          example: "1234567"
+        jwt:
+          type: string
+          description: Javascript Web Token (JWT), JWT provided for one card can only be used to set the PIN for that particular card. Valid for 15 minutes only.
+          example: eyJ0eXAiOiJKV1QiLCJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.WrliT8nLQOTRnXldrYj0brobAyi6M7-U8_iHovmTH1VAZksc4mOGQCfaSx-sbDNjdkpeznR8lU1sHOX26qom94jBO6uePEw1cBbTHLpOSEPDYiWS6SzTgxguF7zT2g5Ui1HHi2GKgPtH5L0XC_QqP5TIs3A15fqpAnvMaSwW9O_GDRzxnsUDCgEZCkwQOuEpWYDbM7r7yKrfAlkWKOHOlZuUtvJvg3k8p-1qwKpuGexhWXQdgKsWphBWbMzbindOIefIo4VTrOVMxWOdP_bLNId0E0CBLxSpRHX1u3EeAjUykUdifT2CP4bb6kbJf4pp0dRc_uPZGJLj7faPyq6UeQ.zTLJMNI8bjGh-KBy.FW0W0ihL2sj7pYin2iY1gavS4W-yPswjKmrb6-ROwHgEOscfeGGLmUihzoV6vy9KvTJ9ytnIPqh-K94UsShUJ0-KgsY4_eWyUwx4IYpYaJkPeUVd4ni_1eZMBy6-hPr3n39DES_kXfnv3MJOiZZj0I-GJXw99WBV7xhl7KZcFKyMXYnszyboV8Xi2iZqHglvEoYRjKLvOlEq2j4pJoMRVfBB8oIOZm6uyCaOnyuWuE_Lg1HeuNMnHddTm8gexDAfwj3WYHkJazsN1PZVhPZVImyKwCNM.TOYk3lw2SKYamQL7XiLXlg
+        status:
+          type: string
+          description: SUCCESS or FAILURE.
+          example: SUCCESS
+        statusDescription:
+          type: string
+          description: Additional information about status.
+          example: SUCCESS
+        mediaType:
+          type: string
+          description: Possible values for media type are voice, text, email.
+          example: TEXT
+          enum:
+          - VOICE
+          - TEXT
+          - EMAIL
+        mediaAddress:
+          type: string
+          description: Value of the selected mediatype.
+          example: '******0001'
+    RulesItems:
+      type: object
+      properties:
+        ruleFiredDateTime:
+          type: string
+          description: Date and Time when the rule was fired.
+          format: date-time
+        ruleSet:
+          type: string
+          description: Rule Set
+          example: decision_DBTRAN25
+        ruleName:
+          type: string
+          description: Rule Name
+          example: RuleManager Case Create
+    UpdateTranDetailsItems:
+      type: object
+      properties:
+        transactionId:
+          pattern: '[0-9a-zA-Z]{1,32}'
+          type: string
+          description: Transaction Id. Transaction Id is required if indicating dispositioning.
+          format: alphanumeric
+          example: "1111115678"
+        transactionDisposition:
+          type: string
+          description: Indicate if a Transaction is Fraud or Not Fraud.
+          example: NOT_FRAUD
+          enum:
+          - FRAUD
+          - NOT_FRAUD
+          - NONE
+    UpdateFraudCaseRequest:
+      required:
+      - caseComments
+      - caseNumber
+      type: object
+      properties:
+        caseNumber:
+          maxLength: 12
+          minLength: 1
+          pattern: '[0-9]{1,12}'
+          type: string
+          description: The case number provided to the cardholder.
+          example: "999999999"
+        caseTenant:
+          maxLength: 2
+          type: string
+          description: The code associated with the case. If the caseTenant is not passed it is defaulted to 60.
+          example: "60"
+        caseStatus:
+          type: string
+          description: "Update the Case status. 'NO_UPDATE'— This will add a new action to a case without updating the case status. 'ACTIVE_FI_INVESTIGATING'—Case is being worked by the institution and no further automated action will be taken.\n'CLOSED_CONFIRMED_FRAUD'—Case is confirmed as fraudulent by the cardholder or the institution. Fraud Code is required when Case Status is updated to 'CLOSED_CONFIRMED_FRAUD' 'CLOSED_NO_FRAUD'—Case confirmed as not fraud; case suppression is initiated. 'CLOSED_UNCONFIRMED_FRAUD'—Case where fraud was suspected, but not confirmed.  "
+          example: CLOSED_UNCONFIRMED_FRAUD
+          enum:
+          - NO_UPDATE
+          - ACTIVE_FI_INVESTIGATING
+          - CLOSED_CONFIRMED_FRAUD
+          - CLOSED_NO_FRAUD
+          - CLOSED_UNCONFIRMED_FRAUD
+        fraudCode:
+          type: string
+          description: 'Fraud Code is required when Case Status is updated to ''CLOSED_CONFIRMED_FRAUD''.  '
+          example: APPLICATION_FRAUD
+          enum:
+          - APPLICATION_FRAUD
+          - CHECK_KITING
+          - CONVENIENCE_CHECK_FRAUD
+          - COUNTERFEIT_FRAUD
+          - FIRST_PARTY_FRAUD
+          - FRIENDLY_FRAUD
+          - ID_THEFT
+          - INTERNET_ORDER_FRAUD
+          - KIDNAPPING
+          - LOSTORSTOLEN
+          - MAILORPHONE_ORDER_FRAUD
+          - OTHER
+          - SKIMMING_FRAUD
+          - TAKEOVER_FRAUD
+          - ZERO_LOSS_FRAUD
+        cardStatus:
+          type: string
+          description: "Card status to be updated in the Card Management (CM) system. This update can be done only if user have update access rights for card status. The card status cannot be set to ACTIVE if the current card status is Abused,Closed,Customer Request,Damaged,Expired,Insufficient Funds,Lost,Revoked,Reserved,Stolen. Card Status cannot be updated to ACTIVE when the Case status is CLOSED_CONFIRMED_FRAUD.\n\nValid values are 'NO_UPDATE'—Default 'ACTIVE'—Card can complete all transactions defined by the institution. You cannot set the Card Status to Active if the Current Card Status is any one of the following values—Abused, Closed, Customer Request, Damaged, Expired, Insufficient Funds, Lost, Revoked, Reserved, or Stolen 'LOST'—Card cannot be used. New card number needs to be issued to the cardholder. 'STOLEN'—Card cannot be used. New card number needs to be issued to the cardholder. 'RESTRICTED'—Card can be used only to make deposits to the account. A restricted status is used to protect the account and once no-fraud is defined should be removed and card status returned to Active. "
+          example: ACTIVE
+          enum:
+          - NO_UPDATE
+          - ACTIVE
+          - LOST
+          - STOLEN
+          - RESTRICTED
+        leftMessage:
+          type: boolean
+          description: true-Indicates voice message was left for the cardholder.
+          example: true
+        contactedCardholder:
+          type: boolean
+          description: true-Indicates contact was established with the cardholder.
+          example: true
+        homePhoneValid:
+          type: boolean
+          description: Indicate if home phone number is valid
+          example: true
+        workPhoneValid:
+          type: boolean
+          description: Indicate if work phone number is valid
+          example: true
+        cellPhoneValid:
+          type: boolean
+          description: Indicate if cell phone number is valid
+          example: true
+        caseComments:
+          maxLength: 1950
+          minLength: 1
+          type: string
+          description: Additional Comments to be added to a case
+          example: No Contact Found due to INVALID data
+        transactionDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateTranDetailsItems'
+    VerificationHistoryRequest:
+      required:
+      - cardNumber
+      type: object
+      properties:
+        cardNumber:
+          maxLength: 19
+          minLength: 16
+          type: string
+          description: Card number of the primary cardholder.
+          example: "4000200030004000"
+        memberNumber:
+          maxLength: 1
+          type: string
+          description: Member number associated with the card. If member number is provided in request then history of relevent card number and member number will be displayed in response. If member number is not provided in request then history of all member numbers will be displayed in response.
+          example: "0"
+        fromDate:
+          type: string
+          description: Refines the search based on the From date. From date cannot be after To date.fromDate is required when toDate is provided in the request. If no From and To dates are passed in the request, this will be defaulted to a date which is one year older to the current date.
+          format: date
+        toDate:
+          type: string
+          description: Refines the search based on the To date. To date cannot be after the current date.toDate is required when fromDate is provided in the request. If no From and To dates are passed in the request, this will be defaulted to the current date.
+          format: date
+        pageLimit:
+          maximum: 250
+          minimum: 1
+          type: integer
+          description: The number of entries returned per page.
+          example: 50
+          default: 250
+        pageOffset:
+          minimum: 1
+          type: integer
+          description: 'The page to be returned. Note: The starting record of the response will be the pagelimit multiplied by the pageoffset.'
+          example: 1
+          default: 1
+    VerificationHistoryResponse:
+      type: object
+      properties:
+        verificationHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/VerificationHistoryItems'
+    VerificationHistoryItems:
+      type: object
+      properties:
+        memberNumber:
+          type: string
+          description: Member number associated with the card.
+          example: "0"
+        dateTime:
+          type: string
+          description: Date and time when the OTP was sent to the cardholder.
+          format: date-time
+        mediaType:
+          type: string
+          description: Preferred media type to which the OTP was sent. This information is based on the option selected for Step Up media type.
+          example: TEXT
+          enum:
+          - TEXT
+          - VOICE
+          - EMAIL
+        mediaAddress:
+          type: string
+          description: Information available at the time of the request for the preferred media type.
+          example: "1005550001"
+        contactStatus:
+          type: string
+          description: Indicates whether the OTP was successfully sent to the cardholder or call was disconnected. SENT applies to TEXT, VOICE, EMAIL. DISCONNECTED applies to VOICE
+          example: SENT
+          enum:
+          - SENT
+          - DISCONNECTED
+        validationStatus:
+          type: string
+          description: Indicates validation status of the OTP provided by the cardholder for authentication.
+          example: VALID
+          enum:
+          - VALID
+          - INVALID
+          - UNKNOWN
+        updatedByUser:
+          type: string
+          description: User ID of the person who last completed OTP verification for the cardholder.
+          example: smith
+    ValidationRequest:
+      required:
+      - cardNumber
+      - otpId
+      - otpPassCode
+      type: object
+      properties:
+        cardNumber:
+          maxLength: 19
+          minLength: 16
+          type: string
+          description: Card number of primary cardholder.
+          format: numeric
+          example: "4000200030004000"
+        cardMemberNumber:
+          type: string
+          description: Member number of the cardholder.
+          example: "0"
+          default: "0"
+        otpId:
+          maxLength: 10
+          type: string
+          description: Unique reference number received from passcodeGeneration operation.
+          example: "1234567"
+        otpPassCode:
+          maxLength: 6
+          type: string
+          description: Passcode received on selected media type from passcodeGeneration operation.
+          example: "123456"
+    ValidationRequestV2:
+      required:
+      - cardNumber
+      - otpId
+      - otpPassCode
+      type: object
+      properties:
+        cardNumber:
+          maxLength: 19
+          minLength: 16
+          type: string
+          description: Card number of primary cardholder.
+          format: numeric
+          example: "4000200030004000"
+        memberNumber:
+          type: string
+          description: Member number of the cardholder.
+          example: "0"
+          default: "0"
+        otpId:
+          maxLength: 10
+          type: string
+          description: Unique reference number received from passcodeGeneration operation.
+          example: "1234567"
+        otpPassCode:
+          maxLength: 6
+          type: string
+          description: Passcode received on selected media type from passcodeGeneration operation.
+          example: "123456"
+    ValidationResponse:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: Semi-masked card number of the primary cardholder.
+          example: '***********4000'
+        memberNumber:
+          type: string
+          description: 'Member number of the cardholder. '
+          example: "0"
+        otpId:
+          type: string
+          description: Unique reference number received from otpValidation operation.
+          example: "1234567"
+        status:
+          type: string
+          description: Success or failed.
+          enum:
+          - FAILED
+          - SUCCESS
+        statusDescription:
+          type: string
+          description: Indicates success or failure.
+          example: SUCCEEDED
+    VerificationSearchRequest:
+      title: verificationSearchRequest
+      required:
+      - cardNumber
+      type: object
+      properties:
+        cardNumber:
+          maxLength: 19
+          minLength: 16
+          type: string
+          description: Card number of primary cardholder.
+          format: numeric
+          example: "4000200030004000"
+        cardMemberNumber:
+          type: string
+          description: Member number of the cardholder.
+          example: "0"
+          default: "0"
+    VerificationSearchRequestV2:
+      title: verificationSearchRequest
+      required:
+      - cardNumber
+      type: object
+      properties:
+        cardNumber:
+          maxLength: 19
+          minLength: 16
+          type: string
+          description: Card number of primary cardholder.
+          format: numeric
+          example: "4000200030004000"
+        memberNumber:
+          type: string
+          description: Member number of the cardholder.
+          example: "0"
+          default: "0"
+    VerificationSearchRequestV3:
+      title: verificationSearchRequest
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: |
+            Unique number assigned to each cardholder record. Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber will be used. Maximum length 19 digits.
+          format: numeric
+          example: "4000200030004000"
+        nonTransToken:
+          type: string
+          description: |
+            Non-transactional token associated with a card. Non-transactional token associated with a card.
+            Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber is used. Length can be between 16 and 19.
+          format: alphanumeric
+          example: piUVBJKZGfks4000
+        memberNumber:
+          maxLength: 1
+          type: string
+          description: |
+            Unique number associated with each member of the card. Based on the card prefix setup. If the member number is not passed, defaults to 0 (zero).  Applies to debit cards only.
+          format: numeric
+          example: "0"
+    VerificationSearchResponse:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: 'Semi-masked card number of the primary cardholder. '
+          format: numeric
+          example: '***********4000'
+        memberNumber:
+          type: string
+          description: 'Member number of the cardholder. '
+          example: "0"
+        contact:
+          $ref: '#/components/schemas/VerificationContact'
+    VerificationSearchResponsev3:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: |
+            Unique number assigned to each cardholder record. Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber will be used. Maximum length 19 digits.
+          format: numeric
+          example: 400020XXXXXX4000
+        nonTransToken:
+          type: string
+          description: |
+            Non-transactional token associated with a card. Non-transactional token associated with a card.
+            Either cardNumber or nonTransToken must be included in the request. If both are included, only cardNumber is used. Length can be between 16 and 19.
+          format: alphanumeric
+          example: piUVBJKZGfks4000
+        memberNumber:
+          type: string
+          description: |
+            Unique number associated with each member of the card. Based on the card prefix setup. If the member number is not passed, defaults to 0 (zero).  Applies to debit cards only.
+          format: numeric
+          example: "0"
+        contact:
+          $ref: '#/components/schemas/VerificationContactV3'
+    CountryLocationResponse:
+      type: object
+      properties:
+        locations:
+          type: array
+          description: List of codes and descriptions for a country location.
+          items:
+            $ref: '#/components/schemas/CountryLocation'
+    CountryLocation:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Location code. For countries this will be the 3-character ISO code. For states, it will be a 2-character ISO code.
+          example: AFG
+        name:
+          type: string
+          description: Name of location.
+          example: AFGHANISTAN
+    StateLocationResponse:
+      type: object
+      properties:
+        locations:
+          type: array
+          description: List of codes and descriptions for a country location.
+          items:
+            $ref: '#/components/schemas/StateLocation'
+    StateLocation:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Location code. For countries this will be the 3-character ISO code. For states, it will be a 2-character ISO code.
+          example: AL
+        name:
+          type: string
+          description: Name of location.
+          example: ALABAMA
+    VerificationContact:
+      type: object
+      properties:
+        voice:
+          $ref: '#/components/schemas/VerificationContactVoice'
+        email:
+          $ref: '#/components/schemas/VerificationContactEmail'
+        text:
+          $ref: '#/components/schemas/VerificationContactText'
+    VerificationContactVoice:
+      type: object
+      properties:
+        homePhone:
+          type: string
+          description: Cardholder's semi-masked home phone number which is enabled to receive passcode via voice call.
+          example: '******7365'
+        workPhone:
+          type: string
+          description: Cardholder's semi-masked work phone number which is enabled to receive passcode via voice call.
+          example: '******7366'
+        cellPhone:
+          type: string
+          description: Cardholder's semi-masked mobile phone number which is enabled to receive passcode via voice call.
+          example: '******7367'
+    VerificationContactEmail:
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          description: Cardholder's semi-masked email address which is enabled to receive passcode via home or work email address.
+          example: kum************@example.com
+    VerificationContactText:
+      type: object
+      properties:
+        homePhone:
+          type: string
+          description: Cardholder's semi-masked home phone number which is enabled to receive passcode via text.
+          example: '******7365'
+        workPhone:
+          type: string
+          description: Cardholder's semi-masked work phone number which is enabled to receive passcode via text.
+          example: '******7366'
+        cellPhone:
+          type: string
+          description: Cardholder's semi-masked mobile phone number which is enabled to receive passcode via text.
+          example: '******7367'
+        textAddress:
+          type: string
+          description: Cardholder's semi-masked textAddress which is enabled to receive passcode via text.
+          example: '******3585'
+    VerificationContactV3:
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          description: Email address of the cardholder
+          format: email
+          example: ale******@example.com
+        homePhone:
+          type: string
+          description: 'Home phone number of the primary cardholder. Applies to debit and credit cards. '
+          example: '******0001'
+        workPhone:
+          type: string
+          description: 'Work phone number of the primary cardholder. Applies to debit and credit cards. '
+          example: '******0001'
+        cellPhone:
+          type: string
+          description: Cellphone number of the primary cardholder. Applies to debit and credit cards.
+          example: '******0001'
+        textAddress:
+          type: string
+          description: Cardholder’s text address
+          example: '******0001'
+    Warning:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem
+          example: Partial update success
+        spanId:
+          type: string
+          description: Id generated given request on each service
+          example: b4a6e572-dbf3-4edb-9cb4-ea295d504aa2
+        traceId:
+          type: string
+          description: Id generated from a request on the first service and pass to other downstream services.
+          example: bed7e03f-c28a-4da9-9436-cfb827a24242
+        warningDetails:
+          type: array
+          description: List of multiple errors that may cause/triggerthe general error.
+          items:
+            $ref: '#/components/schemas/WarningDetail'
+    WarningDetail:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Unique code for error [artifact Id] - [code of the error(logic, action, etc)]
+          example: 200-000-812
+        detail:
+          type: string
+          description: Human details  of the error.
+          example: Case partially updated.
+        spanId:
+          type: string
+          description: Id generated given request on each service
+          example: b4a6e572-dbf3-4edb-9cb4-ea295d504aa2
+        timestamp:
+          type: string
+          description: Date time of the error from a services.
+          example: 2023-01-11T12:57:12.752+0000
+    inline_response_200:
+      oneOf:
+      - $ref: '#/components/schemas/AuthTransactionsResponse'
+      - $ref: '#/components/schemas/NonAuthTransactionsResponse'
+    inline_response_200_1:
+      oneOf:
+      - $ref: '#/components/schemas/CountryLocationResponse'
+      - $ref: '#/components/schemas/StateLocationResponse'
+  parameters:
+    userIdParam:
+      name: userId
+      in: header
+      description: Optional. User on behalf of whom the request is being made. userId must be alphanumeric.
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: johndoe
+    authorizationParam:
+      name: Authorization
+      in: header
+      description: 'Retrieve an access token through the Access Token API. Access token is required in every request. Refer to documentation on access token  (https://card.developer.fiserv.com/apis/token).Tokens expire after 15 minutes. Provide the value as follows in the header. Authorization: Bearer <Access Token Value>'
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: Bearer USlfM8dilzKZPcuGGP3BfVLd7Snk
+    clientIdParam:
+      name: x-fapi-financial-id
+      in: header
+      description: Required. Provide 8 digit client id
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: "12345678"
+    filterParam:
+      name: filter
+      in: query
+      description: Filter based on the transaction type. The response elements differ based on the transaction type.Authorized Transactions are returned when requested for AUTHORIZATIONS,  Deposit and Payment transactions are returned when requested for DEPOSIT_AND_PAYMENTS
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - AUTHORIZATIONS
+        - DEPOSIT_AND_PAYMENTS
+      example: AUTHORIZATIONS
+    locationFilterParam:
+      name: locationFilter
+      in: query
+      description: Filter based on the Region type. The response elements differ based on the region type. Country name with 3-letter country code (USA United States of America) are returned when requested for COUNTRY. State name with 2 letter country code (AK Alaska) are returned when requested for STATE.
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: string
+        enum:
+        - COUNTRY
+        - STATE
+      example: COUNTRY
+  examples:
+    cardAuthInfoV1Search400:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#invalid-request
+        title: Invalid Request
+        detail: Either cardNumber or nonTransToken should be included
+        instance: /v1/verification/cardAuthInfo
+        status: 400
+    cardAuthInfoV1Search401:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#unauthorized
+        title: Unauthorized
+        detail: Invalid Access Token
+        instance: /v1/verification/cardAuthInfo
+        status: 401
+    cardAuthInfoV1Search403:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#forbidden
+        title: Forbidden
+        detail: Unauthorized to perform request.
+        instance: /v1/verification/cardAuthInfo
+        status: 403
+    cardAuthInfoV1Search404:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#resource-not-found
+        title: Resource Not Found
+        detail: No matching search results found or you do not have sufficient access rights to get search results matching your criteria.
+        instance: /v1/verification/cardAuthInfo
+        status: 404
+    cardAuthInfoV1Search405:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#method-not-allowed
+        title: Method Not Allowed
+        detail: The HTTP method requested is not acceptable for this endpoint.
+        instance: /v1/verification/cardAuthInfo
+        status: 405
+    cardAuthInfoV1Search406:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#not-acceptable
+        title: Not Acceptable
+        detail: The content type being requested is not provided by this service.
+        instance: /v1/verification/cardAuthInfo
+        status: 406
+    cardAuthInfoV1Search415:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#unsupported-mediatype
+        title: Unsupported Media type
+        detail: The payload format is unsupported.
+        instance: /v1/verification/cardAuthInfo
+        status: 415
+    cardAuthInfoV1Search422:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#unprocessable-content
+        title: Unprocessable Content
+        detail: The service was not able to process this request.
+        instance: /v1/verification/cardAuthInfo
+        status: 422
+    cardAuthInfoV1Search429:
+      value:
+        type: https://card.developer.fiserv.com/cards/error#TooManyRequests
+        title: Too Many Requests
+        detail: We had a problem getting your credit and debit card information.
+        instance: /v1/verification/cardAuthInfo
+        status: 429
+  headers:
+    interactionId:
+      description: unique transaction ID created for each request for tracking purposes
+      style: simple
+      explode: false
+      schema:
+        type: string
+        example: 95ad42fb-afd1-2121-b794-3ed29342ks42
+  securitySchemes:
+    BearerAuth:
+      type: http
+      description: Enter 'Bearer ' followed by the access token.
+      scheme: bearer
