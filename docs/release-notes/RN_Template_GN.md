@@ -5,7 +5,8 @@ type: tab
 titles: Premier, Precision
 -->
 
-## April 12, 2024
+<details open>
+<summary><b>April 12, 2024</b></summary>
 
 ### Update Party
 | Category | Description |
@@ -20,6 +21,25 @@ titles: Premier, Precision
 | --- | ----------- |
 | <span style="color:orange">Enhancement</span> | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
 | <span style="color:teal">What's New</span> | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
+</details>
+
+<details>
+<summary><b>April 5, 2024</b></summary>
+
+### Add Party
+| Category | Description |
+| --- | ----------- |
+| <span style="color:green">Fixed</span> | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
+| <span style="color:green">Fixed</span> | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
+|<span style="color:green">Fixed</span>|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
+|<span style="color:orange">Enhancement</span>|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
+
+### Get Party
+| Category | Description |
+| --- | ----------- |
+| <span style="color:orange">Enhancement</span> | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
+| <span style="color:teal">What's New</span> | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
+</details>
 
 <!-- type: tab -->
 
