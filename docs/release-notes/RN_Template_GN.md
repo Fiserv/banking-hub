@@ -6,7 +6,7 @@ titles: Premier, Precision
 -->
 
 <details open>
-<summary><b>April 12, 2024</b></summary>
+<summary><h2>April 12, 2024</h2></summary>
 
 ### Update Party
 | Category | Description |
@@ -24,7 +24,7 @@ titles: Premier, Precision
 </details>
 
 <details>
-<summary><b>April 5, 2024</b></summary>
+<summary><h2>April 5, 2024</h2></summary>
 
 ### Add Party
 | Category | Description |
