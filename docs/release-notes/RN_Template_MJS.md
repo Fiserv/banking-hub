@@ -27,10 +27,8 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 With this release, the following enhancements are made. 
 | API Name | Description |
 | --- | ----------- |
-| [Get Transaction Account - Deposits](https://google.com "View Link") | Updated the "AcctTrnRec/AcctTrnInfo/Desc" field that returns the second line of the truncated description in the response.This will benefit you to have a more clear vision of the API.|
-
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
+| [Get Transaction Account - Deposits](https://google.com "View Link") | Updated the "AcctTrnRec/AcctTrnInfo/Desc" field that returns the second line of the truncated description in the response.This will benefit you to have a more clear vision of the API. <br><br>Impacted Field: <br> `AcctTrnInfo/Desc`|
+| [Add Document](https://google.com "View Link")| Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats.This will support more page formats while adding as a document. <br><br>Impacted Field: <br> `PageData/PageFormats` | 
 
 ### Fixed
 | API Name | Description |
