@@ -21,8 +21,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
   [Get Beneficiary](Google.com)
 
   [Add Party Account Relationship](Google.com)
- <summary><h1>What's New</h1></summary> </details>
-
+ 
 ### Enhancements
 With this release, the following enhancements are made. 
 | API Name | Details of the Enhancement |
