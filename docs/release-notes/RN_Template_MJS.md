@@ -4,10 +4,9 @@
 type: tab 
 titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA 
 -->
+ April 12, 2025
 
-## April 12, 2024
-
-### What's New
+ ## What's New
 - Added [Postman collection for Precision](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip) core.
 - The following API endpoints are newly added.
 
@@ -22,6 +21,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
   [Get Beneficiary](Google.com)
 
   [Add Party Account Relationship](Google.com)
+ <summary><h1>What's New</h1></summary> </details>
 
 ### Enhancements
 With this release, the following enhancements are made. 
@@ -67,3 +67,4 @@ MemoLedger <br>
 Memo <br>
 AvailPending <br>
 LedgerPending <br>
+</details>
