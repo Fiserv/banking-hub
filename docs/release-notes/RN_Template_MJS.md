@@ -6,7 +6,8 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 -->
  April 12, 2025
 
- ## What's New
+
+## What's New
 - Added [Postman collection for Precision](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip) core.
 - The following API endpoints are newly added.
 
