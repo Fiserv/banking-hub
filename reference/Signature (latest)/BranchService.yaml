@@ -1,0 +1,2968 @@
+---
+openapi: 3.0.0
+info:
+  title: Signature Branch
+  description: This API will return branches, tellers, tills, fees and transaction code definitions for a financial institution
+  contact:
+    name: Carmen Arevalo
+    email: carmen.arevalo@fiserv.com
+  version: TectWriting_1.0
+servers:
+- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/SIGEFXBranch/1
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: EFXHeader
+  description: 11.0.0
+paths:
+  /bank/{version}/branches:
+    get:
+      tags:
+      - Branch Information
+      summary: Get one branch or a list of branches for a given bank number
+      description: This service retrieves the branch name for a given bank/branch number OR list all branches name/address information associated to the financial institution
+      operationId: getBranchesList
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank number
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 1
+      - name: branchId
+        in: query
+        description: Branch number
+        required: false
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 117
+      - name: pageCursor
+        in: query
+        description: Positional indicator to the next record. If present in the request indicates the pointer to the next record to fetch. The pageCursor is used to allow the client to issue another request to fetch more matching records. In this case, the cursor for the next record is represented by the combination of the Bank Number and the Branch Number. For example, if the bankId=001 and branchId=110 then pageCursor=001118
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 6
+          type: string
+          example: "001118"
+      - name: pageSize
+        in: query
+        description: Total number of records requested. If pageSize tag is present in the request, the value indicates the total number of records requested. If the pageSize is not present in the request by default this service will return up to 300 records in each request/call
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 300
+          minimum: 0
+          type: integer
+          format: integer
+          example: 10
+          default: 300
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              examples:
+                branchInquiryRs:
+                  $ref: '#/components/examples/branchInquiryRs'
+                branchListInquiryRs:
+                  $ref: '#/components/examples/branchListInquiryRs'
+                noMoreRecordsAvailRs:
+                  $ref: '#/components/examples/noMoreRecordsAvailRs'
+                noRecordsFoundRs:
+                  $ref: '#/components/examples/noRecordsFoundRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Branch
+      x-proxy-name: Get Branch Information
+      x-child-product-name: Operations and Servicing
+  /bank/{version}/tellers:
+    get:
+      tags:
+      - Teller Definition
+      summary: Get a list of tellers for a given bank or bank/branch number - Order criteria by Branch/Teller
+      description: This service retrieves all the tellers definition for a given bank or bank/branch number
+      operationId: getTellerList
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank number
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 1
+      - name: branchId
+        in: query
+        description: Branch number
+        required: false
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 117
+      - name: pageCursor
+        in: query
+        description: Positional indicator to the next record. If present in the request indicates the pointer to the next record to fetch. The pageCursor is used to allow the client to issue another request to fetch more matching records. In this case, the cursor for the next record is represented by the combination of the bank number, branch number and teller number. For example, pageCursor=0011181191 where the first three positions (i.e 001) represents the bankId, the next three positions (i.e 118) the branchId and the last 4 positions (i.e 1191) the teller number (tellerId)
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 10
+          type: string
+          example: "0011181191"
+      - name: pageSize
+        in: query
+        description: Total number of records requested. If pageSize tag is present in the request, the value indicates the total number of records requested. If the pageSize is not present in the request by default this service will return up to 300 records in each request/call
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 300
+          minimum: 0
+          type: integer
+          format: integer
+          example: 10
+          default: 300
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+              examples:
+                tellerInquiryRs:
+                  $ref: '#/components/examples/tellerInquiryRs'
+                tellerListInquiryOneBranchRs:
+                  $ref: '#/components/examples/tellerListInquiryOneBranchRs'
+                tellerListInquiryALLBranchesRs:
+                  $ref: '#/components/examples/tellerListInquiryALLBranchesRs'
+                tellerNoMoreRecordsAvailRs:
+                  $ref: '#/components/examples/tellerNoMoreRecordsAvailRs'
+                tellerNoRecordsFoundRs:
+                  $ref: '#/components/examples/tellerNoRecordsFoundRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Bank Control Service
+      x-proxy-name: Get Teller Definition
+      x-child-product-name: Operations and Servicing
+  /bank/{version}/tills:
+    get:
+      tags:
+      - Till Definition
+      summary: Get a list of tills (cash drawers) for a given bank or bank/branch number - Order criteria by Branch/Till
+      description: This service retrieves all the tellers definition for a given bank or bank/branch number
+      operationId: getTillList
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank number
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 1
+      - name: branchId
+        in: query
+        description: Branch number
+        required: false
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 117
+      - name: pageCursor
+        in: query
+        description: Positional indicator to the next record. If present in the request indicates the pointer to the next record to fetch. The pageCursor is used to allow the client to issue another request to fetch more matching records. In this case, the cursor for the next record is represented by the combination of the bank number, branch number and till number. For example, pageCursor=0011181141 where the first three positions (i.e 001) represents the bankId, the next three positions (i.e 118) the branchId and the last 4 positions (i.e 2241) the till number (tillId)
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 10
+          type: string
+          example: "0011182241"
+      - name: pageSize
+        in: query
+        description: Total number of records requested. If pageSize tag is present in the request, the value indicates the total number of records requested. If the pageSize is not present in the request by default this service will return up to 300 records in each request/call
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 300
+          minimum: 0
+          type: integer
+          format: integer
+          example: 10
+          default: 300
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+              examples:
+                tillInquiryRs:
+                  $ref: '#/components/examples/tillInquiryRs'
+                tillListInquiryOneBranchRs:
+                  $ref: '#/components/examples/tillListInquiryOneBranchRs'
+                tillListInquiryALLBranchesRs:
+                  $ref: '#/components/examples/tillListInquiryALLBranchesRs'
+                tillNoMoreRecordsAvailRs:
+                  $ref: '#/components/examples/tillNoMoreRecordsAvailRs'
+                tillNoRecordsFoundRs:
+                  $ref: '#/components/examples/tillNoRecordsFoundRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Bank Control Service
+      x-proxy-name: Get Till Definition
+      x-child-product-name: Operations and Servicing
+  /bank/{version}/tellerFees:
+    get:
+      tags:
+      - Teller Fees Definition
+      summary: Get a list of teller fees for a given bank number - Order criteria by feeId
+      description: This service retrieves the list of teller fees definition for a given bank
+      operationId: getTellerFeesList
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank number
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 1
+      - name: pageCursor
+        in: query
+        description: Positional indicator to the next record. If present in the request indicates the pointer to the next record to fetch. The pageCursor is used to allow the client to issue another request to fetch more matching records. In this case, the cursor for the next record is represented by the combination of the bank number and the fee number. For example, pageCursor=00177 where the first three positions (i.e 001) represents the bankId and the next two positions (i.e 25) the fee number (feeId)
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 10
+          type: string
+          example: "00125"
+      - name: pageSize
+        in: query
+        description: Total number of records requested. If pageSize tag is present in the request, the value indicates the total number of records requested. If the pageSize is not present in the request by default this service will return up to 99 records in each request/call. If pageSize=0 the system will default/return up to 99 records per call
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 99
+          minimum: 0
+          type: integer
+          format: integer
+          example: 10
+          default: 99
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+              examples:
+                tellerFeesListInquiryRs:
+                  $ref: '#/components/examples/tellerFeesListInquiryRs'
+                fiveTellerFeesListRs:
+                  $ref: '#/components/examples/fiveTellerFeesListRs'
+                oneTellerFeeRecordRs:
+                  $ref: '#/components/examples/oneTellerFeeRecordRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+                tellerFeesNoFoundRs:
+                  $ref: '#/components/examples/tellerFeesNoFoundRs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Bank Control Service
+      x-proxy-name: Get Teller Fees Definition
+      x-child-product-name: Operations and Servicing
+  /bank/{version}/transactionCodes:
+    get:
+      tags:
+      - Teller Transaction Code Definitions
+      summary: Get a list of teller transaction codes and their associated definitions for a given bank number - Order criteria by transactionCodeId
+      description: This service retrieves the list of teller transaction code definitions for a given bank
+      operationId: getTellerTransactionCodesList
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank number
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 1
+      - name: pageCursor
+        in: query
+        description: Positional indicator to the next record. If present in the request indicates the pointer to the next record to fetch. The pageCursor is used to allow the client to issue another request to fetch more matching records. In this case, the cursor for the next record is represented by the combination of the bank number (bankId) and the transaction code Id (transactionCode). For example, pageCursor=0010011 where the first three positions (i.e 001) represents the bankId and the next four positions (i.e 0011) the transaction code Id (transactionCode)
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 10
+          type: string
+          example: "0010011"
+      - name: pageSize
+        in: query
+        description: Total number of records requested. If pageSize tag is present in the request, the value indicates the total number of records requested. If the pageSize is not present in the request by default this service will return up to 100 records in each request/call
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 100
+          minimum: 0
+          type: integer
+          format: integer
+          example: 10
+          default: 100
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+              examples:
+                transactionCodeListRs:
+                  $ref: '#/components/examples/transactionCodeListRs'
+                oneTransactionCodeRecordRs:
+                  $ref: '#/components/examples/oneTransactionCodeRecordRs'
+                transactionCodeNoFoundRs:
+                  $ref: '#/components/examples/transactionCodeNoFoundRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Bank Control Service
+      x-proxy-name: Get Teller Transaction Code Definition
+      x-child-product-name: Operations and Servicing
+components:
+  schemas:
+    successStatus:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: status description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/successStatus_messages'
+          description: Details of the messages
+    errorStatus:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          example: E
+          enum:
+          - E
+          - W
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/errorStatus_messages'
+          description: Details of the messages
+    controlRecord:
+      type: object
+      properties:
+        pageSize:
+          maximum: 300
+          minimum: 0
+          type: integer
+          description: Indicates the total number of records returned by Signature. The page size default is 300 records maximum per call -if any records available. Number of records matching the selection criteria are included in the response. Minimum and maximum values are defined below
+          format: number
+          example: 1
+          default: 10
+        pageCursor:
+          pattern: "9999999999"
+          type: string
+          description: Is used to indicates which record (pointer) to pull data from in the next API service call. (1) For Branches service, the pageCursor value is the concatenation of the next bank number/branch (bankId+branchId) available. (2) For Tellers service, the pageCursor value is the concatenation of the next bank number/branch/teller (bankId+branchId+tellerId) available. (3) For Tills service, the pageCursor value is the concatenation of the next bank number/branch/till (bankId+branchId+tillId) available. If the pageCursor is equal to blank, there is not more records available to fetch
+          example: ""
+          default: ""
+      description: Control Record Aggregate.
+    branchDetails:
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank number. Three-digit number of the bank
+          example: 101
+        branchId:
+          pattern: "999"
+          type: number
+          description: Branch number. Three-digit number of the branch
+          example: 117
+        branchName:
+          maxLength: 40
+          type: string
+          description: Branch name. Name of the branch
+          example: 'ORLANDO BRANCH 117 -REGION FOUR - '
+        address1:
+          maxLength: 30
+          type: string
+          description: Branch address line 1. Address line 1 for the branch
+          example: 2100 ORANGE AVE
+        address2:
+          maxLength: 30
+          type: string
+          description: Branch address line 2. Address line 2 for the branch’s city and state
+          example: ORLANDO, FL
+        zipCode:
+          pattern: "99999"
+          type: number
+          description: Branch Zip Code. 5 digits zip code of the branch
+          example: 32837
+        branchManagerName:
+          maxLength: 30
+          type: string
+          description: Branch Manager Name. The name of the officer representing the branch
+          example: JEREMY SILKER
+        phoneNumber:
+          pattern: "9999999999999"
+          type: number
+          description: 'Branch Phone Number. Max length: Numeric 13 positions'
+          example: 14076543210
+      description: 'Branch Name/Address Information Aggregate. This aggregate can recur up to three hundred (300) times. Default criteria returns up to hundred records including the branch(s) name/address available for a given bank number. Files reference: CFP10201 Branch Information and CFP105 Region Branch'
+    tellerDefinition:
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank number. Three-digit number of the bank
+          example: 1
+        branchId:
+          pattern: "999"
+          type: number
+          description: Branch number. Branch number with which the teller is associated
+          example: 118
+        tellerId:
+          pattern: "9999"
+          type: number
+          description: Teller number as defined in the Teller Definition of the Teller Common File
+          example: 1141
+        tellerName:
+          maxLength: 30
+          type: string
+          description: Name of the teller represented by the teller Id
+          example: Eeyore Robin
+        cashAccount:
+          pattern: "999999999999"
+          type: number
+          description: Cash account number (first seven positions) and cost center (last five positions) assigned to the teller
+          example: 110224911013
+        overShortAccount:
+          pattern: "999999999999"
+          type: number
+          description: General ledger account number (first seven positions) and cost center (last five positions) assigned to the teller for an over/short account balance
+          example: 100701000000
+      description: 'Teller Definition Aggregate. This aggregate can return up to three hundred (300) Teller definitions. File reference: TLP001 Common File-Bank/Key and TLP002 Teller/Till Totals'
+    tillDefinition:
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank number. Three-digit number of the bank
+          example: 1
+        branchId:
+          pattern: "999"
+          type: number
+          description: Branch number. Branch number associated with the till
+          example: 118
+        tillId:
+          pattern: "9999"
+          type: number
+          description: Till Number representing the cash drawer defined in the Teller Common File
+          example: 1144
+        tillName:
+          maxLength: 30
+          type: string
+          description: Name of the cash drawer represented by the till number
+          example: Eeyore Robin
+        cashAccount:
+          pattern: "999999999999"
+          type: number
+          description: Cash account number (first seven positions) and cost center (last five positions) assigned to the till
+          example: 110224911013
+        foreignCheckAccount:
+          pattern: "999999999999"
+          type: number
+          description: Foreign check account number (first seven positions) and cost center (last five positions) assigned to the till
+          example: 441303252511
+        ddaChecksOutAccount:
+          pattern: "999999999999"
+          type: number
+          description: Checking account number assigned to the till. Use to post checks out to a DDA account rather than a general ledger account
+          example: 4128444401
+        isUnattended:
+          type: boolean
+          description: 'Flag that identifies whether the till is unattended or not. The Default value is false.  Values are: true – Till is unattended, false – Till is not unattended'
+          example: false
+          default: false
+          enum:
+          - true
+          - false
+        isFCRMReconIncluded:
+          type: boolean
+          description: 'Flag that identifies whether the system includes the transactions processed by this till on the FCRM Recon Exclusions Report. The Default value is false.  Values are: true – till transactions included in the FCRM Recon Exclusions report, false –  till transactions are not included in the FCRM Recon Exclusions report'
+          example: false
+          default: false
+          enum:
+          - true
+          - false
+      description: 'This aggregate can return up to three hundred (300) Till definitions. File reference: TLP001 Common File-Bank/Key and TLP002 Totals Bank/Branch/Till'
+    feeDefinition:
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank number. Three-digit number of the bank
+          example: 1
+        feeId:
+          pattern: "99"
+          type: number
+          description: Fee index. Number representing the fee record
+          example: 25
+        feeDescription:
+          maxLength: 20
+          type: string
+          description: Fee Description. Description of the fee to be used
+          example: WITHDRAWAL FEE
+        feePercentage:
+          pattern: "99999.999999"
+          type: number
+          description: 'Percentage rate at which the system calculates this fee. Not applicable for flat rates. Format: XXXXX.XXXXXX Numeric size 11.6'
+          format: float
+          example: 0
+        feeMinimum:
+          pattern: "99999.99"
+          type: number
+          description: 'Minimum amount fee that a teller can assess. Not applicable for flat rates. Format: XXXXX.XX. Numeric size 7.2'
+          format: decimal
+          example: 2
+        feeMaximum:
+          pattern: "99999.99"
+          type: number
+          description: 'Maximum fee amount that a teller can assess. Not applicable for flat rates. Format: XXXXX.XX. Numeric size 7.2'
+          format: decimal
+          example: 15
+        feeFlatRate:
+          pattern: "99999.99"
+          type: number
+          description: 'Amount that a teller can assess for this fee. Format: XXXXX.XX. Numeric size 7.2'
+          format: decimal
+          example: 0
+        glAccount:
+          pattern: "9999999"
+          type: number
+          description: 'Seven-digit general ledger account number to which the fee will post. Format: XXXXXXX. Numeric size 7'
+          example: 1103053
+        glCostCenter:
+          pattern: "99999"
+          type: number
+          description: 'Five-digit general ledger cost center number to which the fee will post. The system uses this cost center only if the Cost Center Option (ccOption) field is equal to the enum value GLCostCenter (blank). Format: XXXXX. Numeric size 5'
+          example: 10001
+        ccOption:
+          type: string
+          description: 'Indicator that determines which cost center the till (cash drawer) uses for the general ledger credit. Valid values are:  Y - FirstCostCenter Use first cost center,  N – BranchCostCenter Use cost center for branch,  Blank – GLCostCenter Use cost center in the glCostCenter (G/L cost center) field'
+          example: FirstCostCenter
+          enum:
+          - FirstCostCenter
+          - BranchCostCenter
+          - GLCostCenter
+        overrideAllowed:
+          maxLength: 20
+          type: string
+          description: 'Indicator that identifies whether the system allows a teller to change the default fee amount for an individual transaction by using an override. Valid values are:  Blank – TellerOverride Teller Override (default), N – OverrideNotAllowed Override not allowed, O –  OfficerOverride Officer override needed, S – SupervisorOverride Supervisor override needed'
+          example: SupervisorOverride
+          enum:
+          - TellerOverride
+          - OverrideNotAllowed
+          - OfficerOverride
+          - SupervisorOverride
+      description: 'This aggregate can return up to one hundred (100) Fee definitions. File reference: TLP00300 Fee Definition File'
+    transactionDefinition:
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank number. Three-digit number of the bank
+          example: 1
+        transactionCode:
+          maxLength: 4
+          type: string
+          description: Code that represents the Teller/Journal transaction
+          example: ATMD
+        transactionDescription:
+          maxLength: 30
+          type: string
+          description: Description of the transaction code
+          example: DDA EFT FEE
+        transactionType:
+          maxLength: 40
+          type: string
+          description: 'Code that identifies the type of transaction. Valid values are:  0 – Monetary transaction,  1 – Inquiry/maintenance transaction, 2 - Transfer transaction, 3 – New account, 4 – Sign-on (start-of-day), 5 – Final sign-off without total, 6 – Final sign-off with totals, 7 – Float-only transaction, 8 – Pay interest only transaction and 9 – Ending cash'
+          example: Monetary
+          enum:
+          - Monetary
+          - InquiryMaintenance
+          - Transfer
+          - NewAccount
+          - SignOnStartOfDay
+          - FinalSignOffWithoutTotal
+          - FinalSignOffWithTotal
+          - FloatOnly
+          - PayInterestOnly
+          - EndingCash
+        memoRealTimeCode:
+          maxLength: 40
+          type: string
+          description: 'Code that identifies whether this transaction code (if monetary) should memo-post transactions or post real-time transactions. Valid values are:  A – AM mode = Real-time transaction; PM mode = Memo-post transaction,  M – Memo-post transaction and R – Real-time transaction'
+          example: RealTime
+          enum:
+          - AMRealTimePMMemoPost
+          - MemoPost
+          - RealTime
+        applyFloat:
+          maxLength: 40
+          type: string
+          description: 'Code that determines the type of float applied to a particular transaction type when posted through the Teller/Journal Subsystem. Valid values are:  Blank – No float (default),  A – Bank and Customer float, B – Bank float and C – Customer float'
+          example: NoFloat
+          enum:
+          - NoFloat
+          - BankAndCustomerFloat
+          - BankFloat
+          - CustomerFloat
+        debitCreditCode:
+          maxLength: 40
+          type: string
+          description: 'Code that indicates the type of debit or credit for the transaction (if monetary). The system uses this field only to identify whether the transaction is a credit (0–5) or a debit (6–8). Valid values are: 0 – Regular credit,  1 – Service charge credit, 2 – Reversal credit, 3 – Regular credit float, 4 – Service charge credit float, 5 – Reversal credit float, 6 – Regular debit, 7 – Service charge debit and 8 – Reversal debit'
+          example: ServiceChargeDebit
+          enum:
+          - RegularCredit
+          - ServiceChargeCredit
+          - ReversalCredit
+          - RegularCreditFloat
+          - ServiceChargeCreditFloat
+          - ReversalCreditFloat
+          - RegularDebit
+          - ServiceChargeDebit
+          - ReversalDebit
+        feeId1:
+          pattern: "99"
+          type: number
+          description: Fee index 1. Number representing the fee record
+          example: 25
+        feeId2:
+          pattern: "99"
+          type: number
+          description: . Fee index 2. Number representing the fee record
+          example: 12
+        feeId3:
+          pattern: "99"
+          type: number
+          description: Fee index 3. Number representing the fee record
+          example: 33
+        feeId4:
+          pattern: "99"
+          type: number
+          description: Fee index 4. Number representing the fee record
+          example: 77
+        feeId5:
+          pattern: "99"
+          type: number
+          description: Fee index 5. Number representing the fee record
+          example: 20
+        feeId6:
+          pattern: "99"
+          type: number
+          description: Fee index 6. Number representing the fee record
+          example: 21
+        totalToUpdated:
+          pattern: "999"
+          type: number
+          description: Number that identifies the total record to which this transaction will report
+          example: 4
+        endOfDayControlGL:
+          $ref: '#/components/schemas/endOfDayControlGL'
+      description: 'This aggregate can return up to one hundred (100) teller transaction code definitions. File reference: TLP001 Common File-Bank/Key (bankId/transactionCode)'
+    endOfDayControlGL:
+      type: object
+      properties:
+        glDebitAccount:
+          pattern: "9999999"
+          type: number
+          description: 'General ledger debit account number to which the transaction will post. Format: XXXXXXX. Numeric size 7'
+          example: 1103053
+        glDebitCostCenter:
+          pattern: "99999"
+          type: number
+          description: 'General ledger debit cost center number to which the transaction will post. Format: XXXXX. Numeric size 5'
+          example: 10001
+        debitCCOption:
+          maxLength: 40
+          type: string
+          description: 'Indicator that determines which cost center to use for the general ledger debit. Valid values: Y - Use provided cost center AKA use the cost center identified in the glDebitCostCenter field, N - Use center for branch and F - Use first cost center'
+          example: SpecificDRCostCenter
+          enum:
+          - SpecificDRCostCenter
+          - BranchDRCostCenter
+          - FirstDRCostCenter
+        glCreditAccount:
+          pattern: "9999999"
+          type: number
+          description: 'General ledger credit account number to which the transaction will post. Format: XXXXXXX. Numeric size 7'
+          example: 1103053
+        glCreditCostCenter:
+          pattern: "99999"
+          type: number
+          description: 'General ledger credit cost center number to which the transaction will post. Format: XXXXX. Numeric size 5'
+          example: 10001
+        creditCCOption:
+          maxLength: 40
+          type: string
+          description: 'Indicator that determines which cost center to use for the general ledger credit. Valid values: Y - Use provided cost center AKA use the cost center identified in the glCreditCostCenter field, N - Use center for branch and F - Use first cost center'
+          example: SpecificCRCostCenter
+          enum:
+          - SpecificCRCostCenter
+          - BranchCRCostCenter
+          - FirstCRCostCenter
+      description: This aggregate details information passes to the General Ledger Subsystem during nightly processing
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    inline_response_200:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: status description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_messages'
+          description: Details of the messages
+        controlRecord:
+          $ref: '#/components/schemas/controlRecord'
+        branchDetails:
+          maxItems: 300
+          minItems: 0
+          type: array
+          description: Details of the branch
+          items:
+            $ref: '#/components/schemas/branchDetails'
+    inline_response_200_1:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: status description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details of the messages
+          items:
+            $ref: '#/components/schemas/inline_response_200_1_messages'
+        controlRecord:
+          $ref: '#/components/schemas/controlRecord'
+        tellerDefinition:
+          maxItems: 300
+          minItems: 0
+          type: array
+          description: Details of the teller definition
+          items:
+            $ref: '#/components/schemas/tellerDefinition'
+    inline_response_200_2:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: status description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details of the messages
+          items:
+            $ref: '#/components/schemas/inline_response_200_2_messages'
+        controlRecord:
+          $ref: '#/components/schemas/controlRecord'
+        tillDefinition:
+          maxItems: 300
+          minItems: 0
+          type: array
+          description: Details of the teller definition
+          items:
+            $ref: '#/components/schemas/tillDefinition'
+    inline_response_200_3:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: status description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details of the messages
+          items:
+            $ref: '#/components/schemas/inline_response_200_3_messages'
+        controlRecord:
+          $ref: '#/components/schemas/controlRecord'
+        feeDefinition:
+          maxItems: 300
+          minItems: 0
+          type: array
+          description: Details of the fee definition
+          items:
+            $ref: '#/components/schemas/feeDefinition'
+    inline_response_200_4:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: status description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details of the messages
+          items:
+            $ref: '#/components/schemas/inline_response_200_4_messages'
+        controlRecord:
+          $ref: '#/components/schemas/controlRecord'
+        transactionDefinition:
+          maxItems: 100
+          minItems: 0
+          type: array
+          description: Details of the transaction definition
+          items:
+            $ref: '#/components/schemas/transactionDefinition'
+    successStatus_messages:
+      maxItems: 1
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/.../success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully.
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request.
+          example: ../bank/v1/...
+    errorStatus_messages:
+      maxItems: 10
+      minItems: 1
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the problem type
+          example: HTTP error path/HC40000
+        title:
+          maxLength: 132
+          type: string
+          description: Short summary of the problem type. Short description of the Signature Error Message ID
+          example: Short summary of the problem type. Short description of the Signature Error Message ID
+        detail:
+          maxLength: 512
+          type: string
+          description: Explanation specific to this occurrence of the problem. Long description of the Signature Error Message ID
+          example: Explanation specific to this occurrence of the problem. Long description of the Signature Error Message ID
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request.
+          example: ../bank/v1/../msgs/HC40000
+    inline_response_200_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/branches/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: '.../bank/v1/branches...'
+    inline_response_200_1_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/tellers/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully.
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request.
+          example: '.../bank/v1/tellers...'
+    inline_response_200_2_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/tills/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully.
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: '.../bank/v1/tills...'
+    inline_response_200_3_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/fees/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: '.../bank/v1/fees...'
+    inline_response_200_4_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/transactionCodes/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: '.../bank/v1/transactionCodes...'
+  responses:
+    OK:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/successStatus'
+  examples:
+    branchInquiryRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/branches/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/branches...
+        controlRecord:
+          pageSize: 1
+          pageCursor: "001118"
+        branchDetails:
+        - bankId: 1
+          branchId: 117
+          branchName: 'ORLANDO BRANCH 10 -REGION FOUR - '
+          address1: 2100 ORANGE AVE
+          address2: ORLANDO, FL
+          zipcode: 32837
+          branchManagerName: JEREMY SILKER
+          phoneNumber: 4075021127
+    branchListInquiryRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/branches/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/branches...
+        controlRecord:
+          pageSize: 3
+          pageCursor: ""
+        branchDetails:
+        - bankId: 1
+          branchId: 16
+          branchName: LONGWOOD BRANCH 20 -REGION FOUR
+          address1: 300 LONGWOOD BLVD
+          address2: LONGWOOD, FL
+          zipcode: 32323
+          branchManagerName: JUAN SUKKA
+          phoneNumber: 4075021127
+        - bankId: 1
+          branchId: 24
+          branchName: APOPKA BRANCH 30 - REGION ONE
+          address1: 500 APOPKA BLVD
+          address2: APOPKA, FL
+          zipcode: 38888
+          branchManagerName: ANAIS WHITE
+          phoneNumber: 3108541256
+        - bankId: 1
+          branchId: 32
+          branchName: SANFORD BRANCH 40 - REGION TWO
+          address1: 850 SANFORD AVE
+          address2: SANFORD, FL
+          zipcode: 32771
+          branchManagerName: JEREMY SILKER
+          phoneNumber: 4079514562
+    noRecordsFoundRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/branches/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/branches...
+        controlRecord:
+          pageSize: 0
+          pageCursor: ""
+    noMoreRecordsAvailRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/branches/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/branches...
+        controlRecord:
+          pageSize: 1
+          pageCursor: ""
+        branchDetails:
+        - bankId: 1
+          branchId: 117
+          branchName: 'ORLANDO BRANCH 10 -REGION FOUR - '
+          address1: 2100 ORANGE AVE
+          address2: ORLANDO, FL
+          zipcode: 32837
+          branchManagerName: JEREMY SILKER
+          phoneNumber: 4075021127
+    tellerInquiryRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tellers/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tellers...
+        controlRecord:
+          pageSize: 1
+          pageCursor: "0011174126"
+        tellerDefinition:
+        - bankId: 1
+          branchId: 117
+          tellerId: 4125
+          tellerName: Albert Einstein
+          cashAccount: 110224911013
+          overShortAccount: 100701000000
+    tellerListInquiryOneBranchRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tellers/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tellers...
+        controlRecord:
+          pageSize: 11
+          pageCursor: ""
+        tellerDefinition:
+        - bankId: 1
+          branchId: 117
+          tellerId: 4125
+          tellerName: Albert Einstein
+          cashAccount: 110224911013
+          overShortAccount: 100701000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4126
+          tellerName: Marie Curie
+          cashAccount: 110224911014
+          overShortAccount: 100702000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4127
+          tellerName: Alexander Fleming
+          cashAccount: 110224911015
+          overShortAccount: 100703000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4128
+          tellerName: Hermann Muller
+          cashAccount: 110224911016
+          overShortAccount: 100704000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4129
+          tellerName: Francis Crick
+          cashAccount: 110224911017
+          overShortAccount: 100705000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4130
+          tellerName: James Watson
+          cashAccount: 110224911018
+          overShortAccount: 100706000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4131
+          tellerName: Martin King
+          cashAccount: 110224911019
+          overShortAccount: 100707000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4132
+          tellerName: Werner Heisenberg
+          cashAccount: 110224911019
+          overShortAccount: 100707000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4133
+          tellerName: Jean-Paul Sartre
+          cashAccount: 110224911020
+          overShortAccount: 100708000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4134
+          tellerName: Mother Teresa
+          cashAccount: 110224911021
+          overShortAccount: 100709000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4135
+          tellerName: Anton Zeilinger
+          cashAccount: 110224911022
+          overShortAccount: 100710000000
+    tellerListInquiryALLBranchesRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tellers/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tellers...
+        controlRecord:
+          pageSize: 18
+          pageCursor: ""
+        tellerDefinition:
+        - bankId: 1
+          branchId: 117
+          tellerId: 4125
+          tellerName: Albert Einstein
+          cashAccount: 110224911013
+          overShortAccount: 100701000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4126
+          tellerName: Marie Curie
+          cashAccount: 110224911014
+          overShortAccount: 100702000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4127
+          tellerName: Alexander Fleming
+          cashAccount: 110224911015
+          overShortAccount: 100703000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4128
+          tellerName: Hermann Muller
+          cashAccount: 110224911016
+          overShortAccount: 100704000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4129
+          tellerName: Francis Crick
+          cashAccount: 110224911017
+          overShortAccount: 100705000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4130
+          tellerName: James Watson
+          cashAccount: 110224911018
+          overShortAccount: 100706000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4131
+          tellerName: Martin King
+          cashAccount: 110224911019
+          overShortAccount: 100707000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4132
+          tellerName: Werner Heisenberg
+          cashAccount: 110224911019
+          overShortAccount: 100707000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4133
+          tellerName: Jean-Paul Sartre
+          cashAccount: 110224911020
+          overShortAccount: 100708000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4134
+          tellerName: Mother Teresa
+          cashAccount: 110224911021
+          overShortAccount: 100709000000
+        - bankId: 1
+          branchId: 117
+          tellerId: 4135
+          tellerName: Anton Zeilinger
+          cashAccount: 110224911022
+          overShortAccount: 100710000000
+        - bankId: 1
+          branchId: 118
+          tellerId: 1181
+          tellerName: Gloria Gainor
+          cashAccount: 118224911001
+          overShortAccount: 118701000000
+        - bankId: 1
+          branchId: 118
+          tellerId: 1182
+          tellerName: James Jabig
+          cashAccount: 118224911002
+          overShortAccount: 118702000000
+        - bankId: 1
+          branchId: 118
+          tellerId: 1183
+          tellerName: Alexander Rodriguez
+          cashAccount: 118224911003
+          overShortAccount: 118703000000
+        - bankId: 1
+          branchId: 119
+          tellerId: 1191
+          tellerName: Happy Lenny
+          cashAccount: 119224911001
+          overShortAccount: 118701000000
+        - bankId: 1
+          branchId: 119
+          tellerId: 1192
+          tellerName: Leonard Olmos
+          cashAccount: 119224911002
+          overShortAccount: 119702000000
+        - bankId: 1
+          branchId: 119
+          tellerId: 1193
+          tellerName: Juan Martin Peres
+          cashAccount: 119224911003
+          overShortAccount: 119703000000
+        - bankId: 1
+          branchId: 119
+          tellerId: 1193
+          tellerName: Ramon Castle
+          cashAccount: 119224911003
+          overShortAccount: 119703000000
+    tellerNoRecordsFoundRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tellers/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tellers...
+        controlRecord:
+          pageSize: 0
+          pageCursor: ""
+    tellerNoMoreRecordsAvailRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tellers/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tellers...
+        controlRecord:
+          pageSize: 1
+          pageCursor: ""
+        tellerDefinition:
+        - bankId: 101
+          branchId: 119
+          tellerId: 1193
+          tellerName: Ramon Castle
+          cashAccount: 119224911003
+          overShortAccount: 119703000000
+    tillInquiryRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tills/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tills...
+        controlRecord:
+          pageSize: 1
+          pageCursor: "0011174126"
+        tillDefinition:
+        - bankId: 1
+          branchId: 117
+          tillId: 4125
+          tillName: Albert Einstein
+          cashAccount: 110224911013
+          foreignCheckAccount: 441303254125
+          ddaChecksOutAccount: 4125444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+    tillListInquiryOneBranchRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tills/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tills...
+        controlRecord:
+          pageSize: 11
+          pageCursor: ""
+        tillDefinition:
+        - bankId: 1
+          branchId: 117
+          tillId: 4125
+          tillName: Albert Einstein
+          cashAccount: 110224911013
+          foreignCheckAccount: 441303254125
+          ddaChecksOutAccount: 4125444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4126
+          tillName: Marie Curie
+          cashAccount: 110224911014
+          foreignCheckAccount: 441303254126
+          ddaChecksOutAccount: 4126444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4127
+          tillName: Alexander Fleming
+          cashAccount: 110224911015
+          foreignCheckAccount: 441303254127
+          ddaChecksOutAccount: 4127444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4128
+          tillName: Hermann Muller
+          cashAccount: 110224911016
+          foreignCheckAccount: 441303254128
+          ddaChecksOutAccount: 4128444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4129
+          tillName: Francis Crick
+          cashAccount: 110224911017
+          foreignCheckAccount: 441303254129
+          ddaChecksOutAccount: 4129444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4130
+          tillName: James Watson
+          cashAccount: 110224911018
+          foreignCheckAccount: 441303254130
+          ddaChecksOutAccount: 4130444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4131
+          tillName: Martin King
+          cashAccount: 110224911019
+          foreignCheckAccount: 441303254131
+          ddaChecksOutAccount: 4131444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4132
+          tillName: Werner Heisenberg
+          cashAccount: 110224911019
+          foreignCheckAccount: 441303254132
+          ddaChecksOutAccount: 4132444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4133
+          tillName: Jean-Paul Sartre
+          cashAccount: 110224911020
+          foreignCheckAccount: 441303254133
+          ddaChecksOutAccount: 4128444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4134
+          tillName: Mother Teresa
+          cashAccount: 110224911021
+          foreignCheckAccount: 441303254134
+          ddaChecksOutAccount: 413444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4135
+          tillName: Anton Zeilinger
+          cashAccount: 110224911022
+          foreignCheckAccount: 441303254135
+          ddaChecksOutAccount: 4135444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+    tillListInquiryALLBranchesRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tills/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tills...
+        controlRecord:
+          pageSize: 18
+          pageCursor: ""
+        tillDefinition:
+        - bankId: 1
+          branchId: 117
+          tillId: 4125
+          tillName: Albert Einstein
+          cashAccount: 110224911013
+          foreignCheckAccount: 441303254125
+          ddaChecksOutAccount: 4125444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4126
+          tillName: Marie Curie
+          cashAccount: 110224911014
+          foreignCheckAccount: 441303254126
+          ddaChecksOutAccount: 4126444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4127
+          tillName: Alexander Fleming
+          cashAccount: 110224911015
+          foreignCheckAccount: 441303254127
+          ddaChecksOutAccount: 4127444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4128
+          tillName: Hermann Muller
+          cashAccount: 110224911016
+          foreignCheckAccount: 441303254128
+          ddaChecksOutAccount: 4128444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4129
+          tillName: Francis Crick
+          cashAccount: 110224911017
+          foreignCheckAccount: 441303254129
+          ddaChecksOutAccount: 4129444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4130
+          tillName: James Watson
+          cashAccount: 110224911018
+          foreignCheckAccount: 441303254130
+          ddaChecksOutAccount: 4130444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4131
+          tillName: Martin King
+          cashAccount: 110224911019
+          foreignCheckAccount: 441303254131
+          ddaChecksOutAccount: 4131444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4132
+          tillName: Werner Heisenberg
+          cashAccount: 110224911019
+          foreignCheckAccount: 441303254132
+          ddaChecksOutAccount: 4132444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4133
+          tillName: Jean-Paul Sartre
+          cashAccount: 110224911020
+          foreignCheckAccount: 441303254133
+          ddaChecksOutAccount: 4128444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4134
+          tillName: Mother Teresa
+          cashAccount: 110224911021
+          foreignCheckAccount: 441303254134
+          ddaChecksOutAccount: 413444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 117
+          tillId: 4135
+          tillName: Anton Zeilinger
+          cashAccount: 110224911022
+          foreignCheckAccount: 441303254135
+          ddaChecksOutAccount: 4135444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 118
+          tillId: 1181
+          tillName: Gloria Gainor
+          cashAccount: 118224911001
+          foreignCheckAccount: 441303251181
+          ddaChecksOutAccount: 1181444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 118
+          tillId: 1182
+          tillName: James Jabig
+          cashAccount: 118224911002
+          foreignCheckAccount: 441303251182
+          ddaChecksOutAccount: 1182444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 118
+          tillId: 1183
+          tillName: Alexander Rodriguez
+          cashAccount: 118224911003
+          foreignCheckAccount: 441303251183
+          ddaChecksOutAccount: 1183444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 119
+          tillId: 1191
+          tillName: Happy Lenny
+          cashAccount: 119224911001
+          foreignCheckAccount: 441303251191
+          ddaChecksOutAccount: 1191444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 119
+          tillId: 1192
+          tillName: Leonard Olmos
+          cashAccount: 119224911002
+          foreignCheckAccount: 441303251192
+          ddaChecksOutAccount: 1192444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 119
+          tillId: 1193
+          tillName: Juan Martin Peres
+          cashAccount: 119324911003
+          foreignCheckAccount: 441303251193
+          ddaChecksOutAccount: 1193444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+        - bankId: 1
+          branchId: 119
+          tillId: 1194
+          tillName: Ramon Castle
+          cashAccount: 119424911003
+          foreignCheckAccount: 441303251194
+          ddaChecksOutAccount: 1194444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+    tillNoRecordsFoundRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tills/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tills...
+        controlRecord:
+          pageSize: 0
+          pageCursor: ""
+    tillNoMoreRecordsAvailRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tills/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tills...
+        controlRecord:
+          pageSize: 1
+          pageCursor: ""
+        tillDefinition:
+        - bankId: 1
+          branchId: 119
+          tillId: 1193
+          tillName: Ramon Castle
+          cashAccount: 119224911003
+          foreignCheckAccount: 441303251194
+          ddaChecksOutAccount: 1194444401
+          isUnattended: false
+          isFCRMReconIncluded: false
+    tellerFeesListInquiryRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tellerFees/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tellerFees...
+        controlRecord:
+          pageSize: 9
+          pageCursor: ""
+        feeDefinition:
+        - bankId: 1
+          feeId: 1
+          feeDescription: UTILITY PAYMENT FEE
+          feePercentage: 1.0E-6
+          feeMinimum: 0.01
+          feeMaximum: 0.01
+          feeFlatRate: 1.01
+          glAccount: 1103001
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: SupervisorOverride
+        - bankId: 1
+          feeId: 2
+          feeDescription: CASH CHECK FEE
+          feePercentage: 0.0
+          feeMinimum: 0.01
+          feeMaximum: 0.01
+          feeFlatRate: 5.01
+          glAccount: 1103002
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: SupervisorOverride
+        - bankId: 1
+          feeId: 5
+          feeDescription: SELL BANK CHECK
+          feePercentage: 0.0
+          feeMinimum: 1.0
+          feeMaximum: 10.0
+          feeFlatRate: 10.0
+          glAccount: 1103005
+          glCostCenter: 0
+          ccOption: BranchCostCenter
+          overrideAllowed: OfficerOverride
+        - bankId: 1
+          feeId: 17
+          feeDescription: GIFT CARD PER CARD
+          feePercentage: 0.0
+          feeMinimum: 0.0
+          feeMaximum: 50.0
+          feeFlatRate: 2.0
+          glAccount: 1103017
+          glCostCenter: 0
+          ccOption: FirstCostCenter
+          overrideAllowed: TellerOverride
+        - bankId: 1
+          feeId: 25
+          feeDescription: WITHDRAWAL FEE
+          feePercentage: 0.0
+          feeMinimum: 0.0
+          feeMaximum: 0.0
+          feeFlatRate: 3.0
+          glAccount: 1103025
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: SupervisorOverride
+        - bankId: 1
+          feeId: 51
+          feeDescription: REDEMPTION FEE
+          feePercentage: 0.0
+          feeMinimum: 0.0
+          feeMaximum: 0.0
+          feeFlatRate: 10.0
+          glAccount: 1103051
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: OfficerOverride
+        - bankId: 1
+          feeId: 52
+          feeDescription: RETIREMENT FEE
+          feePercentage: 0.0
+          feeMinimum: 0.0
+          feeMaximum: 0.0
+          feeFlatRate: 5.0
+          glAccount: 1103052
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: OfficerOverride
+        - bankId: 1
+          feeId: 55
+          feeDescription: TRAVELERS CHECK FEE
+          feePercentage: 1.0
+          feeMinimum: 2.01
+          feeMaximum: 15.01
+          feeFlatRate: 0.01
+          glAccount: 1103055
+          glCostCenter: 0
+          ccOption: BranchCostCenter
+          overrideAllowed: OfficerOverride
+        - bankId: 1
+          feeId: 77
+          feeDescription: CREDIT CARD ADVANCE
+          feePercentage: 1.000001
+          feeMinimum: 0.01
+          feeMaximum: 0.01
+          feeFlatRate: 25.01
+          glAccount: 0
+          glCostCenter: 0
+          ccOption: FirstCostCenter
+          overrideAllowed: OverrideNotAllowed
+    fiveTellerFeesListRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tellerFees/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tellerFees?bankId=001&pageSize=5
+        controlRecord:
+          pageSize: 5
+          pageCursor: "00151"
+        feeDefinition:
+        - bankId: 1
+          feeId: 1
+          feeDescription: UTILITY PAYMENT FEE
+          feePercentage: 1.0E-6
+          feeMinimum: 0.01
+          feeMaximum: 0.01
+          feeFlatRate: 1.01
+          glAccount: 1103001
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: SupervisorOverride
+        - bankId: 1
+          feeId: 2
+          feeDescription: CASH CHECK FEE
+          feePercentage: 0.0
+          feeMinimum: 0.01
+          feeMaximum: 0.01
+          feeFlatRate: 5.01
+          glAccount: 1103002
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: SupervisorOverride
+        - bankId: 1
+          feeId: 5
+          feeDescription: SELL BANK CHECK
+          feePercentage: 0.0
+          feeMinimum: 1.01
+          feeMaximum: 10.01
+          feeFlatRate: 10.01
+          glAccount: 1103005
+          glCostCenter: 0
+          ccOption: BranchCostCenter
+          overrideAllowed: OfficerOverride
+        - bankId: 1
+          feeId: 17
+          feeDescription: GIFT CARD PER CARD
+          feePercentage: 1.0E-6
+          feeMinimum: 0.01
+          feeMaximum: 50.0
+          feeFlatRate: 2.0
+          glAccount: 1103017
+          glCostCenter: 0
+          ccOption: FirstCostCenter
+          overrideAllowed: TellerOverride
+        - bankId: 1
+          feeId: 25
+          feeDescription: WITHDRAWAL FEE
+          feePercentage: 0.0
+          feeMinimum: 0.0
+          feeMaximum: 0.0
+          feeFlatRate: 3.0
+          glAccount: 1103025
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: SupervisorOverride
+    oneTellerFeeRecordRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/tellerFees/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/tellerFees?pageCursor=00151&pageSize=1
+        controlRecord:
+          pageSize: 1
+          pageCursor: "00152"
+        feeDefinition:
+        - bankId: 1
+          feeId: 51
+          feeDescription: REDEMPTION FEE
+          feePercentage: 0.0
+          feeMinimum: 0.01
+          feeMaximum: 0.01
+          feeFlatRate: 10.01
+          glAccount: 1103051
+          glCostCenter: 10001
+          ccOption: GLCostCenter
+          overrideAllowed: OfficerOverride
+    tellerFeesNoFoundRs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path\CB00153
+          title: The request record could not be found
+          detail: There is no record corresponding to this request.
+          instance: ../bank/v1/tellerFees?bankId=001...
+    transactionCodeListRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/transactionCodes/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/transactionCodes?bankId=001?pageSize=4
+        controlRecord:
+          pageSize: 4
+          pageCursor: 001CD20
+        transactionDefinition:
+        - bankId: 1
+          transactionCode: ATMD
+          transactionDescription: DDA EFT FEE
+          transactionType: Monetary
+          memoRealTimeCode: RealTime
+          applyFloat: NoFloat
+          debitCreditCode: ServiceChargeDebit
+          feeId1: 25
+          feeId2: 10
+          feeId3: 11
+          feeId4: 12
+          feeId5: 33
+          feeId6: 77
+          totalToUpdated: 4
+          endOfDayControlGL:
+            glDebitAccount: 1103053
+            glDebitCostCenter: 10001
+            debitCCOption: SpecificDRCostCenter
+            glCreditAccount: 1103054
+            glCreditCostCenter: 10001
+            creditCCOption: SpecificCRCostCenter
+        - bankId: 1
+          transactionCode: ATMS
+          transactionDescription: SAV EFT FEE
+          transactionType: Monetary
+          memoRealTimeCode: MemoPost
+          applyFloat: NoFloat
+          debitCreditCode: RegularCredit
+          feeId1: 11
+          feeId2: 20
+          feeId3: 22
+          feeId4: 0
+          feeId5: 0
+          feeId6: 0
+          totalToUpdated: 8.0
+          endOfDayControlGL:
+            glDebitAccount: 1103055
+            glDebitCostCenter: 10001
+            debitCCOption: SpecificDRCostCenter
+            glCreditAccount: 1103056
+            glCreditCostCenter: 10001
+            creditCCOption: SpecificCRCostCenter
+        - bankId: 1
+          transactionCode: CC20
+          transactionDescription: CLM DDA DEPOSIT
+          transactionType: Monetary
+          memoRealTimeCode: RealTime
+          applyFloat: NoFloat
+          debitCreditCode: ServiceChargeDebit
+          feeId1: 0
+          feeId2: 0
+          feeId3: 0
+          feeId4: 0
+          feeId5: 0
+          feeId6: 0
+          totalToUpdated: 1
+          endOfDayControlGL:
+            glDebitAccount: 1103001
+            glDebitCostCenter: 0
+            debitCCOption: BranchDRCostCenter
+            glCreditAccount: 1103002
+            glCreditCostCenter: 0
+            creditCCOption: BranchCRCostCenter
+        - bankId: 1
+          transactionCode: CC40
+          transactionDescription: CLM GL CREDIT
+          transactionType: Monetary
+          memoRealTimeCode: AMRealTimePMMemoPost
+          applyFloat: BankFloat
+          debitCreditCode: ServiceChargeDebit
+          feeId1: 25
+          feeId2: 0
+          feeId3: 0
+          feeId4: 0
+          feeId5: 0
+          feeId6: 0
+          totalToUpdated: 17
+          endOfDayControlGL:
+            glDebitAccount: 1103003
+            glDebitCostCenter: 10001
+            debitCCOption: SpecificDRCostCenter
+            glCreditAccount: 1103004
+            glCreditCostCenter: 10001
+            creditCCOption: SpecificCRCostCenter
+    oneTransactionCodeRecordRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/transactionCodes/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/transactionCodes?bankId=001&pageSize=1&pageCursor=001CD20
+        controlRecord:
+          pageSize: 1
+          pageCursor: 001CD40
+        transactionDefinition:
+        - bankId: 1
+          transactionCode: CD20
+          transactionDescription: CLM DDA W/D
+          transactionType: Monetary
+          memoRealTimeCode: RealTime
+          applyFloat: NoFloat
+          debitCreditCode: RegularDebit
+          feeId1: 25
+          feeId2: 10
+          feeId3: 11
+          feeId4: 0
+          feeId5: 0
+          feeId6: 0
+          totalToUpdated: 2
+          endOfDayControlGL:
+            glDebitAccount: 1103000
+            glDebitCostCenter: 10000
+            debitCCOption: FirstDRCostCenter
+            glCreditAccount: 1103001
+            glCreditCostCenter: 10000
+            creditCCOption: FirstCRCostCenter
+    transactionCodeNoFoundRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/transactionCodes/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/transactionCodes...
+        controlRecord:
+          pageSize: 0
+          pageCursor: ""
+    status400Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/HC40000
+          title: Bad request
+          detail: Bad request. malformed request syntax, invalid request message routing
+          instance: ../bank/v1/...
+    status404Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/CB00513
+          title: The requested record could not be found
+          detail: There are not records available for this request
+          instance: ../bank/v1/...
+    status500Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/HC00500
+          title: Internal server error
+          detail: The server encountered an unexpected condition that prevented it from fulfilling the request
+          instance: ..bank/v1/.../msgs/XXXXXXX
+    status503Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/XXXXXXX
+          title: System not available
+          detail: Failed to connect to remote server
+          instance: ../bank/v1/../msgs/XXXXXXX
