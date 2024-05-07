@@ -114,3 +114,6 @@ The following table lists the standard status codes:
 > #### Note
 > 
 > If you are unable to  resolve the issue after reviewing above listed descriptions, please reach out to Fiserv contact person for further assistance.
+>
+> 
+[Fiserv DPoP newsletter-v1.pdf](https://github.com/Fiserv/banking-hub/files/15238309/Fiserv.DPoP.newsletter-v1.pdf)
