@@ -7,36 +7,28 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
  April 12, 2025
 
  ## New in Premier
- 
-- Added [Postman collection for Precision](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip) core.
-- The following API endpoints are newly added.
 
-  [Add Address](Google.com)
+| API Name/Core | Description |
+| --- | ----------- |
+| [Add Party](https://google.com "View Link") | Added [Postman collection](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip) for better linking of API elements together for easy editing, sharing, testing, and reuse. |
+| [Update Party](https://google.com "View Link") | The following API endpoints are newly added.<br> [Add Address](Google.com) <br> [Get Address](Google.com) <br> [UpdateAddress](Google.com) <br>  [Delete Address](Google.com) <br> [Get Beneficiary](Google.com) <br> [Add Party Account Relationship](Google.com)| 
 
-  [Get Address](Google.com)
-
-  [UpdateAddress](Google.com)
-
-  [Delete Address](Google.com)
-
-  [Get Beneficiary](Google.com)
-
-  [Add Party Account Relationship](Google.com)
  
 ### Enhancements
 With this release, the following enhancements are made. 
 | API Name | Details of the Enhancement |
 | --- | ----------- |
-| [Add Document](https://google.com "View Link")| Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats. This will support more page formats while adding as a document. <br><br>Impacted Field: <br> `PageData/PageFormats` | 
-| [Update Stop Item](https://google.com "View Link")| With this release, you can extend enumeration values for the field 'StopItemReasonCode'. You can define these values using the ClientDefined_StopChkReasonCode_Rule. <br><br>Impacted Fields: <br> `StopChkKeys/AcctKeys/AcctType`  <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` </li> <br> <br> Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>Impacted Fields: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` </li> <br> <br> If the account type is an unsupported value, the following response messages are generated. <br><br>- HTTP 400-Bad Request <br>- Status code 1090- Invalid Value <br><br>Impacted Fields: <br> - `StopChkInfo/AcctKeys/AcctType` <br>-`StopChkInfo/TranFee/BillingInstruction/FromAcctKeys/AcctType`
+| [Add Document](https://google.com "View Link")| Added the new enum values "DOCX" and "XLSX" in the 'DocumentInfo/PageData/PageFormat' field as new page formats. This will support more page formats while adding as a document. <br><br>Impacted Field: <br> `PageData/PageFormats` | 
+| [Update Stop Item](https://google.com "View Link")| With this release, you can extend enumeration values for the field 'StopItemReasonCode'. You can define these values using the ClientDefined_StopChkReasonCode_Rule. <br><br>Impacted Fields: <br> `StopChkKeys/AcctKeys/AcctType`  <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` </li> <br> <br> Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>Impacted Fields: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType`|
 
 
 ### Fixed
 With this release, the following issues are resolved. 
 | API Name | Issue and Resolution |
 | --- | ----------- |
-| [Get Party Account Relationship](https://google.com "View Link") | The fields "OwnerInd", "PrimaryOwnerInd" and "TaxReportingOwnerInd" were not rendering as expected in the response. To resolve this issue, we added correct values for owner indicator, primary owner indicator and tax reporting owner indicator. <br><br>Impacted Fields: <br> `OwnerInd`<br>`PrimaryOwnerInd`<br>`TaxReportingOwnerInd `|
-|[Update Party](https://google.com "View Link")| While modifying the "MaritalStat" field under *PersonPartyInfo* Xpath, the value "NotApplicable" was not returning in the response during updating the party records. To resolve this issue, we implemented the Xref Rule for the  "MaritalStat" field.<br> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`  </li> <br> <br> While modifying the "Gender" field from existing value or some other allowed value to "Unknown", the request was not returning the "Gender" field's changed value in the response. To resolve this issue, we updated the gender value "Unknown" in the *XrefTable List_Gender_Rule.* </li> <br><br>Impacted Fields:<br>`PersonPartyInfo/Gender`<br> <br>While modifying the Race field under *PersonPartyInfo/Race* Xpath, the values "Other" or "NativeAmerican" or "NativeAlaskan" was not returning in the response during updating the party records. To resolve this issue, we implemented the Xref Rule for the  "Race" field. </li> <br><br>Impacted Fields:<br>`PersonPartyInfo/Race` |
+| [Add Escrow](https://google.com "View Link") | We resolved an issue where Escrow Expiry Date was sent in an incorrect format to Premier.  <br><br>Impacted Field: <br> `EscrowInfo/EscrowExpDt`|
+|[Add Account-LOAN-INET](https://google.com "View Link")| We fixed an issue where loan accounts were successfully created when the value of the RateChangeRecurType field was "Quarterly," which was not specified in the enum values. We have added the "Quarterly" value as an enum value. <br> <br>Impacted Field:<br>`LoanAcctInfo/RateChangeData/RateChangeRecurType`|
+| [Update Party](https://google.com "View Link")  | </li> <br> <br> While modifying the "Gender" field from existing value or some other allowed value to "Unknown", the request was not returning the "Gender" field's changed value in the response. To resolve this issue, we updated the gender value "Unknown" in the *XrefTable List_Gender_Rule.* </li> <br><br>Impacted Fields:<br>`PersonPartyInfo/Gender`|
 |[Get Party Account Relationship-ByParty](https://google.com "View Link") |Fixed the issue in the "PartyAcctRelDesc" field (PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc) where numeric value was getting assigned instead of the description from Premier Relationship Specifications <br> <br>Fixed the issue in the EnumDesc fields where the value set for one tenant on Premier was getting assigned to the value set for another tenant on Premier. <br><br>Impacted Fields:<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/AddrUseEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/AddrUseEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/Desc`<br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/AcctDtlStatusEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/OriginatingBranchEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/RelationshipMgr/RelationshipMgrIdentEnumDesc`|
 
 ### Known Issues
