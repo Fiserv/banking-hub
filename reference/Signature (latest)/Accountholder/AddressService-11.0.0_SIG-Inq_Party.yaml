@@ -1,0 +1,771 @@
+---
+openapi: 3.0.1
+info:
+  title: Address Service
+  description: The Address service manages addresses related to parties and product accounts.
+  version: 11.0.0_SIG-Inq_Party
+servers:
+- url: /
+paths:
+  /addrservice/partyacctsvc/address/secured:
+    post:
+      tags:
+      - Get Address
+      summary: Get Address
+      description: "Get Address API retrieves the information of secondary/seasonal address records for a party.<br>In Signature, a party must have one primary address and one secondary or seasonal address (optional). Signature also supports mixed address format types for a party.<br>This API supports a standardized address format for parsed addresses. While using the standardized format, the Postal address aggregate is consolidated into two address line fields that are Address line 1 and Address line 2, instead of segregating into multiple independent fields such as House number, Street, Apartment number and Apartment number type. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: getAddrByPost
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getAddrByPostRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAddrByPostResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAddrByPostResponse'
+      x-group-name: Address Service
+      x-proxy-name: Get Address
+      x-child-product-name: Accountholder
+      x-core: Signature-Party
+components:
+  schemas:
+    getAddrByPostRequest:
+      required:
+      - AddrSel
+      properties:
+        AddrSel:
+          $ref: '#/components/schemas/getAddrByPostRequest_AddrSel'
+    getAddrByPostResponse:
+      required:
+      - AddrRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        RecCtrlOut:
+          $ref: '#/components/schemas/getAddrByPostResponse_RecCtrlOut'
+        AddrRec:
+          type: array
+          description: "Details of the address record that includes response keys, response status and response information.\n\n**Note:** Signature allows only one Primary address and one secondary/seasonal address for Party. "
+          items:
+            $ref: '#/components/schemas/getAddrByPostResponse_AddrRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    getAddrByPostRequest_AddrSel_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a party record.
+
+            **Note:** Permanent identifier of customer.
+
+            Customer cannot modify this key.
+      description: "Unique information to identify the party record.\n\n**Note:** To get an address for a party (customer), use AddrSel/PartyKeys aggregate. PartyId should be provided in the request.\n\nOnly one primary and secondary/seasonal address for a party is supported. \n\nIf AddrType is not provided in request, both primary and secondary/seasonal address, if applicable, are returned in the response.\n\n\n\n"
+    getAddrByPostRequest_AddrSel:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/getAddrByPostRequest_AddrSel_PartyKeys'
+        AddrType:
+          type: string
+          description: Type of address.
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+      description: Details of the selection criteria used to identify the address associated with an account.
+    getAddrByPostResponse_RecCtrlOut:
+      required:
+      - SentRecCount
+      type: object
+      properties:
+        SentRecCount:
+          type: integer
+          description: Total number of records that matched the selection criteria and returned in the response message.
+          format: int64
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of a request message.
+    getAddrByPostResponse_AddrInfo_LabelAddr:
+      type: object
+      properties:
+        Addr1:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 1.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+        Addr2:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 2. To enter Addr2, Addr1 field must be provided.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+        Addr3:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 3. To enter Addr3, Addr2 field must be provided.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+        Addr4:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 4. To enter Addr4, Addr3 field must be provided.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+        Addr5:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 5. To enter Addr5, Addr4 field must be provided.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+      description: |-
+        Details of the address in label format.
+
+        **Note:** This field is used if AddrFormatType is "Parsed".
+    getAddrByPostResponse_AddrInfo_AddrDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          type: string
+          description: |+
+            Unique identifier for address line component.
+
+            **Note:** Used to identify the content of optional information line if AddrFormatType is "Parsed".
+
+            Based on the selection, abbreviation appears before optional information.
+
+            This field appears above the recipient line in printed address.
+
+          enum:
+          - ATTN
+          - IN CARE OF
+          - MSC
+          - None
+        Value:
+          maxLength: 256
+          type: string
+          description: |-
+            Value of the client-defined data item.
+
+            **Note:** Optional information field used if AddrFormatType is "Parsed".
+
+            This field will replace HouseNum.
+    getAddrByPostResponse_AddrInfo_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: |-
+            Standard country code format.
+
+            **Note:** This field is used if AddrFormatType is "Parsed".
+          enum:
+          - SPCountryCode
+        CountryCodeValue:
+          type: string
+          description: "Country code value as per the country code format set in the CountryCodeSource field.\n\n**Note:** This field is used if AddrFormatType is \"Parsed\".\n\n\n\nThis field will contain the ISO country code designated for each country. It represents the country by two letter combination. \n\nFor example: US (United States), FR (France) or IN (India) and so on."
+      description: Details of the country code.
+    getAddrByPostResponse_AddrInfo_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+            **Note:** Date when the address is effective.
+
+            Only date value is supported for this core, whereas EFX supports both date and time values.
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "End date and time value.\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** EFX supports Datetime for this field, but Signature supports only date. "
+      description: |-
+        Details of the time frame when the postal address is active.
+
+        **Note:** It is only applicable for secondary/seasonal address.
+    getAddrByPostResponse_AddrInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        AddrUse:
+          type: string
+          description: Use of the address.
+          enum:
+          - Business
+          - Personal
+        AddrUseEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration in AddrUse field.
+        AddrFormatType:
+          type: string
+          description: "Type of address format.\n\n**Note:** Address format type depends on the financial institutions setup in Signature common file. "
+          enum:
+          - Label
+          - Parsed
+        FullName1:
+          maxLength: 96
+          type: string
+          description: |-
+            Full name in line 1.
+
+            **Note:** Full name is a data element that in combination with the address lines 1-5 provides a complete mailing address that can be used to print on an envelope.
+        Addr1:
+          maxLength: 64
+          type: string
+          description: "Address line 1.\n\n**Note:** For label address format type, this field is the first line of the address. \n\n\n\nFor parsed address format type, when the client application is using the Standardized address format, this field refers to the House number and Street. Client application must consolidate the House number and Street in Address line 1 as indicated below and send it in the request; House number followed by a space followed by Street name, for example, 123 Main drive. \n\n\n\n"
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. To enter Addr2, Addr1 field must be provided.\n\n**Note:** If address format type is label, then this field is the second line of the address. \n\nIf AddrFormatType is \"Parsed\" and client application uses the standardized address format, then this field refers to Apartment number type and Apartment number. Client application should consolidate the Apartment number type and Apartment number in Address line 2 as indicated in the format below and send it in the request.\n\nFormat: Apartment number type followed by a space followed by Apartment number\n\nExample: STE 600"
+        Addr3:
+          maxLength: 64
+          type: string
+          description: "Address line 3. To enter Addr3, Addr2 field must be provided.\n\n**Note:** If address format type is label, then this field is the third line of the address. \n\n"
+        Addr4:
+          maxLength: 64
+          type: string
+          description: "Address line 4. To enter Addr4, Addr3 field must be provided.\n\n**Note:** If address format type is label, then this field is the fourth line of the address. \n\n"
+        Addr5:
+          maxLength: 64
+          type: string
+          description: "Address line 5. To enter Addr5, Addr4 field must be provided.\n\n**Note:** If address format type is label, then this field is the fifth line of the address. \n\n"
+        ApartmentNum:
+          maxLength: 15
+          type: string
+          description: |-
+            Number assigned to the apartment in the address record.
+
+            **Note:** Used if AddrFormatType is "Parsed" and client application does not use standardized address format.
+        ApartmentNumType:
+          type: string
+          description: |-
+            Type of apartment number.
+
+            **Note:** Used if AddrFormatType is "Parsed" and client application does not use standardized address format.
+
+            Identifies the contents of ApartmentNum field and appears before the apartment number in the printed address.
+          enum:
+          - APT
+          - BLDG
+          - DEPT
+          - FL
+          - HNGR
+          - KEY
+          - LOT
+          - OFC
+          - PH
+          - PIER
+          - RM
+          - SLIP
+          - SPC
+          - STOP
+          - STE
+          - TRLR
+          - UNIT
+        HouseNum:
+          maxLength: 15
+          type: string
+          description: |-
+            Number assigned to the house in the address record.
+
+            **Note:** Used if AddrFormatType is "Parsed" and client application does not use standardized address format.
+        Street:
+          maxLength: 64
+          type: string
+          description: |-
+            Name of the street in the address record.
+
+            **Note:** Used if AddrFormatType is "Parsed" and client application does not use standardized address format.
+        MilitaryRegion:
+          type: string
+          description: "Name of the military region associated with the address.\n\n**Note:** Used if AddrFormatType is \"Parsed\".\n\nFor a Military address, this field should be used instead of the State or City. "
+          enum:
+          - APO AA
+          - APO AE
+          - APO AP
+          - FPO AA
+          - FPO AE
+          - FPO AP
+        LabelAddr:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_LabelAddr'
+        AddrDefinedData:
+          type: array
+          description: Additional data related to an address.
+          items:
+            $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_AddrDefinedData'
+        City:
+          maxLength: 32
+          type: string
+          description: |-
+            Name of the city.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+        County:
+          maxLength: 32
+          type: string
+          description: |-
+            Name of the county associated with the address.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+        District:
+          maxLength: 32
+          type: string
+          description: |-
+            Name of the district in address record.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+        StateProv:
+          type: string
+          description: |-
+            State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: |-
+            Postal code or Zip code.
+
+            **Note:** Only applicable if the AddrFormatType is Parsed or Label.
+
+            For U.S. address, this field refers to a Zip code. Format of Zip code is (five digits code)-(four digit additional code). The four-digit additional code is optional. It can be represented as "0000" and used to determine a more specific location within a given Zip code.
+
+            Example: XXXX-XXXX or XXXX-0000.
+
+            For a non-U.S. address, this field refers to a, post code if applicable.
+
+            All formats other than the format specified above can represent non-U.S. post code.
+
+            If PostalCode is provided as XXXXX and no CountryCode is indicated, the value is considered as U.S. Zip code.
+
+            Maximum 10 characters are supported.
+        Country:
+          maxLength: 64
+          type: string
+          description: |-
+            Name of the country associated with the address record.
+
+            **Note:** This field is used if AddrFormatType is "Parsed".
+        CountryCode:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_CountryCode'
+        POBox:
+          maxLength: 16
+          type: string
+          description: |-
+            Number of the PO box associated with the address.
+
+            **Note:** Used if AddrFormatType is "Parsed".
+
+            Client application should send a value in either POBox or Street field.
+
+            Output of post office box address are displayed as PO BOX NNNNNN in the printed address.
+        AddrType:
+          type: string
+          description: "Type of address.\n\n**Note:** A Primary address will always exist for a Party. A Secondary or a Seasonal address may exist in addition to the Primary address.\n\n\n\nSecondary address is an alternate address; it will be a permanent alternate address (when Start date or End date are not present) or it will be a temporary alternate address (when Start date and End dates are present) that means that it is only active during the indicated period of time. \n\nSeasonal address is an annual alternate address, that means that the address is active at the indicated period of time every year. \n\n\n\n"
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_TimeFrame'
+        Retention:
+          type: boolean
+          description: |-
+            Flag to indicate if the address should be retained after its time frame.
+
+            **Note:** It is applicable for secondary/seasonal address type only.
+        MoveInDt:
+          type: string
+          description: "Date of current address.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Only applicable if AddrType is 'Primary'."
+          format: date
+        ForeignFlag:
+          type: boolean
+          description: Flag to indicate whether the given address is foreign address
+        HandlingCode:
+          type: string
+          description: |-
+            Handling code to specify the handling process of the notification and statement forms.
+
+            **Note:** Only applicable if AddrType is 'Primary'.
+
+            User-defined value to identify if the mail is sent to the customer.
+    getAddrByPostResponse_AddrInfo:
+      required:
+      - PostAddr
+      type: object
+      properties:
+        PostAddr:
+          type: array
+          description: Postal address details of a party.
+          items:
+            $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo_PostAddr'
+      description: Address details of a party.
+    getAddrByPostResponse_AddrStatus:
+      required:
+      - AddrStatusCode
+      type: object
+      properties:
+        AddrStatusCode:
+          type: string
+          description: Status code of the address.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the address status is changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-12-31T23:59:59.999
+      description: Current status of the address.
+    getAddrByPostResponse_AddrRec:
+      required:
+      - AddrInfo
+      - AddrStatus
+      properties:
+        AddrInfo:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrInfo'
+        AddrStatus:
+          $ref: '#/components/schemas/getAddrByPostResponse_AddrStatus'
