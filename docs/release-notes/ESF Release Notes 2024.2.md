@@ -69,8 +69,6 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 	- PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd
 	- PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd
 
-- We resolved the error exception issue that was occurring in the response message when retrieving party account relationships using the party identifier
-
 <span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
 
 
