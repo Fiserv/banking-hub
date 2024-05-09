@@ -78,7 +78,15 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 
 # DPoP Token Implementation
 
-DPoP (for Demonstration of Proof-of-Possession) is an application-level mechanism for sender-constraining OAuth  access and refresh tokens. DPoP verifies the authenticity of the owner accessing the token in the client application. If the client application is not the valid owner of the access token, the API access is rejected. The authorized sender of the access token must have the access to the private key. This confirms the server that the sender is authorized to access it. 
+
+> #### Note
+> 
+> If you wish to know or share more information with your business teams on DPoP mechanism, [download Understanding DPoP Mechanism.pdf](https://github.com/Fiserv/banking-hub/files/15249417/download.Understanding.DPoP.Mechanism.pdf)
+
+
+> 
+
+DPoP (for Demonstration of Proof-of-Possession) is an application-level mechanism for sender-constraining OAuth access and refresh tokens. DPoP verifies the authenticity of the owner accessing the token in the client application. If the client application is not the valid owner of the access token, the API access is rejected. The authorized sender of the access token must have the access to the private key. This confirms the server that the sender is authorized to access it. 
 How to Setup DPoP mechanism
 To implement the DPoP Security, follow the listed steps.
 1.	Generate the Public/Private Key Pair
@@ -90,10 +98,18 @@ To implement the DPoP Security, follow the listed steps.
 
 ## Step 1 - Generate Public/Private Key Pair
 1.	Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL
-2.	(Optional step) Reference commands to generate an RSA Public/Private Key pair using OpenSSL 
+2.	(Optional step 1) Reference commands to generate an RSA Public/Private Key pair using OpenSSL 
 openssl genrsa -out private_key.pem 4096
 openssl rsa -pubout -in private_key.pem -out public_key.pem
+
 ![image](https://github.com/Fiserv/banking-hub/assets/135122880/284b796f-16f2-4316-9c86-b177d400a758)
+<!-- theme: info -->
+> #### Note
+> 
+> If you are unable to generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit, click the Cryptotools link [Public/Private Key pair](https://cryptotools.net/rsagen ) to generate it.
+>
+> 
+
 
 ## Step 2 - Onboarding of the Consumer
 1.	Register consumer with public key through AppMarket from Fiserv
@@ -122,6 +138,7 @@ Following are the few examples of business-critical attributes.
 
     •	organizationId
 
+    •	SelectivePayloadMap - Map 
 
 <!-- theme: info -->
 > #### Note
@@ -135,13 +152,10 @@ Following are the few examples of business-critical attributes.
 
 ## Step 4 - Create DPoP Generator Library on Consumer Side
 1.	Use the below JAVA code (DPoPGenerator.java) to create the library or use below code as a reference in consumer existing code
-2.	Update the following details in the JAVA code (DPoPGenerator.java)
-   
-    2.1. Replace with your private/public key pair (String privateKey, String publicKey)
-  	
-    2.2. Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod) 
-  	
-    2.3. Enable one or more of the following functions based on the selection in the step 3.2 and replace with actual values
+2.	Update the following details in the JAVA code (DPoPGenerator.java) 
+2.1	Replace with your private/public key pair (String privateKey, String publicKey)
+2.2	Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod)
+2.3	Enable one or more of the following functions based on the selection in the step 3.2 and replace with actual values 
 
     •	noPayloadGenerateDPoP
 
@@ -194,6 +208,7 @@ The following table lists the standard status codes:
 > #### Note
 > 
 > If you are unable to  resolve the issue after reviewing above listed descriptions, please reach out to Fiserv contact person for further assistance.
-
+>
+> 
 
 <!-- type: tab-end -->
