@@ -14,12 +14,10 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 - Response message now includes the effective date of the home mortgages<br>
 **Impacted Field:**
-	- AcctRec/LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt<br>
-
+  - AcctRec/LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt
 - Estimated revenue code for the community reinvestment act for small business or small farm is now available as single-digit numeric code<br>
 **Impacted Field:**
-	- AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode
-
+  - AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode
 
 <span style="font-size: 22px; ">Get Account Details-LOAN, Get Account Details-LOAN_INET</span> *API Explorer > Accounts > Account Service*
 
