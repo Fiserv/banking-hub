@@ -69,8 +69,6 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 	- PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd
 	- PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd
 
-- We resolved the error exception issue that was occurring in the response message when retrieving party account relationships using the party identifier
-
 <span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
 
 
@@ -145,7 +143,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 
 - We resolved an issue that occurred while updating the marital status to "NotApplicable"<br>
-**Imacted Field:**
+**Impacted Field:**
 	- PersonPartyInfo/MaritalStat
 
 - We resolved an issue that occurred while updating the gender status to "Unknown"<br>
