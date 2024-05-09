@@ -32,7 +32,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 <span style="font-size: 22px; ">Add Escrow</span> *API Explorer > Accounts > Escrow Service*
 
 
-- Added new "DataLength" field under "ClientDefinedData" aggregate in the request message, to improve the API workflow<br>
+- Added a new "DataLength" field under "ClientDefinedData" aggregate in the request message, to improve the API workflow<br>
 **Impacted Field:**
 	- EscrowInfo/ClientDefinedData/DataLength
 
