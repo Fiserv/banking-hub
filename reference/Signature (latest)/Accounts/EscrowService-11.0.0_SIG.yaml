@@ -1,0 +1,863 @@
+---
+openapi: 3.0.1
+info:
+  title: Escrow Service
+  description: Escrow service supports the operations to manage escrow accounts for an existing loan.
+  version: 11.0.0_SIG
+servers:
+- url: /
+paths:
+  /escrowservice/lending/escrow:
+    post:
+      tags:
+      - Add Escrow
+      summary: Add Escrow.
+      description: "Adds a new escrow account for an existing loan account.\n   <br>\n        For more information about the Accounts domain, <a href=\"../docs/?path=docs/fintechs/accounts.md\" title=\"Click to open\">click here.</a><br><br>\n        <b>Relates to:</b>\n          <ul> \n            <li><a href=\"../docs/?path=docs/banks-and-CU/loans.md\" title=\"Click to open\">Loans</a></li>\n            <li><a href=\"../docs/?path=docs/banks-and-CU/bank-servicing.md\" title=\"Click to open\">Bank Servicing</a></li>\n          </ul>"
+      operationId: EscrowAddOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EscrowAddOperRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EscrowAddOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EscrowAddOperResponse'
+      x-default-example: Permier
+      x-group-name: Escrow Service
+      x-proxy-name: Add Escrow
+      x-child-product-name: Accounts
+      x-core: Signature
+components:
+  schemas:
+    EscrowAddOperRequest:
+      required:
+      - EscrowInfo
+      properties:
+        EscrowInfo:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo'
+    EscrowAddOperResponse:
+      required:
+      - EscrowStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        EscrowStatusRec:
+          $ref: '#/components/schemas/EscrowAddOperResponse_EscrowStatusRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          type: string
+        TrnId:
+          maxLength: 30
+          type: string
+        VendorId:
+          type: string
+          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+        Channel:
+          type: string
+          description: Indicates the channel used by the client application.
+        ClientDateTime:
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+          format: date-time
+        ClientTerminalSeqNum:
+          maxLength: 36
+          type: string
+          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+        OriginatorType:
+          type: integer
+          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+        TerminalCity:
+          maxLength: 32
+          type: string
+        TerminalCounty:
+          maxLength: 32
+          type: string
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State Province. ISO 3166-2:US codes.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: Postal Code is ZipCode in the US.
+        TerminalCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - ISO3166Numeric
+          - ISO3166Alpha3
+        TerminalCountryCodeValue:
+          maxLength: 80
+          type: string
+        PhoneType:
+          type: string
+        PhoneNum:
+          type: string
+        PhoneExchange:
+          type: string
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - US
+          - IND
+        AcquirerCountryCodeValue:
+          type: string
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        BranchIdent:
+          maxLength: 22
+          type: string
+        TellerIdent:
+          type: string
+        TillIdent:
+          type: string
+        AMPMCode:
+          type: string
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          enum:
+          - Manual
+          - Auto
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    EscrowAddOperRequest_EscrowInfo_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+            **Note:** Refers to the account number of loan account.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - LOAN
+      description: Unique information to identify the account record.
+    EscrowAddOperRequest_EscrowInfo_EscrowCoverageAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: |-
+            Standard ISO currency code format.
+
+            Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank" title="Click to open in a new tab">ISO 4217 codes </a> to view the list of all currency codes.
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that at present, only USD currency code is supported."
+      description: Details of currency code.
+    EscrowAddOperRequest_EscrowInfo_EscrowCoverageAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal.
+
+            **Note:** Refers to the required amount for insurance or tax coverage.
+        CurCode:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_EscrowCoverageAmt_CurCode'
+      description: Details of the amount required for the insurance coverage of an escrow.
+    EscrowAddOperRequest_EscrowInfo_DisburseData_DisburseToAcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: "Disbursement To Account Keys.\n\n**Note:** Refers to account number of payee. \n\n\n\nThis field is for information purposes only; the system automatically deposits the disbursement in the payee account.\n\n"
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+      description: Disbursement To Account Keys.
+    EscrowAddOperRequest_EscrowInfo_DisburseData_DisburseAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: |-
+            Standard ISO currency code format.
+
+            Refer to the <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank" title="Click to open in a new tab">ISO 4217 codes </a> to view the list of all currency codes.
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported."
+      description: Details of currency code.
+    EscrowAddOperRequest_EscrowInfo_DisburseData_DisburseAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal.
+        CurCode:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_DisburseData_DisburseAmt_CurCode'
+      description: Details of disbursement amount.
+    EscrowAddOperRequest_EscrowInfo_DisburseData:
+      type: object
+      properties:
+        DisburseTo:
+          maxLength: 80
+          type: string
+          description: |-
+            Value to identify CIF record (Customer Name) of the party to which money is disbursed.
+
+            **Note:** *Required field*
+
+            Refers to escrow identifier.
+
+            Only 5 characters are allowed.
+
+            Value for this field is defined by the financial institution.
+        AgentId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification code of the agent.
+
+            **Note:** Escrow tax agent identifier or taxing authority to whom the escrow is paid.
+
+            AgentId should be established in a common file.
+        DisburseRefNum:
+          maxLength: 80
+          type: string
+          description: |-
+            Parcel number or insurance policy number used as reference for disbursement.
+
+
+
+            **Note:** Refers to identify the parcel of property being taxed or insurance policy/certificate number.
+        DisburseMethod:
+          type: string
+          description: |-
+            Method of disbursement of funds.
+
+            **Note:** Refers to code for escrow disbursement.
+          enum:
+          - Check
+        DisburseToAcctKeys:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_DisburseData_DisburseToAcctKeys'
+        DisburseType:
+          type: string
+          description: |-
+            Type of disbursement to determine the method used if multiple disbursements are made to the same payee.
+
+            **Note:** *Required field*
+        DisburseAmt:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_DisburseData_DisburseAmt'
+        NextDisburseDt:
+          type: string
+          description: "Date on which the next disbursement is scheduled from an escrow.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        OverdraftCode:
+          type: string
+          description: |-
+            Value to indicate if escrow balance is overdrawn to satisfy a disbursement.
+
+            **Note:** *Required field*
+
+
+
+            Refers to overdraft code of an escrow.
+      description: Details of disbursements to be made from an escrow account.
+    EscrowAddOperRequest_EscrowInfo_FloodData_DeterminationTaxId:
+      type: object
+      properties:
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: "Unique identifier of tax.\n\n**Note:** Refers to origin TIN. "
+        TaxIdentVerified:
+          type: boolean
+          description: |-
+            Flag to indicate if the tax information is verified.
+
+            **Note:** Refers to certification code. Status of TIN as specified in origin field.
+      description: Details of TIN (Taxpayer Identification Number) of the person or company who evaluated the property and determined the flood-related information.
+    EscrowAddOperRequest_EscrowInfo_FloodData:
+      type: object
+      properties:
+        DeterminationDt:
+          type: string
+          description: "Date when the flood zone is identified.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** *Required field*\n\n\n\nRefers to the date when the zone was identified."
+          format: date
+        DeterminationCompany:
+          maxLength: 60
+          type: string
+          description: |-
+            Company that created certificate for flood insurance.
+
+            **Note:** Flood vendor who created the certificate and is liable for the zone. This vendor would be liable for the zone.
+        DeterminationNumber:
+          maxLength: 30
+          type: string
+          description: |-
+            Number used to determine the program for flood insurance.
+
+            **Note:** *Required field*
+
+
+
+            Should be provided in request to determine the rate for flood insurance.
+        DeterminationTaxId:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_FloodData_DeterminationTaxId'
+        CommunityNumber:
+          maxLength: 60
+          type: string
+          description: Number used to identify the community where the property is located.
+        MapPanel:
+          maxLength: 30
+          type: string
+          description: Panel number to identify a property in a Special Flood Hazard Area (SFHA).
+        MapPanelDt:
+          type: string
+          description: "Date when the map panel is recorded.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        FloodZone:
+          maxLength: 40
+          type: string
+          description: |-
+            Alphanumeric value to identify the flood zone where the property is located.
+
+            **Note:** *Required field*
+
+            Should be provided for flood insurance.
+        TrackCompany:
+          type: string
+          description: Company that tracks the specified zone.
+        FloodTrackingNum:
+          maxLength: 20
+          type: string
+          description: |-
+            Number used to track the flood insurance.
+
+            **Note:** *Required field*
+
+
+
+            Should be provided for flood insurance.
+        FloodPartialInd:
+          type: boolean
+          description: Flag to indicate the flood on a part of the property.
+        CBRADesignationDt:
+          type: string
+          description: Date when the flood zone is designated to Coastal Barrier Resources Area (CBRA).
+          format: date
+        LOMRDt:
+          type: string
+          description: "Date when the organization has received the Letter of Map Amendment (LOMA).\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        LOMRReceivedInd:
+          type: boolean
+          description: |-
+            Flag to indicate if the organization has received  the Letter of Map Amendment (LOMA) or Revision (LOMAR).
+
+            **Note:** *Required field*
+
+
+
+            Should be provided for flood insurance.
+        FloodSvcTypeCode:
+          type: string
+          description: Code to identify the type of flood service.
+          enum:
+          - LoanLife
+          - Basic
+          - Tracking
+          - ConversionLife
+      description: |-
+        Details of the insurance for a loan account if escrow is flood insurance.
+
+        **Note:** Refers to escrow flood details that contain details of flood insurance for loan account.
+    EscrowAddOperRequest_EscrowInfo_EscrowInsuranceData:
+      type: object
+      properties:
+        InsExtractCode:
+          type: string
+          description: |-
+            Code to identify if the escrow record uses third-party vendor to monitor the policy renewal and/or the premium payments for the insurance.
+
+            **Note:** Value of "1" (Outsourced) triggers additional business requirements.
+
+            Following fields in EscrowInfo aggregate are required to be provided:
+
+            - Escrow coverage type (EscrowCoverageType)
+
+            - Escrow coverage amount (EscrowCoverageAmt/Amt)
+
+            - Effective date (EffDt)
+
+            - Escrow expiration date (EscrowExpDt)
+
+            - Agent Id under Disburse data aggregate (DisburseData/AgentId)
+
+            - Disburse Reference Number(DisburseData/DisburseRefNum)
+        MultiplePolicyInd:
+          type: boolean
+          description: |-
+            Flag to indicate if the escrow insurance record covers multiple type of policies.
+
+            **Note:** *Required field*
+
+
+
+            Should be provided for escrow insurance.
+        LossPayee:
+          maxLength: 80
+          type: string
+          description: |-
+            Entity (financial institution/individual) that is entitled to all or a part of insurance proceeds and has vested interest in a property covered.
+
+            **Note:** Used for first mortgage-holder.
+        OtherEndorsement:
+          maxLength: 80
+          type: string
+          description: |-
+            Other entity (financial institution/individual) that is entitled to all or a part of insurance proceeds and has vested interest in a property covered.
+
+            **Note:** Used for second mortgage-holder.
+        CollateralId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a collateral record.
+
+            **Note:** Collateral number (Id) associated with the loan.
+      description: "Details of insurance associated with an escrow account.\n\n**Note:** Refers to escrow insurance detail aggregate. \n\nYou may use either escrow taxes detail aggregate OR escrow insurance details aggregate."
+    EscrowAddOperRequest_EscrowInfo_EscrowMIPData_PremiumAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal.
+        CurCode:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_DisburseData_DisburseAmt_CurCode'
+      description: Details of the up-front premium amount assessed when loan was initiated.
+    EscrowAddOperRequest_EscrowInfo_EscrowMIPData:
+      type: object
+      properties:
+        MIPType:
+          type: string
+          description: |-
+            Type of monthly mortgage insurance.
+
+            **Note:** Refers to MIP type code.
+        HUDCaseNumber:
+          type: integer
+          description: |-
+            Number assigned by HUD to identify the insurance customer.
+
+            **Note:** Refers to MIP case identifier.
+          format: int64
+        PremiumExpDt:
+          type: string
+          description: "Date when the premium expires.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to MIP premium expiration date. "
+          format: date
+        PremiumAmt:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_EscrowMIPData_PremiumAmt'
+        PremiumPct:
+          type: number
+          description: Rate in percent used to calculate the insurance amount.
+      description: |-
+        Details of the mortgage insurance premium (MIP).
+
+        **Note:** Client application can send this aggregate for FHA mortgages only.
+    EscrowAddOperRequest_EscrowInfo_EscrowTaxData:
+      type: object
+      properties:
+        TownshipCode:
+          type: string
+          description: Code to identify the township for escrow tax record.
+        MunicipalCode:
+          type: string
+          description: Code to identify the municipal code (MSA) for escrow tax record.
+      description: |-
+        Tax details associated with an escrow.
+
+        **Note:** You may use either EscrowTaxData or EscrowInsuranceData aggregate.
+    EscrowAddOperRequest_EscrowInfo:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_AcctKeys'
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description of the disbursement.
+        EscrowIntInd:
+          type: boolean
+          description: |-
+            Flag to indicate if an escrow account earns interest.
+
+            **Note:** *Required field*
+
+
+
+            Refers to escrow interest option flag.
+        EscrowTaxInd:
+          type: boolean
+          description: |-
+            Flag to indicate if an escrow account maintains year-end tax-reporting fields for monetary activity pertaining to this escrow.
+
+            **Note:** *Required field*
+
+
+
+            Refers to escrow tax flag.
+        IncEscrowAnalysisInd:
+          type: boolean
+          description: |-
+            Flag to indicate whether the escrow is included in the analysis of the account.
+
+            Escrow analysis consists of escrow account review to ensure that funds collected are enough for disbursement.
+
+
+
+
+
+            **Note:** *Required field*
+
+
+
+            Refers to escrow analysis flag.
+        CushionPmtNum:
+          type: integer
+          description: |-
+            Number of monthly escrow payments required for an organization to be held in reserve.
+
+            **Note:** Refers to escrow cushion period.
+          format: int64
+        EscrowAnalysisIncPct:
+          type: number
+          description: "Increase in the percentage of escrow disbursement for analysis. For example, you can use this field to indicate an increased rate for property taxes.\n\n**Note:** Refers to escrow increase percentage. "
+        EscrowCoverageType:
+          type: string
+          description: Type of escrow coverage.
+        EscrowCoverageAmt:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_EscrowCoverageAmt'
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the escrow status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999\n\n**Note:** Start date of escrow."
+        EscrowExpDt:
+          type: string
+          description: "Expiry date of the escrow insurance coverage.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** End date of escrow."
+          format: date
+        EscrowDtlStatus:
+          type: string
+          description: |-
+            Value to identify if the escrow is active.
+
+            **Note:** New escrow should have EscrowDtlStatus as "Active".
+
+            By default, Active (A) value is sent if not provided in request.
+          enum:
+          - Active
+          - Inactive
+        DisburseData:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_DisburseData'
+        FloodData:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_FloodData'
+        EscrowInsuranceData:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_EscrowInsuranceData'
+        EscrowMIPData:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_EscrowMIPData'
+        EscrowTaxData:
+          $ref: '#/components/schemas/EscrowAddOperRequest_EscrowInfo_EscrowTaxData'
+        UpdatePmtSchedInd:
+          type: boolean
+          description: |-
+            Flag to indicate if the payment schedules are to be updated.
+
+            **Note:** This field is used to reflect necessary changes to interest bearing escrow amount and the non-interest bearing escrow amount.
+      description: |-
+        Details of an escrow account.
+
+        **Note:** Escrow summary is a prerequisite for adding escrow details to an account; hence, escrow summary should be defined for a loan account before adding an escrow.
+    EscrowAddOperResponse_EscrowStatusRec_EscrowKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - LOAN
+      description: Unique information to identify the account record.
+    EscrowAddOperResponse_EscrowStatusRec_EscrowKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/EscrowAddOperResponse_EscrowStatusRec_EscrowKeys_AcctKeys'
+        EscrowIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of an escrow account.
+
+            **Note:** Refers to escrow number.
+      description: Unique information to identify the escrow record.
+    EscrowAddOperResponse_EscrowStatusRec_EscrowStatus:
+      required:
+      - EscrowStatusCode
+      type: object
+      properties:
+        EscrowStatusCode:
+          type: string
+          description: Status code of an escrow account.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the escrow status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: Status of an escrow account.
+    EscrowAddOperResponse_EscrowStatusRec:
+      required:
+      - EscrowKeys
+      - EscrowStatus
+      type: object
+      properties:
+        EscrowKeys:
+          $ref: '#/components/schemas/EscrowAddOperResponse_EscrowStatusRec_EscrowKeys'
+        EscrowStatus:
+          $ref: '#/components/schemas/EscrowAddOperResponse_EscrowStatusRec_EscrowStatus'
+      description: Details of the updated status of an escrow account.
