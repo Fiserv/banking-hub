@@ -122,7 +122,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 <span style="font-size: 22px; ">Add Credit-DDA_Teller</span> *API Explorer > Transactions > Credit Service*
 
 
-- Added the following new fields so that the teller or supervisor can override transactions as when required:
+- Added the following new fields so that a teller or supervisor can override the transaction when required:
 	- OvrdExceptionData
 	- OvrdExceptionData/OverrideException
 	- OvrdExceptionData/OverrideException/SubjectRole
@@ -131,7 +131,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 <span style="font-size: 22px; ">Add Debit-DDA_Teller</span> *API Explorer > Transactions > Debit Service*
 
 
-- Added the following new fields so that the teller or supervisor can override transactions as when required:
+- Added the following new fields so that a teller or supervisor can override the transaction when required:
 	- OvrdExceptionData
 	- OvrdExceptionData/OverrideException
 	- OvrdExceptionData/OverrideException/SubjectRole
