@@ -28,9 +28,6 @@ Information is not available at the moment. Stay tuned for the updates.
 
 - The system generated an error exception in the response even when the configuration of fee amount code, fee option and fee waive reason code is correct for the associated organization and client application. To resolve this issue, we have corrected the code
 
-
-<span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
-
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 Information is not available at the moment. Stay tuned for the updates.
