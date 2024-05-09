@@ -24,7 +24,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 - Accrual method field now uses the original interest method instead of the current interest method. This accrues the interest correctly<br>
 **Impacted Field:**
-	- AcctRec/LoanAcctInfo/IntRateData/AccrualMethod
+  - AcctRec/LoanAcctInfo/IntRateData/AccrualMethod
 
 
 <span style="font-size: 22px; ">Add Escrow</span> *API Explorer > Accounts > Escrow Service*
@@ -32,7 +32,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 - Added a new "DataLength" field under "ClientDefinedData" aggregate in the request message, to improve the API workflow<br>
 **Impacted Field:**
-	- EscrowInfo/ClientDefinedData/DataLength
+  - EscrowInfo/ClientDefinedData/DataLength
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
@@ -42,7 +42,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 - We have fixed an issue where loan accounts were successfully created when the value of the RateChangeRecurType field was "Quarterly," which was not specified in the enum values. We added the "Quarterly" value as an enum value<br>
 **Impacted Field:**
-	- LoanAcctInfo/RateChangeData/RateChangeRecurType
+  - LoanAcctInfo/RateChangeData/RateChangeRecurType
 
 
 <span style="font-size: 22px; ">Add Escrow</span> *API Explorer > Accounts > Escrow Service*
@@ -50,7 +50,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 - Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY"<br>
 **Impacted Field:**
-	- EscrowInfo/EscrowExpDt
+  - EscrowInfo/EscrowExpDt
 
 
 <!-- type: tab -->
@@ -63,9 +63,9 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 - The fields OwnerInd, PrimaryOwnerInd and TaxReportingOwnerInd were not rendering as expected in the response. To resolve this issue, we added correct values for owner indicator, primary owner indicator and tax reporting owner indicator<br>
 **Impacted Fields:**
-	- PartyAcctRelRec/PartyAcctRelInfo/OwnerInd
-	- PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd
-	- PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd
+  - PartyAcctRelRec/PartyAcctRelInfo/OwnerInd
+  - PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd
+  - PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd
 
 <span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
 
@@ -99,7 +99,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
-<span style="font-size: 22px; ">Add Credit-Remote Deposit</span> *API Explorer > Transactions > Credit Service*
+<span style="font-size: 22px; ">Add Credit</span> *API Explorer > Transactions > Credit Service*
 
 
 - We resolved the issue to validate the client defined XREF rule "SCO_ClientTimeZone_Rule" while setting the AMPMCode tag in the request message
@@ -142,15 +142,15 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 - We resolved an issue that occurred while updating the marital status to "NotApplicable"<br>
 **Impacted Field:**
-	- PersonPartyInfo/MaritalStat
+  - PersonPartyInfo/MaritalStat
 
 - We resolved an issue that occurred while updating the gender status to "Unknown"<br>
 **Impacted Field:**
-	- PersonPartyInfo/Gender
+  - PersonPartyInfo/Gender
 
 - We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan"<br>
 **Impacted Field:**
-	- PersonPartyInfo/Race
+  - PersonPartyInfo/Race
 
 
 <!-- type: tab -->
