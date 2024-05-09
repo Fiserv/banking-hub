@@ -9,7 +9,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
-<span style="font-size: 22px; ">Get Accounts-LOAN</span> *API Explorer > Accounts > Account Service*
+<span style="font-size: 22px; ">Get Account Details-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
 - Response message now includes the effective date of the home mortgages<br>
@@ -21,7 +21,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 	- AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode
 
 
-<span style="font-size: 22px; ">Get Accounts-LOAN, Get Account-LOAN_INET</span> *API Explorer > Accounts > Account Service*
+<span style="font-size: 22px; ">Get Account Details-LOAN, Get Account Details-LOAN_INET</span> *API Explorer > Accounts > Account Service*
 
 
 - Accrual method field now uses the original interest method instead of the current interest method. This accrues the interest correctly<br>
