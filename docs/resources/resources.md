@@ -78,10 +78,10 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 
 # DPoP Token Implementation
 
-
 > #### Note
-> 
-> If you wish to know or share more information with your business teams on DPoP mechanism, [download Understanding DPoP Mechanism.pdf](https://github.com/Fiserv/banking-hub/files/15249417/download.Understanding.DPoP.Mechanism.pdf)
+> DPoP is to be used once you are a paid subscriber of the [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) in order to access the Banking Hub API endpoints over the internet.
+>
+> If you wish to know or share more information with your business teams on DPoP mechanism, [download Understanding DPoP Mechanism.pdf](https://github.com/Fiserv/banking-hub/files/15249417/download.Understanding.DPoP.Mechanism.pdf).
 
 
 > 
