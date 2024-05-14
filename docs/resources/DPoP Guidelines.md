@@ -12,9 +12,9 @@ JWTs use digital signatures to ensure authenticity and integrity in authenticati
 
   |Details|Signature based verifications|JWT+DPoP|
 |-----------|------------|------------|
-|Mode|      |      |
-|Verification Methods|    |    |
-|Authentication Process|    |    |
+|**Mode**|Standalone JWTs use digital signatures to ensure authenticity and integrity in authentication and authorization.|DPoP creates a unique proof-of-possession key, often linked to the user's session.|
+|**Verification Methods**|Verification involves running the header and payload with a secret key and comparing signatures through the same algorithm.| Servers use the JWT's public key and proof-of-possession key to confirm the client's private key possession.|
+|**Authentication Process**|In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.|When a client makes a request with a JWT+DPoP token, it includes a signature proving that it possesses the private key corresponding to the public key used in the JWT.|
 
 DPoP (for Demonstration of Proof-of-Possession) is an application-level mechanism for sender-constraining OAuth access and refresh tokens. DPoP verifies the authenticity of the owner accessing the token in the client application. If the client application is not the valid owner of the access token, the API access is rejected. The authorized sender of the access token must have the access to the private key. This confirms the server that the sender is authorized to access it. 
 
