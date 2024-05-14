@@ -3,12 +3,27 @@
 
 
 > #### Note
-> DPoP is to be used once you are a paid subscriber of the [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) in order to access the Banking Hub API endpoints over the internet.
+> DPoP is to be used once you are a paid subscriber of the [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) in order to access the Banking Hub API endpoints over the internet. 
 >
 > 
+## JWT & DPoP Integrations
+JWTs use digital signatures to ensure authenticity and integrity in authentication and authorization where as DPoP creates a unique proof-of-possession key, often linked to the user's session. In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.
+
+
+  |Details|Signature based verifications|JWT+DPoP|
+|-----------|------------|------------|
+|Mode|      |      |
+|Verification Methods|    |    |
+|Authentication Process|    |    |
 
 DPoP (for Demonstration of Proof-of-Possession) is an application-level mechanism for sender-constraining OAuth access and refresh tokens. DPoP verifies the authenticity of the owner accessing the token in the client application. If the client application is not the valid owner of the access token, the API access is rejected. The authorized sender of the access token must have the access to the private key. This confirms the server that the sender is authorized to access it. 
-How to Setup DPoP mechanism
+
+## Architecture
+
+
+## DPoP Framework Flow
+
+## How to Setup DPoP mechanism
 To implement the DPoP Security, follow the listed steps.
 1.	Generate the Public/Private Key Pair
 2.	Onboard the Consumer
@@ -124,6 +139,10 @@ The following table lists the standard status codes:
 |     1011   – Invalid DPoP    |     Error generating JWK Thumbprint     |
 |     1012   – Invalid DPoP    |     Unknown Error in Java Callout       |
 |     1099   – Invalid DPoP    |     Unexpected generic error on APIM    |
+
+## Benefits to Fiserv
+
+
 
 <!-- theme: info -->
 > #### Note
