@@ -5,9 +5,6 @@
 > #### Note
 > DPoP is to be used once you are a paid subscriber of the [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) in order to access the Banking Hub API endpoints over the internet.
 >
-> If you wish to know or share more information with your business teams on DPoP mechanism, [download Understanding DPoP Mechanism.pdf](https://github.com/Fiserv/banking-hub/files/15249417/download.Understanding.DPoP.Mechanism.pdf).
-
-
 > 
 
 DPoP (for Demonstration of Proof-of-Possession) is an application-level mechanism for sender-constraining OAuth access and refresh tokens. DPoP verifies the authenticity of the owner accessing the token in the client application. If the client application is not the valid owner of the access token, the API access is rejected. The authorized sender of the access token must have the access to the private key. This confirms the server that the sender is authorized to access it. 
