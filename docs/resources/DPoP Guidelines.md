@@ -3,7 +3,7 @@
 
 
 > #### Note
-> once you are a paid subscriber, you can use the DPOP tokens [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) in order to access the Banking Hub API endpoints over the internet. 
+> Once you are a paid subscriber, you can use the DPOP tokens [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) to access the Banking Hub API endpoints over the internet. 
 >
 > 
 ## JWT & DPoP Integrations
@@ -47,26 +47,23 @@ Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit
 > If you are unable to generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit, click the Cryptotools link [Public/Private Key pair](https://cryptotools.net/rsagen ) to generate it.
 >
 > 
-
-
 ## Step 2 - Onboard the Consumer
-2.1  Register consumer with public key through AppMarket from Fiserv
-2.2  AppMarket stores and returns the consumer key and shares with the consumer <br>
+2.1.  Register consumer with public key through AppMarket from Fiserv
+2.2.  AppMarket stores and returns the consumer key and shares with the consumer <br>
  ![image](https://github.com/Fiserv/banking-hub/assets/135122880/912df1f0-3b80-4e06-8e36-09de51e9466a)
 
 ## Step 3 - Select the Style to sign in DPoP Token
-The following are the steps to 
 ### Step 3.1 - Sign in with DPoP Token
-•  **HTTP Method (GET, POST and so on)** of the corresponding API call in which DPoP token is passed
-•  **URL of the API call** (including the query parameters) in which DPoP token is passed
+• &emsp; **HTTP Method (GET, POST and so on)** of the corresponding API call in which DPoP token is passed
+• &emsp; **URL of the API call** (including the query parameters) in which DPoP token is passed
     
 ### Step 3.2 - Use Request Data for Data Integrity   
-•  **ReqHeaderMap** - Map created with business-critical request headers and its value that are required to be validated by the APIM security framework <br>
-•  **FormParamMap** - Map created with form URL encoded key-value that are required to be validated by the APIM security framework <br>
-•  **Payload** - JSON string of the request body that is required to be validated by APIM security framework
-If case payload size is larger than **100 KB**, use **SelectivePayloadMap**. This Map is created with business-critical attributes of the request payload, which are required to be validated by the APIM security framework. <br>
+• &emsp; **ReqHeaderMap** - Map created with business-critical request headers and its value that are required to be validated by the APIM security framework <br>
+• &emsp; **FormParamMap** - Map created with form URL encoded key-value that are required to be validated by the APIM security framework <br>
+• &emsp; **Payload** - JSON string of the request body that is required to be validated by APIM security framework<br>
+If case payload size is larger than **100 KB**, use **SelectivePayloadMap**. This Map is created with business-critical attributes of the request payload, which are required to be validated by the APIM security framework <br>
 
-Following are the few examples of business-critical attributes:
+Following are the examples of business-critical attributes:
 
     •	accountNumber
 
@@ -89,11 +86,11 @@ Following are the few examples of business-critical attributes:
 |For Form Params|sample-formparam: value-can-be-any-string|`EFXFormParam: {"OrganizationId":"DemoOrgId", "TrnId":"3dab21d2-2ab7"}`|  
 
 ## Step 4 - Create DPoP Generator Library on Consumer Side
-4.1    Use the below JAVA code (DPoPGenerator.java) to create the library or use below code as a reference in consumer existing code<br>
-4.2    Update the following details in the JAVA code (DPoPGenerator.java)<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;4.2.1 &rarr; Replace with your private/public key pair (String privateKey, String publicKey)<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;4.2.2 &rarr; Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod)<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;4.2.3 &rarr; Enable one or more of the following functions based on the selection in the step 3.2 and replace with actual values<br>
+4.1. &emsp; Use the below JAVA code (DPoPGenerator.java) to create the library or use below code as a reference in consumer existing code<br>
+4.2. &emsp; Update the following details in the JAVA code (DPoPGenerator.java)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;4.2.1. &nbsp; Replace with your private/public key pair (String privateKey, String publicKey)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;4.2.2. &nbsp; Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;4.2.3. &nbsp; Enable one or more of the following functions based on the selection in the step 3.2 and replace with actual values<br>
 
     •	noPayloadGenerateDPoP
 
@@ -107,19 +104,19 @@ Following are the few examples of business-critical attributes:
 > Download [pom.xml](https://github.com/Fiserv/banking-hub/files/13915765/PoM.xml.zip "download") 
 
 <!-- theme: info --> 
-> [Download DPoPGenerator](https://github.com/Fiserv/banking-hub/files/13915803/DPoPGenerator.zip "download")
+> Download [DPoPGenerator](https://github.com/Fiserv/banking-hub/files/13915803/DPoPGenerator.zip "download")
 
 ## Step 5 - Generate and Use DPoP Token for Token API Call
-•	Consumer should generate the DPoP token for the token API call using the library created in the previous step (pass the token API URL and HTTP method and other required attributes for the library)
+• &emsp; Consumer should generate the DPoP token for the token API call using the library created in the previous step (pass the token API URL and HTTP method and other required attributes for the library)
 
 <!-- theme: info --> 
-> [Download Request Response 1](https://github.com/Fiserv/banking-hub/files/13901969/Request-Response-1.zip "download")
+> Download [Request Response 1](https://github.com/Fiserv/banking-hub/files/13901969/Request-Response-1.zip "download")
 
 ## Step 6 - Generate and Use DPoP Token for Functional API Call
-•	Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes are required for signing
+• &emsp; Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes are required for signing
 
 <!-- theme: info --> 
-> [Download Request Response 2](https://github.com/Fiserv/banking-hub/files/13915815/Request-Response-2.zip "download")
+> Download [Request Response 2](https://github.com/Fiserv/banking-hub/files/13915815/Request-Response-2.zip "download")
 
 # Debugging DPoP Errors
 Error codes help you to debug errors related to your DPoP implementation and provide initial guidance to resolve issues in your code. For example, if you receive an error code 1002- Invalid DPoP, then make sure the public key you are using and the one sent to Fiserv are the same. 
