@@ -1,9 +1,9 @@
 ---
 openapi: 3.0.1
 info:
-  title: Product Specification Service
+  title: Product Specification Service 
   description: The Product Specification service supports an inquiry operation to retrieve the specification of a product. The information of a product specification is used for product offerings, new account disclosures and the creation of new accounts.
-  version: 11.0.0_DNA
+  version: 11.0.0_SIG-Inq_CARDS
 servers:
 - url: /
 paths:
@@ -12,7 +12,7 @@ paths:
       tags:
       - Get Product Specifications
       summary: Get Product Specifications Secured
-      description: "Get Product Specifications API retrieves a specification of a product, which is used for product offerings.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Get Product Specification API retrieves the specification of a card product. <br>For Signature, this API defines the codes and processing options applicable for the group of cards that are created under the umbrella of ISO card types which provides the card with a set of default processing data. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
       operationId: getProdSpecSecured
       parameters:
       - name: EFXHeader
@@ -42,7 +42,7 @@ paths:
       x-group-name: Product Specification Service
       x-proxy-name: Get Product Specifications
       x-child-product-name: Operations and Servicing
-      x-core: DNA
+      x-core: Signature-Cards
 components:
   schemas:
     getProdSpecSecuredRequest:
@@ -56,7 +56,7 @@ components:
       - ProdSpecRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType_DNA'
+          $ref: '#/components/schemas/StatusType'
         ProdSpecRec:
           $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec'
     EFXHeader:
@@ -246,7 +246,7 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
-    StatusType_DNA:
+    StatusType:
       title: StatusType
       required:
       - Severity
@@ -255,6 +255,9 @@ components:
       - SvcProviderName
       type: object
       properties:
+        Id:
+          type: string
+          description: Status identification number.
         StatusCode:
           maxLength: 20
           type: string
@@ -269,8 +272,12 @@ components:
           maxLength: 1024
           type: string
           description: |-
-            Name of a service provider. Example value is:
+            Name of a service provider. Possible values are:
+              -  Cleartouch
               -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
         ServerStatusCode:
           maxLength: 20
           type: string
@@ -279,8 +286,25 @@ components:
           maxLength: 255
           type: string
           description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
-          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
     SeverityType:
       title: SeverityType
@@ -290,6 +314,73 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    getProdSpecSecuredRequest_ProdSpecSel_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: "Unique identification number of a party record.\n\n**Note:** \n\n- Refers to customer permanent identifier\n\n- When this field is sent in the request, it returns all the accounts owned by the customer that can be linked to a new card"
+      description: |-
+        Unique information to identify the party record.
+
+        This aggregate used to obtain related accounts when retrieving the specifications to create a debit card account.
     getProdSpecSecuredRequest_ProdSpecSel:
       required:
       - ProductIdent
@@ -298,7 +389,10 @@ components:
         ProductIdent:
           maxLength: 42
           type: string
-          description: Unique identifier of a product held at a financial institution.
+          description: |-
+            Unique identifier of a product held at a financial institution.
+
+            **Note:** Refers to Card ISO identifier that is a six-digit ISO number.
         AcctType:
           type: string
           description: |-
@@ -307,18 +401,22 @@ components:
 
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+
+
+
+            **Note:** *Required field*
+
+
+
+            Client application should sent this field in the request.
           enum:
-          - DDA
-          - SDA
-          - CDA
-          - RRA
-          - RET
-          - LEAS
-        ProdIntRateId:
-          maxLength: 36
+          - CRD
+        CardType:
           type: string
-          description: "Unique identifier for the product interest rate.\n\n\n\n**Note:** If ProdIntRateId is not provided in the request, default value is \"NOTE\".\n\nThis field specifes the balance category type associated with the interest rate schedule.\n\nExample:\n\n- Escrow: ESC \n\n- Loan Renewal: RNEW\n\n- Loan Modification: MDFY\n\n-  Late Charge)\n\n- EFEE (Description: Extension)"
-      description: Details of the selection criteria used for retrieving product specifications.
+          description: "Type of a card.\n\n**Note:** \n\n- Refers to card type code\n\n- User-defined, alphanumeric code that identifies the type of EFT card\n\n- Max length: one character"
+        PartyKeys:
+          $ref: '#/components/schemas/getProdSpecSecuredRequest_ProdSpecSel_PartyKeys'
+      description: Details of the product specification selection.
     getProdSpecSecuredResponse_ProdSpecRec_ProdSpecKeys:
       required:
       - ProductIdent
@@ -327,216 +425,205 @@ components:
         ProductIdent:
           maxLength: 42
           type: string
-          description: 'Unique identifier of a product held at a financial institution. '
+          description: |-
+            Unique identifier of a product at a financial institution.
+
+            **Note:** Refers to Card ISO identifier that is a six-digit ISO number.
         AcctType:
           type: string
-          description: |-
+          description: |+
             Type of an account.
 
 
 
             For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
 
+          enum:
+          - CRD
+      description: 'Unique information to identify a product specification record. '
+    getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_CardFee:
+      required:
+      - CardFeeType
+      properties:
+        CardFeeType:
+          type: string
+          description: Type of the card fee.
+          enum:
+          - CardFee
+          - TrnFee
+        WaiveFeeInd:
+          type: boolean
+          description: |-
+            Flag to indicate the fee is waived.
+
+            **Note:** This field is used to indicate whether card or transactions fees should be waived.
+    getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_CardPref:
+      type: object
+      properties:
+        Language:
+          maxLength: 17
+          type: string
+          description: "Preferred language to provide the card-related information. \n\n**Note:** Language code is supplied by the device driver that identifies the language in which an ATM should display its screens. "
+      description: Preference details of the card.
+    getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_AcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identifier of an account held at a financial institution.
+        AcctType:
+          type: string
+          description: |+
+            Type of an account.
 
 
-            **Note:** AcctType is used for deposit accounts.
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+
           enum:
           - DDA
           - SDA
           - CDA
-          - RRA
-          - RET
-          - LEAS
-      description: Unique information to identify a product specification record.
-    getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_OtherProdIntRate:
-      properties:
-        ProdIntRateId:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identifier for the product interest rate.
-
-            This field indicates how the interest is calculated for the product. Also known as interest rate specification or interest plan of a product.
-        ProdIntRateIdEnumDesc:
-          maxLength: 80
-          type: string
-          description: Description of the enumeration value in the ProdIntRateId field.
-    getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_IntRateData_LowCurAmt:
+          - IRA
+          - LOAN
+      description: Unique information used to identify the account record.
+    getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_AcctRef:
+      required:
+      - AcctKeys
       type: object
       properties:
-        Amt:
-          type: number
-          description: Details of maximum currency amount applicable for the deposit account.
-        CurCode:
-          type: object
-          description: Details of the currency code.
-      description: Details of minimum currency amount  applicable for the deposit account.
-    getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_IntRateData_HighCurAmt:
+        AcctKeys:
+          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_AcctRef_AcctKeys'
+      description: Reference details of the account.
+    getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_AcctLinkData:
+      properties:
+        AcctRef:
+          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_AcctRef'
+        FinancialTrnOption:
+          type: string
+          description: "Code that identifies the type of transactions the card can perform on the account.\n\n**Note:** Refers to Monetary Flag / Financial Capable Flag. \n\nCode that identifies the type of transactions this card can perform on the account. The values defined in Signature are: \n\n- 0: Card can perform only inquiry transactions for this account\n\n- 1: Card can perform monetary and inquiry transactions for this account\n\n- 2: Card is linked to this account, but cannot perform any transactions\n\nFor example: \n\n- Use a monetary flag of '2' when all card access needs to be temporarily blocked for the selected account\n\n- Use a monetary flag of '3' when card cannot perform POS transactions on the selected account"
+          enum:
+          - AllowInqOnly
+          - AllowAllTrn
+          - BlockAllTrn
+          - BlockPOSTrn
+    getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo:
       type: object
       properties:
-        Amt:
-          type: number
-          description: Maximum currency amount in decimal format.
-        CurCode:
-          type: object
-          description: Details of the currency code.
-      description: Details of maximum currency amount applicable for the deposit account.
-    getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_IntRateData_RateMatrixTier:
-      properties:
-        Tier:
+        CardNum:
           maxLength: 32
           type: string
-          description: Number of each rate tier in a schedule for the deposit accounts.
-        LowCurAmt:
-          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_IntRateData_LowCurAmt'
-        HighCurAmt:
-          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_IntRateData_HighCurAmt'
-        Rate:
-          type: number
-          description: Rate of interest applicable for the tier.
-        EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          description: |-
+            Number assigned to the card.
+
+            **Note:** The next card number that can be used when sending the  CardAcctAdd or AcctAdd (for Card) request message.
+
+            Max length: 10 characters
+        CardSeqNum:
+          maxLength: 3
           type: string
-          description: "Effective date and time when the product specification status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999\"\n\n"
-    getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_IntRateData:
-      type: object
-      properties:
-        RateMatrixTier:
-          type: array
-          description: Details of the rate matrix tier.
-          items:
-            $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_IntRateData_RateMatrixTier'
-      description: Information about the processing of the interest rate.
-    getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo:
-      type: object
-      properties:
+          description: "Card sequence number that typically refers to the member number to whom the card is issued. \n\n\n\n**Note:** Member number is a one-digit number and it identifies multiple cards for different customers (for example, a wife’s card might have a 1 following it and the husband’s card might have a 2 following it to differentiate the cards)."
+        CardType:
+          type: string
+          description: "Client-defined type of a card.\n\n**Note:** \n\n- Refers to card type code\n\n- User-defined, alphanumeric code that identifies the type of EFT card\n\n- Max length: one character"
         ProductIdent:
           maxLength: 42
           type: string
-          description: Unique identifier of a product held at a financial institution.
-        Desc:
-          maxLength: 100
+          description: |-
+            Unique identifier of a product at a financial institution.
+
+            **Note:** Refers to Card ISO identifier that is a six-digit ISO number.
+        CardDtlStatus:
           type: string
-          description: Description of the product used to set up the account.
-        ProductDtlStatus:
-          type: string
-          description: Current status of the product.
-        AlternateProductDesc:
-          maxLength: 100
-          type: string
-          description: 'Alternate  description of the product used to set up the account. '
-        ProdIntRateId:
-          maxLength: 36
+          description: Status of the card.
+        CardSurchargeOption:
           type: string
           description: |-
-            Unique identifier for the product interest rate.
+            Option that indicates whether the surcharge is applicable on the card or not.
 
-            This field indicates how the interest is calculated for the product. Also known as interest rate specification or interest plan of a product.
-        ProdIntRateIdEnumDesc:
-          maxLength: 80
-          type: string
-          description: Description of the enumeration value in the ProdIntRateId field.
-        OtherProdIntRate:
+            **Note:** Refers to surcharge instruction flag that identifies how transaction surcharges are handled as a default for an EFT card opened in the ISO code.
+          enum:
+          - Charge
+          - DoNotCharge
+        CardFee:
           type: array
-          description: Details of the other product interest rate plans that apply to the product.
+          description: Fee details that contain information about charges and fees that apply to the card.
           items:
-            $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_OtherProdIntRate'
-        IntRateData:
-          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo_IntRateData'
-      description: Details of the deposit product specifications.
-    getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo_IntRateData_LowCurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Minimum currency amount in decimal format.
-      description: Details of maximum currency amount  applicable for the loan account.
-    getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo_IntRateData_HighCurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: Maximum currency amount in decimal format.
-      description: Details of maximum currency amount  applicable for the loan account.
-    getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo_IntRateData_RateMatrixTier:
-      properties:
-        Tier:
-          maxLength: 32
+            $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_CardFee'
+        ExpDt:
           type: string
-          description: Tier applicable for the loan account.
-        LowCurAmt:
-          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo_IntRateData_LowCurAmt'
-        HighCurAmt:
-          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo_IntRateData_HighCurAmt'
-        Rate:
-          type: number
-          description: Rate of interest applicable for the tier.
+          description: "Date on which the card expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** If the value of the date is 12/31/49, then that indicates the card will not expire."
+          format: date
+        CardTrnLimitCode:
+          type: string
+          description: |-
+            Code that identifies the card limit configuration settings that apply to the card.
+
+            **Note:** Refers to VIP class used for the card.
+        AllowWithdrawalDailyLimitInd:
+          type: boolean
+          description: |-
+            Flag to indicate the cardholder can withdraw up to the daily limit, regardless of the account balance.
+
+            **Note:** Refers to the withdrawal balance override code that indicates the cardholder is allowed to withdraw up to the limit defined in the VIP class.
+        AllowInternetInd:
+          type: boolean
+          description: Flag to indicate the card is permitted to perform Internet activity (remote banking).
+        CardsInUseNum:
+          type: integer
+          description: |-
+            Number of active cards.
+
+            **Note:** Refers to the number of cards in use.
+          format: int64
+        GenerateCardOrder:
+          type: string
+          description: "Value that indicates whether to generate the card order or replace the card.\n\n**Note:** \n\n- Refers to the Card Generate Next Cycle Flag\n\n- Code that indicates whether to include the card in the plastic card order file, when next time the file is sent to the card embosser\n\n- If the Status field is set at 3, 5, or greater, then generate card next cycle field must be set at 0"
+          enum:
+          - ReplaceCard
+          - DoNotGenerate
+        GeneratePINMailer:
+          type: string
+          description: "Value that indicates the generation of a PIN mailer.\n\n**Note:** \n\n- Refers to the PIN mailer next flag\n\n- It is the code that indicates whether to send the cardholder a PIN mailer when next time PIN mailers are generated"
+          enum:
+          - GeneratePINMailer
+          - DoNotGenerate
+        CardPref:
+          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_CardPref'
+        AcctLinkData:
+          type: array
+          description: "Details of the account linked to the card.\n\n**Note:** This aggregate returns the details of the accounts that are available to be linked to a card for the selected customer. "
+          items:
+            $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo_AcctLinkData'
+      description: 'Details of the card product specification. '
+    getProdSpecSecuredResponse_ProdSpecRec_ProdSpecStatus:
+      required:
+      - ProdSpecStatusCode
+      type: object
+      properties:
+        ProdSpecStatusCode:
+          type: string
+          description: Code to indicate the status of an account.
+          enum:
+          - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Effective date and time when the product specification status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999\"\n\n"
-    getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo_IntRateData:
-      type: object
-      properties:
-        RateMatrixTier:
-          type: array
-          description: Details of the rate mix tier.
-          items:
-            $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo_IntRateData_RateMatrixTier'
-      description: Information about the processing of the interest rate.
-    getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo:
-      type: object
-      properties:
-        ProductIdent:
-          maxLength: 42
-          type: string
-          description: Unique identifier of a product held at a financial institution.
-        Desc:
-          maxLength: 100
-          type: string
-          description: Description of the product used to set up the account.
-        ProductDtlStatus:
-          type: string
-          description: Current status of the product.
-        AlternateProductDesc:
-          maxLength: 100
-          type: string
-          description: 'Alternate  description of the product used to set up the account.  '
-        ProdIntRateId:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identifier for the product interest rate.
-
-            This field indicates how the interest is calculated for the product. Also known as interest rate specification or interest plan of a product.
-        ProdIntRateIdEnumDesc:
-          maxLength: 80
-          type: string
-          description: Description of the enumeration value in the ProdIntRateId field.
-        IntRateData:
-          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo_IntRateData'
-      description: Details of a loan product specification.
+          description: "Effective date and time when the product specification status is changed. \n\nFormat: yyyy-MM-ddTHH: mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: Status details of the product specification.
     getProdSpecSecuredResponse_ProdSpecRec:
       required:
       - ProdSpecKeys
+      - ProdSpecStatus
       type: object
       properties:
         ProdSpecKeys:
           $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_ProdSpecKeys'
-        DepositProdSpecInfo:
-          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_DepositProdSpecInfo'
-        LoanProdSpecInfo:
-          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_LoanProdSpecInfo'
+        CardProdSpecInfo:
+          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_CardProdSpecInfo'
+        ProdSpecStatus:
+          $ref: '#/components/schemas/getProdSpecSecuredResponse_ProdSpecRec_ProdSpecStatus'
       description: Details of the product specification record.
-    StatusType_DNA_AdditionalStatus:
-      type: object
-      properties:
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: Server status code of the service provider's application.
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.

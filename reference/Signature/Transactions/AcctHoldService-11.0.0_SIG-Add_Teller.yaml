@@ -1,19 +1,20 @@
 ---
 openapi: 3.0.1
 info:
-  title: Safe Deposit Box Service
-  description: The safe deposit box service manages creation, modification and inquiry requests for a safe deposit box.
-  version: 11.0.0_DNA
+  title: Account Hold Service
+  description: The account hold service helps to manage and support operations that are related to the holding of funds for a product account. It also restricts the accountholder’s ability to withdraw funds.
+  version: 11.0.0_SIG-Add_Teller
 servers:
-- url: /
+- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/AcctHoldService/11.0.0_SIG-Add_Teller
+  description: SwaggerHub API Auto Mocking
 paths:
-  /safedepositboxservice/safedepositbox/safedepositbox/secured:
+  /acctholdservice/stophold/accountHolds:
     post:
       tags:
-      - Get Safe Deposit Box
-      summary: Get Safe Deposit Box
-      description: "Get Safe Deposit Box API retrieves the details of a safe deposit box account.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
-      operationId: getSafeDepositBoxSecured
+      - Add Account Hold
+      summary: Add Account Hold.
+      description: "Add Account Hold API creates a hold (restriction) on an account holder’s ability to transfer or withdraw held funds from their account. <br>This API is used when the user is using the Teller identifier to generate the request and is included in the ESF header. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: AcctHoldAddOper
       parameters:
       - name: EFXHeader
         in: header
@@ -25,43 +26,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/getSafeDepositBoxSecuredRequest'
+              $ref: '#/components/schemas/AcctHoldAddOperRequest'
       responses:
-        "200":
-          description: Success
+        "201":
+          description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse'
+                $ref: '#/components/schemas/AcctHoldAddOperResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse'
-      x-group-name: Safe Deposit Box Service
-      x-proxy-name: Get Safe Deposit Box
-      x-child-product-name: Accounts
-      x-core: DNA
+                $ref: '#/components/schemas/AcctHoldAddOperResponse'
+      x-group-name: Account Hold Service
+      x-proxy-name: Add Account Hold
+      x-child-product-name: Transactions
+      x-core: Signature-Teller
 components:
   schemas:
-    getSafeDepositBoxSecuredRequest:
+    AcctHoldAddOperRequest:
       required:
-      - SafeDepositBoxSel
+      - AcctHoldInfo
       properties:
-        SafeDepositBoxSel:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredRequest_SafeDepositBoxSel'
-    getSafeDepositBoxSecuredResponse:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        AcctHoldInfo:
+          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo'
+    AcctHoldAddOperResponse:
       required:
-      - SafeDepositBoxRec
+      - AcctHoldStatusRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType_DNA'
-        SafeDepositBoxRec:
-          type: array
-          description: 'Details of the safe deposit box record.  '
-          items:
-            $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxRec'
+          $ref: '#/components/schemas/StatusType'
+        AcctHoldStatusRec:
+          $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/AcctHoldAddOperResponse_Receipt'
     EFXHeader:
       required:
       - OrganizationId
@@ -249,7 +251,15 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
-    StatusType_DNA:
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
+    StatusType:
       title: StatusType
       required:
       - Severity
@@ -258,6 +268,9 @@ components:
       - SvcProviderName
       type: object
       properties:
+        Id:
+          type: string
+          description: Status identification number.
         StatusCode:
           maxLength: 20
           type: string
@@ -272,8 +285,12 @@ components:
           maxLength: 1024
           type: string
           description: |-
-            Name of a service provider. Example value is:
+            Name of a service provider. Possible values are:
+              -  Cleartouch
               -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
         ServerStatusCode:
           maxLength: 20
           type: string
@@ -282,8 +299,25 @@ components:
           maxLength: 255
           type: string
           description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
-          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
     SeverityType:
       title: SeverityType
@@ -293,7 +327,63 @@ components:
       - Error
       - Warning
       - Info
-    getSafeDepositBoxSecuredRequest_SafeDepositBoxSel_SafeDepositBoxKeys:
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    AcctHoldAddOperRequest_AcctHoldInfo_AcctRef_AcctKeys:
       required:
       - AcctId
       type: object
@@ -301,23 +391,7 @@ components:
         AcctId:
           maxLength: 36
           type: string
-          description: "Unique identification number of an account record.\n\n\n\n**Note:** Refers to the account number of the safe deposit box. "
-      description: 'Unique information to identify the safe deposit box record.                                                                             '
-    getSafeDepositBoxSecuredRequest_SafeDepositBoxSel:
-      type: object
-      properties:
-        SafeDepositBoxKeys:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredRequest_SafeDepositBoxSel_SafeDepositBoxKeys'
-      description: 'Details of the selection criteria for a safe deposit box. '
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: "Unique identification number of an account record.\n\n\n\n**Note:** Refers to the account number of the safe deposit box. "
+          description: "Unique identification number of an account record.\n\n\n\n**Note:** Refers to the account number on which the hold is placed. \n\nMax length: 12 characters"
         AcctType:
           type: string
           description: |-
@@ -325,212 +399,186 @@ components:
 
 
 
-            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
 
 
 
-            **Note:** Refers to the account type code.
+            **Note:** *Required field*
           enum:
-          - SDB
-      description: 'Unique information to identify the safe deposit box record. '
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_BillingInstruction_BillingFrequency:
-      type: object
-      properties:
-        RecurType:
-          type: string
-          description: "Type of recurrence that indicates the frequency of the billing. \n\n\n\n**Note:** System uses this code to calculate the next due date. "
-          enum:
-          - Yearly
-          - SemiYearly
-          - Quarterly
-          - Monthly
-      description: 'Details of billing frequency. '
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_BillingInstruction:
-      type: object
-      properties:
-        BillingFrequency:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_BillingInstruction_BillingFrequency'
-        NextBillingDt:
-          type: string
-          description: "Date on which the next billing is due. \n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-      description: Details of billing instructions.
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_Fee:
-      properties:
-        ChargeFeeInd:
-          type: boolean
-          description: "Value that indicates the charge fee is applicable. \n\n\n\n**Note:** Refers to last payment indicator flagged with the Y or N option. "
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_BilledPmt:
-      properties:
-        BilledDt:
-          type: string
-          description: "Date on which the current bill is due. \n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
-          format: date
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_NextPmt_CurAmt:
-      type: object
-      properties:
-        Amt:
-          type: number
-          description: "Amount in decimal format. \n\nExample: 10.00"
-      description: 'Details of the currency amount. '
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_NextPmt_PmtCompositeAmt:
+          - DDA
+          - SDA
+      description: Unique information to identify the account record.
+    AcctHoldAddOperRequest_AcctHoldInfo_AcctRef:
       required:
-      - CurAmt
-      properties:
-        CompositeCurAmtType:
-          type: string
-          description: "Type of composite currency amount. \n\n\n\n"
-          enum:
-          - PmtDue
-        CurAmt:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_NextPmt_CurAmt'
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_NextPmt:
+      - AcctKeys
       type: object
       properties:
-        PmtCompositeAmt:
-          type: array
-          description: |+
-            Details of the payment composite amount.
+        AcctKeys:
+          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_AcctRef_AcctKeys'
+      description: Reference information of an account object on which a hold is placed.
+    AcctHoldAddOperRequest_AcctHoldInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: |-
+            Currency code value as per the ISO currency code format set in the CurCodeType field.
 
-
-
-          items:
-            $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_NextPmt_PmtCompositeAmt'
-      description: 'Details of upcoming payment based on the payment schedule plan. '
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_LastPmt_CurAmt:
+            **Note:** Only USD currency code is supported.
+      description: Details of currency code.
+    AcctHoldAddOperRequest_AcctHoldInfo_CurAmt:
       type: object
       properties:
         Amt:
           type: number
-          description: "Amount in decimal format. \n\nExample: 10.00"
+          description: "Amount in decimal format.\n\n\n\nExample: 10.00\n\n\n\n**Note:** Applicable if the HoldType value is set to \"Hold\". \n\n\n\n"
         CurCode:
-          type: object
-          description: 'Details of the currency code. '
-      description: 'Details of the currency amount. '
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_LastPmt_PmtCompositeAmt:
-      required:
-      - CurAmt
+          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt_CurCode'
+      description: |+
+        Details of the hold placed on an account.
+
+        **Note:** Only USD currency code is supported.
+
+    AcctHoldAddOperRequest_AcctHoldInfo:
+      type: object
       properties:
-        CompositeCurAmtType:
+        AcctRef:
+          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_AcctRef'
+        HoldType:
           type: string
-          description: 'Type of composite currency amount. '
+          description: Type of hold placed on the account.
           enum:
-          - Current
+          - Hold
         CurAmt:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_LastPmt_CurAmt'
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_LastPmt:
-      type: object
-      properties:
-        PmtCompositeAmt:
+          $ref: '#/components/schemas/AcctHoldAddOperRequest_AcctHoldInfo_CurAmt'
+        HoldReason:
+          maxLength: 80
           type: array
-          description: 'Details of the payment composite amount. '
-          items:
-            $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_LastPmt_PmtCompositeAmt'
-        PmtDt:
+          description: "Description of the reason for placing the hold on an account. \n\n**Note:** *Conditionally Required field*\n\nRequired for holds placed through Teller application.\n\nMax Length: 60 characters"
+          items: {}
+        ExpDt:
           type: string
-          description: "Date on which the customer made the previous payment.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          description: "Date after which the hold on an account is no longer active and the funds are available for transactions.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** *Conditionally Required field*\n\nRequired for holds placed through Teller application. "
           format: date
-      description: 'Details of the last payment. '
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo:
-      type: object
-      properties:
-        Brand:
-          type: string
-          description: "Name of the brand.\n\n\n\n**Note:** Brand name is used to map the current status code of the deposit box. "
-        BoxDtlStatus:
-          type: string
-          description: |-
-            Current status of the safe deposit box.
-
-
-
-            **Note:** Refers to the current status reason code of the safe deposit box.
-        BoxDtlStatusEnumDesc:
-          maxLength: 80
-          type: string
-          description: |-
-            Description of the enumeration value in the BoxDtlStatus field.
-
-
-
-            **Note:** Refers to the description of the current status reason code of the safe deposit box.
-        BoxNum:
-          maxLength: 15
-          type: string
-          description: |-
-            Number of the box you are opening for the party.
-
-
-
-            **Note:** Refers to the box number that identifies the safe deposit box.
-        BoxSizeCode:
-          type: string
-          description: 'Code that indicates the size of the box. '
-        BoxSizeCodeEnumDesc:
-          maxLength: 80
-          type: string
-          description: 'Description of the enumeration value in the BoxSizeCode field.  '
-        OpenDt:
-          type: string
-          description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20                                                                                  "
-          format: date
-        BillingInstruction:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_BillingInstruction'
-        OriginatingBranch:
-          maxLength: 32
-          type: string
-          description: Branch that primarily created the account.
-        OriginatingBranchEnumDesc:
-          maxLength: 80
-          type: string
-          description: "Description of the enumeration value in the OriginatingBranch field.  \n\n\n\n**Note:** Refers to the description of the safe deposit box account originating branch."
-        Fee:
-          type: array
-          description: Details of recurring fee. Includes type and amount of fee applicable for the safe deposit box.
-          items:
-            $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_Fee'
-        BilledPmt:
-          type: array
-          description: 'Details of billed payment. '
-          items:
-            $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_BilledPmt'
-        NextPmt:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_NextPmt'
-        LastPmt:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo_LastPmt'
-      description: Information related to safe deposit box.
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxStatus:
+      description: Information about the business properties of the hold placed on an account.
+    AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys_AcctKeys:
       required:
-      - SafeDepositBoxStatusCode
+      - AcctId
       type: object
       properties:
-        SafeDepositBoxStatusCode:
+        AcctId:
+          maxLength: 36
           type: string
-          description: 'Code to indicate the status of the safe deposit box. '
+          description: |-
+            Unique identification number of an account record.
+
+
+
+            **Note:** Refers to the account number.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+      description: Unique information to identify the account record.
+    AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys_AcctKeys'
+        HoldType:
+          type: string
+          description: Type of hold placed on the account.
+          enum:
+          - Hold
+      description: Unique information to identify the hold record.
+    AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus:
+      required:
+      - AcctHoldStatusCode
+      type: object
+      properties:
+        AcctHoldStatusCode:
+          type: string
+          description: Code to indicate the status of the account hold record.
           enum:
           - Valid
-      description: 'Status details of the safe deposit box. '
-    getSafeDepositBoxSecuredResponse_SafeDepositBoxRec:
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the transaction was initiated.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+      description: Status details of the account hold record.
+    AcctHoldAddOperResponse_AcctHoldStatusRec:
       required:
-      - SafeDepositBoxInfo
-      - SafeDepositBoxKeys
-      - SafeDepositBoxStatus
-      properties:
-        SafeDepositBoxKeys:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxKeys'
-        SafeDepositBoxInfo:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxInfo'
-        SafeDepositBoxStatus:
-          $ref: '#/components/schemas/getSafeDepositBoxSecuredResponse_SafeDepositBoxStatus'
-    StatusType_DNA_AdditionalStatus:
+      - AcctHoldKeys
+      - AcctHoldStatus
       type: object
       properties:
-        ServerStatusCode:
-          maxLength: 20
+        AcctHoldKeys:
+          $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldKeys'
+        AcctHoldStatus:
+          $ref: '#/components/schemas/AcctHoldAddOperResponse_AcctHoldStatusRec_AcctHoldStatus'
+      description: Details of the account hold status record in response to add operation.
+    AcctHoldAddOperResponse_Receipt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+      description: Details of the currency amount.
+    AcctHoldAddOperResponse_Receipt_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
           type: string
-          description: Server status code of the service provider's application.
-        ServerStatusDesc:
-          maxLength: 255
+          description: Type of account balance.
+          enum:
+          - Memo
+          - Avail
+        CurAmt:
+          $ref: '#/components/schemas/AcctHoldAddOperResponse_Receipt_CurAmt'
+    AcctHoldAddOperResponse_Receipt:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
           type: string
-          description: Description of the server status code of the service provider's application.
-      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          description: Name on the receipt.
+        OpenDt:
+          type: string
+          description: "Date on which the account record is created.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
+          format: date
+        AcctBal:
+          type: array
+          description: Account balance details of the account on which hold is placed.
+          items:
+            $ref: '#/components/schemas/AcctHoldAddOperResponse_Receipt_AcctBal'
+      description: Receipt of the transaction.
