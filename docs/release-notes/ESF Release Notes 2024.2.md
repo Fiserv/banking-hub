@@ -62,17 +62,6 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
-<span style="font-size: 22px; ">Get Party Account Relationship</span> *API Explorer > Accountholder > Party Account Relationship Service*
-
-
-- We resolved the issue where the correct number of records were not returned in the response message when filtered by the internet banking party identifier
-
-- The fields OwnerInd, PrimaryOwnerInd and TaxReportingOwnerInd were not rendering as expected in the response. To resolve this issue, we added correct values for owner indicator, primary owner indicator and tax reporting owner indicator<br>
-**Impacted Fields:**
-  - PartyAcctRelRec/PartyAcctRelInfo/OwnerInd
-  - PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd
-  - PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd
-
 <span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
 
 
