@@ -81,9 +81,8 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 
 
 > #### Note
-> Once you are a paid subscriber, you can use the DPOP tokens [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) to access the Banking Hub API endpoints over the internet. 
->
-> 
+> Once you are a paid subscriber, you can use the DPOP tokens [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) to access the Banking Hub API endpoints over the internet.
+
 ## JWT & DPoP Integrations
 Jason Web Tokens (JWTs) use digital signatures to ensure authenticity and integrity in authentication and authorization where as DPoP creates a unique proof-of-possession key, often linked to the user's session. In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.
 
@@ -119,9 +118,8 @@ To implement the DPoP Security, follow the listed steps:
 <!-- theme: info -->
 > #### Note
 > 
-> If you are unable to generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit, click the Cryptotools link [Public/Private Key Pair](https://cryptotools.net/rsagen ) to generate it.
->
-> 
+> If you are unable to generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit, click the Cryptotools link [Public/Private Key Pair](https://cryptotools.net/rsagen ) to generate it. 
+
 ## Step 2 - Onboard the Consumer
   1. Register consumer with public key through AppMarket from Fiserv
   2. AppMarket stores and returns the consumer key and shares with the consumer <br>
@@ -209,8 +207,7 @@ The following table lists the standard status codes:
 > #### Note
 > 
 > If you are unable to  resolve the issue after reviewing above listed descriptions, please reach out to Fiserv contact person for further assistance.
->
-> 
+ 
 # Benefits to Fiserv
 - Using DPoP has helped Fiserv prevent unauthorized or illegitimate parties from using leaked or stolen access tokens
 - This mechanism enables the identification of replay attacks involving access and refresh tokens
