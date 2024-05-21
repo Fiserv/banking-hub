@@ -76,7 +76,7 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 
 <!-- type: tab -->
 
-### DPoP Token Implementation
+# DPoP Token Implementation
 
 
 
@@ -88,7 +88,7 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 Jason Web Tokens (JWTs) use digital signatures to ensure authenticity and integrity in authentication and authorization where as DPoP creates a unique proof-of-possession key, often linked to the user's session. In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.
 
 
-  |Details|Signature based verifications|JWT + DPoP|
+|Details|Signature based verifications|JWT + DPoP|
 |-----------|------------|------------|
 |**Mode**|Standalone JWTs use digital signatures to ensure authenticity and integrity in authentication and authorization.|DPoP creates a unique proof-of-possession key, often linked to the user's session.|
 |**Verification Methods**|Verification involves running the header and payload with a secret key and comparing signatures through the same algorithm.| Servers use the JWT's public key and proof-of-possession key to confirm the client's private key possession.|
