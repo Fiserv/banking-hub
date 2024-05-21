@@ -22,8 +22,6 @@ DPoP (for Demonstration of Proof-of-Possession) is an application-level mechanis
 
 ![DPoP Architecture](https://github.com/Fiserv/banking-hub/assets/135122880/e92ec8b1-3305-4b99-add8-ad2caf6661ec)
 
-## DPoP Framework Flow
-
 ## How to Setup DPoP Mechanism
 To implement the DPoP Security, follow the listed steps.
 1.	Generate the Public/Private Key Pair
