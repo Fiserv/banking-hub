@@ -52,6 +52,12 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 **Impacted Field:**
   - EscrowInfo/EscrowExpDt
 
+<span style="font-size: 22px; ">Add ePreferences</span> *API Explorer > Accounts > Document Preferences Service*
+
+- We resolved an issue in the “DocGroupName” field where the value was not set while creating ePreference record in a request during creation of ePreference record for LOAN or SDA account<br>
+**Impacted Field:**
+  - ePreferenceInfo/DocGroupName
+
 
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
