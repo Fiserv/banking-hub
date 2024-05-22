@@ -12,7 +12,7 @@ Explore and learn more about each Fiserv banking core to find the perfect develo
 
 ## Development environment options
 
-Choose a development environment from three banking core platforms, currently supported: Finxact, Premier and Signature. Select one core now and add another to your dedicated plan at any time.
+Choose a development environment from three banking core platforms, currently supported: Finxact, Premier, Signature and Precision. Select one core now and add another to your dedicated plan at any time.
 
 ### Finxact
 A next-generation, cloud-native platform with an emphasis on agility, scalability and modernization. 
@@ -20,7 +20,6 @@ A next-generation, cloud-native platform with an emphasis on agility, scalabilit
 - Fully accessible open banking APIs meet any scalability and regulatory requirement
 - Far-reaching tracking and contextual capabilities
 - Enables rapid and easy modification to suit any need
-
 
 ### Premier®
 A multi-tenant platform ideal for retail, commercial, small business, regional and community financial institutions. 
@@ -38,9 +37,16 @@ A highly customizable platform ideal for larger retail and commercial financial 
 -	360° view of customers across channels
 -	Customizable and highly scalable
 -	Can be run on premise or in a hosted environment
--	Supports real-time account processing, merger and acquisition strategies and disparate system integration 
+-	Supports real-time account processing, merger and acquisition strategies and disparate system integration
 
-### DNA®
+### Precision®
+An integrated, end-to-end platform featuring ease of implementation and use out of the box.
+-	Ideal for community financial institutions
+-	Can be run on premise or in a hosted environment
+-	Supports retail and small business banking
+-	Flexible technology, including a relational database
+
+### DNA® (test environment coming soon)
 A flexible, real-time platform that supports institutions of all sizes, including those with >$50 billion in assets.
 -	Serves financial institutions, challenger institutions and credit unions
 -	Open architecture supports easy integration with Fiserv and third-party solutions
@@ -48,20 +54,10 @@ A flexible, real-time platform that supports institutions of all sizes, includin
 -	Ideal for mid-to-large financial institutions, including challenger banks
 -	Features a wide range of hardware, operating systems and database deployment options
 
-### Cleartouch® (coming soon)
+### Cleartouch® (test environment coming soon)
 A multi-tenant, real-time platform well positioned for community banks and fintechs.
 -	Ideal for retail banking
 -	Provides a standalone general ledger as a system of record
 -	Exclusively for financial institutions processing in a hosted environment
 -	Features user-designed workflows, role-based functionality, cross-application reporting and more
-
-### Precision® (coming soon)
-An integrated, end-to-end platform featuring ease of implementation and use out of the box.
--	Ideal for community financial institutions
--	Can be run on premise or in a hosted environment
--	Supports retail and small business banking
--	Flexible technology, including a relational database
-
-
-
 
