@@ -163,20 +163,6 @@ titles: Premier, Precision, Signature
 
 - We resolved the internal server error for client defined boolean values sent in the request. Now, users can expect correct values in the API response  
 
-- We resolved the issue in the "InternetBankingFileOpt" aggregate where the field "AccessLevelCode" was not sent to the core for "AccessLevelType" field value as "Vendor2" or "Vendor3"<br>
-**Impacted Fields:**
-	- PersonPartyInfo/InternetBankingIdent
-	- PersonPartyInfo/InternetBankingFileOpt
-	- PersonPartyInfo/InternetBankingFileOpt/Vendor
-	- PersonPartyInfo/InternetBankingFileOpt/Vendor/AccessLevelType
-	- PersonPartyInfo/InternetBankingFileOpt/Vendor/AccessLevelCode
-	- OrgPartyInfo/InternetBankingIdent
-	- OrgPartyInfo/InternetBankingFileOpt
-	- OrgPartyInfo/InternetBankingFileOpt/Vendor
-	- OrgPartyInfo/InternetBankingFileOpt/Vendor/AccessLevelType
-	- OrgPartyInfo/InternetBankingFileOpt/Vendor/AccessLevelCode
-
-
 <span style="font-size: 22px; ">Add Account- DDA_SDA</span> *API Explorer > Accounts > Account Service*
 
 - Previously, in request, the numeric value (udi-1, which specifies the region code) of the client defined data aggregate was added incorrectly while account creation. We resolved this issue to send the correct value<br>
