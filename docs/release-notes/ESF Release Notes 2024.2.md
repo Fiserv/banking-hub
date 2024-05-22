@@ -87,12 +87,12 @@ titles: Premier, Precision, Signature
 
 - We resolved the issue where the "NameSuffix" field was not retrieved correctly<br>
 **Impacted Field:**
-	- PartyRec/PersonPartyInfo/PersonData/PersonName/NameSuffix
+  - PartyRec/PersonPartyInfo/PersonData/PersonName/NameSuffix
 
 - We resolved the issue with the "PreferredPhone" field where the phone flag was not rendered correctly. Now users can retrieve valid values in the response<br>
 **Impacted Fields:**
-	- PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
-	- PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
+  - PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
+  - PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
 
 
 <span style="font-size: 22px; ">Get Account Details-LOAN</span> *API Explorer > Accounts > Account Service*
