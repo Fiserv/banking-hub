@@ -87,20 +87,20 @@ titles: Premier, Precision, Signature
 
 - We resolved the issue where the "NameSuffix" field was not retrieved correctly<br>
 **Impacted Field:**
-	- PartyRec/PersonPartyInfo/PersonData/PersonName/NameSuffix
+  - PartyRec/PersonPartyInfo/PersonData/PersonName/NameSuffix
 
 - We resolved the issue with the "PreferredPhone" field where the phone flag was not rendered correctly. Now users can retrieve valid values in the response<br>
 **Impacted Fields:**
-	- PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
-	- PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
+  - PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
+  - PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
 
 
 <span style="font-size: 22px; ">Get Account Details-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
 - The revolving loan indicator information now displays correctly in the response message<br>
-**Impacted Field:** 
-	- AcctRec/LoanAcctInfo/RevolvingLoanInd
+**Impacted Field:**
+  - AcctRec/LoanAcctInfo/RevolvingLoanInd
 
 
 <!-- type: tab -->
@@ -113,9 +113,9 @@ titles: Premier, Precision, Signature
 
 - The fields OwnerInd, PrimaryOwnerInd and TaxReportingOwnerInd were not rendering as expected in the response. To resolve this issue, we added correct values for owner indicator, primary owner indicator and tax reporting owner indicator<br>
 **Impacted Fields:**
-	- PartyAcctRelRec/PartyAcctRelInfo/OwnerInd
-	- PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd
-	- PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd
+  - PartyAcctRelRec/PartyAcctRelInfo/OwnerInd
+  - PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd
+  - PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd
 
 - We resolved the error exception issue that was occurring in the response message when retrieving party account relationships using the party identifier
 
@@ -145,11 +145,11 @@ titles: Premier, Precision, Signature
 
 - Previously, in the request, the value "UserCode1" of the "DataIdent" field for the Saving Deposit Account (SDA) was not updated with the value that client defines. We resolved the issue so that the client defined value gets updated successfully<br>
 **Impacted Fields:**
-	- LoanAcctInfo/ClientDefinedData
-	- LoanAcctInfo/ClientDefinedData/DataClassType
-	- LoanAcctInfo/ClientDefinedData/DataIdent
-	- LoanAcctInfo/ClientDefinedData/DataType
-	- LoanAcctInfo/ClientDefinedData/Value
+  - LoanAcctInfo/ClientDefinedData
+  - LoanAcctInfo/ClientDefinedData/DataClassType
+  - LoanAcctInfo/ClientDefinedData/DataIdent
+  - LoanAcctInfo/ClientDefinedData/DataType
+  - LoanAcctInfo/ClientDefinedData/Value
 
 
 <span style="font-size: 22px; ">Get Party Account Relationship-ByParty</span> *API Explorer > Accountholder > Party Account Relationship Service*
@@ -167,11 +167,11 @@ titles: Premier, Precision, Signature
 
 - Previously, in request, the numeric value (udi-1, which specifies the region code) of the client defined data aggregate was added incorrectly while account creation. We resolved this issue to send the correct value<br>
 **Impacted Fields:**
-	- DepositAcctInfo/ClientDefinedData
-	- DepositAcctInfo/ClientDefinedData/DataClassType
-	- DepositAcctInfo/ClientDefinedData/DataIdent
-	- DepositAcctInfo/ClientDefinedData/DataType
-	- DepositAcctInfo/ClientDefinedData/Value
+  - DepositAcctInfo/ClientDefinedData
+  - DepositAcctInfo/ClientDefinedData/DataClassType
+  - DepositAcctInfo/ClientDefinedData/DataIdent
+  - DepositAcctInfo/ClientDefinedData/DataType
+  - DepositAcctInfo/ClientDefinedData/Value
 
 
 <span style="font-size: 22px; ">Add Account Hold</span> *API Explorer > Transactions > Account Hold Service*
@@ -194,20 +194,20 @@ titles: Premier, Precision, Signature
 
 - We resolved the null pointer exception error in the response when the value of the "CountryCodeValue" field was null in the request. Now, even if the value is null, the API adds the party record successfully without any error<br>
 **Impacted Fields:**
-	- PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValue
-	- OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValue
+  - PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValue
+  - OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValue
 
 - We resolved the issue in the "PostalCode" field where the postal codes are not passed to the core when adding the Non-US addresses<br>
 **Impacted Fields:**
-	- PersonPartyInfo/Employment/PostAddr/PostalCode
-	- OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode
+  - PersonPartyInfo/Employment/PostAddr/PostalCode
+  - OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode
 
 - We resolved an internal server error when the optional "PostalCode" field was not sent in the request. Now users can create a party record with the required fields in the request
 
 - While creating a party using this API without selecting preferred phone value, the response displayed the errors and failed to create the party. To resolve this issue, we fixed the code and updated the "PreferredPhone" optional field. Now, party can be created with this API even the "PreferredPhone" field is not provided in the request<br>
 **Impacted Fields:**
-	- PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
-	- OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
+  - PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
+  - OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
 
 - We resolved the issue where the "SecretData" aggregate provided in the request was not stored in the core although the API was returning successful response 
 
@@ -217,8 +217,8 @@ titles: Premier, Precision, Signature
 
 - We resolved the issue in the "PostalCode" field where the postal codes are not passed to the core when adding the Non-US addresses<br>
 **Impacted Fields:**
-	- PersonPartyInfo/Employment/PostAddr/PostalCode
-	- OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode
+  - PersonPartyInfo/Employment/PostAddr/PostalCode
+  - OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode
 
 
 <span style="font-size: 22px; ">Get Party Account Relationship</span> *API Explorer > Accountholder > Party Account Relationship Service*
@@ -228,7 +228,7 @@ titles: Premier, Precision, Signature
 
 - We resolved an issue where null tags are returned in the response when the "IncAddtlAcctInfoInd" field was sent in the request<br> 
 **Impacted Field:**
-	- PartyAcctRelSel/IncAddtlAcctInfoInd
+  - PartyAcctRelSel/IncAddtlAcctInfoInd
 
 
 <span style="font-size: 22px; ">General</span>
