@@ -3,7 +3,7 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
+titles: Premier, Precision, Signature, Cleartouch
 -->
 
 
@@ -99,16 +99,6 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 
 - We resolved the issue to validate the client defined XREF rule "SCO_ClientTimeZone_Rule" while setting the AMPMCode tag in the request message
 
-
-<span style="font-size: 22px; ">Add Party</span> *API Explorer > Accountholder > Party Service*
-
-
-- We resolved the null pointer exception error in the response when the value of the "CountryCodeValue" field was null in the request. Now, even if the value is null, the API adds the party record successfully without any error<br>
-**Impacted Fields:**
-	- PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValue
-	- OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValue
-
-
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
@@ -147,12 +137,4 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact
 **Impacted Field:**
   - PersonPartyInfo/Race
 
-
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-Information is not available at the moment. Stay tuned for the updates.
-
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-Information is not available at the moment. Stay tuned for the updates.
 <!-- type: tab-end -->
