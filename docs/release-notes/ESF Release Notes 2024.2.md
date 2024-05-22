@@ -179,6 +179,12 @@ titles: Premier, Precision, Signature
 
 - We resolved the issue of internal server error while account hold creation. Now, the user can successfully place a hold on an account
 
+<span style="font-size: 22px; ">Add Account</span> *API Explorer > Accounts > Account Service*
+
+
+- We resolved an issue to get the correct error message in response when user provides the invalid value for data identifier in the request. Previously, user gets "HTTP 999 - General Error 1011 - Invalid User" message instead of "HTTP 400 - Bad Request 1090 - Invalid Value"<br>
+**Impacted Field:**
+  - DepositAcctInfo/ClientDefinedData/DataIdent
 
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
