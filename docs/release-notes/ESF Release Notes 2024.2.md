@@ -99,6 +99,13 @@ titles: Premier, Precision, Signature, Cleartouch
 
 - We resolved the issue to validate the client defined XREF rule "SCO_ClientTimeZone_Rule" while setting the AMPMCode tag in the request message
 
+<span style="font-size: 22px; ">Add Debit-CDA_Teller, Add Debit-IRA_Teller</span> *API Explorer > Transactions > Debit Service*
+
+- We resolved the null point exception error. Now, even if the value is null, the API adds the debit successfully without any error<br>
+**Impacted Fields:**
+  - Context/TrnIdent (in request)
+  - Status/ServerStatusCode (in response)
+
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
