@@ -121,8 +121,6 @@ titles: Premier, Precision, Signature
 
 - We updated the configurations so that the API successfully retrieves the accounts whose secondary ownership type is "Direct" and "Fiduciary"
 
-- We improved the API configuration to retrieve the response message within 30 seconds. Previously, there was a latency in response while using internet banking
-
 
 <span style="font-size: 22px; ">Get Memo Tickler-Acct, Get Memo Tickler-Party</span> *API Explorer > Transactions > Memo Tickler Service*
 
@@ -156,6 +154,9 @@ titles: Premier, Precision, Signature
 
 
 - The API now retrieves the correct relationship type. Previously, the API retrieves the relationship type as "Owner" for all the records irrespective of the actual relationship type
+
+- We improved the API configuration to retrieve the response message within 30 seconds. Previously, there was a latency in response while using internet banking
+
 
 
 <span style="font-size: 22px; ">Add Party</span> *API Explorer > Accountholder > Party Service*
