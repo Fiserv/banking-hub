@@ -318,7 +318,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-- Added Postman collection for Precision core.   *Documentation > Resources > Postman Collection*
+- We added Postman collection for Precision core.   *Documentation > Resources > Postman Collection*
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
@@ -469,7 +469,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <span style="font-size: 22px; ">General</span>
 
-Added the following API endpoints:
+We added the following API endpoints:
 - Add Address *(API Explorer > Accountholder >  Address Service)*
 - Get Address *(API Explorer > Accountholder > Address Service)*
 - Delete Address *(API Explorer > Accountholder > Address Service)*
