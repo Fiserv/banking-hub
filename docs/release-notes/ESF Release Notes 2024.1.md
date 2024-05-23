@@ -9,7 +9,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
-- Updated Postman collection of Premier core.   *Documentation > Resources > Postman Collection*
+- We updated the Postman Collection of Premier core.   *Documentation > Resources > Postman Collection*
 
 <span style="font-size: 22px; ">Get Transaction Account-LAS, Get Transaction Account-AMS</span> *API Explorer > Transactions > Account Transaction Service*
 
@@ -18,7 +18,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
 
-- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+- We added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
@@ -331,7 +331,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
 
-- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+- We added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
@@ -401,7 +401,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
 
-- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+- We added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
@@ -444,7 +444,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
 
-- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+- We added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
