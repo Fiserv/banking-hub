@@ -10,119 +10,62 @@ titles: Premier, Precision
 ### What's New
 | API Name | Description |
 | --- | ----------- |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
+| Resources| Added [Postman collection](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip) for better linking of API elements together for easy editing, sharing, testing, and reuse. |
+| API Explorer | The following API endpoints are newly added.<br> [Add Address](Google.com) <br> [Get Address](Google.com) <br> [UpdateAddress](Google.com) <br>  [Delete Address](Google.com) <br> [Get Beneficiary](Google.com) <br> [Add Party Account Relationship](Google.com)|
 
 ### Enhancements
 | API Name | Description |
 | --- | ----------- |
-| [Add Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
+| [Add Document](https://google.com "View Link")| Added the new enum values **DOC** and **XLSX** in the *DocumentInfo/PageData/PageFormat* field as new page formats. This will support more page formats while adding as a document. <br><br>**Impacted Field**: <br> `PageData/PageFormats` |
+| [Update Stop Item](https://google.com "View Link")|  Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Fields**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` |
+|[Update Stop Item](https://google.com "View Link") | Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Fields**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType`|
+| [Update Stop Item](https://google.com "View Link")|  For better API performance, you can extend enumeration values for the field *StopItemReasonCode*. You can define these values using the *ClientDefined_StopChkReasonCode_Rule*. <br><br>**Impacted Field(s)**: <br> `StopChkKeys/AcctKeys/AcctType`  <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` </li> <br> <br> Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Field(s)**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` </li> <br> <br> Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Field(s)**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` </li> <br> <br> Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Field(s)**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` </li> <br> <br> Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Field(s)**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` </li> <br> <br> Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Field(s)**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType`|
 
 ### Fixed
 | API Name | Description |
 | --- | ----------- |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
-
-### Enhancements
-| API Name | Description |
-| --- | ----------- |
-| [Add Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
+| [Get Memo Tickeler](https://google.com "View Link") | Previously, the response message failed to retrieve multiple memo ticklers associated with an account or party record. We resolved this issue so that users can retrieve all the memo ticklers successfully |
+| [Add Escrow](https://google.com "View Link") | Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY" <br>**Impacted Field:** <br>`EscrowInfo/EscrowExpDt`|
 
 ## April 25, 2024
 
 ### What's New
 | API Name | Description |
 | --- | ----------- |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
+| Resources| Added [Postman collection](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip) for better linking of API elements together for easy editing, sharing, testing, and reuse. |
+| API Explorer | The following API endpoints are newly added.<br> [Add Address](Google.com) <br> [Get Address](Google.com) <br> [UpdateAddress](Google.com) <br>  [Delete Address](Google.com) <br> [Get Beneficiary](Google.com) <br> [Add Party Account Relationship](Google.com)|
 
 ### Fixed
 | API Name | Description |
 | --- | ----------- |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
+| [Get Memo Tickeler](https://google.com "View Link") | Previously, the response message failed to retrieve multiple memo ticklers associated with an account or party record. We resolved this issue so that users can retrieve all the memo ticklers successfully |
+| [Add Escrow](https://google.com "View Link") | Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY" <br>**Impacted Field:** <br>`EscrowInfo/EscrowExpDt`|
+</details>
 
 <!-- type: tab -->
 
-## April 12, 2024
+## May 01, 2024
 
 ### What's New
 | API Name | Description |
 | --- | ----------- |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
+| Resources| Added [Postman collection](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip) for better linking of API elements together for easy editing, sharing, testing, and reuse. |
+| API Explorer | The following API endpoints are newly added.<br> [Add Address](Google.com) <br> [Get Address](Google.com) <br> [UpdateAddress](Google.com) <br>  [Delete Address](Google.com) <br> [Get Beneficiary](Google.com) <br> [Add Party Account Relationship](Google.com)|
 
 ### Fixed
 | API Name | Description |
 | --- | ----------- |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
+| API Name | Description |
+| --- | ----------- |
+| [Get Memo Tickeler](https://google.com "View Link") | Previously, the response message failed to retrieve multiple memo ticklers associated with an account or party record. We resolved this issue so that users can retrieve all the memo ticklers successfully |
+| [Add Escrow](https://google.com "View Link") | Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY" <br>**Impacted Field:** <br>`EscrowInfo/EscrowExpDt`|
 
 ### Enhancements
 | API Name | Description |
 | --- | ----------- |
-| [Add Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-| [Add Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-| [Add Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-| [Add Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-| [Add Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-| [Add Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Add Transfer ](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Test Name of any long API](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-
-## May 1, 2024
-
-### What's New
-| API Name | Description |
-| --- | ----------- |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
-
-### Enhancements
-| API Name | Description |
-| --- | ----------- |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the marital status to "NotApplicable" <br><br> Impacted field:<br> `PersonPartyInfo/MaritalStat` |
-| [Update Party](https://google.com "View Link") | Fixed an issue occurring while updating the gender status to "Unknown". <br><br>Impacted Field: <br> `PersonPartyInfo/Gender` | 
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed an issue occurring while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan" <br><br>Impacted Field:<br>`PersonPartyInfo/Race`|
-|[Update Party](https://google.com "View Link")|Fixed the issues occurring while updating the following: <br> <li> marital status to "NotApplicable"</li> <li> Gender status to "Unknown"</li> <li> Race status to "Other", "NativeAmerican" or "NativeAlaskan" </li> <br>Impacted Fields:<br>`PersonPartyInfo/MaritalStat`<br>`PersonPartyInfo/Gender`<br>`PersonPartyInfo/Race`|
+| [Add Document](https://google.com "View Link")| Added the new enum values **DOC** and **XLSX** in the *DocumentInfo/PageData/PageFormat* field as new page formats. This will support more page formats while adding as a document. <br><br>**Impacted Field**: <br> `PageData/PageFormats` |
+| [Update Stop Item](https://google.com "View Link")|  Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Fields**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType` |
+|[Update Stop Item](https://google.com "View Link") | Removed enumeration values for CMA- Cash Management Account to improve the API performance. <br><br>**Impacted Fields**: <br> `StopChkKeys/AcctKeys/AcctType` <br> `StopChkStatusRec/StopChkKeys/AcctKeys/AcctType`|
 
 
-<!-- type: tab-end -->
-
+<!-- type: tab -->
