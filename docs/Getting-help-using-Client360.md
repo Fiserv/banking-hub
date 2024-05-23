@@ -16,4 +16,4 @@ Client360 is our self-service platform which includes intuitive navigation and a
 
 > #### Note: 
 >
-> Support is available only for companies who have bought a paid plan. If you would like to upgrade to a paid Developer Studio subscription plan, <a href="https://appmarket.fiservapps.com/company/account/create/" >register here.</a> <br> <br> For inquiries or assistance regarding registration, please contact our support team at [appmarketsupport@fiserv.com](mailto:appmarketsupport@fiserv.com) 
+> Support is available only for companies who have bought a paid plan. If you would like to upgrade to a paid Developer Studio subscription plan, <a href="https://appmarket.fiservapps.com/fintech" >register here.</a> <br> <br> For inquiries or assistance regarding registration, please contact our support team at [appmarketsupport@fiserv.com](mailto:appmarketsupport@fiserv.com) 
