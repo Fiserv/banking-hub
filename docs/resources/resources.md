@@ -217,6 +217,6 @@ The following table lists the standard status codes:
 - Using DPoP has helped the clients to prevent unauthorized or illegitimate parties from using leaked or stolen access tokens
 - This mechanism enables the identification of replay attacks involving access and refresh tokens
 - Given that DPoP functions at the application layer, using asymmetric cryptography and lightweight JSON Web Tokens, it becomes easily accessible to developers
-- Eliminates the need to manage certificates in the mTLS setup,streamlining the process and reducing administrative burdens
+- Eliminates the need to manage certificates in the mTLS setup, streamlining the process and reducing administrative burdens
 
 <!-- type: tab-end -->
