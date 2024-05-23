@@ -84,7 +84,7 @@ DPoP (Demonstration of Proof-of-Possession) is an application-level mechanism fo
 > #### Note
 > If you are a paid subscriber, click the [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) to access the Banking Hub API endpoints over the internet.
 >
-> 
+>  
 
 ## JWT & DPoP Integrations
 JSON Web Tokens (JWTs) use digital signatures to ensure authenticity and integrity in authentication and authorization where as DPoP creates a unique proof-of-possession key, often linked to the user's session. In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.
