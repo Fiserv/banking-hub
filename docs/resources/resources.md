@@ -3,7 +3,7 @@
 ## API Specifications
 
 <!-- theme: info -->  
-> [Download API Specifications](https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip)
+> [Download API Specifications](https://github.com/Fiserv/banking-hub/files/15398141/esf-service-swagger-release-11.0.0.2024.2.zip)
 
 ## Postman Collection
 
