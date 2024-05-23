@@ -188,7 +188,15 @@ titles: Premier, Precision, Signature
   - DepositAcctInfo/ClientDefinedData/DataIdent
 
 <!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+
+<span style="font-size: 22px; ">General</span>
+- We have rolled out an exciting update for the Signature provider within our Fiserv Developer Portal. Now, Signature APIs are even more accessible by the new provider selector dropdown in the API Explorer. When users choose "Signature" from the drop down, the API Explorer dynamically filters and displays only Signature-related APIs.
+
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
+
+<span style="font-size: 22px; ">General</span>
+- We resolved the status code synchronization issue for all APIs
 
 <span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
 
@@ -211,7 +219,7 @@ titles: Premier, Precision, Signature
 
 - We resolved an internal server error when the optional "PostalCode" field was not sent in the request. Now users can create a party record with the required fields in the request
 
-- While creating a party using this API without selecting preferred phone value, the response displayed the errors and failed to create the party. To resolve this issue, we fixed the code and updated the "PreferredPhone" optional field. Now, party can be created with this API even the "PreferredPhone" field is not provided in the request<br>
+- Previously, the API displayed error in response and failed to create a party even if the value of the optional "PreferredPhone" filed is not provided. To resolve this issue, we fixed the code and updated the "PreferredPhone" field. Now, user can create the party records successfully <br>
 **Impacted Fields:**
   - PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
   - OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
@@ -236,11 +244,5 @@ titles: Premier, Precision, Signature
 - We resolved an issue where null tags are returned in the response when the "IncAddtlAcctInfoInd" field was sent in the request<br> 
 **Impacted Field:**
   - PartyAcctRelSel/IncAddtlAcctInfoInd
-
-
-<span style="font-size: 22px; ">General</span>
-
-
-- We resolved the status code synchronization issue for all APIs
 
 <!-- type: tab-end -->

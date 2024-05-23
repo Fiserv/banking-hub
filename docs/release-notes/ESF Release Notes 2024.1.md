@@ -45,7 +45,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
   - LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt
 
 - We resolved an issue to successfully create an account when the billing method value is set to "DirectDebitDDAStmt" or "DirectDebitSDAStmt"<br>
-**Impacted fields:**
+**Impacted Fields:**
     - LoanAcctInfo/LoanBilling/BillingMethod
     - LoanAcctInfo/LoanBilling/FromAcctKeys/AcctId
     - LoanAcctInfo/LoanBilling/FromAcctKeys/AcctType
@@ -161,22 +161,22 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <span style="font-size: 22px; ">Get Party Account Relationship-ByAcct</span> *API Explorer > Accountholder > Party Account Relationship Service*
 
-- Previously value set of the enum description fields for one tenant was getting assigned to the value set for another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve correct values
-Impacted Fields:
-- PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc
-- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
-- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
-- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc
-- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc
-- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/AddrUseEnumDesc
-- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/AddrUseEnumDesc
+- Previously, value set of the enum description fields for one tenant was getting assigned to the value set for another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve correct values<br>
+**Impacted Fields:**
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/AddrUseEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/AddrUseEnumDesc
 
 <span style="font-size: 22px; ">Get Party Account Relationship-ByParty</span> *API Explorer > Accountholder > Party Account Relationship Service*
 
 
 - We resolved the issue with the “PartyAcctRelDesc” field where numeric value was returned in the response instead of the actual description as per the premier relationship specifications
 
-- Previously value set of the enum description fields for one tenant was getting assigned to the value set for another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve correct values<br>
+- Previously, value set of the enum description fields for one tenant was getting assigned to the value set for another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve correct values<br>
 **Impacted Fields:**
     - PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
@@ -395,7 +395,7 @@ Impacted Fields:
 
 
 - We resolved the issue in the "InternetBankingFileOpt" aggregate where the field "AccessLevelCode" was not sent to the core for "AccessLevelType" field value as "Vendor2" or "Vendor3"<br>
-**Impacted fields:**
+**Impacted Fields:**
     - PersonPartyInfo/InternetBankingIdent
     - PersonPartyInfo/InternetBankingFileOpt
     - PersonPartyInfo/InternetBankingFileOpt/Vendor
