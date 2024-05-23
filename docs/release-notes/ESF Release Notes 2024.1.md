@@ -3,13 +3,13 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
+titles: Premier, Precision, Signature, Cleartouch, DNA
 -->
 
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
-- Updated Postman collection of Premier core.   *Documentation > Resources > Postman Collection*
+- We updated the Postman Collection of Premier core.   *Documentation > Resources > Postman Collection*
 
 <span style="font-size: 22px; ">Get Transaction Account-LAS, Get Transaction Account-AMS</span> *API Explorer > Transactions > Account Transaction Service*
 
@@ -18,7 +18,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
 
-- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+- We added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
@@ -26,7 +26,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add Account-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
-- Removed the following enum values from the "CRARevenueCode" field *(LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode)* so that the "CRARevenueCode" field acts as a passthrough field while creating a loan account:
+- We removed the following enum values from the "CRARevenueCode" field (LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode) so that the "CRARevenueCode" field acts as a passthrough field while creating a loan account:
     - None
     - LessEqualOneMillion
     - MoreThanOneMillion
@@ -34,14 +34,18 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
     - Consumer Loan
     - NotApplicable
 
-- Fixed the error in the "LoanAcctInfo/RevolvingLoanInd" field when using the "SingleAdvance" and "AdvanceLimit" values for the "LoanAcctInfo/RevolvingLoanCode" field. 
+- We resolved an issue that used to occur for the revolving loan code value when enum values are provided for the SingleAdvance and AdvanceLimit fields<br>
+**Impacted Field:**
+  - LoanAcctInfo/RevolvingLoanCode 
 
 - Fixed the error of the "OpenDt" field (LoanAcctInfo/PostAddr/OpenDt) which was marked as a required field and hence restricting to create a loan account. Now the field is marked as optional in request and does not restrict the user to create a loan account
 
-- Fixed the date format for the "LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt" field. Now, clients can view the date sent in the request
+- Effective date for the home mortgage now correctly displays in the response. Earlier, effective date value was showing different value in the response<br>
+**Impacted Field:**
+  - LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt
 
-- Fixed account creation issue when the value of the "BillingMethod" field is "DirectDebitDDAStmt" or "DirectDebitSDAStmt"<br>
-**Impacted fields:**
+- We resolved an issue to successfully create an account when the billing method value is set to "DirectDebitDDAStmt" or "DirectDebitSDAStmt"<br>
+**Impacted Fields:**
     - LoanAcctInfo/LoanBilling/BillingMethod
     - LoanAcctInfo/LoanBilling/FromAcctKeys/AcctId
     - LoanAcctInfo/LoanBilling/FromAcctKeys/AcctType
@@ -61,42 +65,51 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Update Account-LOAN</span> *API Explorer > Accounts > Account Service*
 
 
-- Added the "LoanAcctInfo/LoanBilling/ACHPayerId" field so that the billing method gets modified as per the request
+- We resolved an issue to correctly display the billing method value in the response<br>
+**Impacted Field:**
+  - LoanAcctInfo/LoanBilling/BillingMethod
 
-- Changed the following enum values for the "LoanAcctInfo/LoanBilling/BillingMethod" field from:
+- We changed the following enum values for the "LoanAcctInfo/LoanBilling/BillingMethod" field from:
     - "Debit Demand Deposit" to "DirectDebitDDA"
     - "Debit Savings" to "DirectDebitSDA"
     - "BillByStmt" to "BillingByStmt"
 
-- Updated the field descriptions for the following fields:
+- We updated the field descriptions for the following fields:
     - LoanAcctInfo/LoanBilling/FromAcctKeys
     - LoanAcctInfo/LoanBilling/FromAcctKeys/FIIdentType
     - LoanAcctInfo/LoanBilling/FromAcctKeys/FIIdent
     - LoanAcctInfo/LoanBilling/ACHPayerId
     - LoanAcctInfo/LoanBilling/Desc
 
-- Fixed the issue with the following fields, which were not getting modified as per the request:
-    - RevolvingLoanInd (LoanAcctInfo/RevolvingLoanInd)
-    - RevolvingLoanCode (LoanAcctInfo/RevolvingLoanInd)
+- We resolved an issue to correctly display the RevolvingLoanInd and RevolvingLoanCode values in the response<br>
+**Impacted Fields:**
+  - LoanAcctInfo/RevolvingLoanInd
+  - LoanAcctInfo/RevolvingLoanCode
 
-- Fixed the issue in the "LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt" field so that the modified effective date is returned in the Get Account-LOAN API
+- Effective date for the home mortgage now correctly updates in the UI. Earlier, effective date value was showing different value in the UI<br>
+**Impacted Field:**
+  - LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt
 
 - Fixed the error that occurred while modifying the "ClientDefined" aggregate in the requests. Updated the field description of the "LoanAcctInfo/ClientDefinedData/DataLength" field
 
-
+- This API now correctly updates the information of the responsible branch, credit risk, and NAICS<br>
+**Impacted Fields:**
+  - LoanAcctInfo/ResponsibleBranch
+  - LoanAcctInfo/CreditRisk
+  - LoanAcctInfo/NAICS
 
 <span style="font-size: 22px; ">Add Account Collateral Relationship</span> *API Explorer > Accounts > Account Collateral Service*
 
 
 - Fixed the "PledgeDt" field to add the correct date while creating a relationship of a collateral with an account
 
-- Fixed the issue of "DataType mismatch error"  returned in the response for "AcctCollateralRelInfo/LienPosition field", when not provided in the request. Error handling is done to return a valid error  in case this required field is not provided. Updated the "Note" for this field
+- Previously, the API returned the data type mistmatch error in the response when the required "LienPosition" field was not provided in the request. To resolve the issue we have done error handling for the code and now users can expect to correct API response message when any required field is not provided in the request
 
 
 <span style="font-size: 22px; ">Add Collateral</span> *API Explorer > Accounts > Collateral Service*
 
 
-- Fixed the issue of adding an existing address while creating a new collateral record. Now, the existing address is visible on Navigator UI for the collateral record
+- We resolved an issue where an existing address was not getting linked while adding a new collateral record. Now an existing address is linked and can be viewed successfully on the navigator UI
 
 - Fixed an issue in the "LienPosition" field (AcctCollateralRelInfo/LienPosition), where the API returned a data type mismatch error if this field was not included in the request. This field is required for the core. Error handling is done to return a valid error provided by the core in case this required field is not provided.   
     
@@ -123,8 +136,8 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
     - PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
     - PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
 
-- Fixed an issue in the "PostalCode" field where the field "StatProv" was not returned in the response when the postal code was unavailable for the party address<br>
-**Impacted fields:**
+- We resolved the issue with the "PostalCode" field where the "StatProv" field was not returned in response when the postal code was not available for the party address<br>
+**Impacted Fields:**
     - PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/StateProv
     - PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/StateProv
 
@@ -133,26 +146,38 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add Beneficial Owner</span> *API Explorer > Accountholder > Beneficial Owner Service*
 
 
-- Fixed the issue in the "ControlCode" field (BeneficialOwnerInfo/BeneficialOwnerData/ControlCode) where the value was sent in the incorrect format causing Premier to return a data type error
+- We resolved an issue with the "ControlCode" field where the incorrect value was sent to the provider leading to data type error in the API response<br>
+**Impacted Field:**
+  - BeneficialOwnerInfo/BeneficialOwnerData/ControlCode
 
 
 <span style="font-size: 22px; ">Get Party Account Relationship-ByAcct, Get Party Account Relationship-ByParty</span> *API Explorer > Accountholder > Party Account Relationship Service*
 
 
-- Fixed the issue in the "Phone" field where an invalid value such as +1-00-0000000 was returned in the response<br>
-**Impacted fields:**
-    - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/Phone
-    - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/Phone
+- We resolved the issue with the "Phone" field where an invalid value as "+1-00-0000000" was returned in the response<br>
+**Impacted Fields:**
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/Phone
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/Phone
 
+<span style="font-size: 22px; ">Get Party Account Relationship-ByAcct</span> *API Explorer > Accountholder > Party Account Relationship Service*
 
+- Previously, value set of the enum description fields for one tenant was getting assigned to the value set for another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve correct values<br>
+**Impacted Fields:**
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/AddrUseEnumDesc
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/AddrUseEnumDesc
 
 <span style="font-size: 22px; ">Get Party Account Relationship-ByParty</span> *API Explorer > Accountholder > Party Account Relationship Service*
 
 
-- Fixed the issue in the "PartyAcctRelDesc" field (PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc) where numeric value was getting assigned instead of the description from Premier Relationship Specifications
+- We resolved the issue with the “PartyAcctRelDesc” field where numeric value was returned in the response instead of the actual description as per the premier relationship specifications
 
-- Fixed the issue in the EnumDesc fields where the value set for one tenant on Premier was getting assigned to the value set for another tenant on Premier<br>
-**Impacted fields:**
+- Previously, value set of the enum description fields for one tenant was getting assigned to the value set for another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve correct values<br>
+**Impacted Fields:**
     - PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
@@ -169,18 +194,18 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Get Party Account Relationship-ByTaxId</span> *API Explorer > Accountholder > Party Account Relationship Service*
 
 
-- Fixed the issue in the "City" field where additional space was appended at the end of the value such as "FALLS CITY " in the response<br>
-**Impacted fields:**
-    - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/City
-    - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/City
+- We resolved the issue of additional space that was appended to the value of the "City" field in response<br>
+**Impacted Fields:**
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/City
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/City
 
-- Fixed the issue in the "City" field where space between the value such as "Berkeley Heights" was removed<br>
-**Impacted fields:**
-    - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/City
-    - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/City
+- We resolved an issue where the value of the "City" field such as "Berkeley Heights" was returned without space as "BerkeleyHeights". Now, users can expect the correct value in the response<br>
+**Impacted Fields:**
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/City
+  - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/City
 
-- Fixed the issue in the optional "City" field where if the "City" field is not provided then other related fields "StateProv" and "PostalCode" were not returned in the response<br>
-**Impacted fields:**
+- We resolved the issue with the "PostalCode" and "StateProv" field that are not returned in the response when the optional "City" field was not set for the contact address<br>
+**Impacted Fields:**
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/StateProv
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/StateProv
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/PostalCode
@@ -191,16 +216,16 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add Party</span> *API Explorer > Accountholder > Party Service*
 
 
-- Fixed issue in the repeating "IssuedIdent" aggregate where second "IssuedIdent" information was not sent to the core<br>
-**Impacted fields:**
-    - PersonPartyInfo/PersonData/IssuedIdent
+- Previously, when a party was created with the multiple "IssueIdent" aggregates, only the information related to the first aggregate was sent to the provider and rest were ignored. We resolved this issue with a code fix to create the correct information for the repeating "IssueIdent" aggregates<br>
+**Impacted Fields:**
+  - PersonPartyInfo/PersonData/IssuedIdent
     - PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType
     - PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId
     - PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentValue
     - PersonPartyInfo/PersonData/IssuedIdent/Issuer
     - PersonPartyInfo/PersonData/IssuedIdent/IssueDt
     - PersonPartyInfo/PersonData/IssuedIdent/ExpDt
-    - OrgPartyInfo/OrgData/IssuedIdent
+  - OrgPartyInfo/OrgData/IssuedIdent
     - OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType
     - OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId
     - OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentValue
@@ -212,14 +237,14 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add ePreference</span> *API Explorer > Accounts > Document Preferences Service*
 
 
-- Fixed the issue in the "DocGroupName" field (ePreferenceInfo/DocGroupName) where the value was not passed to Premier when a request was made to create ePreference for LOAN, CDA or SDA account
-
+- We resolved an issue with the "DocGroupName" field where the value was not sent to the provider when creating an ePreference for Loan, CDA and SDA account
 
 <span style="font-size: 22px; ">Update ePreference</span> *API Explorer > Accounts > Document Preferences Service*
 
 
-- Fixed the issue in the "AcctType" field (ePreferenceStatusRec/ePreferenceKeys/AcctKeys/AcctType) where the field was not returned in response
-
+- We resolved the issue in the code where the "AcctType" field was not returned in the response. Now users can expect to retrieve all the required fields<br>
+**Impacted Field:**
+  - ePreferenceStatusRec/ePreferenceKeys/AcctKeys/AcctType
 
 <span style="font-size: 22px; ">Get Product Interest Rate</span> *API Explorer > Operations and Servicing > Product Interest Rate Service*
 
@@ -230,19 +255,21 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Update Address</span> *API Explorer > Party > Address Service*
 
 
-- Fixed the issue in the "AddrType" field (AddrInfo/PostAddr/AddrType) where the address fields were not sent to the core when the value of the "AddrType" field is "Secondary". The support for AddrType value as Secondary is needed for the internal calls sent from the Update Party or Update Account API to update an address
+- We resolved an issue with the "AddrType" field where the address fields were not sent to the provider when the value for the field is "Secondary"<br>
+**Impacted Field:**
+  - AddrInfo/PostAddr/AddrType
 
 
 <span style="font-size: 22px; ">Get Party List</span> *API Explorer > Accountholder > Party Service*
 
 
-- Fixed the issue in the "PostalCode" field where the postal codes, which has zip extension digits as "0000" were not returned in the response<br>
-**Impacted fields:**
+- Previously, in response, the "PostalCode" field was not returned when it has the zip extention as "0000". Also, if the postal code value was of 4-digits, it returned with an additional hyphen (-) in response. We resolved these issues with a code fix and configuration changes<br>
+**Impacted Fields:**
     - PartyListRec/PersonPartyListInfo/Contact/PostAddr/PostalCode
     - PartyListRec/OrgPartyListInfo/Contact/PostAddr/PostalCode
 
-- Fixed the issue in the "PostalCode" field where the field "StatProv" was not returned in the response when the postal code was not available for the party address<br>
-**Impacted fields:**
+- We resolved the issue with the "PostalCode" field where the "StatProv" field was not returned in response when the postal code was not available for the party address<br>
+**Impacted Fields:**
     - PartyListRec/PersonPartyListInfo/Contact/PostAddr/StatProv
     - PartyListRec/OrgPartyListInfo/Contact/PostAddr/StatProv
 
@@ -305,7 +332,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-- Added Postman collection for Precision core.   *Documentation > Resources > Postman Collection*
+- We added Postman collection for Precision core.   *Documentation > Resources > Postman Collection*
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
@@ -318,27 +345,27 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
 
-- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+- We added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
-<span style="font-size: 22px; ">Add Account - DDA_SDA</span> *API Explorer > Accounts > Account Service*
+<span style="font-size: 22px; ">Add Account-DDA_SDA</span> *API Explorer > Accounts > Account Service*
 
 
-- Fixed the issue where the Add Account API for DDA and SDA was failing for all banks<br>
-**Impacted fields:**
+- We resolved the issue where the account creation for account types DDA and SDA was failed due to incorrect value format of the "DataIdent" field sent in the request <br>
+**Impacted Fields:**
     - DepositAcctInfo/ClientDefinedData/DataClassType
     - DepositAcctInfo/ClientDefinedData/DataIdent
     - DepositAcctInfo/ClientDefinedData/DataType
     - DepositAcctInfo/ClientDefinedData/Value
 
 
-<span style="font-size: 22px; ">Add Account - DDA_SDA, Add Account - CDA</span> *API Explorer > Accounts > Account Service*
+<span style="font-size: 22px; ">Add Account-DDA_SDA, Add Account-CDA</span> *API Explorer > Accounts > Account Service*
 
 
-- Fixed the issue where the Add Account API for DDA, SDA and CDA was not working for region code when the client-defined field was passed as "udi-1"<br>
-**Impacted fields:**
+- Previously, in request, the numeric value (udi-1, which specifies the region code) of the client defined data aggregate was added incorrectly while account creation. We resolved this issue to send the correct value<br>
+**Impacted Fields:**
     - DepositAcctInfo/ClientDefinedData/DataClassType
     - DepositAcctInfo/ClientDefinedData/DataIdent
     - DepositAcctInfo/ClientDefinedData/DataType
@@ -353,8 +380,8 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Update Party</span> *API Explorer > Accountholder > Party Service*
 
 
-- Fixed an issue in the "ClientDefinedData" aggregate where the API was returning an internal server error and DataTypes such as Date and Boolean were not sent to the core correctly<br>
-**Impacted fields:**
+- We resolved an internal server error that the API returned even when the valid values for the "ClientDefinedData" aggregate with the data type as Date and Boolean was set in the request message<br>
+**Impacted Fields:**
     - PersonPartyInfo/ClientDefinedData
     - PersonPartyInfo/ClientDefinedData/DataIdent
     - PersonPartyInfo/ClientDefinedData/DataType
@@ -367,8 +394,8 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add Party</span> *API Explorer > Accountholder > Party Service*
 
 
-- Fixed and issue in the "InternetBankingFileOpt" aggregate where the field "AccessLevelCode" was not sent to the core for AccessLevelType as Vendor2 or Vendor3<br>
-**Impacted fields:**
+- We resolved the issue in the "InternetBankingFileOpt" aggregate where the field "AccessLevelCode" was not sent to the core for "AccessLevelType" field value as "Vendor2" or "Vendor3"<br>
+**Impacted Fields:**
     - PersonPartyInfo/InternetBankingIdent
     - PersonPartyInfo/InternetBankingFileOpt
     - PersonPartyInfo/InternetBankingFileOpt/Vendor
@@ -388,7 +415,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
 
-- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+- We added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
@@ -401,11 +428,20 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
     - CardRec/CardKeys/CardId
     - CardRec/CardKeys/CardSeqNum
  
-<span style="font-size: 22px; ">Update Account - DDA_SDA</span> *API Explorer > Accounts > Account Service*
+<span style="font-size: 22px; ">Update Account-DDA_SDA</span> *API Explorer > Accounts > Account Service*
 
-- Removed the enum value "AnalysisOffset" from the "DepositAcctInfo/SvcChgData/SvcChgMethod/SvcChgMethodType" field to resolve the following:
-    - Fixed "null pointer exception" issue while passing the "SvcChgData" aggregate
-    - Fixed "partial success" issue when the "DepositAcctInfo/ProdIntRateId" and "DepositAcctInfo/AcctStmtData" aggregates are provided
+- We resolved the null pointer exception error that used to occur in the service charge data (SvcChgData) aggregate when the ProdIntRateId and AcctStmtData values are provided in the request. We removed the "AnalysisOffset" enumeration value from the "SvcChgMethodType" field<br>
+**Impacted Field:**
+  - DepositAcctInfo/SvcChgData/SvcChgMethod/SvcChgMethodType
+
+<span style="font-size: 22px; ">Update Party</span> *API Explorer > Accountholder > Party Service*
+
+- Previously, the updated combination of TaxIdentType and TaxExempt set for customer identification type was not retrieved correctly using the Get Party API. We fixed the code so that users can update and retrieve information for the non-profit, government and foreign customers
+
+<span style="font-size: 22px; ">Add Party</span> *API Explorer > Accountholder > Party Service*
+
+- Previously, the added combination of TaxIdentType and TaxExempt for customer identification type was not retrieved correctly using the Get Party API. We fixed the code so that users can add and retrieve information for the non-profit, government and foreign customers
+
 
 
 
@@ -422,31 +458,32 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
 
-- Added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
+- We added the new enum values "DOCX" and "XLSX" in the "DocumentInfo/PageData/PageFormat" field as new page formats
 
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
-<span style="font-size: 22px; ">Get Account Transaction History - DDA, Get Account Transaction History - SDA_CDA </span> *API Explorer > Transactions > Account Transaction Service*
+<span style="font-size: 22px; ">Get Account Transaction History-DDA, Get Account Transaction History-SDA_CDA </span> *API Explorer > Transactions > Account Transaction Service*
 
 - Fixed the format of the "PostedDt" and "TrnDt" field to ensure the values of these fields are converted into correct ESF date and time format<br>
 **Impacted fields:**
     - AcctTrnRec/AcctTrnInfo/PostedDt
     - AcctTrnRec/AcctTrnInfo/TrnDt
 
-<!-- type: tab -->
-> #### Note
-> Support for Finxact v1.21.
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
+<span style="font-size: 22px; ">Get Account Transaction History</span> *API Explorer > Transactions > Account Transaction Service*
 
-Information is not available at the moment. Stay tuned for the updates.
+- Effective date of account transaction now returns correctly in the response for INET integrations<br>
+**Impacted Fields:**
+  - AcctTrnRec/AcctTrnInfo/EffDt
+  - AcctTrnRec/AcctTrnInfo/TrnDt
+  - AcctTrnRec/AcctTrnInfo/PostedDt
 
 <!-- type: tab -->
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 <span style="font-size: 22px; ">General</span>
 
-Added the following API endpoints:
+We added the following API endpoints:
 - Add Address *(API Explorer > Accountholder >  Address Service)*
 - Get Address *(API Explorer > Accountholder > Address Service)*
 - Delete Address *(API Explorer > Accountholder > Address Service)*
