@@ -188,7 +188,15 @@ titles: Premier, Precision, Signature
   - DepositAcctInfo/ClientDefinedData/DataIdent
 
 <!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+
+<span style="font-size: 22px; ">General</span>
+- We have rolled out an exciting update for the Signature provider within our Fiserv Developer Portal. Now, Signature APIs are even more accessible by the new provider selector dropdown in the API Explorer. When users choose "Signature" from the drop down, the API Explorer dynamically filters and displays only Signature-related APIs.
+
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
+
+<span style="font-size: 22px; ">General</span>
+- We resolved the status code synchronization issue for all APIs
 
 <span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
 
@@ -236,11 +244,5 @@ titles: Premier, Precision, Signature
 - We resolved an issue where null tags are returned in the response when the "IncAddtlAcctInfoInd" field was sent in the request<br> 
 **Impacted Field:**
   - PartyAcctRelSel/IncAddtlAcctInfoInd
-
-
-<span style="font-size: 22px; ">General</span>
-
-
-- We resolved the status code synchronization issue for all APIs
 
 <!-- type: tab-end -->
