@@ -110,7 +110,7 @@ To implement the DPoP Security, follow the listed steps:
 6.	Generate and use DPoP Token for Functional API Call
 
 ## Step 1 - Generate Public/Private Key Pair
-1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL. The foolowing are the reference commands to generate an RSA Public/Private Key Pair using OpenSSL<br>
+1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL. The following are the reference commands to generate an RSA Public/Private Key Pair using OpenSSL<br>
 
 &nbsp;  &nbsp;  &nbsp;  &nbsp; `openssl genrsa -out private_key.pem 4096` <br>
 &nbsp;  &nbsp;  &nbsp;  &nbsp; `openssl rsa -pubout -in private_key.pem -out public_key.pem`<br>
