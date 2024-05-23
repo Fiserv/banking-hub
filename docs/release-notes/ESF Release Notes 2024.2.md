@@ -211,7 +211,7 @@ titles: Premier, Precision, Signature
 
 - We resolved an internal server error when the optional "PostalCode" field was not sent in the request. Now users can create a party record with the required fields in the request
 
-- While creating a party using this API without selecting preferred phone value, the response displayed the errors and failed to create the party. To resolve this issue, we fixed the code and updated the "PreferredPhone" optional field. Now, party can be created with this API even the "PreferredPhone" field is not provided in the request<br>
+- Previously, the API displayed error in response and failed to create a party even if the value of the optional "PreferredPhone" filed is not provided. To resolve this issue, we fixed the code and updated the "PreferredPhone" field. Now, user can create the party records successfully <br>
 **Impacted Fields:**
   - PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
   - OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
