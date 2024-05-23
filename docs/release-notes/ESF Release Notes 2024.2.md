@@ -92,6 +92,10 @@ titles: Premier, Precision, Signature, Cleartouch
 
 
 <!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+
+<span style="font-size: 22px; ">General</span>
+- We have rolled out an exciting update for the Signature provider within our Fiserv Developer Portal. Now, Signature APIs are even more accessible by the new provider selector dropdown in the API Explorer. When users choose "Signature" from the drop down, the API Explorer dynamically filters and displays only Signature-related APIs
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
 <span style="font-size: 22px; ">Add Credit</span> *API Explorer > Transactions > Credit Service*
