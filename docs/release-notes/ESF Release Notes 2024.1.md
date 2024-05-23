@@ -69,12 +69,12 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 **Impacted Field:**
   - LoanAcctInfo/LoanBilling/BillingMethod
 
-- Changed the following enum values for the "LoanAcctInfo/LoanBilling/BillingMethod" field from:
+- We changed the following enum values for the "LoanAcctInfo/LoanBilling/BillingMethod" field from:
     - "Debit Demand Deposit" to "DirectDebitDDA"
     - "Debit Savings" to "DirectDebitSDA"
     - "BillByStmt" to "BillingByStmt"
 
-- Updated the field descriptions for the following fields:
+- We updated the field descriptions for the following fields:
     - LoanAcctInfo/LoanBilling/FromAcctKeys
     - LoanAcctInfo/LoanBilling/FromAcctKeys/FIIdentType
     - LoanAcctInfo/LoanBilling/FromAcctKeys/FIIdent
@@ -103,13 +103,13 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 - Fixed the "PledgeDt" field to add the correct date while creating a relationship of a collateral with an account
 
-- Fixed the issue of "DataType mismatch error"  returned in the response for "AcctCollateralRelInfo/LienPosition field", when not provided in the request. Error handling is done to return a valid error  in case this required field is not provided. Updated the "Note" for this field
+- Previously, the API returned the data type mistmatch error in the response when the required "LienPosition" field was not provided in the request. To resolve the issue we have done error handling for the code and now users can expect to correct API response message when any required field is not provided in the request
 
 
 <span style="font-size: 22px; ">Add Collateral</span> *API Explorer > Accounts > Collateral Service*
 
 
-- Fixed the issue of adding an existing address while creating a new collateral record. Now, the existing address is visible on Navigator UI for the collateral record
+- We resolved an issue where an existing address was not getting linked while adding a new collateral record. Now an existing address is linked and can be viewed successfully on the navigator UI
 
 - Fixed an issue in the "LienPosition" field (AcctCollateralRelInfo/LienPosition), where the API returned a data type mismatch error if this field was not included in the request. This field is required for the core. Error handling is done to return a valid error provided by the core in case this required field is not provided.   
     
@@ -146,7 +146,9 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Add Beneficial Owner</span> *API Explorer > Accountholder > Beneficial Owner Service*
 
 
-- Fixed the issue in the "ControlCode" field (BeneficialOwnerInfo/BeneficialOwnerData/ControlCode) where the value was sent in the incorrect format causing Premier to return a data type error
+- We resolved an issue with the "ControlCode" field where the incorrect value was sent to the provider leading to data type error in the API response<br>
+**Impacted Field:**
+  - BeneficialOwnerInfo/BeneficialOwnerData/ControlCode
 
 
 <span style="font-size: 22px; ">Get Party Account Relationship-ByAcct, Get Party Account Relationship-ByParty</span> *API Explorer > Accountholder > Party Account Relationship Service*
@@ -157,15 +159,25 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
   - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/Phone
   - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/Phone
 
+<span style="font-size: 22px; ">Get Party Account Relationship-ByAcct</span> *API Explorer > Accountholder > Party Account Relationship Service*
 
+- Previously value set of the enum description fields for one tenant was getting assigned to the value set for another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve correct values
+Impacted Fields:
+- PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc
+- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
+- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
+- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc
+- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc
+- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/AddrUseEnumDesc
+- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/AddrUseEnumDesc
 
 <span style="font-size: 22px; ">Get Party Account Relationship-ByParty</span> *API Explorer > Accountholder > Party Account Relationship Service*
 
 
 - We resolved the issue with the “PartyAcctRelDesc” field where numeric value was returned in the response instead of the actual description as per the premier relationship specifications
 
-- Fixed the issue in the EnumDesc fields where the value set for one tenant on Premier was getting assigned to the value set for another tenant on Premier<br>
-**Impacted fields:**
+- Previously value set of the enum description fields for one tenant was getting assigned to the value set for another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve correct values<br>
+**Impacted Fields:**
     - PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc
@@ -187,13 +199,13 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
   - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/City
   - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/City
 
-- We resolved an issue with the "City" field where space in the value as "Berkeley Heights" was appended in the response<br>
+- We resolved an issue where the value of the "City" field such as "Berkeley Heights" was returned without space as "BerkeleyHeights". Now, users can expect the correct value in the response<br>
 **Impacted Fields:**
   - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/City
   - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/City
 
-- Fixed the issue in the optional "City" field where if the "City" field is not provided then other related fields "StateProv" and "PostalCode" were not returned in the response<br>
-**Impacted fields:**
+- We resolved the issue with the "PostalCode" and "StateProv" field that are not returned in the response when the optional "City" field was not set for the contact address<br>
+**Impacted Fields:**
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/StateProv
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/StateProv
     - PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/PostalCode
@@ -225,14 +237,14 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Add ePreference</span> *API Explorer > Accounts > Document Preferences Service*
 
 
-- Fixed the issue in the "DocGroupName" field (ePreferenceInfo/DocGroupName) where the value was not passed to Premier when a request was made to create ePreference for LOAN, CDA or SDA account
-
+- We resolved an issue with the "DocGroupName" field where the value was not sent to the provider when creating an ePreference for Loan, CDA and SDA account
 
 <span style="font-size: 22px; ">Update ePreference</span> *API Explorer > Accounts > Document Preferences Service*
 
 
-- Fixed the issue in the "AcctType" field (ePreferenceStatusRec/ePreferenceKeys/AcctKeys/AcctType) where the field was not returned in response
-
+- We resolved the issue in the code where the "AcctType" field was not returned in the response. Now users can expect to retrieve all the required fields<br>
+**Impacted Field:**
+  - ePreferenceStatusRec/ePreferenceKeys/AcctKeys/AcctType
 
 <span style="font-size: 22px; ">Get Product Interest Rate</span> *API Explorer > Operations and Servicing > Product Interest Rate Service*
 
@@ -243,7 +255,9 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Update Address</span> *API Explorer > Party > Address Service*
 
 
-- Fixed the issue in the "AddrType" field (AddrInfo/PostAddr/AddrType) where the address fields were not sent to the core when the value of the "AddrType" field is "Secondary". The support for AddrType value as Secondary is needed for the internal calls sent from the Update Party or Update Account API to update an address
+- We resolved an issue with the "AddrType" field where the address fields were not sent to the provider when the value for the field is "Secondary"<br>
+**Impacted Field:**
+  - AddrInfo/PostAddr/AddrType
 
 
 <span style="font-size: 22px; ">Get Party List</span> *API Explorer > Accountholder > Party Service*
@@ -318,7 +332,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-- Added Postman collection for Precision core.   *Documentation > Resources > Postman Collection*
+- We added Postman collection for Precision core.   *Documentation > Resources > Postman Collection*
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
@@ -469,7 +483,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <span style="font-size: 22px; ">General</span>
 
-Added the following API endpoints:
+We added the following API endpoints:
 - Add Address *(API Explorer > Accountholder >  Address Service)*
 - Get Address *(API Explorer > Accountholder > Address Service)*
 - Delete Address *(API Explorer > Accountholder > Address Service)*
