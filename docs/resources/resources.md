@@ -113,12 +113,13 @@ To implement the DPoP Security, follow the listed steps:
 1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL
 2. This cryptotools link [Public/Private Key Generator](https://cryptotools.net/rsagen ) is provided as an example to generate the public/private key pair <br>
 
- ![Step 1 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/33f3b957-51db-458f-bce1-e862a6d3bfb3)
+  ![Step 1 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/33f3b957-51db-458f-bce1-e862a6d3bfb3)
 
 ## Step 2 - Onboard the Consumer
   1. Register consumer with public key through AppMarket from Fiserv
   2. AppMarket stores and returns the consumer key and shares with the consumer <br>
- ![image](https://github.com/Fiserv/banking-hub/assets/135122880/912df1f0-3b80-4e06-8e36-09de51e9466a)
+  
+  ![Step 2 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/6f5e4b9e-c36d-4142-93e3-fc532e4a32bf)
 
 ## Step 3 - Select the Style to Sign in DPoP Token
 ### Step 3.1 - Sign in with DPoP Token
