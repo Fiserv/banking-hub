@@ -79,15 +79,15 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 # DPoP Token Implementation
 
 
-DPoP (for Demonstration of Proof-of-Possession) is an application-level mechanism for sender-constraining OAuth access and refresh tokens. DPoP verifies the authenticity of the owner accessing the token in the client application. If the client application is not the valid owner of the access token, the API access is rejected. The authorized sender of the access token must have the access to the private key. This confirms the server that the sender is authorized to access it. 
+DPoP is an OAuth 2.0 Demonstration of Proof-of-Possession at the application layer. It is a security mechanism that utilizes short-lived tokens, each of which is exclusively valid for a single request or interaction, providing a heightened level of security and assurance in authentication and access control systems.
 
 > #### Note
 > If you are a paid subscriber, click the [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) to access the Banking Hub API endpoints over the internet.
 >
-> 
+>  
 
 ## JWT & DPoP Integrations
-Jason Web Tokens (JWTs) use digital signatures to ensure authenticity and integrity in authentication and authorization where as DPoP creates a unique proof-of-possession key, often linked to the user's session. In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.
+JSON Web Tokens (JWTs) use digital signatures to ensure authenticity and integrity in authentication and authorization where as DPoP creates a unique proof-of-possession key, often linked to the user's session. In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.
 
 
   |Details|Signature based verifications|JWT + DPoP|
@@ -111,14 +111,15 @@ To implement the DPoP Security, follow the listed steps:
 
 ## Step 1 - Generate Public/Private Key Pair
 1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL
-2. This cryptotools link [Public/Private Key Generator](https://cryptotools.net/rsagen ) is provided as an example to generate the public/private key pair <br>
+2. This cryptotools link [Public/Private Key Generator](https://cryptotools.net/rsagen ) is provided as an example to generate the public/private key pair. Fiserv strongly suggests to use the minimum Key Length of 2048 and above (2048 or 4096) for generating the key pair<br>
 
- ![Step 1 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/33f3b957-51db-458f-bce1-e862a6d3bfb3)
+  ![Step 1 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/33f3b957-51db-458f-bce1-e862a6d3bfb3)
 
 ## Step 2 - Onboard the Consumer
   1. Register consumer with public key through AppMarket from Fiserv
   2. AppMarket stores and returns the consumer key and shares with the consumer <br>
- ![image](https://github.com/Fiserv/banking-hub/assets/135122880/912df1f0-3b80-4e06-8e36-09de51e9466a)
+  
+  ![Step 2 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/6f5e4b9e-c36d-4142-93e3-fc532e4a32bf)
 
 ## Step 3 - Select the Style to Sign in DPoP Token
 ### Step 3.1 - Sign in with DPoP Token
@@ -172,7 +173,7 @@ Consumer should generate the DPoP token for the token API call using the library
 > Download [Request Response 1](https://github.com/Fiserv/banking-hub/files/13901969/Request-Response-1.zip "download")
 
 ## Step 6 - Generate and Use DPoP Token for Functional API Call
-Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes are required for signing
+Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes required for signing
 > Download [Request Response 2](https://github.com/Fiserv/banking-hub/files/13915815/Request-Response-2.zip "download")
 <!-- theme: info -->
 > #### Note
@@ -210,7 +211,7 @@ The following table lists the standard status codes:
 > If you are unable to  resolve the issue after reviewing above listed descriptions, please reach out to Fiserv contact person for further assistance.
  
 # Benefits to Consumers
-- Using DPoP has helped the clients to prevent unauthorized or illegitimate parties from using leaked or stolen access tokens
+- Using DPoP helps the clients to prevent unauthorized or illegitimate parties from using leaked or stolen access tokens
 - This mechanism enables the identification of replay attacks involving access and refresh tokens
 - Given that DPoP functions at the application layer, using asymmetric cryptography and lightweight JSON Web Tokens, it becomes easily accessible to developers
 - Eliminates the need to manage certificates in the mTLS setup, streamlining the process and reducing administrative burdens
