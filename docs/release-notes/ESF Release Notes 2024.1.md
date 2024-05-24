@@ -9,7 +9,9 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
-- We updated the Postman Collection of Premier core.   *Documentation > Resources > Postman Collection*
+<span style="font-size: 22px; ">General</span> *Resources > Downloads > Postman Collection*
+
+- We updated the Postman Collection of Premier core 
 
 <span style="font-size: 22px; ">Get Transaction Account-LAS, Get Transaction Account-AMS</span> *API Explorer > Transactions > Account Transaction Service*
 
@@ -332,7 +334,9 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-- We added Postman collection for Precision core.   *Documentation > Resources > Postman Collection*
+<span style="font-size: 22px; ">General</span> *Resources > Downloads > Postman Collection*
+
+- We added Postman collection for Precision core
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
