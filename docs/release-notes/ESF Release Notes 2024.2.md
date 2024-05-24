@@ -9,6 +9,9 @@ titles: Premier, Precision, Signature
 
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
+<span style="font-size: 22px; ">General</span> *Resources > Downloads > API Specifications*
+- We updated the API Specifications in the Resources section 
+
 <span style="font-size: 22px; ">Get Account Details-LOAN_INET</span> *API Explorer > Accounts > Account Service*
 
 
@@ -104,6 +107,11 @@ titles: Premier, Precision, Signature
 
 
 <!-- type: tab -->
+<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
+
+<span style="font-size: 22px; ">General</span> *Resources > Downloads > API Specifications*
+- We updated the API Specifications in the Resources section
+
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
 <span style="font-size: 22px; ">Get Party Account Relationship</span> *API Explorer > Accountholder > Party Account Relationship Service*
@@ -191,7 +199,13 @@ titles: Premier, Precision, Signature
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
 <span style="font-size: 22px; ">General</span>
-- We have rolled out an exciting update for the Signature provider within our Fiserv Developer Portal. Now, Signature APIs are even more accessible by the new provider selector dropdown in the API Explorer. When users choose "Signature" from the drop down, the API Explorer dynamically filters and displays only Signature-related APIs
+- In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature<br>
+![image](https://github.com/Fiserv/banking-hub/assets/85101648/9efbbe40-9682-4b18-9676-fa980ecdc32a)
+
+<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
+
+<span style="font-size: 22px; ">General</span> *Resources > Downloads > API Specifications*
+- We updated the API Specifications in the Resources section
 
 <p style="font-size: 24px; font-weight: bold;">Fixed </p>
 
