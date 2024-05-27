@@ -79,7 +79,13 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 # DPoP Token Implementation
 
 
-DPoP is an OAuth 2.0 Demonstration of Proof-of-Possession at the application layer. It is a security mechanism that utilizes short-lived tokens, each of which is exclusively valid for a single request or interaction, providing a heightened level of security and assurance in authentication and access control systems.
+DPoP is an OAuth 2.0 Demonstration of Proof-of-Possession at the application layer. It is a security mechanism that utilizes short-lived tokens, each of which is exclusively valid for a single request or interaction, providing a heightened level of security and assurance in authentication and access control systems.<br>
+As displayed in the following pictures, a car-key in the first picture represents a bearer token. Anyone having access to that car key, can use it. Whereas, the passport in the second picture represents a bound token that passes different criterias such as facial, fingerprint and attribute matching parameters. Along with this, a document interrogation is also conducted to ensure the holder's identity and authenticity. DPoP mechanism assures a layered security like passport authentication.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![car key](https://github.com/Fiserv/banking-hub/assets/135122880/20f45721-7dcf-45b1-b2c2-5e164596a63e)    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![passport](https://github.com/Fiserv/banking-hub/assets/135122880/5040658c-35a0-41be-9d8e-be6b9e8000d1)
+
+
 
 > #### Note
 > If you are a paid subscriber, click the [Developer Studio Connection Plan](https://appmarket.fiservapps.com/fintech) to access the Banking Hub API endpoints over the internet.
@@ -98,7 +104,8 @@ JSON Web Tokens (JWTs) use digital signatures to ensure authenticity and integri
 
 ## Architecture
 
-![DPoP Architecture](https://github.com/Fiserv/banking-hub/assets/135122880/e92ec8b1-3305-4b99-add8-ad2caf6661ec)
+![DPoP Architecture](https://github.com/Fiserv/banking-hub/assets/135122880/0b3e7ee2-a39e-4971-87d2-de798997a2f8)
+
 
 ## How to Setup DPoP Mechanism
 To implement the DPoP Security, follow the listed steps:
