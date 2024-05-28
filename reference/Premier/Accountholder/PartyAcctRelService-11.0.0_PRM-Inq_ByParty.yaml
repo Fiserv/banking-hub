@@ -1,0 +1,2415 @@
+---
+openapi: 3.0.1
+info:
+  title: Party Account Relationship Service
+  description: Party account relationship service manages the nature of relationship between a party and a product account. It is used to indicate the primary contact and tax responsible parties as well as state the relationship type between the party and an account.
+  version: 11.0.0_PRM-Inq_ByParty
+servers:
+- url: /
+paths:
+  /partyacctrelservice/partyacctrel/partyacctrel/secured:
+    post:
+      tags:
+      - Get Party Account Relationship
+      summary: Get Party Account Relationship
+      description: "Get Party Account Relationship By Party API provides the list of all accounts related to the Party (Persons or Organizations).<br> For Premier, this API provides the information about the unique Party identifier, relationship type and a subset of information about each Party. Pagination functionality is used with RecCtrl aggregates. <br> <details> <summary> Read more </summary> <p>Request API indicates party details, address, phone and additional information that is required to be returned for each account or only basic account details that to be included in Response API. In this API, the information on closed accounts can be excluded or included. <br> Pagination does not support returning Portfolio or Line accounts in the response. Also, when the accounts with DDL account type are associated with a party, the PartyAcctRelInq service may provide more records (up-to twice) than the number requested, while paginating through DDA and DDL accounts. That is, the record count returned in the response will not match the record count requested in the request.</p> </details> <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>." 
+      operationId: PartyAcctRelInqBySecured
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse'
+      x-default-example: Premier
+      x-group-name: Party Account Relationship Service
+      x-proxy-name: Get Party Account Relationship
+      x-child-product-name: Accountholder
+      x-core: Premier-ByParty
+components:
+  schemas:
+    PartyAcctRelInqBySecuredRequest:
+      required:
+      - PartyAcctRelSel
+      properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_RecCtrlIn'
+        PartyAcctRelSel:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel'
+    PartyAcctRelInqBySecuredResponse:
+      required:
+      - PartyAcctRelRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        RecCtrlOut:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_RecCtrlOut'
+        PartyAcctRelRec:
+          type: array
+          description: |-
+            Details of the party-to-account relationship record.
+
+
+
+            **Note:** For improved performance, the consumer has an option to limit the number of associated party-account relationships in EFX response by updating the configuration in ESF for the financial institution. By default, all party-account relationships that exist in core would be returned by the operation.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    PartyAcctRelInqBySecuredRequest_RecCtrlIn:
+      type: object
+      properties:
+        MaxRecLimit:
+          type: integer
+          description: |+
+            Maximum number of records in the result set to satisfy the request. If no value is specified, the maximum value of 250 records is sent.
+
+
+
+            **Note:** A maximum record limit is required for pagination logic.
+
+
+
+            If this field is not provided, then all the accounts associated with the party are returned in the response.
+
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: "Next record pointer in the response only when additional records are available.\n\n\n\n**Note:** Cursor is not applicable for the first request. If applicable, it can be provided in subsequent client application requests to obtain the next set of records. "
+      description: "Maximum number of records to be processed within a single response as specified by the client.\n\n\n\n**Note:** This aggregate must be sent for the pagination only when required. \n\n\n\nIf a financial institution or a client application wants to use pagination, they must configure the Xref rule for pagination in ESF studio. Without the rule, pagination cannot be implemented. Because portfolio and line account types do not support pagination, they are not returned in the response when the \"RecCtrlIn\" aggregate is sent in the ESF request that is when pagination is enabled. \n\n\n\nWhen paginating through DDA and DDL accounts, the PartyAcctRelInq may provide more records (up to twice) than the requested number when the accounts with the DDL account type are linked to a party. In other words, the record count in the ESF answer and the ESF request will differ. "
+    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of a party record.
+      description: Unique information to identify the party record.
+    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys'
+        ExcludeClosedAcctInd:
+          type: boolean
+          description: "Flag to indicate the closed accounts is excluded from response. \n\n\n\nBy default, \"false\" value is selected and both open and closed accounts are included in response.\n\n\n\n**Note:** If the value of the \"ExcludeClosedLoans\" field is \"true\" for an FI, then the closed loan accounts are never returned in the ESF response even when \"ExcludeClosedAccttInd\" is \"false\" or not sent in the request. \n\n\n\n\n\n\n\n"
+      description: Selection criteria for a party-to-account relationship inquiry.
+    PartyAcctRelInqBySecuredResponse_RecCtrlOut:
+      required:
+      - SentRecCount
+      type: object
+      properties:
+        SentRecCount:
+          type: integer
+          description: "Total number of records that matched the selection criteria and returned in the response message.\n\n\n\n**Note:** Refers to the number of records returned in the current ESF response. "
+          format: int64
+        MatchedRecCount:
+          type: integer
+          description: "Number of records that matches the selection criteria.\n\n\n\n**Note:** Refers to the total number of accounts belonging to the selected party.  "
+          format: int64
+        RemainRecCount:
+          type: integer
+          description: Total number of records matching the selection criteria that have not been sent yet.
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: "Next record pointer to include in the response if more than 250 posted transaction records exist.\n\n\n\nFor more than 250 posted transactions, ESF returns cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within RecCtrlIn/Cursor field.\n\n\n\n**Note:** The cursor indicates more records to fetch that match the criteria and provides the pointer to the next account record.\n\n\n\nAbsence of this tag in the response indicates that there are no more account records available for this party.\n\n\n\nClient application may provide this value in the /RecCtrlIn/Cursor field to fetch the next set of records. "
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_SvcIdent:
+      type: object
+      properties:
+        SvcNbr:
+          maxLength: 36
+          type: string
+          description: Number of a service.
+      description: |-
+        Unique identifier of a service that provides a unique reference.
+
+
+
+        **Note:** Multi-System Service (MSS) uses this aggregate.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        SvcIdent:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_SvcIdent'
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+          - CRD
+          - LOAN
+          - CLOC
+          - SDB
+          - DDL
+          - PORT
+      description: Details of the account keys to identify an account record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys'
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys'
+      description: Unique information to identify the party-to-account relationship record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: |-
+            Type of phone.
+
+
+
+            **Note:** A customer may have up to 10 occurrences of phone number.
+          enum:
+          - Home
+          - Work
+          - Mobile
+          - Fax
+          - Pager
+          - Other
+          - Modem
+        PhoneIdent:
+          type: integer
+          description: Unique identifier to serialize the phone types when more than one phone type exists.
+          format: int64
+        Phone:
+          type: string
+          description: Phone number to search the party records.
+        PreferredPhone:
+          type: boolean
+          description: |-
+            Flag to indicate if the phone number is the preferred contact number.
+
+
+
+            **Note:** Refers to the primary phone indicator.
+        PhoneDesc:
+          maxLength: 30
+          type: string
+          description: Description of the phone.
+      description: Phone number details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+          enum:
+          - SPCountryCode
+        CountryCodeValue:
+          type: string
+          description: |-
+            Country code value as per the country code format set in the CountryCodeSource field.
+
+
+
+            **Note:** Country code values for postal address are client-defined in premier.
+      description: Details of the country code.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Start date and time value.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999\n\n\n\n**Note:** Applicable for seasonal address type only. The seasonal address begins on the same start date and ends on the same End date every year. \n\n\n\nPremier stores only month and day for the seasonal address start and end dates. \n\n\n\nESF maps 9999 as the year so that the date can be displayed in the EFX standard date format such as 9999-02-21.\n\n\n\nThe month and the day of the month shows the actual seasonal address start date."
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "End date and time value.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999\n\n\n\n**Note:** Applicable for seasonal address type only. The seasonal address begins on the same start date and ends on the same end date every year. \n\n\n\nPremier stores only month and day for the seasonal address start and end dates. \n\n\n\nESF maps 9999 as the year so that the date can be displayed in the EFX standard date format such as 9999-02-21.\n\n\n\nThe month and the day of the month shows the actual seasonal address end date."
+      description: Details of the time frame when the address is active.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr:
+      required:
+      - AddrType
+      type: object
+      properties:
+        AddressIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of an address record.
+        AddrUse:
+          type: string
+          description: "Code to indicate the use of address.\n\n\n\n**Note:** Address use as tax is only applicable for secondary address type.\n\n\n\nEach of address types can have different address uses, for example, personal, home, business and other user-defined address uses. \n\n\n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to that primary address, use is home as well. The same applies to secondary address and seasonal address related to it address use.\n\n\n\nAdditional address use values may be client defined."
+          enum:
+          - Business
+          - Home
+          - Personal
+          - Tax
+        AddrFormatType:
+          type: string
+          description: |-
+            Format type of the address.
+
+
+
+            **Note:** Premier supports label address format.
+          enum:
+          - Label
+        Addr1:
+          maxLength: 64
+          type: string
+          description: Address line 1.
+        Addr2:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 2. To enter Addr2, Addr1 field must be provided.
+
+
+
+            **Note:** Address line 2 is applicable if enabled on premier in the CIS miscellaneous (Institution) specifications.
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: |+
+            Postal code or zip code.
+
+
+
+            **Note:** Postal Code provides information about the ZIP code, if address is a United States address. It also provides postal code information, if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional.  Examples: 32714-1234 or 32714-0000 or 32714.
+
+
+
+
+
+
+
+            Postal codes for nn-US addresses are simply a string of characters.
+
+
+
+        CountryCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_CountryCode'
+        AddrType:
+          type: string
+          description: |-
+            Type of the address.
+
+
+
+            **Note:** Premier supports primary, multiple secondary and seasonal address types for the customer. Seasonal address cannot exist as an independent address record in premier, therefore it shares address identifier and address use with either primary or secondary address.
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_TimeFrame'
+        Retention:
+          type: boolean
+          description: "Flag to indicate the address to be retained after its timeframe.\n\n\n\n**Note:** Refers to address retention code. Indicates that the address record is automatically deleted when no accounts, tax addenda or relationships are attached to the address record. "
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. census bureau to identify the geographic location.
+        CensusBlock:
+          maxLength: 20
+          type: string
+          description: Census block number assigned by the U.S. postal service to uniquely identify each carrier delivery point.
+        ForeignFlag:
+          type: boolean
+          description: Flag to indicate if the given address is the foreign address.
+        HandlingCode:
+          type: string
+          description: "Handling code to specify the handling process of the notification and statement forms.\n\n\n\n**Note:** Indicates special routing information for customer correspondence. Values are client-defined. "
+        HandlingCodeOption:
+          type: string
+          description: "Notification and statement forms handling option for the postal address. \n\n\n\n**Note:** Identifies the types of customer correspondence that prints handling messages according to the handling code."
+          enum:
+          - StatementNoticeChecks
+          - Statements
+          - StatementsNotices
+          - StatementsChecks
+          - Notices
+          - NoticesChecks
+          - Checks
+          - DoNotPrint
+        MSACode:
+          type: integer
+          description: Code that identifies a metropolitan statistical area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB), and used by the U.S. census bureau and other federal government agencies for statistical purposes.
+          format: int64
+      description: "Postal address details of the party.\n\n\n\n**Note:** Customer for premier can have one primary, multiple secondary and seasonal address types. However, seasonal address cannot exist as an independent address record in premier. Seasonal address always share address identifier with primary address or one of the secondary addresses.\n\n\n\nIf primary address record or a secondary address record has seasonal address related to it, ESF displays them as a separate postal address instances.\n\n\n\n\n\n\n\nEach of address types can have different address uses, for example, personal, home, business and other user-defined address uses. \n\n\n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to the primary address is home as well. The same applies to address use for secondary address and related seasonal address.\n\n\n\nAddress use as tax is only applicable for secondary address type."
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Email:
+      type: object
+      properties:
+        EmailIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of the email address.
+        EmailType:
+          type: string
+          description: Type of the email address.
+          enum:
+          - Business
+          - Person
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address to search the party records.
+        PreferredEmail:
+          type: boolean
+          description: |-
+            Flag to indicate if the email address is the preferred email address of contact.
+
+
+
+            **Note:** Refers to the primary contact indicator.
+      description: Email address details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_WebAddr:
+      type: object
+      properties:
+        WebAddrIdent:
+          type: integer
+          description: |-
+            Unique identifier of the web address.
+
+
+
+            **Note:** A customer may have up to 10 occurrences of an email address and web URL combination.
+          format: int64
+        WebAddrType:
+          type: string
+          description: Type of web address.
+          enum:
+          - Work
+        WebAddrLink:
+          type: string
+          description: Link or URL of web address.
+      description: Web address details of the party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PhoneNum'
+        PostAddr:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr'
+        Email:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Email'
+        WebAddr:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_WebAddr'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_IssuedIdent:
+      required:
+      - IssuedIdentType
+      properties:
+        IssuedIdentType:
+          type: string
+          description: |-
+            Type of identity card/document issued.
+
+
+
+            **Note:** Refers to the ID type and values are client-defined.
+        IssuedIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the IssuedIdentType field.
+        IssuedIdentId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of the issued identity card/document of a party.
+        IssuedIdentValue:
+          maxLength: 32
+          type: string
+          description: Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
+        Issuer:
+          maxLength: 32
+          type: string
+          description: Issuer of the identity card/document.
+        IssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date on which the identity card/document was issued. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
+        ExpDt:
+          type: string
+          description: |-
+            Date after which the identity card/document becomes inactive.
+
+
+
+            Format: yyyy-mm-dd.
+
+
+
+            Example: 2021-11-20.
+          format: date
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PersonName:
+      required:
+      - NameType
+      type: object
+      properties:
+        NameType:
+          type: string
+          description: |-
+            Type of the name.
+
+
+
+            **Note:** Only primary customer name is available for this service.
+          enum:
+          - Primary
+        NameIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of a name value to identify names related to an account record.
+        FullName:
+          maxLength: 96
+          type: string
+          description: Full name of the person.
+        FamilyName:
+          maxLength: 40
+          type: string
+          description: Family name or last name of the person.
+        GivenName:
+          maxLength: 40
+          type: string
+          description: First name of the person.
+        MiddleName:
+          maxLength: 40
+          type: string
+          description: Middle name of the person.
+      description: Name details of a person party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo:
+      type: object
+      properties:
+        PartyType:
+          type: string
+          description: |-
+            Type of the party used for further classification of the party.
+
+
+
+            **Note:** Refers to customer type, indicating the personal customer's relationship to the financial institution.
+          enum:
+          - Unknown
+          - Personal-Prospect
+          - Business-Prospect
+          - Consumer
+          - Corporate
+          - SoleProprietorship
+          - C-Corporation
+          - S-Corporation
+          - Partnership
+          - Trust/Estate
+          - LimitLiabilityC-Corp
+          - LimitLiabilityS-Corp
+          - LimitLiabilityPartnership
+          - Other
+          - ThirdParty
+        PartyTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PartyType field.
+        Contact:
+          type: array
+          description: |-
+            Contact information of a party (person or organization).
+
+
+
+            **Note:** By default, the operation returns all contact aggregates within each relationship aggregate. For performance reasons, the number can be configured in ESF for the institution and a maximum number of contacts within each relationship record can be returned (as per requirement).
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Contact'
+        TaxIdentType:
+          type: string
+          description: Type of tax identification.
+          enum:
+          - None
+          - SSN
+          - EIN
+          - Foreign
+          - ITIN
+          - ATIN
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: |-
+            Unique identifier of tax.
+
+
+
+            Example: "123456789".
+        IssuedIdent:
+          type: array
+          description: Details of issued identity card/document of a party.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_IssuedIdent'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account with the party.
+
+
+
+            **Note:** Refers to branch region associated to the customer's name record.
+        TelebancPswd:
+          maxLength: 255
+          type: string
+          description: Electronic banking password used for personal identification.
+        PersonName:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PersonName'
+        BirthDt:
+          type: string
+          description: |-
+            Date of birth of a person associated with the party.
+
+
+
+
+
+
+
+            Format: yyyy-mm-dd.
+
+
+
+            Example: 2021-11-20.
+          format: date
+      description: Frequently used properties of a person party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: |-
+            Type of a phone.
+
+
+
+            **Note:** A customer may have up to 10 occurrences of phone number.
+          enum:
+          - Home
+          - Work
+          - Mobile
+          - Fax
+          - Pager
+          - Other
+          - Modem
+        PhoneIdent:
+          type: integer
+          description: |-
+            Unique identifier to serialize the phone types when more than one phone type exists.
+
+
+
+            **Note:** Refers to the primary phone indicator.
+          format: int64
+        Phone:
+          type: string
+          description: Phone number to search the party records.
+        PreferredPhone:
+          type: boolean
+          description: Flag to indicate if the phone number is a preferred phone number to contact.
+        PhoneDesc:
+          maxLength: 30
+          type: string
+          description: Description of a phone.
+      description: Phone number details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** Applicable for seasonal address type only. The seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address start year. The month and the day of the month shows the actual seasonal address start date.
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** Applicable for seasonal address type only. The seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address end year. The month and the day of the month shows the actual seasonal address end date.
+      description: Details of the time frame when the address is active.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr:
+      required:
+      - AddrType
+      type: object
+      properties:
+        AddressIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of an address record.
+
+
+
+            **Note:** This is a unique address identifier that primary and related seasonal addresses or secondary and related seasonal addresses share.
+        AddrUse:
+          type: string
+          description: "Code to indicate the use of address.\n\n\n\n**Note:** Address use as tax is only applicable for secondary address type.\n\n\n\nEach of address types can have different address uses, for example, personal, home, business and other user-defined address uses. \n\n\n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to that primary address, use is home as well. The same applies to secondary address and seasonal address related to it address use.\n\n\n\nAdditional address use values may be client defined."
+          enum:
+          - Business
+          - Home
+          - Personal
+          - Tax
+        AddrFormatType:
+          type: string
+          description: |-
+            Type of address format.
+
+
+
+            **Note:** Premier supports label address format.
+          enum:
+          - Label
+        Addr1:
+          maxLength: 64
+          type: string
+          description: Address line 1.
+        Addr2:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 2. To enter Addr2, Addr1 field must be provided.
+
+
+
+            **Note:** Address line 2 is applicable if enabled on premier in the CIS Miscellaneous (Institution) specifications.
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: |+
+            Postal code or zip code.
+
+
+
+            **Note:** Postal code provides information about the ZIP code, if address is a United States address. It also provides postal code information, if address is a non-US address.  The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional.  Examples: 32714-1234 or 32714-0000 or 32714.
+
+
+
+
+
+
+
+            Postal codes for nn-US addresses are simply a string of characters.
+
+
+
+        CountryCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_CountryCode'
+        AddrType:
+          type: string
+          description: |-
+            Type of the address.
+
+
+
+            **Note:** Premier supports primary, multiple secondary and seasonal address types for the customer. Seasonal address cannot exist as an independent address record in premier, therefore it shares address identifier and address use with either primary or secondary address.
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr_TimeFrame'
+        Retention:
+          type: boolean
+          description: "Flag to indicate the address to be retained after its timeframe.\n\n\n\n**Note:** Refers to address retention code. Indicates that the address record is automatically deleted when no accounts, tax addenda or relationships are attached to the address record. "
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. census bureau to identify the geographic location.
+        CensusBlock:
+          maxLength: 20
+          type: string
+          description: Census block number assigned by the U.S. postal service to uniquely identify each carrier delivery point.
+        ForeignFlag:
+          type: boolean
+          description: Flag to indicate if the given address is the foreign address.
+        HandlingCode:
+          type: string
+          description: "Handling code to specify the handling process of the notification and statement forms.\n\n\n\n**Note:** Indicates special routing information for customer correspondence. Values are client-defined. "
+        HandlingCodeOption:
+          type: string
+          description: "Notification and statement forms handling option for the postal address. \n\n\n\n**Note:** Identifies the types of customer correspondence that prints handling messages according to the handling code."
+          enum:
+          - StatementNoticeChecks
+          - Statements
+          - StatementsNotices
+          - StatementsChecks
+          - Notices
+          - NoticesChecks
+          - Checks
+          - DoNotPrint
+        MSACode:
+          type: integer
+          description: Code that identifies a metropolitan statistical area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB), and used by the U.S. census bureau and other federal government agencies for statistical purposes.
+          format: int64
+      description: "Postal address details of a party.\n\n\n\n**Note:** Customer for premier can have one primary, multiple secondary and seasonal address types. However, seasonal address cannot exist as an independent address record in premier. Seasonal address always share address identifier with primary address or one of the secondary addresses.\n\n\n\nIf primary address record or a secondary address record has seasonal address related to it, ESF displays them as a separate postal address instances.\n\n\n\n\n\n\n\nEach of address types can have different address uses, for example, personal, home, business and other user-defined address uses. \n\n\n\nAddress use is always the same for primary and related seasonal address. For example, if primary address use is home, then seasonal address, related to the primary address is home as well. The same applies to address use for secondary address and related seasonal address.\n\n\n\nAddress use as tax is only applicable for secondary address type."
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Email:
+      type: object
+      properties:
+        EmailIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of the email address.
+
+
+
+            **Note:** A customer may have up to 10 occurrences of an email address and web URL combination.
+        EmailType:
+          type: string
+          description: Type of the email address.
+          enum:
+          - Business
+          - Person
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address to search the party records.
+        PreferredEmail:
+          type: boolean
+          description: |-
+            Flag to indicate if the email address is the preferred address to contact.
+
+
+
+            **Note:** Refers to the primary contact indicator.
+      description: Email address details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_WebAddr:
+      type: object
+      properties:
+        WebAddrIdent:
+          type: integer
+          description: |-
+            Unique identifier of the web address.
+
+
+
+            Use when you have more than one occurrence of a web address type. This element serializes the web addresses.
+
+
+
+            **Note:** A customer may have up to 10 occurrences of an email address and web URL combination.
+          format: int64
+        WebAddrType:
+          type: string
+          description: Type of web address.
+          enum:
+          - Work
+        WebAddrLink:
+          type: string
+          description: Link or URL of web address.
+      description: Web address details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PhoneNum'
+        PostAddr:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr'
+        Email:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Email'
+        WebAddr:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_WebAddr'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_OrgName:
+      required:
+      - NameType
+      type: object
+      properties:
+        NameType:
+          type: string
+          description: |-
+            Type of the name.
+
+
+
+            **Note:** Only primary customer name is available for this operation.
+          enum:
+          - Primary
+        NameIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of a name value. This field is used to identify names related to the account record.
+        Name:
+          maxLength: 80
+          type: string
+          description: Organization name details.
+      description: Organization name details.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo:
+      type: object
+      properties:
+        PartyType:
+          type: string
+          description: |-
+            Type of the party used for further classification of party types.
+
+
+
+            **Note:** Refers to customer type, indicating the customer's relationship to the financial institution.
+          enum:
+          - Unknown
+          - Personal-Prospect
+          - Business-Prospect
+          - Consumer
+          - Corporate
+          - SoleProprietorship
+          - C-Corporation
+          - S-Corporation
+          - Partnership
+          - Trust/Estate
+          - LimitLiabilityC-Corp
+          - LimitLiabilityS-Corp
+          - LimitLiabilityPartnership
+          - Other
+          - ThirdParty
+        PartyTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PartyType field.
+        Contact:
+          type: array
+          description: |-
+            Contact information of a party (person or organization).
+
+
+
+            **Note:** By default, the operation returns all contact aggregates within each relationship aggregate. For performance reasons, the number can be configured in ESF for the institution and a maximum number of contacts within each relationship record can be returned (as per requirement).
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Contact'
+        TaxIdentType:
+          type: string
+          description: Type of tax identification.
+          enum:
+          - None
+          - SSN
+          - EIN
+          - Foreign
+          - ITIN
+          - ATIN
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: |-
+            Unique identifier of tax.
+
+
+
+            Example: "123456789".
+        IssuedIdent:
+          type: array
+          description: Details of issued identity card/document of a party.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_IssuedIdent'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account with the party.
+
+
+
+            **Note:** Refers to branch region associated to the customer's name record.
+        TelebancPswd:
+          maxLength: 255
+          type: string
+          description: Electronic banking password used for personal identification.
+        OrgName:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_OrgName'
+      description: Information related to party when party is an organization.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_PartyKeys'
+        PersonPartyListInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo'
+        OrgPartyListInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo'
+      description: |+
+        Reference details of a party object that is part of the relationship.
+
+
+
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyAcctRelData:
+      required:
+      - PartyAcctRelType
+      properties:
+        PartyAcctRelType:
+          type: string
+          description: "Relationship type between the party and account.\n\n\n\n**Note:** In addition to service provider defined values (which are transformed by default in ESF for all clients) the financial institutions can have specific additional user-defined relationship types (configured in ESF). If the user-defined party-account relation is not set up for transformation in ESF, then it is returned as-is from premier. A user-defined party-account relation in premier is transformed, only if the transformation is set up in ESF. \n\n\n\nRelationship types as \"PrimaryPortfolioName\" and \"SecondaryPortfolioName\" applicable for Party to Portfolio relationships only.\n\n\n\nMultiple relationship types may exist between one party and one account. "
+          enum:
+          - DoingBusinessAs
+          - CoBorrower
+          - Borrower
+          - OwnerSigner
+          - Owner
+          - JointTenancy
+          - Custodian
+          - Executor
+          - Fiduciary
+          - Trustee
+          - Signer
+          - PrimaryPortfolioName
+          - SecondaryPortfolioName
+        PartyAcctRelDesc:
+          maxLength: 80
+          type: string
+          description: Description of the relationship of the party to the account.
+        PartyAcctRelOrder:
+          type: string
+          description: "Relationship order of party with an account in case of JointTenancy or JointTenantsInComman. \n\n\n\n**Note:** Parties with the party account relationship order as \"First\", \"Second\" and \"Third\" are considered main names on the account and most commonly applies to party Relationship Types as OwnerSigner and Signer, Owner.\n\n\n\n\"Other\" relationship order is commonly used for relationships other than OwnerSigner, Signer, Owner."
+          enum:
+          - First
+          - Second
+          - Third
+          - Other
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctKeys_AcctIdent:
+      type: object
+      properties:
+        AcctIdentType:
+          type: string
+          description: |-
+            Type of account identifier.
+
+
+
+            **Note:** PORT refers to a portfolio. The field returns the portfolio account number, which is associated to the account.
+          enum:
+          - PORT
+        AcctIdentValue:
+          maxLength: 36
+          type: string
+          description: Value to identify an account.
+      description: Unique identifier details of an account record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        SvcIdent:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_SvcIdent'
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary </a>.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+          - LOAN
+          - CLOC
+          - SDB
+          - DDL
+          - CRD
+          - PORT
+        AcctIdent:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctKeys_AcctIdent'
+      description: Unique information to identify the account record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctPref:
+      type: object
+      properties:
+        Language:
+          type: string
+          description: Preferred language to provide the account-related information.
+          enum:
+          - UsePortfolio
+          - English
+          - Spanish
+      description: Details of account preferences to define the default settings such as language and region.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_InitialAmount_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported.\n\n\n\n\n\n\n\n**Note:** Premier supports USD only."
+      description: Details of currency code.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_InitialAmount:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: "Amount in decimal format. \n\n\n\nExample: 10.00."
+        CurCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_InitialAmount_CurCode'
+      description: Origination or face amount of the loan account. It can also be the initial deposit or certificate value for time deposits.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_Term:
+      required:
+      - TermUnits
+      type: object
+      properties:
+        Count:
+          type: integer
+          description: Number of occurrences with respect to the specified unit value.
+          format: int64
+        TermUnits:
+          type: string
+          description: Unit of term.
+          enum:
+          - Months
+          - Days
+      description: 'Term for a deposit or loan account. '
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DateData:
+      properties:
+        DateType:
+          type: string
+          description: |+
+            Type of date contained in date value.
+
+
+
+            **Note:** LastFileMaint refers to the date on which file maintenance last occurred.
+
+
+
+            LastTrn refers to the date of the last transaction activity.
+
+
+
+
+
+
+
+
+
+
+
+          enum:
+          - LastFileMaint
+          - ChargeOff
+          - NonAccrual
+          - LastTrn
+        DateValue:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Value of the date.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_RelationshipMgr:
+      required:
+      - RelationshipMgrIdent
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of a relationship manager.
+        RelationshipMgrIdentEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the RelationshipMgrIdent field.
+        RelationshipRole:
+          type: string
+          description: "Role of a relationship manager.\n\n\n\n**Note:** Officer refers to responsibility officer. "
+          enum:
+          - Officer
+          - ReferralOfficer
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_ClientDefinedData:
+      properties:
+        DataClassType:
+          type: string
+          description: Type of application to which the client-defined data belongs.
+          enum:
+          - Portfolio
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+        Desc:
+          maxLength: 200
+          type: string
+          description: |-
+            Description of the client-defined data.
+
+
+
+            **Note:** Refers to the flex data field label.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctStmtData_StmtTimeFrame:
+      properties:
+        RecurType:
+          type: string
+          description: "Type of recurrence. \n\n\n\n**Note:** Premier provides recurrence types in \"Cycle\"."
+          enum:
+          - Cycle
+        RecurInterval:
+          type: integer
+          description: |-
+            Recurrence interval between two successive occurrences of statements.
+
+
+
+            For example, if the recurrence type value is set to 'Monthly' and the recurrence interval set to '1', then there will be 1-month interval between the next statement.
+
+
+
+            The default value is set to 1.
+          format: int64
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctStmtData:
+      type: object
+      properties:
+        StmtTimeFrame:
+          type: array
+          description: Details of the time frame of a statement.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctStmtData_StmtTimeFrame'
+      description: Details of the account statement.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n\n\n\n\n"
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: |-
+            Currency code value as per the ISO4217-Alpha format.
+
+
+
+            Presently only USD currency code is supported.
+
+
+
+            **Note:** Premier supports USD only.
+      description: Details of currency code.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt_CurCode'
+      description: Details of the currency amount.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
+          type: string
+          description: Type of the balance.
+          enum:
+          - Avail
+          - AvailCredit
+          - ChargeOff
+          - Current
+          - DirectLiability
+          - Guaranteed
+          - IndirectLiability
+          - InterestDue
+          - Ledger
+          - Memo
+          - PartChargeOff
+          - PartInterestDue
+          - PartPrincipal
+          - PastDue
+          - PayOffAmt
+          - PledgedAmount
+          - Principal
+          - RentDue
+          - Secured
+          - Unsecured
+          - PmtDue
+          - LateFee
+          - Hold
+        CurAmt:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CurAmt'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctPeriodData:
+      required:
+      - AcctAmtType
+      properties:
+        AcctAmtType:
+          type: string
+          description: Type of amount.
+          enum:
+          - Statement
+          - ChkDebit
+          - Deposit
+          - Debit
+          - AvgAvail
+          - AvgLedger
+          - AvgPrin
+          - IntPaid
+          - AvgAvail
+          - AvgLedger
+          - AvgPrin
+          - IntPaid
+          - IntPaid
+          - ForfeitureAmt
+          - Rent
+          - LoanPmt
+          - AdvAmt
+          - IntDue
+        AcctPeriodType:
+          type: string
+          description: Type of account period.
+          enum:
+          - LTD
+          - YTD
+          - CTD
+          - PriorYr
+        LastOccurInd:
+          type: boolean
+          description: Flag to indicate the last occurrence.
+        Amt:
+          type: number
+          description: "Amount in decimal format. \n\n\n\nExample: 10.00\n\n\n\n**Note:** Premier supports USD only."
+        Count:
+          type: integer
+          description: Number of occurrences with respect to the specified unit value.
+          format: int64
+        Rate:
+          type: number
+          description: Current rate of the account.
+        LastOccuranceDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Date of last occurrence.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+          enum:
+          - SPCountryCode
+        CountryCodeValue:
+          type: string
+          description: |-
+            Country code value as per the country code format set in the CountryCodeSource field.
+
+
+
+            **Note:** Values are client-defined in premier.
+      description: Details of the country code.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** Applicable for seasonal address type only.
+
+
+
+            The seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address start year. The month and the day of the month shows the actual seasonal address start date.
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "End date and time value.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999\n\n\n\n**Note:** Applicable for seasonal address type only.   \n\n\n\nThe seasonal address begins on the same start date and ends on the same end date every year. ESF response displays year as 9999 for seasonal address end year.\n\n\n\nThe month and the day of the month shows the actual seasonal address end date."
+      description: Details of the time frame when the address is active.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        AddressIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of an address record.
+
+
+
+            **Note:** It is a unique address identifier that primary and seasonal address shares.
+        AddrUse:
+          type: string
+          description: |+
+            Usage of the address.
+
+
+
+            **Note:** Address use for account primary address and related seasonal address is "Inquiry".
+
+
+
+
+
+
+
+          enum:
+          - Inquiry
+        AddrFormatType:
+          type: string
+          description: Type of address format.
+          enum:
+          - Label
+        Addr1:
+          maxLength: 64
+          type: string
+          description: Address line 1.
+        Addr2:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 2. To enter Addr2, Addr1 field must be provided.
+
+
+
+            **Note:** Applicable only if enabled on premier in the CIS miscellaneous (institution) specifications.
+        City:
+          maxLength: 32
+          type: string
+          description: City name of the account holder.
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: |+
+            Postal code or zip code.
+
+
+
+            **Note:** Postal code provides information about the ZIP code, if address is a United States address. It also provides postal code information, if address is a non-US address. The format of ZIP code consists of five digits for the ZIP code, a hyphen, and four additional digits that determine a more specific location within a given ZIP code. The four additional digits are optional. Examples: 32714-1234 or 32714-0000 or 32714.
+
+
+
+
+
+
+
+            Postal codes for non-US addresses are simply a string of characters.
+
+
+
+        CountryCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_CountryCode'
+        AddrType:
+          type: string
+          description: "Type of the address.\n\n\n\n**Note:** Primary and related seasonal address, when available is returned in this service. "
+          enum:
+          - Primary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_TimeFrame'
+        Retention:
+          type: boolean
+          description: Flag to indicate the address to be retained after its timeframe.
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. census bureau to identify the geographic location.
+        CensusBlock:
+          maxLength: 20
+          type: string
+          description: Census block number assigned by the U.S. postal service to uniquely identify each carrier delivery point.
+        ForeignFlag:
+          type: boolean
+          description: Flag to indicate if the given address is the foreign address.
+        HandlingCode:
+          type: string
+          description: "Handling code to specify the handling process of the notification and statement forms.\n\n\n\n**Note:** Indicates special routing information for customer correspondence. Values are client-defined. "
+        HandlingCodeOption:
+          type: string
+          description: "Notification and statement forms handling option for the postal address. \n\n\n\n**Note:** Identifies the types of customer correspondence that prints handling messages according to the handling code."
+          enum:
+          - UsePortfolio
+          - Statements
+          - StatementsNotices
+          - StatementsChecks
+          - Notices
+          - NoticesChecks
+          - Checks
+          - DoNotPrint
+        MSACode:
+          type: integer
+          description: Code that identifies a metropolitan statistical area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB), and used by the U.S. census bureau and other federal government agencies for statistical purposes.
+          format: int64
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_PmtPostingRestrictions:
+      type: object
+      properties:
+        RestrictionReasonCode:
+          type: string
+          description: "Code that indicates which restrictions are placed on payment transactions. \n\n\n\n**Note:** For interest method and loans, the payment restriction code applies only to the principal schedule. \n\nThe following code indicates:\n\n- 0: No Restrictions\n\n- 1: Zero Payment Tolerance \n\n- 2: Payment Increment \n\n- 3: Non-Post Regular Payment \n\n- 9: Non-Post All"
+      description: Restriction details of a posting payment.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AdvPostingRestrictions:
+      type: object
+      properties:
+        RestrictionOvrdInd:
+          type: boolean
+          description: Flag to indicate the restrictions of a posting payment is overridden.
+        RestrictionReasonCode:
+          type: string
+          description: Code that indicates the reason for posting restriction.
+        RestrictionPastDueDays:
+          type: integer
+          description: Number of days the loan needs be past due for a restriction to be placed on the loan advance transaction.
+          format: int64
+      description: Restriction details of the advance posting.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n\n\n\n\n"
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported.\n\n\n\n\n\n\n\n**Note:** Premier supports USD only."
+      description: Details of currency code.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+
+
+
+            **Note:** The amount of the current payment due.
+        CurCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_CurAmt_CurCode'
+      description: Details of the currency amount.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_PmtCompositeAmt:
+      required:
+      - CurAmt
+      properties:
+        CompositeCurAmtType:
+          type: string
+          description: Type of composite currency amount.
+          enum:
+          - PmtDue
+          - Rent
+        CurAmt:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_CurAmt'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt:
+      type: object
+      properties:
+        PmtCompositeAmt:
+          type: array
+          description: Details of payment composite amount.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_PmtCompositeAmt'
+        DueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Date and time on which the payment is due.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the due payments described in terms of date and amounts.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_LastPmt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt_CurAmt_CurCode'
+      description: Details of the currency amount.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_LastPmt_PmtCompositeAmt:
+      required:
+      - CurAmt
+      properties:
+        CompositeCurAmtType:
+          type: string
+          description: |+
+            Type of composite currency amount.
+
+
+
+          enum:
+          - LastPmt
+        CurAmt:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_LastPmt_CurAmt'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_LastPmt:
+      type: object
+      properties:
+        PmtCompositeAmt:
+          type: array
+          description: Details of payment composite amount.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_LastPmt_PmtCompositeAmt'
+        PmtDt:
+          type: string
+          description: |-
+            Date and time on which the payment is done.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+          format: date
+      description: Details of previous payment.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo:
+      type: object
+      properties:
+        AcctDtlStatus:
+          type: string
+          description: Current status of the account.
+          enum:
+          - Active
+          - Dormant
+          - Closed
+          - Matured
+          - Inactive
+          - ClientControlled
+          - ChargedOff
+          - ActiveNoRenew
+          - NoWithdrawal
+          - HotCard
+          - Foreclosure
+          - Bankruptcy
+          - EarlyCollection
+          - ClosedToAdvances
+        AcctDtlStatusEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the AcctDtlStatus field.
+        AcctDtlStatusDt:
+          type: string
+          description: |-
+            Date of the current status of the account.
+
+
+
+
+
+
+
+            Format: yyyy-mm-dd.
+
+
+
+            Example: 2021-11-20.
+          format: date
+        AcctPref:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctPref'
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: |-
+            Unique identifier of a product to indicate the processing options of an account.
+
+
+
+            **Note:** Product number.
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description of the product used to set up the account.
+        TaxIncentiveType:
+          type: string
+          description: |-
+            Type of tax incentive to indicate if the account is a tax incentive account such as a Health Savings Account (HSA).
+
+
+
+            **Note:** Refers to special reporting code for tax filing process.
+          enum:
+          - HSAFamily
+          - HSAIndividual
+          - None
+          - IRA
+        InitialAmount:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_InitialAmount'
+        OpenDt:
+          type: string
+          description: |-
+            Date on which the account record was created.
+
+
+
+            Format: yyyy-mm-dd.
+
+
+
+            Example: 2021-11-20.
+          format: date
+        ClosedDt:
+          type: string
+          description: |-
+            Date on which the account record was closed.
+
+
+
+            Format: yyyy-mm-dd.
+
+
+
+            Example: 2021-11-20.
+
+
+
+            **Note:** Available for DDA, SDA, CDA, SDA and LOAN account types.
+          format: date
+        Term:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_Term'
+        MaturityDt:
+          type: string
+          description: |-
+            Maturity date for certificate of deposit or loan.
+
+
+
+            Format: yyyy-mm-dd.
+
+
+
+            Example: 2021-11-20.
+          format: date
+        DateData:
+          type: array
+          description: Details of transactions done at a particular date.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DateData'
+        RelationshipMgr:
+          type: array
+          description: Information about the financial institution officers who have management-related responsibilities of the account.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_RelationshipMgr'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account with the party.
+
+
+
+            **Note:** Refers to branch region associated to the account.
+        OriginatingBranchEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the OriginatingBranchEnum field.
+        NicknameOption:
+          type: string
+          description: Printing option for the account nickname.
+          enum:
+          - Printed
+          - NotPrinted
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Name that customer can assign to an account for easy identification.
+        AcctTitleOption:
+          type: string
+          description: 'Printing options for the account title. '
+          enum:
+          - NotPrinted
+          - PrintBefore
+          - PrintAfter
+        AcctTitle:
+          maxLength: 255
+          type: string
+          description: |-
+            Title of an account that is used to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned.
+
+
+
+            Example: John Doe CUSTODIAN.
+        OEDCode:
+          type: string
+          description: |-
+            Officer, employee, director code. This code is used to indicate if the party is an employee of the financial institution.
+
+
+
+            **Note:** Values are client defined.
+        ClassCode:
+          type: string
+          description: |-
+            Code to group accounts. The class code controls the method of processing and reporting accounts.
+
+
+
+            **Note:** Values are client defined.
+        AcctTypeCode:
+          type: string
+          description: "Code to classify the account for selection and totaling purposes. \n\n\n\n**Note:** The account type code also identifies public funds and special accounts. Values are client defined."
+        ClientDefinedData:
+          type: array
+          description: |-
+            Details of the client-defined data.
+
+
+
+            **Note:** Refers to flex data.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_ClientDefinedData'
+        AcctStmtData:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctStmtData'
+        ProdIntRateId:
+          maxLength: 36
+          type: string
+          description: Code to identify an interest rate specification that indicates how the interest rate and interest is calculated. Also known as interest rate specification or interest plan.
+        Rate:
+          type: number
+          description: |-
+            Current rate of the account.
+
+
+
+            **Note:** For DDA and SDA, the current rate in effect when automatic interest was last posted to the account.
+        AcctBal:
+          type: array
+          description: Details of the account balance at the time the debit transaction posted.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctBal'
+        AcctPeriodData:
+          type: array
+          description: Accounting period data details such as last interest payment, nonsufficient funds, overdraft activity year to date, current month and cycle to date.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AcctPeriodData'
+        PostAddr:
+          type: array
+          description: "Details of the postal address associated to the account.\n\n\n\n**Note:** This service return account primary address and seasonal address, if applicable. \n\n\n\nSeasonal address cannot exist as a single address record in premier, it is always related to a primary address. Therefore, seasonal address always shares address identifier and address use with primary address.\n\n\n\n\n\n\n\nAddress Use for account Primary address and related Seasonal address is \"Inquiry\".\n\n\n\n\n\n\n\n"
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_PostAddr'
+        TrnRestriction:
+          type: string
+          description: |-
+            Client-defined restriction that applies to the account during transaction posting.
+
+
+
+            **Note:** This code also indicates whether certain transaction codes are allowed (posted) or not allowed (non-posted) on the account.
+        TrnRestrictionOvrd:
+          type: string
+          description: Client-defined restriction override code overrides the transaction restriction code and permits a particular kind of transaction to post to a restricted account for a single update.
+        ElectronicBankingOpt:
+          type: string
+          description: |-
+            Option that indicates the services that are available through electronic banking.
+
+
+
+            **Note:** Refers to electronic banking restriction.
+          enum:
+          - InquiryOnly
+          - Enabled
+          - Disabled
+        ReportGroupCode:
+          type: string
+          description: "Client-defined code to group the accounts for reporting purposes.\n\n\n\n**Note:** Values are from 000 to 999. "
+        DocDistributionOption:
+          type: string
+          description: |-
+            Client-defined document distribution method to distribute the notices and statement forms.
+
+
+
+            **Note:** Values are client defined.
+        RestrictedInd:
+          type: boolean
+          description: Flag to indicate the restriction.
+        RestrictedDesc:
+          maxLength: 80
+          type: string
+          description: Description of the reason for restricted view.
+        NonAccrualInd:
+          type: boolean
+          description: Flag to indicate the loan is on non-accrual condition.
+        NonAccrualCode:
+          type: string
+          description: |-
+            Code to indicate the processing condition of the non-accrual.
+
+
+
+            **Note:** Corresponds to premier non-accrual code. Indicates whether the loan changes automatically to non-accrual after the number of non-accrual days. Values are defined in premier miscellaneous 6 specification.
+        ChargeOffInd:
+          type: boolean
+          description: Flag to indicate the charge off.
+        ChargeOffCode:
+          type: string
+          description: Code to indicate charge off.
+        PmtPostingRestrictions:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_PmtPostingRestrictions'
+        AdvPostingRestrictions:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_AdvPostingRestrictions'
+        CardType:
+          type: string
+          description: |-
+            Type of a card.
+
+
+
+            **Note:** Service provider supports user-defined values.
+        IssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date on which the account summary information was issued. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
+        ExpDt:
+          type: string
+          description: |-
+            Date after which the account becomes inactive.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+          format: date
+        BoxNum:
+          maxLength: 15
+          type: string
+          description: Safe deposit box number assigned to the party.
+        DuePmt:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_DuePmt'
+        LastPmt:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo_LastPmt'
+      description: Summary details of an account.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctKeys'
+        AcctSummInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef_AcctSummInfo'
+      description: Reference information of an account object that is part of the relationship.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo:
+      type: object
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef'
+        PartyAcctRelData:
+          type: array
+          description: Details of the relationship of the party to the account.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyAcctRelData'
+        OwnerPercent:
+          type: number
+          description: Percentage of ownership the party has in the account.
+        OwnerInd:
+          type: boolean
+          description: "Flag to indicate if the party is an owner of the account. \n\n\n\n**Note:** Owner Indicator identifies if customer has a direct relationship to the account.\n\n\n\nDo not apply to portfolio relationships.\n\n\n\n"
+        PrimaryOwnerInd:
+          type: boolean
+          description: |-
+            Flag to indicate the account owner is the primary owner.
+
+
+
+            **Note:** Primary owner indicator identifies the first name on the account.
+
+
+
+            .
+        TaxReportingOwnerInd:
+          type: boolean
+          description: |+
+            Flag to indicate if the party has tax responsibility on the account.
+
+
+
+            **Note:** Tax reporting owner indicator identifies which party has tax responsibility on the account.
+
+
+
+            Do not apply to portfolio relationships.
+
+
+
+        Nickname:
+          maxLength: 80
+          type: string
+          description: |-
+            Name that customer can assign to an account for easy identification.
+
+
+
+            **Note:** For Customers using nickname to easily identify accounts, the calling application should refer the field /PartyAcctRelInfo/Nickname instead of /PartyAcctRelInfo/AcctRef/AcctSummInfo/Nickname in ESF Response.
+        AcctRef:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_AcctRef'
+      description: 'Details of a relationship between party and account. '
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelStatus:
+      required:
+      - PartyAcctRelStatusCode
+      type: object
+      properties:
+        PartyAcctRelStatusCode:
+          type: string
+          description: "Code to identify the current status of the party-to-account relationship. \n\n\n\n**Note:** Internal EFX status."
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the party-to-account relationship status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
+      description: Details of party-to-account relationship status.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelRec:
+      required:
+      - PartyAcctRelInfo
+      - PartyAcctRelKeys
+      - PartyAcctRelStatus
+      properties:
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys'
+        PartyAcctRelInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo'
+        PartyAcctRelStatus:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelStatus'
