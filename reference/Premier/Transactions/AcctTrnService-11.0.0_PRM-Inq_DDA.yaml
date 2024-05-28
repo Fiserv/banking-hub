@@ -1,0 +1,705 @@
+---
+openapi: 3.0.1
+info:
+  title: Account Transaction Service
+  description: |-
+    The account transaction service performs the function of retrieving the monetary transaction history against a product account and is implemented in the AccTrnService service domain.<br>
+    An account is a product serviced by the financial institutions that has debit or credit balance in a particular currency.
+  version: 11.0.0_PRM-Inq_DDA
+servers:
+- url: /
+paths:
+  /accttranservice/acctmgmt/acctTrn/secured:
+    post:
+      tags:
+      - Get Account Transaction History
+      summary: GET Account Transaction History.
+      description: "Get Account Transaction History API retrieves the transaction history for Demand Deposit Account (DDA).<br>For Premier, this API returns both memo post (pending) transactions and hard posted transactions for the current and previous statement cycle only from the Core and not from an auxiliary storage like AMS. It also returns reversed transactions. This API does not include a selection criterion to filter pending vs posted transactions and does not return running balances. <br>No parameter configuration is needed for this API. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: AcctTrnInqOperBySecured
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse'
+      x-default-example: Premier
+      x-group-name: Account Transaction Service
+      x-proxy-name: Get Account Transaction History
+      x-child-product-name: Transactions
+      x-core: Premier-DDA
+components:
+  schemas:
+    AcctTrnInqOperBySecuredRequest:
+      required:
+      - AcctTrnSel
+      properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_RecCtrlIn'
+        AcctTrnSel:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel'
+    AcctTrnInqOperBySecuredResponse:
+      required:
+      - AcctTrnRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        AcctTrnRec:
+          type: array
+          description: 'Details of a transaction record that includes information, such as transaction keys, transaction status, amount, description and so on. '
+          items:
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as teller and supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    AcctTrnInqOperBySecuredRequest_RecCtrlIn:
+      type: object
+      properties:
+        Cursor:
+          maxLength: 250
+          type: string
+          description: |-
+            Next record pointer to include in the response if additional records are available.
+
+            If there are more than 250 posted transactions, ESF will return cursor value in the RecCtrlOut/Cursor field. This field should be passed in the subsequent request within this (RecCtrlIn/Cursor) field to retrieve the next set of posted transactions. This feature is not applicable for memo post transactions.
+
+            **Note:** Initial request of transaction history should not have a 'Cursor' field provided. If more than 250 posted transactions exist on the account, Premier will provide the next cursor value in the response to indicate that there is more transactions to be returned.
+      description: Maximum number of records that client can specify to process within a single response.
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+
+
+
+
+        AcctType:
+          type: string
+          description: Type of an account.
+          enum:
+          - DDA
+      description: Unique information to identify the account record.
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys'
+        TrnPostType:
+          type: string
+          description: Type of transaction posting used to request all transactions, only memo post transactions or all transactions excluding memo post transactions.
+          enum:
+          - MemoPostOnly
+          - ExcludeMemoPost
+          - All
+      description: Details of the selection criteria to retrieve the account transaction records.
+    AcctTrnInqOperBySecuredResponse_AcctTrnKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+      description: Unique information to identify the account record.
+    AcctTrnInqOperBySecuredResponse_AcctTrnKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnKeys_AcctKeys'
+        AcctTrnIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Identification code to uniquely identify an account transaction record.
+
+            Value of this field cannot be used to look up the transactions in navigator/user interface.
+
+            **Note:** For memo posted transactions this is a record key.
+
+            Premier does not provide unique transaction identifier for  posted transactions.
+
+            Transaction  posting date and occurrence will be returned as transaction identifier.
+
+            The 'AcctTrnident' value cannot be used to look up transactions on the premier navigator/user interface.
+      description: Unique information to identify a transaction record.
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
+      description: Details of currency code.
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+
+
+
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt_CurCode'
+      description: Details of the total transaction amount posted to the account.
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CheckFloatAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\n\n\n\n\nPresently only USD currency code is supported.\n\n\n\n"
+      description: Details of currency code.
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CheckFloatAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: 'Check float amount that is pending for check clearance.  '
+        CurCode:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CheckFloatAmt_CurCode'
+      description: Details of the float check amount that contains the monetary value and currency code.
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_FloatDetails:
+      properties:
+        FloatDays:
+          type: integer
+          description: Time period between submitting the check and clearing the check.
+          format: int64
+        CheckFloatAmt:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_CheckFloatAmt'
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo_FloatData:
+      properties:
+        FloatType:
+          type: string
+          description: Type of float in processing checks.
+          enum:
+          - Uncollected
+        FloatDetails:
+          type: array
+          description: |-
+            Details of the float data that contains float days and check amount.
+
+            **Note:** Float details aggregate repeats seven times.
+          items:
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_FloatDetails'
+    AcctTrnInqOperBySecuredResponse_AcctTrnInfo:
+      type: object
+      properties:
+        TrnCode:
+          type: string
+          description: 'Service provider transaction code of the payment posted to the account. '
+        DrCrType:
+          type: string
+          description: Value that indicates if the account transaction is either debit or credit to the account.
+          enum:
+          - Debit
+          - Credit
+        TrnRevType:
+          type: string
+          description: |-
+            Value that classifies the transaction reversal type.
+
+            **Note:** TrnRevType identifies the following:
+
+            - original transaction, which was reversed and it is represented by ESF as MatchedTransaction.
+
+            - reversal transaction, which is represented by ESF as Reversal.
+
+            Applicable only for posted transactions.
+          enum:
+          - Reversal
+          - MatchedTransaction
+          - Waived
+        MemoPostInd:
+          type: boolean
+          description: "Value that indicates the transaction is memo posted.  \n\n\n\nIf the value is set to 'true', then the transaction is memo posted but pending nightly processing. \n\n\n\nIf the value is set to 'false', then the transaction is not memo posted; it is a posted transaction."
+        PostedDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date and time value when the transaction is posted in the system. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the transaction went into effect for an account. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-12-31T23:59:59.999"
+        TrnDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date and time value when the transaction is recorded on the history record. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n**Note:** Oldest memoposted transaction is returned first in the response. Premier does not support sort order for memoposted transactions. Memoposted transactions are always returned in ascending order as per date and timestamp of when transaction memoposted to the account. "
+        TrnType:
+          type: string
+          description: "For deposit account (DDA and SDA) types, this field identifies health banking (HSA) contribution or distribution transactions type. \n\n**Note:** Applicable to premier health banking (HSA) clients only. It identifies HSA transaction contribution and distribution type.\n\nNot applicable for memo posted transactions.\n\n\n\n\n\n\n\n"
+          enum:
+          - YTDContribution
+          - PriorYrContribution
+          - YTDContributionEmployer
+          - PriorYrContributionEmployer
+          - Rollover
+          - RefundedDisabilityDistribution
+          - RefundedDeathDistribution
+          - RefundedQualifiedDistribution
+          - RefundedExcessYTDContribution
+          - RefundedExcessPriorYrContribution
+          - RefundedEarningExcessYTDContribution
+          - RefundedEarningExcessPriorYrContribution
+          - RefundedProhibitedHSA
+          - RefundedDeathNonSpouseDistribution
+          - DisabilityDistribution
+          - DeathDistribution
+          - QualifiedDistribution
+          - ExcessYTDContribution
+          - ExcessPriorYrContribution
+          - EarningExcessYTDContribution
+          - EarningExcessPriorYrContribution
+          - ProhibitedHSA
+          - DeathNonSpouseDistribution
+          - RefundedYTDContribution
+          - RefundedPriorYrContribution
+          - RefundedYTDContributionEmployer
+          - RefundedPriorYrContributionEmployer
+          - RefundedRollover
+          - NonReportable
+        TrnAmt:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_TrnAmt'
+        Desc:
+          maxLength: 200
+          type: array
+          description: "Custom-defined description for the transaction codes. \n\n**Note:** Premier allows bank to define custom description for transaction codes.\n\nPin order for transaction descriptions to display correctly, premier API version should be configured to match the core version.\n\nFor example, If PRM core is at 10.0, ESF should be configured to use PRM 10.0 API."
+          items: {}
+        ChkNum:
+          maxLength: 22
+          type: string
+          description: Check number associated with the transaction.
+        ExternalTrnCode:
+          type: string
+          description: "External transaction code provided by the payment service provider that is posted to the account. \n\n**Note:** Applicable for posted transactions only."
+        ImageInd:
+          type: boolean
+          description: "Value that indicates the related images to the transaction are available. \n\n**Note:** Image Indicator is returned as 'true' if an image document (for e.g. check image/deposit slip image/picture file) is available in image archive system. \n\nOtherwise Image Indicator is set to 'false'.\n\nApplicable for posted transactions only."
+        TrnImageId:
+          maxLength: 36
+          type: string
+          description: "Unique transaction image identifier that associates transaction image with the related transaction. \n\n**Note:** Applicable for posted transactions only. \n\nTransaction image identifier refers to a trace number, which is unique number assigned to the transaction per account. \n\nIt can be used to retrieve a document for a particular transaction from archive system (via keyword search using ESF document services).\n\nIt can be returned as 0. Applicable for internal premier transactions, like interest posting transactions, service charge transactions and so on."
+        FloatData:
+          type: array
+          description: "Details of the float data that contains float type and details for a transaction. \n\n**Note:** Applicable only for deposit accounts such as DDA and SDA. The float data at the transaction-level is available, if any of following conditions are satisfied: \n\n- Account is an analysis account with analysis code value greater then 199\n\n- Account is set up to earn interest based on the account available balance. This is defined under premier Specifications Deposit Rate Index parameter\n\n- Effective Date of the current interest is defined for the account"
+          items:
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_FloatData'
+      description: Information related to account transaction such as transaction type, transaction amount, description, transaction code and so on.
+    AcctTrnInqOperBySecuredResponse_AcctTrnStatus:
+      required:
+      - AcctTrnStatusCode
+      type: object
+      properties:
+        AcctTrnStatusCode:
+          type: string
+          description: Current status of the account transaction record.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the status of the transaction is last confirmed.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-12-31T23:59:59.999
+      description: Details of the transaction status that contains the effective date and status information details.
+    AcctTrnInqOperBySecuredResponse_AcctTrnRec:
+      required:
+      - AcctTrnInfo
+      - AcctTrnKeys
+      - AcctTrnStatus
+      properties:
+        AcctTrnKeys:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnKeys'
+        AcctTrnInfo:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo'
+        AcctTrnStatus:
+          $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnStatus'
