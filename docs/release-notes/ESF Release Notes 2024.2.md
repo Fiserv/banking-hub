@@ -9,7 +9,7 @@ titles: Premier, Premier, Precision, Signature
 ## May 23, 2024
 
 ### Enhancements
-| API Name | Description | Deployement |
+| API Name | Description | Deployment |
 | --- | ----------- | -------- |
 | API Specification| We updated the API Specifications.|
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN_INET</a> | We updated the `BalType` field to reflect the current available credit balance instantly. Previously, when a bank updates the current available credit on navigator, the credit balance was updating after the nightly batch process.<br>**Impacted Field:**<br> `AcctRec/LoanAcctInfo/AcctBal/BalType`| PROD |
