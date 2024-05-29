@@ -3,10 +3,33 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature
+titles: Premier, Premier, Precision, Signature
 -->
 
+## May 23, 2024
 
+### Enhancements
+| API Name | Description | Deployment |
+| --- | ----------- | -------- |
+| API Specification| We updated the API Specifications.|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN_INET</a> | We updated the `BalType` field to reflect the current available credit balance instantly. Previously, when a bank updates the current available credit on navigator, the credit balance was updating after the nightly batch process.<br>**Impacted Field:**<br> `AcctRec/LoanAcctInfo/AcctBal/BalType`| PROD |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | We updated the `NextRateChangeDt` field with correct path to process the request successfully. Previously, the `NextRateChangeDt` field was not getting updated due to incorrect path.<br>**Impacted Field:**<br>`LoanAcctInfo/RateChangeData/NextRateChangeDt`| PROD |
+
+### Fixed
+| API Name | Description | Deployment |
+| --- | ----------- | ------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | The system no longer displays an internal server error message when the accrual method value is not included in the request under the interest rate data aggregate. <br> **Impacted Field:** <br> `LoanAcctInfo/IntRateData/AccrualMethod` | PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA</a>,<br> <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-DDA</a> |  We resolved an internal server error issue that used to occur when the analysis group value was not included in the request.<br>**Impacted Field:**<br>`DepositAcctInfo/CommercialAnalysisData/AnalysisGroup` | PROD |
+|<a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | The system no longer displays an internal server error message when the Accrual Method value is not included in the request under the Interest Rate Data (`IntRateData`) aggregate.<br>**Impacted Fields:**<br>`LoanAcctInfo/IntRateData`<br>`LoanAcctInfo/IntRateData/AccrualMethod`| PROD |
+| <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Get ePreferences</a>|  We resolved an issue by updating the xref rule for the `StmtPrepCode` field that was not sent to the core for the DDA accounts.<br>**Impacted Field:**<br>`ePreferenceRec/ePreferenceInfo/StmtPrepCode`| PROD |
+| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | Memo posted transaction now returns only in the first instance of the API request as per the pagination logic. Previously, both memo posted and posted transactions used to return in every response message. <br> **Impacted Fields:**<br>`RecCtrlIn/MaxRecLimit` <br>`RecCtrlIn/Cursor` | PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Account Service</a> | We updated the security fix for all account management APIs. | PROD |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the exception handling error. Now, this API can add phone number and/or email address for the party successfully. | PROD |
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where the "NameSuffix" field was not retrieved correctly. <br>**Impacted Field:** <br>`PartyRec/PersonPartyInfo/PersonData/PersonName/NameSuffix` | PROD | 
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue with the "PreferredPhone" field where the phone flag was not rendered correctly. Now users can retrieve valid values in the response.<br>**Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone`<br>`PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone`| PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a>| The revolving loan indicator information now displays correctly in the response message. <br>**Impacted Field:** <br>`AcctRec/LoanAcctInfo/RevolvingLoanInd`| PROD |
+
+<!--type: tab-->
 <p style="font-size: 24px; font-weight: bold;">Enhancements </p>
 
 <span style="font-size: 22px; ">General</span> *Resources > Downloads > API Specifications*
@@ -56,7 +79,7 @@ titles: Premier, Precision, Signature
 
 
 
-<span style="font-size: 22px; ">Get ePreferences</span> *Accounts > Document & Preferences > ePreferences*
+<span style="font-size: 22px; ">Get ePreferences</span> *API Explorer > Accounts > Document Preferences Service*
 
 
 - We resolved an issue by updating the xref rule for the "StmtPrepCode" field that was not sent to the core for the DDA accounts<br>
@@ -68,7 +91,7 @@ titles: Premier, Precision, Signature
 
 
 - Memo posted transaction now returns only in the first instance of the API request as per the pagination logic. Previously, both memo posted and posted transactions used to return in every response message<br>
-**Impacted Field:**
+**Impacted Fields:**
 	- RecCtrlIn/MaxRecLimit
 	- RecCtrlIn/Cursor
 
