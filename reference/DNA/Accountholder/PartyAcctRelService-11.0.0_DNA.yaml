@@ -1,0 +1,666 @@
+---
+openapi: 3.0.1
+info:
+  title: Party Account Relationship Service
+  description: Party account relationship service manages the nature of relationship between a party and a product account. It is used to indicate the primary contact and tax responsible parties as well as state the relationship type between the party and an account.
+  version: 11.0.0_DNA
+servers:
+- url: /
+paths:
+  /partyacctrelservice/partyacctrel/partyacctrel:
+    put:
+      tags:
+      - Update Party Account Relationship
+      summary: Update Party Account Relationship
+      description: "Update Party Account Relationship API modifies the non-tax relationships and other information about the relationships between the selected account and the parties (Business or Person) associated with an account. This API implementation requires the final state of the relationships to be included in the request.<br>To delete an account and party relationship, the client application should not include the relationship in the modification request. It deletes the party account relationship in the DNA.<br>To update an account and party relationship, the client application should include the relationship in the modification request. It deletes the existing party account relationship (if any) and establishes a new request relationship in DNA.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: PartyAcctRelMod
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyAcctRelModRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelModResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelModResponse'
+      x-group-name: Party Account Relationship Service
+      x-proxy-name: Update Party Account Relationship
+      x-child-product-name: Accountholder
+      x-core: DNA
+    post:
+      tags:
+      - Add Party Account Relationship
+      summary: Add Party Account Relationship
+      description: "Add Party Account Relationship API creates a new non-tax relationship between a party and an account. <br>For DNA, this API does not support the addition of tax relationships that is owner signer or owner role on an account.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: PartyAcctRelAdd
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyAcctRelAddRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelAddResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelAddResponse'
+      x-group-name: Party Account Relationship Service
+      x-proxy-name: Add Party Account Relationship
+      x-child-product-name: Accountholder
+      x-core: 'DNA '
+components:
+  schemas:
+    PartyAcctRelAddRequest:
+      required:
+      - PartyAcctRelInfo
+      properties:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        PartyAcctRelInfo:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo'
+    PartyAcctRelAddResponse:
+      required:
+      - PartyAcctRelStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        PartyAcctRelStatusRec:
+          $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec'
+    PartyAcctRelModRequest:
+      required:
+      - PartyAcctRelInfo
+      - PartyAcctRelKeys
+      properties:
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelKeys'
+        PartyAcctRelInfo:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo'
+    PartyAcctRelModResponse:
+      required:
+      - PartyAcctRelStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType_DNA'
+        PartyAcctRelStatusRec:
+          $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
+    StatusType_DNA:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Example value is:
+              -  DNA
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        AdditionalStatus:
+          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef_PartyKeys:
+      required:
+      - PartyIdent
+      - PartyIdentType
+      type: object
+      properties:
+        PartyIdentType:
+          type: string
+          description: |+
+            Type of party identification.
+
+
+
+            **Note:** *Required field*
+
+            PartyIdentType is a value that indicates whether the party is a person or an organization.
+
+
+
+
+
+          enum:
+          - OrgNum
+          - PersonNum
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: |-
+            Unique identifier of a party record.
+
+
+
+            **Note:** *Required field*
+
+            Value that identifies the related person or organization number.
+      description: Unique information to identify the party record.
+    PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef_PartyKeys'
+      description: |+
+        Reference details of a party that is part of the relationship with an account.
+
+
+
+    PartyAcctRelAddRequest_PartyAcctRelInfo_PartyAcctRelData:
+      required:
+      - PartyAcctRelType
+      properties:
+        PartyAcctRelType:
+          type: string
+          description: |+
+            Relationship type between the party and an account.
+
+
+
+            **Note:** DNA supports the addition of only user-defined non-tax relationship types that are defined by the financial institution. Some of the common examples are Beneficiary, Joint Owner, Trustee, WWW Access Role, Mobile Banking Access and others.
+
+            A party can have multiple relationships to the account. For example Owner (Tax Reported) can also have WWW Access Role, Mobile Banking Access Role and so on.
+
+    PartyAcctRelAddRequest_PartyAcctRelInfo_Liability:
+      type: object
+      properties:
+        LiabilityPercent:
+          type: number
+          description: |-
+            Percentage of liability for which the party is responsible.
+
+
+
+            **Note:** Applicable if the account type is loan and the role is defined as an indirect liability role.
+        LiabilityAmt:
+          type: number
+          description: |-
+            Fixed amount of the liability for which the party is responsible.
+
+
+
+            **Note:** Applicable if the account type is loan and the role is defined as an indirect liability role.
+      description: Liability details of the party associated to the account.
+    PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+      description: Unique information to identify the account record.
+    PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef_AcctKeys'
+      description: Reference information of the account that is part of the party to account relationship.
+    PartyAcctRelAddRequest_PartyAcctRelInfo:
+      type: object
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef'
+        PartyAcctRelData:
+          type: array
+          description: Details of the relationship of the party to the account.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_PartyAcctRelData'
+        Liability:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_Liability'
+        AcctRef:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef'
+      description: "Details of the relationship between party and account. \n\n\n\n**Note:** This API is used to add a secondary party (customer) to an existing account and to specify the relationship between the party and the account.\n\nIn DNA, this API does not allow to add primary party (customer) or tittle types. To add tittle types for an account, use the Update Account API."
+    PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+          - RRA
+          - LEAS
+          - ILA
+          - CLA
+          - MLA
+          - MLN
+      description: Unique information to identify the account record.
+    PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys'
+      description: Unique information to identify the party to account relationship record.
+    PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelStatus:
+      required:
+      - PartyAcctRelStatusCode
+      type: object
+      properties:
+        PartyAcctRelStatusCode:
+          type: string
+          description: Code to indicate the status of the party to account relationship record.
+          enum:
+          - Valid
+      description: Status details of the party to account relationship record.
+    PartyAcctRelAddResponse_PartyAcctRelStatusRec:
+      required:
+      - PartyAcctRelKeys
+      - PartyAcctRelStatus
+      type: object
+      properties:
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelKeys'
+        PartyAcctRelStatus:
+          $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelStatus'
+      description: Details of the party to account relationship status record in response to add operation.
+    PartyAcctRelModRequest_PartyAcctRelKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_AcctRef_AcctKeys'
+      description: Unique information to identify the party to account relationship record.
+    PartyAcctRelModRequest_PartyAcctRelInfo_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelAddRequest_PartyAcctRelInfo_PartyRef_PartyKeys'
+      description: Reference details of a party that is part of the relationship with an account.
+    PartyAcctRelModRequest_PartyAcctRelInfo_PartyAcctRelData:
+      required:
+      - PartyAcctRelType
+      properties:
+        PartyAcctRelType:
+          type: string
+          description: |-
+            Type of relationship between the party and account.
+
+
+
+            **Note:** DNA supports modification of user-defined non-tax relationship types that are defined by the financial institution. Some of the common examples are Beneficiary, Joint Owner, Trustee, WWW Access Role, Mobile Banking Access and others.
+
+            A party can have multiple relationships to the account. For example Owner (Tax Reported) can also have WWW Access Role, Mobile Banking Access Role and so on.
+          enum:
+          - OwnerSigner
+          - Owner
+    PartyAcctRelModRequest_PartyAcctRelInfo_Liability:
+      type: object
+      properties:
+        LiabilityPercent:
+          type: number
+          description: |-
+            Percentage of liability for which the party is responsible.
+
+
+
+            **Note:** Applicable if the account type is loan and the role is defined as an indirect liability role.
+        LiabilityAmt:
+          type: number
+          description: |-
+            Fixed amount of the liability for which the party is responsible.
+
+
+
+            **Note:** Applicable if the account type is loan and the role is defined as an indirect liability role.
+      description: "Liability details of the party associated to the account.\n\n\n\n**Note:** Liability percentage and liability amount can be provided for non-tax roles. "
+    PartyAcctRelModRequest_PartyAcctRelInfo:
+      type: object
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_PartyRef'
+        PartyAcctRelData:
+          type: array
+          description: "Details of the relationship of the party to the account.\n\n\n\n**Note:** DNA allows a party to have multiple relationships with the account. Accordingly multiple instances of the PartyAcctRelData aggregate are sent in the request based on the number of relationships party have with the account.\n\nClient application is required to send at least one instance of PartyAcctRelData aggregate for at least one relationship that party has with the account.  \n\nThis API requires the final state of the party to account relationship to be sent in the request. Therefore, if an existing party to account relationship is not sent in the request then it leads to deletion of the existing party to account relationship from DNA core.\n\n"
+          items:
+            $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_PartyAcctRelData'
+        Liability:
+          $ref: '#/components/schemas/PartyAcctRelModRequest_PartyAcctRelInfo_Liability'
+      description: |-
+        Details of a relationship between party and account.
+
+
+
+        **Note:** Client application is required to send one instance of PartyAcctRelInfo aggregate for each party linked to the account. Multiple instances of the PartyAcctRelInfo aggregate are sent in the request based upon the number of parties related to the account.
+
+        This API requires the final state of the party to account relationship to be sent in the request. Therefore, if an existing party to account relationship is not sent in the request then it leads to deletion of the existing party to account relationship from DNA core.
+    PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+          - RRA
+          - LEAS
+          - ILA
+          - CLA
+          - MLA
+          - MLN
+      description: Unique information to identify the account record.
+    PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys_AcctKeys'
+      description: Unique information to identify the party to account relationship record.
+    PartyAcctRelModResponse_PartyAcctRelStatusRec:
+      required:
+      - PartyAcctRelKeys
+      - PartyAcctRelStatus
+      type: object
+      properties:
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelModResponse_PartyAcctRelStatusRec_PartyAcctRelKeys'
+        PartyAcctRelStatus:
+          $ref: '#/components/schemas/PartyAcctRelAddResponse_PartyAcctRelStatusRec_PartyAcctRelStatus'
+      description: Details of the party to account relationship status record in response to update operation.
+    StatusType_DNA_AdditionalStatus:
+      type: object
+      properties:
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
