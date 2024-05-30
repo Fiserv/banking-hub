@@ -1,0 +1,2118 @@
+---
+openapi: 3.0.1
+info:
+  title: Account Service
+  description: The account service helps to create and manage product accounts serviced by the financial institutions. It is also used to retrieve information about the existing accounts and maintain information of new accounts.
+  version: 11.0.0_PRC-Add_DDA_SDA
+servers:
+- url: /
+paths:
+  /acctservice/acctmgmt/accounts:
+    post:
+      tags:
+      - Add Account
+      summary: Add Account.
+      description: "Add Account API creates a new Demand Deposit Account (DDA) and Saving Account (SDA).<br>If applicable, account analysis is also created for a new account.<br>Precision has the ability to insert default values defined for the selected DDA and SDA Type (Type Code).<br>This API supports the Open Verification Method (OVM), as Precision defines, to insert the default values. <br>This means, while creating a new account with the fields sent in the Add Account request, the DDA and SDA default types defined within the Precision parameters may get overridden. The override depends on the setting of the New Account Override attribute for each field where a default value has been defined.<br>Precision uses the default values to populate the fields whose default value is defined but not included in the Add Account request.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: addAccount
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addAccountRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addAccountResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addAccountResponse'
+      x-group-name: Account Service
+      x-proxy-name: Add Account
+      x-child-product-name: Accounts
+      x-core: Precision-DDA_SDA
+components:
+  schemas:
+    addAccountRequest:
+      properties:
+        PartyAcctRelInfo:
+          type: array
+          description: Details of a relationship between party and account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_PartyAcctRelInfo'
+        DepositAcctInfo:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo'
+    addAccountResponse:
+      required:
+      - AcctStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        AcctStatusRec:
+          $ref: '#/components/schemas/addAccountResponse_AcctStatusRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          type: string
+        TrnId:
+          maxLength: 36
+          type: string
+        VendorId:
+          type: string
+          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+        Channel:
+          type: string
+          description: Indicates the channel used by the client application.
+        ClientDateTime:
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+          format: date-time
+        ClientTerminalSeqNum:
+          maxLength: 36
+          type: string
+          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+        OriginatorType:
+          type: integer
+          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+        TerminalCity:
+          maxLength: 32
+          type: string
+        TerminalCounty:
+          maxLength: 32
+          type: string
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State Province. ISO 3166-2:US codes.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: Postal Code is ZipCode in the US.
+        TerminalCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - ISO3166Numeric
+          - ISO3166Alpha3
+        TerminalCountryCodeValue:
+          maxLength: 80
+          type: string
+        PhoneType:
+          type: string
+        PhoneNum:
+          type: string
+        PhoneExchange:
+          type: string
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - US
+          - IND
+        AcquirerCountryCodeValue:
+          type: string
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        BranchIdent:
+          maxLength: 22
+          type: string
+        TellerIdent:
+          type: string
+        TillIdent:
+          type: string
+        AMPMCode:
+          type: string
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          enum:
+          - Manual
+          - Auto
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    addAccountRequest_PartyRef_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: "Unique identification number of a party record.\n\n\n\n**Note:** Refers to customer short name key that uniquely identifies the customer. \n\n\n\nThe customer record must exist on Precision."
+      description: |-
+        Unique information to identify the party record.
+
+
+
+        **Note:** Send PartyKeys foe each customer associated to the deposit account.
+
+
+
+        Only one primary customer is allowed.
+
+
+
+        If PartyAcctRelInfo/PrimaryOwnerInd is set as "True" for the primary customer.
+    addAccountRequest_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addAccountRequest_PartyRef_PartyKeys'
+      description: Reference details of a party that is part of the relationship with the account.
+    addAccountRequest_PartyAcctRelData:
+      required:
+      - PartyAcctRelType
+      properties:
+        PartyAcctRelType:
+          type: string
+          description: |-
+            Type of party relationship to account.
+
+
+
+
+
+
+
+            **Note:** Precision requires a relationship type to be assigned to secondary customer on the account.
+
+
+
+            Any value sent for the primary customer will be ignored.
+        OwnershipType:
+          type: string
+          description: |-
+            Type of party ownership to an account.
+
+
+
+            **Note:** For primary customer, ownership type is set as "Direct" and any value sent for the primary customer will be ignored.
+          enum:
+          - Direct
+          - Indirect
+          - Fiduciary
+          - Additional
+    addAccountRequest_Liability:
+      type: object
+      properties:
+        LiabilityPercent:
+          type: number
+          description: "Percentage of tax liability for which the party is responsible.\n\n\n\n**Note:** If 100% of tax reporting is done under primary customer, convert as 100. \n\n\n\nIf 100% of tax reporting is done under one of the secondary customers then convert as 0 for the primary and put the 100 under the secondary customer. \n\n\n\nIf tax reporting is broken up between primary and secondary then convert values accordingly."
+      description: Details of the liability of owner on an account.
+    addAccountRequest_PartyAcctRelInfo:
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/addAccountRequest_PartyRef'
+        PartyAcctRelData:
+          type: array
+          description: Details of the relationship of the party to the account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_PartyAcctRelData'
+        PrimaryOwnerInd:
+          type: boolean
+          description: |-
+            Value to indicate the owner is primary owner of an account.
+
+
+
+            **Note:** This field is set as true for one party, if more than one party has this field true or no party has this field set as true then in both the cases first party instance will be assigned the role of primary customer and all the other will be considered as seconadry customer.
+        Liability:
+          $ref: '#/components/schemas/addAccountRequest_Liability'
+        TaxReportingOwnerInd:
+          type: boolean
+          description: |-
+            Value to indicate the party has tax responsibility on the account.
+
+
+
+            **Note:** Set the value to 'True' if primary customer will have tax responsibility on the account.
+        TaxReportingSignerInd:
+          type: boolean
+          description: |-
+            Value to indicate the secondary customer is responsible to pay tax for an account.
+
+
+
+            **Note:** Set the value to 'True' if primary customer will have tax responsibility on the account.
+        NamePrintOption:
+          type: string
+          description: |-
+            Option to indicate the position where secondary name or title is displayed on account or, separate notice/statement is printed.
+
+
+
+            **Note:** Used to determine how a secondary customer prints on a notice or statement.  Also used to send a separate notice to secondary customer, and determine how the primary is printed on the notice.  If no value is provided, the default value of 'None' is considered.
+
+
+
+            Following numeric values are supported:
+
+
+
+            0 - None (display on inquiry only)
+
+
+
+            1 - SecondLine (print in the second name line)
+
+
+
+            2 - ReplaceNameAddrLine (print in place of name/address)
+
+
+
+            3 - FirstAvailAddrLine (print on the first open line)
+
+
+
+            4 - PrintOutsideWindow (print outside of address window)
+
+
+
+            5 - SepNoticePrimLine1 (Separate Notice, Primary on Line 1)
+
+
+
+            6 - SepNoticePrimLine2 (Separate Notice, Primary on Line 2)
+
+
+
+            7 - SepNoticePrimAbove (Separate Notice, Primary Above)
+
+
+
+            9 - OnlyforInquiry (Do Not Print Or Display on Inquiry)
+        AndorOr:
+          type: string
+          description: Conjunctions used to print names before secondary name.
+          enum:
+          - AND
+          - OR
+          - None
+    addAccountRequest_DepositAcctInfo_AcctIdent:
+      properties:
+        AcctIdentType:
+          type: string
+          description: Type of the account identification.
+          enum:
+          - AcctNum
+        AcctIdentValue:
+          maxLength: 36
+          type: string
+          description: |-
+            Account identification value associated to the AcctIdentType field.
+
+
+
+            **Note:** There is a parameter available in PRC that allows the financial institution to have account numbers up to 17 digits in length.
+    addAccountRequest_DepositAcctInfo_InitialAmount_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\n **Note:** Only USD currency code is supported.\n\n"
+      description: Details of currency code.
+    addAccountRequest_DepositAcctInfo_InitialAmount:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+
+
+
+            **Note:** Refers to the amount of the first deposit.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_InitialAmount_CurCode'
+      description: Details of the certificate value of a time deposit account.
+    addAccountRequest_DepositAcctInfo_BalanceAtClosingAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\n\n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\n **Note:** Only USD currency code is supported.\n\n"
+      description: Details of currency code.
+    addAccountRequest_DepositAcctInfo_BalanceAtClosingAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+
+
+
+            **Note:** Balance of an account at closing.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_BalanceAtClosingAmt_CurCode'
+      description: Balance details of an account at the time of account closure.
+    addAccountRequest_DepositAcctInfo_DateData:
+      properties:
+        DateType:
+          type: string
+          description: |-
+            Values that  indicate the type of date contained in the "DateValue" field.
+
+
+
+
+
+
+
+            **Note:** Select the DataType to be populated.
+          enum:
+          - Dormant
+          - LastOverdraft
+          - PreviousStmt
+          - ChargeOff
+          - Disbursement
+        DateValue:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Value of the date.
+
+
+
+
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+            **Note:** Input value of DataType that was selected.
+    addAccountRequest_DepositAcctInfo_RelationshipMgr:
+      required:
+      - RelationshipMgrIdent
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of a relationship manager.
+
+
+
+            **Note:** If officer code is activated, a value should be sent unless the financial institution has built a null (N/A) value.  Officer code is always activated and required or a null (N/A) should be built for that officer.
+        RelationshipRole:
+          type: string
+          description: |-
+            Role of a relationship manager.
+
+
+
+            **Note:** Send SecondOfficer, ThirdOfficer, FourthOfficer, if the field is activated for the module.
+          enum:
+          - Officer
+          - SecondOfficer
+          - ThirdOfficer
+          - FourthOfficer
+    addAccountRequest_DepositAcctInfo_AddtlTitles:
+      properties:
+        AcctTitleType:
+          type: string
+          description: "Type of account title.\n\n\n\n\n\n\n\n**Note:** Precisions supports upto three tittles on an account.\n\n\n\nRefers to ownership type values:\n\n\n\n- 4: Title (name on the account)\n\n\n\n- 5: Title 2 (name on the account)\n\n\n\n- 6: Title 3 (name on the account)\n\n\n\nIt determines the position of the AcctTittle text. Each \"AcctTitleType\" can be used one time. First title is required before second title is send, and second title is required before third title. \n\n\n\n"
+          enum:
+          - FirstTitle
+          - SecondTitle
+          - ThirdTitle
+        AcctTitle:
+          maxLength: 255
+          type: string
+          description: "Title of an account to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\n\n\nFor example, John Doe CUSTODIAN.\n\n\n\n**Note:** Maximum length: 40 characters "
+        AcctTitleOption:
+          type: string
+          description: |+
+            Printing option for the account title.
+
+
+
+          enum:
+          - SecondLine
+          - FirstAvailAddrLine
+          - ReplaceNameAddrLine
+          - None
+          - OnlyforInquiry
+          - PrintOutsideWindow
+        DBAInd:
+          type: boolean
+          description: "Value to indicate the prefix DBA (Doing Business As) should be added to the title.\n\n\n\n**Note:** \n\n\n\n- Applicable only to FirstTittle (4).\n\n\n\n- This field is set as true when DBA (Doing Business As) to be included after the FirstTittle text."
+    addAccountRequest_DepositAcctInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataClassType:
+          type: string
+          description: Client-defined class type of the data.
+          enum:
+          - DemandDeposits
+        DataIdent:
+          type: string
+          description: |-
+            Unique data identifier to identify the client-defined data item.
+
+
+
+            **Note:** This field is used to identify the user code or user-defined field (1-999) for the specified module and field type.
+          enum:
+          - UserCode1
+          - UserCode2
+          - UserCode3
+        DataType:
+          type: string
+          description: "Type of client defined data. \n\n\n\n\n\n\n\n**Note:** Refers to field type.\n\n\n\nValue refers to: \n\n\n\n- Alpha refers to character fields.\n\n\n\n- Boolean refers to logical fields.\n\n\n\n- Currency refers to amount fields.\n\n\n\n- Numeric refers to code fields.\n\n\n\nDataType is required only if the DataIdent value ranges from 1-999. Both values are used to identify which user-defined field should be added to account record."
+          enum:
+          - Alpha
+          - Boolean
+          - Date
+          - Currency
+          - Numeric
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+    addAccountRequest_DepositAcctInfo_AcctStmtData_StmtOptions:
+      properties:
+        StmtOptionType:
+          type: string
+          description: |-
+            Type of statement option.
+
+
+
+            **Note:** Statement options. To specify list post for checks and override the default behavior, provide 'ListPost' in request. If any other value- or no value is provided, it is assumed by the core that list post is not needed for checks (default behavior).
+          enum:
+          - DailyEndingBal
+          - ListPost
+          - OverdraftReturnCharge
+        StmtOptionValue:
+          type: string
+          description: |-
+            Value of statement option.
+
+
+
+            **Note:** This refers to printing of daily balance.
+
+
+
+            Select this field to print the daily ending balance section on sorted statements.  To access this field, select print sorted statements.
+
+
+
+
+
+
+
+            OD/RI charges print.
+
+
+
+            This field determines if OD/RI charges will print on the statement.  FDIC regulations require them to print on the statement if an account is an OD privilege account.
+          enum:
+          - Print
+          - DoNotPrint
+    addAccountRequest_DepositAcctInfo_AcctStmtData:
+      type: object
+      properties:
+        StmtTimeFrame:
+          type: array
+          description: Time frame details for the account statement.
+          items: {}
+        LastStmtDt:
+          type: string
+          description: "Date on which last statement was generated.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
+          format: date
+        StmtPrepCode:
+          type: string
+          description: |-
+            Code to identify if an individual statement is printed for an account.
+
+
+
+            **Note:** Statement type for an account.
+
+
+
+            Values should be set up in parameters.
+
+
+
+            This field can be accessed if Director Imaging or Director COLD Storage are used.
+        StmtFormat:
+          type: string
+          description: |-
+            Format to identify the statement detail, balance options, daily summary and other values.
+
+
+
+            **Note:** Statement format to be used for an account.
+        StmtTruncationOption:
+          type: string
+          description: |-
+            Option to indicate if the physical items are enclosed with an account statement.
+
+
+
+            **Note:** Select this field if items are returned with DDA Statement.
+        MailCode:
+          type: string
+          description: |-
+            Code of mail to sort statements.
+
+
+
+            **Note:** Code to indicate the method to handle statements for an account. User-defined field and if no value is provided, by default, '0 - No Special Handling' is considered.
+        StmtGroup:
+          type: string
+          description: |-
+            Group to identify statement cycle for an account.
+
+
+
+            **Note:** Statement cycle for an account. Code is set up in parameters and controls all aspects of account correspondence (combined statements, statement cycling, earnings payment, service charge assessment, and account analysis charging).
+        StmtOptions:
+          type: array
+          description: Information about additional printing or generation options used for processing statements.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctStmtData_StmtOptions'
+      description: Details of the account statement processing data.
+    addAccountRequest_DepositAcctInfo_NoticeData:
+      properties:
+        NoticeType:
+          type: string
+          description: |-
+            Type of notice.
+
+
+
+
+
+
+
+
+
+
+
+            **Note:** Value of the type of notice that is sent to the customer for this account.
+          enum:
+          - ContinuousOD
+          - DepItemRetPaper
+          - DepItemACHRet
+          - Dormancy
+          - RegD
+          - OdRetItem
+          - Transfer
+          - StopPayment
+          - ACHNotice
+          - DebitTran
+          - CreditTran
+          - Prenote
+          - DepItemNotOfChg
+        NoticeOption:
+          type: string
+          description: "Option for account notice. \n\n\n\n\n\n\n\n**Note:** Use this field to generate notice for Deposit account.\n\n\n\nValue is set as \"true\" if want to generate notices."
+          enum:
+          - NoNotice
+          - GenerateNotice
+        HandlingCode:
+          type: string
+          description: "Handling code to specify the handling process of the notification and statement forms.\n\n\n\n**Note:** Enter any user-defined special handling code that is attached to the notice. \n\n\n\nThe codes are set up in the Precision parameters by the financial institute. \n\n\n\nESF would pass through the value sent in the request to core."
+    addAccountRequest_DepositAcctInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+
+
+
+            **Note:** Refers to amount of balance.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_BalanceAtClosingAmt_CurCode'
+      description: Details of the currency amount.
+    addAccountRequest_DepositAcctInfo_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
+          type: string
+          description: Type of account balance.
+          enum:
+          - Avail
+          - ChargeOff
+          - Current
+          - BalanceLastStatement
+          - InterestAccrued
+        CurAmt:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_CurAmt'
+    addAccountRequest_DepositAcctInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        NameIdent:
+          maxLength: 36
+          type: array
+          description: "Name identification value to identify the names related to the account address.\n\n\n\n**Note:** Used to identify primary customer's name of an account. Provide value '0' in request to use the customer-level name (which may be the CIF primary name or the CIF alternate name). Provide value '1-99' to identify the primary customer's alternate name to use for account correspondence. The alternate name should already exist for the customer. "
+          items: {}
+        AddressIdent:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique address identification value.
+
+
+
+            **Note:** This field is used to identify the primary customer's address to use for an account. Provide '0' in request to use the customer-level address (which may be the CIF Primary address or a CIF Alternate address). Provide '1-99' in request to identify the primary customer's alternate address to use for account correspondence. The alternate address should already exist for the customer. The effective date (start date) of alternate address to be associated to an account, cannot be updated with AcctAdd service. Consumer should call PartyMod service to update customer's information and address details.
+
+
+
+        AddrType:
+          type: string
+          description: "Type of the address. \n\n\n\n\n\n\n\n**Note:** Address identified in AddressIdent field is the primary address associated to the deposit account."
+          enum:
+          - Primary
+    addAccountRequest_DepositAcctInfo_WithholdingData:
+      type: object
+      properties:
+        WithholdingType:
+          type: string
+          description: Withholding type to identify if withholding percent is FederalTax or StateTax.
+          enum:
+          - FederalTax
+          - StateTax
+        WithholdingCode:
+          type: string
+          description: |-
+            Code to identify the withholding.
+
+
+
+            **Note:** Withholding Codes need to be created in Parameters.  Parameters>Bank Information>Withholding Percents.  Only values defined in that parameter can be used in this field(s).
+      description: Details of the withholding data used to process interest withholdings.
+    addAccountRequest_DepositAcctInfo_Fee:
+      required:
+      - FeeType
+      properties:
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of fee.
+
+
+
+            **Note:** User-defined code used when calculating the charge for this account.
+        FeeType:
+          type: string
+          description: Type of fee.
+          enum:
+          - OverdraftInt
+          - StopFee
+          - NegativeBal
+          - DepItemRet
+        FeeOption:
+          type: string
+          description: |+
+            Processing option for fee type.
+
+
+
+          enum:
+          - Charge
+        WaiveFeeInd:
+          type: boolean
+          description: "Value to indicate the fee is to be waived off.\n\n\n\n**Note:** Select this field to calculate and waive the OD interest charge.  "
+    addAccountRequest_DepositAcctInfo_AccessLevelData:
+      type: object
+      properties:
+        AccessLevelType:
+          type: string
+          description: Type of access level data.
+        AccessLevelCode:
+          type: string
+          description: |-
+            Code to identify the access level.
+
+
+
+            **Note:** Security level is assigned to limit the access to accounts by certain employees. Generally, a higher security level is assigned to employee, dormant and written off accounts.  Security levels need to be set up in parameters.
+      description: Details of access level data.
+    addAccountRequest_DepositAcctInfo_RewardAcct:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+
+
+            **Note:** Required if transfer is done to a customer with an existing bank account within the financial institution.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
+
+            **Note:** Type of account to which the Rewards/CashBack or TransferCents are deposited from the account.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+      description: Details of the reward associated with an account.
+    addAccountRequest_DepositAcctInfo_RewardsData:
+      properties:
+        RewardType:
+          type: string
+          description: |-
+            Type of reward.
+
+
+
+            **Note:** If TransferCents is selected, you must should have a license for this product.  See for account manager for more information about using this product.
+          enum:
+          - CashBack
+          - TransferCents
+        RewardDispositionType:
+          type: string
+          description: |-
+            Type of reward disposition to indicate the method for converting reward to cash.
+
+
+
+            **Note:** Reward disposition of the reward type selected. If RewardType is 'TransferCents' the application should provide the actual 'Transfer Cents Code' setup, linked to the Reward Account.
+          enum:
+          - TransferToAcct
+          - Captitalize
+        RewardAcct:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_RewardAcct'
+    addAccountRequest_DepositAcctInfo_IntDispData_IntDistAcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+
+
+            **Note:** If the earnings handling is not equal to ACH this field refers to an existing account on the core. If the earnings handling is equal to ACH, input the account number to which the funds should be transferred.
+        AcctType:
+          type: string
+          description: |+
+            Type of an account.
+
+
+
+
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
+
+            **Note:** If DDA and SDA are in same module, send the value of the account that you want to use.
+
+
+
+            You can find out if it is a DDA or SAV by checking the Type Code Parameter (if necessary). Many times the title on the Type Code will tell you what type of account it is.
+
+
+
+          enum:
+          - DDA
+          - SDA
+          - CDA
+        FIIdentType:
+          type: string
+          description: |+
+            Identification type of a financial institution.
+
+
+
+          enum:
+          - RoutingNum
+        FIIdent:
+          maxLength: 34
+          type: string
+          description: |-
+            Unique identification number of a financial institution.
+
+
+
+            **Note:** *Conditionally Required field*
+
+
+
+
+
+
+
+            Required when earnings handling is ACH.
+      description: |+
+        Unique information to identify the account record.
+
+
+
+        **Note:** *Conditionally Required aggregate*
+
+
+
+
+
+
+
+        Required to be provided if DepositAcctInfo/IntDispData/IntDisposition is 'TransferToAcct' or 'ACHXfer'.
+
+
+
+        Not required if IntDisposition is "AddToBal" or "Check".
+
+
+
+    addAccountRequest_DepositAcctInfo_IntDispData_IntDistAcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_IntDispData_IntDistAcctRef_AcctKeys'
+        ACHTrnCode:
+          type: string
+          description: |-
+            Code to identify the ACH transaction.
+
+
+
+            **Note:** *Conditionally Required field*
+
+
+
+
+
+
+
+            Required when earnings handling is ACH.
+        ACHReceivingType:
+          type: string
+          description: |-
+            Type of ACH account to indicate if an account is commercial or consumer.
+
+
+
+            **Note:** *Conditionally Required field*
+
+
+
+
+
+
+
+            Required when earnings handling is ACH.
+          enum:
+          - Person
+          - Organization
+        ACHCompanyEntryDesc:
+          maxLength: 30
+          type: string
+          description: |-
+            Description of ACH company entry.
+
+
+
+            **Note:** This field should not be blank for earnings paid to an external account.
+
+
+
+            For example: "DDA Earnings"
+      description: Details of the interest distribution account reference indicating the object where the interest is distributed.
+    addAccountRequest_DepositAcctInfo_IntDispData:
+      type: object
+      properties:
+        IntDisposition:
+          type: string
+          description: "Option to indicate the interest disposition. \n\n\n\n**Note:** ACH fields must be filled if ACHXfer is selected."
+          enum:
+          - TransferToAcct
+          - Check
+          - AddToBal
+          - ACHXfer
+        IntDistAcctRef:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_IntDispData_IntDistAcctRef'
+      description: Details of the interest disposition for the account.
+    addAccountRequest_DepositAcctInfo_ClubPayoffData_ClubPayoffAcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+            **Note:** Required if Club Handling is equal to 1 - Add to a DDA account, 2 - Add to a savings account or 3 - Add to a certificate account. Account should be an existing account if transfer is not an ACHXfer.
+
+
+
+
+
+
+
+            If set to ACHXfer, this account number is in another financial institution and account number does not need to exist on the core.
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - CDA
+        FIIdentType:
+          type: string
+          description: |-
+            Identification type of a financial institution.
+
+
+
+
+
+
+
+            **Note:** Required if ACH set the club handling cote to 7.
+          enum:
+          - RoutingNum
+        FIIdent:
+          maxLength: 34
+          type: string
+          description: |-
+            Unique identification number of a financial institution.
+
+
+
+            **Note:** Required if ACH set the club handling cote to 7.
+      description: Unique information to identify the account record.
+    addAccountRequest_DepositAcctInfo_ClubPayoffData_ClubPayoffAcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_ClubPayoffData_ClubPayoffAcctRef_AcctKeys'
+        ACHTrnCode:
+          type: string
+          description: |-
+            Code to identify the ACH transaction.
+
+
+
+            **Note:** Required if ACH set the club handling cote to 7.
+        ACHReceivingType:
+          type: string
+          description: |-
+            Type of ACH account to indicate if an account is commercial or consumer.
+
+
+
+            **Note:** Required if ACH set the club handling cote to 7.
+          enum:
+          - Person
+          - Organization
+        ACHCompanyEntryDesc:
+          maxLength: 30
+          type: string
+          description: |-
+            Description of ACH company entry.
+
+
+
+            **Note:** Required if ACH set the club handling cote to 7.
+        SameDayInd:
+          type: boolean
+          description: |-
+            Value to indicate the ACH transaction is processed on the same day.
+
+
+
+            **Note:** Required if ACH set the club handling cote to 7.
+      description: Reference information of the account where the payoff of a club savings account is being distributed.
+    addAccountRequest_DepositAcctInfo_ClubPayoffData:
+      required:
+      - ClubPayoffOption
+      type: object
+      properties:
+        ClubPayoffOption:
+          type: string
+          description: |-
+            Option for processing club payoff.
+
+
+
+            **Note:** Method used for distribution.
+          enum:
+          - TransferToAcct
+          - Check
+          - ACHXfer
+        ClubPayoffAcctRef:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_ClubPayoffData_ClubPayoffAcctRef'
+      description: Information for processing club payoff.
+    addAccountRequest_DepositAcctInfo_OverdraftData_OverdraftLimitAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+
+
+
+            **Note:** This number should be a negative value. This should be the amount the account can be overdrawn before the system will automatically return debits.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_BalanceAtClosingAmt_CurCode'
+      description: Details of the amount specified in overdraft program.
+    addAccountRequest_DepositAcctInfo_OverdraftData:
+      type: object
+      properties:
+        OverdraftEnrollOpt:
+          type: string
+          description: |-
+            Option to indicate the customer enrollment for overdraft program.
+
+
+
+            **Note:** Used to track overdraft occurrences for customers opted-in to an overdraft program. Should be configured in General settings>Exception item process>Occurrence.
+
+
+
+            Provide 'OptIn' to enroll for overdraft facility for account to be created. If 'OptOut' or no value is provided, no overdraft is supported on the account.
+          enum:
+          - OptIn
+          - OptOut
+        BalanceVerification:
+          type: string
+          description: |-
+            Option used to indicate the overdraft decision for an account.
+
+
+
+            **Note:** Refers to decision balance used to make overdraft decisions for an account.
+          enum:
+          - Current
+          - Collected
+        OverdraftLimitAmt:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_OverdraftData_OverdraftLimitAmt'
+        OverdraftLimitReviewOption:
+          type: string
+          description: |-
+            Option used to indicate the method to review the overdraft limit.
+
+
+
+            **Note:** Only available if client purchased the OD privilege product.
+
+
+
+            Code to indicate if account and its items are displayed on the OD/Return Iiem review when it presents an overdraft or return item against the account.
+          enum:
+          - Review
+          - DoNotReview
+          - ReviewOverdraft
+        OverdraftTypeCode:
+          type: string
+          description: |-
+            Code to indicate the type of overdraft.
+
+
+
+            **Note:** Values are client-defined and should be set up in parameters.
+      description: Details of overdraft program.
+    addAccountRequest_DepositAcctInfo_SvcChgData_SvcChgMethod:
+      properties:
+        SvcChgMethodType:
+          type: string
+          description: |-
+            Type of method used to calculate service charge.
+
+
+
+            **Note:** Service charge method.
+          enum:
+          - Activity
+        SvcChgMethodOpt:
+          type: integer
+          description: |-
+            Service charge code on the account.
+
+
+
+            **Note:** Service charge code on the account.
+          format: int64
+    addAccountRequest_DepositAcctInfo_SvcChgData_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+            **Note:** Use only if the service charge for the account should be debited from a different account. This needs to be a valid account number in the financial institution.
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+      description: Unique information to identify the account record.
+    addAccountRequest_DepositAcctInfo_SvcChgData_SvcChgRelatedAcct:
+      required:
+      - AcctKeys
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_SvcChgData_AcctKeys'
+    addAccountRequest_DepositAcctInfo_SvcChgData_SvcChgFlatFee:
+      properties:
+        SvcChgFlatFeeType:
+          type: string
+          description: |-
+            Type of service charge flat fee.
+
+
+
+            **Note:** Service Charge Flat Fee Type.
+          enum:
+          - DepositItem
+        SvcChgFlatFeeIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of service charge flat fee.
+
+
+
+            **Note:** Code to calculate the deposit item return charge for an account.  Configure the code in Parameters>Deposited Item Return Charge before it can be used on the account.
+    addAccountRequest_DepositAcctInfo_SvcChgData:
+      type: object
+      properties:
+        SvcChgMethod:
+          type: array
+          description: Method used to calculate the automatic service charges for maintenance or activity.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_SvcChgData_SvcChgMethod'
+        SvcChgRelatedAcct:
+          type: array
+          description: Details of accounts associated with the service charge.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_SvcChgData_SvcChgRelatedAcct'
+        SvcChgFlatFee:
+          type: array
+          description: "Flat fees associated with service charge.\n\n\n\n**Note:** To associate a 'Deposit Item Return Charge' on the account, consumer should either provide the FeeIdent in DepositAcctInf/Fee aggregate or within  DepositAcctInfo/SvcChgData/SvcChgFlatFee aggregate.  \n\n\n\nBoth aggregates should not be sent with FeeIdent for a 'Deposit Item Return Charge'.\n\n\n\n\n\n\n\nIn case the Deposit Item Return Charge is provided in DepositAcctInfo/Fee aggregate (FeeType as 'DepItemRet') and SvcChgFlatFee (SvcChgFlatFeeType as 'DepositItem'), the FeeIdent provided in DepositAcctInfo/Fee/FeeIdent shall be overridden by SvcChgFlatFeeIdent."
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_SvcChgData_SvcChgFlatFee'
+        SvcChgAcctRef:
+          type: object
+          description: Reference details of account associated with the service charge.
+        SvcChgWaiveCode:
+          type: integer
+          description: |-
+            Code to identify the service charge to be waived off.
+
+
+
+            **Note:** Reason for waive of service charge. User-defined codes and to be set up in parameters.
+          format: int64
+        SvcChgWaiveCycles:
+          type: integer
+          description: |-
+            Number of cycles for which the service charge is waived.
+
+
+
+            **Note:** The number of cycles service charging will be waived.
+          format: int64
+        IncAcctRelSvcChgInd:
+          type: boolean
+          description: Value to indicate the account is included in related account service charges.
+      description: Details of the service charge associated with an account.
+    addAccountRequest_DepositAcctInfo_CommercialAnalysisData_AnalysisChargeAcct_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+
+
+            **Note:** Set this to the 0 to debit the same account being analyzed. If you want to assess analysis charges to another account enter that account number.  This account will need to be an existing account in the FI.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA (SDA is also part of this module)
+      description: Unique information to identify the account record.
+    addAccountRequest_DepositAcctInfo_CommercialAnalysisData_AnalysisChargeAcct:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_CommercialAnalysisData_AnalysisChargeAcct_AcctKeys'
+      description: Details of an account that is debited for analysis charges.
+    addAccountRequest_DepositAcctInfo_CommercialAnalysisData:
+      type: object
+      properties:
+        AnalysisCode:
+          type: string
+          description: |-
+            Code to determine if an account is analyzed for profitability, methods of handling analysis charges and customer reporting.
+
+
+
+            **Note:** Code should be configured in parameters to be used in this field. (Parameters>DDA>Account Analysis Charge)
+        AnalysisChargeAcct:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_CommercialAnalysisData_AnalysisChargeAcct'
+      description: |-
+        Data related to commercial analysis.
+
+
+
+        **Note:** Use this aggregate if new DDA account has account analysis.
+    addAccountRequest_DepositAcctInfo_RegCCData:
+      type: object
+      properties:
+        RegCCStatus:
+          type: string
+          description: |-
+            Status of regulation CC.
+
+
+
+            **Note:** To assign float code, make sure the EFAA days are set up in the proof capture parameter.
+          enum:
+          - None
+          - NewAccount
+          - OverdrafterAuto
+          - NormalAuto
+      description: Data used to process regulation CC.
+    addAccountRequest_DepositAcctInfo_AcctReconciliation_Contact_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: |-
+            Type of a phone.
+
+
+
+
+
+
+
+            **Note:** Values are defined with respect to selection in DepositAcctInfo/AcctReconciliation/Contact/PhoneNum/PhoneIdent.
+          enum:
+          - EvePhone
+          - DayPhone
+          - Home
+          - Work
+          - Mobile
+          - Fax
+        PhoneIdent:
+          type: integer
+          description: |-
+            Unique identifier of phone.
+
+
+
+            Use if more than one occurrence of a phone type (for example, 5 mobile phones) is available. This element serializes the phones.
+
+
+
+            **Note:** If rcn-plan > 0 this is the corresponding contact.seq where contact.code = 0,1,2,6,7 or 8 (phone).
+          format: int64
+      description: Phone number details of the account holder.
+    addAccountRequest_DepositAcctInfo_AcctReconciliation_Contact:
+      type: object
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctReconciliation_Contact_PhoneNum'
+        ContactName:
+          maxLength: 40
+          type: string
+          description: |-
+            Name of the contact.
+
+
+
+            **Note:** Refers to account reconciliation contact.
+      description: |-
+        Contact name details for account reconciliation type.
+
+
+
+        **Note:** This aggregate is used if the rcn-plan is greater than 0 (zero).
+    addAccountRequest_DepositAcctInfo_AcctReconciliation_UserDefinedData:
+      required:
+      - UserIdent
+      type: object
+      properties:
+        UserIdent:
+          type: string
+          description: |-
+            Unique identifier of user-defined data.
+
+
+
+            **Note:** Account reconciliation user-defined fields.
+        Value:
+          maxLength: 256
+          type: string
+          description: |-
+            Value of the client-defined data item.
+
+
+
+            **Note:** Values are client-defined.
+      description: Details of user-defined data.
+    addAccountRequest_DepositAcctInfo_AcctReconciliation_PositivePay_Contact_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: |-
+            Type of a phone.
+
+
+
+
+
+
+
+            **Note:** Values are defined with respect to selection in DepositAcctInfo/AcctReconciliation/Contact/PhoneNum/PhoneIdent.
+          enum:
+          - Fax
+        PhoneIdent:
+          type: integer
+          description: |-
+            Unique identifier of phone.
+
+
+
+            Use if more than one occurrence of a phone type (for example, 5 mobile phones) is available. This element serializes the phones.
+
+
+
+            **Note:** If rcn-plan > 0 this is the corresponding contact.seq where contact.code = 0,1,2,6,7 or 8 (phone).
+          format: int64
+      description: Phone number details of an account holder.
+    addAccountRequest_DepositAcctInfo_AcctReconciliation_PositivePay_Contact:
+      type: object
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctReconciliation_PositivePay_Contact_PhoneNum'
+        ContactName:
+          maxLength: 40
+          type: string
+          description: |-
+            Name of the contact for positive pay.
+
+
+
+            **Note:** Name of the contact for positive pay.
+      description: Contact details for positive pay.
+    addAccountRequest_DepositAcctInfo_AcctReconciliation_PositivePay:
+      type: object
+      properties:
+        DeliveryMethod:
+          type: string
+          description: Method used to deliver positive pay.
+          enum:
+          - Manual
+          - InternetBanking
+        Contact:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctReconciliation_PositivePay_Contact'
+      description: |-
+        Details of the positive pay.
+
+
+
+        **Note:** Only used if reconciliation plan is equal to daily positive pay or daily reverse positive pay. Do not map this aggregate if set to anything other than these two values.
+
+
+
+
+
+
+
+        Access to this field is denied if product is not purchased.
+    addAccountRequest_DepositAcctInfo_AcctReconciliation:
+      type: object
+      properties:
+        ReconciliationType:
+          type: string
+          description: |-
+            Type of account reconciliation.
+
+
+
+            **Note:** Used to define the type of reconciliation processing used in daily processing.
+          enum:
+          - None
+          - Standard
+          - Partial
+          - DailyPositivePay
+          - DailyReversePositivePay
+          - InternalBankAcct
+        Contact:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctReconciliation_Contact'
+        StaleDays:
+          type: integer
+          description: Number of days an item remains unreconciled before it gets identified as staled dated.
+          format: int64
+        DormantDays:
+          type: integer
+          description: Number of days an item remains unreconciled before it gets identified as dormant dated.
+          format: int64
+        UserDefinedData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctReconciliation_UserDefinedData'
+        PositivePay:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctReconciliation_PositivePay'
+      description: Details of account reconciliation.
+    addAccountRequest_DepositAcctInfo:
+      type: object
+      properties:
+        Brand:
+          type: string
+          description: |-
+            Name of the brand.
+
+
+
+            **Note:** Values are client-defined.
+        AcctDtlStatus:
+          type: string
+          description: "Current status of an account.\n\n\n\n**Note:** Values are defined by Precision.\n\n\n\nIn most cases, precision creates the account in \"New\"/\"Active\" status. ESF does not validate the request data and only request data and only returns the error from one core in case of a failure while creating the account in Precision. Calling application must ensure that the request sent to the ESF validates the requirements in core to allow the account to be set up (with the desired status).\n\n\n\nFor example: \n\n\n\nA request to create the account in 'Closed' status shall lead to an error in Precision if details in request fail during validation by core."
+          enum:
+          - 0 - New
+          - 1 - Active
+          - 2 - Dormant
+          - 3 - Locked
+          - 5 - Credits Only
+          - 6 - Debits Only
+          - 8 - Charged Off
+          - 9 - Closed
+        AcctIdent:
+          type: array
+          description: "Information related to identifier of an account record used as alternative identifier. \n\n\n\n**Note:** If AcctIdent is not provided, system generates a new account number for an account."
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctIdent'
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: "Unique identifier of a product to indicate the processing options of account.\n\n\n\n**Note:** This is the type of account. \n\n\n\nRequired to be provided in parameters for types codes, if it is DDA or Saving account."
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+        TaxIncentiveType:
+          type: string
+          description: "Type of tax incentive. \n\n\n\n\n\n\n\n**Note:** Enter the number of the plan, if the account is IRA.\n\n\n\nThe value entered must match an existing IRA plan and is set up by the financial institution in Precision at the time of onboarding.\n\n\n\nThe plan number provided in the request need to be associated to the new account being created, and is passed as-is from ESF to core. "
+          enum:
+          - 0-99
+        InitialAmount:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_InitialAmount'
+        OpenDt:
+          type: string
+          description: "Date on which the account record is created.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
+          format: date
+        ClosedDt:
+          type: string
+          description: "Date on which the account is closed.\n\n\n\n\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Only used if dda.stat is equal to '9' (closed)."
+          format: date
+        BalanceAtClosingAmt:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_BalanceAtClosingAmt'
+        LastContactDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Last contact date when the Financial Institution contacted the customer for this account.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+
+
+
+
+            **Note:** Used for dormant accounts. Only available if dormancy option field is A and the Demand Deposits Date Last Contact field is selected in Parameters>Bank Information>Dormancy Options.
+        DateData:
+          type: array
+          description: Details of additional date types and values associated with the account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_DateData'
+        RelationshipMgr:
+          type: array
+          description: Information about the financial institution officers who have management-related responsibilities of the account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_RelationshipMgr'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch in which the account is primarily created for the party.
+
+
+
+            **Note:** Needs to be an existing branch on the core.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Name that customer can assign to the account for easy identification.
+        AcctTitleOption:
+          type: string
+          description: |-
+            Printing option for the account title.
+
+
+
+
+
+
+
+            **Note:** Input print option for Secondary customer or title.
+
+
+
+            Either PartyAcctRelInfo/NamePrintOption (one or more occurrences) or DepositAcctInfo/AcctTitleOption should be provided in the request. If AcctTitleOption is provided and more titles need to be associated to the account, Additional Titles for secondary customer can be sent in AddtlTitles aggregate.
+
+
+
+
+
+
+
+            0 - None (Display on Inquiry Only)
+
+
+
+            1 - SecondLine (Print in the Second Name line)
+
+
+
+            2 - ReplaceNameAddrLine (Print in place of Name/Address)
+
+
+
+            3 - FirstAvailAddrLine (Print on the First Open Line)
+
+
+
+            4 - PrintOutsideWindow (Print Outside of Address Window)
+
+
+
+            9 - OnlyforInquiry (Do Not Print Or Display on Inquiry)
+          enum:
+          - SecondLine
+          - FirstAvailAddrLine
+          - ReplaceNameAddrLine
+          - None
+          - OnlyforInquiry
+          - PrintOutsideWindow
+        AddtlTitles:
+          type: array
+          description: Details of additional titles required for an account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AddtlTitles'
+        AccountingMethod:
+          type: string
+          description: 'Method to define which accounts are integrated into the general ledger. '
+          enum:
+          - GeneralLedger
+        AccountingValue:
+          type: string
+          description: |-
+            Numeric value associated with the chosen accounting method.
+
+
+
+            **Note:** This is a value that is set up in defaults for each TypeCode.
+          enum:
+          - This is the GL code and could be set up in defaults for each type code, if desired.  All GL Codes will need to be set up in Parameters to be used in this field.
+        ClassCode:
+          type: string
+          description: |-
+            Code to group accounts for the purpose of processing and reporting.
+
+
+
+            **Note:** This is user-defined field in PRC used to define a customer. It is also used to track Opt In/Opt Out.
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_ClientDefinedData'
+        AcctStmtData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctStmtData'
+        NoticeData:
+          type: array
+          description: Details of account notice processing data.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_NoticeData'
+        ProdIntRateId:
+          maxLength: 36
+          type: string
+          description: "Code to specify how the interest rate and interest is calculated for the account.\n\n\n\n**Note:** Code of earnings.\n\n\n\nValues are client-defined and '0' indicates no earnings. \n\n\n\nEarnings code determines if the rate index and tiers can be adjusted at the account level or only at parameter level."
+        AcctBal:
+          type: array
+          description: Amount of balance present in a financial institution account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctBal'
+        PostAddr:
+          type: array
+          description: Postal address details of the account holder.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_PostAddr'
+        WithholdingData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_WithholdingData'
+        Fee:
+          type: array
+          description: Details of recurring fee to identify the type and amount of fee charged.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_Fee'
+        CreditRisk:
+          type: array
+          description: Credit risk details related to the account.
+          items: {}
+        ReportGroupCode:
+          type: string
+          description: |-
+            Client-defined code to group the accounts for reporting purposes.
+
+
+
+            **Note:** Enter the number assigned to the customer. This number is not incremented in Precision and can be numeric value. It will carry down from the customer information file, but can be maintained at the account level.
+        DocDistributionOption:
+          type: string
+          description: "Client defined method to indicate the document distribution method used for processing the notices and statement forms.\n\n\n\n\n\n\n\n**Note:** Refers to DeliveryCode.\n\n\n\nValues are client-defined. \n\n\n\nAfter statement or notice is produced for an account, the system uses delivery code to determine which director class of service code is generated in the statement or notice footer."
+        NAICS:
+          maxLength: 6
+          type: string
+          description: |-
+            Six-digit North American Industry Classification System (NAICS) code used to indicate the type of customer based upon standard government definitions.
+
+
+
+            **Note:** This is the NAICS code for the account. It Is used to categorize the account based on the primary activity of the account owner. These values are defined in precision parameters.
+        CallReportCode:
+          type: string
+          description: "Code to identify the call report.\n\n\n\n**Note:** *Required field*\n\n\n\n\n\n\n\nValue for this field needs to be set up in parameters based "
+        AccessLevelData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AccessLevelData'
+        RewardsData:
+          type: array
+          description: Details of the rewards.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_RewardsData'
+        IntDispData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_IntDispData'
+        ClubPayoffData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_ClubPayoffData'
+        OverdraftData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_OverdraftData'
+        ChargeOffCode:
+          type: string
+          description: |-
+            Code to indicate the charge off.
+
+
+
+            **Note:** Code defined in parameters and can be used to automatically write off a DDA account if certain criteria are met.
+        SvcChgData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_SvcChgData'
+        CommercialAnalysisData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_CommercialAnalysisData'
+        RegCCData:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_RegCCData'
+        AcctReconciliation:
+          $ref: '#/components/schemas/addAccountRequest_DepositAcctInfo_AcctReconciliation'
+      description: |-
+        Details of the deposit account.
+    addAccountResponse_AcctStatusRec_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: |-
+            Unique identifier of a branch.
+
+
+
+            Example: "1234"
+      description: Unique information to identify the account record.
+    addAccountResponse_AcctStatusRec_AcctStatus:
+      required:
+      - AcctStatusCode
+      type: object
+      properties:
+        AcctStatusCode:
+          type: string
+          description: Status code of an account.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the account status is changed. \n\n\n\n\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\n\n\nExample: 2021-01-31T23:59:59.999"
+      description: Status details of the account.
+    addAccountResponse_AcctStatusRec:
+      required:
+      - AcctKeys
+      - AcctStatus
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctKeys'
+        AcctStatus:
+          $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctStatus'
+      description: Details of the updated status of the account.
