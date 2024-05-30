@@ -1,0 +1,1061 @@
+---
+openapi: 3.0.1
+info:
+  title: Card Service
+  description: The Card service provides administration in respect to creation, modification, inquiry, and deletion of any type of EFT cards used by the holders. It supports operations managing the credit, debit, prepaid and private label cards.
+  version: 11.0.0_CT
+servers:
+- url: /
+paths:
+  /cardservice/cards/cards:
+    post:
+      tags:
+      - Add Card
+      summary: Add Card.
+      description: "Add Card API adds a new debit card account in the core and relates it to one or more parties.<br>The request information for the new card includes the Tax Id of the card owner, embossing information and the accounts linked to the new card. A card number must be sent in the request for Instant Issue card. For other card types, card number is not required. <br>If the bank uses EFT Card Services, then everything flows through real time for new card creation.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: CardAddOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardAddOperRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAddOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardAddOperResponse'
+      x-group-name: Card Service
+      x-proxy-name: Add Card
+      x-child-product-name: Debit Cards
+      x-core: Cleartouch
+  /cardservice/cards/cards/secured:
+    post:
+      tags:
+      - Get Card
+      summary: Get Card.
+      description: "Get Card API retrieves details of a debit card account from the core. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: CardInqOperSecured
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardInqOperSecuredRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardInqOperSecuredResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardInqOperSecuredResponse'
+      x-group-name: Card Service
+      x-proxy-name: Get Card
+      x-child-product-name: Debit Cards
+      x-core: Cleartouch
+components:
+  schemas:
+    CardAddOperRequest:
+      required:
+      - CardInfo
+      properties:
+        PartyCardRelInfo:
+          type: array
+          description: "Details of the party and their relationship with the card.\n\n**Note:** Cleartouch allows only one customer to be linked to a card. "
+          items:
+            $ref: '#/components/schemas/CardAddOperRequest_PartyCardRelInfo'
+        CardInfo:
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo'
+    CardAddOperResponse:
+      required:
+      - CardStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        CardStatusRec:
+          $ref: '#/components/schemas/CardAddOperResponse_CardStatusRec'
+    CardInqOperSecuredRequest:
+      required:
+      - CardSel
+      properties:
+        CardSel:
+          $ref: '#/components/schemas/CardInqOperSecuredRequest_CardSel'
+    CardInqOperSecuredResponse:
+      required:
+      - CardRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        CardRec:
+          type: array
+          description: Details of the card record.
+          items:
+            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Value that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Value that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    CardAddOperRequest_PartyRef_PartyKeys:
+      required:
+      - PartyIdent
+      - PartyIdentType
+      type: object
+      properties:
+        PartyIdentType:
+          type: string
+          description: 'Type of party identification. '
+          enum:
+          - TaxIdent
+          - PersonNum
+        PartyIdent:
+          maxLength: 60
+          type: string
+          description: |-
+            Unique identification type of the party record.
+
+            **Note:** Refers to the customer's personal identification number or the customer’s Tax Id.
+
+            Integrators using the CardAdd API must first search for the customer record. If more than one customer record is returned based on that search – then the integrator must determine who it is ordering this new card.
+
+            Once the correct customer record is selected – the integrator must use the customer’s permanent Id and not the TaxId. When TaxId is used in this case, then the service provider attaches the card to the first customer record.
+      description: "Unique information to identify the party record. \n\n**Note:** Refers to the customer identification. "
+    CardAddOperRequest_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/CardAddOperRequest_PartyRef_PartyKeys'
+      description: 'Reference details of a party object that is part of the relationship. '
+    CardAddOperRequest_PartyCardRelInfo:
+      required:
+      - PartyCardRelType
+      - PartyRef
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/CardAddOperRequest_PartyRef'
+        PartyCardRelType:
+          type: string
+          description: Type of relationship between the party and the card.
+          enum:
+          - Owner
+    CardAddOperRequest_CardInfo_CardFee:
+      required:
+      - CardFeeType
+      properties:
+        CardFeeType:
+          type: string
+          description: 'Type of a card fee. '
+          enum:
+          - CardFee
+          - TrnFee
+          - ForeignFee
+    CardAddOperRequest_CardInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        Addr1:
+          maxLength: 64
+          type: string
+          description: "Address line 1. \n\n**Note:** Max length: 35 characters.\n\n"
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided.\n\n**Note:** Max length: 35 characters."
+        Addr3:
+          maxLength: 64
+          type: string
+          description: "Address line 3. \n\nTo enter Addr3, Addr2 field must be provided. \n\n**Note:** Max length: 35 characters."
+        City:
+          maxLength: 32
+          type: string
+          description: "Name of the city. \n\n**Note:** Max length: 24 characters."
+        StateProv:
+          type: string
+          description: |-
+            State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+
+            **Note:** Max length: two characters.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: "Postal code or zip code. \n\n**Note:** Postal Code is a string up to 10 characters in length. Postal Codes can be represented as either a five-digit Zip Code or in a Zip + four format (that is, 5 digits with a hyphen separating the Zip Code and the additional four-digit code). If the additional four-digit code is omitted, the hyphen should also be omitted.\n\nFor example, a value in PostalCode of “54321” indicates a zip code of 54321. A value of “54321-1234” indicates a zip code of 54321 and a 4-digit code of 1234."
+        Country:
+          maxLength: 64
+          type: string
+          description: |-
+            Name of the country.
+
+            **Note:** Max length: two characters.
+        AddrType:
+          type: string
+          description: 'Type of the address. '
+          enum:
+          - Primary
+    CardAddOperRequest_CardInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n"
+          enum:
+          - ISO4217-Alpha
+          - ISO4217-Numeric
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported.\n\n"
+      description: Details of currency code.
+    CardAddOperRequest_CardInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+
+            **Note:** Max length: five digits.
+        CurCode:
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt_CurCode'
+      description: Details of the currency limit amount.
+    CardAddOperRequest_CardInfo_CardTrnLimit:
+      required:
+      - TrnTypeValue
+      properties:
+        TrnTypeValue:
+          type: string
+          description: 'Type of transaction. '
+          enum:
+          - Withdrawal
+        TrnSrc:
+          type: string
+          description: 'Type of transaction source. '
+          enum:
+          - POS
+          - ATM
+        CurAmt:
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CurAmt'
+    CardAddOperRequest_CardInfo_RefData:
+      required:
+      - RefType
+      properties:
+        RefType:
+          type: string
+          description: 'Type of reference information. '
+          enum:
+          - CardImage
+        RefIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification number that identifies the reference data.
+    CardAddOperRequest_CardInfo_AcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+      description: 'Unique information to identify the account record. '
+    CardAddOperRequest_CardInfo_AcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_AcctRef_AcctKeys'
+      description: Reference information of an account linked to a card.
+    CardAddOperRequest_CardInfo_AcctLinkData:
+      properties:
+        AcctRef:
+          $ref: '#/components/schemas/CardAddOperRequest_CardInfo_AcctRef'
+        OtherAcctRel:
+          type: integer
+          description: "Code that identifies the account's relationship with the card.\n\n \n\n\n\n**Note:** An OAR of one or more account type (DDA or SDA) is linked to the card, then it is primary account for each account type. \n\nFor example: If a card account is linked to three DDA and two SDA accounts, one of the DDA accounts and one of the SDA accounts must be designated as the primary account. If only one account is linked to a card then this field is optional and will be set by default. \n\n\n\nThe valid values are:\n\n- '1': Primary account \n\n- '2' : Secondary account\n\nCleartouch allows no values other than this. "
+          format: int64
+        IsPrimaryAddress:
+          type: boolean
+          description: "Value to indicate the account's address is used as the primary address for the card.\n\n**Note:** This field is used to identify which address should be used to send the new card (plastic). This is an optional field and if not sent (or sent as 'false') then either the address provided in this request or the customer's primary address must be used to send the new card. \n\n\n\nIf this field is sent as 'true' for a linked account, then that account's primary address is used to send the new card (plastic). \n\nOnly one linked account should have this value sent as 'true' in the request. "
+    CardAddOperRequest_CardInfo:
+      required:
+      - EmbossingName
+      type: object
+      properties:
+        CardNum:
+          maxLength: 32
+          type: string
+          description: "Number assigned to the card. \n\n**Note:** Either the card number or the product identifier is required and hence must be sent in the request. \n\n"
+        CardType:
+          type: string
+          description: "Type of a card.\n\n**Note:** Cleartouch supports client defined values from 00 - 79 for this field. It also supports 'II' for Instant Issue and 'IB for Internet Banking. \n\nWhen the card type is send as 'II' in the request then the Instant Issue Indicator must be 'true' in the request. \n\n"
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: "Unique identifier of a product. This value identifies the processing parameters of the card.\n\n**Note:** Either the card number or the product identifier is required and hence must be sent in the request. \n\nThis field refers to the client defined product codes in Cleartouch. "
+        InstantIssuedInd:
+          type: boolean
+          description: "Value to indicate the card will be issued instantly to the customer. \n\n**Note:** The value 'false' indicates that the plastic card will be mailed to the customer. "
+        CardFee:
+          type: array
+          description: Details of charges and the fee applicable to the card.
+          items:
+            $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CardFee'
+        ExpDt:
+          type: string
+          description: "Date on which the card becomes inactive. \n\nFormat: yyyy-mm-dd\n\nExample: 2011-11-20\n\n**Note:** If a date is not sent in the request, then Cleartouch sets the expiration date automatically using the Cleartouch core parameter(22-5138). If a date cannot be established using this parameter, the system will default the date to 12/2049. "
+          format: date
+        CardCategory:
+          type: string
+          description: 'Code to indicate the category of the card. '
+          enum:
+          - Personal
+          - Business
+        EmbossingName:
+          maxLength: 80
+          type: string
+          description: "Name embossed on the front side of the card. \n\n**Note:** If a value is not sent in the request, then the Customer's name is used. \n\nMax length: 35 characters\n\nEmbossingName and/or SecondaryEmbossingName are provided when the name on the card differs from the name stored with the customer record."
+        SecondaryEmbossingName:
+          maxLength: 80
+          type: string
+          description: |-
+            Secondary name embossed on the card.
+
+            **Note:** Max length: 35 characters.
+
+            EmbossingName and/or SecondaryEmbossingName are provided when the name on the card differs from the name stored with the customer record.
+        PostAddr:
+          type: array
+          description: |-
+            Postal address details of the card holder.
+
+            **Note:** Postal Address if different from what is stored in customer source. Cleartouch allows only one address to be sent. For Cleartouch this address represents the customer's primary address. This address is typically pulled from customer source and not required to be sent in the CardAdd message. When sent the customer is indicating to us the address here is different than the address stored with their customer record in customer source.
+          items:
+            $ref: '#/components/schemas/CardAddOperRequest_CardInfo_PostAddr'
+        CardTrnLimit:
+          type: array
+          description: "Details of the card transaction limit. \n\n**Note:** Card switch and bank parameters control these limits. \n\nIn most cases, the integrator does not send this information as it is automatically set using the bank defined parameters.  However, if they chose to override those settings then you can submit that using these elements."
+          items:
+            $ref: '#/components/schemas/CardAddOperRequest_CardInfo_CardTrnLimit'
+        Nickname:
+          maxLength: 80
+          type: string
+          description: "Name that customer can assign to the cards for easy identification. \n\n**Note:** Maximum length: 10 characters."
+        PINOffset:
+          maxLength: 10
+          type: string
+          description: "PIN offset number assigned to the card. \n\n**Note:** Identifier that identifies the offset of the customer's PIN. Cleartouch allows only four-digit for this field."
+        RefData:
+          type: array
+          description: Reference details of a card.
+          items:
+            $ref: '#/components/schemas/CardAddOperRequest_CardInfo_RefData'
+        AcctLinkData:
+          type: array
+          description: "Linking details of the account to a debit card.\n\n**Note:** Cleartouch allows linking up to 16 accounts to a single card. "
+          items:
+            $ref: '#/components/schemas/CardAddOperRequest_CardInfo_AcctLinkData'
+      description: Detailed information for a card.
+    CardAddOperResponse_CardStatusRec_CardKeys:
+      type: object
+      properties:
+        CardNum:
+          maxLength: 32
+          type: string
+          description: "Number assigned to the card. \n\n**Note:** Refers to 16 digit number of the card."
+        CardId:
+          maxLength: 36
+          type: string
+          description: "Unique identification number of a card.\n\n**Note:** Refers to the generic identifier that contains no sensitive data and should be utilized as the key within URI when performing RESTful operations. "
+      description: Unique information to identify a card record.
+    CardAddOperResponse_CardStatusRec_CardStatus:
+      required:
+      - CardStatusCode
+      type: object
+      properties:
+        CardStatusCode:
+          type: string
+          description: Status code of the card.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the card status is changed.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-12-31T23:59:59.999
+      description: Details of the card status returned in the result of API call.
+    CardAddOperResponse_CardStatusRec:
+      required:
+      - CardKeys
+      - CardStatus
+      type: object
+      properties:
+        CardKeys:
+          $ref: '#/components/schemas/CardAddOperResponse_CardStatusRec_CardKeys'
+        CardStatus:
+          $ref: '#/components/schemas/CardAddOperResponse_CardStatusRec_CardStatus'
+      description: Details of the card status.
+    CardInqOperSecuredRequest_CardSel_CardKeys:
+      type: object
+      properties:
+        CardId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of a card.
+      description: Unique information to identify a card record.
+    CardInqOperSecuredRequest_CardSel:
+      required:
+      - CardKeys
+      type: object
+      properties:
+        CardKeys:
+          $ref: '#/components/schemas/CardInqOperSecuredRequest_CardSel_CardKeys'
+      description: |+
+        Criteria to select the card record.
+
+    CardInqOperSecuredResponse_CardInfo_FeeWaiver:
+      type: object
+      properties:
+        WaiverReason:
+          maxLength: 40
+          type: string
+          description: |-
+            Reason to waive the fees.
+
+            **Note:** Refers to reason for service charge.
+        WaiverCode:
+          type: string
+          description: 'Method used to apply the loss to income. '
+      description: Information about the method used to waive the fees.
+    CardInqOperSecuredResponse_CardInfo_CardFee:
+      required:
+      - CardFeeType
+      properties:
+        CardFeeType:
+          type: string
+          description: |+
+            Type of a card fee.
+
+        FeePlan:
+          maxLength: 80
+          type: string
+          description: Fee plan to charge the card fee.
+        WaiveFeeInd:
+          type: boolean
+          description: Value that indicates the fees is to be waived.
+        FeeWaiver:
+          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_FeeWaiver'
+        TimeFrame:
+          type: object
+          description: "Details of the time frame when the card fee is applicable. \n\n\n\n"
+    CardInqOperSecuredResponse_CardInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n"
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPlease note that presently only USD currency code is supported.\n\n"
+      description: Details of currency code.
+    CardInqOperSecuredResponse_CardInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CurAmt_CurCode'
+      description: Details of the currency limit amount.
+    CardInqOperSecuredResponse_CardInfo_CardTrnLimit:
+      required:
+      - TrnTypeValue
+      properties:
+        TrnTypeValue:
+          type: string
+          description: "Type of the transaction limit. \n\n**Note:** The value \"PreAuth\" represents the amount of outstanding holds that may be placed on the cardholder's account."
+          enum:
+          - Credit
+          - Withdrawal
+          - PreAuth
+        TrnSrc:
+          type: string
+          description: "Type of transaction source. \n\n**Note:** The value \"Combined\" indicates that the card limit applicable to both ATM and POS."
+          enum:
+          - POS
+          - Combined
+          - ATM
+        LimitType:
+          type: string
+          description: "Type of the transaction limit. \n\n**Note:** The value \"CycleMax\" indicates that the card limit is applicable within the cycle."
+          enum:
+          - DailyMax
+          - CycleMax
+        DaysInCycle:
+          type: integer
+          description: Number of days in the cycle.
+          format: int64
+        CurAmt:
+          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CurAmt'
+    CardInqOperSecuredResponse_CardInfo_RefData:
+      required:
+      - RefType
+      properties:
+        RefType:
+          type: string
+          description: Type of reference.
+          enum:
+          - Photo
+        RefIdent:
+          maxLength: 36
+          type: string
+          description: Reference identification number.
+    CardInqOperSecuredResponse_CardInfo_DateData:
+      properties:
+        RefData:
+          type: array
+          description: Details of the reference.
+          items:
+            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_RefData'
+    CardInqOperSecuredResponse_CardInfo_CardPeriodData:
+      properties:
+        CardAmtType:
+          type: string
+          description: |+
+            Type of card amount processed in the given period.
+
+          enum:
+          - Withdrawal
+        CardAmtSource:
+          type: string
+          description: Type of source for the amount.
+          enum:
+          - ATM
+          - POS
+        CardPeriodType:
+          type: string
+          description: |+
+            Code to indicate the card amount period.
+
+          enum:
+          - ThisCycle
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+        Count:
+          type: integer
+          description: Number of occurrences with respect to the specified unit value.
+          format: int64
+    CardInqOperSecuredResponse_CardInfo:
+      type: object
+      properties:
+        CardNum:
+          maxLength: 32
+          type: string
+          description: 'Number assigned to this card. '
+        CardSeqNum:
+          maxLength: 3
+          type: string
+          description: |+
+            Card sequence number that refers to the member number to whom the card is issued.
+
+        CardType:
+          type: string
+          description: |-
+            Type of a card.
+
+
+
+            **Note:** The financial institution must provide the numeric value for the CardType, which is setup in core.
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: Unique identifier of a product. This value identifies the processing parameters of the card.
+        EmployeeInd:
+          type: boolean
+          description: Value that indicates the cardholder is an employee of financial institution.
+        CardDtlStatus:
+          type: string
+          description: |+
+            Current status of the card.
+
+        CardFee:
+          type: array
+          description: |-
+            Details of the charges and fees applicable to the card
+
+            **Note:** CT has option to waive annual fee, auto reissue fee and service charge fee.
+          items:
+            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CardFee'
+        IssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Date on which the current card was issued.
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+        ExpDt:
+          type: string
+          description: "Date after which the card becomes inactive.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n"
+          format: date
+        CardTrnLimit:
+          type: array
+          description: 'Details of the card transaction limit. '
+          items:
+            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CardTrnLimit'
+        CardsInUseNum:
+          type: integer
+          description: Number of cards in use.
+          format: int64
+        GenerateCardNum:
+          maxLength: 1
+          type: string
+          description: Number of plastic cards that need to be generated.
+        GenerateCardOrder:
+          type: string
+          description: |+
+            Value that generates card order to replace a card.
+
+          enum:
+          - ReplaceCard
+          - NewCard
+          - DoNotGenerate
+        DateData:
+          type: array
+          description: Details of other dates related to a card.
+          items:
+            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_DateData'
+        CardVerifyData:
+          type: string
+          description: 'Code that indicates whether the validation process is required after the new debit card is ordered. '
+          enum:
+          - ValidateCard
+          - DoNotValidateCard
+        CardPeriodData:
+          type: array
+          description: Duration details of a card.
+          items:
+            $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo_CardPeriodData'
+        PINOffset:
+          maxLength: 10
+          type: string
+          description: PIN Offset number assigned to the card.
+        PINOffsetResetInd:
+          type: boolean
+          description: |+
+            Value that indicates the PIN offset has been reset.
+
+        PINInvalidEntryNum:
+          type: integer
+          description: Number of invalid PIN entry attempts.
+          format: int64
+        PINInvalidEntryAllowedNum:
+          type: integer
+          description: Maximum number of invalid PIN entry attempts allowed.
+          format: int64
+        PINLastGenerationDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Date when the PIN was last generated.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+      description: Detailed information about the card.
+    CardInqOperSecuredResponse_CardStatus:
+      required:
+      - CardStatusCode
+      type: object
+      properties:
+        CardStatusCode:
+          type: string
+          description: Status code of the card.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the card status is changed. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999"
+      description: Details of the card status.
+    CardInqOperSecuredResponse_CardRec:
+      required:
+      - CardInfo
+      - CardKeys
+      - CardStatus
+      properties:
+        CardKeys:
+          $ref: '#/components/schemas/CardInqOperSecuredRequest_CardSel_CardKeys'
+        CardInfo:
+          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardInfo'
+        CardStatus:
+          $ref: '#/components/schemas/CardInqOperSecuredResponse_CardStatus'
