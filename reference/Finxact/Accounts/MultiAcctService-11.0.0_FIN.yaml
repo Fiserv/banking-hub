@@ -1,0 +1,569 @@
+---
+openapi: 3.0.1
+info:
+  title: Multi Account Service
+  description: The multi account service supports an inquiry operation that allows retrieving information of multiple product accounts in a single consumer request.
+  version: 11.0.0_FIN
+servers:
+- url: /
+paths:
+  /multiacctservice/acctmgmt/accounts/list/secured:
+    post:
+      tags:
+      - Get Multiple Accounts
+      summary: Get Multiple Accounts.
+      description: Get Multi-Account API retrieves the account-related information of one or more accounts in single request call. This API supports various account types for deposit and loans products.<br> <br> To download the API Specifications and Postman Collection, click <a href="../docs/?path=docs/resources/resources.md" title="Click to open">Resources</a>.
+      operationId: MultiAcctInqOperBySecuredPost
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse'
+      x-group-name: Multi Account Service
+      x-proxy-name: ' Get Transaction History'
+      x-child-product-name: Accounts
+      x-core: Finxact
+components:
+  schemas:
+    MultiAcctInqOperBySecuredPostRequest:
+      required:
+      - MultiAcctSel
+      properties:
+        MultiAcctSel:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostRequest_MultiAcctSel'
+    MultiAcctInqOperBySecuredPostResponse:
+      required:
+      - MultiAcctRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        MultiAcctRec:
+          type: array
+          description: Details of multiple account records.
+          items:
+            $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    MultiAcctInqOperBySecuredPostRequest_MultiAcctSel_AcctKeys:
+      required:
+      - AcctId
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
+          type: string
+          description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>.\n\n\n\n**Note:** The following values indicate: \n\n- DDA: Demand Deposit Account\n\n- MMA: Money Market Account\n\n- SDA: Savings Deposit Account\n\n- EQU: Home Equity Loan\n\n- ILA: Installment Loan Account\n\n- CLA: Commercial Loan Account\n\n- LOC: Consumer Line of Credit\n\n- MLA: Mortgage Loan Account"
+          enum:
+          - DDA
+          - MMA
+          - SDA
+          - EQU
+          - ILA
+          - CLA
+          - LOC
+          - MLA
+    MultiAcctInqOperBySecuredPostRequest_MultiAcctSel:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          type: array
+          description: Unique information to identify the account record.
+          items:
+            $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostRequest_MultiAcctSel_AcctKeys'
+      description: Selection criteria details to select multiple accounts.
+    MultiAcctInqOperBySecuredPostResponse_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+        AcctType:
+          type: string
+          description: "Type of an account.\n\n\n\nFor more information about account types, refer to the Account Types section in <a href=\"../docs?path=docs/api-glossary.md\" target=\"_blank\" title=\"Click to open in a new tab\"> Glossary</a>.\n\n\n\n**Note:** The following values indicate: \n\n- DDA: Demand Deposit Account\n\n- MMA: Money Market Account\n\n- SDA: Savings Deposit Account\n\n- CDA: Certificate of Deposit Account\n\n- EQU: Home Equity Loan\n\n- ILA: Installment Loan Account\n\n- CLA: Commercial Loan Account\n\n- LOC: Consumer Line of Credit\n\n- MLA: Mortgage Loan Account"
+          enum:
+          - DDA
+          - MMA
+          - SDA
+          - CDA
+          - EQU
+          - ILA
+          - CLA
+          - LOC
+          - MLA
+      description: Unique information to identify the account record.
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: |-
+            Currency code value as per the ISO currency code format set in the CurCodeType field.
+
+
+
+            **Note:** Finxact supports U.S. Dollars. This field should contain the "USD" value, which is case sensitive.
+      description: Details of currency code.
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_CurAmt_CurCode'
+      description: Details of the currency amount.
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
+          type: string
+          description: "Type of account balance. \n\n\n\n**Note:** For deposit, following are the account balances:\n\n- InterestAccrued\n\n- Ledger\n\n- Current\n\n- Avail\n\n- Sweep\n\n- AvailCredit\n\n- Hold\n\n- CreditLimit\n\n- BalanceLastStatement\n\n- CustCollected\n\n\n\nFor loan, following are the account balances:\n\n- CreditLimit\n\n- Principal\n\n- InterestDue\n\n- Ledger\n\n- AvailCredit\n\n- Orig\n\n- PmtDue\n\n- ChargeOff\n\n- PayOffAmt"
+          enum:
+          - InterestAccrued
+          - Ledger
+          - Current
+          - Avail
+          - Sweep
+          - AvailCredit
+          - Hold
+          - CreditLimit
+          - BalanceLastStatement
+          - CustCollected
+          - Principal
+          - InterestDue
+          - Orig
+          - PmtDue
+          - ChargeOff
+          - PayOffAmt
+        CurAmt:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_CurAmt'
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo:
+      type: object
+      properties:
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: Unique identifier of a product. This value is used to indicate the processing options of the account.
+        Desc:
+          maxLength: 100
+          type: string
+          description: 'Description of the product to set up the account. '
+        AcctBal:
+          type: array
+          description: Details of the balance present in a financial institution account.
+          items:
+            $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo_AcctBal'
+        AcctDtlStatus:
+          type: string
+          description: |-
+            Code to indicate the current account status.
+
+
+
+            **Note:** For deposit, following are the account status:
+
+            - Active
+
+            - Closed
+
+            - Dormant
+
+            - Escheated
+
+            - Inactive
+
+
+
+            For loan, following are the account status:
+
+            - Active
+
+            - Closed
+
+            - Dormant
+
+            - Inactive
+          enum:
+          - Active
+          - Closed
+          - Dormant
+          - Escheated
+          - Inactive
+      description: Detailed information of multiple accounts filtered.
+    MultiAcctInqOperBySecuredPostResponse_AcctStatus:
+      required:
+      - AcctStatusCode
+      type: object
+      properties:
+        AcctStatusCode:
+          type: string
+          description: Code to indicate the status of the account.
+          enum:
+          - Valid
+          - Invalid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999"
+      description: Status details of the account.
+    MultiAcctInqOperBySecuredPostResponse_MultiAcctRec:
+      required:
+      - AcctKeys
+      - AcctStatus
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_AcctKeys'
+        MultiAcctInfo:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_MultiAcctInfo'
+        AcctStatus:
+          $ref: '#/components/schemas/MultiAcctInqOperBySecuredPostResponse_AcctStatus'
