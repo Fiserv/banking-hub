@@ -129,6 +129,7 @@ titles: General Terms, Acronyms , Account Types, Legacy Service Name
 | PartyPartyRel      | Party Parties Service              |
 | SafeDepositBox     | Safe Deposit Box Service           |
 | StopChk            | Stop Check Service                 |
+| StopItem           | Stop Item Service                  |
 | Xfer               | Transfer Service                   |
 
 

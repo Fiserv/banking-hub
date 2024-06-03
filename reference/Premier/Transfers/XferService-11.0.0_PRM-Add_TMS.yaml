@@ -1,0 +1,686 @@
+---
+openapi: 3.0.1
+info:
+  title: Transfer Service
+  description: The Transfer service supports operations related to managing the transfer of money between accounts. The service includes the description of the FROM and TO accounts, amount of the transfer, transfer fees and frequency of the transfer as it can be a one-time transfer or a recurring transfer.
+  version: 11.0.0_PRM-Add_TMS
+servers:
+- url: /
+paths:
+  /xferservice/payments/transfers:
+    post:
+      tags:
+      - Add Transfer
+      summary: Add Transfer
+      description: "Add Transfer API creates the request for an immediate fund transfer between two accounts. <br> For Premier, this API creates entries into a Transaction Management System (TMS), that is posted to the customer's accounts during nightly processing. In addition, it also creates a memo post (pending) transactions on both accounts to reflect a change in the memo balances. The calling application will need to send in the appropriate transaction codes for the intended transfer. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: XferAddOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/XferAddOperRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XferAddOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XferAddOperResponse'
+      x-group-name: Transfer Service
+      x-proxy-name: Add Transfer
+      x-child-product-name: Transfers
+      x-core: Premier-TMS
+components:
+  schemas:
+    XferAddOperRequest:
+      required:
+      - XferInfo
+      properties:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        XferInfo:
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo'
+    XferAddOperResponse:
+      required:
+      - XferStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        XferStatusRec:
+          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: 
+            Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
+    OverrideExceptionType:
+      title: OverrideExceptionType
+      type: object
+      properties:
+        SubjectRole:
+          type: string
+          description: Role of the subject who is overriding the exception.
+        SubjectIdent:
+          maxLength: 36
+          type: string
+          description: Subject identification value to identify the subject who is overriding the exception.
+        OvrdExceptionCode:
+          maxLength: 40
+          type: string
+          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
+        OvrdElement:
+          $ref: '#/components/schemas/OvrdElementType'
+    OvrdElementType:
+      title: OvrdElementType
+      type: object
+      description: Information about the elements that corresponds to the override exception code.
+      allOf:
+      - $ref: '#/components/schemas/SubjectElementType'
+      - type: object
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    XferAddOperRequest_XferInfo_FromAcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - LOAN
+          - GLA
+          - DDL
+      description: |-
+        Unique information to identify the account record.
+
+        **Note:** It should be provided in the request with AcctId and AcctType for the operation to work successfully. It has details of Account being Debited. ESF would return an error if AcctKeys/AcctId or AcctKeys/AcctType is not provided in request.
+    XferAddOperRequest_XferInfo_FromAcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctKeys'
+        TrnCode:
+          type: string
+          description: "External transaction code used to indicate the type of transfer and the type of account.\n\n\n\n**Note:** Refers to external transaction code.  \n\nTransaction code provided should be a valid external transaction code setup in Premier for the TransferType and the Type of the Account being debited.\n\nIf Transaction Code is not provided, the default TrnCode available at TMS (Premier) is used to post the transaction during nightly processing, if applicable."
+      description: Reference account information from which the funds are transferred.
+    XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - LOAN
+          - GLA
+          - DDL
+          - CDA
+      description: |-
+        Unique account information used to identify the account record.
+
+        **Note:** It should be provided in the request with AcctId and AcctType for the operation to work successfully. It has details of Account being Credited. ESF would return an error if AcctKeys/AcctId or AcctKeys/AcctType is not provided in request.
+    XferAddOperRequest_XferInfo_ToAcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys'
+        TrnCode:
+          type: string
+          description: |-
+            External transaction code used to indicate the type of transfer and the type of account.
+
+
+
+            **Note:** If transaction code is not provided, the default TrnCode available at TMS (Premier) is used to post the transaction during nightly processing, if applicable.
+      description: Reference information of an account to which funds are transferred.
+    XferAddOperRequest_XferInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
+      description: Details of currency code.
+    XferAddOperRequest_XferInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt_CurCode'
+      description: Details of the amount to be transferred.
+    XferAddOperRequest_XferInfo:
+      type: object
+      properties:
+        TransferType:
+          type: string
+          description: |-
+            Type of transfer transaction.
+
+            **Note:** Following Transfers are supported by the operation:
+
+            - From DDA to DDA, DDA to Savings, DDA to Loan, DDA to GLA, DDA to Demand Deposit Loan account, and from DDA to Certificate of Deposits
+
+            - From Savings to Savings, Savings to DDA, Savings to Loan, Savings to GLA, Savings to Demand Deposit Loan Account, and from Savings to Certificate of Deposits
+
+            - From Loan to Savings, Loan to GLA and Loan to DDA Account
+
+            - From GLA to GLA, GLA to DDA, GLA to Savings and GLA to Loan Account
+
+            - From DDL to DDA, DDL to Savings
+
+
+
+            Applicable TranferType are:
+
+
+
+            - RegularPayment: from DDA or Savings to Loan account or Demand Deposit Loan
+
+            - PrincipalPayment: from DDA or Savings to Loan account or Demand Deposit Loan
+
+            - InterestPayment: from DDA or Savings to Loan account or Demand Deposit Loan
+
+            - EscrowPayment: from DDA or Savings to Loan account
+
+            - LoanAdvance: from Loan to DDA or Savings account, from DDL to DDA, DDL to Savings
+
+            - FundsTransfer: DDA to DDA, DDA to Savings, DDA to GLA, DDA to Certificate of Deposits, Savings to DDA, Savings to Savings, Savings to GLA, GLA to GLA, GLA to DDA, GLA to Savings, GLA to Loans and Loans to GLA, Savings to Certificate of Deposits.
+          enum:
+          - FundsTransfer
+          - RegularPayment
+          - PrincipalPayment
+          - InterestPayment
+          - EscrowPayment
+          - LoanAdvance
+        FromAcctRef:
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef'
+        ToAcctRef:
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef'
+        CurAmt:
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_CurAmt'
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when transfer status is changed.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+
+
+            **Note:** It is the transaction date. It is required by the TMS system and should be provided in the request if Transaction Date is required by consumer application along with Posting Date. While posting date is obtained from core (Premier), Effective Date is equated to Posting Date by default, unless provided in the EFX request.
+        ExpediteInd:
+          type: boolean
+          description: |-
+            Flag to indicate the fund transfer execution subject to service profile. If the indicator is 'true', then the transfer is an immediate transfer and by default the value is set to false.
+
+            **Note:** Indicator must be 'true' to post immediate transfer for DDL Advances.
+
+
+
+            In Premier, TMS services execute the immediate transfers and PRM services execute the recurring transfers. This indicator will determine which services are used.
+        XferFromDesc:
+          maxLength: 80
+          type: array
+          description: |+
+            Mandatory description used for a transfer posted by the account from where the funds are transferred.
+
+            Value in this field should be identical to the value provided in XferToDesc.
+
+          items: {}
+        XferToDesc:
+          maxLength: 80
+          type: array
+          description: |+
+            Mandatory description used for a transfer posted for the account to where the funds are transferred.
+
+            Value in this field should be identical to the value provided in XferFromDesc.
+
+          items: {}
+        CreateDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date on which transfer record is created.\n\n**Note:** If CreateDt is not supplied in the request or provided in incorrect format, then ESF system server date and time will be used. \n\n\n\nIf the field is sent in request, then date must be provided (time is optional). Also, time can be provided without seconds and milliseconds - as these are not updated by Premier. If only date is provided, then ESF system time would be used by the operation and updated in Premier.\n\n\n\nThe request follows the format: YYYY-MM-DDTHH:mm:ss.SSS \n\n\n\nWhere YYYY = Year, MM = Month, DD = Day HH = Hour (24-hour notation), mm = minutes, ss = seconds, SSS = milliseconds\n\n\n\nExamples:2018-11-27T16:03:01.567,\n\n2018-11-27T16:03, 2018-11-27"
+      description: Details of the fund transfer.
+    XferAddOperResponse_XferStatusRec_XferKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+          - LOAN
+      description: Unique information to identify the account record.
+    XferAddOperResponse_XferStatusRec_XferKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferKeys_AcctKeys'
+      description: Unique information to identify the transaction record.
+    XferAddOperResponse_XferStatusRec_XferStatus:
+      required:
+      - XferStatusCode
+      type: object
+      properties:
+        XferStatusCode:
+          type: string
+          description: Code to identify the status of the transfer.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |+
+            Effective date and time when transfer status is changed.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+
+
+
+      description: Current status of the transfer.
+    XferAddOperResponse_XferStatusRec:
+      required:
+      - XferKeys
+      - XferStatus
+      type: object
+      properties:
+        XferKeys:
+          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferKeys'
+        XferStatus:
+          $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferStatus'
+      description: Fund transfer status details used in a response message to return results from an add, modify or delete operation.
