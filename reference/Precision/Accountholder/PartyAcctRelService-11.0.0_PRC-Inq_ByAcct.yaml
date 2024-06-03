@@ -1,0 +1,1768 @@
+---
+openapi: 3.0.1
+info:
+  title: Party Account Relationship Service
+  description: Party account relationship service manages the nature of relationship between a party and a product account. It is used to indicate the primary contact and tax responsible parties as well as state the relationship type between the party and an account.
+  version: 11.0.0_PRC-Inq_ByAcct
+servers:
+- url: /
+paths:
+  /partyacctrelservice/partyacctrel/partyacctrel/secured:
+    post:
+      tags:
+      - Get Party Account Relationship
+      summary: Get Party Account Relationship
+      description: "Get Party Account Relationship by Acct API retrieves a list of customers related to an account that is sent in the request. <br>This API provides the relationship details, such as ownership type and relationship code for a customer who has a relationship with an account or safe deposit box. <br>For Precision, the relationship details for the primary owner are static and stored internally. If the customer in the relationship is the primary owner, then the response has the 'PrimaryOwnerInd' field set to 'true', the 'OwnershipType' field set to 'Direct' and the 'PartyAcctRelType' field set to 'Owner'.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: PartyAcctRelInqBySecured
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse'
+      x-group-name: Party Account Relationship Service
+      x-proxy-name: Get Party Account Relationship
+      x-child-product-name: Accountholder
+      x-core: Precision-ByAcct
+components:
+  schemas:
+    PartyAcctRelInqBySecuredRequest:
+      required:
+      - PartyAcctRelSel
+      properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_RecCtrlIn'
+        PartyAcctRelSel:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel'
+    PartyAcctRelInqBySecuredResponse:
+      required:
+      - PartyAcctRelRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        RecCtrlOut:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_RecCtrlOut'
+        PartyAcctRelRec:
+          type: array
+          description: |-
+            Details of the party-to-account relationship record.
+
+
+
+            **Note:** If the user is restricted from viewing the selected account, then the system displays an error. No party-to-account relationship information is returned.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    PartyAcctRelInqBySecuredRequest_RecCtrlIn:
+      type: object
+      properties:
+        MaxRecLimit:
+          type: integer
+          description: |-
+            Maximum number of records in the result set to satisfy the request. If no value is specified, the maximum value of 250 records is sent.
+
+
+
+            **Note:** Precision does not support the "RecCtrlIn" aggregate.
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: |-
+            Next record pointer to include in the response if more than 250 posted transaction records exist.
+
+
+
+            For more than 250 posted transactions, ESF returns a cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within the RecCtrlIn/Cursor field.
+
+
+
+            **Note:** Precision does not support the "RecCtrlIn" aggregate.
+      description: |-
+        Maximum number of records to be processed within a single response as specified by the client.
+
+
+
+        **Note:** Currently, Precision does not support the "RecCtrlIn" aggregate.
+    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+
+
+
+
+            **Note:** ISO code is required if the card number is sent. Use the "SubAcctId" field to send the ISO code. For PAN, send the entire card number, including the ISO number and check digits.
+        SubAcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a sub-account. This field is also used as the CostCenter for GLA Accounts.
+
+
+
+            **Note:** Refers to ISO code and is required if the card number is sent in the "AcctId" field.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
+
+            **Note:** *Required field*
+
+
+
+            DDA and SDA account types are interchangeable.
+          enum:
+          - CDA
+          - CRD
+          - DDA
+          - LOAN
+          - SDB
+          - SDA
+      description: Unique information to identify the account record.
+    PartyAcctRelInqBySecuredRequest_PartyAcctRelSel:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredRequest_PartyAcctRelSel_AcctKeys'
+        AcctSelCriteria:
+          type: array
+          description: Selection criteria to identify specific account types to include or exclude in the response based on the account status or the AcctExcludeInd.
+          items: {}
+        PartyAcctRelType:
+          type: string
+          description: |-
+            Relationship of party with an account.
+
+
+
+            **Note:** Refers to Ownership Type. If no value is sent, then all ownership types are returned. Titles are not returned.
+          enum:
+          - Direct
+          - Indirect
+          - Fiduciary
+          - Additional
+        IncPartyInfoInd:
+          type: boolean
+          description: |-
+            Flag to indicate a subset of frequently used properties of party information is to be included in response. By default the value is set to "false".
+
+
+
+            In case, the value is "true" and if the party makes the, then the information of the party appears only once in the first instance of a record to avoid unnecessary repetition, and if the account makes the selection, then the party information summary is always provided.
+      description: Selection criteria for a party-to-account relationship inquiry.
+    PartyAcctRelInqBySecuredResponse_RecCtrlOut:
+      required:
+      - SentRecCount
+      type: object
+      properties:
+        SentRecCount:
+          type: integer
+          description: |+
+            Total number of records that matched the selection criteria and returned in the response message.
+
+
+
+            **Note:** Precision can return up to 100 records. Any additional records are not retrieved.
+
+
+
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: |-
+            Next record pointer to include in the response if more than 250 posted transaction records exist.
+
+
+
+            For more than 250 posted transactions, ESF returns a cursor value in the RecCtrlOut/Cursor field. To retrieve the next set of posted transactions, this field should be sent in the subsequent request within the RecCtrlIn/Cursor field.
+
+
+
+            **Note:** Precision does not support the ability to send a cursor in the request. The value returned is always been 0.
+      description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a party record.
+
+
+
+            **Note:** Refers to customer name that uniquely identifies the party.
+      description: Unique information to identify the party record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_SvcIdent:
+      type: object
+      properties:
+        SvcNbr:
+          maxLength: 36
+          type: string
+          description: Number of a service.
+      description: |-
+        Unique identifier of a service that provides a unique reference.
+
+
+
+        **Note:** Multi-System Service (MSS) uses this aggregate.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        SvcIdent:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys_SvcIdent'
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+
+
+
+
+        SubAcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of a sub-account. This field is also used as CostCenter for GLA Accounts.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md"  title="Click to open"> Glossary</a>.
+          enum:
+          - CDA
+          - CRD
+          - DDA
+          - SDB
+          - LOAN
+          - SDA
+      description: Details of the account keys to identify an account record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys:
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_PartyKeys'
+        AcctKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_AcctKeys'
+      description: Unique information to identify the party-to-account relationship record.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of phone.\n\n\n\n**Note:** Foreign is interpreted as outside the U.S. Additional phone types may be client-defined. \n\n\n\n"
+          enum:
+          - Home
+          - Work
+          - Mobile
+          - Fax
+          - WorkForeign
+          - HomeForeign
+          - MobileForeign
+          - FaxForeign
+        PhoneTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PhoneType field.
+        PhoneIdent:
+          type: integer
+          description: |-
+            Unique identifier to serialize the phone types when more than one phone type exists.
+
+
+
+            **Note:** The PhoneIdent and PartyId form the unique identifier for the contact record.
+          format: int64
+        Phone:
+          type: string
+          description: "Phone number to search the party records.\n\n\n\n**Note:** US phone numbers have International Dial Code as 1. \n\n\n\nBy default, the EFX Phone Number considers the following format for all phones: \n\n\n\n+IntlCountryCode-AreaCode-PhoneNumber[+Extn]\n\n\n\nThe Phone Extension Number is the only portion that is optional and is returned, if available for Work or WorkForeign. Example Phone Format:\n\n\n\n+91-402-5551212+739.\n\n\n\n\n\n\n\nIf the Client application has setup the parameter in ESF studio that indicates to not use phone formatting in ESF, then ESF does not format the phone number and returns the phone number as a string of numbers in the response. "
+        PreferredPhone:
+          type: boolean
+          description: Flag to indicate the phone number is the preferred contact number.
+        Priority:
+          type: string
+          description: "Priority defined by the customer to indicate the order of contacts.\n\n\n\n\n\n\n\n**Note:** Refers to Contact Priority. \n\n\n\nPrecision has fixed values for setting the priority of the contact details. It supports primary, secondary and additional priority for phone number, email and contact.\n\n\n\n\n\n\n\nAny other value received other than Primary/Secondary are not supported."
+          enum:
+          - Primary
+          - Secondary
+        PhoneDesc:
+          maxLength: 30
+          type: string
+          description: Description of the phone.
+      description: Phone number details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+        CountryCodeValue:
+          type: string
+          description: |-
+            Country code value as per the country code format set in the CountryCodeSource field.
+
+
+
+            **Note:** Applicable for international non-US addresses.
+        CountryCodeValueEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the CountryCodeValue field.
+      description: Details of the country code.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+
+
+            Example: 2021-01-31T23:59:59.999
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the time frame when the address is active.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr:
+      required:
+      - AddrType
+      type: object
+      properties:
+        AddressIdent:
+          maxLength: 36
+          type: string
+          description: "Unique identifier of an address record.\n\n\n\n**Note:** Refers to Alternate Address Code. \n\n\n\n1-99 represents an additional (alternate) address for the customer. \n\n\n\nIf the AddressIdent is 0 or is not present, then the address record is for the customer's primary address."
+        AddrUse:
+          type: string
+          description: Code to indicate the use of address.
+          enum:
+          - Physical
+        AddrUseEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the AddrUse field.
+        AddrFormatType:
+          type: string
+          description: |-
+            Format type of the address.
+
+
+
+            **Note:** Precision only supports the label format.
+          enum:
+          - Label
+        FullName1:
+          maxLength: 96
+          type: string
+          description: "Full name line 1.\n\n\n\n**Note:** Refers to Name/Address supplementary information for the legal name or address. This line is printed below the primary name and above the mailing address. "
+        Addr1:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 1.
+
+
+
+            **Note:** Refers to the street address, rural route or box number where customer correspondence is mailed.
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        County:
+          maxLength: 32
+          type: string
+          description: |-
+            Name of the county associated with the address.
+
+
+
+            **Note:** Applicable only for the US state of Indiana.
+        StateProv:
+          type: string
+          description: |-
+            State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+
+
+
+            **Note:** Refers to the two character US state abbreviation. Values are client-defined.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: |-
+            Postal code or zip code.
+
+
+
+            **Note:** If ForeignFlag is true, then Precision accepts any value up to 10 characters. If ForeignFlag is false, then Precision accepts either 5 character zip or 10 character zip+4 (for example: 32715-1234).
+        CountryCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_CountryCode'
+        AddrType:
+          type: string
+          description: "Type of the address.\n\n\n\n**Note:** Primary refers to the CIF Mailing Address.  Only one Primary address is allowed. \n\n\n\nSecondary refers to Alternate Address.\n\n\n\nSeasonal refers to a Scheduled Alternate Address with a start and end date."
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_TimeFrame'
+        ExpDt:
+          type: string
+          description: "Date after which the address becomes inactive.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
+          format: date
+        MoveInDt:
+          type: string
+          description: "Date stated in the current address of the party.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Applicable only to the current primary address."
+          format: date
+        ContactMethod:
+          type: string
+          description: |-
+            Method used to contact.
+
+
+
+            **Note:** Method used to notify the financial institution about the address change. Values are client-defined.
+        Comment:
+          maxLength: 300
+          type: string
+          description: |-
+            Comments on the address mentioned.
+
+
+
+            **Note:** Max length: 25 characters
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: |-
+            Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+
+
+
+            **Note:** Refers to GEO code. This information is present in the response alongside Primary address details. However, Precision stores this information separately from address information.
+        ForeignFlag:
+          type: boolean
+          description: "Flag to indicate the given address is a foreign address.\n\n\n\n**Note:** Refers to Foreign Address that indicates if the address is outside the United States. "
+        HandlingCode:
+          type: string
+          description: |-
+            Handling code to specify the handling process of the notification and statement forms.
+
+
+
+            **Note:** Refers to Delivery Code (Class of Service option). This information is present in the response alongside Primary address details. However, Precision stores this information separately from address information.
+        AddrInUseInd:
+          type: boolean
+          description: |-
+            Flag to indicate the alternate address is in use instead of the primary address for a customer.
+
+
+
+            **Note:** Only one alternate address can be selected as the address in use for a customer.
+      description: Postal address details of the party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Email:
+      type: object
+      properties:
+        EmailIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of the email address.
+        EmailType:
+          type: string
+          description: Type of the email address.
+        EmailTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the EmailType field.
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address to search the party records.
+        PreferredEmail:
+          type: boolean
+          description: |-
+            Flag to indicate the email address is the preferred email address of contact.
+
+
+
+            **Note:** Refers to Contact Priority.
+      description: Email address details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_WebAddr:
+      type: object
+      properties:
+        WebAddrIdent:
+          type: integer
+          description: |-
+            Unique identifier of the web address.
+
+
+
+            Use when you have more than one occurrence of a web address type. This element serializes the web addresses.
+          format: int64
+        WebAddrType:
+          type: string
+          description: Type of web address.
+        WebAddrTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the WebAddrType field.
+        WebAddrLink:
+          type: string
+          description: Link or URL of web address.
+        PreferredWebAddr:
+          type: boolean
+          description: "Flag to indicate the web address is preferred to contact.\n\n\n\n**Note:** Refers to Contact Priority. Precision sets the priority for all WebAddr URL contacts to Additional Contact. "
+      description: Details of the web address.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PhoneNum'
+        PostAddr:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr'
+        Email:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Email'
+        WebAddr:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_WebAddr'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_GovIssuedIdent_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+          enum:
+          - SPCountryCode
+        CountryCodeValue:
+          type: string
+          description: Country code value as per the country code format set in the CountryCodeSource field.
+        CountryCodeValueEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the CountryCodeValue field.
+      description: Details of the country code.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_GovIssuedIdent:
+      required:
+      - CountryCode
+      type: object
+      properties:
+        CountryCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_GovIssuedIdent_CountryCode'
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+      description: Details of identifier issued by the government for a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_IssuedIdent:
+      required:
+      - IssuedIdentType
+      properties:
+        IssuedIdentType:
+          type: string
+          description: |-
+            Type of identity card/document issued.
+
+
+
+            **Note:** StateId refers to a user-defined identification type that the user may enter at run time to document a third Id, other than Drivers License and Passport.  KnownToBranch must be paired with VerificationDetailText, which provides the ability to store notes/information on other methods used to identify the customer, such as Publicly Known Official.
+          enum:
+          - DrvrsLicNb
+          - PsptNb
+          - StateId
+          - KnownToBranch
+        IssuedIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the IssuedIdentType field.
+        IssuedIdentValue:
+          maxLength: 32
+          type: string
+          description: |-
+            Unique identification number of the issued identity card/document of a party, for example, birth certificate number.
+
+
+
+            Example: 3762849726
+        IssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date on which the identity card/document was issued. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\n\n\nExample: 2021-01-31T23:59:59.999"
+        ExpDt:
+          type: string
+          description: |-
+            Date after which the account becomes inactive.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+
+
+            Example: 2021-01-31T23:59:59.999
+          format: date
+        VerificationDetailText:
+          maxLength: 255
+          type: string
+          description: |-
+            User-defined identity verification details.
+
+
+
+            **Note:** First 255 characters are returned in the response.
+        GovIssuedIdent:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_GovIssuedIdent'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_SecretData:
+      required:
+      - SecretIdent
+      properties:
+        SecretIdent:
+          type: string
+          description: |-
+            Unique identifier of the security question used to identify the customer.
+
+
+
+
+
+
+
+            **Note:** MaidenaName refers to Mother's Maiden Name.
+          enum:
+          - MaidenName
+        SecretValue:
+          maxLength: 80
+          type: string
+          description: |+
+            Value of the "SecretIdent" field that includes the customer's answer to the corresponding security question.
+
+
+
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PersonName:
+      required:
+      - NameType
+      type: object
+      properties:
+        NameType:
+          type: string
+          description: Type of the name.
+          enum:
+          - Primary
+        NameIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of a name value to identify names related to an account record.
+
+
+
+            **Note:** The NameIdent for a customer's Primary address is always 0 on Precision.
+        FullName:
+          maxLength: 96
+          type: string
+          description: "Full name of the person.\n\n\n\n**Note:** For primary NameType, refers to the read-only legal name, which is Precision constructs based on the name option. The user cannot modify this value.\n\n\n\n\n\n\n\n "
+        FamilyName:
+          maxLength: 40
+          type: string
+          description: Family name or last name of the person.
+        GivenName:
+          maxLength: 40
+          type: string
+          description: First name of the person.
+        MiddleName:
+          maxLength: 40
+          type: string
+          description: Middle name of the person.
+        NamePrefix:
+          type: string
+          description: "Name prefix to add before the name of the party.\n\n\n\n**Note:** Refers to Salutation. Precision uses freeform text. "
+        NameSuffix:
+          type: string
+          description: |-
+            Name suffix to add after the name of the party.
+
+
+
+            **Note:** Precision uses freeform text.
+        NameFormat:
+          type: string
+          description: |-
+            Format of the name to indicate the way name is to be printed in certain mailings for personal customers.
+
+
+
+
+
+
+
+            **Note:** Refers to name option.
+          enum:
+          - FirstLastSuffix
+          - FirstMiddleInitialLastSuffix
+          - FirstMiddleLastSuffix
+      description: |-
+        Name of a person party.
+
+
+
+        **Note:** This service returns the customer's primary name only.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo:
+      type: object
+      properties:
+        PartyType:
+          type: string
+          description: |-
+            Type of the party used for further classification of party types.
+
+
+
+            **Note:** Refers to owner and values are client-defined.
+        PartyTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PartyType field.
+        Contact:
+          type: array
+          description: Contact information of a party (person or organization).
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_Contact'
+        TaxIdentType:
+          type: string
+          description: |+
+            Type of tax identification.
+
+
+
+            **Note:** Refers to TIN Type.
+
+
+
+          enum:
+          - SSN
+          - ITIN
+          - Foreign
+          - None
+        TaxIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the TaxIdentType field.
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: |-
+            Unique identifier of tax.
+
+
+
+            Example: "123456789"
+
+
+
+            **Note:** Refers to Tax ID Number.
+        IssuedIdent:
+          type: array
+          description: Details of issued identity card/document of a party.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_IssuedIdent'
+        OEDCode:
+          type: string
+          description: |-
+            Code to indicate that the party is an employee of a financial institution.
+
+
+
+            **Note:** Values are client-defined.
+        OEDCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the OEDCode field.
+        SecretData:
+          type: array
+          description: Client-defined secret data of party that is used to validate the identity of the party in scenarios such as forgotten password.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_SecretData'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: Branch that primarily created the account with the party.
+        OriginatingBranchEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the OriginatingBranch field.
+        TelebancPswd:
+          maxLength: 255
+          type: string
+          description: |-
+            Electronic banking password used for personal identification.
+
+
+
+            **Note:** Refers to CIF Voice Response ID PIN.
+        PersonName:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PersonName'
+        BirthDt:
+          type: string
+          description: Date of birth of a person associated with the party.
+          format: date
+      description: "Frequently used properties of a person party.\n\n\n\n**Note:** Precision customer records with the value of the \"TaxIdentType\" field as \"EIN\" and \"QI EIN\" are mapped to the \"OrgPartyListInfo\" aggregate. All other customer records are mapped to the \"PersonPartyListInfo\" aggregate. "
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PhoneNum:
+      required:
+      - PhoneType
+      type: object
+      properties:
+        PhoneType:
+          type: string
+          description: "Type of a phone.\n\n\n\n**Note:** Foreign is interpreted as outside the U.S. Additional phone types may be client-defined. \n\n\n\n"
+          enum:
+          - Home
+          - Work
+          - Mobile
+          - Fax
+          - WorkForeign
+          - HomeForeign
+          - MobileForeign
+          - FaxForeign
+        PhoneTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PhoneType field.
+        PhoneIdent:
+          type: integer
+          description: Unique identifier to serialize the phone types when more than one phone type exists.
+          format: int64
+        Phone:
+          type: string
+          description: "Phone number to search the party records.\n\n\n\n**Note:** US phone numbers have International Dial Code as 1. \n\n\n\nBy default, the EFX Phone Number considers the following format for all phones: \n\n\n\n+IntlCountryCode-AreaCode-PhoneNumber[+Extn]\n\n\n\nThe Phone Extension Number is the only portion that is optional and is returned, if available for Work or WorkForeign. Example Phone Format:\n\n\n\n+91-402-5551212+739.\n\n\n\n\n\n\n\nIf the Client application has setup the parameter in ESF studio that indicates to not use phone formatting in ESF, then ESF does not format the phone number and returns the phone number as a string of numbers in the response. "
+        PreferredPhone:
+          type: boolean
+          description: Flag to indicate the phone number is a preferred phone number to contact.
+        Priority:
+          type: string
+          description: "Priority defined by the customer to indicate the order of contacts.\n\n\n\n\n\n\n\n**Note:** Refers to Contact Priority. \n\n\n\nPrecision has fixed values for setting the priority of the contact details. It supports primary, secondary and additional priority for phone number, email and contact.\n\n\n\nExcept for the\_Primary/Secondary value, this field does not support\_any other values."
+          enum:
+          - Primary
+          - Secondary
+        PhoneDesc:
+          maxLength: 30
+          type: string
+          description: Description of a phone.
+      description: Phone number details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard format of country code.
+          enum:
+          - SPCountryCode
+        CountryCodeValue:
+          type: string
+          description: |-
+            Country code value as per the country code format set in the CountryCodeSource field.
+
+
+
+            **Note:** Applicable for international non-US addresses.
+      description: Details of the country code.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr:
+      required:
+      - AddrType
+      type: object
+      properties:
+        AddressIdent:
+          maxLength: 36
+          type: string
+          description: "Unique identifier of an address record.\n\n\n\n**Note:** Refers to Alternate Address Code. \n\n\n\n1-99 represents an additional (alternate) address for the customer. \n\n\n\nIf the AddressIdent is 0 or is not present, then the address record is for the customer's primary address."
+        AddrUse:
+          type: string
+          description: Usage of the address.
+          enum:
+          - Physical
+        AddrUseEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the AddrUse field.
+        AddrFormatType:
+          type: string
+          description: Type of address format.
+          enum:
+          - Label
+        FullName1:
+          maxLength: 96
+          type: string
+          description: "Full name line 1.\n\n\n\n**Note:** Refers to Name/Address supplementary information for the legal name or address. This line is printed below the primary name and above the mailing address. "
+        Addr1:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 1.
+
+
+
+            **Note:** Refers to the street address, rural route or box number where customer correspondence is mailed.
+        City:
+          maxLength: 32
+          type: string
+          description: Name of the city.
+        County:
+          maxLength: 32
+          type: string
+          description: Name of the county to which an accountholder/party belongs.
+        StateProv:
+          type: string
+          description: |-
+            State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+
+
+
+            **Note:** Refers to the two character US state abbreviation. Values are client-defined.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: |+
+            Postal code or zip code.
+
+
+
+            **Note:** If ForeignFlag is true, then Precision accepts any value up to 10 characters. If ForeignFlag is false, then Precision accepts either 5 character zip or 10 character zip+4 (for example: 32715-1234).
+
+
+
+        CountryCode:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr_CountryCode'
+        AddrType:
+          type: string
+          description: "Type of the address.\n\n\n\n**Note:** Primary refers to the CIF Mailing Address. Only one Primary address is allowed. \n\n\n\nSecondary refers to Alternate Address.\n\n\n\nSeasonal refers to a Scheduled Alternate Address with a start and end date.\n\n\n\n"
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_PostAddr_TimeFrame'
+        ExpDt:
+          type: string
+          description: "Date after which the address becomes inactive.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
+          format: date
+        MoveInDt:
+          type: string
+          description: "Date of current address.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20\n\n\n\n**Note:** Applicable only to the current primary address."
+          format: date
+        ContactMethod:
+          type: string
+          description: Method used to notify the financial institution about address change.
+        Comment:
+          maxLength: 300
+          type: string
+          description: |-
+            Comments associated with the address.
+
+
+
+            **Note:** Max length: 25 characters
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: |-
+            Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+
+
+
+            **Note:** Refers to GEO code. This information is present in the response alongside Primary address details. However, Precision stores this information separately from address information.
+        ForeignFlag:
+          type: boolean
+          description: "Flag to indicate the given address is the foreign address.\n\n\n\n**Note:** Refers to Foreign Address that indicates if the address is outside the United States. "
+        HandlingCode:
+          type: string
+          description: |-
+            Handling code to specify the handling process of the notification and statement forms.
+
+
+
+            **Note:** Refers to Delivery Code (Class of Service). This information is present in the response alongside Primary address details. However, Precision stores this information separately from address information.
+        AddrInUseInd:
+          type: boolean
+          description: |-
+            Flag to indicate the alternate address is in use instead of the primary address for a customer.
+
+
+
+            **Note:** Only one alternate address can be selected as the address in use for a customer.
+      description: Postal address details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Email:
+      type: object
+      properties:
+        EmailIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of the email address.
+        EmailType:
+          type: string
+          description: |-
+            Type of the email address.
+
+
+
+            **Note:** Precision supports the type "4" (Email). Additional types may be client-defined.
+        EmailTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the EmailType field.
+        EmailAddr:
+          maxLength: 254
+          type: string
+          description: Email address to search the party records.
+        PreferredEmail:
+          type: boolean
+          description: |-
+            Flag to indicate the email address is the preferred address to contact.
+
+
+
+            **Note:** Refers to Contact Priority.
+      description: Email address details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_WebAddr:
+      type: object
+      properties:
+        WebAddrIdent:
+          type: integer
+          description: |-
+            Unique identifier of the web address.
+
+
+
+            Use when you have more than one occurrence of a web address type. This element serializes the web addresses.
+          format: int64
+        WebAddrType:
+          type: string
+          description: |-
+            Type of web address.
+
+
+
+            **Note:** Precision supports the type "5" (URL). Additional types may be client-defined.
+          enum:
+          - "5"
+        WebAddrTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the WebAddrType field.
+        WebAddrLink:
+          type: string
+          description: Link or URL of web address.
+        PreferredWebAddr:
+          type: boolean
+          description: "Flag to indicate the web address is preferred to contact.\n\n\n\n**Note:** Refers to Contact Priority. Precision sets the priority for all WebAddr URL contacts to Additional Contact. "
+      description: Web address details of a party.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Contact:
+      properties:
+        PhoneNum:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PhoneNum'
+        PostAddr:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_PostAddr'
+        Email:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Email'
+        WebAddr:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_WebAddr'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_IssuedIdent:
+      required:
+      - IssuedIdentType
+      properties:
+        IssuedIdentType:
+          type: string
+          description: |-
+            Type of identity card/document issued.
+
+
+
+            **Note:** StateId refers to a user-defined identification type that the user may enter at run time to document a third Id, other than Drivers License and Passport.  KnownToBranch must be paired with VerificationDetailText, which provides the ability to store notes/information on other methods used to identify the customer, such as Publicly Known Official.
+          enum:
+          - DrvrsLicNb
+          - PsptNb
+          - StateId
+          - KnownToBranch
+        IssuedIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the IssuedIdentType field.
+        IssueDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Date on which the identity card/document was issued. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\n\n\nExample: 2021-01-31T23:59:59.999"
+        ExpDt:
+          type: string
+          description: "Date after which the identity card/document becomes inactive.\n\n\n\nFormat: yyyy-mm-dd \n\n\n\nExample: 2021-11-20"
+          format: date
+        VerificationDetailText:
+          maxLength: 255
+          type: string
+          description: |-
+            User-defined identity verification details.
+
+
+
+            **Note:** First 255 characters are returned in the response.
+        GovIssuedIdent:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo_GovIssuedIdent'
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_SecretData:
+      required:
+      - SecretIdent
+      properties:
+        SecretIdent:
+          type: string
+          description: Unique identifier of the security question used to identify the customer.
+          enum:
+          - MaidenName
+        SecretValue:
+          maxLength: 80
+          type: string
+          description: |+
+            Value of the "SecretIdent" field that includes the customer's answer to the corresponding security question.
+
+
+
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_OrgName:
+      required:
+      - NameType
+      type: object
+      properties:
+        NameType:
+          type: string
+          description: "Type of the name.\n\n\n\n**Note:** Only one Primary name is allowed. Secondary refers to Alternate Name. "
+          enum:
+          - Primary
+        NameIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of a name value. This field is used to identify names related to the account record.
+
+
+
+            **Note:** The NameIdent for a customer's Primary address is always 0 on Precision.
+        Name:
+          maxLength: 80
+          type: string
+          description: "Organization name details.\n\n\n\n**Note:** Refers to the read-only Legal Name constructed by Precision based on the Name Option.  "
+        NameFormat:
+          type: string
+          description: Format of name to indicate the way of printing the name on certain mailings for personal customers.
+          enum:
+          - FirstLastSuffix
+          - FirstMiddleInitialLastSuffix
+          - FirstMiddleLastSuffix
+      description: |-
+        Organization name details.
+
+
+
+        **Note:** This service returns the customer's primary name only.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo:
+      type: object
+      properties:
+        PartyType:
+          type: string
+          description: |-
+            Type of a party.
+
+
+
+            **Note:** Refers to owner and values are client-defined.
+        PartyTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the PartyType field.
+        Contact:
+          type: array
+          description: Contact details of a party (person or organization).
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_Contact'
+        TaxIdentType:
+          type: string
+          description: |-
+            Type of tax identification.
+
+
+
+            **Note:** Refers to TIN Type. Other refers to QI EIN.
+          enum:
+          - EIN
+          - Other
+        TaxIdentTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the TaxIdentType field.
+        TaxIdent:
+          maxLength: 12
+          type: string
+          description: |-
+            Unique identifier of tax.
+
+
+
+            Example: "123456789"
+
+
+
+            **Note:** Refers to Tax ID Number.
+        IssuedIdent:
+          type: array
+          description: Details of issued identity card/document of a party.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_IssuedIdent'
+        OEDCode:
+          type: string
+          description: |-
+            Officer, employee, director code. This code is used to indicate if the party is an employee of the financial institution.
+
+
+
+            **Note:** Values are client-defined.
+        OEDCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the OEDCode field.
+        SecretData:
+          type: array
+          description: |+
+            Client-defined secret data of party that is used to validate the identity of the party in scenarios such as forgotten password.
+
+
+
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_SecretData'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: Branch that primarily created the account with the party.
+        OriginatingBranchEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the OriginatingBranch field.
+        TelebancPswd:
+          maxLength: 255
+          type: string
+          description: |-
+            Electronic Banking Password used for personal identification.
+
+
+
+            **Note:** Refers to CIF Voice Response ID PIN.
+        OrgName:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo_OrgName'
+      description: "Information related to a party when a party is an organization.\n\n\n\n**Note:** Precision customer records with TaxIdentType EIN and QI EIN are mapped to OrgPartyListInfo. All other customer records are mapped to the \"PersonPartyListInfo\" aggregate. "
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys_PartyKeys'
+        PersonPartyListInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_PersonPartyListInfo'
+        OrgPartyListInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef_OrgPartyListInfo'
+      description: |-
+        Reference details of a party object that is part of the relationship.
+
+
+
+
+
+
+
+        **Note:** If the value of the "IncPartyInfoInd" field is "true", then this aggregate is returned in the request.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyAcctRelData:
+      required:
+      - PartyAcctRelType
+      properties:
+        PartyAcctRelType:
+          type: string
+          description: |-
+            Relationship type between the party and account.
+
+
+
+            **Note:** Relationship can be assigned only to the secondary customers and, if the customer is primary owner of an account, value of 'owner' is returned in this field. Values between 0-99 are client-defined.
+        PartyAcctRelDesc:
+          maxLength: 80
+          type: string
+          description: Description of the relationship of the party to the account.
+        OwnershipType:
+          type: string
+          description: |-
+            Type of ownership.
+
+
+
+            **Note:** Title types are not returned in this service and refer to AcctInq for titles.
+          enum:
+          - Direct
+          - Indirect
+          - Fiduciary
+          - Additional
+        OwnershipTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the OwnershipType field.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_Liability:
+      type: object
+      properties:
+        LiabilityPercent:
+          type: number
+          description: "Percentage for which the party is responsible.\n\n\n\n**Note:** For Loans, the primary owner receives 100% of tax reporting. Precision provides the ability to set tax percentages for secondary owners only. The tax percentage value is present in whole numbers, for example, 10 = 10%. The primary owner's tax reporting liability = 100 less the total tax liability reported to secondary owners. "
+      description: Details of liability of a party/account holder.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo:
+      type: object
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyRef'
+        PartyAcctRelData:
+          type: array
+          description: Details of the relationship of the party to the account.
+          items:
+            $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_PartyAcctRelData'
+        OwnerInd:
+          type: boolean
+          description: "Flag to indicate the party is an owner of the account. \n\n\n\n**Note:** The \"OwnerInd\" field is set to \"true\" for the primary account owner and any direct secondary owners."
+        PrimaryOwnerInd:
+          type: boolean
+          description: Flag to indicate the account owner is the primary owner.
+        Liability:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo_Liability'
+        TaxReportingOwnerInd:
+          type: boolean
+          description: Flag to indicate the party has tax responsibility on the account.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: |-
+            Name that customer can assign to an account for easy identification.
+
+
+
+            **Note:** Nickname for account sent in the request.
+        Name:
+          maxLength: 80
+          type: string
+          description: |-
+            Full name of the party.
+
+
+
+            **Note:** Refers to the Legal Name, that Precision generates based on the Name Option formatting selected for the customer.
+        FDICOwnership:
+          type: string
+          description: "Relationship of party with FDIC.\n\n\n\n**Note:** Primary relationship is assigned to the initial account owner. \n\n\n\nNo other relationship can be assigned."
+        FDICOwnershipEnumDesc:
+          maxLength: 80
+          type: string
+          description: Description of the enumeration value in the FDICOwnership field.
+      description: 'Details of a relationship between party and account. '
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelStatus:
+      required:
+      - PartyAcctRelStatusCode
+      type: object
+      properties:
+        PartyAcctRelStatusCode:
+          type: string
+          description: Details of party to account relationship.
+          enum:
+          - Valid
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the party-to-account relationship status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\n\n\nExample: 2021-12-31T23:59:59.999"
+      description: Details of party-to-account relationship status.
+    PartyAcctRelInqBySecuredResponse_PartyAcctRelRec:
+      required:
+      - PartyAcctRelInfo
+      - PartyAcctRelKeys
+      - PartyAcctRelStatus
+      properties:
+        PartyAcctRelKeys:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelKeys'
+        PartyAcctRelInfo:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelInfo'
+        PartyAcctRelStatus:
+          $ref: '#/components/schemas/PartyAcctRelInqBySecuredResponse_PartyAcctRelStatus'

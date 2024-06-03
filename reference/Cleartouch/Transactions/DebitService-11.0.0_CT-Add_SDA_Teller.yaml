@@ -1,0 +1,682 @@
+---
+openapi: 3.0.1
+info:
+  title: Debit Service
+  description: This service domain is the debit facility for Accounts. A debit is performed with the use of a DebitAdd message. \_The client \_can use the DebitRev message to reverse the previous debit request.
+  version: 11.0.0_CT-Add_SDA_Teller
+servers:
+- url: /
+paths:
+  /debitservice/payments/debits:
+    post:
+      tags:
+      - Add Debit
+      summary: Add Debit.
+      description: "Add Debit API creates a one-sided transaction where monetary funds are debited/withdrawn from a Savings Deposit Account (SDA) for cash, check or any other payment types (disbursements). <br>This API is generally used for a Teller transaction.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: DebitAddOper
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DebitAddOperRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitAddOperResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitAddOperResponse'
+      x-group-name: Debit Service
+      x-proxy-name: Add Debit
+      x-child-product-name: Transactions
+      x-core: Cleartouch-SDA_Teller
+components:
+  schemas:
+    DebitAddOperRequest:
+      required:
+      - DebitInfo
+      properties:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        DebitInfo:
+          $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo'
+    DebitAddOperResponse:
+      required:
+      - DebitStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        DebitStatusRec:
+          $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec'
+        Receipt:
+          $ref: '#/components/schemas/DebitAddOperResponse_Receipt'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization Identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: Unique vendor identification number provided by Fiserv to identify the vendor.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: Name of the channel used by the client application. * 'Online' * 'Phone'  * 'Branch' * 'EFT'
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 32
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 32
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the terminal is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        TerminalCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: * ''EvePhone'' * ''DayPhone'' * ''EveFax'' * ''DayFax'' * ''Home'' * ''Work'' * ''Mobile'' * ''Fax'' * ''Pager'' * ''Modem'' * ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          maxLength: 80
+          type: string
+          description: |-
+            Standard country code format where the acquirer is located. Valid values are:
+              * 'ISO3166-Numeric'
+              * 'ISO3166-Alpha-3'
+        AcquirerCountryCodeValue:
+          maxLength: 20
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              * 'P2P' - Person-to-Person
+              * 'C2B' - Consumer-to-Business
+              * 'A2A' - Account-to-Account
+              * 'B2C' - Business-to-Consumer
+              * 'B2B' - Business-to-Business
+              * 'G2C' - Government-to-Consumer
+              * 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    DebitAddOperRequest_DebitInfo_AcctRef_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+
+
+
+
+
+
+            **Note:** *Required field*
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+            **Note:** If the account type is not sent or the account type is an invalid account type, ESF will return a 700 error - Unsupported function.
+          enum:
+          - SDA
+      description: Unique information to identify the account record.
+    DebitAddOperRequest_DebitInfo_AcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_AcctRef_AcctKeys'
+      description: Reference information of an account from which the amount is debited.
+    DebitAddOperRequest_DebitInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPlease note that presently only USD currency code is supported.\n\n**Note:** Currently only USD is supported by the SPs."
+      description: Details of the currency code.
+    DebitAddOperRequest_DebitInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            **Note:** This value is required and cannot be a value of 0 (zero).
+        CurCode:
+          $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CurAmt_CurCode'
+      description: Details of the debit amount to be processed.
+    DebitAddOperRequest_DebitInfo_CompositeCurAmt:
+      required:
+      - CurAmt
+      properties:
+        CompositeCurAmtType:
+          type: string
+          description: "Type of composite currency amount.\n\n**Note:** For a service charge transaction, this is a required field in Cleartouch and should be filled with the value of \"Fee\".  \n\n\n\nFor a Withdrawal, this field is not expected to be populated."
+          enum:
+          - Fee
+        CurAmt:
+          $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CurAmt'
+        SpecialHandling:
+          type: array
+          description: 'Special instructions for processing the transaction amount. '
+          items: {}
+          enum:
+          - NoDLA
+    DebitAddOperRequest_DebitInfo_ToAcctRef:
+      type: object
+      properties:
+        TrnCode:
+          type: string
+          description: "Service provider transaction code of the payment posted to the account.\n\n**Note:** Used to enter a two-digit or four-digit statement description code. \n\n"
+      description: |-
+        Reference details of the account to which the funds are transferred.
+
+        Applicable when the credit funds are transferred from other accounts.
+    DebitAddOperRequest_DebitInfo_XferToAcct:
+      required:
+      - ToAcctRef
+      properties:
+        ToAcctRef:
+          $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_ToAcctRef'
+    DebitAddOperRequest_DebitInfo:
+      required:
+      - CompositeCurAmt
+      - DebitType
+      type: object
+      properties:
+        DebitType:
+          type: string
+          description: |-
+            Type of debit transaction.
+
+            **Note:** This is a required field in Cleartouch.
+          enum:
+          - Withdrawal
+          - Fee
+        Desc:
+          maxLength: 200
+          type: array
+          description: "Description of debit transaction.\n\n**Note:** Client generated Reg-E description that service providers can use to display on the customers statements, up to 33 characters.  "
+          items: {}
+        MediaType:
+          type: string
+          description: |-
+            Type of media on which the transaction is recorded.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            Required if account type is "SDA".
+
+            Used to indicate if this is a passbook or statement account.
+
+            When the transaction is for "Service Charge" use "NoBook".
+          enum:
+          - Statement
+          - NoBook
+        AcctRef:
+          $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_AcctRef'
+        CompositeCurAmt:
+          type: array
+          description: |-
+            Details of the composition of the debited amount.
+
+            **Note:** One CompositeCurAmt aggregate is required which contains the transaction amount.
+          items:
+            $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_CompositeCurAmt'
+        XferToAcct:
+          type: array
+          description: "Details of the account to which transfer of funds is made. \n\nApplicable when funds are transferred to one or more accounts."
+          items:
+            $ref: '#/components/schemas/DebitAddOperRequest_DebitInfo_XferToAcct'
+      description: Details of the debit transaction.
+    DebitAddOperResponse_DebitStatusRec_DebitKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identification number of an account record.
+
+
+
+
+
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information on account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - SDA
+      description: Unique information to identify the account record.
+    DebitAddOperResponse_DebitStatusRec_DebitKeys:
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec_DebitKeys_AcctKeys'
+      description: Unique information to identify a debit record.
+    DebitAddOperResponse_DebitStatusRec_DebitStatus:
+      required:
+      - DebitStatusCode
+      type: object
+      properties:
+        DebitStatusCode:
+          type: string
+          description: Code to specify the status of the debit transaction.
+          enum:
+          - Posted
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date and time when the debit transaction status is changed.
+
+            Format: yyyy-mm-ddThh:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+      description: Details of the debit transaction status.
+    DebitAddOperResponse_DebitStatusRec:
+      required:
+      - DebitStatus
+      type: object
+      properties:
+        DebitKeys:
+          $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec_DebitKeys'
+        DebitStatus:
+          $ref: '#/components/schemas/DebitAddOperResponse_DebitStatusRec_DebitStatus'
+      description: Details of the debit transaction response returned from add and reversal of the object.
+    DebitAddOperResponse_Receipt_TrnAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            **Note:** Total transaction amount.
+      description: |+
+        Details of the transaction amount.
+
+    DebitAddOperResponse_Receipt_WarningOrLockout:
+      required:
+      - Type
+      properties:
+        Type:
+          type: string
+          description: |-
+            Type of warning or lockout that indicates whether the associated warning code is for a warning flag or a lockout flag.
+
+            **Note:** Indicates whether the associated WarningCode is for a warning flag or a lockout flag.
+          enum:
+          - Warning
+          - Lockout
+        Code:
+          type: string
+          description: |-
+            Value of the warning or lockout flag indicated in "WarningType".
+
+            **Note:** Value of the warning or lockout flag.
+    DebitAddOperResponse_Receipt_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+      description: Details of the debit amount to be processed.
+    DebitAddOperResponse_Receipt_AcctBal:
+      required:
+      - BalType
+      - CurAmt
+      properties:
+        BalType:
+          type: string
+          description: "Type of account balance. \n\n"
+          enum:
+          - Current
+          - Interest
+        CurAmt:
+          $ref: '#/components/schemas/DebitAddOperResponse_Receipt_CurAmt'
+    DebitAddOperResponse_Receipt:
+      type: object
+      properties:
+        Name:
+          maxLength: 80
+          type: string
+          description: |-
+            Name of the person.
+
+            **Note:** Short name for this account.
+        TellerIdent:
+          type: string
+          description: |-
+            Unique identifier of a teller used to run the transaction.
+
+
+
+            **Note:** Teller number used to run this transaction.  The teller number may be a static number for this service or passed through the token created from the teller signon.
+        TrnAmt:
+          $ref: '#/components/schemas/DebitAddOperResponse_Receipt_TrnAmt'
+        WarningOrLockout:
+          type: array
+          description: Details of the account warning or lockout associated to the account.
+          items:
+            $ref: '#/components/schemas/DebitAddOperResponse_Receipt_WarningOrLockout'
+        AcctBal:
+          type: array
+          description: |-
+            Details of the account balance at the time the debit transaction posted.
+
+            **Note:** The AcctBal aggregate will repeat for balances affected by the transaction.
+          items:
+            $ref: '#/components/schemas/DebitAddOperResponse_Receipt_AcctBal'
+      description: Details of the debit transaction receipt.
