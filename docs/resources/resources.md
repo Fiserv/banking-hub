@@ -105,7 +105,7 @@ JSON Web Tokens (JWTs) use digital signatures to authorize and authenticate user
 |**Verification Method**|Verification involves running the header and payload with a secret key and comparing signatures through the same algorithm.| Servers use the JWT's public key and proof-of-possession key as a combination to confirm the client's private key possession.|
 |**Authentication Process**|In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.|When a client makes a request with a JWT+DPoP token, it includes a signature proving that it possesses the private key corresponding to the public key used in the JWT.|
 
-## Architecture
+## DPoP Process Flow
 
 ![DPoP Architecture](https://github.com/Fiserv/banking-hub/assets/135122880/0b3e7ee2-a39e-4971-87d2-de798997a2f8)
 
