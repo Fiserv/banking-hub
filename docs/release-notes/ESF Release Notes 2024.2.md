@@ -130,7 +130,6 @@ titles: Premier, Premier, Precision, Precision, Signature
 
 <!-- type: tab -->
 
-<!-- type: tab -->
 ## May 23, 2024
 
 ### Enhancements
