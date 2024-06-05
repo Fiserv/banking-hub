@@ -79,8 +79,11 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 # DPoP Token Implementation
 
 
-DPoP is an OAuth 2.0 Demonstration of Proof-of-Possession at the application layer. It is a security mechanism that utilizes short-lived tokens, each of which is exclusively valid for a single request or interaction, providing a heightened level of security and assurance in authentication and access control systems.<br>
-As displayed in the following pictures, a car-key in the first picture represents a bearer token. Anyone having access to that car key, can use it. Whereas, the passport in the second picture represents a bound token that passes different criteria such as facial, fingerprint and attribute matching parameters. Along with this, a document interrogation is also conducted to ensure the holder's identity and authenticity. DPoP mechanism assures a layered security like passport authentication.
+DPoP is an OAuth 2.0 Demonstration of Proof-of-Possession at the application layer. It is a security mechanism that uses temporary bound (short-lived) tokens that are exclusively valid for a single request or interaction. These tokens provide a high level of security and assurance in authentication and access control systems.<br>
+Let us consider the following pictures to understand the difference between bound and bearer tokens:<br>
+•	Picture 1: Represents a car-key, which is like a bearer token. Anyone with an access or possesion can use it.<br>
+•	Picture 2: Represents a passport, which is like a bound token. Such a token needs holder's identity and authenticity through face detection, fingerprint, attribute matching, and document interrogation. <br>
+
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![car key](https://github.com/Fiserv/banking-hub/assets/135122880/20f45721-7dcf-45b1-b2c2-5e164596a63e)    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![passport](https://github.com/Fiserv/banking-hub/assets/135122880/5040658c-35a0-41be-9d8e-be6b9e8000d1)
@@ -93,16 +96,16 @@ As displayed in the following pictures, a car-key in the first picture represent
 >  
 
 ## JWT & DPoP Integrations
-JSON Web Tokens (JWTs) use digital signatures to ensure authenticity and integrity in authentication and authorization where as DPoP creates a unique proof-of-possession key, often linked to the user's session. In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.
+JSON Web Tokens (JWTs) use digital signatures to authorize and authenticate users.  whereas DPoP creates a unique proof-of-possession key, often linked to the user's session. In JWTs, if the signatures match, the token is considered valid, and the claims in the payload is trusted. The following is a comparative analysis based on mode, verification method and authentication process carried out for signature-based tokens and JWT + DPoP combination tokens. 
 
 
-  |Details|Signature based verifications|JWT + DPoP|
+  |Details|Signature-based Tokens|JWT + DPoP|
 |-----------|------------|------------|
 |**Mode**|Standalone JWTs use digital signatures to ensure authenticity and integrity in authentication and authorization.|DPoP creates a unique proof-of-possession key, often linked to the user's session.|
-|**Verification Methods**|Verification involves running the header and payload with a secret key and comparing signatures through the same algorithm.| Servers use the JWT's public key and proof-of-possession key to confirm the client's private key possession.|
+|**Verification Method**|Verification involves running the header and payload with a secret key and comparing signatures through the same algorithm.| Servers use the JWT's public key and proof-of-possession key as a combination to confirm the client's private key possession.|
 |**Authentication Process**|In JWTs, If the signatures match, the token is considered valid, and the claims in the payload can be trusted.|When a client makes a request with a JWT+DPoP token, it includes a signature proving that it possesses the private key corresponding to the public key used in the JWT.|
 
-## Architecture
+## DPoP Process Flow
 
 ![DPoP Architecture](https://github.com/Fiserv/banking-hub/assets/135122880/0b3e7ee2-a39e-4971-87d2-de798997a2f8)
 
@@ -118,14 +121,20 @@ To implement the DPoP Security, follow the listed steps:
 
 ## Step 1 - Generate Public/Private Key Pair
 1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL
-2. This cryptotools link [Public/Private Key Generator](https://cryptotools.net/rsagen ) is provided as an example to generate the public/private key pair. Fiserv strongly suggests to use the minimum Key Length of 2048 and above (2048 or 4096) for generating the key pair<br>
+2. This cryptotools link [Public/Private Key Generator](https://cryptotools.net/rsagen ) is provided as an example to generate the public/private key pair. <br>
+<!-- theme: info -->
+> #### Note
+>
+> Fiserv strongly suggests to use the minimum Key Length of 2048 and above (2048 or 4096) for generating the key pair.
 
   ![Step 1 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/33f3b957-51db-458f-bce1-e862a6d3bfb3)
 
 ## Step 2 - Onboard the Consumer
-  1. Register consumer with public key through AppMarket from Fiserv
-  2. AppMarket stores and returns the consumer key and shares with the consumer <br>
-  
+Register consumer with public key through AppMarket from Fiserv
+  <!-- theme: info -->
+> #### Note
+>
+> AppMarket stores and returns the consumer key and shares with the consumer.
   ![Step 2 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/6f5e4b9e-c36d-4142-93e3-fc532e4a32bf)
 
 ## Step 3 - Select the Style to Sign in DPoP Token

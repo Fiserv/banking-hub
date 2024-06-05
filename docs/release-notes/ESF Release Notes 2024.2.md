@@ -3,7 +3,7 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Premier, Precision, Signature
+titles: Premier, Premier, Precision, Precision, Signature
 -->
 
 ## May 23, 2024
@@ -127,6 +127,35 @@ titles: Premier, Premier, Precision, Signature
 - The revolving loan indicator information now displays correctly in the response message<br>
 **Impacted Field:**
   - AcctRec/LoanAcctInfo/RevolvingLoanInd
+
+<!-- type: tab -->
+
+<!-- type: tab -->
+## May 23, 2024
+
+### Enhancements
+| API Name | Description | Deployment |
+| --- | ----------- | -------- |
+| API Specification| We updated the API Specifications.| PROD |
+
+### Fixed
+| API Name | Description | Deployment |
+| --- | ----------- | ------------------ |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the issue where the correct number of records were not returned in the response message when filtered by the internet banking party identifier. | PROD |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> |  The fields `OwnerInd`, `PrimaryOwnerInd` and `TaxReportingOwnerInd` were not rendering as expected in the response. To resolve this issue, we added correct values for owner indicator, primary owner indicator and tax reporting owner indicator.<br>**Impacted Fields:**<br>`PartyAcctRelRec/PartyAcctRelInfo/OwnerInd`<br>`PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd`<br> `PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd`| PROD |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the error exception issue that was occurring in the response message when retrieving party account relationships using the party identifier. | PROD |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We updated the configurations so that the API successfully retrieves the accounts whose secondary ownership type is "Direct" and "Fiduciary". | PROD |
+| <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Acct</a>,<br> <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Party</a> |  Previously, the response message failed to retrieve multiple memo ticklers associated with an account or party record. We resolved this issue so that users can retrieve all the memo ticklers successfully. | PROD |
+| <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Acct</a>,<br> <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Party</a> |  We resolved the issue in which the system does not generate "HTTP 200-OK 1120- No Records Match Selection Criteria" response, if a user sent the request with `MemoTicklerIdent` as blank or with an invalid value. | PROD |
+| <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Acct</a>,<br> <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Party</a> |  We resolved the issue in which the system does not generate "HTTP 200-OK 1120-No Records Match Selection Criteria" response, when the memo ticker usage was "Memo" or "MemoRequired" in the request. | PROD |
+| <a href="../api/?type=post&path=/stopchkservice/stophold/stopChecks" title="Click to open">Add Stop Check</a> | The system generated an error exception in the response even when the configuration of fee amount code, fee option and fee waive reason code is correct for the associated organization and client application. To resolve this issue, we have corrected the code. | PROD |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-DDA_SDA</a> | Previously, in the request, the value "UserCode1" of the `DataIdent` field for the Saving Deposit Account (SDA) was not updated with the value that client defines. We resolved the issue so that the client defined value gets updated successfully.<br>**Impacted Fields:**<br>`LoanAcctInfo/ClientDefinedData`<br>`LoanAcctInfo/ClientDefinedData/DataClassType`<br> `LoanAcctInfo/ClientDefinedData/DataIdent` <br> `LoanAcctInfo/ClientDefinedData/DataType` <br> `LoanAcctInfo/ClientDefinedData/Value`| PROD |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty</a> | The API now retrieves the correct relationship type. Previously, the API retrieves the relationship type as "Owner" for all the records irrespective of the actual relationship type. | PROD |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty</a> | We improved the API configuration to retrieve the response message within 30 seconds. Previously, there was a latency in response while using internet banking. | PROD |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the internal server error for client defined boolean values sent in the request. Now, users can expect correct values in the API response. | PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account- DDA_SDA</a> | Previously, in request, the numeric value (udi-1, which specifies the region code) of the client defined data aggregate was added incorrectly while account creation. We resolved this issue to send the correct value.<br>**Impacted Fields:**<br>`DepositAcctInfo/ClientDefinedData`<br>`DepositAcctInfo/ClientDefinedData/DataClassType`<br> `DepositAcctInfo/ClientDefinedData/DataIdent` <br> `DepositAcctInfo/ClientDefinedData/DataType` <br> `DepositAcctInfo/ClientDefinedData/Value` | PROD |
+| <a href="../api/?type=post&path=/acctholdservice/stophold/accountHolds" title="Click to open">Add Account Hold</a> | We resolved the issue of internal server error while account hold creation. Now, the user can successfully place a hold on an account. | PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | We resolved an issue to get the correct error message in response when user provides the invalid value for data identifier in the request. Previously, user gets "HTTP 999 - General Error 1011 - Invalid User" message instead of "HTTP 400 - Bad Request 1090 - Invalid Value".<br>**Impacted Field:**<br>`DepositAcctInfo/ClientDefinedData/DataIdent`| PROD |
 
 
 <!-- type: tab -->
