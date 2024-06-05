@@ -81,8 +81,8 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 
 DPoP is an OAuth 2.0 Demonstration of Proof-of-Possession at the application layer. It is a security mechanism that uses temporary bound (short-lived) tokens that are exclusively valid for a single request or interaction. These tokens provide a high level of security and assurance in authentication and access control systems.<br>
 Let us consider the following pictures to understand the difference between bound and bearer tokens:<br>
-•	Picture 1: Represents a car-key, which is like a bearer token. Anyone with an access or possesion can use it.<br>
-•	Picture 2: Represents a passport, which is like a bound token. Such a token needs holder's identity and authenticity through face detection, fingerprint, attribute matching, and document interrogation. <br>
+- Picture 1: Represents a car-key, which is like a bearer token. Anyone with an access or possesion can use it.<br>
+- Picture 2: Represents a passport, which is like a bound token. Such a token needs holder's identity and authenticity through face detection, fingerprint, attribute matching, and document interrogation. <br>
 
 
 
