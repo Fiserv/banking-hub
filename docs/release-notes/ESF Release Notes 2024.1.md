@@ -15,7 +15,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 
 <span style="font-size: 22px; ">Get Transaction Account-LAS, Get Transaction Account-AMS</span> *API Explorer > Transactions > Account Transaction Service*
 
-- Updated the "ChkNum" field to return the values of the client-defined "TrnCode" and "ExternalTrnCode" fields for memopost transactions
+- We enhanced the "ChkNum" field in the response to return the values of the client-defined "TrnCode" and "ExternalTrnCode" field for the memopost transactions
 
 <span style="font-size: 22px; ">Add Document</span> *API Explorer > Accounts > Document Service*
 
@@ -40,7 +40,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 **Impacted Field:**
   - LoanAcctInfo/RevolvingLoanCode 
 
-- Fixed the error of the "OpenDt" field (LoanAcctInfo/PostAddr/OpenDt) which was marked as a required field and hence restricting to create a loan account. Now the field is marked as optional in request and does not restrict the user to create a loan account
+- We resolved the "Date Opened is Required" error that API returned in the response even the "OpenDt" field is an optional field. Now users can successfully create the loan account even if the open date is not provided
 
 - Effective date for the home mortgage now correctly displays in the response. Earlier, effective date value was showing different value in the response<br>
 **Impacted Field:**
@@ -103,7 +103,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Add Account Collateral Relationship</span> *API Explorer > Accounts > Account Collateral Service*
 
 
-- Fixed the "PledgeDt" field to add the correct date while creating a relationship of a collateral with an account
+- We resolved the issue with the "PledgeDt" field where the value for the pledge date was not correctly passed to the provider when creating the account collateral relationship
 
 - Previously, the API returned the data type mistmatch error in the response when the required "LienPosition" field was not provided in the request. To resolve the issue we have done error handling for the code and now users can expect to correct API response message when any required field is not provided in the request
 
@@ -379,7 +379,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 <span style="font-size: 22px; ">Update Account - DDA_SDA</span> *API Explorer > Accounts > Account Service*
 
 
-- Fixed the issue with the "DepositAcctInfo/ClientDefinedData/DataIdent" where the client-defined value was getting passed as "0" in the request
+- We resolved an issue with the "DataIdent" field where the client defined value "UserCode1" was sent incorrectly to the provider
 
 <span style="font-size: 22px; ">Update Party</span> *API Explorer > Accountholder > Party Service*
 
