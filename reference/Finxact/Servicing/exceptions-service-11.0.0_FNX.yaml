@@ -1,20 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Transaction Codes Service
-  description: Transaction Codes Service
-  version: 11.0.0_FIN
+  title: Exceptions Service
+  description: Exceptions Service
+  version: 11.0.0_FNX
 servers:
-- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/TransactionCode/11.0.0_FIN
-  description: SwaggerHub API Auto Mocking
+- url: /
 paths:
-  /servicing/transactionCodes:
+  /servicing/exceptions:
     get:
       tags:
-      - Get Transaction Codes List
-      summary: Get Transaction Codes List
-      description: "Get Transaction Codes List API retrieves a list of all transaction codes including details for each transaction code.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
-      operationId: getTrasactionCodes
+      - Get Exceptions List
+      summary: Get Exceptions List
+      description: "Get Exceptions List API retrieves the details of all exceptions or a particular exception.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: getExceptions
       parameters:
       - name: EFXHeader
         in: header
@@ -24,7 +23,7 @@ paths:
           $ref: '#/components/schemas/EFXHeader'
       - name: pageLimit
         in: query
-        description: Maximum number of records to retrieve in the result set used for the page and cursor base pagination.
+        description: "Maximum number of records to retrieve in the result set used for the page and cursor base pagination. <br><b>Note:</b> pageLimit is not used in combination with accountNumber search."
         required: false
         style: form
         explode: true
@@ -32,7 +31,7 @@ paths:
           type: integer
       - name: pageOffset
         in: query
-        description: Start point of the result set, required for the page base pagination.
+        description: "Start point of the result set, required for the page base pagination. <br><b>Note:</b> pageOffSet is not be used in combination with accountNumber search."
         required: false
         style: form
         explode: true
@@ -40,7 +39,15 @@ paths:
           type: integer
       - name: cursor
         in: query
-        description: Next record pointer to include in the response if additional records are available. Applicable for the cursor base pagination.
+        description: "Next record pointer to include in the response if additional records are available. Applicable for the cursor base pagination. <br><b>Note:</b> cursor is not be used in combination with accountNumber search."
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: code
+        in: query
+        description: Code of the exception placed for a transaction.
         required: false
         style: form
         explode: true
@@ -52,20 +59,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTrasactionCodesResponse'
+                $ref: '#/components/schemas/getExceptionsResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTrasactionCodesResponse'
-      x-group-name: Transaction Codes Service
-      x-proxy-name: Get Transaction Codes List
+                $ref: '#/components/schemas/getExceptionsResponse'
+      x-group-name: Exceptions Service
+      x-proxy-name: Get Exceptions List
       x-child-product-name: Operations and Servicing
       x-core: Finxact
 components:
   schemas:
-    getTrasactionCodesResponse:
+    getExceptionsResponse:
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
@@ -80,11 +87,11 @@ components:
         cursor:
           type: string
           description: Next record pointer value included in the response for available additional records. Applicable for cursor base pagination.
-        transactionCodes:
+        exceptions:
           type: array
-          description: Details of the transaction codes.
+          description: Details of the exceptions placed for a transaction.
           items:
-            $ref: '#/components/schemas/getTrasactionCodesResponse_transactionCodes'
+            $ref: '#/components/schemas/getExceptionsResponse_exceptions'
     EFXHeader:
       required:
       - OrganizationId
@@ -396,74 +403,50 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    getTrasactionCodesResponse_entryDefinitions:
-      required:
-      - isDebit
-      properties:
-        entryName:
-          maxLength: 200
-          type: string
-          description: Name of the transaction code entry.
-        isDebit:
-          type: boolean
-          description: Value that indicates the transaction code is a debit entry.
-        isGLEntry:
-          type: boolean
-          description: Value that indicates the transaction code is a general ledger entry.
-        glAccountNumber:
-          type: string
-          description: Number of the General Ledger Account (GLA).
-        currencyCode:
-          maxLength: 3
-          type: string
-          description: Code to indicate the currency.
-        description:
-          maxLength: 200
-          type: string
-          description: Description of the transaction code entry.
-        isGLDetail:
-          type: boolean
-          description: 'Value that indicates the entry is the general ledger entry detail. '
-        isReversalGLDetail:
-          type: boolean
-          description: 'Value that indicates the entry is the reversal general ledger entry detail. '
-        feeIdent:
-          maxLength: 80
-          type: string
-          description: Unique identifier of the fee.
-    getTrasactionCodesResponse_transactionCodes:
+    getExceptionsResponse_exceptions:
       required:
       - code
       - description
       properties:
         code:
-          maxLength: 15
+          maxLength: 80
           type: string
-          description: Code of the transaction.
+          description: Code of the exception placed for a transaction.
         description:
           maxLength: 200
           type: string
-          description: Description of the transaction code.
-        networks:
+          description: Description of the exception placed for a transaction.
+        isSystem:
+          type: boolean
+          description: 'Value that indicates the exception is a system exception. Financial Institutions can also create exceptions. '
+        severity:
+          type: string
+          description: Value that describes the severity of the exception.
+          enum:
+          - Override
+          - Warning
+          - Error
+        entities:
           type: array
-          description: Value that indicates the network where the transaction code is applied.
+          description: Type of the entity on which the exception is applicable.
           items: {}
           enum:
-          - CORE
-          - ACH
-          - ACTIMIZE
-          - AFT
-          - FEDWIRE
-          - SEPA
-          - SWIFT
-          - CHECK
-          - EFT
-          - P2P
-          - RTP
-          - MANUALWIRE
-          - FAIM
-        entryDefinitions:
+          - Portfolio
+          - Account
+          - Party
+        rolesIncluded:
           type: array
-          description: Details of the transaction code entries.
-          items:
-            $ref: '#/components/schemas/getTrasactionCodesResponse_entryDefinitions'
+          description: Value that indicates roles may override the exception.
+          items: {}
+        rolesExcluded:
+          type: array
+          description: Value that indicates roles may not override the exception.
+          items: {}
+        transactionCodesIncluded:
+          type: array
+          description: Value that indicates the transaction code uses the exception.
+          items: {}
+        transactionCodesExcluded:
+          type: array
+          description: Value that indicates the transaction code do not use the exception.
+          items: {}

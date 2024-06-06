@@ -1,20 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Transaction Codes Service
-  description: Transaction Codes Service
-  version: 11.0.0_FIN
+  title: GLAccount Service
+  description: General Ledger Account Service retrieves information about general ledger account and positions.
+  version: 11.0.0_FNX
 servers:
-- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/TransactionCode/11.0.0_FIN
-  description: SwaggerHub API Auto Mocking
+- url: /
 paths:
-  /servicing/transactionCodes:
-    get:
+  /acctmgmt/glAccounts/secured:
+    post:
       tags:
-      - Get Transaction Codes List
-      summary: Get Transaction Codes List
-      description: "Get Transaction Codes List API retrieves a list of all transaction codes including details for each transaction code.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
-      operationId: getTrasactionCodes
+      - Get GLAccount
+      summary: Get GLAccount.
+      description: "Get GL Account Details API retrieves a list of all the general ledger accounts or general ledger positions.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: getGLAccountSecured
       parameters:
       - name: EFXHeader
         in: header
@@ -24,7 +23,7 @@ paths:
           $ref: '#/components/schemas/EFXHeader'
       - name: pageLimit
         in: query
-        description: Maximum number of records to retrieve in the result set used for the page and cursor base pagination.
+        description: "Maximum number of records to retrieve in the result set used for the page and cursor base pagination. <br><b>Note:</b> pageLimit is not used in combination with accountNumber search."
         required: false
         style: form
         explode: true
@@ -32,7 +31,7 @@ paths:
           type: integer
       - name: pageOffset
         in: query
-        description: Start point of the result set, required for the page base pagination.
+        description: "Start point of the result set, required for the page base pagination. <br><b>Note:</b> pageOffSet is not used in combination with accountNumber search."
         required: false
         style: form
         explode: true
@@ -40,32 +39,40 @@ paths:
           type: integer
       - name: cursor
         in: query
-        description: Next record pointer to include in the response if additional records are available. Applicable for the cursor base pagination.
+        description: "Next record pointer to include in the response if additional records are available. Applicable for the cursor base pagination. <br><b>Note:</b> cursor is not used in combination with accountNumber search."
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: accountNumber
+        in: query
+        description: Number of the general ledger account.
         required: false
         style: form
         explode: true
         schema:
           type: string
       responses:
-        "200":
+        "201":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTrasactionCodesResponse'
+                $ref: '#/components/schemas/getGLAccountSecuredResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTrasactionCodesResponse'
-      x-group-name: Transaction Codes Service
-      x-proxy-name: Get Transaction Codes List
-      x-child-product-name: Operations and Servicing
+                $ref: '#/components/schemas/getGLAccountSecuredResponse'
+      x-group-name: GL Account Service
+      x-proxy-name: Get GL Account Details
+      x-child-product-name: Accounts
       x-core: Finxact
 components:
   schemas:
-    getTrasactionCodesResponse:
+    getGLAccountSecuredResponse:
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
@@ -80,11 +87,11 @@ components:
         cursor:
           type: string
           description: Next record pointer value included in the response for available additional records. Applicable for cursor base pagination.
-        transactionCodes:
+        glAccounts:
           type: array
-          description: Details of the transaction codes.
+          description: Details of the general ledger account.
           items:
-            $ref: '#/components/schemas/getTrasactionCodesResponse_transactionCodes'
+            $ref: '#/components/schemas/getGLAccountSecuredResponse_glAccounts'
     EFXHeader:
       required:
       - OrganizationId
@@ -396,74 +403,72 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    getTrasactionCodesResponse_entryDefinitions:
+    getGLAccountSecuredResponse_segments:
       required:
-      - isDebit
+      - id
+      - value
       properties:
-        entryName:
-          maxLength: 200
+        id:
           type: string
-          description: Name of the transaction code entry.
-        isDebit:
-          type: boolean
-          description: Value that indicates the transaction code is a debit entry.
-        isGLEntry:
-          type: boolean
-          description: Value that indicates the transaction code is a general ledger entry.
-        glAccountNumber:
+          description: Unique identifier of the segment.
+        value:
+          maxLength: 256
           type: string
-          description: Number of the General Ledger Account (GLA).
-        currencyCode:
-          maxLength: 3
-          type: string
-          description: Code to indicate the currency.
-        description:
-          maxLength: 200
-          type: string
-          description: Description of the transaction code entry.
-        isGLDetail:
-          type: boolean
-          description: 'Value that indicates the entry is the general ledger entry detail. '
-        isReversalGLDetail:
-          type: boolean
-          description: 'Value that indicates the entry is the reversal general ledger entry detail. '
-        feeIdent:
-          maxLength: 80
-          type: string
-          description: Unique identifier of the fee.
-    getTrasactionCodesResponse_transactionCodes:
+          description: Value of the segment.
+    getGLAccountSecuredResponse_positions:
       required:
-      - code
-      - description
+      - balanceAmount
+      - number
+      - segments
       properties:
-        code:
-          maxLength: 15
+        number:
           type: string
-          description: Code of the transaction.
-        description:
-          maxLength: 200
-          type: string
-          description: Description of the transaction code.
-        networks:
+          description: Full number of the general ledger account used during credit and debit posting.
+        segments:
           type: array
-          description: Value that indicates the network where the transaction code is applied.
-          items: {}
-          enum:
-          - CORE
-          - ACH
-          - ACTIMIZE
-          - AFT
-          - FEDWIRE
-          - SEPA
-          - SWIFT
-          - CHECK
-          - EFT
-          - P2P
-          - RTP
-          - MANUALWIRE
-          - FAIM
-        entryDefinitions:
-          type: array
-          description: Details of the transaction code entries.
+          description: Sub-classification details of general ledger account in segments.
           items:
-            $ref: '#/components/schemas/getTrasactionCodesResponse_entryDefinitions'
+            $ref: '#/components/schemas/getGLAccountSecuredResponse_segments'
+        balanceAmount:
+          type: number
+          description: Balance amount of general ledger account.
+        name:
+          type: string
+          description: Name of a general ledger account position.
+    getGLAccountSecuredResponse_glAccounts:
+      required:
+      - class
+      - name
+      - number
+      properties:
+        number:
+          type: string
+          description: Number of the general ledger account.
+        name:
+          type: string
+          description: Name of the general ledger account.
+        class:
+          type: string
+          description: Type of the general ledger account.
+          enum:
+          - Asset
+          - Liabity
+          - Capital
+          - Revenue
+          - Expense
+        openDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Date and time when the general ledger account was opened.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.SSS
+
+            Example: 2021-01-31T23:59:59.999
+        positions:
+          type: array
+          description: Information related to the positions of the general ledger account.
+          items:
+            $ref: '#/components/schemas/getGLAccountSecuredResponse_positions'

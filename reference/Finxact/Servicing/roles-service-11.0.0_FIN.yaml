@@ -1,20 +1,19 @@
 ---
 openapi: 3.0.1
 info:
-  title: Transaction Codes Service
-  description: Transaction Codes Service
+  title: Roles Service
+  description: The Roles service supports operations managing user roles.
   version: 11.0.0_FIN
 servers:
-- url: https://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/TransactionCode/11.0.0_FIN
-  description: SwaggerHub API Auto Mocking
+- url: /
 paths:
-  /servicing/transactionCodes:
+  /servicing/roles:
     get:
       tags:
-      - Get Transaction Codes List
-      summary: Get Transaction Codes List
-      description: "Get Transaction Codes List API retrieves a list of all transaction codes including details for each transaction code.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
-      operationId: getTrasactionCodes
+      - Get User Role List
+      summary: Get Roles List
+      description: "Get Roles List API retrieves a list of available user roles.<br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: getRoleCode
       parameters:
       - name: EFXHeader
         in: header
@@ -24,7 +23,7 @@ paths:
           $ref: '#/components/schemas/EFXHeader'
       - name: pageLimit
         in: query
-        description: Maximum number of records to retrieve in the result set used for the page and cursor base pagination.
+        description: "Maximum number of records to retrieve in the result set used for the page and cursor base pagination. <br><b>Note:</b> pageLimit field is not used in combination with accountNumber search."
         required: false
         style: form
         explode: true
@@ -32,7 +31,7 @@ paths:
           type: integer
       - name: pageOffset
         in: query
-        description: Start point of the result set, required for the page base pagination.
+        description: "Start point of the result set, required for the page base pagination. <br><b>Note:</b> pageOffset field is not used in combination with accountNumber search."
         required: false
         style: form
         explode: true
@@ -40,7 +39,7 @@ paths:
           type: integer
       - name: cursor
         in: query
-        description: Next record pointer to include in the response if additional records are available. Applicable for the cursor base pagination.
+        description: "Next record pointer to include in the response if additional records are available. Applicable for the cursor base pagination. <br><b>Note:</b> cursor field is not used in combination with accountNumber search."
         required: false
         style: form
         explode: true
@@ -52,20 +51,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTrasactionCodesResponse'
+                $ref: '#/components/schemas/getRoleCodeResponse'
         default:
           description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getTrasactionCodesResponse'
-      x-group-name: Transaction Codes Service
-      x-proxy-name: Get Transaction Codes List
+                $ref: '#/components/schemas/getRoleCodeResponse'
+      x-group-name: Roles Service
+      x-proxy-name: Get Roles List
       x-child-product-name: Operations and Servicing
       x-core: Finxact
 components:
   schemas:
-    getTrasactionCodesResponse:
+    getRoleCodeResponse:
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
@@ -79,12 +78,12 @@ components:
           format: int64
         cursor:
           type: string
-          description: Next record pointer value included in the response for available additional records. Applicable for cursor base pagination.
-        transactionCodes:
+          description: Next record pointer value included in the response for available additional records. Applicable for cursor base pagination. The value of this field is used as the "cursor" for retrieving the next record.
+        roles:
           type: array
-          description: Details of the transaction codes.
+          description: Details of user roles.
           items:
-            $ref: '#/components/schemas/getTrasactionCodesResponse_transactionCodes'
+            $ref: '#/components/schemas/getRoleCodeResponse_roles'
     EFXHeader:
       required:
       - OrganizationId
@@ -163,10 +162,10 @@ components:
           maxLength: 32
           type: string
           description: State province value as per ISO 3166-2:US codes where the terminal is located.
-        TerminalPostalCode:
+        TerminalalCode:
           maxLength: 11
           type: string
-          description: 'Postal Code where the terminal is located. '
+          description: 'al Code where the terminal is located. '
         TerminalCountryCodeSource:
           maxLength: 80
           type: string
@@ -258,7 +257,7 @@ components:
           description: Till identification number.
         AMPMCode:
           type: string
-          description: 'Transaction posting code. '
+          description: 'Transaction ing code. '
           enum:
           - AM
           - PM
@@ -396,74 +395,15 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    getTrasactionCodesResponse_entryDefinitions:
-      required:
-      - isDebit
-      properties:
-        entryName:
-          maxLength: 200
-          type: string
-          description: Name of the transaction code entry.
-        isDebit:
-          type: boolean
-          description: Value that indicates the transaction code is a debit entry.
-        isGLEntry:
-          type: boolean
-          description: Value that indicates the transaction code is a general ledger entry.
-        glAccountNumber:
-          type: string
-          description: Number of the General Ledger Account (GLA).
-        currencyCode:
-          maxLength: 3
-          type: string
-          description: Code to indicate the currency.
-        description:
-          maxLength: 200
-          type: string
-          description: Description of the transaction code entry.
-        isGLDetail:
-          type: boolean
-          description: 'Value that indicates the entry is the general ledger entry detail. '
-        isReversalGLDetail:
-          type: boolean
-          description: 'Value that indicates the entry is the reversal general ledger entry detail. '
-        feeIdent:
-          maxLength: 80
-          type: string
-          description: Unique identifier of the fee.
-    getTrasactionCodesResponse_transactionCodes:
+    getRoleCodeResponse_roles:
       required:
       - code
       - description
       properties:
         code:
-          maxLength: 15
           type: string
-          description: Code of the transaction.
+          description: Code that identify the user role.
         description:
           maxLength: 200
           type: string
-          description: Description of the transaction code.
-        networks:
-          type: array
-          description: Value that indicates the network where the transaction code is applied.
-          items: {}
-          enum:
-          - CORE
-          - ACH
-          - ACTIMIZE
-          - AFT
-          - FEDWIRE
-          - SEPA
-          - SWIFT
-          - CHECK
-          - EFT
-          - P2P
-          - RTP
-          - MANUALWIRE
-          - FAIM
-        entryDefinitions:
-          type: array
-          description: Details of the transaction code entries.
-          items:
-            $ref: '#/components/schemas/getTrasactionCodesResponse_entryDefinitions'
+          description: Description of the user role.
