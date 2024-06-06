@@ -5,6 +5,13 @@ V 11.0.0
 type: tab 
 titles: Premier, Precision, Signature
 -->
+## June 6, 2024
+
+### Fixed
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+|<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue where ESF was not mapping 'Pending' transactions in the response when cursor value is set to 1. We also updated a configuration that was limiting the number of pending transactions.<br>**Impacted Fields:** <br>`RecCtrlIn/MaxRecLimit` <br>`AcctTrnRec aggregate level` | PROD |
+|<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending" and 'Posted'. | CERT |
 
 ## May 23, 2024
 
