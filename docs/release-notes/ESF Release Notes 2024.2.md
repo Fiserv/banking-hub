@@ -3,7 +3,7 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Signature
+titles: Premier, Precision, Signature
 -->
 
 ## May 23, 2024
@@ -92,70 +92,5 @@ titles: Premier, Precision, Signature, Signature
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue in the `PostalCode` field where the postal codes are not passed to the core when adding the Non-US addresses.<br>**Impacted Fields:**<br>`PersonPartyInfo/Employment/PostAddr/PostalCode`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode` | PROD |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the internal server error when the API retrieves party account relationship using account keys (`PartyAcctRelSel/AcctKeys`) in the request. Now users can retrieve a valid API response message. | PROD |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved an issue where null tags are returned in the response when the `IncAddtlAcctInfoInd` field was sent in the request.<br>**Impacted Field:**<br>`PartyAcctRelSel/IncAddtlAcctInfoInd` | PROD |
-
-<!-- type: tab -->
-
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-
-<span style="font-size: 22px; ">General</span>
-- In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature<br>
-![image](https://github.com/Fiserv/banking-hub/assets/85101648/9efbbe40-9682-4b18-9676-fa980ecdc32a)
-
-<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
-
-<span style="font-size: 22px; ">General</span> *Resources > Downloads > API Specifications*
-- We updated the API Specifications in the Resources section
-
-<p style="font-size: 24px; font-weight: bold;">Fixed </p>
-
-<span style="font-size: 22px; ">General</span>
-- We resolved the status code synchronization issue for all APIs
-
-<span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
-
-
-- We updated the service contract to make the aggregate "Secretdata" as an optional aggregate as this information can be optional on the core
-
-
-<span style="font-size: 22px; ">Add Party</span> *API Explorer > Accountholder > Party Service*
-
-
-- We resolved the null pointer exception error in the response when the value of the "CountryCodeValue" field was null in the request. Now, even if the value is null, the API adds the party record successfully without any error<br>
-**Impacted Fields:**
-  - PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValue
-  - OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValue
-
-- We resolved the issue in the "PostalCode" field where the postal codes are not passed to the core when adding the Non-US addresses<br>
-**Impacted Fields:**
-  - PersonPartyInfo/Employment/PostAddr/PostalCode
-  - OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode
-
-- We resolved an internal server error when the optional "PostalCode" field was not sent in the request. Now users can create a party record with the required fields in the request
-
-- Previously, the API displayed error in response and failed to create a party even if the value of the optional "PreferredPhone" filed is not provided. To resolve this issue, we fixed the code and updated the "PreferredPhone" field. Now, user can create the party records successfully <br>
-**Impacted Fields:**
-  - PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone
-  - OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone
-
-- We resolved the issue where the "SecretData" aggregate provided in the request was not stored in the core although the API was returning successful response 
-
-
-<span style="font-size: 22px; ">Update Party</span> *API Explorer > Accountholder > Party Service*
-
-
-- We resolved the issue in the "PostalCode" field where the postal codes are not passed to the core when adding the Non-US addresses<br>
-**Impacted Fields:**
-  - PersonPartyInfo/Employment/PostAddr/PostalCode
-  - OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode
-
-
-<span style="font-size: 22px; ">Get Party Account Relationship</span> *API Explorer > Accountholder > Party Account Relationship Service*
-
-
-- We resolved the internal server error when the API retrieves party account relationship using account keys (PartyAcctRelSel/AcctKeys) in the request. Now users can retrieve a valid API response message
-
-- We resolved an issue where null tags are returned in the response when the "IncAddtlAcctInfoInd" field was sent in the request<br> 
-**Impacted Field:**
-  - PartyAcctRelSel/IncAddtlAcctInfoInd
 
 <!-- type: tab-end -->
