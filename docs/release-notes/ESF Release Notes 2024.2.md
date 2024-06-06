@@ -3,15 +3,22 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature
+titles: Premier, Precision, Signature, Cleartouch
 -->
+## June 6, 2024
+
+### Fixed
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+|<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue where ESF was not mapping 'Pending' transactions in the response when cursor value is set to 1. We also updated a configuration that was limiting the number of pending transactions.<br>**Impacted Fields:** <br>`RecCtrlIn/MaxRecLimit` <br>`AcctTrnRec aggregate level` | PROD |
+|<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending" and 'Posted'. | CERT |
 
 ## May 23, 2024
 
 ### Enhancements
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| API Specification| We updated the API Specifications - version 11.0.0.2024.2.| PROD |
+| API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN_INET</a> | We updated the `BalType` field to reflect the current available credit balance instantly. Previously, when a bank updates the current available credit on navigator, the credit balance was updating after the nightly batch process.<br>**Impacted Field:**<br> `AcctRec/LoanAcctInfo/AcctBal/BalType`| PROD |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | We updated the `NextRateChangeDt` field with correct path to process the request successfully. Previously, the `NextRateChangeDt` field was not getting updated due to incorrect path.<br>**Impacted Field:**<br>`LoanAcctInfo/RateChangeData/NextRateChangeDt`| PROD |
 
@@ -45,7 +52,7 @@ titles: Premier, Precision, Signature
 ### Enhancements
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| API Specification| We updated the API Specifications  - version 11.0.0.2024.2.| PROD |
+| API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -77,7 +84,7 @@ titles: Premier, Precision, Signature
 ### Enhancements
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| API Specification| We updated the API Specifications  - version 11.0.0.2024.2.| PROD |
+| API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -92,5 +99,19 @@ titles: Premier, Precision, Signature
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue in the `PostalCode` field where the postal codes are not passed to the core when adding the Non-US addresses.<br>**Impacted Fields:**<br>`PersonPartyInfo/Employment/PostAddr/PostalCode`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode` | PROD |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the internal server error when the API retrieves party account relationship using account keys (`PartyAcctRelSel/AcctKeys`) in the request. Now users can retrieve a valid API response message. | PROD |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved an issue where null tags are returned in the response when the `IncAddtlAcctInfoInd` field was sent in the request.<br>**Impacted Field:**<br>`PartyAcctRelSel/IncAddtlAcctInfoInd` | PROD |
+
+<!-- type: tab -->
+## June 6, 2024
+
+### Enhancements
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty_INET</a> | For imporvised Single Sign On (SSO) processes and consistancy in API performace, we updated the account number format with required leading zeros (0), if the length of the account number is less than 10 digits. | CERT |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty_INET</a> | We added a new field `ClosedDt` under the `AcctSummInfo` aggregate (`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/ClosedDt`) in the response message for the accounts having the `AcctDtlStatus` field value as "Closed", to improve the API workflow | CERT |
+
+### Fixed
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue where the API displayed an error in response and failed to update the party records when an optional aggregate `OrgData` was not provided in the request. To resolve this issue, we fixed the code and updated the `OrgData` aggregate. Now, user can update the party records successfully. | PROD |
 
 <!-- type: tab-end -->
