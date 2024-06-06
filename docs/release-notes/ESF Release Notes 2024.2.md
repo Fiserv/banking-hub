@@ -11,7 +11,7 @@ titles: Premier, Precision, Signature, Signature
 ### Enhancements
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| API Specification| We updated the API Specifications.| PROD |
+| API Specification| We updated the API Specifications - version 11.0.0.2024.2.| PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN_INET</a> | We updated the `BalType` field to reflect the current available credit balance instantly. Previously, when a bank updates the current available credit on navigator, the credit balance was updating after the nightly batch process.<br>**Impacted Field:**<br> `AcctRec/LoanAcctInfo/AcctBal/BalType`| PROD |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | We updated the `NextRateChangeDt` field with correct path to process the request successfully. Previously, the `NextRateChangeDt` field was not getting updated due to incorrect path.<br>**Impacted Field:**<br>`LoanAcctInfo/RateChangeData/NextRateChangeDt`| PROD |
 
@@ -45,7 +45,7 @@ titles: Premier, Precision, Signature, Signature
 ### Enhancements
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| API Specification| We updated the API Specifications.| PROD |
+| API Specification| We updated the API Specifications  - version 11.0.0.2024.2.| PROD |
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -77,7 +77,7 @@ titles: Premier, Precision, Signature, Signature
 ### Enhancements
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| API Specification| We updated the API Specifications.| PROD |
+| API Specification| We updated the API Specifications  - version 11.0.0.2024.2.| PROD |
 
 ### Fixed
 | API Name | Description | Environment Availability |
