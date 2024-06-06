@@ -6,7 +6,7 @@ titles: Downloads, Guidelines
 # API Specifications
 
 <!-- theme: info -->  
-> [Download API Specifications](https://github.com/Fiserv/banking-hub/files/15398141/esf-service-swagger-release-11.0.0.2024.2.zip)
+> [Download API Specifications - version 11.0.0.2024.2](https://github.com/Fiserv/banking-hub/files/15398141/esf-service-swagger-release-11.0.0.2024.2.zip)
 
 # Postman Collection
 
@@ -81,8 +81,8 @@ FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.
 
 DPoP is an OAuth 2.0 Demonstration of Proof-of-Possession at the application layer. It is a security mechanism that uses temporary bound (short-lived) tokens that are exclusively valid for a single request or interaction. These tokens provide a high level of security and assurance in authentication and access control systems.<br>
 Let us consider the following pictures to understand the difference between bound and bearer tokens:<br>
-•	Picture 1: Represents a car-key, which is like a bearer token. Anyone with an access or possesion can use it.<br>
-•	Picture 2: Represents a passport, which is like a bound token. Such a token needs holder's identity and authenticity through face detection, fingerprint, attribute matching, and document interrogation. <br>
+- Picture 1: Represents a car-key, which is like a bearer token. Anyone with an access or possesion can use it.<br>
+- Picture 2: Represents a passport, which is like a bound token. Such a token needs holder's identity and authenticity through face detection, fingerprint, attribute matching, and document interrogation. <br>
 
 
 
@@ -120,7 +120,7 @@ To implement the DPoP Security, follow the listed steps:
 6.	Generate and use DPoP Token for Functional API Call
 
 ## Step 1 - Generate Public/Private Key Pair
-1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL
+1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL.
 2. This cryptotools link [Public/Private Key Generator](https://cryptotools.net/rsagen ) is provided as an example to generate the public/private key pair. <br>
 <!-- theme: info -->
 > #### Note
@@ -139,14 +139,14 @@ Register consumer with public key through AppMarket from Fiserv
 
 ## Step 3 - Select the Style to Sign in DPoP Token
 ### Step 3.1 - Sign in with DPoP Token
-- **HTTP Method (GET, POST and so on)** of the corresponding API call in which DPoP token is passed
-- **URL of the API call** (including the query parameters) in which DPoP token is passed
+- **HTTP Method (GET, POST and so on)** of the corresponding API call in which DPoP token is passed.
+- **URL of the API call** (including the query parameters) in which DPoP token is passed.
     
 ### Step 3.2 - Use Request Data for Data Integrity   
-- **ReqHeaderMap** - Map created with business-critical request headers and its value that are required to be validated by the APIM security framework <br>
-- **FormParamMap** - Map created with form URL encoded key-value that are required to be validated by the APIM security framework <br>
-- **Payload** - JSON string of the request body that is required to be validated by APIM security framework<br>
-If case payload size is larger than **100 KB**, use **SelectivePayloadMap**. This map is created with business-critical attributes of the request payload, which are required to be validated by the APIM security framework <br>
+- **ReqHeaderMap** - Map created with business-critical request headers and its value that are required to be validated by the APIM security framework. <br>
+- **FormParamMap** - Map created with form URL encoded key-value that are required to be validated by the APIM security framework. <br>
+- **Payload** - JSON string of the request body that is required to be validated by APIM security framework.<br>
+If case payload size is larger than **100 KB**, use **SelectivePayloadMap**. This map is created with business-critical attributes of the request payload, which are required to be validated by the APIM security framework. <br>
 
 Following are the examples of business-critical attributes:
 - accountNumber
@@ -166,10 +166,10 @@ Following are the examples of business-critical attributes:
 |For Form Params|sample-formparam: value-can-be-any-string|`EFXFormParam: {"OrganizationId":"DemoOrgId", "TrnId":"3dab21d2-2ab7"}`|  
 
 ## Step 4 - Create DPoP Generator Library on Consumer Side
-1. Use the below JAVA code (DPoPGenerator.java) to create the library or use below code as a reference in consumer existing code
+1. Use the below JAVA code (DPoPGenerator.java) to create the library or use below code as a reference in consumer existing code.
 2. Update the following details in the JAVA code (DPoPGenerator.java):<br>
-  a. Replace with your private/public key pair (String privateKey, String publicKey)<br>
-  b. Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod)<br>
+  a. Replace with your private/public key pair (String privateKey, String publicKey).<br>
+  b. Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod).<br>
   c. Enable one or more of the following functions based on the selection in the step 3.2 and replace with actual values:<br>
     - noPayloadGenerateDPoP
     - requestBodyPayloadGenerateDPoP (includes request headers)
@@ -227,9 +227,9 @@ The following table lists the standard status codes:
 > If you are unable to  resolve the issue after reviewing above listed descriptions, please reach out to Fiserv contact person for further assistance.
  
 # Benefits to Consumers
-- Using DPoP helps the clients to prevent unauthorized or illegitimate parties from using leaked or stolen access tokens
-- This mechanism enables the identification of replay attacks involving access and refresh tokens
-- Given that DPoP functions at the application layer, using asymmetric cryptography and lightweight JSON Web Tokens, it becomes easily accessible to developers
-- Eliminates the need to manage certificates in the mTLS setup, streamlining the process and reducing administrative burdens
+- Using DPoP helps the clients to prevent unauthorized or illegitimate parties from using leaked or stolen access tokens.
+- This mechanism enables the identification of replay attacks involving access and refresh tokens.
+- Given that DPoP functions at the application layer, using asymmetric cryptography and lightweight JSON Web Tokens, it becomes easily accessible to developers.
+- Eliminates the need to manage certificates in the mTLS setup, streamlining the process and reducing administrative burdens.
 
 <!-- type: tab-end -->
