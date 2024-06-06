@@ -1,9 +1,9 @@
 # Release Notes 
-### 2024_Q2
+## 2024_Q2
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature
+titles: Premier, Precision, Signature, Signature
 -->
 
 ## May 23, 2024
@@ -31,6 +31,15 @@ titles: Premier, Precision, Signature
 
 <!--type: tab-->
 
+## June 6, 2024
+
+### Fixed
+| API Name | Description | Environment Availability |
+| --- | ----------- | ------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved an issue that occured while creating a party where the given month in the issued and expiration date for Drivers License (DL) information defaults to "01" (January). Now, the value of the month remains same as the users provide in the request. | PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | Previously, while adding the benficiary (secondary customer) to an account, the details provided in the request were not added with the provider. We resolved this issue and now users can add and retrieve beneficiary details using Get Account API. | PROD |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account</a> | We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. | PROD |
+
 ## May 23, 2024
 
 ### Enhancements
@@ -57,6 +66,32 @@ titles: Premier, Precision, Signature
 | <a href="../api/?type=post&path=/acctholdservice/stophold/accountHolds" title="Click to open">Add Account Hold</a> | We resolved the issue of internal server error while account hold creation. Now, the user can successfully place a hold on an account. | PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | We resolved an issue to get the correct error message in response when user provides the invalid value for data identifier in the request. Previously, user gets "HTTP 999 - General Error 1011 - Invalid User" message instead of "HTTP 400 - Bad Request 1090 - Invalid Value".<br>**Impacted Field:**<br>`DepositAcctInfo/ClientDefinedData/DataIdent`| PROD |
 
+<!-- type: tab -->
+## May 23, 2024
+
+### What's New
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| General | In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature.<br> ![image](https://github.com/Fiserv/banking-hub/assets/85101648/9efbbe40-9682-4b18-9676-fa980ecdc32a) | PROD |
+
+### Enhancements
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| API Specification| We updated the API Specifications.| PROD |
+
+### Fixed
+| API Name | Description | Environment Availability |
+| --- | ----------- | ------------------ |
+| General | We resolved the status code synchronization issue for all APIs. | PROD |
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We updated the service contract to make the aggregate `Secretdata` as an optional aggregate as this information can be optional on the core. | PROD |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the null pointer exception error in the response when the value of the `CountryCodeValue` field was null in the request. Now, even if the value is null, the API adds the party record successfully without any error.<br>**Impacted Fields:**<br>`PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValue`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValue` | PROD |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue in the `PostalCode` field where the postal codes are not passed to the core when adding the Non-US addresses.<br>**Impacted Fields:**<br>`PersonPartyInfo/Employment/PostAddr/PostalCode`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode` | PROD |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved an internal server error when the optional `PostalCode` field was not sent in the request. Now users can create a party record with the required fields in the request. | PROD |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | Previously, the API displayed error in response and failed to create a party even if the value of the optional `PreferredPhone` filed is not provided. To resolve this issue, we fixed the code and updated the `PreferredPhone` field. Now, user can create the party records successfully.<br>**Impacted Fields:**<br>`PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone`<br>`OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone` | PROD |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where the `SecretData` aggregate provided in the request was not stored in the core although the API was returning successful response. | PROD |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue in the `PostalCode` field where the postal codes are not passed to the core when adding the Non-US addresses.<br>**Impacted Fields:**<br>`PersonPartyInfo/Employment/PostAddr/PostalCode`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode` | PROD |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the internal server error when the API retrieves party account relationship using account keys (`PartyAcctRelSel/AcctKeys`) in the request. Now users can retrieve a valid API response message. | PROD |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved an issue where null tags are returned in the response when the `IncAddtlAcctInfoInd` field was sent in the request.<br>**Impacted Field:**<br>`PartyAcctRelSel/IncAddtlAcctInfoInd` | PROD |
 
 <!-- type: tab -->
 
