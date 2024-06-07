@@ -112,6 +112,6 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue where the API displayed an error in response and failed to update the party records when an optional aggregate `OrgData` was not provided in the request. To resolve this issue, we fixed the code and updated the `OrgData` aggregate. Now, user can update the party records successfully. | PROD |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue where the API displayed an error in the response message, when `OrgData` an optional aggregate was not provided in the request. We updated the `OrgData` aggregate in the request and now user can update the party records successfully. <br>**Impacted Field:**<br> `OrgPartyInfo/OrgData`| PROD |
 
 <!-- type: tab-end -->
