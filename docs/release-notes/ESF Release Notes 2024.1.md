@@ -8,12 +8,9 @@ titles: Portico
 
 <p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-<span style="font-size: 22px; ">General</span>
+| API Name | Description | 
+| --- | ----------- | 
+| General | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Address</a> <br> <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Update Address</a><br> <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - DDA_SDA</a> <br> <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - CDA</a> |
 
-Added the following API endpoints:
-- Get Address *(API Explorer > Accountholder >  Address Service)*
-- Update Address *(API Explorer > Accountholder >  Address Service)*
-- Get Account Details - DDA_SDA *(API Explorer > Accounts >  Account Service)*
-- Get Account Details - CDA *(API Explorer > Accounts >  Account Service)*
 
 <!-- type: tab-end -->
