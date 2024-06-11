@@ -84,6 +84,7 @@ Let us consider the following pictures to understand the difference between boun
 - Picture 1: Represents a car-key, which is like a bearer token. Anyone with an access or possesion can use it.<br>
 - Picture 2: Represents a passport, which is like a bound token. Such a token needs holder's identity and authenticity through face detection, fingerprint, attribute matching, and document interrogation. <br>
 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![car key](https://github.com/Fiserv/banking-hub/assets/135122880/20f45721-7dcf-45b1-b2c2-5e164596a63e)    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![passport](https://github.com/Fiserv/banking-hub/assets/135122880/5040658c-35a0-41be-9d8e-be6b9e8000d1)
 
 
