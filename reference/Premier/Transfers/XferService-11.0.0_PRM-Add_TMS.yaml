@@ -12,7 +12,7 @@ paths:
       tags:
       - Add Transfer
       summary: Add Transfer
-      description: "Add Transfer API creates the request for an immediate fund transfer between two accounts. <br> For Premier, this API creates entries into a Transaction Management System (TMS), that is posted to the customer's accounts during nightly processing. In addition, it also creates a memo post (pending) transactions on both accounts to reflect a change in the memo balances. The calling application will need to send in the appropriate transaction codes for the intended transfer. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Add Transfer API creates the request for an immediate fund transfer between two accounts. <br> For Premier, this API creates entries into a Transaction Management System (TMS), that is posted to the customer's accounts during nightly processing. <br>In addition, it also creates a memo post (pending) transactions on both accounts to reflect a change in the memo balances. <br>The calling application will need to send in the appropriate transaction codes for the intended transfer. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
       operationId: XferAddOper
       parameters:
       - name: EFXHeader
@@ -254,49 +254,8 @@ components:
       properties:
         OvrdAutoAckInd:
           type: boolean
-          description: 
-            Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    OverrideExceptionType:
-      title: OverrideExceptionType
-      type: object
-      properties:
-        SubjectRole:
-          type: string
-          description: Role of the subject who is overriding the exception.
-        SubjectIdent:
-          maxLength: 36
-          type: string
-          description: Subject identification value to identify the subject who is overriding the exception.
-        OvrdExceptionCode:
-          maxLength: 40
-          type: string
-          description: Override exception code to be overridden. This can be the ServerStatusCode from the Message Status section.
-        OvrdElement:
-          $ref: '#/components/schemas/OvrdElementType'
-    OvrdElementType:
-      title: OvrdElementType
-      type: object
-      description: Information about the elements that corresponds to the override exception code.
-      allOf:
-      - $ref: '#/components/schemas/SubjectElementType'
-      - type: object
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
     StatusType:
       title: StatusType
       required:
@@ -353,7 +312,7 @@ components:
           description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
           type: array
-          description: Details of the additional status of the response message. This aggrigate can appear once for each additional status that the server is expected to provide.
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
           items:
             $ref: '#/components/schemas/AdditionalStatusType'
       description: Details of the API response messages.
@@ -365,6 +324,22 @@ components:
       - Error
       - Warning
       - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
     AdditionalStatusType:
       title: AdditionalStatusType
       type: object
@@ -435,7 +410,9 @@ components:
       description: |-
         Unique information to identify the account record.
 
-        **Note:** It should be provided in the request with AcctId and AcctType for the operation to work successfully. It has details of Account being Debited. ESF would return an error if AcctKeys/AcctId or AcctKeys/AcctType is not provided in request.
+
+
+        **Note:** It should be provided in the request with the AcctId and AcctType field for the operation to work successfully. It has details of the account being debited. ESF would return an error if AcctKeys/AcctId or AcctKeys/AcctType is not provided in the request.
     XferAddOperRequest_XferInfo_FromAcctRef:
       required:
       - AcctKeys
@@ -445,7 +422,7 @@ components:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctKeys'
         TrnCode:
           type: string
-          description: "External transaction code used to indicate the type of transfer and the type of account.\n\n\n\n**Note:** Refers to external transaction code.  \n\nTransaction code provided should be a valid external transaction code setup in Premier for the TransferType and the Type of the Account being debited.\n\nIf Transaction Code is not provided, the default TrnCode available at TMS (Premier) is used to post the transaction during nightly processing, if applicable."
+          description: "External transaction code used to indicate the type of transfer and the type of account.\n\n\n\n**Note:** Refers to external transaction code.  \n\nTransaction code provided should be a valid external transaction code setup in Premier for the TransferType and the Type of the Account being debited.\n\nIf Transaction Code is not provided, the default TrnCode available at TMS (Premier) is used to post the transaction during nightly processing, if applicable.\n\n"
       description: Reference account information from which the funds are transferred.
     XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys:
       required:
@@ -474,7 +451,9 @@ components:
       description: |-
         Unique account information used to identify the account record.
 
-        **Note:** It should be provided in the request with AcctId and AcctType for the operation to work successfully. It has details of Account being Credited. ESF would return an error if AcctKeys/AcctId or AcctKeys/AcctType is not provided in request.
+
+
+        **Note:** It should be provided in the request with AcctId and AcctType for the operation to work successfully. It has details of the Account being Credited. ESF would return an error if AcctKeys/AcctId or AcctKeys/AcctType is not provided in request.
     XferAddOperRequest_XferInfo_ToAcctRef:
       required:
       - AcctKeys
@@ -484,12 +463,13 @@ components:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys'
         TrnCode:
           type: string
-          description: |-
+          description: |+
             External transaction code used to indicate the type of transfer and the type of account.
 
 
 
             **Note:** If transaction code is not provided, the default TrnCode available at TMS (Premier) is used to post the transaction during nightly processing, if applicable.
+
       description: Reference information of an account to which funds are transferred.
     XferAddOperRequest_XferInfo_CurAmt_CurCode:
       required:
@@ -503,7 +483,7 @@ components:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only USD currency code is supported."
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\n\n\nPresently only the USD currency code is supported."
       description: Details of currency code.
     XferAddOperRequest_XferInfo_CurAmt:
       type: object
@@ -522,7 +502,9 @@ components:
           description: |-
             Type of transfer transaction.
 
-            **Note:** Following Transfers are supported by the operation:
+
+
+            **Note:** This API supports the following transfers:
 
             - From DDA to DDA, DDA to Savings, DDA to Loan, DDA to GLA, DDA to Demand Deposit Loan account, and from DDA to Certificate of Deposits
 
@@ -567,30 +549,19 @@ components:
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: |-
-            Effective date and time when transfer status is changed.
-
-
-
-            Format: yyyy-MM-ddTHH:mm:ss.SSS
-
-            Example: 2021-01-31T23:59:59.999
-
-
-
-
-
-            **Note:** It is the transaction date. It is required by the TMS system and should be provided in the request if Transaction Date is required by consumer application along with Posting Date. While posting date is obtained from core (Premier), Effective Date is equated to Posting Date by default, unless provided in the EFX request.
+          description: "Effective date and time when transfer status is changed.\n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.SSS\n\nExample: 2021-01-31T23:59:59.999\n\n\n\n**Note:** *Required field*\n\n\n\nEffective date cannot be older than the current date.  \n\n\n\nThe EffDt is the Posting Date in Premier unless the EffDt is older than the TMS System processing date; then, the TMS System processing date is the Posting Date.  \n\n\n\nIf the EffDt is a date older than the current date, ESF returns an 8155 error code – ‘Expiration Date is a Past Date’."
         ExpediteInd:
           type: boolean
           description: |-
-            Flag to indicate the fund transfer execution subject to service profile. If the indicator is 'true', then the transfer is an immediate transfer and by default the value is set to false.
+            Value to indicate the fund transfer execution subject to service profile. If the indicator is 'true', then the transfer is an immediate transfer and by default the value is set to false.
+
+
 
             **Note:** Indicator must be 'true' to post immediate transfer for DDL Advances.
 
 
 
-            In Premier, TMS services execute the immediate transfers and PRM services execute the recurring transfers. This indicator will determine which services are used.
+            In Premier, TMS services execute the immediate transfers and PRM services execute the recurring transfers. This indicator determines which services are used.
         XferFromDesc:
           maxLength: 80
           type: array
@@ -612,7 +583,7 @@ components:
         CreateDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
-          description: "Date on which transfer record is created.\n\n**Note:** If CreateDt is not supplied in the request or provided in incorrect format, then ESF system server date and time will be used. \n\n\n\nIf the field is sent in request, then date must be provided (time is optional). Also, time can be provided without seconds and milliseconds - as these are not updated by Premier. If only date is provided, then ESF system time would be used by the operation and updated in Premier.\n\n\n\nThe request follows the format: YYYY-MM-DDTHH:mm:ss.SSS \n\n\n\nWhere YYYY = Year, MM = Month, DD = Day HH = Hour (24-hour notation), mm = minutes, ss = seconds, SSS = milliseconds\n\n\n\nExamples:2018-11-27T16:03:01.567,\n\n2018-11-27T16:03, 2018-11-27"
+          description: "Date on which the transfer record is created.\n\n\n\nFormat: YYYY-MM-DDTHH:mm:ss.SSS, YYYY-MM-DDTHH:mm:ss, YYYY-MM-DD\n\nExample: 2018-11-27T16:03:01.567, 2018-11-27T16:03, 2018-11-27\n\n\n\n**Note:** If the create date is not provided or it is provided in the incorrect format in the request, then ESF system server date and time is used. \n\n\n\nIf the field is sent in request, then date must be provided (time is optional). Also, time can be provided without seconds and milliseconds - as the provider does not update the time details. If only a date is provided, then the API uses the ESF system time and updates it in the provider."
       description: Details of the fund transfer.
     XferAddOperResponse_XferStatusRec_XferKeys_AcctKeys:
       required:
@@ -655,14 +626,14 @@ components:
       properties:
         XferStatusCode:
           type: string
-          description: Code to identify the status of the transfer.
+          description: Code that indicates the status of the transfer.
           enum:
           - Valid
         EffDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
           description: |+
-            Effective date and time when transfer status is changed.
+            Effective date and time when the transfer status is changed.
 
 
 
@@ -672,7 +643,7 @@ components:
 
 
 
-      description: Current status of the transfer.
+      description: Status details of the transfer.
     XferAddOperResponse_XferStatusRec:
       required:
       - XferKeys
@@ -683,4 +654,4 @@ components:
           $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferKeys'
         XferStatus:
           $ref: '#/components/schemas/XferAddOperResponse_XferStatusRec_XferStatus'
-      description: Fund transfer status details used in a response message to return results from an add, modify or delete operation.
+      description: Details of the fund transfer status record in response to add operation.
