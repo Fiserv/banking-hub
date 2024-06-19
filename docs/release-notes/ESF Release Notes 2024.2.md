@@ -5,7 +5,7 @@ V 11.0.0
 type: tab 
 titles: Premier, Precision, Signature, Cleartouch
 -->
-## June 6, 2024
+## 2024_Q2.3
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -13,7 +13,7 @@ titles: Premier, Precision, Signature, Cleartouch
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue where ESF was not mapping 'Pending' transactions in the response when cursor value is set to 1. We also updated a configuration that was limiting the number of pending transactions.<br>**Impacted Fields:** <br>`RecCtrlIn/MaxRecLimit` <br>`AcctTrnRec aggregate level` | PROD |
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending" and 'Posted'. | CERT |
 
-## May 23, 2024
+## 2024_Q2.2
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -38,7 +38,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!--type: tab-->
 
-## June 6, 2024
+## 2024_Q2.3
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -47,7 +47,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | Previously, while adding the benficiary (secondary customer) to an account, the details provided in the request were not added with the provider. We resolved this issue and now users can add and retrieve beneficiary details using Get Account API. | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account</a> | We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. | CERT |
 
-## May 23, 2024
+## 2024_Q2.2
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -74,7 +74,15 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | We resolved an issue to get the correct error message in response when user provides the invalid value for data identifier in the request. Previously, user gets "HTTP 999 - General Error 1011 - Invalid User" message instead of "HTTP 400 - Bad Request 1090 - Invalid Value".<br>**Impacted Field:**<br>`DepositAcctInfo/ClientDefinedData/DataIdent`| PROD |
 
 <!-- type: tab -->
-## May 23, 2024
+## 2024_Q2.3
+
+### Fixed
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+|<a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |We resolved the update issue with the `ApartmentNum` field. The user was unable to delete the apartment number even if the value of the `ApartmentNum` field was sent empty in the request to update the party contact information.<br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType`| CERT |
+|<a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where user was unable to modify the `SecretData` aggregate provided in the request. Now, the aggregate is modified successfully and mapped to the provider as per the request. <br> **Impacted Fields:** <br> `PersonPartyInfo/SecretData` <br> `PersonPartyInfo/SecretData/SecretIdent` <br> `PersonPartyInfo/SecretData/SecretValue` <br> `OrgPartyInfo/SecretData` <br> `OrgPartyInfo/SecretData/SecretIdent` <br> `OrgPartyInfo/SecretData/SecretValue`| CERT |
+
+## 2024_Q2.2
 
 ### What's New
 | API Name | Description | Environment Availability |
@@ -101,7 +109,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved an issue where null tags are returned in the response when the `IncAddtlAcctInfoInd` field was sent in the request.<br>**Impacted Field:**<br>`PartyAcctRelSel/IncAddtlAcctInfoInd` | PROD |
 
 <!-- type: tab -->
-## June 6, 2024
+## 2024_Q2.3
 
 ### Enhancements
 | API Name | Description | Environment Availability |
