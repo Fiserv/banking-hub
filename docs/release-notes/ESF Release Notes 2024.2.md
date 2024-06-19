@@ -5,7 +5,7 @@ V 11.0.0
 type: tab 
 titles: Premier, Precision, Signature, Cleartouch
 -->
-## 2024_Q2_3
+## 2024_Q2.3
 
 ### Fixed
 | API Name | Description | 
@@ -21,7 +21,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the attributes of the `EscrowCtrlData` aggregate were not mapped correctly but the loan account was created successfully. Now, the arrtributes are mapped correctly and can be retrieved using the Get Account API successfully.<br>**Impacted Fields:**<br> `LoanAcctInfo/EscrowCtrlData` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurType` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurInterval` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/LeadDays` <br> `LoanAcctInfo/EscrowCtrlData/NextAnalysisDt`|  
 
 
-## 2024_Q2_2
+## 2024_Q2.2
 
 ### Enhancements
 | API Name | Description | 
@@ -40,7 +40,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q2_2
+## 2024_Q2.2
 
 ### Fixed
 | API Name | Description | 
@@ -48,14 +48,14 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | Previously, the response message failed to retrieve multiple issued identifications (IssuedIdent) associated with the party record. We resolved this issue so that users can retrieve all (repeating IssuedIdents) successfully.<br>**Impacted Fields:**<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentValue`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssueDt`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/ExpDt`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/VerificationDetailText`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeSource`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeValue`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/StateProv`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentValue`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssueDt`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/ExpDt`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/VerificationDetailText`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeSource`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeValue`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/StateProv`| 
 
 <!-- type: tab -->
-## 2024_Q2_3
+## 2024_Q2.3
 
 ### Fixed
 | API Name | Description | 
 | --- | ----------- | 
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-CDA</a> | We added the new enum value "NightlyReview" for the `RateChangeControl` field. Now the account is created successfully for the product. <br> **Impacted Field:** <br> `DepositAcctInfo/RateChangeData/RateChangeControl` | 
 
-## 2024_Q2_2
+## 2024_Q2.2
 
 ### What's New
 | API Name | Description | 
@@ -70,7 +70,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q2_2
+## 2024_Q2.2
 
 ### Enhancements
 | API Name | Description | 
