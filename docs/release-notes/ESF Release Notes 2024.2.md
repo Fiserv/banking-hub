@@ -77,10 +77,10 @@ titles: Premier, Precision, Signature, Cleartouch
 ## 2024_Q2.3
 
 ### Fixed
-| API Name | Description | 
-| --- | ----------- | 
-|<a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |We resolved the update issue with the `ApartmentNum` field. The user was unable to delete the apartment number even if the value of the `ApartmentNum` field was sent empty in the request to update the party contact information.<br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType` <br> | 
-|<a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where user was unable to modify the `SecretData` aggregate provided in the request. Now, the aggregate is modified successfully and mapped to the provider as per the request. <br> **Impacted Fields:** <br> `PersonPartyInfo/SecretData` <br> `PersonPartyInfo/SecretData/SecretIdent` <br> `PersonPartyInfo/SecretData/SecretValue` <br> `OrgPartyInfo/SecretData` <br> `OrgPartyInfo/SecretData/SecretIdent` <br> `OrgPartyInfo/SecretData/SecretValue` |
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+|<a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |We resolved the update issue with the `ApartmentNum` field. The user was unable to delete the apartment number even if the value of the `ApartmentNum` field was sent empty in the request to update the party contact information.<br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType`| CERT |
+|<a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where user was unable to modify the `SecretData` aggregate provided in the request. Now, the aggregate is modified successfully and mapped to the provider as per the request. <br> **Impacted Fields:** <br> `PersonPartyInfo/SecretData` <br> `PersonPartyInfo/SecretData/SecretIdent` <br> `PersonPartyInfo/SecretData/SecretValue` <br> `OrgPartyInfo/SecretData` <br> `OrgPartyInfo/SecretData/SecretIdent` <br> `OrgPartyInfo/SecretData/SecretValue`| CERT |
 
 ## 2024_Q2.2
 
