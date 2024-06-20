@@ -34,7 +34,6 @@ titles: Premier, Precision, Signature, Cleartouch
 | API Name | Description | 
 | --- | ----------- | 
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We have fixed an issue where loan accounts were successfully created when the value of the `RateChangeRecurType` field was "Quarterly", which was not specified in the enum values. We added the "Quarterly" value as an enum value.<br>**Impacted Field:** <br> `LoanAcctInfo/RateChangeData/RateChangeRecurType`| 
-| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY".<br>**Impacted Field:** <br> `EscrowInfo/EscrowExpDt`|
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Add ePreferences</a> | We resolved an issue in the `DocGroupName` field where the value was not set while creating ePreference record in a request during creation of ePreference record for LOAN or SDA account.<br>**Impacted Field:**<br> `ePreferenceInfo/DocGroupName`|
 
 <!-- type: tab -->
