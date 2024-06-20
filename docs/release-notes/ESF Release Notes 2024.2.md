@@ -10,6 +10,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | 
 | --- | ----------- | 
+| General | We fixed cybersecurity vulnerabilities notified on the basis of security scan reports. |
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the attributes of the `EscrowCtrlData` aggregate were not mapped correctly but the loan account was created successfully. Now, the arrtributes are mapped correctly and can be retrieved using the Get Account Details API successfully.<br> **Impacted Fields:** <br> `LoanAcctInfo/EscrowCtrlData` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurType` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurInterval` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/LeadDays` <br> `LoanAcctInfo/EscrowCtrlData/NextAnalysisDt` | 
 |<a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByTaxId</a> | Previously, when the client sends maximum record limit (MaxRecLimit) in the request with value more than the number of records linked to the tax ident, the API failed with an error as "Internal Server Error".  To resolve this issue, we fixed the `MaxRecLimit` field and now, the API retreives the data successfully.|
 |<a href="../api/?type=post&path=/collateralservice/collateral/collateral" title="Click to open">Add Collateral</a> | We updated the enum value of the `PartyCollateralRelType` field from "Signer/Owner" to "OwnerSigner". <br> **Impacted Field:** <br> `PartyCollateralRelInfo/PartyCollateralRelType`|
@@ -52,6 +53,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | 
 | --- | ----------- | 
+| General | We fixed cybersecurity vulnerabilities notified on the basis of security scan reports. |
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-CDA</a> | We added the new enum value "NightlyReview" for the `RateChangeControl` field. Now the account is created successfully for the product. <br> **Impacted Field:** <br> `DepositAcctInfo/RateChangeData/RateChangeControl` | 
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open"> Get Product Specifications | We resolved the issue in response message to populate all occurences of the `RateMatrixTier` field as per the value received from the provider.|
 
@@ -69,6 +71,12 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/debitservice/payments/debits" title="Click to open">Add Debit-CDA_Teller</a>, <a href="../api/?type=post&path=/debitservice/payments/debits" title="Click to open">Add Debit-IRA_Teller</a> | We resolved the null point exception error. Now, even if the value is null, the API adds the debit successfully without any error.<br>**Impacted Fields:**<br> `Context/TrnIdent (in request)`<br>`Status/ServerStatusCode (in response)`| 
 
 <!-- type: tab -->
+
+## 2024_Q2.3
+### Fixed
+| API Name | Description |
+| --- | ----------- | 
+| General | We fixed cybersecurity vulnerabilities notified on the basis of security scan reports. |
 
 ## 2024_Q2.2
 
