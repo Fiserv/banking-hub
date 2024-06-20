@@ -3,7 +3,7 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch
+titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA, EPOC
 -->
 ## 2024_Q2.3
 
@@ -12,8 +12,14 @@ titles: Premier, Precision, Signature, Cleartouch
 | --- | ----------- | -------- |
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue where ESF was not mapping 'Pending' transactions in the response when cursor value is set to 1. We also updated a configuration that was limiting the number of pending transactions.<br>**Impacted Fields:** <br>`RecCtrlIn/MaxRecLimit` <br>`AcctTrnRec aggregate level` | PROD |
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending" and 'Posted'. | CERT |
+|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the `HomeMortgageDisclosure` aggregate was not mapped correctly. Now, the aggregate is mapped correctly and the values can be retrieved using the Get Account Details-LOAN API successfully. <br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/CensusTract` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/MSACode`| CERT |
 
 ## 2024_Q2.2
+
+### What's New
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| General | In the API Explorer, we enabled a dropdown to select Premier APIs. When you select '**Premier**' from the dropdown, the API Explorer dynamically displays only Premier APIs. The '**11.0.0 (latest)**' continues to display all APIs including Premier.<br> ![PRM](https://github.com/Fiserv/banking-hub/assets/85101648/c63bc13d-7bc3-45a4-895d-7efecd2330d2) | PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -35,6 +41,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where the `NameSuffix` field was not retrieved correctly. <br>**Impacted Field:** <br>`PartyRec/PersonPartyInfo/PersonData/PersonName/NameSuffix` | PROD | 
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue with the `PreferredPhone` field where the phone flag was not rendered correctly. Now users can retrieve valid values in the response.<br>**Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone`<br>`PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone`| PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a>| The revolving loan indicator information now displays correctly in the response message. <br>**Impacted Field:** <br>`AcctRec/LoanAcctInfo/RevolvingLoanInd`| PROD |
+| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY".<br>**Impacted Field:** <br> `EscrowInfo/EscrowExpDt`| CERT |
 
 <!--type: tab-->
 
@@ -48,6 +55,11 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account</a> | We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. | CERT |
 
 ## 2024_Q2.2
+
+### What's New
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| General | In the API Explorer, we enabled a dropdown to select Precision APIs. When you select '**Precision**' from the dropdown, the API Explorer dynamically displays only Precision APIs. The '**11.0.0 (latest)**' continues to display all APIs including Precision.<br> ![PRC](https://github.com/Fiserv/banking-hub/assets/85101648/a63a05d6-42f3-4210-ab93-21a7f5d690f7) | PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -87,7 +99,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### What's New
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| General | In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature.<br> ![image](https://github.com/Fiserv/banking-hub/assets/85101648/9efbbe40-9682-4b18-9676-fa980ecdc32a) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature.<br> ![SIG](https://github.com/Fiserv/banking-hub/assets/85101648/a3d0e4a8-803b-483f-989c-a24f3d2b208d) | PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -122,5 +134,48 @@ titles: Premier, Precision, Signature, Cleartouch
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue where the API displayed an error in the response message, when `OrgData` an optional aggregate was not provided in the request. We updated the `OrgData` aggregate in the request and now user can update the party records successfully. <br>**Impacted Field:**<br> `OrgPartyInfo/OrgData`| PROD |
+
+## 2024_Q2.2
+
+### What's New
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| General | In the API Explorer, we enabled a dropdown to select Cleartouch APIs. When you select '**Cleartouch**' from the dropdown, the API Explorer dynamically displays only Cleartouch APIs. The '**11.0.0 (latest)**' continues to display all APIs including Cleartouch.<br> ![CT](https://github.com/Fiserv/banking-hub/assets/85101648/ea3f536b-ea28-4b62-8922-a80f63513797) | PROD |
+
+<!-- type: tab -->
+
+## 2024_Q2.2
+
+### What's New
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| General | In the API Explorer, we enabled a dropdown to select Finxact APIs. When you select '**Finxact**' from the dropdown, the API Explorer dynamically displays only Finxact APIs. The '**11.0.0 (latest)**' continues to display all APIs including Finxact.<br> ![FNX](https://github.com/Fiserv/banking-hub/assets/85101648/8f432b34-2f1c-49a7-acd3-371bc270d5fd) | PROD |
+
+<!-- type: tab -->
+
+## 2024_Q2.2
+
+### What's New
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| General | In the API Explorer, we enabled a dropdown to select Onboard Advisor APIs. When you select '**Onboard Advisor**' from the dropdown, the API Explorer dynamically displays only Onboard Advisor APIs. The '**11.0.0 (latest)**' continues to display all APIs including Onboard Advisor.<br> ![OBA](https://github.com/Fiserv/banking-hub/assets/85101648/a136320b-ce3c-4d04-ae95-0362547a0998) | PROD |
+
+<!-- type: tab -->
+
+## 2024_Q2.2
+
+### What's New
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| General | In the API Explorer, we enabled a dropdown to select DNA APIs. When you select '**DNA**' from the dropdown, the API Explorer dynamically displays only DNA APIs. The '**11.0.0 (latest)**' continues to display all APIs including DNA.<br> ![DNA](https://github.com/Fiserv/banking-hub/assets/85101648/5762e478-3e1a-4a0f-bf27-6524bcb4a457) | PROD |
+
+<!-- type: tab -->
+
+## 2024_Q2.2
+
+### What's New
+| API Name | Description | Environment Availability |
+| --- | ----------- | -------- |
+| General | In the API Explorer, we enabled a dropdown to select EPOC APIs. When you select '**EPOC**' from the dropdown, the API Explorer dynamically displays only EPOC APIs. The '**11.0.0 (latest)**' continues to display all APIs including EPOC.<br> ![EPOC](https://github.com/Fiserv/banking-hub/assets/85101648/d57e2906-d3c6-471b-98fd-463c5408427d) | PROD |
 
 <!-- type: tab-end -->
