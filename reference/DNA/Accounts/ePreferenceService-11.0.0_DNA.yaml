@@ -164,7 +164,7 @@ components:
       - ePreferenceStatusRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: '#/components/schemas/StatusType_DNA'
         ePreferenceStatusRec:
           $ref: '#/components/schemas/addEPreferenceResponse_ePreferenceStatusRec'
     deleteEPreferenceSecuredRequest:
@@ -178,7 +178,7 @@ components:
       - ePreferenceStatusRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: '#/components/schemas/StatusType_DNA'
         ePreferenceStatusRec:
           $ref: '#/components/schemas/deleteEPreferenceSecuredResponse_ePreferenceStatusRec'
     getEPreferenceSecuredRequest:
@@ -194,10 +194,10 @@ components:
       - ePreferenceRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: '#/components/schemas/StatusType_DNA'
         ePreferenceRec:
           type: array
-          description: 'Details of the ePreference record. '
+          description: 'Details of the ePrefrence record. '
           items:
             $ref: '#/components/schemas/getEPreferenceSecuredResponse_ePreferenceRec'
     modifyEPreferenceRequest:
@@ -213,7 +213,7 @@ components:
       - ePreferenceStatusRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: '#/components/schemas/StatusType_DNA'
         ePreferenceStatusRec:
           $ref: '#/components/schemas/modifyEPreferenceResponse_ePreferenceStatusRec'
     EFXHeader:
@@ -411,7 +411,7 @@ components:
           type: boolean
           description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
       description: Details of the exceptions that can be manually acknowledged by the client.
-    StatusType:
+    StatusType_DNA:
       title: StatusType
       required:
       - Severity
@@ -420,9 +420,6 @@ components:
       - SvcProviderName
       type: object
       properties:
-        Id:
-          type: string
-          description: Status identification number.
         StatusCode:
           maxLength: 20
           type: string
@@ -437,12 +434,8 @@ components:
           maxLength: 1024
           type: string
           description: |-
-            Name of a service provider. Possible values are:
-              -  Cleartouch
+            Name of a service provider. Example value is:
               -  DNA
-              -  Precision
-              -  Premier
-              -  Signature
         ServerStatusCode:
           maxLength: 20
           type: string
@@ -451,25 +444,8 @@ components:
           maxLength: 255
           type: string
           description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
-        SubjectRole:
-          type: string
-          description: Authorization level required to override, such as Teller and Supervisor.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
-        ContentHTML:
-          type: string
-          description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
-          type: array
-          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
-          items:
-            $ref: '#/components/schemas/AdditionalStatusType'
+          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
       description: Details of the API response messages.
     SeverityType:
       title: SeverityType
@@ -479,62 +455,6 @@ components:
       - Error
       - Warning
       - Info
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
-    AdditionalStatusType:
-      title: AdditionalStatusType
-      type: object
-      properties:
-        StatusCode:
-          maxLength: 20
-          type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: |-
-            Name of a service provider. Possible values are:
-              - Cleartouch
-              - DNA
-              - Precision
-              - Premier
-              - Signature
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: 'Server status code of the service provider''s application.  '
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
     addEPreferenceRequest_ePreferenceInfo_AcctKeys:
       required:
       - AcctId
@@ -552,7 +472,7 @@ components:
           $ref: '#/components/schemas/addEPreferenceRequest_ePreferenceInfo_AcctKeys'
         DocGroupName:
           type: string
-          description: Value that indicates the document group name. This field is used when a group of papers must be enrolled as part of this process.
+          description: Value to indicate the selected delivery method. For DNA, all document groups have the same delivery method and is coded to 'All'.
       description: Information about the e-Preferenece, which is used for customer account eDistribution preferences.
     addEPreferenceResponse_ePreferenceStatusRec_ePreferenceKeys:
       required:
@@ -562,10 +482,22 @@ components:
           $ref: '#/components/schemas/addEPreferenceRequest_ePreferenceInfo_AcctKeys'
         DocGroupName:
           type: string
-          description: Value that indicates the document group name. This field is used when a group of papers must be enrolled as part of this process.
+          description: Value that indicates the selected delivery method. For DNA, all document groups have the same delivery method and is coded to 'All'.
+    addEPreferenceResponse_ePreferenceStatusRec_ePreferenceStatus:
+      required:
+      - ePreferenceStatusCode
+      type: object
+      properties:
+        ePreferenceStatusCode:
+          type: string
+          description: Code to indicate the status of the ePreference record.
+          enum:
+          - Valid
+      description: Status details of the ePreference record.
     addEPreferenceResponse_ePreferenceStatusRec:
       required:
       - ePreferenceKeys
+      - ePreferenceStatus
       type: object
       properties:
         ePreferenceKeys:
@@ -573,6 +505,8 @@ components:
           description: Unique information to identify the ePreference record.
           items:
             $ref: '#/components/schemas/addEPreferenceResponse_ePreferenceStatusRec_ePreferenceKeys'
+        ePreferenceStatus:
+          $ref: '#/components/schemas/addEPreferenceResponse_ePreferenceStatusRec_ePreferenceStatus'
       description: Details of the status record returned in response to the ePreferenceAdd operation.
     deleteEPreferenceSecuredRequest_ePreferenceKeys:
       required:
@@ -618,7 +552,7 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/addEPreferenceRequest_ePreferenceInfo_AcctKeys'
-      description: "Details of the selection criteria to search for the account ePreferences. \n\n\n\n**Note:** When both ePreferenceSel/AcctKeys and ePreferenceSel/ePreferenceKeys aggregates are provided in the EFX request, then search is performed using ePreferenceSel/ePreferenceKeys aggregate, if ePreferenceIdent field is provided in request. Else AcctId and AcctType values in ePreferenceSel/AcctKeys aggregate are used to retrieve records. \n\n\n\nGet ePreference API returns the account-level preference record only when search is performed using the ePreferenceSel/AcctKeys field. The record cannot be updated or deleted through Update ePreference/Delete ePreference APIs. To retrieve/update the e-Preference record (DocGroupName and other data) at the account-level, the calling application is requested to use ESF Get Account and Update Account APIs."
+      description: 'Details of the selection criteria to search for the account ePreferences. '
     getEPreferenceSecuredResponse_ePreferenceInfo:
       type: object
       properties:
@@ -626,19 +560,10 @@ components:
           $ref: '#/components/schemas/addEPreferenceRequest_ePreferenceInfo_AcctKeys'
         DocGroupName:
           type: string
-          description: "Value that indicates the document group name. This field is used when a group of papers must be enrolled as part of this process.\n\n\n\n**Note:** \n\n\n\n- ESF does not transform the value of DocGroupName between calling application and core - ESF passes the same value\n\n\n\n- Financial institution determines the allowed values for this field at the time of onboarding as per understanding with integration team"
-      description: Details of the ePreference record used for the customer account e-distribution preferences.
-    getEPreferenceSecuredResponse_ePreferenceStatus:
-      required:
-      - ePreferenceStatusCode
-      type: object
-      properties:
-        ePreferenceStatusCode:
-          type: string
-          description: Code to indicate the status of the ePreference record.
-          enum:
-          - Valid
-      description: Status details of the ePreference record.
+          description: |+
+            Value that indicates the Delivery Method selected. For DNA, all document groups have the same delivery method and is coded to 'All'.
+
+      description: Details of the ePrefrence record used for the customer account e-distribution preferences.
     getEPreferenceSecuredResponse_ePreferenceRec:
       required:
       - ePreferenceInfo
@@ -647,7 +572,7 @@ components:
         ePreferenceInfo:
           $ref: '#/components/schemas/getEPreferenceSecuredResponse_ePreferenceInfo'
         ePreferenceStatus:
-          $ref: '#/components/schemas/getEPreferenceSecuredResponse_ePreferenceStatus'
+          $ref: '#/components/schemas/addEPreferenceResponse_ePreferenceStatusRec_ePreferenceStatus'
     modifyEPreferenceRequest_ePreferenceInfo:
       type: object
       properties:
@@ -655,8 +580,22 @@ components:
           $ref: '#/components/schemas/addEPreferenceRequest_ePreferenceInfo_AcctKeys'
         DocGroupName:
           type: string
-          description: Value that indicates the document group name. This field is used when a group of papers must be enrolled as part of this process.
+          description: |-
+            Value that indicates the Delivery Method selected. For DNA, all document groups have the same delivery method and is coded to 'All'.
+
+
+
+            **Note:** To fetch the permitted values for this field, use "DeliveryMethods" as EnumTableIdent in Get Enumtable API.
       description: Information about the e-Preference.
+    modifyEPreferenceResponse_ePreferenceStatusRec_ePreferenceKeys:
+      required:
+      - AcctKeys
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/addEPreferenceRequest_ePreferenceInfo_AcctKeys'
+        DocGroupName:
+          type: string
+          description: Value that indicates the Delivery Method selected. For DNA, all document groups have the same delivery method and is coded to 'All'.
     modifyEPreferenceResponse_ePreferenceStatusRec:
       required:
       - ePreferenceKeys
@@ -667,7 +606,19 @@ components:
           type: array
           description: Unique information to identify the ePreference record.
           items:
-            $ref: '#/components/schemas/addEPreferenceResponse_ePreferenceStatusRec_ePreferenceKeys'
+            $ref: '#/components/schemas/modifyEPreferenceResponse_ePreferenceStatusRec_ePreferenceKeys'
         ePreferenceStatus:
-          $ref: '#/components/schemas/getEPreferenceSecuredResponse_ePreferenceStatus'
+          $ref: '#/components/schemas/addEPreferenceResponse_ePreferenceStatusRec_ePreferenceStatus'
       description: Details of the status record returned in response to the ePreferenceMod operation.
+    StatusType_DNA_AdditionalStatus:
+      type: object
+      properties:
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
