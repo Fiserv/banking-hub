@@ -60,7 +60,7 @@ components:
       - AcctTrnRec
       properties:
         Status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: '#/components/schemas/StatusType_DNA'
         RecCtrlOut:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_RecCtrlOut'
         AcctTrnRec:
@@ -255,7 +255,7 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
-    StatusType:
+    StatusType_DNA:
       title: StatusType
       required:
       - Severity
@@ -264,9 +264,6 @@ components:
       - SvcProviderName
       type: object
       properties:
-        Id:
-          type: string
-          description: Status identification number.
         StatusCode:
           maxLength: 20
           type: string
@@ -281,12 +278,8 @@ components:
           maxLength: 1024
           type: string
           description: |-
-            Name of a service provider. Possible values are:
-              -  Cleartouch
+            Name of a service provider. Example value is:
               -  DNA
-              -  Precision
-              -  Premier
-              -  Signature
         ServerStatusCode:
           maxLength: 20
           type: string
@@ -295,25 +288,8 @@ components:
           maxLength: 255
           type: string
           description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
-        SubjectRole:
-          type: string
-          description: Authorization level required to override, such as Teller and Supervisor.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
-        ContentHTML:
-          type: string
-          description: Response status in HTML format. This parameter returns only in some cases.
         AdditionalStatus:
-          type: array
-          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
-          items:
-            $ref: '#/components/schemas/AdditionalStatusType'
+          $ref: '#/components/schemas/StatusType_DNA_AdditionalStatus'
       description: Details of the API response messages.
     SeverityType:
       title: SeverityType
@@ -323,62 +299,6 @@ components:
       - Error
       - Warning
       - Info
-    SubjectElementType:
-      title: SubjectElementType
-      type: object
-      properties:
-        Path:
-          type: string
-          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
-        ServerPath:
-          maxLength: 256
-          type: string
-          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
-        Value:
-          maxLength: 256
-          type: string
-          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
-      description: Information about the subject element
-    AdditionalStatusType:
-      title: AdditionalStatusType
-      type: object
-      properties:
-        StatusCode:
-          maxLength: 20
-          type: string
-          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
-        StatusDesc:
-          maxLength: 255
-          type: string
-          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
-        Severity:
-          $ref: '#/components/schemas/SeverityType'
-        SvcProviderName:
-          maxLength: 1024
-          type: string
-          description: |-
-            Name of a service provider. Possible values are:
-              - Cleartouch
-              - DNA
-              - Precision
-              - Premier
-              - Signature
-        ServerStatusCode:
-          maxLength: 20
-          type: string
-          description: 'Server status code of the service provider''s application.  '
-        ServerStatusDesc:
-          maxLength: 255
-          type: string
-          description: Description of the server status code of the service provider's application.
-        OvrdExceptionInd:
-          type: boolean
-          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
-        SubjectElement:
-          type: array
-          description: Information about the elements that caused the status.
-          items:
-            $ref: '#/components/schemas/SubjectElementType'
     AcctTrnInqOperBySecuredRequest_RecCtrlIn:
       type: object
       properties:
@@ -395,7 +315,7 @@ components:
           maxLength: 250
           type: string
           description: "Next record pointer is included in the response if additional records exist. \n\n\n\n**Note:** Refers to time unique extension. \n\nThis field identifies the starting point from which to start the next query.\n\nCursor is provided in the previous response of Account Transaction Inquiry, if there are additional transaction records available to be returned."
-      description: Details to specify the maximum number of records to be processsed within a single response.
+      description: Details to specify the maximum number of records that can be processed within a single response.
     AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys:
       required:
       - AcctId
@@ -412,11 +332,26 @@ components:
 
 
       description: Unique information to identify the account record.
+    AcctTrnInqOperBySecuredRequest_AcctTrnSel_DtRange:
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Start date and time value of the date range to search the transaction records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n\n\n**Note:** Refers to the start date for which history should be returned. If only the start date is provided, then this API returns all the available transactions on the account up to current date. \n\nIf the value of the resulting balance is set to 'true', the start date should be provided."
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "End date and time value of the date range to search the transaction records. \n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-12-31T23:59:59.999\n\n\n\n**Note:** Refers to the end date for which history should be returned."
     AcctTrnInqOperBySecuredRequest_AcctTrnSel:
       type: object
       properties:
         AcctKeys:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_AcctKeys'
+        DtRange:
+          type: array
+          description: Details of the date range that contains the start date and the end date information to return the transaction records.
+          items:
+            $ref: '#/components/schemas/AcctTrnInqOperBySecuredRequest_AcctTrnSel_DtRange'
       description: Details of the selection criteria to retrieve the account transaction records.
     AcctTrnInqOperBySecuredResponse_RecCtrlOut:
       required:
@@ -484,7 +419,7 @@ components:
           description: Description of the enumeration value in the TrnCode field.
         MemoPostInd:
           type: boolean
-          description: "Value that indicates the transaction is memo posted. \n\nIf the value is 'true', then the transaction is memo posted but pending nightly processing. "
+          description: "Value that indicates the transaction is memo posted. \n\nIf the value is 'true', then the transaction is memo posted but pending for nightly processing. "
         PostedDt:
           pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
           type: string
@@ -503,15 +438,13 @@ components:
           maxLength: 100
           type: array
           description: |-
+          description: 'Custom-defined description for the transaction codes. '
             Description for the transaction codes.
-
-
-
             **Note:** DNA allows custom-defined descriptions for transaction codes at branch level and are defined during pre-installation tasks.
           items: {}
         StmtRunningBal:
           type: array
-          description: Details of the account balance after the transaction is posted.
+          description: Details of the account balance after the transaction is posted to the account.
           items:
             $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo_StmtRunningBal'
       description: Details of account transaction information.
@@ -538,3 +471,15 @@ components:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnInfo'
         AcctTrnStatus:
           $ref: '#/components/schemas/AcctTrnInqOperBySecuredResponse_AcctTrnStatus'
+    StatusType_DNA_AdditionalStatus:
+      type: object
+      properties:
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+      description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
