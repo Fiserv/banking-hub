@@ -53,7 +53,6 @@ titles: Premier, Precision, Signature, Cleartouch
 | API Name | Description | 
 | --- | ----------- | 
 | General | We fixed cybersecurity vulnerabilities notified on the basis of security scan reports. |
-|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-CDA</a> | We added the new enum value "NightlyReview" for the `RateChangeControl` field. Now the account is created successfully for the product. <br> **Impacted Field:** <br> `DepositAcctInfo/RateChangeData/RateChangeControl` | 
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open"> Get Product Specifications | We resolved the issue in response message to populate all occurences of the `RateMatrixTier` field as per the value received from the provider.|
 
 ## 2024_Q2.2
