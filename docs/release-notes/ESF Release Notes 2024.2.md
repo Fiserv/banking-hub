@@ -136,7 +136,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### Fixed
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue where the API displayed an error in the response message, when `OrgData` an optional aggregate was not provided in the request. We updated the `OrgData` aggregate in the request and now user can update the party records successfully. <br>**Impacted Field:**<br> `OrgPartyInfo/OrgData`| PROD |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue where the API displayed an error in the response message, when `OrgData` an optional aggregate was not provided in the request. Now, user can update the party record successfully even when `OrgData` aggregate is not provided in the request. <br>**Impacted Field:**<br> `OrgPartyInfo/OrgData`| PROD |
 
 ## 2024_Q2.2
 
