@@ -13,6 +13,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue where ESF was not mapping 'Pending' transactions in the response when cursor value is set to 1. We also updated a configuration that was limiting the number of pending transactions.<br>**Impacted Fields:** <br>`RecCtrlIn/MaxRecLimit` <br>`AcctTrnRec aggregate level` | PROD |
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending" and 'Posted'. | CERT |
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the `HomeMortgageDisclosure` aggregate was not mapped correctly. Now, the aggregate is mapped correctly and the values can be retrieved using the Get Account Details-LOAN API successfully. <br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/CensusTract` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/MSACode`| CERT |
+|<a href="../api/?type=post&path=/collateralservice/collateral/collateral" title="Click to open">Add Collateral</a> | We updated the enum value of the `PartyCollateralRelType` field from "Signer/Owner" to "OwnerSigner". <br> **Impacted Field:** <br> `PartyCollateralRelInfo/PartyCollateralRelType`| PROD |
 
 ## 2024_Q2.2
 
@@ -94,6 +95,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 | --- | ----------- | -------- |
 |<a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |We resolved the update issue with the `ApartmentNum` field. The user was unable to delete the apartment number even if the value of the `ApartmentNum` field was sent empty in the request to update the party contact information.<br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType`| CERT |
 |<a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where user was unable to modify the `SecretData` aggregate provided in the request. Now, the aggregate is modified successfully and mapped to the provider as per the request. <br> **Impacted Fields:** <br> `PersonPartyInfo/SecretData` <br> `PersonPartyInfo/SecretData/SecretIdent` <br> `PersonPartyInfo/SecretData/SecretValue` <br> `OrgPartyInfo/SecretData` <br> `OrgPartyInfo/SecretData/SecretIdent` <br> `OrgPartyInfo/SecretData/SecretValue`| CERT |
+|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-CDA</a> | We added the new enum value "NightlyReview" for the `RateChangeControl` field. Now the account is created successfully for the product. <br> **Impacted Field:** <br> `DepositAcctInfo/RateChangeData/RateChangeControl` | PROD |
 
 ## 2024_Q2.2
 
@@ -134,7 +136,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### Fixed
 | API Name | Description | Environment Availability |
 | --- | ----------- | -------- |
-| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue where the API displayed an error in the response message, when `OrgData` an optional aggregate was not provided in the request. We updated the `OrgData` aggregate in the request and now user can update the party records successfully. <br>**Impacted Field:**<br> `OrgPartyInfo/OrgData`| PROD |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue where the API displayed an error in the response message, when `OrgData` an optional aggregate was not provided in the request. Now, user can update the party record successfully even when `OrgData` aggregate is not provided in the request. <br>**Impacted Field:**<br> `OrgPartyInfo/OrgData`| PROD |
 
 ## 2024_Q2.2
 
