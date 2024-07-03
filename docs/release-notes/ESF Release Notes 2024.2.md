@@ -9,29 +9,30 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### Fixed
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue where ESF was not mapping 'Pending' transactions in the response when cursor value is set to 1. We also updated a configuration that was limiting the number of pending transactions.<br>**Impacted Fields:** <br>`RecCtrlIn/MaxRecLimit` <br>`AcctTrnRec aggregate level` | PROD |
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending" and 'Posted'. | CERT |
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the `HomeMortgageDisclosure` aggregate was not mapped correctly. Now, the aggregate is mapped correctly and the values can be retrieved using the Get Account Details-LOAN API successfully. <br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/CensusTract` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/MSACode`| CERT |
 |<a href="../api/?type=post&path=/collateralservice/collateral/collateral" title="Click to open">Add Collateral</a> | We updated the enum value of the `PartyCollateralRelType` field from "Signer/Owner" to "OwnerSigner". <br> **Impacted Field:** <br> `PartyCollateralRelInfo/PartyCollateralRelType`| PROD |
+|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the attributes of the `EscrowCtrlData` aggregate were not mapped correctly but the loan account was created successfully. Now, the arrtributes are mapped correctly and can be retrieved using the Get Account Details API successfully.<br> **Impacted Fields:** <br> `LoanAcctInfo/EscrowCtrlData` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurType` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurInterval` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/LeadDays` <br> `LoanAcctInfo/EscrowCtrlData/NextAnalysisDt` | CERT |
 
 ## 2024_Q2.2
 
 ### What's New
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | General | In the API Explorer, we enabled a dropdown to select Premier APIs. When you select '**Premier**' from the dropdown, the API Explorer dynamically displays only Premier APIs. The '**11.0.0 (latest)**' continues to display all APIs including Premier.<br> ![PRM](https://github.com/Fiserv/banking-hub/assets/85101648/c63bc13d-7bc3-45a4-895d-7efecd2330d2) | PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN_INET</a> | We updated the `BalType` field to reflect the current available credit balance instantly. Previously, when a bank updates the current available credit on navigator, the credit balance was updating after the nightly batch process.<br>**Impacted Field:**<br> `AcctRec/LoanAcctInfo/AcctBal/BalType`| PROD |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | We updated the `NextRateChangeDt` field with correct path to process the request successfully. Previously, the `NextRateChangeDt` field was not getting updated due to incorrect path.<br>**Impacted Field:**<br>`LoanAcctInfo/RateChangeData/NextRateChangeDt`| PROD |
 
 ### Fixed
 | API Name | Description | Environment Availability |
-| --- | ----------- | ------------------ |
+| -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | The system no longer displays an internal server error message when the accrual method value is not included in the request under the interest rate data aggregate. <br> **Impacted Field:** <br> `LoanAcctInfo/IntRateData/AccrualMethod` | PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA</a>,<br> <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-DDA</a> |  We resolved an internal server error issue that used to occur when the analysis group value was not included in the request.<br>**Impacted Field:**<br>`DepositAcctInfo/CommercialAnalysisData/AnalysisGroup` | PROD |
 |<a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | The system no longer displays an internal server error message when the Accrual Method value is not included in the request under the Interest Rate Data (`IntRateData`) aggregate.<br>**Impacted Fields:**<br>`LoanAcctInfo/IntRateData`<br>`LoanAcctInfo/IntRateData/AccrualMethod`| PROD |
@@ -44,6 +45,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a>| The revolving loan indicator information now displays correctly in the response message. <br>**Impacted Field:** <br>`AcctRec/LoanAcctInfo/RevolvingLoanInd`| PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We have fixed an issue where loan accounts were successfully created when the value of the `RateChangeRecurType` field was "Quarterly", which was not specified in the enum values. We added the "Quarterly" value as an enum value.<br>**Impacted Field:** <br> `LoanAcctInfo/RateChangeData/RateChangeRecurType`| PROD |
 | <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY".<br>**Impacted Field:** <br> `EscrowInfo/EscrowExpDt`| CERT |
+| <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Add ePreferences</a> | We resolved an issue in the `DocGroupName` field where the value was not set while creating ePreference record in a request during creation of ePreference record for LOAN or SDA account.<br>**Impacted Field:**<br> `ePreferenceInfo/DocGroupName`| PROD |
 
 <!--type: tab-->
 
@@ -51,7 +53,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### Fixed
 | API Name | Description | Environment Availability |
-| --- | ----------- | ------------------ |
+| -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved an issue that occured while creating a party where the given month in the issued and expiration date for Drivers License (DL) information defaults to "01" (January). Now, the value of the month remains same as the users provide in the request. | CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | Previously, while adding the benficiary (secondary customer) to an account, the details provided in the request were not added with the provider. We resolved this issue and now users can add and retrieve beneficiary details using Get Account API. | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account</a> | We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. | CERT |
@@ -60,17 +62,17 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### What's New
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | General | In the API Explorer, we enabled a dropdown to select Precision APIs. When you select '**Precision**' from the dropdown, the API Explorer dynamically displays only Precision APIs. The '**11.0.0 (latest)**' continues to display all APIs including Precision.<br> ![PRC](https://github.com/Fiserv/banking-hub/assets/85101648/a63a05d6-42f3-4210-ab93-21a7f5d690f7) | PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
 
 ### Fixed
 | API Name | Description | Environment Availability |
-| --- | ----------- | ------------------ |
+| -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the issue where the correct number of records were not returned in the response message when filtered by the internet banking party identifier. | PROD |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> |  The fields `OwnerInd`, `PrimaryOwnerInd` and `TaxReportingOwnerInd` were not rendering as expected in the response. To resolve this issue, we added correct values for owner indicator, primary owner indicator and tax reporting owner indicator.<br>**Impacted Fields:**<br>`PartyAcctRelRec/PartyAcctRelInfo/OwnerInd`<br>`PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd`<br> `PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd`| PROD |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the error exception issue that was occurring in the response message when retrieving party account relationships using the party identifier. | PROD |
@@ -92,7 +94,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### Fixed
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 |<a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |We resolved the update issue with the `ApartmentNum` field. The user was unable to delete the apartment number even if the value of the `ApartmentNum` field was sent empty in the request to update the party contact information.<br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType`| CERT |
 |<a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where user was unable to modify the `SecretData` aggregate provided in the request. Now, the user is able to add or update SecretData successfully. <br> **Impacted Fields:** <br> `PersonPartyInfo/SecretData` <br> `PersonPartyInfo/SecretData/SecretIdent` <br> `PersonPartyInfo/SecretData/SecretValue` <br> `OrgPartyInfo/SecretData` <br> `OrgPartyInfo/SecretData/SecretIdent` <br> `OrgPartyInfo/SecretData/SecretValue`| CERT |
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-CDA</a> | We added the new enum value "NightlyReview" for the `RateChangeControl` field. Now the account is created successfully for the product. <br> **Impacted Field:** <br> `DepositAcctInfo/RateChangeData/RateChangeControl` | PROD |
@@ -101,17 +103,17 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### What's New
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | General | In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature.<br> ![SIG](https://github.com/Fiserv/banking-hub/assets/85101648/a3d0e4a8-803b-483f-989c-a24f3d2b208d) | PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
 
 ### Fixed
 | API Name | Description | Environment Availability |
-| --- | ----------- | ------------------ |
+| -------- | ----------- | ------------------------ |
 | General | We resolved the status code synchronization issue for all APIs. | PROD |
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We updated the service contract to make the aggregate `Secretdata` as an optional aggregate as this information can be optional on the core. | PROD |
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the null pointer exception error in the response when the value of the `CountryCodeValue` field was null in the request. Now, even if the value is null, the API adds the party record successfully without any error.<br>**Impacted Fields:**<br>`PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValue`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValue` | PROD |
@@ -128,21 +130,21 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### Enhancements
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty_INET</a> | For imporvised Single Sign On (SSO) processes and consistancy in API performace, we updated the account number format with required leading zeros (0), if the length of the account number is less than 10 digits. <br>**Impacted Field:**<br> `PartyAcctRelRec/PartyAcctRelKeys/AcctKeys/AcctId`| CERT |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty_INET</a> | We added a new field `ClosedDt` under the `AcctSummInfo` aggregate in the response message for the accounts having the `AcctDtlStatus` field value as "Closed", to improve the API workflow. <br>**Impacted Field:**<br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/ClosedDt` | CERT |
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History</a> | We fixed the issue where the API was returning the pending transactions on each response in pagination logic. Now, the pending transactions are returned against the prior/initial request at once.| CERT |
 
 ### Fixed
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue where the API displayed an error in the response message, when `OrgData` an optional aggregate was not provided in the request. Now, user can update the party record successfully even when `OrgData` aggregate is not provided in the request. <br>**Impacted Field:**<br> `OrgPartyInfo/OrgData`| PROD |
 
 ## 2024_Q2.2
 
 ### What's New
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | General | In the API Explorer, we enabled a dropdown to select Cleartouch APIs. When you select '**Cleartouch**' from the dropdown, the API Explorer dynamically displays only Cleartouch APIs. The '**11.0.0 (latest)**' continues to display all APIs including Cleartouch.<br> ![CT](https://github.com/Fiserv/banking-hub/assets/85101648/ea3f536b-ea28-4b62-8922-a80f63513797) | PROD |
 
 <!-- type: tab -->
@@ -151,7 +153,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### What's New
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | General | In the API Explorer, we enabled a dropdown to select Finxact APIs. When you select '**Finxact**' from the dropdown, the API Explorer dynamically displays only Finxact APIs. The '**11.0.0 (latest)**' continues to display all APIs including Finxact.<br> ![FNX](https://github.com/Fiserv/banking-hub/assets/85101648/8f432b34-2f1c-49a7-acd3-371bc270d5fd) | PROD |
 
 <!-- type: tab -->
@@ -160,7 +162,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### What's New
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | General | In the API Explorer, we enabled a dropdown to select Onboard Advisor APIs. When you select '**Onboard Advisor**' from the dropdown, the API Explorer dynamically displays only Onboard Advisor APIs. The '**11.0.0 (latest)**' continues to display all APIs including Onboard Advisor.<br> ![OBA](https://github.com/Fiserv/banking-hub/assets/85101648/a136320b-ce3c-4d04-ae95-0362547a0998) | PROD |
 
 <!-- type: tab -->
@@ -169,7 +171,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### What's New
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | General | In the API Explorer, we enabled a dropdown to select DNA APIs. When you select '**DNA**' from the dropdown, the API Explorer dynamically displays only DNA APIs. The '**11.0.0 (latest)**' continues to display all APIs including DNA.<br> ![DNA](https://github.com/Fiserv/banking-hub/assets/85101648/5762e478-3e1a-4a0f-bf27-6524bcb4a457) | PROD |
 
 <!-- type: tab -->
@@ -178,7 +180,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 ### What's New
 | API Name | Description | Environment Availability |
-| --- | ----------- | -------- |
+| -------- | ----------- | ------------------------ |
 | General | In the API Explorer, we enabled a dropdown to select EPOC APIs. When you select '**EPOC**' from the dropdown, the API Explorer dynamically displays only EPOC APIs. The '**11.0.0 (latest)**' continues to display all APIs including EPOC.<br> ![EPOC](https://github.com/Fiserv/banking-hub/assets/85101648/d57e2906-d3c6-471b-98fd-463c5408427d) | PROD |
 
 <!-- type: tab-end -->
