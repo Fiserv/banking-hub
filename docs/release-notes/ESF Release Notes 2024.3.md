@@ -3,10 +3,17 @@
 V 11.0.0
 <!-- 
 type: tab 
-titles: Signature
+titles: Premier, Signature
 -->
 ## 2024_Q3.1
 
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+|<a href="../api/?type=post&path=/beneficialownerservice/parties/beneficialowner/secured" title="Click to open">Add Beneficial Owner</a> |We resolved an issue with the `ControlCode` field when the value of the `RelationshipType` field is "ControlPerson", the value was not sent in the correct format to the provider displaying an error in the API response. Now, the provider accepts the correct interger value for this field.<br>**Impacted Field:** <br>`BeneficialOwnerInfo/BeneficialOwnerData/ControlCode` | CERT |
+
+<!-- type: tab-end -->
+<!--type: tab-->
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
