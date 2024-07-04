@@ -6,7 +6,7 @@ type: tab
 titles: Premier
 -->
 
-### Enhancements
+### Fixed
 
 | API Name | Description | Tentative Availability |
 | -------- | ----------- | ---------------------- |
