@@ -13,16 +13,16 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 <!-- type: tab -->
 |        Activity      |  Tentitative Available Date      |	  Status    |
 |   --------------     | ----------------------------     |  ---------  |
-| CERT Deployment      | 8 August, 2024 - 12 August, 2024 | In-progress |
-| PROD Deployment      | 8 August, 2024 - 12 August, 2024 | In-progress |
-| General Availability | 25 August, 2024	                | In-progress |
+| CERT Deployment      | 8 August, 2024 - 12 August, 2024 | Not started |
+| PROD Deployment      | 8 August, 2024 - 12 August, 2024 | Not started |
+| General Availability | 25 August, 2024	                | Not started |
 
 <!-- type: tab -->
 |        Activity      |  Tentitative Available Date            |	  Status    |
 |   --------------     | ----------------------------           |  ---------  |
-| CERT Deployment      | 8 September, 2024 - 12 September, 2024 | In-progress |
-| PROD Deployment      | 8 September, 2024 - 12 September, 2024 | In-progress |
-| General Availability | 25 September, 2024	                    | In-progress |
+| CERT Deployment      | 8 September, 2024 - 12 September, 2024 | Not started |
+| PROD Deployment      | 8 September, 2024 - 12 September, 2024 | Not started |
+| General Availability | 25 September, 2024	                    | Not started |
 
 <!-- type: tab-end -->
 
