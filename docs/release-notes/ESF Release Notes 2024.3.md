@@ -23,6 +23,8 @@ titles: 2024_Q3.1, 2024_Q3.3, 2024_Q3.3
 | PROD Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
 | General Availability | 25 July, 2024	              | In-progress |
 
+<!-- type: tab-end -->
+
 # Release Notes 
 ## 2024_Q3
 V 11.0.0
