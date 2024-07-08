@@ -2,7 +2,7 @@
 ## Release Schedule
 <!-- 
 type: tab 
-titles: 2024_Q3.1, 2024_Q3.3, 2024_Q3.3
+titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 -->
 |        Activity      |  Tentitative Available Date  |	  Status    |
 |   --------------     | ---------------------------- |  ---------  |
@@ -11,18 +11,18 @@ titles: 2024_Q3.1, 2024_Q3.3, 2024_Q3.3
 | General Availability | 25 July, 2024	              | In-progress |
 
 <!-- type: tab -->
-|        Activity      |  Tentitative Available Date  |	  Status    |
-|   --------------     | ---------------------------- |  ---------  |
-| CERT Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
-| PROD Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
-| General Availability | 25 July, 2024	              | In-progress |
+|        Activity      |  Tentitative Available Date      |	  Status    |
+|   --------------     | ----------------------------     |  ---------  |
+| CERT Deployment      | 8 August, 2024 - 12 August, 2024 | In-progress |
+| PROD Deployment      | 8 August, 2024 - 12 August, 2024 | In-progress |
+| General Availability | 25 August, 2024	                | In-progress |
 
 <!-- type: tab -->
-|        Activity      |  Tentitative Available Date  |	  Status    |
-|   --------------     | ---------------------------- |  ---------  |
-| CERT Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
-| PROD Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
-| General Availability | 25 July, 2024	              | In-progress |
+|        Activity      |  Tentitative Available Date            |	  Status    |
+|   --------------     | ----------------------------           |  ---------  |
+| CERT Deployment      | 8 September, 2024 - 12 September, 2024 | In-progress |
+| PROD Deployment      | 8 September, 2024 - 12 September, 2024 | In-progress |
+| General Availability | 25 September, 2024	                    | In-progress |
 
 <!-- type: tab-end -->
 
