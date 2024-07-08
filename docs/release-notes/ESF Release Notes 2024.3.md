@@ -1,4 +1,5 @@
-# Release Schedule
+# Release 2024_Q3
+## Release Schedule
 <!-- 
 type: tab 
 titles: 2024_Q3.1, 2024_Q3.3, 2024_Q3.3
@@ -25,8 +26,7 @@ titles: 2024_Q3.1, 2024_Q3.3, 2024_Q3.3
 
 <!-- type: tab-end -->
 
-# Release Notes 
-## 2024_Q3
+## Release Notes
 V 11.0.0
 <!-- 
 type: tab 
@@ -38,7 +38,6 @@ titles: Premier, Signature
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 |<a href="../api/?type=post&path=/beneficialownerservice/parties/beneficialowner/secured" title="Click to open">Add Beneficial Owner</a> |We resolved an issue with the `ControlCode` field when the value of the `RelationshipType` field is "ControlPerson", the value was not sent in the correct format to the provider displaying an error in the API response. Now, the provider accepts the correct interger value for this field.<br>**Impacted Field:** <br>`BeneficialOwnerInfo/BeneficialOwnerData/ControlCode` | CERT |
-
 
 <!-- type: tab -->
 ## 2024_Q3.1
