@@ -1,9 +1,15 @@
-# Release 2024_Q3
-## Release Schedule
+# Release Notes 2024_Q3
+V 11.0.0
+
+<details><summary>
+  
+### Release Schedule
+</summary>
 <!-- 
 type: tab 
 titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 -->
+
 |        Activity      |  Tentitative Available Date  |	  Status    |
 |   --------------     | ---------------------------- |  ---------  |
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
@@ -26,8 +32,8 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 <!-- type: tab-end -->
 
-## Release Notes
-V 11.0.0
+</details>
+
 <!-- 
 type: tab 
 titles: Premier, Signature
@@ -38,6 +44,9 @@ titles: Premier, Signature
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=put&path=/partyservice/parties/secured" title="Click to open">Update Party</a> | We enhanced the API's ability where the user can delete the 'IssuedIdent' aggregate values that are not passed in the request. If the party has two `IssuedIdent` aggregates, the user can remove the aggregate that is not needed for the party. <br>  **Implemented Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentValue` <br> `PersonPartyInfo/PersonData/IssuedIdent/Issuer` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br>`OrgPartyInfo/OrgData/IssuedIdent` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentValue` <br> `OrgPartyInfo/OrgData/IssuedIdent/Issuer` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/ExpDt`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - CDA</a> | We added `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup` as a new field to map the account relationships when adding a CDA account.<br>  **Implemented Field:** <br> `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - CDA</a> | We added `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup` as a new field to display the account relationships status in the response message. <br>  **Implemented Field:** <br> `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN </a> | Response message now includes the effective date of the home mortgages.<br>  **Implemented Field:** <br> `- AcctRec/LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt`| CERT |
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -46,6 +55,9 @@ titles: Premier, Signature
 |<a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship (By Party)</a> |We resolved an issue where the API returned the value for `PhoneType` field in lower case. Now, the `PhoneType` field value is retrieved correctly as per the configurations.<br>**Impacted Fields:** <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/PhoneType` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | CERT |
 |<a href="../api/?type=put&path=/addrservice/partyacctsvc/secured" title="Click to open">Update Address</a> |We resolved the issue with the `RelationshipMgr` aggregate where the `RelationshipMgrIdent` and `RelationshipRole`  fields were not modified for the specified address. Now, the users can update the address successfully. <br>**Impacted Fields:** <br>`AddrInfo/PostAddr/RelationshipMgr` <br> `AddrInfo/PostAddr/RelationshipMgr/RelationshipMgrIdent` <br> `AddrInfo/PostAddr/RelationshipMgr/RelationshipRole` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | CERT |
 |<a href="../api/?type=put&path=/addrservice/partyacctsvc/secured" title="Click to open">Update Address</a> |We resolved the issue where the user was unable to update the value of the field `HandlingCodeOption`for addresses when the AddrType field is "Seasonal".<br>**Impacted Fields:** <br>`AddrInfo/PostAddr/HandlingCodeOption`| CERT |
+| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending' and 'Posted'.  | CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account - DDA</a> | We fixed the "IndexOutOfBoundsException: Index 0" error occurred when the `RateFactor` field was sent in the API request. <br>  **Implemented Field:** <br> `​​​​​​​DepositAcctInfo/RateChangeData/RateFactor`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - all types </a> | We updated the API to correctly display the product description in the API response message. Previously, the `Desc` field was displaying incorrect description. <br>  **Implemented Field:** <br> `AcctRec/DepositAcctInfo/Desc`| CERT |
 
 <!-- type: tab -->
 ## 2024_Q3.1
