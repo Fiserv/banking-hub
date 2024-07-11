@@ -60,7 +60,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 ### Known Issues
 | API Name | Description | Environment Availability |
 | --- | ----------- | ------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-CDA</a> | We added the following enum values for the `AcctBal/BalType` field: <br> <ul> <li> Avail <br> <li> AvailCash <br> <li> AvailChk <br> <li> Closing <Br> <li> BalanceLastStatement <br> <li> Current <br> <li> ClosingInterest <br> <li> InterestAccrued <br> <li> Ledger <br> <li> MinLedger <br> <li> OpeningOutstanding <br> <li> OverdraftAtmPos <br> <li> PrevAvailCash <br> <li> PrevAvailChk <br> <li> PrevAvail <br> <li> PrevInterestAccrued <br> <li> PrevSvcChg <br> <li> PrevLedger <br> <li> SvcChg <br> <li> Hold <br> <li> OtherTransfers <br> <li> Sweep <br> <li> Float <br> <li> MemoLedger <br> <li> Memo <br> <li> AvailPending <br> <li> LedgerPending </ul> | - |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | We added the following enum values for the `AcctBal/BalType` field: <br> <ul> <li> Avail <br> <li> AvailCash <br> <li> AvailChk <br> <li> Closing <Br> <li> BalanceLastStatement <br> <li> Current <br> <li> ClosingInterest <br> <li> InterestAccrued <br> <li> Ledger <br> <li> MinLedger <br> <li> OpeningOutstanding <br> <li> OverdraftAtmPos <br> <li> PrevAvailCash <br> <li> PrevAvailChk <br> <li> PrevAvail <br> <li> PrevInterestAccrued <br> <li> PrevSvcChg <br> <li> PrevLedger <br> <li> SvcChg <br> <li> Hold <br> <li> OtherTransfers <br> <li> Sweep <br> <li> Float <br> <li> MemoLedger <br> <li> Memo <br> <li> AvailPending <br> <li> LedgerPending </ul> | - |
 
 <!--type: tab-->
 
