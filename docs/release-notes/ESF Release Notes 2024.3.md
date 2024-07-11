@@ -1,10 +1,8 @@
 # Release Notes 2024_Q3
 V 11.0.0
 
-<details><summary>
-  
-### Release Schedule
-</summary>
+<details>
+<summary> <b>Release Schedule</b> </summary>
 <!-- 
 type: tab 
 titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
