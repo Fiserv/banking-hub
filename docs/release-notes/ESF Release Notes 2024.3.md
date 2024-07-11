@@ -1,9 +1,15 @@
-# Release 2024_Q3
-## Release Schedule
+# Release Notes 2024_Q3
+V 11.0.0
+
+<details><summary>
+  
+### Release Schedule
+</summary>
 <!-- 
 type: tab 
 titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 -->
+
 |        Activity      |  Tentitative Available Date  |	  Status    |
 |   --------------     | ---------------------------- |  ---------  |
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
@@ -26,8 +32,8 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 <!-- type: tab-end -->
 
-## Release Notes
-V 11.0.0
+</details>
+
 <!-- 
 type: tab 
 titles: Premier, Signature
