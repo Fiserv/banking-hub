@@ -72,9 +72,8 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 ### Enhancements
 | API Name | Description | Environment Availability |
 | --- | ----------- | ------------------ |
-| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-Deposits</a> | We updated the `AcctTrnRec/AcctTrnInfo/Desc` field that returns the second line of the truncated description in the response. | PROD |
+| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-Deposits</a> | We resolved the issue with the `Desc` field where the second line of the description was getting truncated in the response. Now the users can expect complete description to be populated in the API response message. <br> **Impacted Field:** <br> `AcctTrnRec/AcctTrnInfo/Desc` | CERT |
 | <a href="../api/?type=post&path=/documentservice/document/document" title="Click to open">Add Document</a> | We added the new enum values "DOCX" and "XLSX" in the `DocumentInfo/PageData/PageFormat` field as new page formats. | PROD |
-| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History</a> | We resolved the issue with the `Desc` field where the second line of the description was getting truncated in the response. Now the users can expect complete description to be populated in the API response message. <br> **Impacted Field:** <br> `AcctTrnRec/AcctTrnInfo/Desc` | - |
 
 ### Fixed
 | API Name | Description | Environment Availability |
