@@ -34,7 +34,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 <!-- 
 type: tab 
-titles: Premier, Signature
+titles: Premier, Signature, Cleartouch
 -->
 ## 2024_Q3.1
 
@@ -54,7 +54,7 @@ titles: Premier, Signature
 |<a href="../api/?type=put&path=/addrservice/partyacctsvc/secured" title="Click to open">Update Address</a> |We resolved the issue with the `RelationshipMgr` aggregate where the `RelationshipMgrIdent` and `RelationshipRole`  fields were not modified for the specified address. Now, the users can update the address successfully. <br>**Impacted Fields:** <br>`AddrInfo/PostAddr/RelationshipMgr` <br> `AddrInfo/PostAddr/RelationshipMgr/RelationshipMgrIdent` <br> `AddrInfo/PostAddr/RelationshipMgr/RelationshipRole` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | CERT |
 |<a href="../api/?type=put&path=/addrservice/partyacctsvc/secured" title="Click to open">Update Address</a> |We resolved the issue where the user was unable to update the value of the field `HandlingCodeOption`for addresses when the AddrType field is "Seasonal".<br>**Impacted Fields:** <br>`AddrInfo/PostAddr/HandlingCodeOption`| CERT |
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending' and 'Posted'.  | CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account - DDA</a> | We fixed the "IndexOutOfBoundsException: Index 0" error occurred when the `RateFactor` field was sent in the API request. <br>  **Implemented Field:** <br> `​​​​​​​DepositAcctInfo/RateChangeData/RateFactor`| CERT |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account - DDA</a> | We fixed the "IndexOutOfBoundsException: Index 0" error occurred when the `RateFactor` field was sent in the API request. <br>  **Implemented Field:** <br> `​​​​​​​DepositAcctInfo/RateChangeData/RateFactor`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - all types </a> | We updated the API to correctly display the product description in the API response message. Previously, the `Desc` field was displaying incorrect description. <br>  **Implemented Field:** <br> `AcctRec/DepositAcctInfo/Desc`| CERT |
 
 <!-- type: tab -->
@@ -64,12 +64,24 @@ titles: Premier, Signature
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | Collateral code is now available when you perform the account inquiry for the LOAN accounts. <br>  **Implemented Field:** <br> `AcctRec/LoanAcctInfo/CollateralCode`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - LOAN</a> | Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Implemented Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details - LOAN</a> | Collateral code is now available when you perform the account inquiry for the LOAN accounts. <br>  **Implemented Field:** <br> `AcctRec/LoanAcctInfo/CollateralCode`| CERT |
 
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 | <a href="/api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We fixed the issue in `ShortName` field where its value was not saved in accordance with the maximum supported length of 18 characters. Now the field value is saved correctly when the client provides a `ShortName` field value with upto 18 characters is length. <br> **Impacted Fields:** <br> `PersonPartyInfo/ShortName` <br> `OrgPartyInfo/ShortName`| CERT |
 | <a href="/api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue with the `ShortName` field where the API used the full middle name instead of initials to construct the short name when this field is not provided in the request. In such case, the value of the `ShortName` field is populated from the `PersonName` aggregate using family name, given name and middle name initials, such that the maximum length is 18 characters.| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open"> Add Account - DDA</a> | We resolved the issue of the “Invalid Float Extension Code” error, which previously occurred when the RegCCStatus value was sent in the request. <br>  **Implemented Field:** <br> `DepositAcctInfo/RegCCData/RegCCStatus`| CERT |
 
+<!-- type: tab -->
+
+## 2024_Q3.1
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History DDA_SDA_Teller</a> | We fixed the issue where transaction date and timestamp were not getting mapped properly with `PostedDt` and `TrnDt` fields when received from Cleartouch.  <br>  **Implemented Fields:** <br> `AcctTrnRec/AcctTrnInfo/PostedDt` <br> `AcctTrnRec/AcctTrnInfo/TrnDt`| CERT |
+| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History </a> | We fixed the issue where the API was returning the pending transactions on each response in pagination logic. Now, the pending transactions are returned against the prior/initial request at once.| PROD |
 
 <!-- type: tab-end -->
