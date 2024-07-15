@@ -1,37 +1,6 @@
 # Release Notes 2024_Q3
 V 11.0.0
 
-<details>
-<summary> <b>Release Schedule</b> </summary>
-<!-- 
-type: tab 
-titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
--->
-
-|        Activity      |  Tentitative Available Date  |	  Status    |
-|   --------------     | ---------------------------- |  ---------  |
-| CERT Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
-| PROD Deployment      | 8 July, 2024 - 12 July, 2024 | In-progress |
-| General Availability | 25 July, 2024	              | In-progress |
-
-<!-- type: tab -->
-|        Activity      |  Tentitative Available Date      |	  Status    |
-|   --------------     | ----------------------------     |  ---------  |
-| CERT Deployment      | 8 August, 2024 - 12 August, 2024 | Not started |
-| PROD Deployment      | 8 August, 2024 - 12 August, 2024 | Not started |
-| General Availability | 25 August, 2024	                | Not started |
-
-<!-- type: tab -->
-|        Activity      |  Tentitative Available Date            |	  Status    |
-|   --------------     | ----------------------------           |  ---------  |
-| CERT Deployment      | 8 September, 2024 - 12 September, 2024 | Not started |
-| PROD Deployment      | 8 September, 2024 - 12 September, 2024 | Not started |
-| General Availability | 25 September, 2024	                    | Not started |
-
-<!-- type: tab-end -->
-
-</details>
-
 <!-- 
 type: tab 
 titles: Premier, Signature, Cleartouch
@@ -44,7 +13,7 @@ titles: Premier, Signature, Cleartouch
 | <a href="../api/?type=put&path=/partyservice/parties/secured" title="Click to open">Update Party</a> | We enhanced the API's ability where the user can delete the 'IssuedIdent' aggregate values that are not passed in the request. If the party has two `IssuedIdent` aggregates, the user can remove the aggregate that is not needed for the party. <br>  **Implemented Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentValue` <br> `PersonPartyInfo/PersonData/IssuedIdent/Issuer` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br>`OrgPartyInfo/OrgData/IssuedIdent` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentValue` <br> `OrgPartyInfo/OrgData/IssuedIdent/Issuer` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/ExpDt`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - CDA</a> | We added `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup` as a new field to map the account relationships when adding a CDA account.<br>  **Implemented Field:** <br> `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - CDA</a> | We added `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup` as a new field to display the account relationships status in the response message. <br>  **Implemented Field:** <br> `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup`| CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN </a> | Response message now includes the effective date of the home mortgages.<br>  **Implemented Field:** <br> `- AcctRec/LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN </a> | Response message now includes the effective date of the home mortgages.<br>  **Implemented Field:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/HAMPData/EffDt`| CERT |
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -56,6 +25,7 @@ titles: Premier, Signature, Cleartouch
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending' and 'Posted'.  | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account - DDA</a> | We fixed the "IndexOutOfBoundsException: Index 0" error occurred when the `RateFactor` field was sent in the API request. <br>  **Implemented Field:** <br> `​​​​​​​DepositAcctInfo/RateChangeData/RateFactor`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - all types </a> | We updated the API to correctly display the product description in the API response message. Previously, the `Desc` field was displaying incorrect description. <br>  **Implemented Field:** <br> `AcctRec/DepositAcctInfo/Desc`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - LOAN </a> | We added the notes within the `InitialAmount/Amt` and `RevolvingLoanCode` fields to provide the correlation between these fields. <br>  **Implemented Field:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt` <br> `AcctRec/LoanAcctInfo/RevolvingLoanCode`| CERT |
 
 <!-- type: tab -->
 ## 2024_Q3.1
