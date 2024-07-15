@@ -212,7 +212,7 @@ components:
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
         StopItemKeys:
-          $ref: '#/components/schemas/StopItemModOperRequest_StopItemKeys'
+          $ref: '#/components/schemas/StopItemAddOperResponse_StopItemStatusRec_StopItemKeys'
         StopItemInfo:
           $ref: '#/components/schemas/StopItemModOperRequest_StopItemInfo'
     StopItemModOperResponse:
@@ -590,13 +590,13 @@ components:
           maxLength: 36
           type: string
           description: |+
-            Unique identifier to identify the stop item record. It is a composite field that shall comprise a combination of Stop Item Identifier and Source Id.
+            Unique identification number of an account record.
 
 
 
-            Note:
+            **Note:** Refers to the account number.
 
-            Construction: Includes '_' between two values. Ex: Sourceid_stopSequenceNumber
+
 
       description: 'Unique information to identify the account subject of the stop item. '
     StopItemCanOperSecuredRequest_StopItemKeys:
@@ -607,47 +607,9 @@ components:
         StopItemId:
           maxLength: 36
           type: string
-          description: |-
-            Unique identifier to identify the stop item record. It is a composite field that shall comprise a combination of Stop Item Identifier and Source Id.
-
-
-
-            Note:
-
-            Construction: Includes '_' between two values. Ex: Sourceid_stopSequenceNumber
-        AcctKeys:
-          $ref: '#/components/schemas/StopItemCanOperSecuredRequest_StopItemKeys_AcctKeys'
-      description: |-
-        Unique information to identify the stop item record.
-
-
-
-        **Note:** To delete an item, the Cancel Stop Item API requires "AcctKeys" and "StopItemIdent".
-    StopItemCanOperSecuredResponse_StopItemStatusRec_StopItemKeys_AcctKeys:
-      required:
-      - AcctId
-      type: object
-      properties:
-        AcctId:
-          maxLength: 36
-          type: string
-          description: |+
-            Unique identification number of an account record.
-
-
-
-      description: 'Unique information to identify the account subject of the stop item. '
-    StopItemCanOperSecuredResponse_StopItemStatusRec_StopItemKeys:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        StopItemId:
-          maxLength: 36
-          type: string
           description: Unique identifier to identify the stop item record.
         AcctKeys:
-          $ref: '#/components/schemas/StopItemCanOperSecuredResponse_StopItemStatusRec_StopItemKeys_AcctKeys'
+          $ref: '#/components/schemas/StopItemCanOperSecuredRequest_StopItemKeys_AcctKeys'
       description: 'Unique information to identify the stop item record. '
     StopItemCanOperSecuredResponse_StopItemStatusRec_StopItemStatus:
       required:
@@ -671,7 +633,7 @@ components:
       type: object
       properties:
         StopItemKeys:
-          $ref: '#/components/schemas/StopItemCanOperSecuredResponse_StopItemStatusRec_StopItemKeys'
+          $ref: '#/components/schemas/StopItemCanOperSecuredRequest_StopItemKeys'
         StopItemStatus:
           $ref: '#/components/schemas/StopItemCanOperSecuredResponse_StopItemStatusRec_StopItemStatus'
       description: Details of the stop item status record.
@@ -686,7 +648,6 @@ components:
           maxLength: 250
           type: string
           description: Next record pointer to include in the response if additional records are available.
-      description: Maximum number of records that a client can specify to process within a single response.
     StopItemInqOperSecuredRequest_StopItemSel_StopItemKeys:
       required:
       - AcctKeys
@@ -695,12 +656,7 @@ components:
         StopItemId:
           maxLength: 36
           type: string
-          description: |-
-            StopItemId is a composite field that shall comprise a combination of Stop Item Identifier and Source Id.
-
-
-
-            Construction: Includes '_' between two values. Ex: Sourceid_stopSequenceNumber
+          description: Unique identifier of the stop item record.
         AcctKeys:
           $ref: '#/components/schemas/StopItemAddOperResponse_StopItemStatusRec_StopItemKeys_AcctKeys'
       description: Unique information to identify a stop item record.
@@ -723,6 +679,39 @@ components:
             **Note:** Total number of records is the total number of stop items present for an account.
           format: int64
       description: Information retrieved for the criteria specified in the RecCtrlIn aggregate of the request message.
+    StopItemInqOperSecuredResponse_StopItemKeys_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+            **Note:** Refers to the account number for the following account types:
+
+            - DDA
+
+            - SAV
+
+            - COD
+
+            - LASNOTE
+      description: Unique information to identify the account record.
+    StopItemInqOperSecuredResponse_StopItemKeys:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        StopItemId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of a stop item record.
+        AcctKeys:
+          $ref: '#/components/schemas/StopItemInqOperSecuredResponse_StopItemKeys_AcctKeys'
+      description: Unique information to identify a stop item record.
     StopItemInqOperSecuredResponse_StopItemInfo_CurAmt:
       type: object
       properties:
@@ -730,11 +719,20 @@ components:
           type: number
           description: Amount in decimal format.
       description: Amount details of the check.
+    StopItemInqOperSecuredResponse_StopItemInfo_VarianceAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+      description: Details of the amount that vary from the specified check amount field and is still considered for stop or suspect.
     StopItemInqOperSecuredResponse_StopItemInfo:
       type: object
       properties:
         CurAmt:
           $ref: '#/components/schemas/StopItemInqOperSecuredResponse_StopItemInfo_CurAmt'
+        VarianceAmt:
+          $ref: '#/components/schemas/StopItemInqOperSecuredResponse_StopItemInfo_VarianceAmt'
         ExpDt:
           type: string
           description: "Date after which the stop payment becomes inactive.\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
@@ -742,7 +740,7 @@ components:
         ACHDebitCredit:
           type: string
           description: Value that indicates whether the stop payment is against a debit or a credit ACH item.
-      description: Information about the stop item.
+      description: Details of the client-managed properties of the stop item record.
     StopItemInqOperSecuredResponse_StopItemStatus:
       type: object
       properties:
@@ -758,32 +756,11 @@ components:
       - StopItemStatus
       properties:
         StopItemKeys:
-          $ref: '#/components/schemas/StopItemAddOperResponse_StopItemStatusRec_StopItemKeys'
+          $ref: '#/components/schemas/StopItemInqOperSecuredResponse_StopItemKeys'
         StopItemInfo:
           $ref: '#/components/schemas/StopItemInqOperSecuredResponse_StopItemInfo'
         StopItemStatus:
           $ref: '#/components/schemas/StopItemInqOperSecuredResponse_StopItemStatus'
-    StopItemModOperRequest_StopItemKeys:
-      required:
-      - AcctKeys
-      type: object
-      properties:
-        StopItemId:
-          maxLength: 36
-          type: string
-          description: |-
-            Unique identifier of the stop item record.
-
-
-
-            **Note:** StopItemId is a composite field that comprises of Stop Item Identifier and Source Id.
-
-            Construction: Includes '_' between two values
-
-            Example: Sourceid_stopSequenceNumber
-        AcctKeys:
-          $ref: '#/components/schemas/StopItemAddOperResponse_StopItemStatusRec_StopItemKeys_AcctKeys'
-      description: Unique information to identify a stop item record.
     StopItemModOperRequest_StopItemInfo_VarianceAmt:
       type: object
       properties:
