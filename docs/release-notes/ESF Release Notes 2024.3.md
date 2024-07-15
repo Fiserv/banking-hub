@@ -25,7 +25,7 @@ titles: Premier, Signature, Cleartouch
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending' and 'Posted'.  | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account - DDA</a> | We fixed the "IndexOutOfBoundsException: Index 0" error that occurred when the `RateFactor` field was sent in the API request. <br>  **Impacted Field:** <br> `​​​​​​​DepositAcctInfo/RateChangeData/RateFactor`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - all types </a> | We updated the API to correctly display the product description in the API response message. Previously, the `Desc` field was displaying incorrect description. <br>  **Impacted Field:** <br> `AcctRec/DepositAcctInfo/Desc`| CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - LOAN </a> | We added the notes within the `InitialAmount/Amt` and `RevolvingLoanCode` fields to provide the correlation between these fields. <br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt` <br> `AcctRec/LoanAcctInfo/RevolvingLoanCode`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - LOAN </a> | We added the notes within the `InitialAmount/Amt` and `RevolvingLoanCode` fields to provide the correlation between these fields. <br>  **Impacted Fields:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt` <br> `AcctRec/LoanAcctInfo/RevolvingLoanCode`| CERT |
 
 <!-- type: tab -->
 ## 2024_Q3.1
@@ -34,7 +34,7 @@ titles: Premier, Signature, Cleartouch
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | Collateral code is now available when you perform the account inquiry for the LOAN accounts. <br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/CollateralCode`| CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - LOAN</a> | Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”.  We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - LOAN</a> | Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
 
 ### Fixed
 | API Name | Description | Environment Availability |
