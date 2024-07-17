@@ -3,13 +3,14 @@ V 11.0.0
 
 <details>
 <summary> <b>Release Schedule</b> </summary>
+
 <!-- 
 type: tab 
 titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 -->
 
 |        Activity      |  Planned Available Date  |	  Status    |
-|   --------------     | ---------------------------- |  ---------  |
+| -------------- |----------------------------|---------|
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | Done |
 | PROD Deployment      | 18 July, 2024 - 19 July, 2024 | Not started |
 | General Availability (GA) | 25 July, 2024	              | Not started |
@@ -17,7 +18,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 <!-- type: tab -->
 
 |        Activity      |  Planned Available Date  |	  Status    |
-|   --------------     | ---------------------------- |  ---------  |
+| -------------- |----------------------------|---------|
 | CERT Deployment      | 2 August, 2024 - 8 August, 2024 | Not started |
 | PROD Deployment      | 16 August, 2024 - 22 August, 2024 | Not started |
 | General Availability (GA) | 30 August, 2024	             | Not started |
@@ -25,7 +26,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 <!-- type: tab -->
 
 |        Activity      |  Planned Available Date            |	  Status    |
-|   --------------     | ----------------------------           |  ---------  |
+| -------------- |----------------------------|---------|
 | CERT Deployment      | 2 September, 2024 - 6 September, 2024 | Not started |
 | PROD Deployment      | 18 September, 2024 - 24 September, 2024 | Not started |
 | General Availability (GA) | 30 September, 2024	               | Not started |
@@ -33,6 +34,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 <!-- type: tab-end -->
 
 </details>
+
 
 <!-- 
 type: tab 
