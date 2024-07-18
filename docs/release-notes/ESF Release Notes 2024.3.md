@@ -11,7 +11,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 |        Activity      |  Planned Available Date  |	  Status    |
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | Done |
-| PROD Deployment      | 18 July, 2024 - 19 July, 2024 | Not started |
+| PROD Deployment      | 15 July, 2024 - 19 July, 2024 | Not started |
 | General Availability (GA) | 25 July, 2024	              | Not started |
 
 <!-- type: tab -->
@@ -20,7 +20,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 2 August, 2024 - 8 August, 2024 | Not started |
 | PROD Deployment      | 16 August, 2024 - 22 August, 2024 | Not started |
-| General Availability (GA) | 30 August, 2024	             | Not started |
+| General Availability (GA) | 29 August, 2024	             | Not started |
 
 <!-- type: tab -->
 
@@ -28,7 +28,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 2 September, 2024 - 6 September, 2024 | Not started |
 | PROD Deployment      | 18 September, 2024 - 24 September, 2024 | Not started |
-| General Availability (GA) | 30 September, 2024	               | Not started |
+| General Availability (GA) | 26 September, 2024	               | Not started |
 
 <!-- type: tab-end -->
 
@@ -55,6 +55,7 @@ titles: Premier, Signature, Cleartouch
 |<a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship (By Party)</a> |We resolved an issue where the API returned the value for `PhoneType` field in lower case. Now, the `PhoneType` field value is retrieved correctly as per the configurations.<br>**Impacted Fields:** <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/PhoneType` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | CERT |
 |<a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address</a> |We resolved the issue with the `RelationshipMgr` aggregate where the `RelationshipMgrIdent` and `RelationshipRole`  fields were not modified for the specified address. Now, the users can update the address successfully. <br>**Impacted Fields:** <br>`AddrInfo/PostAddr/RelationshipMgr` <br> `AddrInfo/PostAddr/RelationshipMgr/RelationshipMgrIdent` <br> `AddrInfo/PostAddr/RelationshipMgr/RelationshipRole` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | CERT |
 |<a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address</a> |We resolved the issue where the user was unable to update the value of the field `HandlingCodeOption`for addresses when the AddrType field is "Seasonal".<br>**Impacted Fields:** <br>`AddrInfo/PostAddr/HandlingCodeOption`| CERT |
+| <a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address</a> | We resolved an issue with the `AddrType` field where the address fields were not sent to the provider when the value for the field is "Secondary". <br> **Impacted Field:** <br> `AddrInfo/PostAddr/AddrType` | CERT |
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending' and 'Posted'.  | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account - DDA</a> | We fixed the "IndexOutOfBoundsException: Index 0" error that occurred when the `RateFactor` field was sent in the API request. <br>  **Impacted Field:** <br> `​​​​​​​DepositAcctInfo/RateChangeData/RateFactor`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - all types </a> | We updated the API to correctly display the product description in the API response message. Previously, the `Desc` field was displaying incorrect description. <br>  **Impacted Field:** <br> `AcctRec/DepositAcctInfo/Desc`| CERT |
