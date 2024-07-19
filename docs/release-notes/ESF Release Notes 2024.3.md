@@ -2,7 +2,7 @@
 V 11.0.0
 
 <details>
-<summary> <b>Release Schedule</b> </summary>
+<summary> <h3>Release Schedule</h3> </summary>
 <!-- 
 type: tab 
 titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
