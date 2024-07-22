@@ -102,7 +102,6 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 ### Enhancements
 | API Name | Description | Environment Availability |
 | --- | ----------- | ------------------ |
-| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | We enhanced the ability of the API to allow transfers from commercial loans (CLA) to checking and savings account. <br> **Impacted Fields:** <br> `XferInfo/FromAcctRef/AcctKeys/AcctType` <br> `XferStatusRec/XferKeys/AcctKeys/AcctType` | CERT |
 | <a href="../api/?type=post&path=/documentservice/document/document" title="Click to open">Add Document</a> | We added the new enum values "DOCX" and "XLSX" in the `DocumentInfo/PageData/PageFormat` field as new page formats. | PROD |
 
 ### Fixed
