@@ -2,7 +2,7 @@
 V 11.0.0
 
 <details>
-<summary><b style="font-size: 24px;">Release Schedule </b> </summary>
+<summary><b style="font-size: 20px;">Release Schedule </b> </summary>
 <!-- 
 type: tab 
 titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
@@ -11,7 +11,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 |        Activity      |  Planned Available Date  |	  Status    |
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | Done |
-| PROD Deployment      | 15 July, 2024 - 19 July, 2024 | Not started |
+| PROD Deployment      | 15 July, 2024 - 25 July, 2024 | Not started |
 | General Availability (GA) | 25 July, 2024	              | Not started |
 
 <!-- type: tab -->
@@ -84,6 +84,7 @@ titles: Premier, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | We enhanced the ability of the API to allow transfers from commercial loans (CLA) to checking and savings account. <br>  **Impacted Fields:** <br> `XferInfo/FromAcctRef/AcctKeys/AcctType` <br> `XferStatusRec/XferKeys/AcctKeys/AcctType` | CERT |
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History DDA_SDA_Teller</a> | We fixed the issue where transaction date and timestamp were not getting mapped properly with `PostedDt` and `TrnDt` fields when received from Cleartouch.  <br>  **Impacted Fields:** <br> `AcctTrnRec/AcctTrnInfo/PostedDt` <br> `AcctTrnRec/AcctTrnInfo/TrnDt`| CERT |
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History </a> | We fixed the issue where the API was returning the pending transactions on each response in pagination logic. Now, the pending transactions are returned against the prior/initial request at once.| PROD |
 
