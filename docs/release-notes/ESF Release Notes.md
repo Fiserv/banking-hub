@@ -32,7 +32,7 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-DDA</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br>`AcctRec/DepositAcctInfo/FederalInsuranceEligibility`|
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the loan account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility`|
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-DDL</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit loan account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility`|
-
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-SDA</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the savings account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility`|
 
 <!-- type: tab -->
 
