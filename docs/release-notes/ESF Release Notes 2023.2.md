@@ -1,257 +1,80 @@
-# Release Notes 
-### 2023_Q2
+# Pre-Release Notes 
 V 11.0.0
+
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, Finxact
+titles: Premier, Precision, Signature, Cleartouch, Portico
 -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-Information is not available at the moment. Stay tuned for the updates.
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-Information is not available at the moment. Stay tuned for the updates.
+### Fixed
 
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-Information is not available at the moment. Stay tuned for the updates.
+| API Name | Description | 
+| -------- | ----------- | 
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved the issue where the value "0" was passed in the resquest regardless of any valid value provided in the `RestrictionReasonCode` field. Now, the expected value is passed in the request. <br> **Impacted Field:** <br> `LoanAcctInfo/PmtPostingRestrictions/RestrictionReasonCode` |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |Previously, the API failed to modify the address if both primary and secondary addresses have the same address identification. Now, the API can modify both addresses successfully provided they have different address uses. |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |Previously, the API failed to modify the secondary address details when both primary and secondary addresses were modified at the same time. Now, this issue is resolved and both the addresses can be modified successfully. |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |We resolved the issue to correctly map the `EmailIdent` and `PreferredEmail` fields to the provider. <br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/Email/EmailIdent` <br> `OrgPartyInfo/OrgData/Contact/Email/EmailIdent` <br>`OrgPartyInfo/OrgData/Contact/Email/PreferredEmail` <br> `PersonPartyInfo/PersonData/Contact/Email/PreferredEmail` |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |We resolved the issue where user was unable to add the `ForeignTaxForms` field and received an error "Foreign Code is invalid with Tax ID Code of Foreign". <br>**Impacted Field:** <br> `PersonPartyInfo/TaxDataInfo/ForeignTaxData/ForeignTaxForms` |
+|<a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByTaxId</a> | Previously, when the client sends maximum record limit (MaxRecLimit) in the request with value more than the number of records linked to the tax ident, the API failed with an error as "Internal Server Error".  To resolve this issue, we fixed the `MaxRecLimit` field and now, the API retreives the data successfully.|
+|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | We added two new fields `County` and `StateProv` in the `MortgageReportingData` aggregate to retrieve county and state province codes used for Federal Housing Authority (FHA) and Federal Home Loan Bank (FHLB) reporting. <br> **Impacted Fields:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County`<br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/StateProv` <br> <br> The following fields will deprecate in the future because the above added fields make usage of these fields obsolete: <br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/PostAddr/County` <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/PostAddr/StateProv` |
+|<a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | We added two new fields `County` and `StateProv` in the `MortgageReportingData` aggregate to modify county and state province codes for Federal Housing Authority (FHA) and Federal Home Loan Bank (FHLB) reporting.<br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County`<br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/StateProv` <br><br> The following fields will deprecate in the future because the above added fields make usage of these fields obsolete: <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/County` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/StateProv` | 
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | We fixed the issue where `InitialAmount` field was not getting populated when Revolving Loan Code value was either 1 (Credit Limit) or 2 (Advance Limit) in the AcctInq-LOAN API.<br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt`|  
+| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | We resolved the issue of incorrect error message generation when the account number sent in the request is not as per the numeric format. |
+| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | We resolved the issue to accept additional values (other than "Insurance", "Taxes" or "Other") of the `EscrowCategory` field in the request message. Now, the API converts the additional value as "Other" before it sends to service provider.<br>**Impacted Field:** <br> `EscrowInfo/EscrowCategory` |
 
-<!-- type: tab -->
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
-
-<span style="font-size: 22px; ">General</span>
-
-
-Added the following API endpoints:
-- Add Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)*
-- Update Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)*
-- Get Beneficial Owner  *(API Explorer > Accountholder > Beneficial Owner Service)*
-- Delete Beneficial Owner *(API Explorer > Accountholder > Beneficial Owner Service)* 
-- Update Address - Acct *(API Explorer > Accountholder > Address Service)*
-- Update Address - Party *(API Explorer > Accountholder > Address Service)*
-- Get Address - Acct *(API Explorer > Accountholder > Address Service)*
-- Get Address - Party *(API Explorer > Accountholder > Address Service)*
-- Delete Address - Acct *(API Explorer > Accountholder > Address Service)*
-- Delete Address - Party *(API Explorer > Accountholder > Address Service)*
-- Add Collateral *(API Explorer > Accounts > Collateral Service)*
-- Add Account - Deposits *(API Explorer > Accounts > Account Service)*
-- Add Account - LOC *(API Explorer > Accounts > Account Service)*
-- Get Branch *(API Explorer > Operations and Servicing > Branch Service)*
-- Get Product List *(API Explorer > Operations and Servicing > Product Service)*
-- Add Stop Item *(API Explorer > Transactions> Stop Item Service)*
-- Cancel Stop Item *(API Explorer > Transactions> Stop Item Service)*
-- Get Stop Item *(API Explorer > Transactions> Stop Item Service)*
-- Get Enumeration Table -  PartyAcctRel *(API Explorer > Operations and Servicing> Enumeration Table Service)*
-- Get Product Specifications *(API Explorer > Operations and Servicing > Product Specification Service)*
-- Add Client Defined Field *(API Explorer > Accountholder > Client Defined Field Service)*
-- Get Client Defined Field *(API Explorer > Accountholder > Client Defined Field Service)*
-- Update Client Defined Field *(API Explorer > Accountholder > Client Defined Field Service)*
-- Add Account Collateral Relationship *(API Explorer > Accounts > Account Collateral Service)*
-
-
-<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
-
-<span style="font-size: 22px; ">Get Party</span> *API Explorer > Accountholder > Party Service*
-
-
-- Added the following fields in the API to return employment details in case of a person party and business establishment date in case of a business/organization party:
-	- PartyRec/PersonPartyInfo/Employment/EmployerName
- 	- PartyRec/PersonPartyInfo/Employment/Occupation
-	- PartyRec/PersonPartyInfo/Employment/TimeFrame/StartDt
-	- PartyRec/OrgPartyInfo/OrgEstablishDt
-
-
-<span style="font-size: 22px; ">Get Card</span> *API Explorer > Debit Cards > Card Service*
-
-
-- Added the CardRec/CardInfo/CardTrnLimit aggregate to return card transaction limits for the requested card
-
-
-<span style="font-size: 22px; ">Get Party Account Relationship - ByAcct</span> *API Explorer > Accountholder > Party Account Relationship Service*
-
-
-- Added the following aggregates in the API to return issued identification information for person or organization customers:
-  	- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/IssuedIdent
-  	- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent 
-
-<p style="font-size: 24px; font-weight: bold;">Fixed </p>
-
-<span style="font-size: 22px; ">Get Account Transaction</span> *API Explorer > Transactions > Account Transaction Service*
-
-- Fixed Get Account Transaction-LOAN to retrieve the transaction history for CLA accounts
-
-<span style="font-size: 22px; ">Get Card Account Relationship</span> *API Explorer > Debit Cards > Card Account Relationship Service*
-
-- Fixed the API to send AddrType field correctly to the Cleartouch core
+### Enhancements
+| API Name | Description | 
+| --- | ----------- |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | Estimated revenue code for the community reinvestment act for small business or small farm is now available as single-digit numeric code.<br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| 
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a>, <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN_INET</a> | Accrual method field now uses the original interest method instead of the current interest method. This accrues the interest correctly.<br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/IntRateData/AccrualMethod`| 
+| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | We added a new field `DataLength` under the `ClientDefinedData` aggregate in the request message, to improve the API workflow.<br>**Impacted Field:**<br> `EscrowInfo/ClientDefinedData/DataLength`| 
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-CDA</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the certificate of deposit or retirement account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility`|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-DDA</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br>`AcctRec/DepositAcctInfo/FederalInsuranceEligibility`|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the loan account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility`|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-DDL</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit loan account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility`|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-SDA</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the savings account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility`|
 
 <!-- type: tab -->
-> #### Note
-> Support for Finxact v1.21.
-> 
-<p style="font-size: 24px; font-weight: bold;">What's New </p>
 
-<span style="font-size: 22px; ">General</span>
+### Fixed
+| API Name | Description | 
+| --- | ----------- | 
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | Previously, the response message failed to retrieve multiple issued identifications (IssuedIdent) associated with the party record. We resolved this issue so that users can retrieve all (repeating IssuedIdents) successfully.<br>**Impacted Fields:**<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentValue`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssueDt`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/ExpDt`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/VerificationDetailText`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeSource`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeValue`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/StateProv`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentValue`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssueDt`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/ExpDt`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/VerificationDetailText`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeSource`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeValue`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/StateProv`| 
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship | We resolved the issue where the user was unable to retrieve the party account relationship information in response using the party identifier.|
 
+<!-- type: tab -->
+### Fixed
+| API Name | Description | 
+| --- | ----------- | 
+| <a href="../api/?type=post&path=/cardservice/cards/cards/secured" title="Click to open">Get Card</a> | We fixed the API so that the following fields are not truncated in the response and ensure that they match the value of the `CardId` field sent in the request when the `CardSeqNum` field is not provided: <br> `CardRec/CardKeys/CardId` <br> `CardRec/CardKeys/CardSeqNum` | 
+| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open"> Get Product Specifications | We resolved the issue in response message to populate all occurences of the `RateMatrixTier` field as per the value received from the provider.|
+| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open"> Get Product Specifications-Deposit | We resolved the issue with the `RateChangeRecurType` field that was not populated in the response message for certificate of deposit accounts. Now users can retrieve the field successfully. <br> **Impacted Field:** <br> `ProdSpecRec/DepositProdSpecInfo/RateChangeData/RateChangeRecurType`|
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party | We resolved the issue where the `ApartmentNum`, `ApartmentNumType `, and `HouseNum` fields retrieved the incorrect value in the response message. We also updated the code to resolve the retrieval issue of an extra field `HouseName`, which was not supposed to be returned in the response message. <br> **Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/HouseNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/HouseNum`|
+| <a href="../api/?type=post&path=/hostsystemservice/servicing/hostSystem/secured" title="Click to open"> Get Host System Status | We resolved the issue to retrieve the correct value of the `StatusCode` field in response when the `SystemName` field is not provided in the request.|
+| <a href="../api/?type=post&path=/creditservice/payments/credits" title="Click to open">Add Credit</a> | We resolved the issue to validate the client defined XREF rule "SCO_ClientTimeZone_Rule" while setting the AMPMCode tag in the request message.| 
+| <a href="../api/?type=post&path=/debitservice/payments/debits" title="Click to open">Add Debit-CDA_Teller</a>, <a href="../api/?type=post&path=/debitservice/payments/debits" title="Click to open">Add Debit-IRA_Teller</a> | We resolved the null point exception error. Now, even if the value is null, the API adds the debit successfully without any error.<br>**Impacted Fields:**<br> `Context/TrnIdent (in request)`<br>`Status/ServerStatusCode (in response)`| 
 
-Added the following API endpoints:
-- Add Account - Deposit *(API Explorer > Accounts > Account Service)*
-- Get Account - Deposit *(API Explorer > Accounts > Account Service)*
-- Get Account - Loan *(API Explorer > Accounts > Account Service)*
-- Update Account *(API Explorer > Accounts > Account Service)*
-- Add Account Hold *(API Explorer > Transactions > Account Hold Service)*
-- Get Account Hold *(API Explorer > Transactions > Account Hold Service)*
-- Update Account Hold *(API Explorer > Transactions > Account Hold Service)*
-- Delete Account Hold *(API Explorer > Transactions > Account Hold Service)*
-- Get Account Transaction *(API Explorer > Transactions > Account Transaction Service)*
-- Get Address - ByAddrId *(API Explorer > Accountholder > Address Service)*
-- Get Address - ByPartyrId *(API Explorer > Accountholder > Address Service)*
-- Update Address *(API Explorer > Accountholder > Address Service)*
-- Add Party Account Reltionship *(API Explorer > Accountholder > Party Account Relationship Service)*
-- Get Party Account Relationship - ByAcct *(API Explorer > Accountholder > Party Account Relationship Service)*
-- Get Party Account Relationship - ByParty *(API Explorer > Accountholder > Party Account Relationship Service)*
-- Update Party Account Relationship *(API Explorer > Accountholder > Party Account Relationship Service)*
-- Add Party *(API Explorer > Accountholder > Party Service)*
-- Get Party *(API Explorer > Accountholder > Party Service)*
-- Update Party *(API Explorer > Accountholder > Party Service)*
-- Get Party List *(API Explorer > Accountholder > Party Service)*
-- Get Portfolio *(API Explorer > Accounts > Portfolio Service)*
-- Get Product List *(API Explorer > Operation and Servicing > Product Service)*
-- Get Product Specification *(API Explorer > Operation and Servicing > Product Specification Service)*
-- Add Stop Check *(API Explorer > Transactions > Stop Check Service)*
-- Get Stop Check *(API Explorer > Transactions > Stop Check Service)*
-- Update Stop Check *(API Explorer > Transactions > Stop Check Service)*
-- Cancel Stop Check *(API Explorer > Transactions > Stop Check Service)*
-- Add Stop Item *(API Explorer > Transactions > Stop Item Service)*
-- Get Stop Item *(API Explorer > Transactions > Stop Item Service)*
-- Update Stop Item *(API Explorer > Transactions > Stop Item Service)*
-- Cancel Stop Item *(API Explorer > Transactions > Stop Item Service)*
-- Add Transfer *(API Explorer > Transfers > Transfer Service)*
-- Get Transfer *(API Explorer > Transfers > Transfer Service)*
-- Update Transfer *(API Explorer > Transfers > Transfer Service)*
-- Get Transfer List *(API Explorer > Transfers > Transfer Service)*
-- Delete Transfer *(API Explorer > Transfers > Transfer Service)*
-- Add ePreference *(API Explorer > Accounts > Document Preference Service)*
-- Update ePreference *(API Explorer > Accounts > Document Preference Service)*
+<!-- type: tab -->
+
+### Enhancements
+| API Name | Description | 
+| --- | ----------- | 
+| <a href="../api/?type=post&path=/creditservice/payments/credits" title="Click to open">Add Credit-DDA_Teller</a> | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`| 
+| <a href="../api/?type=post&path=/debitservice/payments/debits" title="Click to open">Add Debit-DDA_Teller</a> | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`|
+| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open"> Add Transfer | As part of the enhancement, we added a new value in `AcctType` field (CLA) that enables transfers from commercial loans to checking and savings accounts.<br>**Impacted Fields:**<br> `XferInfo/FromAcctRef/AcctKeys/AcctType`<br>`XferStatusRec/XferKeys/AcctKeys/AcctType`|
+
+### Fixed
+| API Name | Description |
+| --- | ----------- |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue that occurred while updating the marital status to "NotApplicable".<br>**Impacted Field:**<br> `PersonPartyInfo/MaritalStat`| 
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue that occurred while updating the gender status to "Unknown".<br>**Impacted Field:**<br> `PersonPartyInfo/Gender`| 
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
 
 
-<p style="font-size: 24px; font-weight: bold;">Enhancements </p>
+<!-- type: tab -->
+### What's New
+| API Name | Description | 
+| --- | ----------- | 
+| General | We added the following API endpoints:<br> <ul><li>Get Address</li> <li>Update Address</li> <li> Get Account Details-DDA_SDA</li> <li> Get Account Details-CDA</li> </ul> |
 
-<span style="font-size: 22px; ">Get Party Account Relationship - ByParty, Get Party Account Relationship - ByAcct </span> *API Explorer > Accountholder > Party Account Relationship Service*
-
-
-- Updated the data type to C-130 of the following xpaths:
-	- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/PersonName/FullName
-	- PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/OrgName/Name<br>
-
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the following xpaths:
-	- PartyAcctRelRec/PartyAcctRelKeys/AcctKeys/AcctType
-	- PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctKeys/AcctType<br>
-
-- Added the following new enumeration values for xpath PartyAcctRelRec/PartyAcctRelInfo/FDICOwnership:
-	- DIT (Depository Institution)
-	- ANC (Annuity Contract)
-	- BIA (American Indian)
-	- DOE (Department of Energy) 
-
-
-<span style="font-size: 22px; ">Add Party Account Relationship</span> *API Explorer > Accountholder > Party Account Relationship Service*
-
-
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the PartyAcctRelInfo/AcctRef/AcctKeys/AcctType xpath<br>
-
-- Added the following new enumeration values for xpath PartyAcctRelInfo/FDICOwnership:
-	- DIT (Depository Institution)
-	- ANC (Annuity Contract)
-	- BIA (American Indian)
-	- DOE (Department of Energy) 
-
-
-<span style="font-size: 22px; ">Update Party Account Relationship</span> *API Explorer > Accountholder > Party Account Relationship Service*
-
-
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the following xpath:
-	- PartyAcctRelKeys/AcctKeys/AcctType
-	- PartyAcctRelStatusRec/PartyAcctRelKeys/AcctKeys/AcctType<br>
-
-- Added the following new enumeration values for xpath PartyAcctRelInfo/FDICOwnership:
-	- DIT (Depository Institution)
-	- ANC (Annuity Contract)
-	- BIA (American Indian)
-	- DOE (Department of Energy) 
-
-
-<span style="font-size: 22px; ">Get Account - Loan</span> *API Explorer > Accounts > Account Service*
-
-
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the AcctSel/AcctKeys/AcctType AcctRec/AcctKeys/AcctType xpath
-
-
-<span style="font-size: 22px; ">Add Account - Deposit</span> *API Explorer > Accounts > Account Service*
-
-
-- Added the following new enumeration values for xpath PartyAcctRelInfo/FDICOwnership:
-	- DIT (Depository Institution)
-	- ANC (Annuity Contract)
-	- BIA (American Indian)
-	- DOE (Department of Energy) 
-
-
-<span style="font-size: 22px; ">Add Transfer</span> *API Explorer > Transfers > Transfer Service*
-
-
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the following xpath:
-	- XferInfo/FromAcctRef/AcctKeys/AcctType
-	- XferInfo/ToAcctRef/AcctKeys/AcctType
-	- XferStatusRec/XferKeys/AcctKeys/AcctType
-
-
-<span style="font-size: 22px; ">Update Transfer</span> *API Explorer > Transfers > Transfer Service*
-
-
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the following xpath:
-	- XferInfo/FromAcctRef/AcctKeys/AcctType
-	- XferInfo/ToAcctRef/AcctKeys/AcctType
-
-
-<span style="font-size: 22px; ">Get Transfer</span> *API Explorer > Transfers > Transfer Service*
-
-
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the following xpath:
-	- XferRec/XferInfo/FromAcctRef/AcctKeys/AcctType
-	- XferRec/XferInfo/ToAcctRef/AcctKeys/AcctType
-
-
-<span style="font-size: 22px; ">Get Transfer List</span> *API Explorer > Transfers > Transfer Service*
-
-
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the following xpath:
-	- XferListRec/XferListInfo/FromAcctRef/AcctKeys/AcctType
-	- XferListRec/XferListInfo/ToAcctRef/AcctKeys/AcctType
-
-
-<span style="font-size: 22px; ">Get Party, Get Party List</span> *API Explorer > Accountholder > Party Service*
-
-
-- Updated the data type to C-130 of the following xpaths:
-	- PartyRec/PersonPartyInfo/PersonData/PersonName/FullName
-	- PartyRec/OrgPartyInfo/OrgData/OrgName/Name
-
-
-<span style="font-size: 22px; ">Update Party, Add Party</span> *API Explorer > Accountholder > Party Service*
-
-
-- Updated the data type to C-130 of the following xpaths:
-	- PersonPartyInfo/PersonData/PersonName/FullName
-	- OrgPartyInfo/OrgData/OrgName/Name
-
-
-<span style="font-size: 22px; ">Get Account Transaction</span> *API Explorer > Transactions > Account Transaction Service*
-
-
-- Added the new aggregate *AcctTrnRec/AcctTrnInfo/Checks* and following xpaths in it:
-	- AcctTrnRec/AcctTrnInfo/Checks/ChkNum
-	- AcctTrnRec/AcctTrnInfo/Checks/TrnImageId
-	- AcctTrnRec/AcctTrnInfo/Checks/TrnImageBackId
- 
-- Added the new enumeration value *MLA (Mortgage Loan Account)* for the AcctTrnSel/AcctKeys/AcctType xpath
 <!-- type: tab-end -->
