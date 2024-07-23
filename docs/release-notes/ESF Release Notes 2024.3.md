@@ -11,7 +11,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 |        Activity      |  Planned Available Date  |	  Status    |
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | Done |
-| PROD Deployment      | 15 July, 2024 - 25 July, 2024 | Not started |
+| PROD Deployment      | 15 July, 2024 - 25 July, 2024 | In Progress |
 | General Availability (GA) | 25 July, 2024	              | Not started |
 
 <!-- type: tab -->
@@ -60,6 +60,7 @@ titles: Premier, Signature, Cleartouch
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account - DDA</a> | We fixed the "IndexOutOfBoundsException: Index 0" error that occurred when the `RateFactor` field was sent in the API request. <br>  **Impacted Field:** <br> `​​​​​​​DepositAcctInfo/RateChangeData/RateFactor`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - all types </a> | We updated the API to correctly display the product description in the API response message. Previously, the `Desc` field was displaying incorrect description. <br>  **Impacted Field:** <br> `AcctRec/DepositAcctInfo/Desc`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - LOAN </a> | We added the notes within the `InitialAmount/Amt` and `RevolvingLoanCode` fields to provide the correlation between these fields. <br>  **Impacted Fields:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt` <br> `AcctRec/LoanAcctInfo/RevolvingLoanCode`| CERT |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |We resolved the issue to correctly map the `WebAddrLink` and `WebAddrIdent` fields to the provider. <br> **Impacted Fields:** <br>`PersonPartyInfo/PersonData/Contact/WebAddr/WebAddrIdent` <br>`OrgPartyInfo/OrgData/Contact/WebAddr/WebAddrIdent` <br>`OrgPartyInfo/OrgData/Contact/WebAddr/WebAddrLink` <br> `PersonPartyInfo/PersonData/Contact/WebAddr/WebAddrLink` | CERT |
 
 <!-- type: tab -->
 ## 2024_Q3.1
