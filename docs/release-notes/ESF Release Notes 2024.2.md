@@ -1,196 +1,80 @@
-# Release Notes 
-## 2024_Q2
+# Pre-Release Notes 
 V 11.0.0
+
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA, EPOC
+titles: Premier, Precision, Signature, Cleartouch, Portico
 -->
-## 2024_Q2.3
 
 ### Fixed
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/xferservice/payments/transfers/secured" title="Click to open">Get Transfer</a> | We resolved the issue where the `DayOfMonth` field was not mapped correctly.<br>**Impacted Field:** <br> `XferRec/XferInfo/RecurModel/RecurRule/DayOfMonth`| PROD |
-|<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue where ESF was not mapping 'Pending' transactions in the response when cursor value is set to 1. We also updated a configuration that was limiting the number of pending transactions.<br>**Impacted Fields:** <br>`RecCtrlIn/MaxRecLimit` <br>`AcctTrnRec aggregate level` | PROD |
-|<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending" and 'Posted'. | CERT |
-|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the `HomeMortgageDisclosure` aggregate was not mapped correctly. Now, the aggregate is mapped correctly and the values can be retrieved using the Get Account Details-LOAN API successfully. <br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/CensusTract` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/MSACode`| CERT |
-|<a href="../api/?type=post&path=/collateralservice/collateral/collateral" title="Click to open">Add Collateral</a> | We updated the enum value of the `PartyCollateralRelType` field from "Signer/Owner" to "OwnerSigner". <br> **Impacted Field:** <br> `PartyCollateralRelInfo/PartyCollateralRelType`| PROD |
-|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the attributes of the `EscrowCtrlData` aggregate were not mapped correctly but the loan account was created successfully. Now, the arrtributes are mapped correctly and can be retrieved using the Get Account Details API successfully.<br> **Impacted Fields:** <br> `LoanAcctInfo/EscrowCtrlData` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurType` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurInterval` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/LeadDays` <br> `LoanAcctInfo/EscrowCtrlData/NextAnalysisDt` | CERT |
-|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We added two new fields `County` and `StateProv` in the `MortgageReportingData` aggregate to add county and state province codes for Federal Housing Authority (FHA) and Federal Home Loan Bank (FHLB) reporting.<br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County`<br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/StateProv` <br><br> The following fields will deprecate in the future because the above added fields make usage of these fields obsolete: <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/County` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/StateProv` | CERT |
 
-## 2024_Q2.2
-
-### What's New
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Premier APIs. When you select '**Premier**' from the dropdown, the API Explorer dynamically displays only Premier APIs. The '**11.0.0 (latest)**' continues to display all APIs including Premier.<br> ![PRM](https://github.com/Fiserv/banking-hub/assets/85101648/c63bc13d-7bc3-45a4-895d-7efecd2330d2) | PROD |
+| API Name | Description | 
+| -------- | ----------- | 
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved the issue where the value "0" was passed in the resquest regardless of any valid value provided in the `RestrictionReasonCode` field. Now, the expected value is passed in the request. <br> **Impacted Field:** <br> `LoanAcctInfo/PmtPostingRestrictions/RestrictionReasonCode` |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |Previously, the API failed to modify the address if both primary and secondary addresses have the same address identification. Now, the API can modify both addresses successfully provided they have different address uses. |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |Previously, the API failed to modify the secondary address details when both primary and secondary addresses were modified at the same time. Now, this issue is resolved and both the addresses can be modified successfully. |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |We resolved the issue to correctly map the `EmailIdent` and `PreferredEmail` fields to the provider. <br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/Email/EmailIdent` <br> `OrgPartyInfo/OrgData/Contact/Email/EmailIdent` <br>`OrgPartyInfo/OrgData/Contact/Email/PreferredEmail` <br> `PersonPartyInfo/PersonData/Contact/Email/PreferredEmail` |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |We resolved the issue where user was unable to add the `ForeignTaxForms` field and received an error "Foreign Code is invalid with Tax ID Code of Foreign". <br>**Impacted Field:** <br> `PersonPartyInfo/TaxDataInfo/ForeignTaxData/ForeignTaxForms` |
+|<a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByTaxId</a> | Previously, when the client sends maximum record limit (MaxRecLimit) in the request with value more than the number of records linked to the tax ident, the API failed with an error as "Internal Server Error".  To resolve this issue, we fixed the `MaxRecLimit` field and now, the API retreives the data successfully.|
+|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | We added two new fields `County` and `StateProv` in the `MortgageReportingData` aggregate to retrieve county and state province codes used for Federal Housing Authority (FHA) and Federal Home Loan Bank (FHLB) reporting. <br> **Impacted Fields:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County`<br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/StateProv` <br> <br> The following fields will deprecate in the future because the above added fields make usage of these fields obsolete: <br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/PostAddr/County` <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/PostAddr/StateProv` |
+|<a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | We added two new fields `County` and `StateProv` in the `MortgageReportingData` aggregate to modify county and state province codes for Federal Housing Authority (FHA) and Federal Home Loan Bank (FHLB) reporting.<br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County`<br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/StateProv` <br><br> The following fields will deprecate in the future because the above added fields make usage of these fields obsolete: <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/County` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/StateProv` | 
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | We fixed the issue where `InitialAmount` field was not getting populated when Revolving Loan Code value was either 1 (Credit Limit) or 2 (Advance Limit) in the AcctInq-LOAN API.<br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt`|  
+| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | We resolved the issue of incorrect error message generation when the account number sent in the request is not as per the numeric format. |
+| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | We resolved the issue to accept additional values (other than "Insurance", "Taxes" or "Other") of the `EscrowCategory` field in the request message. Now, the API converts the additional value as "Other" before it sends to service provider.<br>**Impacted Field:** <br> `EscrowInfo/EscrowCategory` |
 
 ### Enhancements
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN_INET</a> | We updated the `BalType` field to reflect the current available credit balance instantly. Previously, when a bank updates the current available credit on navigator, the credit balance was updating after the nightly batch process.<br>**Impacted Field:**<br> `AcctRec/LoanAcctInfo/AcctBal/BalType`| PROD |
-| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | We updated the `NextRateChangeDt` field with correct path to process the request successfully. Previously, the `NextRateChangeDt` field was not getting updated due to incorrect path.<br>**Impacted Field:**<br>`LoanAcctInfo/RateChangeData/NextRateChangeDt`| PROD |
+| API Name | Description | 
+| --- | ----------- |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | Estimated revenue code for the community reinvestment act for small business or small farm is now available as single-digit numeric code.<br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| 
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a>, <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN_INET</a> | Accrual method field now uses the original interest method instead of the current interest method. This accrues the interest correctly.<br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/IntRateData/AccrualMethod`| 
+| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | We added a new field `DataLength` under the `ClientDefinedData` aggregate in the request message, to improve the API workflow.<br>**Impacted Field:**<br> `EscrowInfo/ClientDefinedData/DataLength`| 
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-CDA</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the certificate of deposit or retirement account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility`|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-DDA</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br>`AcctRec/DepositAcctInfo/FederalInsuranceEligibility`|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the loan account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility`|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-DDL</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit loan account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility`|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-SDA</a> | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the savings account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility`|
+
+<!-- type: tab -->
 
 ### Fixed
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | The system no longer displays an internal server error message when the accrual method value is not included in the request under the interest rate data aggregate. <br> **Impacted Field:** <br> `LoanAcctInfo/IntRateData/AccrualMethod` | PROD |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA</a>,<br> <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-DDA</a> |  We resolved an internal server error issue that used to occur when the analysis group value was not included in the request.<br>**Impacted Field:**<br>`DepositAcctInfo/CommercialAnalysisData/AnalysisGroup` | PROD |
-|<a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | The system no longer displays an internal server error message when the Accrual Method value is not included in the request under the Interest Rate Data (`IntRateData`) aggregate.<br>**Impacted Fields:**<br>`LoanAcctInfo/IntRateData`<br>`LoanAcctInfo/IntRateData/AccrualMethod`| PROD |
-| <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Get ePreferences</a>|  We resolved an issue by updating the xref rule for the `StmtPrepCode` field that was not sent to the core for the DDA accounts.<br>**Impacted Field:**<br>`ePreferenceRec/ePreferenceInfo/StmtPrepCode`| PROD |
-| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | Memo posted transaction now returns only in the first instance of the API request as per the pagination logic. Previously, both memo posted and posted transactions used to return in every response message. <br> **Impacted Fields:**<br>`RecCtrlIn/MaxRecLimit` <br>`RecCtrlIn/Cursor` | PROD |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Account Service</a> | We updated the security fix for all account management APIs. | PROD |
-| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the exception handling error. Now, this API can add phone number and/or email address for the party successfully. | PROD |
-| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where the `NameSuffix` field was not retrieved correctly. <br>**Impacted Field:** <br>`PartyRec/PersonPartyInfo/PersonData/PersonName/NameSuffix` | PROD | 
-| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue with the `PreferredPhone` field where the phone flag was not rendered correctly. Now users can retrieve valid values in the response.<br>**Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone`<br>`PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone`| PROD |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a>| The revolving loan indicator information now displays correctly in the response message. <br>**Impacted Field:** <br>`AcctRec/LoanAcctInfo/RevolvingLoanInd`| PROD |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We have fixed an issue where loan accounts were successfully created when the value of the `RateChangeRecurType` field was "Quarterly", which was not specified in the enum values. We added the "Quarterly" value as an enum value.<br>**Impacted Field:** <br> `LoanAcctInfo/RateChangeData/RateChangeRecurType`| PROD |
-| <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY".<br>**Impacted Field:** <br> `EscrowInfo/EscrowExpDt`| CERT |
-| <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Add ePreferences</a> | We resolved an issue in the `DocGroupName` field where the value was not set while creating ePreference record in a request during creation of ePreference record for LOAN or SDA account.<br>**Impacted Field:**<br> `ePreferenceInfo/DocGroupName`| PROD |
+| API Name | Description | 
+| --- | ----------- | 
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | Previously, the response message failed to retrieve multiple issued identifications (IssuedIdent) associated with the party record. We resolved this issue so that users can retrieve all (repeating IssuedIdents) successfully.<br>**Impacted Fields:**<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentValue`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssueDt`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/ExpDt`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/VerificationDetailText`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeSource`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeValue`<br>`PartyRec/PersonPartyInfo/PersonData/IssuedIdent/GovIssuedIdent/StateProv`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentValue`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssueDt`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/ExpDt`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/VerificationDetailText`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeSource`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/CountryCode/CountryCodeValue`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/GovIssuedIdent/StateProv`| 
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship | We resolved the issue where the user was unable to retrieve the party account relationship information in response using the party identifier.|
 
-<!--type: tab-->
-
-## 2024_Q2.3
-
+<!-- type: tab -->
 ### Fixed
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved an issue that occured while creating a party where the given month in the issued and expiration date for Drivers License (DL) information defaults to "01" (January). Now, the value of the month remains same as the users provide in the request. | CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | Previously, while adding the benficiary (secondary customer) to an account, the details provided in the request were not added with the provider. We resolved this issue and now users can add and retrieve beneficiary details using Get Account API. | CERT |
-| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account</a> | We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. | CERT |
+| API Name | Description | 
+| --- | ----------- | 
+| <a href="../api/?type=post&path=/cardservice/cards/cards/secured" title="Click to open">Get Card</a> | We fixed the API so that the following fields are not truncated in the response and ensure that they match the value of the `CardId` field sent in the request when the `CardSeqNum` field is not provided: <br> `CardRec/CardKeys/CardId` <br> `CardRec/CardKeys/CardSeqNum` | 
+| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open"> Get Product Specifications | We resolved the issue in response message to populate all occurences of the `RateMatrixTier` field as per the value received from the provider.|
+| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open"> Get Product Specifications-Deposit | We resolved the issue with the `RateChangeRecurType` field that was not populated in the response message for certificate of deposit accounts. Now users can retrieve the field successfully. <br> **Impacted Field:** <br> `ProdSpecRec/DepositProdSpecInfo/RateChangeData/RateChangeRecurType`|
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party | We resolved the issue where the `ApartmentNum`, `ApartmentNumType `, and `HouseNum` fields retrieved the incorrect value in the response message. We also updated the code to resolve the retrieval issue of an extra field `HouseName`, which was not supposed to be returned in the response message. <br> **Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/HouseNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/HouseNum`|
+| <a href="../api/?type=post&path=/hostsystemservice/servicing/hostSystem/secured" title="Click to open"> Get Host System Status | We resolved the issue to retrieve the correct value of the `StatusCode` field in response when the `SystemName` field is not provided in the request.|
+| <a href="../api/?type=post&path=/creditservice/payments/credits" title="Click to open">Add Credit</a> | We resolved the issue to validate the client defined XREF rule "SCO_ClientTimeZone_Rule" while setting the AMPMCode tag in the request message.| 
+| <a href="../api/?type=post&path=/debitservice/payments/debits" title="Click to open">Add Debit-CDA_Teller</a>, <a href="../api/?type=post&path=/debitservice/payments/debits" title="Click to open">Add Debit-IRA_Teller</a> | We resolved the null point exception error. Now, even if the value is null, the API adds the debit successfully without any error.<br>**Impacted Fields:**<br> `Context/TrnIdent (in request)`<br>`Status/ServerStatusCode (in response)`| 
 
-## 2024_Q2.2
-
-### What's New
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Precision APIs. When you select '**Precision**' from the dropdown, the API Explorer dynamically displays only Precision APIs. The '**11.0.0 (latest)**' continues to display all APIs including Precision.<br> ![PRC](https://github.com/Fiserv/banking-hub/assets/85101648/a63a05d6-42f3-4210-ab93-21a7f5d690f7) | PROD |
+<!-- type: tab -->
 
 ### Enhancements
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
+| API Name | Description | 
+| --- | ----------- | 
+| <a href="../api/?type=post&path=/creditservice/payments/credits" title="Click to open">Add Credit-DDA_Teller</a> | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`| 
+| <a href="../api/?type=post&path=/debitservice/payments/debits" title="Click to open">Add Debit-DDA_Teller</a> | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`|
+| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open"> Add Transfer | As part of the enhancement, we added a new value in `AcctType` field (CLA) that enables transfers from commercial loans to checking and savings accounts.<br>**Impacted Fields:**<br> `XferInfo/FromAcctRef/AcctKeys/AcctType`<br>`XferStatusRec/XferKeys/AcctKeys/AcctType`|
 
 ### Fixed
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the issue where the correct number of records were not returned in the response message when filtered by the internet banking party identifier. | PROD |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> |  The fields `OwnerInd`, `PrimaryOwnerInd` and `TaxReportingOwnerInd` were not rendering as expected in the response. To resolve this issue, we added correct values for owner indicator, primary owner indicator and tax reporting owner indicator.<br>**Impacted Fields:**<br>`PartyAcctRelRec/PartyAcctRelInfo/OwnerInd`<br>`PartyAcctRelRec/PartyAcctRelInfo/PrimaryOwnerInd`<br> `PartyAcctRelRec/PartyAcctRelInfo/TaxReportingOwnerInd`| PROD |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the error exception issue that was occurring in the response message when retrieving party account relationships using the party identifier. | PROD |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We updated the configurations so that the API successfully retrieves the accounts whose secondary ownership type is "Direct" and "Fiduciary". | PROD |
-| <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Acct</a>,<br> <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Party</a> |  Previously, the response message failed to retrieve multiple memo ticklers associated with an account or party record. We resolved this issue so that users can retrieve all the memo ticklers successfully. | PROD |
-| <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Acct</a>,<br> <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Party</a> |  We resolved the issue in which the system does not generate "HTTP 200-OK 1120- No Records Match Selection Criteria" response, if a user sent the request with `MemoTicklerIdent` as blank or with an invalid value. | PROD |
-| <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Acct</a>,<br> <a href="../api/?type=post&path=/memoticklerservice/partyacctsvc/memotickler/secured" title="Click to open">Get Memo Tickler-Party</a> |  We resolved the issue in which the system does not generate "HTTP 200-OK 1120-No Records Match Selection Criteria" response, when the memo ticker usage was "Memo" or "MemoRequired" in the request. | PROD |
-| <a href="../api/?type=post&path=/stopchkservice/stophold/stopChecks" title="Click to open">Add Stop Check</a> | The system generated an error exception in the response even when the configuration of fee amount code, fee option and fee waive reason code is correct for the associated organization and client application. To resolve this issue, we have corrected the code. | PROD |
-| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-DDA_SDA</a> | Previously, in the request, the value "UserCode1" of the `DataIdent` field for the Saving Deposit Account (SDA) was not updated with the value that client defines. We resolved the issue so that the client defined value gets updated successfully.<br>**Impacted Fields:**<br>`LoanAcctInfo/ClientDefinedData`<br>`LoanAcctInfo/ClientDefinedData/DataClassType`<br> `LoanAcctInfo/ClientDefinedData/DataIdent` <br> `LoanAcctInfo/ClientDefinedData/DataType` <br> `LoanAcctInfo/ClientDefinedData/Value`| PROD |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty</a> | The API now retrieves the correct relationship type. Previously, the API retrieves the relationship type as "Owner" for all the records irrespective of the actual relationship type. | PROD |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty</a> | We improved the API configuration to retrieve the response message within 30 seconds. Previously, there was a latency in response while using internet banking. | PROD |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the internal server error for client defined boolean values sent in the request. Now, users can expect correct values in the API response. | PROD |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account- DDA_SDA</a> | Previously, in request, the numeric value (udi-1, which specifies the region code) of the client defined data aggregate was added incorrectly while account creation. We resolved this issue to send the correct value.<br>**Impacted Fields:**<br>`DepositAcctInfo/ClientDefinedData`<br>`DepositAcctInfo/ClientDefinedData/DataClassType`<br> `DepositAcctInfo/ClientDefinedData/DataIdent` <br> `DepositAcctInfo/ClientDefinedData/DataType` <br> `DepositAcctInfo/ClientDefinedData/Value` | PROD |
-| <a href="../api/?type=post&path=/acctholdservice/stophold/accountHolds" title="Click to open">Add Account Hold</a> | We resolved the issue of internal server error while account hold creation. Now, the user can successfully place a hold on an account. | PROD |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | We resolved an issue to get the correct error message in response when user provides the invalid value for data identifier in the request. Previously, user gets "HTTP 999 - General Error 1011 - Invalid User" message instead of "HTTP 400 - Bad Request 1090 - Invalid Value".<br>**Impacted Field:**<br>`DepositAcctInfo/ClientDefinedData/DataIdent`| PROD |
+| API Name | Description |
+| --- | ----------- |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue that occurred while updating the marital status to "NotApplicable".<br>**Impacted Field:**<br> `PersonPartyInfo/MaritalStat`| 
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue that occurred while updating the gender status to "Unknown".<br>**Impacted Field:**<br> `PersonPartyInfo/Gender`| 
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
+
 
 <!-- type: tab -->
-## 2024_Q2.3 
-
-### Enhancements
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - LOAN</a> | Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”. <br>  **Implemented Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
-
-### Fixed
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-|<a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> |We resolved the update issue with the `ApartmentNum` field. The user was unable to delete the apartment number even if the value of the `ApartmentNum` field was sent empty in the request to update the party contact information.<br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType`| CERT |
-|<a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We resolved the issue where user was unable to modify the `SecretData` aggregate provided in the request. Now, the user is able to add or update SecretData successfully. <br> **Impacted Fields:** <br> `PersonPartyInfo/SecretData` <br> `PersonPartyInfo/SecretData/SecretIdent` <br> `PersonPartyInfo/SecretData/SecretValue` <br> `OrgPartyInfo/SecretData` <br> `OrgPartyInfo/SecretData/SecretIdent` <br> `OrgPartyInfo/SecretData/SecretValue`| CERT |
-|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-CDA</a> | We added the new enum value "NightlyReview" for the `RateChangeControl` field. Now the account is created successfully for the product. <br> **Impacted Field:** <br> `DepositAcctInfo/RateChangeData/RateChangeControl` | PROD |
-|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - DDA</a> | We resolved the issue of the “Invalid Float Extension Code” error, which previously occurred when the `RegCCStatus` value was sent in the request. <br>  **Implemented Field:** <br> `DepositAcctInfo/RegCCData/RegCCStatus`| CERT |
-
-
-## 2024_Q2.2
-
 ### What's New
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature.<br> ![SIG](https://github.com/Fiserv/banking-hub/assets/85101648/a3d0e4a8-803b-483f-989c-a24f3d2b208d) | PROD |
-
-### Enhancements
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| API Specification| We updated the API Specifications (v11.0.0.2024.2).| PROD |
-
-### Fixed
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | We resolved the status code synchronization issue for all APIs. | PROD |
-| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | We updated the service contract to make the aggregate `Secretdata` as an optional aggregate as this information can be optional on the core. | PROD |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the null pointer exception error in the response when the value of the `CountryCodeValue` field was null in the request. Now, even if the value is null, the API adds the party record successfully without any error.<br>**Impacted Fields:**<br>`PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValue`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValue` | PROD |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue in the `PostalCode` field where the postal codes are not passed to the core when adding the Non-US addresses.<br>**Impacted Fields:**<br>`PersonPartyInfo/Employment/PostAddr/PostalCode`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode` | PROD |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved an internal server error when the optional `PostalCode` field was not sent in the request. Now users can create a party record with the required fields in the request. | PROD |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | Previously, the API displayed error in response and failed to create a party even if the value of the optional `PreferredPhone` filed is not provided. To resolve this issue, we fixed the code and updated the `PreferredPhone` field. Now, user can create the party records successfully.<br>**Impacted Fields:**<br>`PersonPartyInfo/PersonData/Contact/PhoneNum/PreferredPhone`<br>`OrgPartyInfo/OrgData/Contact/PhoneNum/PreferredPhone` | PROD |
-| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where the `SecretData` aggregate provided in the request was not stored in the core although the API was returning successful response. | PROD |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue in the `PostalCode` field where the postal codes are not passed to the core when adding the Non-US addresses.<br>**Impacted Fields:**<br>`PersonPartyInfo/Employment/PostAddr/PostalCode`<br>`OrgPartyInfo/OrgData/Contact/PostAddr/PostalCode` | PROD |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved the internal server error when the API retrieves party account relationship using account keys (`PartyAcctRelSel/AcctKeys`) in the request. Now users can retrieve a valid API response message. | PROD |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We resolved an issue where null tags are returned in the response when the `IncAddtlAcctInfoInd` field was sent in the request.<br>**Impacted Field:**<br>`PartyAcctRelSel/IncAddtlAcctInfoInd` | PROD |
-
-<!-- type: tab -->
-## 2024_Q2.3
-
-### Enhancements
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty_INET</a> | For imporvised Single Sign On (SSO) processes and consistancy in API performace, we updated the account number format with required leading zeros (0), if the length of the account number is less than 10 digits. <br>**Impacted Field:**<br> `PartyAcctRelRec/PartyAcctRelKeys/AcctKeys/AcctId`| CERT |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty_INET</a> | We added a new field `ClosedDt` under the `AcctSummInfo` aggregate in the response message for the accounts having the `AcctDtlStatus` field value as "Closed", to improve the API workflow. <br>**Impacted Field:**<br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/ClosedDt` | CERT |
-| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History</a> | We fixed the issue where the API was returning the pending transactions on each response in pagination logic. Now, the pending transactions are returned against the prior/initial request at once.| CERT |
-
-### Fixed
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue where the API displayed an error in the response message, when `OrgData` an optional aggregate was not provided in the request. Now, user can update the party record successfully even when `OrgData` aggregate is not provided in the request. <br>**Impacted Field:**<br> `OrgPartyInfo/OrgData`| PROD |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | We updated the list of supported account types and removed AcctType CDA from the list to receive expected list of accounts in response. | PROD |
-
-## 2024_Q2.2
-
-### What's New
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Cleartouch APIs. When you select '**Cleartouch**' from the dropdown, the API Explorer dynamically displays only Cleartouch APIs. The '**11.0.0 (latest)**' continues to display all APIs including Cleartouch.<br> ![CT](https://github.com/Fiserv/banking-hub/assets/85101648/ea3f536b-ea28-4b62-8922-a80f63513797) | PROD |
-
-<!-- type: tab -->
-
-## 2024_Q2.2
-
-### What's New
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Finxact APIs. When you select '**Finxact**' from the dropdown, the API Explorer dynamically displays only Finxact APIs. The '**11.0.0 (latest)**' continues to display all APIs including Finxact.<br> ![FNX](https://github.com/Fiserv/banking-hub/assets/85101648/8f432b34-2f1c-49a7-acd3-371bc270d5fd) | PROD |
-
-<!-- type: tab -->
-
-## 2024_Q2.2
-
-### What's New
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Onboard Advisor APIs. When you select '**Onboard Advisor**' from the dropdown, the API Explorer dynamically displays only Onboard Advisor APIs. The '**11.0.0 (latest)**' continues to display all APIs including Onboard Advisor.<br> ![OBA](https://github.com/Fiserv/banking-hub/assets/85101648/a136320b-ce3c-4d04-ae95-0362547a0998) | PROD |
-
-<!-- type: tab -->
-
-## 2024_Q2.2
-
-### What's New
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select DNA APIs. When you select '**DNA**' from the dropdown, the API Explorer dynamically displays only DNA APIs. The '**11.0.0 (latest)**' continues to display all APIs including DNA.<br> ![DNA](https://github.com/Fiserv/banking-hub/assets/85101648/5762e478-3e1a-4a0f-bf27-6524bcb4a457) | PROD |
-
-<!-- type: tab -->
-
-## 2024_Q2.2
-
-### What's New
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select EPOC APIs. When you select '**EPOC**' from the dropdown, the API Explorer dynamically displays only EPOC APIs. The '**11.0.0 (latest)**' continues to display all APIs including EPOC.<br> ![EPOC](https://github.com/Fiserv/banking-hub/assets/85101648/d57e2906-d3c6-471b-98fd-463c5408427d) | PROD |
+| API Name | Description | 
+| --- | ----------- | 
+| General | We added the following API endpoints:<br> <ul><li>Get Address</li> <li>Update Address</li> <li> Get Account Details-DDA_SDA</li> <li> Get Account Details-CDA</li> </ul> |
 
 <!-- type: tab-end -->
