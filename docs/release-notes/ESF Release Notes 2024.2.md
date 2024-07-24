@@ -50,7 +50,7 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | Get Party Account Relationship-ByParty | We resolved an issue with the `DueAmt` field to populate with correct caluculations in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/PmtCompositeAmt/CurAmt/Amt`|
 | Get Party Account Relationship-ByParty | We resolved an issue with the `NextPmt` aggregate to populate in the response message. <br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/NextPmt`|
 | Get Party Account Relationship-ByParty | We resolved an issue with the `DueDt` field to populate in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/DueDt`|
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-CDA | We resolved the datatype mismatch error with the `ClientDefinedData` aggregate when the region code is passed as client defined field udi-1.<br>**Impacted Fields:** <br> `DepositAcctInfo/ClientDefinedData/DataClassType` <br>`DepositAcctInfo/ClientDefinedData/DataIdent`<Br>`DepositAcctInfo/ClientDefinedData/DataType`<br>`DepositAcctInfo/ClientDefinedData/Value`|
+| Add Account-CDA | We resolved the datatype mismatch error with the `ClientDefinedData` aggregate when the region code is passed as client defined field udi-1.<br>**Impacted Fields:** <br> `DepositAcctInfo/ClientDefinedData/DataClassType` <br>`DepositAcctInfo/ClientDefinedData/DataIdent`<Br>`DepositAcctInfo/ClientDefinedData/DataType`<br>`DepositAcctInfo/ClientDefinedData/Value`|
 
 ### Enhancements
 | API Name | Description | 
