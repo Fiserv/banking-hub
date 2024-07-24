@@ -3,7 +3,7 @@ V 11.0.0
 
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, Portico
+titles: Premier, Precision, Signature, Cleartouch, DNA, Portico
 -->
 
 ### Fixed
@@ -88,6 +88,13 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue that occurred while updating the gender status to "Unknown".<br>**Impacted Field:**<br> `PersonPartyInfo/Gender`| 
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
 
+<!-- type: tab -->
+
+### Enhancements
+| API Name | Description | 
+| --- | ----------- | 
+| <a href="../api/?type=post&path=/creditservice/payments/credits" title="Click to open"> Add Credit | We introduced a new value in the `CreditInfo/CompositeCurAmt/SpecialHandling` field to support the validation of credit requests without posting the transaction. We also updated the `Client/Channel` field to function as a passthrough and support credits posting via multiple transaction sources.|
+| <a href="../api/?type=put&path=/creditservice/payments/credits" title="Click to open"> Reverse Credit | We introduced a new value in the `CreditInfo/CompositeCurAmt/SpecialHandling` field to support the validation of credit requests without posting the transaction. We also updated the `Client/Channel` field to function as a passthrough and support credits posting via multiple transaction sources.|
 
 <!-- type: tab -->
 ### What's New
