@@ -36,7 +36,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 <!-- 
 type: tab 
-titles: Premier, Signature, Cleartouch
+titles: Premier, Precision, Signature, Cleartouch 
 -->
 ## 2024_Q3.1
 
@@ -54,7 +54,7 @@ titles: Premier, Signature, Cleartouch
 |<a href="../api/?type=post&path=/beneficialownerservice/parties/beneficialowner" title="Click to open">Add Beneficial Owner</a> |We resolved an issue with the `ControlCode` field when the value of the `RelationshipType` field is "ControlPerson", the value was not sent in the correct format to the provider displaying an error in the API response. Now, the provider accepts the correct interger value for this field.<br>**Impacted Field:** <br>`BeneficialOwnerInfo/BeneficialOwnerData/ControlCode` | CERT |
 |<a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship (By Party)</a> |We resolved an issue where the API returned the value for `PhoneType` field in lower case. Now, the `PhoneType` field value is retrieved correctly as per the configurations.<br>**Impacted Fields:** <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/PhoneType` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | CERT |
 |<a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address</a> |We resolved the issue with the `RelationshipMgr` aggregate where the `RelationshipMgrIdent` and `RelationshipRole`  fields were not modified for the specified address. Now, the users can update the address successfully. <br>**Impacted Fields:** <br>`AddrInfo/PostAddr/RelationshipMgr` <br> `AddrInfo/PostAddr/RelationshipMgr/RelationshipMgrIdent` <br> `AddrInfo/PostAddr/RelationshipMgr/RelationshipRole` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | CERT |
-|<a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address</a> |We resolved the issue where the user was unable to update the value of the field `HandlingCodeOption`for addresses when the AddrType field is "Seasonal".<br>**Impacted Fields:** <br>`AddrInfo/PostAddr/HandlingCodeOption`| CERT |
+|<a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address</a> |We resolved the issue where the user was unable to update the value of the field `HandlingCodeOption`for addresses when the AddrType field is "Seasonal".<br>**Impacted Field:** <br>`AddrInfo/PostAddr/HandlingCodeOption`| CERT |
 | <a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address</a> | We resolved an issue with the `AddrType` field where the address fields were not sent to the provider when the value for the field is "Secondary". <br> **Impacted Field:** <br> `AddrInfo/PostAddr/AddrType` | CERT |
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending' and 'Posted'.  | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account - DDA</a> | We fixed the "IndexOutOfBoundsException: Index 0" error that occurred when the `RateFactor` field was sent in the API request. <br>  **Impacted Field:** <br> `​​​​​​​DepositAcctInfo/RateChangeData/RateFactor`| CERT |
@@ -63,6 +63,18 @@ titles: Premier, Signature, Cleartouch
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |We resolved the issue to correctly map the `WebAddrLink` and `WebAddrIdent` fields to the provider. <br> **Impacted Fields:** <br>`PersonPartyInfo/PersonData/Contact/WebAddr/WebAddrIdent` <br>`OrgPartyInfo/OrgData/Contact/WebAddr/WebAddrIdent` <br>`OrgPartyInfo/OrgData/Contact/WebAddr/WebAddrLink` <br> `PersonPartyInfo/PersonData/Contact/WebAddr/WebAddrLink` | CERT |
 
 <!-- type: tab -->
+
+## 2024_Q3.1
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account</a> | We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. | PROD |
+| <a href="../api/?type=post&path=/stopchkservice/stophold/stopChecks" title="Click to open">Add Stop Check</a> | The system generated an error exception in the response even when the configuration of fee amount code, fee option and fee waive reason code is correct for the associated organization and client application. To resolve this issue, we have corrected the code. | PROD |
+| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | We resoved an issue where the users were not able to make payment for loan from another loan account.  | CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA_SDA</a> | We updated the note for the `TaxIncentiveType` field with the addition of "HSA" (Health Saving Account). <br> **Impacted Field:** <br>`DepositAcctInfo/TaxIncentiveType` | PROD |
+<!-- type: tab -->
+
 ## 2024_Q3.1
 
 ### Enhancements
@@ -90,3 +102,5 @@ titles: Premier, Signature, Cleartouch
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History </a> | We fixed the issue where the API was returning the pending transactions on each response in pagination logic. Now, the pending transactions are returned against the prior/initial request at once.| PROD |
 
 <!-- type: tab-end -->
+
+
