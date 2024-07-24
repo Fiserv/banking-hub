@@ -12,7 +12,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | Done |
 | PROD Deployment      | 15 July, 2024 - 25 July, 2024 | In Progress |
-| General Availability (GA) | 25 July, 2024	              | Not started |
+| General Availability (GA) | 25 July, 2024	          | Not started |
 
 <!-- type: tab -->
 
