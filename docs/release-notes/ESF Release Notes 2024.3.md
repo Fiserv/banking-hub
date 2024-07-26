@@ -22,6 +22,7 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | Get Account Details-LOAN | We fixed the issue where `InitialAmount` field was not getting populated when Revolving Loan Code value was either 1 (Credit Limit) or 2 (Advance Limit) in the AcctInq-LOAN API.<br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt`|  
 | Add Escrow | We resolved the issue of incorrect error message generation when the account number sent in the request is not as per the numeric format. |
 | Add Escrow | We resolved the issue to accept additional values (other than "Insurance", "Taxes" or "Other") of the `EscrowCategory` field in the request message. Now, the API converts the additional value as "Other" before it sends to service provider.<br>**Impacted Field:** <br> `EscrowInfo/EscrowCategory` |
+| Get Party Account Relationship-ByTaxId | We resolved the issue where the API retrieved incorrect response for the `PreferredPhone` field and did not match the Premier navigator response.<br>**Impacted Fields:** <br> `PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum` <br> `PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum` | <!-- ESFATIG-2238 -->
 
 ### Enhancements
 | API Name | Description | 
