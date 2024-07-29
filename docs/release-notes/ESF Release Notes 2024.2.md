@@ -109,6 +109,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-CDA</a> | We added the new enum value "NightlyReview" for the `RateChangeControl` field. Now the account is created successfully for the product. <br> **Impacted Field:** <br> `DepositAcctInfo/RateChangeData/RateChangeControl` | PROD |
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - DDA</a> | We resolved the issue of the “Invalid Float Extension Code” error, which previously occurred when the `RegCCStatus` value was sent in the request. <br>  **Implemented Field:** <br> `DepositAcctInfo/RegCCData/RegCCStatus`| CERT |
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-Deposit</a> | We resolved the issue with the `RateChangeRecurType` field that was not populated in the response message for certificate of deposit accounts. Now users can retrieve the field successfully. <br> **Impacted Field:** <br> `ProdSpecRec/DepositProdSpecInfo/RateChangeData/RateChangeRecurType`| PROD | <!-- ESFPAN-3468 -->
+| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications</a> | We resolved the issue in response message to populate all occurences of the `RateMatrixTier` field as per the value received from the provider.| PROD | <!-- ESFABUS-7528/ESFPAN-4117 -->
 
 
 ## 2024_Q2.2
