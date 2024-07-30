@@ -8,7 +8,7 @@ type: tab
 titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 -->
 
-|        Activity      |  Planned Available Date  |	  Status    |
+|        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
 | PROD Deployment      | 15 July, 2024 - 25 July, 2024 | ![In Progress](https://github.com/user-attachments/assets/4c06d246-df65-49f9-abb7-60bdc2b8958b) |
@@ -16,7 +16,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 <!-- type: tab -->
 
-|        Activity      |  Planned Available Date  |	  Status    |
+|        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 2 August, 2024 - 8 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | PROD Deployment      | 16 August, 2024 - 22 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
@@ -24,7 +24,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 <!-- type: tab -->
 
-|        Activity      |  Planned Available Date            |	  Status    |
+|        Activity      |  Planned Schedule            |	  Status    |
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 2 September, 2024 - 6 September, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | PROD Deployment      | 18 September, 2024 - 24 September, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
@@ -82,6 +82,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="/api/?type=post&path=/safedepositboxservice/safedepositbox/safedepositbox" title="Click to open">Add Safe Deposit Box</a> | We added the following enum values to the `SafeDepositBoxInfo/AcctTaxData/TaxType` field: <ul> <li>Tax4</li> <li> Tax5 </li> <li> Tax6 </li> <li> Tax7 </li> <li> Tax8 </li> <li> Tax9 </li> <li> TaxA </li> <li> TaxB </li> <li> TaxC </li> </ul>| PROD | <!-- ESFPAN-4160 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | Collateral code is now available when you perform the account inquiry for the LOAN accounts. <br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/CollateralCode`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - LOAN</a> | Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
 
