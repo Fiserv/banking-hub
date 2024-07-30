@@ -82,7 +82,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="/api/?type=post&path=/safedepositboxservice/safedepositbox/safedepositbox" title="Click to open">Add Safe Deposit Box</a> | We added the following enum values to the `SafeDepositBoxInfo/AcctTaxData/TaxType` field: <ul> <li>Tax4</li> <li> Tax5 </li> <li> Tax6 </li> <li> Tax7 </li> <li> Tax8 </li> <li> Tax9 </li> <li> TaxA </li> <li> TaxB </li> <li> TaxC </li> </ul>| PROD | <!-- ESFPAN-4160 -->
+| <a href="/api/?type=post&path=/safedepositboxservice/safedepositbox/safedepositbox" title="Click to open">Add Safe Deposit Box</a> | We added the following enum values to the `SafeDepositBoxInfo/AcctTaxData/TaxType` field for installed banks that have a modification to extend tax type codes: <ul> <li>Tax4</li> <li> Tax5 </li> <li> Tax6 </li> <li> Tax7 </li> <li> Tax8 </li> <li> Tax9 </li> <li> TaxA </li> <li> TaxB </li> <li> TaxC </li> </ul>| PROD | <!-- ESFPAN-4160 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | Collateral code is now available when you perform the account inquiry for the LOAN accounts. <br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/CollateralCode`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - LOAN</a> | Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
 
