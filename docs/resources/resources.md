@@ -135,7 +135,7 @@ To implement the DPoP Security, follow the listed steps:
 
 ## Step 2 - Onboard the Consumer
 Register consumer with public key through AppMarket from Fiserv.
-For **Communicator Open**, share the public key with Communicator Open project team for seamless integration in this onboarding process.
+<br> For **Communicator Open**, share the public key with Communicator Open project team for seamless integration in this onboarding process. <br>
   <!-- theme: info -->
 > #### Note
 >
