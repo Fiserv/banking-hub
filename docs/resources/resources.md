@@ -134,7 +134,8 @@ To implement the DPoP Security, follow the listed steps:
   ![Step 1 diagram_editedMJS](https://github.com/Fiserv/banking-hub/assets/135122880/33f3b957-51db-458f-bce1-e862a6d3bfb3)
 
 ## Step 2 - Onboard the Consumer
-Register consumer with public key through AppMarket from Fiserv
+Register consumer with public key through AppMarket from Fiserv.
+<br> For **Communicator Open**, share the public key with Communicator Open project team for seamless integration in this onboarding process. <br>
   <!-- theme: info -->
 > #### Note
 >
