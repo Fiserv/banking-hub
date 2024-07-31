@@ -9,7 +9,10 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 ### Fixed
 
 | API Name | Description | 
-| -------- | ----------- | 
+| -------- | ----------- |
+| Add Account Hold | We resolved the error "**Stop Pay Date Date Cannot be a Future Date**" that occured while adding a stop check instruction in the request with no value set for the stop check date. <br> **Impacted Fields:** <br> `StopChkInfo/OrigDt` <br> `StopChkInfo/StopChkDt` | <!-- ESFATIG-2708 --> 
+| Get Safe Deposit Box | Previously, the value set for the enum description fields for one tenant was getting assigned to the another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve the correct values. <br> **Impacted Fields:** <br> `SafeDepositBoxRec/SafeDepositBoxInfo/BoxDtlStatusEnumDesc` <br> `SafeDepositBoxRec/SafeDepositBoxInfo/OriginatingBranchEnumDesc` <br> `SafeDepositBoxRec/SafeDepositBoxInfo/PostAddr/CountryCode/CountryCodeValueEnumDesc` |
+| Get Card | Previously, the value set for the enum description fields for one tenant was getting assigned to the another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve the correct values. <br> **Impacted Fields:** <br> `CardRec/CardInfo/CardDtlStatusEnumDesc` <br> `CardRec/CardInfo/PostAddr/CountryCode/CountryCodeValueEnumDesc` |
 | Get Account Details | We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly. |
 | Add Account-LOAN | We resolved the issue where the value "0" was passed in the resquest regardless of any valid value provided in the `RestrictionReasonCode` field. Now, the expected value is passed in the request. <br> **Impacted Field:** <br> `LoanAcctInfo/PmtPostingRestrictions/RestrictionReasonCode` |
 | Update Party |Previously, the API failed to modify the secondary address details when both primary and secondary addresses were modified at the same time. Now, this issue is resolved and both the addresses can be modified successfully. |
