@@ -10,15 +10,8 @@ These Know Your customer (KYC) APIs make it possible to authenticate new custome
 
 **Potential uses:** KYC Apps that provide customer authencation services. 
 
-Begin the integration with following services of Identity Verification domain in API Explorer:
+Begin the integration with following services of Identity domain in API Explorer:
 
-* Business Verification Only
-* Business Verification Only (with Authorizer)
-* Business Verification Fraud and Risk
-* Customer Verification Fraud and Risk
-* Customer Identity Authentication
-* Watchlist Scan (Customer and Business)
-* Address Verification
-
-
-
+* [Identity Verification](../api/?type=post&path=/onboardadvisor/business/verification)
+* [Watch List](../api/?type=post&path=/onboardadvisor/business/watchlist)
+* [Address Verification](../api/?type=post&path=/onboardadvisor/business/verification/address)
