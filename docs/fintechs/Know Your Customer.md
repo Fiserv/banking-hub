@@ -8,10 +8,8 @@ Consumer Identity Authentication (KYC) is the process of verifying a customer's 
 
 **Potential uses:** KYC Apps that provide customer authentication services. 
 
-Begin the integration with following services of the Know Your Customer domain in API Explorer:
+Begin the integration with following services of the Identity domain in API Explorer:
 
-* Consumer Watchlist
-* Consumer ID Authentication
-* Consumer Verification Address
-* Consumer Verification Email
-* Consumer Verification Phone
+* [Consumer Watch List](../api/?type=post&path=/onboardadvisor/consumer/watchlist)
+* [Consumer Identity Verfication](../api/?type=post&path=/onboardadvisor/consumer/verification)
+* [Business Address Verfication](../api/?type=post&path=/onboardadvisor/consumer/verification/address)
