@@ -10,6 +10,7 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 
 | API Name | Description | 
 | -------- | ----------- |
+| Get Party Account Relationship-ByAcct |We resolved an issue where the API returned the value for `PhoneType` field in lower case. Now, the `PhoneType` field value is retrieved correctly as per the configurations.<br>**Impacted Fields:** <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/PhoneType` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | <!-- ESFATIG-2262 -->
 | Add Account Hold | We resolved the error "**Stop Pay Date Date Cannot be a Future Date**" that occured while adding a stop check instruction in the request with no value set for the stop check date. <br> **Impacted Fields:** <br> `StopChkInfo/OrigDt` <br> `StopChkInfo/StopChkDt` | <!-- ESFATIG-2708 --> 
 | Get Safe Deposit Box | Previously, the value set for the enum description fields for one tenant was getting assigned to the another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve the correct values. <br> **Impacted Fields:** <br> `SafeDepositBoxRec/SafeDepositBoxInfo/BoxDtlStatusEnumDesc` <br> `SafeDepositBoxRec/SafeDepositBoxInfo/OriginatingBranchEnumDesc` <br> `SafeDepositBoxRec/SafeDepositBoxInfo/PostAddr/CountryCode/CountryCodeValueEnumDesc` |
 | Get Card | Previously, the value set for the enum description fields for one tenant was getting assigned to the another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve the correct values. <br> **Impacted Fields:** <br> `CardRec/CardInfo/CardDtlStatusEnumDesc` <br> `CardRec/CardInfo/PostAddr/CountryCode/CountryCodeValueEnumDesc` |
@@ -80,6 +81,7 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 ### Enhancements
 | API Name | Description | 
 | --- | ----------- | 
+| Add Transfer-Teller | We added the Add Transfer-Teller API that provides Teller capabilities for performing funds transfer. This API operation supports a one-time transfer of funds, including the FROM and TO accounts, descriptions, and returns balances for each of the accounts.| <!-- ESF-606 -->
 | Add Credit-DDA_Teller | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`| 
 | Add Debit-DDA_Teller | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`|
 | Add Transfer | As part of the enhancement, we added a new value in `AcctType` field (CLA) that enables transfers from commercial loans to checking and savings accounts.<br>**Impacted Fields:**<br> `XferInfo/FromAcctRef/AcctKeys/AcctType`<br>`XferStatusRec/XferKeys/AcctKeys/AcctType`|
