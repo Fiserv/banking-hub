@@ -11,8 +11,8 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
-| PROD Deployment      | 15 July, 2024 - 25 July, 2024 | ![In Progress](https://github.com/user-attachments/assets/4c06d246-df65-49f9-abb7-60bdc2b8958b) |
-| General Availability (GA) | 25 July, 2024	          | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| PROD Deployment      | 15 July, 2024 - 25 July, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
+| General Availability (GA) | 25 July, 2024	          | ![Live](https://github.com/user-attachments/assets/ca5a712e-083e-491c-9c55-bf54227cbeb2) |
 
 <!-- type: tab -->
 
