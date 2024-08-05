@@ -18,7 +18,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | 2 August, 2024 - 8 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| CERT Deployment      | 2 August, 2024 - 8 August, 2024 | ![In Progress](https://github.com/user-attachments/assets/4c06d246-df65-49f9-abb7-60bdc2b8958b) |
 | PROD Deployment      | 16 August, 2024 - 22 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | General Availability (GA) | 29 August, 2024	             | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 
@@ -38,11 +38,29 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 type: tab 
 titles: Premier, Precision, Signature, Cleartouch 
 -->
+
+## 2024_Q3.2
+
+### Enhancements
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account DDA and SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account DDA and SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details</a> | We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly. | CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open"> Add Account SDA, DDA, CDA and LOAN</a> | We fixed the issue where the TaxReportingOwner was incorrectly being assigned to the first Party, regardless of the indicator provided in the request. Now, the TaxReportingOwner is correctly assigned to the appropriate Party. <br>  **Implemented Field:** <br> `PartyAcctRelInfo/TaxReportingOwnerInd`| CERT |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship - ByTaxId</a> | We fixed the issue where the API was displaying a Null Pointer Exception error in the response when a null value is sent in the `AddrType` field. <br>  **Implemented Field:** <br> `DepositAcctInfo/PostAddr/AddrType`| CERT |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account</a> |We fixed the issue where the API was displaying a Null Pointer Exception error when a null or blank value is sent in the ovrdAutoAckInd field. <br>  **Implemented Field:** <br> `OvrdAutoAckInd`| CERT |
+
 ## 2024_Q3.1
 
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences&branch" title="Click to open">Add ePreference, Update ePreference & Delete ePreference </a> | We added a new field 'OvrdAutoAckInd' to override the warnings that are returned in the response by the core while performing add, update and delete of an ePreference record under these APIs.| CERT |
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We enhanced the API's ability where the user can delete the 'IssuedIdent' aggregate values that are not passed in the request. If the party has two `IssuedIdent` aggregates, the user can remove the aggregate that is not needed for the party. <br>  **Impacted Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentValue` <br> `PersonPartyInfo/PersonData/IssuedIdent/Issuer` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br>`OrgPartyInfo/OrgData/IssuedIdent` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentValue` <br> `OrgPartyInfo/OrgData/IssuedIdent/Issuer` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/ExpDt`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - CDA</a> | We added `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup` as a new field to map the account relationships when adding a CDA account.<br>  **Impacted Field:** <br> `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup`| PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - CDA</a> | We added `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup` as a new field to display the account relationships status in the response message. <br>  **Impacted Field:** <br> `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup`| PROD |

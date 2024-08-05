@@ -9,6 +9,7 @@ API domains related to Risk and Performance Management:
 - [Accountholder](?path=docs/fintechs/accountholder.md "Click to open")
 - [Accounts](?path=docs/fintechs/accounts.md "Click to open")
 - [Transactions](?path=docs/fintechs/transactions.md "Click to open")
+- [Identity](?path=docs/fintechs/IdentityVerification.md "Click to open")
 
 
 ## See Also
