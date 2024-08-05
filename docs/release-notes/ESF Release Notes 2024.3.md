@@ -3,7 +3,7 @@ V 11.0.0
 
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, Portico
+titles: Premier, Precision, Signature, Cleartouch
 -->
 
 ### Fixed
@@ -93,11 +93,5 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | Update Party | We resolved an issue that occurred while updating the marital status to "NotApplicable".<br>**Impacted Field:**<br> `PersonPartyInfo/MaritalStat`| 
 | Update Party | We resolved an issue that occurred while updating the gender status to "Unknown".<br>**Impacted Field:**<br> `PersonPartyInfo/Gender`| 
 | Update Party| We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
-
-<!-- type: tab -->
-### What's New
-| API Name | Description | 
-| --- | ----------- | 
-| General | We added the following API endpoints:<br> <ul><li>Get Address</li> <li>Update Address</li> <li> Get Account Details-DDA_SDA</li> <li> Get Account Details-CDA</li> </ul> |
 
 <!-- type: tab-end -->
