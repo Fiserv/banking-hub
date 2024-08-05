@@ -3,13 +3,14 @@ V 11.0.0
 
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, Portico
+titles: Premier, Precision, Signature, Cleartouch
 -->
 
 ### Fixed
 
 | API Name | Description | 
 | -------- | ----------- |
+| Get Party Account Relationship-ByAcct |We resolved an issue where the API returned the value for `PhoneType` field in lower case. Now, the `PhoneType` field value is retrieved correctly as per the configurations.<br>**Impacted Fields:** <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/PhoneType` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | <!-- ESFATIG-2262 -->
 | Add Account Hold | We resolved the error "**Stop Pay Date Date Cannot be a Future Date**" that occured while adding a stop check instruction in the request with no value set for the stop check date. <br> **Impacted Fields:** <br> `StopChkInfo/OrigDt` <br> `StopChkInfo/StopChkDt` | <!-- ESFATIG-2708 --> 
 | Get Safe Deposit Box | Previously, the value set for the enum description fields for one tenant was getting assigned to the another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve the correct values. <br> **Impacted Fields:** <br> `SafeDepositBoxRec/SafeDepositBoxInfo/BoxDtlStatusEnumDesc` <br> `SafeDepositBoxRec/SafeDepositBoxInfo/OriginatingBranchEnumDesc` <br> `SafeDepositBoxRec/SafeDepositBoxInfo/PostAddr/CountryCode/CountryCodeValueEnumDesc` |
 | Get Card | Previously, the value set for the enum description fields for one tenant was getting assigned to the another tenant on the provider from the cache. We resolved the issue and now users can expect to retrieve the correct values. <br> **Impacted Fields:** <br> `CardRec/CardInfo/CardDtlStatusEnumDesc` <br> `CardRec/CardInfo/PostAddr/CountryCode/CountryCodeValueEnumDesc` |
@@ -23,6 +24,9 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | Update Account-LOAN | We added two new fields `County` and `StateProv` in the `MortgageReportingData` aggregate to modify county and state province codes for Federal Housing Authority (FHA) and Federal Home Loan Bank (FHLB) reporting.<br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County`<br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/StateProv` <br><br> The following fields will deprecate in the future because the above added fields make usage of these fields obsolete: <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/County` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/StateProv` | 
 | Get Account Details-LOAN | We fixed the issue where `InitialAmount` field was not getting populated when Revolving Loan Code value was either 1 (Credit Limit) or 2 (Advance Limit) in the AcctInq-LOAN API.<br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt`|  
 | Get Party Account Relationship-ByTaxId | We resolved the issue where the API retrieved incorrect response for the `PreferredPhone` field and did not match the Premier navigator response.<br>**Impacted Fields:** <br> `PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum` <br> `PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum` | <!-- ESFATIG-2238 -->
+| Add Account SDA, DDA, CDA and LOAN | We fixed the issue where the TaxReportingOwner was incorrectly being assigned to the first Party, regardless of the indicator provided in the request. Now, the TaxReportingOwner is correctly assigned to the appropriate Party. <br>  **Impacted Field:** <br> `PartyAcctRelInfo/TaxReportingOwnerInd`| 
+| Update Account| We fixed the issue where the API was displaying a Null Pointer Exception error in the response when a null value is sent in the `AddrType` field. <br>  **Impacted Field:** <br> `DepositAcctInfo/PostAddr/AddrType`|
+| Update Account| We fixed the issue where the API was displaying a Null Pointer Exception error when a null or blank value is sent in the `ovrdAutoAckInd` field.  <br>  **Impacted Field:** <br> `OvrdAutoAckInd`|
 
 ### Enhancements
 | API Name | Description | 
@@ -38,6 +42,7 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | Get Party Account Relationship-ByParty, Get Party Account Relationship-ByParty_INET, Get Party Account Relationship-ByTaxId | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit account, demand deposit loan, savings account, certificate of deposit account, loan account and safe deposit box account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable".  <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/FederalInsuranceEligibility`|
 | Get Multiple Accounts | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit, demand deposit loan, savings, certificate of deposit, loan and safe deposit box accounts. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `MultiAcctRec/MultiAcctInfo/FederalInsuranceEligibility`|
 | Get Safe Deposit Box | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the safe deposit box account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `SafeDepositBoxRec/SafeDepositBoxInfo/FederalInsuranceEligibility`| <!-- ESFATIG-2728 -->
+| Get Account DDA<br>Get Account SDA<br>Update Account DDA<br>Update Account SDA | We added the following fields to support the integration with a financial literacy feature. <br><br>`DepositAcctInfo/FinancialLiteracy`<br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp`<br>`DepositAcctInfo/FinancialLiteracy/IsFunding`|
 
 
 <!-- type: tab -->
@@ -65,6 +70,11 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 ### Fixed
 | API Name | Description | 
 | --- | ----------- |
+| Add Party | We resolved the issue to correctly map the default value of the `Retention` field to the provider. Now, if the client application does not send the value of the `Retention` field, then the value of this field defaults to "true". <br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/Retention` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/Retention`| <!-- ESFPAN-1013 -->
+| Update Party | We resolved the issue where user was unable to remove a documented or non-documented source of identification. To remove an identification, the user must take care of the following: <br> <ul><li>Include the identification id that is to be removed (the value of the `IssuedIdentId` field from "1" to "4") </li> <li>Set the value of all the dates to "0000-12-31"</li><li>Set all other properties to blank</li></ul> <br> **Impacted Fields:** <br>`PersonPartyInfo/PersonData/IssuedIdent` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/NextIdentVerifyDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/ExpDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/NextIdentVerifyDt` <br> `OrgPartyInfo/OrgData/IssuedIdent` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/ExpDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/NextIdentVerifyDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/ExpDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/NextIdentVerifyDt` | <!-- ESFACYC-10813/ESFPAN-1184 -->
+| Get Account Details-CDA, Get Account Details-CDA_INET | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the certificate of deposit or retirement account (including INET). The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility` | <!-- ESF-1812/ESFATIG-2642 -->
+| Get Account Details-LOAN, Get Account Details-LOAN_INET | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the loan account (including INET). The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility` | <!-- ESF-1812/ESFATIG-2660 -->
+| Get Account Details-DDA_SDA, Get Account Details-DDA_SDA_INET | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the savings or demand deposit account (including INET). The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility` | <!-- ESF-1812/ESFATIG-2659 -->
 | Get Account Details | We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly. |
 | Get Card | We fixed the API so that the following fields are not truncated in the response and ensure that they match the value of the `CardId` field sent in the request when the `CardSeqNum` field is not provided: <br> `CardRec/CardKeys/CardId` <br> `CardRec/CardKeys/CardSeqNum` | 
 | Get Party | We resolved the issue where the `ApartmentNum`, `ApartmentNumType `, and `HouseNum` fields retrieved the incorrect value in the response message. We also updated the code to resolve the retrieval issue of an extra field `HouseName`, which was not supposed to be returned in the response message. <br> **Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/HouseNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/HouseNum`|
@@ -77,6 +87,7 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 ### Enhancements
 | API Name | Description | 
 | --- | ----------- | 
+| Add Transfer-Teller | We added the Add Transfer-Teller API that provides Teller capabilities for performing funds transfer. This API operation supports a one-time transfer of funds, including the FROM and TO accounts, descriptions, and returns balances for each of the accounts.| <!-- ESF-606 -->
 | Add Credit-DDA_Teller | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`| 
 | Add Debit-DDA_Teller | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`|
 | Add Transfer | As part of the enhancement, we added a new value in `AcctType` field (CLA) that enables transfers from commercial loans to checking and savings accounts.<br>**Impacted Fields:**<br> `XferInfo/FromAcctRef/AcctKeys/AcctType`<br>`XferStatusRec/XferKeys/AcctKeys/AcctType`|
@@ -87,11 +98,5 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | Update Party | We resolved an issue that occurred while updating the marital status to "NotApplicable".<br>**Impacted Field:**<br> `PersonPartyInfo/MaritalStat`| 
 | Update Party | We resolved an issue that occurred while updating the gender status to "Unknown".<br>**Impacted Field:**<br> `PersonPartyInfo/Gender`| 
 | Update Party| We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
-
-<!-- type: tab -->
-### What's New
-| API Name | Description | 
-| --- | ----------- | 
-| General | We added the following API endpoints:<br> <ul><li>Get Address</li> <li>Update Address</li> <li> Get Account Details-DDA_SDA</li> <li> Get Account Details-CDA</li> </ul> |
 
 <!-- type: tab-end -->
