@@ -18,8 +18,8 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | 2 August, 2024 - 8 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
-| PROD Deployment      | 16 August, 2024 - 22 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| CERT Deployment      | 2 August, 2024 - 14 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| PROD Deployment      | 20 August, 2024 - 27 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | General Availability (GA) | 29 August, 2024	             | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 
 <!-- type: tab -->
@@ -43,6 +43,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences&branch" title="Click to open">Add ePreference, Update ePreference & Delete ePreference </a> | We added a new field 'OvrdAutoAckInd' to override the warnings that are returned in the response by the core while performing add, update and delete of an ePreference record under these APIs.| CERT |
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We enhanced the API's ability where the user can delete the 'IssuedIdent' aggregate values that are not passed in the request. If the party has two `IssuedIdent` aggregates, the user can remove the aggregate that is not needed for the party. <br>  **Impacted Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentValue` <br> `PersonPartyInfo/PersonData/IssuedIdent/Issuer` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br>`OrgPartyInfo/OrgData/IssuedIdent` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentValue` <br> `OrgPartyInfo/OrgData/IssuedIdent/Issuer` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/ExpDt`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - CDA</a> | We added `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup` as a new field to map the account relationships when adding a CDA account.<br>  **Impacted Field:** <br> `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup`| PROD |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details - CDA</a> | We added `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup` as a new field to display the account relationships status in the response message. <br>  **Impacted Field:** <br> `AcctRec/DepositAcctInfo/AcctStmtData/StmtGroup`| PROD |
