@@ -3,7 +3,7 @@ V 11.0.0
 
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, Portico
+titles: Premier, Precision, Signature, Cleartouch
 -->
 
 ### Fixed
@@ -54,9 +54,6 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | Get Party Account Relationship | We resolved the issue where the user was unable to retrieve the party account relationship information in response using the party identifier.|
 | Add Account Hold | We resolved the internal server error in the response when the `HoldType` field is passed with one of the valid value "Caution". Now users can add hold on the account successfully.|
 | Add Account Hold | Previously the API generated an internal server error when the `AcctType` field value is "CDA" and the `AcctKeys` aggreagte (AcctHoldInfo/OtherAcctRef/AcctKeys) is sent as blank. Now users can expect valid error message as "Other Account reference not found" in the response.|
-| Get Party Account Relationship-ByParty | We resolved an issue with the `DueAmt` field to populate with correct caluculations in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/PmtCompositeAmt/CurAmt/Amt`|
-| Get Party Account Relationship-ByParty | We resolved an issue with the `NextPmt` aggregate to populate in the response message. <br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/NextPmt`|
-| Get Party Account Relationship-ByParty | We resolved an issue with the `DueDt` field to populate in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/DueDt`|
 | Add Account-CDA | We resolved the datatype mismatch error with the `ClientDefinedData` aggregate when the region code is passed as client defined field udi-1.<br>**Impacted Fields:** <br> `DepositAcctInfo/ClientDefinedData/DataClassType` <br>`DepositAcctInfo/ClientDefinedData/DataIdent`<Br>`DepositAcctInfo/ClientDefinedData/DataType`<br>`DepositAcctInfo/ClientDefinedData/Value`|
 
 ### Enhancements
@@ -70,6 +67,11 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 ### Fixed
 | API Name | Description | 
 | --- | ----------- |
+| Add Party | We resolved the issue to correctly map the default value of the `Retention` field to the provider. Now, if the client application does not send the value of the `Retention` field, then the value of this field defaults to "true". <br> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/Retention` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/Retention`| <!-- ESFPAN-1013 -->
+| Update Party | We resolved the issue where user was unable to remove a documented or non-documented source of identification. To remove an identification, the user must take care of the following: <br> <ul><li>Include the identification id that is to be removed (the value of the `IssuedIdentId` field from "1" to "4") </li> <li>Set the value of all the dates to "0000-12-31"</li><li>Set all other properties to blank</li></ul> <br> **Impacted Fields:** <br>`PersonPartyInfo/PersonData/IssuedIdent` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/NextIdentVerifyDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/ExpDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/NextIdentVerifyDt` <br> `OrgPartyInfo/OrgData/IssuedIdent` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/ExpDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/NextIdentVerifyDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/ExpDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/NextIdentVerifyDt` | <!-- ESFACYC-10813/ESFPAN-1184 -->
+| Get Account Details-CDA, Get Account Details-CDA_INET | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the certificate of deposit or retirement account (including INET). The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility` | <!-- ESF-1812/ESFATIG-2642 -->
+| Get Account Details-LOAN, Get Account Details-LOAN_INET | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the loan account (including INET). The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility` | <!-- ESF-1812/ESFATIG-2660 -->
+| Get Account Details-DDA_SDA, Get Account Details-DDA_SDA_INET | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the savings or demand deposit account (including INET). The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility` | <!-- ESF-1812/ESFATIG-2659 -->
 | Get Account Details | We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly. |
 | Get Card | We fixed the API so that the following fields are not truncated in the response and ensure that they match the value of the `CardId` field sent in the request when the `CardSeqNum` field is not provided: <br> `CardRec/CardKeys/CardId` <br> `CardRec/CardKeys/CardSeqNum` | 
 | Get Party | We resolved the issue where the `ApartmentNum`, `ApartmentNumType `, and `HouseNum` fields retrieved the incorrect value in the response message. We also updated the code to resolve the retrieval issue of an extra field `HouseName`, which was not supposed to be returned in the response message. <br> **Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/HouseNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/HouseNum`|
@@ -93,11 +95,5 @@ titles: Premier, Precision, Signature, Cleartouch, Portico
 | Update Party | We resolved an issue that occurred while updating the marital status to "NotApplicable".<br>**Impacted Field:**<br> `PersonPartyInfo/MaritalStat`| 
 | Update Party | We resolved an issue that occurred while updating the gender status to "Unknown".<br>**Impacted Field:**<br> `PersonPartyInfo/Gender`| 
 | Update Party| We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
-
-<!-- type: tab -->
-### What's New
-| API Name | Description | 
-| --- | ----------- | 
-| General | We added the following API endpoints:<br> <ul><li>Get Address</li> <li>Update Address</li> <li> Get Account Details-DDA_SDA</li> <li> Get Account Details-CDA</li> </ul> |
 
 <!-- type: tab-end -->
