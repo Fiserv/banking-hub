@@ -54,9 +54,6 @@ titles: Premier, Precision, Signature, Cleartouch
 | Get Party Account Relationship | We resolved the issue where the user was unable to retrieve the party account relationship information in response using the party identifier.|
 | Add Account Hold | We resolved the internal server error in the response when the `HoldType` field is passed with one of the valid value "Caution". Now users can add hold on the account successfully.|
 | Add Account Hold | Previously the API generated an internal server error when the `AcctType` field value is "CDA" and the `AcctKeys` aggreagte (AcctHoldInfo/OtherAcctRef/AcctKeys) is sent as blank. Now users can expect valid error message as "Other Account reference not found" in the response.|
-| Get Party Account Relationship-ByParty | We resolved an issue with the `DueAmt` field to populate with correct caluculations in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/PmtCompositeAmt/CurAmt/Amt`|
-| Get Party Account Relationship-ByParty | We resolved an issue with the `NextPmt` aggregate to populate in the response message. <br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/NextPmt`|
-| Get Party Account Relationship-ByParty | We resolved an issue with the `DueDt` field to populate in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/DueDt`|
 | Add Account-CDA | We resolved the datatype mismatch error with the `ClientDefinedData` aggregate when the region code is passed as client defined field udi-1.<br>**Impacted Fields:** <br> `DepositAcctInfo/ClientDefinedData/DataClassType` <br>`DepositAcctInfo/ClientDefinedData/DataIdent`<Br>`DepositAcctInfo/ClientDefinedData/DataType`<br>`DepositAcctInfo/ClientDefinedData/Value`|
 
 ### Enhancements
