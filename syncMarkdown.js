@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Specify the folder containing the markdown files.
-const folderPath = './';
+const folderPath = './docs/release-notes';
 
 // Read all files in the folder.
 fs.readdir(folderPath, (err, files) => {
@@ -17,7 +17,7 @@ fs.readdir(folderPath, (err, files) => {
 	}
 	
 	// Read the contents of the Source file.
-	const sourceFilePath = './Release Notes 4.md';
+	const sourceFilePath = './docs/release-notes/ESF Release Notes 2024.3.md';
 	fs.readFile(sourceFilePath, 'utf8', (err, data) => {
 		if (err) throw err;
 		
