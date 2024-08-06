@@ -25,7 +25,7 @@ fs.readdir(folderPath, (err, files) => {
 		mdFiles.forEach(file => {
 			const filePath = path.join(folderPath, file);
 			if (filePath !== sourceFilePath){
-				fs.writeFile(filePath, data, 'utf8, err => {
+				fs.writeFile(filePath, data, 'utf8', err => {
 					if (err) throw err;
 					console.log(`${filePath} has been updated.`);
 				});
