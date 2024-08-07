@@ -18,8 +18,8 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | 2 August, 2024 - 8 August, 2024 | ![In Progress](https://github.com/user-attachments/assets/4c06d246-df65-49f9-abb7-60bdc2b8958b) |
-| PROD Deployment      | 16 August, 2024 - 22 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| CERT Deployment      | 2 August, 2024 - 14 August, 2024 | ![In Progress](https://github.com/user-attachments/assets/4c06d246-df65-49f9-abb7-60bdc2b8958b) |
+| PROD Deployment      | 20 August, 2024 - 27 August, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | General Availability (GA) | 29 August, 2024	             | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 
 <!-- type: tab -->
@@ -101,6 +101,13 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
+## 2024_Q3.2
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details</a> | We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly.  | CERT |
+
 ## 2024_Q3.1
 
 ### Fixed
@@ -110,6 +117,9 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/stopchkservice/stophold/stopChecks" title="Click to open">Add Stop Check</a> | The system generated an error exception in the response even when the configuration of fee amount code, fee option and fee waive reason code is correct for the associated organization and client application. To resolve this issue, we have corrected the code. | PROD |
 | <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | We resoved an issue where the users were not able to make payment for loan from another loan account.  | CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA_SDA</a> | We updated the note for the `TaxIncentiveType` field with the addition of "HSA" (Health Saving Account). <br> **Impacted Field:** <br>`DepositAcctInfo/TaxIncentiveType` | PROD |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-DDA, Update Account-SDA</a> | We resolved the null pointer exception error that used to occur in the service charge data (SvcChgData) aggregate when the ProdIntRateId and AcctStmtData values are provided in the request. We removed the "AnalysisOffset" enumeration value from the `SvcChgMethodType` field. <br> **Impacted Field:** <br>`DepositAcctInfo/SvcChgData/SvcChgMethod/SvcChgMethodType` | PROD |
+
+
 <!-- type: tab -->
 
 ## 2024_Q3.1
