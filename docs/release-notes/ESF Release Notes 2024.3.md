@@ -67,6 +67,8 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account</a> |We fixed the issue where the API was displaying a Null Pointer Exception error when a null or blank value is sent in the ovrdAutoAckInd field. <br>  **Impacted Field:** <br> `OvrdAutoAckInd`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-LOAN</a> |We updated the API to correctly return the response in the `NoticeOption` field when the `NoticeType` value is PmtChgNotice.<br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/NoticeData/NoticeOption`| CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-LOAN</a> |We updated the API to correctly return the response in the `NoticeOption` field when the `NoticeType` value is HUdNotice.<br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/NoticeData/NoticeOption`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-LOAN</a> |We fixed the issue related to the status code handling for the following scenarios.<br> - When Account ID is not provided or kept blank in the request <br> - When Account ID is provided in alphanumeric format in the request <br> - When API returns “Account ID not found” error<br>  **Impacted Field:** <br> `AcctSel/AcctKeys/AcctId`| CERT |
+
 
 ## 2024_Q3.1
 
