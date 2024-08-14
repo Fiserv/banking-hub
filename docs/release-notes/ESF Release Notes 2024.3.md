@@ -141,6 +141,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA</a> | We resolved the issue where the API failed to generate correct beneficiary code while account creation. <br> **Impacted Field:** <br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelType` | CERT | <!-- ESFATIG-2444 -->
 | <a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address </a> | We resolved the issue where the API returned success message "HTTP 200 - OK" on updating the secondary or seasonal addresses for an account using the standardized format of the `Addr1` and `Addr2` fields, but there were no updates in address. When using this format, the value of the `Addr1` and `Addr2` fields are used instead of the value of the `Street`, `HouseNum`, `ApartmentNumType` and `ApartmentNum` fields. | CERT | <!-- ESFATIG-2112 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details</a> | We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly.  | CERT | <!-- ESFAMAX-6751 -->
 
