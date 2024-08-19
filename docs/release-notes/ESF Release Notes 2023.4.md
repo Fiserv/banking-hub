@@ -1,4 +1,3 @@
-
 # Pre-Release Notes 
 V 11.0.0
 
@@ -61,6 +60,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | 
 | --- | ----------- |
+| Get Product Specifications | We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | <!-- ESFABUS-8613 -->
 | Update Party | We resolved the issue with data identifier that was unable to correctly update the following properties in the address of a party: <ul><li> Attention (ATTN) </li> <li>In care of (IN CARE OF)</li><li>Miscellaneous line (MISC)</li></ul> | <!-- ESFPAN-3718 -->
 | Get Multiple Account | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit, savings, certificate of deposit, loan and safe deposit box accounts. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `MultiAcctRec/MultiAcctInfo/FederalInsuranceEligibility` | <!-- ESFATIG-2839 -->
 | Get Safe Deposit Box | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the safe deposit box account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br>`SafeDepositBoxRec/SafeDepositBoxInfo/FederalInsuranceEligibility` | <!-- ESFATIG-2841 -->
@@ -93,3 +93,4 @@ titles: Premier, Precision, Signature, Cleartouch
 | Update Party| We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
 
 <!-- type: tab-end -->
+ 
