@@ -61,6 +61,8 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | 
 | --- | ----------- |
+| Add Account-DDA | We resolved the issue where incorrect party relationship type was assigned for the beneficiary while new account creation. The relationship must be set to BNF-Beneficiary for Signature. | <!-- ESFATIG-2680 -->
+| Get Product Specifications-Deposits | We added the following enum values for the `SecuredDeposit` field to ensure consistency with accepted values while account creation: <ul> <li>Secured</li> <li>NotSecured</li></ul> **Impacted Field:** <br> `ProdSpecRec/DepositProdSpecInfo/SecuredDeposit` | <!-- ESFATIG-2846 -->
 | Update Party | We resolved the issue with data identifier that was unable to correctly update the following properties in the address of a party: <ul><li> Attention (ATTN) </li> <li>In care of (IN CARE OF)</li><li>Miscellaneous line (MISC)</li></ul> | <!-- ESFPAN-3718 -->
 | Get Multiple Account | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit, savings, certificate of deposit, loan and safe deposit box accounts. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable". <br> **Impacted Field:** <br> `MultiAcctRec/MultiAcctInfo/FederalInsuranceEligibility` | <!-- ESFATIG-2839 -->
 | Get Safe Deposit Box | We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the safe deposit box account. The valid value of this field is "NotApplicable". <br> **Impacted Field:** <br>`SafeDepositBoxRec/SafeDepositBoxInfo/FederalInsuranceEligibility` | <!-- ESFATIG-2841 -->
