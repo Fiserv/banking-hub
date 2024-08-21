@@ -134,6 +134,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/stopchkservice/stophold/stopChecks" title="Click to open">Add Stop Check</a> | The system generated an error exception in the response even when the configuration of fee amount code, fee option and fee waive reason code is correct for the associated organization and client application. To resolve this issue, we have corrected the code. | PROD |
 | <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | We resoved an issue where the users were not able to make payment for loan from another loan account.  | CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA_SDA</a> | We updated the note for the `TaxIncentiveType` field with the addition of "HSA" (Health Saving Account). <br> **Impacted Field:** <br>`DepositAcctInfo/TaxIncentiveType` | PROD |
+
 <!-- type: tab -->
 
 ## 2024_Q3.2
@@ -141,6 +142,8 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-SDA</a> | We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for SDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8813 -->
+| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-DDA</a> | We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for DDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8613 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA</a> | We resolved the issue where the API failed to generate correct beneficiary code while account creation. <br> **Impacted Field:** <br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelType` | CERT | <!-- ESFATIG-2444 -->
 | <a href="../api/?type=put&path=/addrservice/partyacctsvc/address" title="Click to open">Update Address </a> | We resolved the issue where the API returned success message "HTTP 200 - OK" on updating the secondary or seasonal addresses for an account using the standardized format of the `Addr1` and `Addr2` fields, but there were no updates in address. When using this format, the value of the `Addr1` and `Addr2` fields are used instead of the value of the `Street`, `HouseNum`, `ApartmentNumType` and `ApartmentNum` fields. | CERT | <!-- ESFATIG-2112 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details</a> | We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly.  | CERT | <!-- ESFAMAX-6751 -->
