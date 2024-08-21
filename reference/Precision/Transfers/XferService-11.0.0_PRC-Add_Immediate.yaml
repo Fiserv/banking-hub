@@ -12,7 +12,7 @@ paths:
       tags:
       - Add Transfer
       summary: Add Transfer
-      description: "Add Transfer API creates an immediate transfer record from one account to another account. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      description: "Add Transfer API creates an immediate transfer record from one account to another account.  <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
       operationId: XferAddOper
       parameters:
       - name: EFXHeader
@@ -49,6 +49,8 @@ components:
       required:
       - XferInfo
       properties:
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
         XferInfo:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo'
     XferAddOperResponse:
@@ -246,6 +248,14 @@ components:
           type: object
           additionalProperties: true
           description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
     StatusType:
       title: StatusType
       required:
@@ -370,9 +380,48 @@ components:
           description: Information about the elements that caused the status.
           items:
             $ref: '#/components/schemas/SubjectElementType'
-    XferAddOperRequest_XferInfo_FromAcctRef:
+    XferAddOperRequest_XferInfo_FromAcctRef_AcctKeys:
+      required:
+      - AcctId
       type: object
       properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of an account held at a financial institution.
+
+
+
+            **Note:** Refers to the account identifier that is debited.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+
+
+            **Note:** *Required field*
+          enum:
+          - DDA
+          - SDA
+          - LOAN
+      description: Unique information to identify the account record.
+    XferAddOperRequest_XferInfo_FromAcctRef:
+      required:
+      - AcctKeys
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef_AcctKeys'
         TrnCode:
           type: string
           description: |-
@@ -402,7 +451,15 @@ components:
 
 
 
+
+
+
+
         This operation does not support safe deposit box rental payment. Payments/Transactions to target safe deposit box account can not be carried out via XferAdd operation in immediate mode.
+
+
+
+
 
 
 
@@ -472,7 +529,7 @@ components:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_ToAcctRef_AcctKeys'
         TrnCode:
           type: string
-          description: "External transaction code used to indicate the type of transfer and the account.\n\n\n\n**Note:** Precision expects an integer value for loan payment transfers, against the Loan account that is credited. The field along with TransferType identifies the selector code that Precision uses to process a loan payment transfer. \n\n\n\nIf no value is provided in the request, then TrnCode value of '962'  is sent to Precision, as a default configuration in ESF for loan credit."
+          description: "External transaction code used to indicate the type of transfer and the account.\n\n\n\n\n\n\n\n**Note:** Precision expects an integer value for loan payment transfers, against the Loan account that is credited. The field along with TransferType identifies the selector code that Precision uses to process a loan payment transfer. \n\n\n\nIf no value is provided in the request, then TrnCode value of '962'  is sent to Precision, as a default configuration in ESF for loan credit."
       description: |-
         Reference information of an account where funds are transferred.
 
@@ -519,9 +576,20 @@ components:
         CurCodeType:
           type: string
           description: "Standard ISO currency code format. \n\n\n\n\n\n\n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes.\n\n\n\n\n\n\n\n"
+          enum:
+          - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\n**Note:** Currency code is required and should match the currency mentioned in the account. Only USD currency code is supported. "
+          description: |-
+            Currency code value as per the ISO currency code format set in the CurCodeType field.
+
+
+
+            Please note that presently only USD currency code is supported.
+
+
+
+            **Note:** Currency code should be provided and should match the currency the account is held in.
       description: Details of currency code.
     XferAddOperRequest_XferInfo_CurAmt:
       type: object
@@ -544,7 +612,16 @@ components:
           - ISO4217-Alpha
         CurCodeValue:
           type: string
-          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\n\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n\n\n- USD (in ISO4217-Alpha format) \n\n\n\n- 840 (in ISO4217-Numeric format)\n\n\n\n**Note:** \n\nOnly sent if fee exists on the transfer.\n\nonly USD currency code is supported."
+          description: |-
+            Currency code value as per the ISO currency code format set in the CurCodeType field.
+
+
+
+            Please note that presently only USD currency code is supported.
+
+
+
+            **Note:** Only sent if fee exists on the transfer.
       description: |-
         Details of currency code.
 
@@ -585,7 +662,7 @@ components:
 
 
 
-            **Note:** Applicable if the value is "TransactionFee".
+            **Note:** Applicable to send in case of a transaction fee.
           enum:
           - TransactionFee
         CurAmt:
@@ -600,11 +677,13 @@ components:
 
 
 
-            **Note:** This field is required for loan payments or transfers that is if the credit or debit account is a loan account then the relevant TransferType should be sent in the request.
+
+
+            **Note:** This field is required for loan payments. It is also required for Financial Literacy Tool transactions [Funding, Fee & RoundUp].
 
 
 
-            It signifies the selector code Precision uses to process a loan payment transfer and is therefore required for loan transactions.
+            The value of FundsTransfer may be used to identify fund transfers that are not loan payments or Financial Literacy Tool transactions. The same results can be obtained by not sending the TransferType.
           enum:
           - InterestPayment
           - PrincipalPayment
@@ -612,6 +691,7 @@ components:
           - Funding
           - Fee
           - RoundUp
+          - FundsTransfer
         FromAcctRef:
           $ref: '#/components/schemas/XferAddOperRequest_XferInfo_FromAcctRef'
         ToAcctRef:
@@ -650,6 +730,8 @@ components:
           type: string
           description: |-
             Type of an account.
+
+
 
 
 
