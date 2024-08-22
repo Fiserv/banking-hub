@@ -1,0 +1,1796 @@
+---
+openapi: 3.0.0
+info:
+  title: Bank Control Services
+  description: This API will return the bank name, address and any other common information defined by the financial institution
+  contact:
+    name: Carmen Arevalo
+    email: carmen.arevalo@fiserv.com
+  version: "1.0"
+servers:
+- url: http://swaggerhub.onefiserv.net/virts/Bank_Sol_Org/SIGEFXBank/1
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: EFXHeader
+  description: 11.0.0
+- name: Signature
+  description: "24.1"
+paths:
+  /bank/{version}/name:
+    get:
+      tags:
+      - Bank Number and Bank Name
+      summary: Get bank name for a given bank number supported by the organization.
+      description: This service retrieves one bank number and bank name information defined by the financial institution at the Bank-Wide Common File level
+      operationId: getBankName
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains authentication and client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+        examples:
+          EFXHeader:
+            value:
+              TrnId: 9DD8DC04-A5E7-433A-90EB-A180563B8BC5
+              OrganizationId: SIGOrg333
+              Context:
+                Channel: Online
+                ClientDateTime: 20230919T13:22-0500
+                ClientAppName: LyraTech333
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank Number. Indicates that the query is for a specific bank number. If the bank number exists, the functionality will return the bank number and the bank name information for a given bankId
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 101
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              examples:
+                bankNameInqRs:
+                  $ref: '#/components/examples/bankNameInqRs'
+                noBankNamesFoundRs:
+                  $ref: '#/components/examples/noBankNamesFoundRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status401Rs:
+                  $ref: '#/components/examples/status401Rs'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status403Rs:
+                  $ref: '#/components/examples/status403Rs'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Bank Control Service
+      x-proxy-name: Get Bank Information
+      x-child-product-name: Operations and Servicing
+      x-core: Signature
+  /bank/{version}/common:
+    get:
+      tags:
+      - Bank Common Information
+      summary: Get bank common information supported by the organization.
+      description: This service retrieves the bank(s) name/address information defined by the financial institution at the Bank-Wide Common File level
+      operationId: getBankCommonInfo
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains authentication and client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+        examples:
+          EFXHeader:
+            value:
+              TrnId: 9DD8DC04-A5E7-433A-90EB-A180563B8BC5
+              OrganizationId: SIGOrg333
+              Context:
+                Channel: Online
+                ClientDateTime: 20230919T13:22-0500
+                ClientAppName: LyraTech333
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank Number. Indicates that the query is for a specific bank number. If the bank number exists, the functionality will return the bank common information for this specific bank number
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 101
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+              examples:
+                bankInquiryRs:
+                  $ref: '#/components/examples/bankInquiryRs'
+                noRecordsFoundRs:
+                  $ref: '#/components/examples/noRecordsFoundRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status401Rs:
+                  $ref: '#/components/examples/status401Rs'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status403Rs:
+                  $ref: '#/components/examples/status403Rs'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Bank Control Service
+      x-proxy-name: Get Bank Common Information
+      x-child-product-name: Operations and Servicing
+      x-core: Signature
+  /bank/{version}/officers:
+    get:
+      tags:
+      - Officers by Bank or Specific Officer Code
+      summary: Get a list of officers by a given bank number supported by the organization
+      description: This service retrieves one officer (by officer code) or a list of officers (by a given bank) defined by the financial institution.
+      operationId: getBankOfficers
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains authentication and client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+        examples:
+          EFXHeader:
+            value:
+              TrnId: 9DD8DC04-A5E7-433A-90EB-A180563B8BC5
+              OrganizationId: SIGOrg333
+              Context:
+                Channel: Online
+                ClientDateTime: 20230919T13:22-0500
+                ClientAppName: LyraTech333
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank Number. If the bankId is a valid bank number, the functionality will return a list of officers related to this specific bank number. This query parameter is required
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 101
+      - name: officerId
+        in: query
+        description: Officer Code. If the officerId is a valid officer code, the functionality will return details of the officer code related to the given bank and branch number
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 5
+          type: string
+          example: OFADM
+      - name: pageCursor
+        in: query
+        description: Positional indicator to the next record. Page Cursor. If present in the request indicates the pointer to the next record to fetch. The pageCursor is used to allow the client to issue another request to fetch more matching records
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 3
+          type: string
+          example: "11"
+      - name: pageSize
+        in: query
+        description: Total number of records requested. If pageSize tag is present in the request, the value indicates the total number of records requested. If the pageSize is not present in the request by default this service will return up to 100 records in each request/call
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 100
+          type: integer
+          format: integer
+          example: 10
+          default: 100
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+              examples:
+                bankOfficerInqRs:
+                  $ref: '#/components/examples/bankOfficerInqRs'
+                bankOfficerListInqRs:
+                  $ref: '#/components/examples/bankOfficerListInqRs'
+                noBankOfficersFoundRs:
+                  $ref: '#/components/examples/noBankOfficersFoundRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status401Rs:
+                  $ref: '#/components/examples/status401Rs'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status403Rs:
+                  $ref: '#/components/examples/status403Rs'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Bank Control Service
+      x-proxy-name: Get Officers List
+      x-child-product-name: Operations and Servicing
+      x-core: Signature
+  /bank/{version}/dates:
+    get:
+      tags:
+      - Bank Processing Dates
+      summary: Get current processing date, process-thru date and next processing date by subsystem for a given financial institution
+      description: This service retrieves the dates (current date, process-thru date and next processing date) by subsystem for a given financial institution defined at Bank Control level
+      operationId: getBankDates
+      parameters:
+      - name: version
+        in: path
+        description: Service version. Valid value for the version of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: v1
+          default: v1
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains authentication and client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter
+        required: true
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+        examples:
+          EFXHeader:
+            value:
+              TrnId: 9DD8DC04-A5E7-433A-90EB-A180563B8BC5
+              OrganizationId: SIGOrg333
+              Context:
+                Channel: Online
+                ClientDateTime: 20230919T13:22-0500
+                ClientAppName: LyraTech333
+      - name: ClientAppKey
+        in: header
+        description: Key for the client application
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 32
+          type: string
+          example: CMDEVMFBJVCXZSFOBWBFPHVUQIXDISWF
+      - name: ClientAppName
+        in: header
+        description: Name of the client application making the service request (e.g. Architect, Commercial Center, etc.)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 40
+          type: string
+          example: TestApp
+      - name: CustLoginId
+        in: header
+        description: User Identifier. Customer Login Id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 255
+          type: string
+          example: OrionUni888
+      - name: CustPswd
+        in: header
+        description: Password
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 32
+          type: string
+          example: Lyra33344@#
+      - name: EnvironmentName
+        in: header
+        description: Name of the environment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 50
+          type: string
+          example: CelcicTree
+      - name: InstCode
+        in: header
+        description: Code that identify the institution
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 10
+          type: string
+          example: CMDEV
+      - name: RqUID
+        in: header
+        description: Transaction Identifier. AKA TrnId or TransactionId. Sent by a client as a universally unique identifier for the message. Used to correlate responses with requests
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maxLength: 36
+          pattern: ^[0-9a-fA-F\-]{36}$
+          type: string
+          format: uuid
+          example: 96e3725d-cc4a-4159-9b79-9cbc288d9d43
+      - name: bankId
+        in: query
+        description: Bank Number. Indicates that the query is for a specific bank number. If the bank number exists and no other parameter is provided, the functionality will return a list of all the dates ordered by subsystem for a given bankId
+        required: true
+        style: form
+        explode: true
+        schema:
+          pattern: "999"
+          type: number
+          example: 111
+      - name: subsystemId
+        in: query
+        description: 'Subsystem Code. Valid values: FTM - Financial Transaction Management Subsystem, TranTime - Transaction and Time Subsystems, Loans - Loan Subystem and GL - General Ledger Subsytem'
+        required: false
+        style: form
+        explode: true
+        schema:
+          maxLength: 10
+          type: string
+          example: FTM
+          enum:
+          - FTM
+          - GL
+          - Loans
+          - TranTime
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+              examples:
+                bankDatesInquiryRs:
+                  $ref: '#/components/examples/bankDatesInquiryRs'
+                oneBankDateSubsystemInquiryRs:
+                  $ref: '#/components/examples/oneBankDateSubsystemInquiryRs'
+                bankDatesNoFoundRs:
+                  $ref: '#/components/examples/bankDatesNoFoundRs'
+        "400":
+          description: Bad Request. Bad input parameter. The Bad Request Error indicates the server was unable to process (understand) the request sent by the client due to incorrect syntax, missing parameters, invalid request message framing or request routing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status400Rs:
+                  $ref: '#/components/examples/status400Rs'
+        "401":
+          description: Unauthorized. The client has not authenticated or not authentication details were provided to the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status401Rs:
+                  $ref: '#/components/examples/status401Rs'
+        "403":
+          description: Forbidden. Indicates that the server understood request but refuses to authorize it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status403Rs:
+                  $ref: '#/components/examples/status403Rs'
+        "404":
+          description: Not found. The requested resource does not exist. i.e Value not found, Invalid path
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status404Rs:
+                  $ref: '#/components/examples/status404Rs'
+        "500":
+          description: Internal Server Error. This means that some invariants expected by the underlying system have been broken or servers are not working as expected. This error code is reserved for serious errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status500Rs:
+                  $ref: '#/components/examples/status500Rs'
+        "503":
+          description: Service Unavailable. The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying again later
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorStatus'
+              examples:
+                status503Rs:
+                  $ref: '#/components/examples/status503Rs'
+      x-group-name: Bank Control Service
+      x-proxy-name: Get Host Processing Dates List
+      x-child-product-name: Operations and Servicing
+      x-core: Signature
+components:
+  schemas:
+    successStatus:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: Status Description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details Status Messages
+          items:
+            $ref: '#/components/schemas/successStatus_messages'
+    errorStatus:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: Status Description
+          example: E
+          enum:
+          - E
+          - W
+        messages:
+          type: array
+          description: Details Status Messages
+          items:
+            $ref: '#/components/schemas/errorStatus_messages'
+    controlRecord:
+      type: object
+      properties:
+        pageSize:
+          maximum: 100
+          type: integer
+          description: The pageSize indicates the total number of records returned by Signature. The page size default is 100 records maximum per call -if any records available. Number of records matching the selection criteria are included in the response. Minimum and maximum values are defined below
+          format: number
+          example: 1
+          default: 10
+        pageCursor:
+          pattern: "999"
+          type: string
+          description: The pageCursor is used to indicates which record (pointer) to pull data from in the next API service call. In this case the pageCursor value is the next bank number (bankId) available. If the pageCursor is blank there is not more records available to fetch
+          example: "002"
+          default: "000"
+      description: Control Record Aggregate
+    bankName:
+      title: Bank Name
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank Identifier. AKA Bank Number. Valid values-range 0–999
+          example: 1
+        name:
+          maxLength: 40
+          type: string
+          description: Bank Name. Name of the bank
+          example: Lyra's Federal Savings Bank
+      description: Bank Basic Information Aggregate. Default criteria returns up to ten records including the bank(s) number and bank name information available for the financial institution. Reference CFP101 Bank Information
+    bankDetails:
+      title: Bank Details
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank Identifier. AKA Bank Number. Valid values-range 0–999
+          example: 1
+        name:
+          maxLength: 40
+          type: string
+          description: Bank Name. Name of the bank
+          example: Lyra's Federal Savings Bank
+        address1:
+          maxLength: 30
+          type: string
+          description: Bank address line 1. Address line 1 for the bank
+          example: 100 Connell Drive
+        address2:
+          maxLength: 30
+          type: string
+          description: Bank address line 2. Address line 2 for the bank’s city and state
+          example: Berkeley Heights, New Jersey
+        zipCode:
+          pattern: "99999"
+          type: number
+          description: Bank Zip Code. Zip code of the bank.
+          example: 70163
+        phoneNumber:
+          pattern: "9999999999"
+          type: number
+          description: Bank Phone Number. Credit bureau contact phone number. Telephone number of the department or individual authorized to receive inquiries from the credit bureau for the financial institution u organization
+          example: 9088079011
+        holdingCompanyNumber:
+          pattern: "999"
+          type: number
+          description: Holding Company Number. Number of the holding company to which the bank is assigned. Consolidating Company Number
+          example: 1
+        isParsed:
+          type: boolean
+          description: 'Parsed name/address format indicator. Indicates whether the CIF Bank Control configuration is in parsed format or not for the name/address. Values are: true – Name/address is in parsed format, false – Name/address is not in parsed format'
+          example: true
+          enum:
+          - true
+          - false
+        isParsedAlternate:
+          type: boolean
+          description: 'Parse alternate mailing address indicator. Indicates whether the CIF Bank Control configuration for the alternate mailing address is in parsed format or not. Values are: true – Alternate mailing address is in parsed format, false – Alternate mailing address is not in parsed format'
+          example: true
+          enum:
+          - true
+          - false
+      description: Bank common Name/Address Information Aggregate. This aggregate can recur up to one hundred (100) times. Default criteria returns up to ten records including the bank(s) name/address common information available for the financial institution. Reference CFP101 Bank Information and CFP090 CIF Common File
+    bankOfficer:
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank Id. Bank number. Three-digit number of the bank on which the Officer belongs to
+          example: 1
+        officerId:
+          maxLength: 5
+          type: string
+          description: Officer Code Id. Officer Id. Code that identify the Officer
+          example: OFADM
+        name:
+          maxLength: 30
+          type: string
+          description: Officer name. Name of the officer
+          example: ALEX DAVID MCCOY
+        phoneNumber:
+          pattern: "999999999999"
+          type: number
+          description: 'Officer Phone Number. Max length: Numeric 12 positions'
+          example: 14075128871
+        extension:
+          pattern: "9999"
+          type: number
+          description: 'Officer Extension. Max length: Numeric 4 positions'
+          example: 1127
+        branchId:
+          pattern: "999"
+          type: number
+          description: Officer Branch. Three-digit number of the branch on which the Officer belongs to
+          example: 8
+      description: 'Bank Officer Information Aggregate. This aggregate can recur up to one hundred (100) times per call. Default criteria returns up to hundred active records including the officer details for a given bank number. Files reference: CFP103'
+    bankDates:
+      title: Bank Dates
+      type: object
+      properties:
+        bankId:
+          pattern: "999"
+          type: number
+          description: Bank Id. Bank number. Three-digit number of the bank number
+          example: 1
+        subsystemId:
+          maxLength: 10
+          type: string
+          description: 'Subsystem Id. Valid values: FTM - Financial Transaction Management Subsystem, TranTime - Transaction/Time Subsystems [sharing the same dates], Loans - Loan Subystem and GL - General Ledger Subsytem.'
+          example: FTM
+          enum:
+          - FTM
+          - GL
+          - Loans
+          - TranTime
+        currentProcessingDate:
+          maxLength: 10
+          pattern: YYYY-MM-DD
+          type: string
+          description: 'Current Processing Date. Current Date of the Subsystem. ISO 8601 format: YYYY-MM-DD'
+          format: date
+        currentProcessingDay:
+          $ref: '#/components/schemas/dayOfWeek'
+        processThroughDate:
+          maxLength: 10
+          pattern: YYYY-MM-DD
+          type: string
+          description: 'Process-thru date for the subsystem. ISO 8601 format: YYYY-MM-DD'
+          format: date
+        processThroughDay:
+          $ref: '#/components/schemas/dayOfWeek'
+        nextProcessingDate:
+          maxLength: 10
+          pattern: YYYY-MM-DD
+          type: string
+          description: 'Next Processing Date. Next processing date of the subsystem. ISO 8601 format: YYYY-MM-DD'
+          format: date
+        nextProcessingDay:
+          $ref: '#/components/schemas/dayOfWeek'
+      description: 'Bank Control Processing Dates by Subsystem Aggregate. Bank Control File References: TAP001, LNP001, GLP001, FTP001'
+    dayOfWeek:
+      maxLength: 10
+      type: string
+      description: 'Day of Week. Day of the week in which the specific date occurs. Valid values: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, and Sunday'
+      example: Thursday
+      enum:
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      - Sunday
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          maxLength: 36
+          type: string
+          description: Organization identifier is a unique identifier that represents the financial institution or holding company.  This identifier does not necessarily match the organization identifier or bank identifier in the backend system. To ensure uniqueness across all institutions in all parts of the world, use the Dun & Bradstreet number.
+        TrnId:
+          maxLength: 36
+          type: string
+          description: Transaction UUID (Universal Unique Identifier) of the current message.
+        VendorId:
+          maxLength: 255
+          type: string
+          description: 'Unique vendor identification number provided by Fiserv to identify the vendor. '
+        MultiSystemInd:
+          type: boolean
+          description: For internal use only. Indicates Multi-System environment is enabled.
+        SvcNbr:
+          maxLength: 36
+          type: string
+          description: For organizations processing the Multi-System environment this identifies the Service Provider (account processor).
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "622182", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Name of the client application that is used to send the service request, such as Architect, Commercial Center and others.
+        Channel:
+          maxLength: 80
+          type: string
+          description: "Name of the channel used by the client application.\n  - 'Online'\n  - 'Phone' \n  - 'Branch'\n  - 'EFT'\n  - 'Teller'\n  "
+        ClientDateTime:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+        isOverridden:
+          type: boolean
+          description: Indicates whether previous exception is being overridden by the sender.
+        TrnIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification value of transaction defined by the client.  Also known as Trace Number or Sequence in some systems. When used by a Network defined transaction,  the value of this identifier is typically set to narrow character of 12.
+        ClientTerminalSeqNum:
+          maxLength: 36
+          description: 'Client terminal sequence number. type: string'
+        OriginatorType:
+          type: integer
+          description: "The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.  Originator Type codes that apply to financial institutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial institution—home banking"
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor location (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+          description: Terminal address line 1.
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+          description: Terminal address line 2.
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+          description: Terminal address line 3.
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+          description: Terminal address line 4.
+        TerminalCity:
+          maxLength: 40
+          type: string
+          description: Terminal city name.
+        TerminalCounty:
+          maxLength: 40
+          type: string
+          description: Terminal county name.
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State province value as per ISO 3166-2:US codes where the terminal is located.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: 'Postal Code where the terminal is located. '
+        TerminalCountryCodeSource:
+          $ref: '#/components/schemas/CountryCodeSourceType'
+        TerminalCountryCodeValue:
+          maxLength: 80
+          type: string
+          description: Country code value as per the ISO source code set in the TerminalCountryCodeSource field.
+        PhoneType:
+          maxLength: 80
+          type: string
+          description: 'Type of a phone. Valid values are: - ''EvePhone'' - ''DayPhone'' - ''EveFax'' - ''DayFax'' - ''Home'' - ''Work'' - ''Mobile'' - ''Fax'' - ''Pager'' - ''Modem'' - ''Other'''
+        PhoneNum:
+          type: string
+          description: Phone number.
+        PhoneExchange:
+          maxLength: 80
+          type: string
+          description: Phone exchange.
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12.
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifier of the acquirer who processes the financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          $ref: '#/components/schemas/CountryCodeSourceType'
+        AcquirerCountryCodeValue:
+          maxLength: 80
+          type: string
+          description: Country code value of Acquirer as per the ISO source code set in the AcquirerCountryCodeSource field.
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Unique identification number of a merchant.  For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: Transaction settlement date. Used by ISO 8583 (DE63).
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: Identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          maxLength: 80
+          type: string
+          description: |-
+            Identification of the business application. Valid values are:
+              - 'P2P' - Person-to-Person
+              - 'C2B' - Consumer-to-Business
+              - 'A2A' - Account-to-Account
+              - 'B2C' - Business-to-Consumer
+              - 'B2B' - Business-to-Business
+              - 'G2C' - Government-to-Consumer
+              - 'C2G' - Consumer-to-Government
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: Branch identification number.
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TillIdent:
+          maxLength: 80
+          type: string
+          description: Till identification number.
+        AMPMCode:
+          type: string
+          description: 'Transaction posting code. '
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          description: Type of re-entry.
+          enum:
+          - Manual
+          - Auto
+        GroupIdent:
+          maxLength: 80
+          type: string
+          description: Transaction group identifier.
+        TellerTrnData:
+          $ref: '#/components/schemas/TellerTrnDataType'
+        AdditionalSettings:
+          type: object
+          additionalProperties: true
+          description: Contains additional information required to successfully process the transaction. Required By Cleartouch
+    CountryCodeSourceType:
+      title: CountryCodeSourceType
+      type: string
+      description: |-
+        Country code value as per the ISO source code. Posible values:
+          - 'ISO3166-Numeric'
+          - 'ISO3166-Alpha-3'
+      enum:
+      - ISO3166Numeric
+      - ISO3166Alpha3
+      - ISO3166-Numeric
+      - ISO3166-Alpha-3
+    TellerTrnDataType:
+      title: TellerTrnData
+      type: object
+      properties:
+        TellerIdent:
+          maxLength: 80
+          type: string
+          description: Teller identification number.
+        TrnConductorData:
+          type: array
+          description: 'Contains data elements that identify the conductor of the  transaction at the teller line. '
+          items:
+            $ref: '#/components/schemas/TrnConductorDataType'
+      description: Teller Transaction Data.
+    TrnConductorDataType:
+      title: TrnConductorType
+      type: object
+      properties:
+        TrnConductorIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the person conducting the transaction.
+        NoConductorReason:
+          maxLength: 80
+          type: string
+          description: "No conductor reason is used when a conductor cannot be identified. Valid values are:\n  - 'ArmoredCarSvc '\n  - 'MailDeposit' \n  - 'NightDeposit' \n  - 'ATM' \n  - 'AggregatedTransaction' \n  - 'CourierSvc' "
+      description: Transaction conductor data contains data elements that identify  the conductor of a transaction at the teller line.
+    inline_response_200:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: Status Description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details Status Messages
+          items:
+            $ref: '#/components/schemas/inline_response_200_messages'
+        bankName:
+          $ref: '#/components/schemas/bankName'
+    inline_response_200_1:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: Status Description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details Status Messages
+          items:
+            $ref: '#/components/schemas/inline_response_200_1_messages'
+        bankDetails:
+          $ref: '#/components/schemas/bankDetails'
+    inline_response_200_2:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: Status Description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details Status Messages
+          items:
+            $ref: '#/components/schemas/inline_response_200_2_messages'
+        controlRecord:
+          $ref: '#/components/schemas/controlRecord'
+        bankOfficer:
+          maxItems: 100
+          minItems: 0
+          type: array
+          description: Details Bank Officer Definition
+          items:
+            $ref: '#/components/schemas/bankOfficer'
+    inline_response_200_3:
+      type: object
+      properties:
+        status:
+          maxLength: 1
+          type: string
+          description: Status Description
+          example: S
+          enum:
+          - S
+        messages:
+          type: array
+          description: Details Status Messages
+          items:
+            $ref: '#/components/schemas/inline_response_200_3_messages'
+        bankDates:
+          maxItems: 4
+          minItems: 0
+          type: array
+          description: Details Bank Dates Definition
+          items:
+            $ref: '#/components/schemas/bankDates'
+    successStatus_messages:
+      maxItems: 1
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/.../success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: ../bank/v1/...
+    errorStatus_messages:
+      maxItems: 10
+      minItems: 1
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the problem type
+          example: HTTP error path/HC40000
+        title:
+          maxLength: 132
+          type: string
+          description: Short summary of the problem type. Short description of the Signature Error Message ID
+          example: Short summary of the problem type. Short description of the Signature Error Message ID
+        detail:
+          maxLength: 512
+          type: string
+          description: Explanation specific to this occurrence of the problem. Long description of the Signature Error Message ID
+          example: Explanation specific to this occurrence of the problem. Long description of the Signature Error Message ID
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: ../bank/v1/../msgs/HC40000
+    inline_response_200_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/name/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: '.../bank/v1/name...'
+    inline_response_200_1_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/common/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: '.../bank/v1/common...'
+    inline_response_200_2_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/officers/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: '.../bank/v1/officers...'
+    inline_response_200_3_messages:
+      maxItems: 1
+      type: object
+      properties:
+        type:
+          maxLength: 100
+          type: string
+          description: URI reference that identifies the results of the operation
+          example: https://fiserv.com/signature/bank/v1/dates/success
+        title:
+          maxLength: 132
+          type: string
+          description: Short description of the Signature Error Message ID
+          example: request was successful
+        detail:
+          maxLength: 512
+          type: string
+          description: Long description of the Signature Error Message ID
+          example: request was processed successfully
+        instance:
+          maxLength: 256
+          type: string
+          description: URI reference that identifies the specific occurring of the problem. This piece of information is not echoed from the request/URL. It represents a resource segment from the request
+          example: '.../bank/v1/dates...'
+  responses:
+    OK:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/successStatus'
+  examples:
+    bankInquiryRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/common/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/common...
+        bankDetails:
+          bankId: 1
+          name: Lyra's Federal Savings Bank
+          address1: 100 Connell Drive
+          address2: Berkeley Heights, NJ
+          zipcode: 7922.0
+          phoneNumber: 9086733700
+          holdingCompanyNumber: 1
+          isParsed: true
+          isParsedAlternate: true
+    noRecordsFoundRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/common/success
+          title: request was successful
+          detail: No bank records found for selected criteria
+          instance: ../bank/v1/common...
+    bankNameInqRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/name/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/name...
+        bankName:
+          bankId: 1
+          name: Lyra's Federal Savings Bank
+    noBankNamesFoundRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/name/success
+          title: request was successful
+          detail: No bank records found for selected criteria
+          instance: ../bank/v1/name...
+    bankOfficerInqRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/officers/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/officers...
+        controlRecord:
+          pageSize: 1
+          pageCursor: '001XM1  '
+        bankOfficer:
+        - bankId: 1
+          officerId: OFADM
+          name: ALEX DAVID MCCOY
+          phoneNumber: "14075128871"
+          extension: 1127
+          branchId: 8
+    bankOfficerListInqRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/officers/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/officers...
+        controlRecord:
+          pageSize: 17
+          pageCursor: ""
+        bankOfficer:
+        - bankId: 1
+          officerId: KNB
+          name: KRISTEN BACKUS
+          phoneNumber: 0
+          extension: 0
+          branchId: 0
+        - bankId: 1
+          officerId: KKT
+          name: KIM TAWNEY
+          phoneNumber: 4075135346
+          extension: 0
+          branchId: 0
+        - bankId: 1
+          officerId: PRS
+          name: PATTY SMITH
+          phoneNumber: 4073574546
+          extension: 1127
+          branchId: 0
+        - bankId: 1
+          officerId: PXS
+          name: PUJA SINGH
+          phoneNumber: 9087782345
+          extension: 0
+          branchId: 0
+        - bankId: 1
+          officerId: MXS
+          name: MANINDER SINGH
+          phoneNumber: 9087784423
+          extension: 273
+          branchId: 0
+        - bankId: 1
+          officerId: OFADM
+          name: ALEX DAVID MCCOY
+          phoneNumber: 14075128871
+          extension: 1127
+          branchId: 8
+        - bankId: 1
+          officerId: SMM
+          name: LOUISE FRITSCHER BENNETT
+          phoneNumber: 4075135200
+          extension: 5895
+          branchId: 8
+        - bankId: 1
+          officerId: SMM
+          name: SUSAN LAW
+          phoneNumber: 0
+          extension: 0
+          branchId: 8
+        - bankId: 1
+          officerId: TERRY
+          name: TERRY RAISA STAUBER
+          phoneNumber: 3059972321
+          extension: 0
+          branchId: 16
+        - bankId: 1
+          officerId: CWL
+          name: CHERYL W. LEMIEUX
+          phoneNumber: 4072995400
+          extension: 4421
+          branchId: 16
+        - bankId: 1
+          officerId: PAH
+          name: LAWRENCE HARRELSON
+          phoneNumber: 4075135697
+          extension: 0
+          branchId: 16
+        - bankId: 1
+          officerId: SXT
+          name: SHAUN TUGEND
+          phoneNumber: 4075135255
+          extension: 0
+          branchId: 24
+        - bankId: 1
+          officerId: SLY
+          name: SHIRLEY YUEN
+          phoneNumber: "6043422129"
+          extension: 0
+          branchId: 24
+        - bankId: 1
+          officerId: JA1
+          name: JENNIFER ALTEMOSE
+          phoneNumber: 0
+          extension: 0
+          branchId: 24
+        - bankId: 1
+          officerId: JXL
+          name: JOYCE LANGFORD
+          phoneNumber: "7023957870"
+          extension: 0
+          branchId: 40
+        - bankId: 1
+          officerId: MOL11
+          name: MOLLY TERRY LAMBER
+          phoneNumber: "4075136244"
+          extension: 0
+          branchId: 48
+        - bankId: 1
+          officerId: ATM
+          name: ATM TRANSACTION ENTRY
+          phoneNumber: 0
+          extension: 0
+          branchId: 998
+    noBankOfficersFoundRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/officers/success
+          title: request was successful
+          detail: No bank officers found for selected criteria
+          instance: ../bank/v1/officers...
+        controlRecord:
+          pageSize: 0
+          pageCursor: ""
+    bankDatesInquiryRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/dates/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/dates...
+        bankDates:
+        - bankId: 101
+          subsystemId: FTM
+          currentProcessingDate: 2023-09-01
+          currentProcessingDay: Friday
+          processThroughDate: 2023-09-01
+          processThroughDay: Friday
+          nextProcessingDate: 2023-09-05
+          nextProcessingDay: Tuesday
+        - bankId: 101
+          subsystemId: GL
+          currentProcessingDate: 2023-09-01
+          currentProcessingDay: Friday
+          processThroughDate: 2023-09-01
+          processThroughDay: Friday
+          nextProcessingDate: 2023-09-05
+          nextProcessingDay: Tuesday
+        - bankId: 101
+          subsystemId: Loans
+          currentProcessingDate: 2023-09-01
+          currentProcessingDay: Friday
+          processThroughDate: 2023-09-01
+          processThroughDay: Friday
+          nextProcessingDate: 2023-09-05
+          nextProcessingDay: Tuesday
+        - bankId: 101
+          subsystemId: TranTime
+          currentProcessingDate: 2023-09-01
+          currentProcessingDay: Friday
+          processThroughDate: 2023-09-01
+          processThroughDay: Friday
+          nextProcessingDate: 2023-09-05
+          nextProcessingDay: Tuesday
+    oneBankDateSubsystemInquiryRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/dates/success
+          title: request was successful
+          detail: request was processed successful
+          instance: ../bank/v1/dates?bankId=101&subsystemId=TranTime
+        bankDates:
+        - bankId: 101
+          subsystemId: TranTime
+          currentProcessingDate: 2023-09-01
+          currentProcessingDay: Friday
+          processThroughDate: 2023-09-01
+          processThroughDay: Friday
+          nextProcessingDate: 2023-09-05
+          nextProcessingDay: Tuesday
+    bankDatesNoFoundRs:
+      value:
+        status: S
+        messages:
+        - type: https://fiserv.com/signature/bank/v1/dates/success
+          title: request was successful
+          detail: No dates found for selected criteria
+          instance: ../bank/v1/dates...
+    status400Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/HC40000
+          title: Bad request
+          detail: Bad request. malformed request syntax, invalid request message routing
+          instance: ../bank/v1/...
+    status401Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/HC0040100
+          title: Unauthorized
+          detail: The user could not be authenticated due to an incorrect Login id or password
+          instance: ../bank/v1/.../msgs/XXXXXXX
+    status403Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/CB00514
+          title: User is not assigned to the environment
+          detail: User does not have access to the environment
+          instance: ../bank/v1/.../msgs/XXXXXXX
+    status404Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/CB00513
+          title: The requested record could not be found
+          detail: There are not records available for this request
+          instance: ../bank/v1/...
+    status500Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/HC00500
+          title: Internal server error
+          detail: The server encountered an unexpected condition that prevented it from fulfilling the request
+          instance: ..bank/v1/.../msgs/XXXXXXX
+    status503Rs:
+      value:
+        status: E
+        messages:
+        - type: HTTP error path/XXXXXXX
+          title: System not available
+          detail: Failed to connect to remote server
+          instance: ../bank/v1/...
