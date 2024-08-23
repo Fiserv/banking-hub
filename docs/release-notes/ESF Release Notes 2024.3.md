@@ -1,7 +1,7 @@
 # Release Notes 2024_Q3
 V 11.0.0
 
-<details>
+<details open>
 <summary><b style="font-size: 20px; color: #ff6600;">Release Schedule </b> </summary>
 <!-- 
 type: tab 
