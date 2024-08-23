@@ -1,7 +1,7 @@
 # Release Notes 2024_Q3
 V 11.0.0
 
-<details>
+<details open>
 <summary><b style="font-size: 20px; color: #ff6600;">Release Schedule </b> </summary>
 <!-- 
 type: tab 
@@ -12,7 +12,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 8 July, 2024 - 12 July, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
 | PROD Deployment      | 15 July, 2024 - 25 July, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
-| General Availability (GA) | 25 July, 2024	          | ![Live](https://github.com/user-attachments/assets/ca5a712e-083e-491c-9c55-bf54227cbeb2) |
+| General Availability (GA) | 25 July, 2024	          | ![Available](https://github.com/user-attachments/assets/fe369b6c-5b0a-4cdd-bd48-27ecbc38ba59) |
 
 <!-- type: tab -->
 
@@ -20,7 +20,8 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 2 August, 2024 - 20 August, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
 | PROD Deployment      | 21 August, 2024 - 29 August, 2024 | ![In Progress](https://github.com/user-attachments/assets/4c06d246-df65-49f9-abb7-60bdc2b8958b) |
-| General Availability (GA) | 29 August, 2024	             | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| General Availability (GA) | 29 August, 2024	             | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
+
 
 <!-- type: tab -->
 
@@ -28,7 +29,7 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 2 September, 2024 - 6 September, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | PROD Deployment      | 17 September, 2024 - 20 September, 2024 | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
-| General Availability (GA) | 26 September, 2024	               | ![Not Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| General Availability (GA) | 26 September, 2024	               | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
 
 <!-- type: tab-end -->
 
@@ -51,6 +52,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where `IRSNameControl` field was not added for the primary PersonParty or OrgParty even when the `LegalName` field is provided in the request. <br>**Impacted Field:** <br> `PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/LegalName`| CERT | <!-- ESFACYC-11280 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue, where the value for `ImmigrationStat` field was always set to the code zero (0) while adding a party, when the immigration status is, National or Citizen or esidentAlien or NonResidentAlien. <br>**Impacted Field:** <br> `PersonPartyInfo/ImmigrationStat`| CERT | <!-- ESFACYC-10981 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue related to the `NameFormat` field where the default value was not getting added in the OrgParty aggregate when the field value is not provided in the request. The default values are, <br> <li> for PersonParty = None </li> <li> for OrgParty = NonPersonal </li> **Impacted Field:** <br> `PersonPartyInfo/PersonData/PersonName/NameFormat` <br> `OrgPartyInfo/OrgData/OrgName/NameFormat`| CERT | <!-- ESFACYC-11344 -->
@@ -67,7 +69,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> | Previously, the API did not return the enum desc fields when the fields were not setup with the provider. Now, the issue is resolved and the API returns empty tags successfully, if the fields are not setup with the provider. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/RelationshipMgr/RelationshipMgrIdentEnumDesc` <br> `PartyRec/OrgPartyInfo/RelationshipMgr/RelationshipMgrIdentEnumDesc` <br> `PartyRec/PersonPartyInfo/OEDCodeEnumDesc` <br> `PartyRec/OrgPartyInfo/OEDCodeEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentTypeEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentTypeEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuerEnumDesc`<br>`PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuerEnumDesc`<br> `PartyRec/PersonPartyInfo/OriginatingBranchEnumDesc`<br> `PartyRec/OrgPartyInfo/OriginatingBranchEnumDesc`<br> `PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc`<br> `PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc`| CERT | <!-- ESFACYC-11004 -->
 | <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Update ePreference</a> | We resolved the issue where the API was displaying a Null Pointer Exception error in the response when a value is not provided in the request for `DocGroupName` field.| CERT | <!-- ESFACYC-9663 -->
 | <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Delete ePreference</a> | We resolved the issue where the API was unable to delete the ePreference records created for the LOAN account.| CERT | <!-- ESFAMAX-8141 --> 
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue related to the `IssuedIdentId` field where the API was setting the value of this field automatically. Now, the API updates the value of `IssuedIdentId` field from the request. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId`| CERT | <!-- ESFACYC-6744, ESFACYC-6718 -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue related to the `IssuedIdentId` field where the API was setting the value of this field automatically. Now, the API adds the value of `IssuedIdentId` field from the request. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId`| CERT | <!-- ESFACYC-6744, ESFACYC-6718 -->
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue related to the `IssuedIdentId` field where the API was setting the value of this field automatically. Now, the API updates the value of `IssuedIdentId` field from the request. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId`| CERT | <!-- ESFACYC-6964 -->
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Get ePreference</a> | We resolved the issue where the already deleted ePreference record was getting assigned to the next ePreference record exist in the response. Now, the ePreferenceIdent details of the deleted record are not returned in the response and the user can retrieve the information successfully. | CERT | <!-- ESFACYC-9451 --> 
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Add ePreference</a> | We resolved the issue, related to incorrect error message display when an invalid account type was sent in the request. Now, the correct message, "Provider implementation not supported." is displayed when an invalid account type is sent in the request. | CERT | <!-- ESFACYC-9436 --> 
@@ -125,6 +127,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> | We resolved the issue with the `IssueDt` and `ExpDt` fields, where the API returned incorrect dates for driver license in the response message. <br> **Impacted Fields:** <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssueDt`<br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/ExpDt`| CERT |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty</a> | We resolved an issue with the `DueAmt` field to populate with correct caluculations in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/PmtCompositeAmt/CurAmt/Amt`| CERT |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty</a>  | We resolved an issue with the `NextPmt` aggregate to populate in the response message. <br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/NextPmt`| CERT |
@@ -147,6 +150,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-SDA</a> | We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for SDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8813 -->
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-DDA</a> | We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for DDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8613 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA</a> | We resolved the issue where the API failed to generate correct beneficiary code while account creation. <br> **Impacted Field:** <br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelType` | CERT | <!-- ESFATIG-2444 -->
@@ -171,6 +175,13 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open"> Add Account-DDA</a> | We resolved the issue of the “Invalid Float Extension Code” error, which previously occurred when the `RegCCStatus` value was sent in the request. <br>  **Impacted Field:** <br> `DepositAcctInfo/RegCCData/RegCCStatus`| PROD |
 
 <!-- type: tab -->
+
+## 2024_Q3.2
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 
 ## 2024_Q3.1
 
