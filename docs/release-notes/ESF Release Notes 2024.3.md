@@ -51,6 +51,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where `IRSNameControl` field was not added for the primary PersonParty or OrgParty even when the `LegalName` field is provided in the request. <br>**Impacted Field:** <br> `PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/LegalName`| CERT | <!-- ESFACYC-11280 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue, where the value for `ImmigrationStat` field was always set to the code zero (0) while adding a party, when the immigration status is, National or Citizen or esidentAlien or NonResidentAlien. <br>**Impacted Field:** <br> `PersonPartyInfo/ImmigrationStat`| CERT | <!-- ESFACYC-10981 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue related to the `NameFormat` field where the default value was not getting added in the OrgParty aggregate when the field value is not provided in the request. The default values are, <br> <li> for PersonParty = None </li> <li> for OrgParty = NonPersonal </li> **Impacted Field:** <br> `PersonPartyInfo/PersonData/PersonName/NameFormat` <br> `OrgPartyInfo/OrgData/OrgName/NameFormat`| CERT | <!-- ESFACYC-11344 -->
@@ -125,6 +126,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> | We resolved the issue with the `IssueDt` and `ExpDt` fields, where the API returned incorrect dates for driver license in the response message. <br> **Impacted Fields:** <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssueDt`<br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/ExpDt`| CERT |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty</a> | We resolved an issue with the `DueAmt` field to populate with correct caluculations in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/PmtCompositeAmt/CurAmt/Amt`| CERT |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty</a>  | We resolved an issue with the `NextPmt` aggregate to populate in the response message. <br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/NextPmt`| CERT |
@@ -147,6 +149,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-SDA</a> | We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for SDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8813 -->
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-DDA</a> | We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for DDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8613 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA</a> | We resolved the issue where the API failed to generate correct beneficiary code while account creation. <br> **Impacted Field:** <br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelType` | CERT | <!-- ESFATIG-2444 -->
@@ -171,6 +174,13 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open"> Add Account-DDA</a> | We resolved the issue of the “Invalid Float Extension Code” error, which previously occurred when the `RegCCStatus` value was sent in the request. <br>  **Impacted Field:** <br> `DepositAcctInfo/RegCCData/RegCCStatus`| PROD |
 
 <!-- type: tab -->
+
+## 2024_Q3.2
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 
 ## 2024_Q3.1
 
