@@ -1,4 +1,4 @@
-[Banking Hub - DNA - Trial Plan Postman Collection.zip](https://github.com/user-attachments/files/16346977/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip)<!-- 
+<!-- 
 type: tab 
 titles: Downloads, Guidelines
 -->
