@@ -16,12 +16,11 @@ titles: Downloads, Guidelines
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for Premier Core](https://github.com/Fiserv/banking-hub/files/14979763/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.postman_collection.zip)
+> [Download Postman Collection for Premier Core](https://github.com/user-attachments/files/16746722/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.zip)
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for Precision Core](https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip)
-
+> [Download Postman Collection for Precision Core](https://github.com/user-attachments/files/16746724/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.zip)
 
 
 <!-- theme: info -->  
@@ -33,7 +32,8 @@ titles: Downloads, Guidelines
 
 
 <!--
-
+Postman PRC old: https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip
+Postamn prm old: https://github.com/Fiserv/banking-hub/files/14979763/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.postman_collection.zip
 changed on 23 july for DNA postman collection(https://github.com/Fiserv/banking-hub/files/14461530/EFX.Collection.for.DS.zip) 
 APi Spec of q2 [Download API Specifications (v11.0.0.2024.2)](https://github.com/Fiserv/banking-hub/files/15398141/esf-service-swagger-release-11.0.0.2024.2.zip)
 changed on 15 april (this link is to the old file, updated file is linked above):(https://github.com/Fiserv/banking-hub/files/14896029/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.postman_collection.zip)
