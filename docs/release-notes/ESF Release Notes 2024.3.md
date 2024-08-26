@@ -124,6 +124,11 @@ titles: Premier, Precision, Signature, Cleartouch
 
 ## 2024_Q3.2
 
+### Enhancements
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| Get Party Account Relationship-ByParty | We updated the value of the consumer credit card identifier (applicable only when the value of the `AcctType` field is "CCA", which is Credit Card Account) in the response to match the value of the card service provider. <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctKeys/CardKeys/CardId` | CERT | <!-- ESFAUTO-5842/ESFATIG-2956 -->
+
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
