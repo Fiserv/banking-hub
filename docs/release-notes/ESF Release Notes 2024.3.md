@@ -45,6 +45,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+|General | We updated the postman collection for Premier core in the <a href="../docs/?path=docs/resources/resources.md">Resources</a>.| PROD|
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-DDA, Get Account Details-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account-DDA, Update Account-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open"> Add ePreference, </a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences" title="Click to open"> Update ePreference,</a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Delete ePreference</a> | We added a new field `OvrdAutoAckInd` to override the warnings that are returned in the response by the core while performing add, update and delete of an ePreference record under these APIs.| CERT |<!-- ESF-1769, ESFACYC-9557, ESFACYC-9558, ESFACYC-7461 & ESFACYC-1110 -->
@@ -127,6 +128,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+|General | We updated the postman collection for Precision core in the <a href="../docs/?path=docs/resources/resources.md">Resources</a>.| PROD|
 | Get Party Account Relationship-ByParty | We updated the value of the consumer credit card identifier (applicable only when the value of the `AcctType` field is "CCA", which is Credit Card Account) in the response to match the value of the card service provider. <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctKeys/CardKeys/CardId` | CERT | <!-- ESFAUTO-5842/ESFATIG-2956 -->
 
 ### Fixed
