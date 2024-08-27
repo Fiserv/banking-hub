@@ -129,7 +129,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 |General | We updated the postman collection for Precision core in the <a href="../docs/?path=docs/resources/resources.md">Resources</a>.| PROD|
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty </a> | We updated the value of the consumer credit card identifier (applicable only when the value of the `AcctType` field is "CCA", which is Credit Card Account) in the response to match the value of the card service provider. <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctKeys/CardKeys/CardId` | CERT | <!-- ESFAUTO-5842/ESFATIG-2956 -->
+| Get Party Account Relationship-ByParty | We updated the value of the consumer credit card identifier (applicable only when the value of the `AcctType` field is "CCA", which is Credit Card Account) in the response to match the value of the card service provider. <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctKeys/CardKeys/CardId` | CERT | <!-- ESFAUTO-5842/ESFATIG-2956 -->
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -200,5 +200,4 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History </a> | We fixed the issue where the API was returning the pending transactions on each response in pagination logic. Now, the pending transactions are returned against the prior/initial request at once.| PROD |
 
 <!-- type: tab-end -->
-
 
