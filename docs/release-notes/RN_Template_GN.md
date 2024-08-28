@@ -3536,3 +3536,147 @@ titles: UMM, North, GMA
 | NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
 
 <!-- type: tab-end -->
+### irsSupplementalInformation
+
+---
+
+tags: [irsSupplementalInformation]
+
+---
+
+* Description: Irs Supplemental Information
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| econsentDate| Econsent Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| econsentIndicator| Econsent Indicator        |    OWNERSHIP_CHANGE   |   Ownership Change        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ECONSENT_GIVEN   |   Econsent Given        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ECONSENT_REVOKED   |   Econsent Revoked        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    PENDING_STATUS   |   Pending Status        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EMAIL_DELIVERY_FAILED   |   Email Delivery Failed        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    STATUS_CHANGE   |   Status Change        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ONLY_EMAIL_ACTIVATED   |   Only Email Activated        |    Available     | Optional     | Allowed |    NA |
+| primaryEmailIndicator| Primary Email Indicator        |    USE_ALTERNATE_EMAIL   |   Use Alternate Email        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    USE_PRIMARY_EMAIL   |   Use Primary Email        |    Available     | Optional     | Allowed |    NA |
+| requestGuid| Request Guid        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| userProvidedEconsentEmail| User Provided Econsent Email        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| econsentDate| Econsent Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| econsentIndicator| Econsent Indicator        |    OWNERSHIP_CHANGE   |   Ownership Change        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ECONSENT_GIVEN   |   Econsent Given        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ECONSENT_REVOKED   |   Econsent Revoked        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    PENDING_STATUS   |   Pending Status        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EMAIL_DELIVERY_FAILED   |   Email Delivery Failed        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    STATUS_CHANGE   |   Status Change        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ONLY_EMAIL_ACTIVATED   |   Only Email Activated        |    Available     | Optional     | Allowed |    NA |
+| primaryEmailIndicator| Primary Email Indicator        |    USE_ALTERNATE_EMAIL   |   Use Alternate Email        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    USE_PRIMARY_EMAIL   |   Use Primary Email        |    Available     | Optional     | Allowed |    NA |
+| requestGuid| Request Guid        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| userProvidedEconsentEmail| User Provided Econsent Email        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### isoServices
+
+---
+
+tags: [isoServices]
+
+---
+
+* Description: Iso Services
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| isoIdAmex| Iso Id Amex        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdDscv| Iso Id Discover        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdMc| Iso Id Mc        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdVi| Iso Id Vi        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| serviceProvider| Service Provider        |    APERIA   |   Aperia        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    WELLS   |   Wells        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    MARKETPLACE   |   Marketplace        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FD_DIRECT   |   Fd Direct        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| isoIdAmex| Iso Id Amex        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdDscv| Iso Id Discover        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdMc| Iso Id Mc        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdVi| Iso Id Vi        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| serviceProvider| Service Provider        |    APERIA   |   Aperia        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    WELLS   |   Wells        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    MARKETPLACE   |   Marketplace        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FD_DIRECT   |   Fd Direct        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### keyReferenceNumber
+
+---
+
+tags: [keyReferenceNumber]
+
+---
+
+* Description: Key Reference Number
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| keyReferenceNumber| Credit Only Key Reference Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| tbd| Tbd        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| keyReferenceNumber| Credit Only Key Reference Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| tbd| Tbd        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
