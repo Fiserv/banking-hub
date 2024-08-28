@@ -5065,6 +5065,245 @@ titles: UMM, North, GMA
 
 <!-- type: tab-end -->
 
+### msipDetails
+
+---
+
+tags: [msipDetails]
+
+---
+
+* Description: MSIP Details
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| msipAlternateCityName| MSIP Alternate City Name        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipAlternateMerchantName| MSIP Alternate Merchant Name        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipBacsIndicator| MSIP Bacs Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+| msipBacsMerchantName| MSIP Bacs Merchant Name        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipCategoryLevelCode| MSIP Category Level Code        |    VAU_MERCHANT   |   Vau Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LIMITED_AMOUNT_TERMINAL   |   Limited Amount Terminal        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MRCH_PERFPGM_NOT_ME2ME   |   Mrch Perfpgm Not Me2Me        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_A_CAT_MERCHANT   |   Not A Cat Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ORIGINAL_CREDIT_TRANS   |   Original Credit Trans        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MRCH_PERFPGM_AND_ME2ME   |   Mrch Perfpgm And Me2Me        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UNATTEND_WITH_AUTH_CAPA   |   Unattend With Auth Capa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ME_TO_ME   |   Me To Me        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+| msipChainRollupDate| MSIP Chain Rollup Date        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipChainRollupIndicator| MSIP Chain Rollup Indicator        |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_SPECIFIED   |   Not Specified        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    C   |   C        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| msipContactName| MSIP Contact Name        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipFax1Number| MSIP Fax1 Number        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipFax2Number| MSIP Fax2 Number        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipHotCardIndicator| MSIP Hot Card Indicator        |    2   |   2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    4   |   4        |    Available     | Optional     | Allowed |    NA |
+| msipInternationalDialNumber| MSIP International Dial Number        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroCashbackIndicator | MSIP Maestro Cashback Indicator   |    2   |   2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    N   |   N        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_SPECIFIED   |   Not Specified        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    C   |   C        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    5   |   5        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroCeilingAmount| MSIP Maestro Ceiling Amount        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroFloorAmount| MSIP Maestro Floor Amount        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroFraudProneIndicator| MSIP Maestro Fraud Prone Indicator        |    NORMAL_RISK   |   Normal Risk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HIGHLY_FRAUD_PRONE   |   Highly Fraud Prone        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRAUD_PRONE   |   Fraud Prone        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroId| MSIP Maestro Id        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroMccCode| MSIP Maestro Mcc Code        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMailToAgentIndicator| MSIP Mail To Agent Indicator        |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+| msipMailToBankIndicator| MSIP Mail To Bank Indicator        |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    1   |   1        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+| msipMailToBusinessIndicator| MSIP Mail To Business Indicator        |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+| msipMailToChainIndicator| MSIP Mail To Chain Indicator        |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+| msipMailToCorporationIndicator| MSIP Mail To Corporation Indicator        |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    1   |   1        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+| msipMailToOutletIndicator| MSIP Mail To Outlet Indicator        |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    O   |   O        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    1   |   1        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+| msipMastercardCurrencyCode| MSIP Mastercard Currency Code        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipNewAccountIndicator| MSIP New Account Indicator        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| msipPlasticFormatCode| MSIP Plastic Format Code        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipPlasticRegenerateIndicator| MSIP Plastic Regenerate Indicator        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+| msipRecourseCode| MSIP Recourse Code        |    MAIL_ORDER_FULL_RECOURSE   |   Mail Order Full Recourse        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MISSING_IMPRINT_FULL_REC   |   Missing Imprint Full Rec        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BOTH_MAIL_MISSING   |   Both Mail Missing        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    1   |   1        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| msipTerminalCount| MSIP Terminal Count        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipVisaCashbackIndicator| MSIP Visa Cashback Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    5   |   5        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    2   |   2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    N   |   N        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    C   |   C        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_SPECIFIED   |   Not Specified        |    Available     | Optional     | Allowed |    NA |
+| msipVisaCeilingAmount| MSIP Visa Ceiling Amount        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipVisaCurrencyCode| MSIP Visa Currency Code        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipVisaFloorAmount| MSIP Visa Floor Amount        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| msipAlternateCityName| MSIP Alternate City Name        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipAlternateMerchantName| MSIP Alternate Merchant Name        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipBacsIndicator| MSIP Bacs Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+| msipBacsMerchantName| MSIP Bacs Merchant Name        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipCategoryLevelCode| MSIP Category Level Code        |    VAU_MERCHANT   |   Vau Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LIMITED_AMOUNT_TERMINAL   |   Limited Amount Terminal        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MRCH_PERFPGM_NOT_ME2ME   |   Mrch Perfpgm Not Me2Me        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_A_CAT_MERCHANT   |   Not A Cat Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ORIGINAL_CREDIT_TRANS   |   Original Credit Trans        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MRCH_PERFPGM_AND_ME2ME   |   Mrch Perfpgm And Me2Me        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UNATTEND_WITH_AUTH_CAPA   |   Unattend With Auth Capa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ME_TO_ME   |   Me To Me        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+| msipChainRollupDate| MSIP Chain Rollup Date        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipChainRollupIndicator| MSIP Chain Rollup Indicator        |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_SPECIFIED   |   Not Specified        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    C   |   C        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| msipContactName| MSIP Contact Name        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipFax1Number| MSIP Fax1 Number        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipFax2Number| MSIP Fax2 Number        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipHotCardIndicator| MSIP Hot Card Indicator        |    2   |   2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    4   |   4        |    Available     | Optional     | Allowed |    NA |
+| msipInternationalDialNumber| MSIP International Dial Number        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroCashbackIndicator | MSIP Maestro Cashback Indicator   |    2   |   2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    N   |   N        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_SPECIFIED   |   Not Specified        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    C   |   C        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    5   |   5        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroCeilingAmount| MSIP Maestro Ceiling Amount        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroFloorAmount| MSIP Maestro Floor Amount        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroFraudProneIndicator| MSIP Maestro Fraud Prone Indicator        |    NORMAL_RISK   |   Normal Risk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HIGHLY_FRAUD_PRONE   |   Highly Fraud Prone        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRAUD_PRONE   |   Fraud Prone        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroId| MSIP Maestro Id        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMaestroMccCode| MSIP Maestro Mcc Code        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipMailToAgentIndicator| MSIP Mail To Agent Indicator        |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+| msipMailToBankIndicator| MSIP Mail To Bank Indicator        |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    1   |   1        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+| msipMailToBusinessIndicator| MSIP Mail To Business Indicator        |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+| msipMailToChainIndicator| MSIP Mail To Chain Indicator        |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+| msipMailToCorporationIndicator| MSIP Mail To Corporation Indicator        |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    1   |   1        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+| msipMailToOutletIndicator| MSIP Mail To Outlet Indicator        |    USE_DBA_ADDRESS   |   Use Dba Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    O   |   O        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    1   |   1        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_SENT   |   No Statement Sent        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USE_BILL_TO_ADDRESS   |   Use Bill To Address        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO_STATEMENT_GENERATED   |   No Statement Generated        |    Available     | Optional     | Allowed |    NA |
+| msipMastercardCurrencyCode| MSIP Mastercard Currency Code        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipNewAccountIndicator| MSIP New Account Indicator        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| msipPlasticFormatCode| MSIP Plastic Format Code        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipPlasticRegenerateIndicator| MSIP Plastic Regenerate Indicator        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    0   |   0        |    Available     | Optional     | Allowed |    NA |
+| msipRecourseCode| MSIP Recourse Code        |    MAIL_ORDER_FULL_RECOURSE   |   Mail Order Full Recourse        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MISSING_IMPRINT_FULL_REC   |   Missing Imprint Full Rec        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BOTH_MAIL_MISSING   |   Both Mail Missing        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    1   |   1        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| msipTerminalCount| MSIP Terminal Count        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipVisaCashbackIndicator| MSIP Visa Cashback Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    5   |   5        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    2   |   2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    N   |   N        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    3   |   3        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    C   |   C        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_SPECIFIED   |   Not Specified        |    Available     | Optional     | Allowed |    NA |
+| msipVisaCeilingAmount| MSIP Visa Ceiling Amount        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipVisaCurrencyCode| MSIP Visa Currency Code        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+| msipVisaFloorAmount| MSIP Visa Floor Amount        |    Not available in API mappings   |   Not Available In Api Mappings        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+
 
 
 
