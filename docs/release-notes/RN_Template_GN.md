@@ -4375,6 +4375,330 @@ titles: UMM, North, GMA
 | NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
 
 <!-- type: tab-end -->
+### merchantMunicipality
+
+---
+
+tags: [merchantMunicipality]
+
+---
+
+* Description: Merchant Municipality
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| municipalityTaxInd| Municipality Tax Indicator        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| municipilatityCode| Municipality Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| municipalityTaxInd| Municipality Tax Indicator        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| municipilatityCode| Municipality Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab-end -->
+
+### merchantPortfolioType
+
+---
+
+tags: [merchantPortfolioType]
+
+---
+
+* Description: Merchant Portfolio Type
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| byTransactionCount| Transaction Count Portfolio Size        |    MIDMARKET   |   Midmarket        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMB   |   Smb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NATIONAL   |   National        |    Available     | Optional     | Allowed |    NA |
+| offeringType| Offering Type        |    NATIONAL   |   National        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMB   |   Smb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MIDMARKET   |   Midmarket        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| byTransactionCount| Transaction Count Portfolio Size        |    MIDMARKET   |   Midmarket        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMB   |   Smb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NATIONAL   |   National        |    Available     | Optional     | Allowed |    NA |
+| offeringType| Offering Type        |    NATIONAL   |   National        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMB   |   Smb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MIDMARKET   |   Midmarket        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantPricingStructure
+
+---
+
+tags: [merchantPricingStructure]
+
+---
+
+* Description: Merchant Pricing Structure
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+|          -            |                 -                    |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+|          -            |                 -                    |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### miniPromoForStationOutage
+
+---
+
+tags: [miniPromoForStationOutage]
+
+---
+
+* Description: Mini Promo For Station Outage
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| contractDate| Contract Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| contractDate| Contract Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### miscReporting
+
+---
+
+tags: [miscReporting]
+
+---
+
+* Description: MISC
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| enhancedReportingIndicator| Enhanced Reporting Indicator        |    ALL_TRANS_FUNDED_CHG_FEE   |   All Trans Funded Chg Fee        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BAI2_PINNACLE   |   Bai2 Pinnacle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PINNACLE   |   Pinnacle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MERCHANT_LOCATION_SUMM_J   |   Merchant Location Summ J        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_REP   |   All Trans Settled Rep        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_CHG_FEE   |   All Trans Settled Chg Fee        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_I   |   All Trans Settled I        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_E   |   Only Trans Funded E        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BAI2   |   Bai2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_REP   |   Only Trans Funded Rep        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EDI CONF   |   Edi Conf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_AUTOBILLBK_SYS   |   Not Autobillbk Sys        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_F   |   All Trans Settled F        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MERCHANT_LOCATION_SUMM_G   |   Merchant Location Summ G        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_H   |   Only Trans Funded H        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EDI_CONF_PINNACLE   |   Edi Conf Pinnacle        |    Available     | Optional     | Allowed |    NA |
+| farsFiscalDate        | Financial Account Reporting System Fiscal Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| farsMediaTypeCode     | Financial Activity Reporting System Media Type Code        |    TAPE_REEL_16100_BPI   |   Tape Reel 16100 Bpi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CATRIDGE_COMP   |   Catridge Comp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARTRIDGE_NON_COMP   |   Cartridge Non Comp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TAPE_REEL_3250_BPI   |   Tape Reel 3250 Bpi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|farsReportFrequencyCode| Financial Activity Reporting System Report Frequency Code        |    MNTH_LAST_SAT   |   Mnth Last Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_MON   |   Wkly 1St 3Rd Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_THU   |   Wkly Tue Thu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_SAT   |   Wkly Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_FRI   |   Wkly Wed Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE   |   Wkly Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEMIMNTH_LAST_BUSS_DAY   |   Semimnth Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SUN_2ND_LAST_WEEK   |   Sun 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_FRI   |   Wkly Tue Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_SAT   |   Wkly Tue Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUE_2ND_LAST_WEEK   |   Tue 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_TUE   |   Mnth Last Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_WED   |   Mnth Last Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_WED   |   Wkly 1St 3Rd Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QTRLY_LAST_BUSS_DAY   |   Qtrly Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MON_2ND_LAST_WEEK   |   Mon 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DLY   |   Dly        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_TUE   |   Wkly 1St 3Rd Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_SUN   |   Wkly 1St 3Rd Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_FARS_ENTITLED   |   Not Fars Entitled        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_THURS   |   Wkly Thurs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_SUN   |   Wkly Wed Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTHLY_LAST_BUSS_DAY   |   Mthly Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    28_DAYS_CYCLE   |   28 Days Cycle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SAT_2ND_LAST_WEEK   |   Sat 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_THURS   |   Mnth Last Thurs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTHLY_LAST_CAL_DAY   |   Mthly Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON_TUE   |   Wkly Mon Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QTRLY_LAST_CAL_DAY   |   Qtrly Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_FRI_SUN   |   Wkly Fri Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON   |   Wkly Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    28_35_28_DAYS_CYCLE   |   28 35 28 Days Cycle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRI_2ND_LAST_WEEK   |   Fri 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WED_2ND_LAST_WEEK   |   Wed 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_SUN   |   Mnth Last Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FLEX_DAYS   |   Flex Days        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_FRI   |   Wkly 1St 3Rd Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED   |   Wkly Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_MON   |   Mnth Last Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON_WED   |   Wkly Mon Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_SUN   |   Wkly Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEMIMNTH_LAST_CAL_DAY   |   Semimnth Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_SAT   |   Wkly Wed Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_SUN   |   Wkly Tue Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_THU_SUN   |   Wkly Thu Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_SAT   |   Wkly 1St 3Rd Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    THU_2ND_LAST_WEEK   |   Thu 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_FRI   |   Mnth Last Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_FRI   |   Wkly Fri        |    Available     | Optional     | Allowed |    NA |  
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| enhancedReportingIndicator| Enhanced Reporting Indicator        |    ALL_TRANS_FUNDED_CHG_FEE   |   All Trans Funded Chg Fee        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BAI2_PINNACLE   |   Bai2 Pinnacle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PINNACLE   |   Pinnacle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MERCHANT_LOCATION_SUMM_J   |   Merchant Location Summ J        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_REP   |   All Trans Settled Rep        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_CHG_FEE   |   All Trans Settled Chg Fee        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_I   |   All Trans Settled I        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_E   |   Only Trans Funded E        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BAI2   |   Bai2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_REP   |   Only Trans Funded Rep        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EDI CONF   |   Edi Conf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_AUTOBILLBK_SYS   |   Not Autobillbk Sys        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_F   |   All Trans Settled F        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MERCHANT_LOCATION_SUMM_G   |   Merchant Location Summ G        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_H   |   Only Trans Funded H        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EDI_CONF_PINNACLE   |   Edi Conf Pinnacle        |    Available     | Optional     | Allowed |    NA |
+| farsFiscalDate        | Financial Account Reporting System Fiscal Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| farsMediaTypeCode     | Financial Activity Reporting System Media Type Code        |    TAPE_REEL_16100_BPI   |   Tape Reel 16100 Bpi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CATRIDGE_COMP   |   Catridge Comp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARTRIDGE_NON_COMP   |   Cartridge Non Comp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TAPE_REEL_3250_BPI   |   Tape Reel 3250 Bpi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|farsReportFrequencyCode| Financial Activity Reporting System Report Frequency Code        |    MNTH_LAST_SAT   |   Mnth Last Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_MON   |   Wkly 1St 3Rd Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_THU   |   Wkly Tue Thu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_SAT   |   Wkly Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_FRI   |   Wkly Wed Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE   |   Wkly Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEMIMNTH_LAST_BUSS_DAY   |   Semimnth Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SUN_2ND_LAST_WEEK   |   Sun 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_FRI   |   Wkly Tue Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_SAT   |   Wkly Tue Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUE_2ND_LAST_WEEK   |   Tue 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_TUE   |   Mnth Last Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_WED   |   Mnth Last Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_WED   |   Wkly 1St 3Rd Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QTRLY_LAST_BUSS_DAY   |   Qtrly Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MON_2ND_LAST_WEEK   |   Mon 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DLY   |   Dly        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_TUE   |   Wkly 1St 3Rd Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_SUN   |   Wkly 1St 3Rd Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_FARS_ENTITLED   |   Not Fars Entitled        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_THURS   |   Wkly Thurs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_SUN   |   Wkly Wed Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTHLY_LAST_BUSS_DAY   |   Mthly Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    28_DAYS_CYCLE   |   28 Days Cycle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SAT_2ND_LAST_WEEK   |   Sat 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_THURS   |   Mnth Last Thurs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTHLY_LAST_CAL_DAY   |   Mthly Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON_TUE   |   Wkly Mon Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QTRLY_LAST_CAL_DAY   |   Qtrly Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_FRI_SUN   |   Wkly Fri Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON   |   Wkly Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    28_35_28_DAYS_CYCLE   |   28 35 28 Days Cycle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRI_2ND_LAST_WEEK   |   Fri 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WED_2ND_LAST_WEEK   |   Wed 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_SUN   |   Mnth Last Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FLEX_DAYS   |   Flex Days        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_FRI   |   Wkly 1St 3Rd Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED   |   Wkly Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_MON   |   Mnth Last Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON_WED   |   Wkly Mon Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_SUN   |   Wkly Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEMIMNTH_LAST_CAL_DAY   |   Semimnth Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_SAT   |   Wkly Wed Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_SUN   |   Wkly Tue Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_THU_SUN   |   Wkly Thu Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_SAT   |   Wkly 1St 3Rd Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    THU_2ND_LAST_WEEK   |   Thu 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_FRI   |   Mnth Last Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_FRI   |   Wkly Fri        |    Available     | Optional     | Allowed |    NA |  
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
 
 
 
