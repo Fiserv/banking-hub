@@ -4204,4 +4204,177 @@ titles: UMM, North, GMA
 
 <!-- type: tab-end -->
 
+### merchantFraudAndSecurity
+
+---
+
+tags: [merchantFraudAndSecurity]
+
+---
+
+* Description: Merchant Fraud And Security
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| afdsMerchantAuthBlockStatus| Afds Merchant Auth Block Status        |    AFDS_AUTH_BLOCK   |   Afds Auth Block        |    Available     | Optional     | Allowed |    NA |
+|          -                 |                 -                      |    AFDS_AUTH_UNBLOCK   |   Afds Auth Unblock        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| afdsMerchantAuthBlockStatus| Afds Merchant Auth Block Status        |    AFDS_AUTH_BLOCK   |   Afds Auth Block        |    Available     | Optional     | Allowed |    NA |
+|          -                 |                 -                      |    AFDS_AUTH_UNBLOCK   |   Afds Auth Unblock        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantFrontEnds
+
+---
+
+tags: [merchantFrontEnds]
+
+---
+
+* Description: Merchant Front Ends
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| authNetworkCode1| Name Of The Network        |    WALMART_BEST_PRICE   |   Walmart Best Price        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VITAL   |   Vital        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOUTH   |   South        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARDNET   |   Cardnet        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COMPASS   |   Compass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NASHVILLE   |   Nashville        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDI   |   Mdi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAPER   |   Paper        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELECHECK   |   Telecheck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FDR   |   Fdr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELEMONEY   |   Telemoney        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAPP   |   Mapp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NDC   |   Ndc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BUYPASS   |   Buypass        |    Available     | Optional     | Allowed |    NA |
+| authNetworkCode2      | Name Of The Secondary Network        |    NDC   |   Ndc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAPER   |   Paper        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COMPASS   |   Compass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELECHECK   |   Telecheck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAPP   |   Mapp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FDR   |   Fdr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BUYPASS   |   Buypass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELEMONEY   |   Telemoney        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOUTH   |   South        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WALMART_BEST_PRICE   |   Walmart Best Price        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NASHVILLE   |   Nashville        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VITAL   |   Vital        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARDNET   |   Cardnet        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDI   |   Mdi        |    Available     | Optional     | Allowed |    NA |
+| authNetworkSecurityCode1| Code Which Can Be Used To Determine The Front End Network        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| authNetworkSecurityCode2| Code which is being used to determine the front end network         |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| authNetworkCode1| Name Of The Network        |    WALMART_BEST_PRICE   |   Walmart Best Price        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VITAL   |   Vital        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOUTH   |   South        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARDNET   |   Cardnet        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COMPASS   |   Compass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NASHVILLE   |   Nashville        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDI   |   Mdi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAPER   |   Paper        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELECHECK   |   Telecheck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FDR   |   Fdr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELEMONEY   |   Telemoney        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAPP   |   Mapp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NDC   |   Ndc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BUYPASS   |   Buypass        |    Available     | Optional     | Allowed |    NA |
+| authNetworkCode2      | Name Of The Secondary Network        |    NDC   |   Ndc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAPER   |   Paper        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COMPASS   |   Compass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELECHECK   |   Telecheck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAPP   |   Mapp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FDR   |   Fdr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BUYPASS   |   Buypass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELEMONEY   |   Telemoney        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOUTH   |   South        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WALMART_BEST_PRICE   |   Walmart Best Price        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NASHVILLE   |   Nashville        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VITAL   |   Vital        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARDNET   |   Cardnet        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDI   |   Mdi        |    Available     | Optional     | Allowed |    NA |
+| authNetworkSecurityCode1| Code Which Can Be Used To Determine The Front End Network        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| authNetworkSecurityCode2| Code which is being used to determine the front end network         |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantLiteConfig
+
+---
+
+tags: [merchantLiteConfig]
+
+---
+
+* Description: Merchant Lite Configuration
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| merchantLiteAuthLimitAmount  | Merchant Lite Auth Limit Amount                   |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| merchantLiteCreditLimitAmount| Merchant Lite Credit Limit Amount                 |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| merchantLiteSalesLimitAmount | Merchant Lite Sales Limit Amount                  |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| merchantLiteAuthLimitAmount  | Merchant Lite Auth Limit Amount                   |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| merchantLiteCreditLimitAmount| Merchant Lite Credit Limit Amount                 |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| merchantLiteSalesLimitAmount | Merchant Lite Sales Limit Amount                  |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+
 
