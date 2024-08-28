@@ -5303,7 +5303,215 @@ titles: UMM, North, GMA
 
 <!-- type: tab-end -->
 
+### mvbEmergingMarkets
 
+---
+
+tags: [mvbEmergingMarkets]
+
+---
+
+* Description: Mvb Emerging Markets
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type        |    VISA_MC_HBR   |   Visa Mc Hbr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CBD_CANNABIS   |   Cbd Cannabis        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LEGAL_GAMBLING   |   Legal Gambling        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DFS   |   Dfs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MSB   |   Msb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SINGLE_MID_PFAC   |   Single Mid Pfac        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type        |    VISA_MC_HBR   |   Visa Mc Hbr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CBD_CANNABIS   |   Cbd Cannabis        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LEGAL_GAMBLING   |   Legal Gambling        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DFS   |   Dfs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MSB   |   Msb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SINGLE_MID_PFAC   |   Single Mid Pfac        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### nationalAccountId
+
+---
+
+tags: [nationalAccountId]
+
+---
+
+* Description: National Account Underwriting Account Id
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| nationalAccountId| National account id        |       |           |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| nationalAccountId| National account id        |       |           |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### omahaDebitSuspenseItemsRelease
+
+---
+
+tags: [omahaDebitSuspenseItemsRelease]
+
+---
+
+* Description: Omaha Dd-623 Debit  Suspense Items Release - Channel Level
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| status| Program Status        |    ACTIVE   |   Active        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CANCEL   |   Cancel        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| status| Program Status        |    ACTIVE   |   Active        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CANCEL   |   Cancel        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### onBoardingDetails
+
+---
+
+tags: [onBoardingDetails]
+
+---
+
+* Description: OnBoarding Details
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| boardingOriginCode| Legacy field boarding origin code        |    MERCURY   |   Mercury        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    BAM   |   Bam        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    EMERALD   |   Emerald        |    Available     | Required     | Allowed |    NA |
+|   -   |    -   |    NONE   |   Blank Value  |    Available     | Required     | Allowed |    NA    |
+| boardingSourceCode| Code which indicates what boarding tool or process was used        |    UAL   |   Ual        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    CONVERTED_ACCT   |   Converted Acct        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    AMA_CLICK_TO_AGREE   |   Ama Click To Agree        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    MERCURY   |   Mercury        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    AMA   |   Ama        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    HIERARCHY_ADD   |   Hierarchy Add        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    ACCESS_ONE   |   Access One        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    AMA _WEB   |   Ama  Web        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    FD_SNAP   |   Fd Snap        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    COPILOT_N   |   Copilot N        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    BAM   |   Bam        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    COPILOT_O   |   Copilot O        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    FD_MARKETPLACE   |   Fd Marketplace        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    PARTNER_REFERAL   |   Partner Referal        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    SNAP_MER_LITE   |   Snap Mer Lite        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    GSB_BOARDING   |   Gsb Boarding        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    AMA DE   |   Ama De        |    Available     | Required     | Allowed |    NA |
+|   -   |   -  |    VAPP_BRICK_AND_MORTAR   |   VAPP Brick and Mortar   |    Available     | Required     | Allowed |  NA |
+|   -   |   -  |    TRACES   |   Traces   |    Available     | Required     | Allowed |  NA |
+|   -   |   -  |    NONE   |   Blank Value   |    Available     | Required     | Allowed |  NA |
+| boardingTypeCode| Boarding Type Code |    NEW_ACCOUNT   |  New Account |  Available | Required  | Allowed | NA |
+|   -   |    -   |    ADDITIONAL_OUTLET   |   Additional Outlet  |    Available     | Required  | Allowed |  NA |
+|   -   |    -   |    BATCH_FEED   |   Batch Feed  |    Available     | Required  | Allowed |  NA |
+| convertedAccountDate| Converted Account Date        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| convertedAccountIndicator| Converted Account Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| linkBackwardMerchantId| Link Backward Merchant Id        |    STRING containing digits only - MERCHANT ID   |   String Containing Digits Only - Merchant Id        |    Available     | Optional     | Allowed |    NA |
+| linkForwardMerchantId| Link Forward Merchant Id        |    STRING containing digits only - MERCHANT ID   |   String Containing Digits Only - Merchant Id        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| boardingOriginCode| Legacy field boarding origin code        |    MERCURY   |   Mercury        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    BAM   |   Bam        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    EMERALD   |   Emerald        |    Available     | Required     | Allowed |    NA |
+|   -   |    -   |    NONE   |   Blank Value  |    Available     | Required     | Allowed |    NA    |
+| boardingSourceCode| Code which indicates what boarding tool or process was used        |    UAL   |   Ual        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    CONVERTED_ACCT   |   Converted Acct        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    AMA_CLICK_TO_AGREE   |   Ama Click To Agree        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    MERCURY   |   Mercury        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    AMA   |   Ama        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    HIERARCHY_ADD   |   Hierarchy Add        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    ACCESS_ONE   |   Access One        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    AMA _WEB   |   Ama  Web        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    FD_SNAP   |   Fd Snap        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    COPILOT_N   |   Copilot N        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    BAM   |   Bam        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    COPILOT_O   |   Copilot O        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    FD_MARKETPLACE   |   Fd Marketplace        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    PARTNER_REFERAL   |   Partner Referal        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    SNAP_MER_LITE   |   Snap Mer Lite        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    GSB_BOARDING   |   Gsb Boarding        |    Available     | Required     | Allowed |    NA |
+|          -            |                 -                    |    AMA DE   |   Ama De        |    Available     | Required     | Allowed |    NA |
+|   -   |   -  |    VAPP_BRICK_AND_MORTAR   |   VAPP Brick and Mortar   |    Available     | Required     | Allowed |  NA |
+|   -   |   -  |    TRACES   |   Traces   |    Available     | Required     | Allowed |  NA |
+|   -   |   -  |    NONE   |   Blank Value   |    Available     | Required     | Allowed |  NA |
+| boardingTypeCode| Boarding Type Code |    NEW_ACCOUNT   |  New Account |  Available | Required  | Allowed | NA |
+|   -   |    -   |    ADDITIONAL_OUTLET   |   Additional Outlet  |    Available     | Required  | Allowed |  NA |
+|   -   |    -   |    BATCH_FEED   |   Batch Feed  |    Available     | Required  | Allowed |  NA |
+| convertedAccountDate| Converted Account Date        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| convertedAccountIndicator| Converted Account Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| linkBackwardMerchantId| Link Backward Merchant Id        |    STRING containing digits only - MERCHANT ID   |   String Containing Digits Only - Merchant Id        |    Available     | Optional     | Allowed |    NA |
+| linkForwardMerchantId| Link Forward Merchant Id        |    STRING containing digits only - MERCHANT ID   |   String Containing Digits Only - Merchant Id        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
 
 
 
