@@ -1943,3 +1943,1287 @@ titles: UMM, North, GMA
 
 <!-- type: tab-end -->
 
+### enhanceDebitCompletionFlow
+
+---
+
+tags: [enhanceDebitCompletionFlow]
+
+---
+
+* Description: Enhance Debit Completion Flow For Pts Direct Send Merchants
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| status| Program Status        |    ENHANCED_DB_FLOW_OFF   |   Enhanced Db Flow Off        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    ENHANCED_DB_FLOW_ON   |   Enhanced Db Flow On        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| status| Program Status        |    ENHANCED_DB_FLOW_OFF   |   Enhanced Db Flow Off        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    ENHANCED_DB_FLOW_ON   |   Enhanced Db Flow On        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### fdggMigration
+
+---
+
+tags: [fdggMigration]
+
+---
+
+* Description: First Data Global Gateway Migration
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type        |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+| status| Program Status        |    NOT_MIGRATED   |   Not Migrated        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    MIGRATED   |   Migrated        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type        |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+| status| Program Status        |    NOT_MIGRATED   |   Not Migrated        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    MIGRATED   |   Migrated        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### financialBuAssignmentValues
+
+---
+
+tags: [financialBuAssignmentValues]
+
+---
+
+* Description: Financial Bu Assignment Values
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| companyCode| Company Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| financeAlliance| Finance Alliance        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| financeEntity| Finance Entity        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| financeParent| Finance Parent        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| financePortfolio| Finance Portfolio        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| fmgGroupCode | Fmg Group Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| fmgMarkerBank | Fmg Marker Bank        |    STRING - Alphanumeric   |   String - Alphanumeric        |    Available     | Optional     | Allowed |    NA |
+| futureUse1    | Future Use 1           |                            |                                |    Available     | Optional     | Allowed |    NA |
+| futureUse2 | Future Use 2        |       |           |    Available     | Optional     | Allowed |    NA |
+| globalClientDescription | Global Client Description        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| globalClientId| Global Client Id        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| profitCenterDescription| Profit Center Description        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| profitCenterId| Profit Center Id        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| status| Program Status        |    CANCEL   |   Cancel        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    ACTIVE   |   Active        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| companyCode| Company Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| financeAlliance| Finance Alliance        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| financeEntity| Finance Entity        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| financeParent| Finance Parent        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| financePortfolio| Finance Portfolio        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| fmgGroupCode| Fmg Group Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| fmgMarkerBank| Fmg Marker Bank        |    STRING - Alphanumeric   |   String - Alphanumeric        |    Available     | Optional     | Allowed |    NA |
+| futureUse1| Future Use 1        |       |           |    Available     | Optional     | Allowed |    NA |
+| futureUse2| Future Use 2        |       |           |    Available     | Optional     | Allowed |    NA |
+| globalClientDescription| Global Client Description        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| globalClientId| Global Client Id        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| profitCenterDescription| Profit Center Description        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| profitCenterId| Profit Center Id        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| status| Program Status        |    CANCEL   |   Cancel        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    ACTIVE   |   Active        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### firstHawaiianBank
+
+---
+
+tags: [firstHawaiianBank]
+
+---
+
+* Description: First Hawaiian Bank
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| fhbNaicsNumber| Fhb Naics Number N        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| fhbNaicsNumber| Fhb Naics Number N        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### foreignLanguageSupport
+
+---
+
+tags: [foreignLanguageSupport]
+
+---
+
+* Description: Foreign Language Support
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| foreignLanguageSupport| Foreign Language Support        |    JAPANESE   |   Japanese        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    SOMALI   |   Somali        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    HINDI   |   Hindi        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    FRENCH   |   French        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    FARSI   |   Farsi        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    BURMESE   |   Burmese        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    CAMBODIAN   |   Cambodian        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    CANTONESE   |   Cantonese        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    HAITIANCREOLE   |   Haitiancreole        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    ARABIC   |   Arabic        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    KAREN   |   Karen        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    KOREAN   |   Korean        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| foreignLanguageSupport| Foreign Language Support        |    JAPANESE   |   Japanese        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    SOMALI   |   Somali        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    HINDI   |   Hindi        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    FRENCH   |   French        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    FARSI   |   Farsi        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    BURMESE   |   Burmese        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    CAMBODIAN   |   Cambodian        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    CANTONESE   |   Cantonese        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    HAITIANCREOLE   |   Haitiancreole        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    ARABIC   |   Arabic        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    KAREN   |   Karen        |    Available     | Optional     | Allowed |    NA |
+|                       |                                 |    KOREAN   |   Korean        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### franchise
+
+---
+
+tags: [franchise]
+
+---
+
+* Description: Franchise
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type  |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|             |                |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type  |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|             |                |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### fraudAndAccountTakeoverRisk
+
+---
+
+tags: [fraudAndAccountTakeoverRisk]
+
+---
+
+* Description: Fraud And Account Takeover Risk
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| status| Program Status        |    CAUTION_PREVIOUS_FRAUD   |   Caution Previous Fraud        |    Available     | Optional     | Allowed |    NA |
+|             |                |    URGENT_MERCH_AT_RISK   |   Urgent Merch At Risk        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| status| Program Status        |    CAUTION_PREVIOUS_FRAUD   |   Caution Previous Fraud        |    Available     | Optional     | Allowed |    NA |
+|             |                |    URGENT_MERCH_AT_RISK   |   Urgent Merch At Risk        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### freeProcessing
+
+---
+
+tags: [freeProcessing]
+
+---
+
+* Description: Free Processing
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| status| Program Status        |    COMPLETED   |   Completed        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    ACTIVE   |   Active        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    CANCEL   |   Cancel        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| status| Program Status        |    COMPLETED   |   Completed        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    ACTIVE   |   Active        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    CANCEL   |   Cancel        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### fundingConfig
+
+---
+
+tags: [fundingConfig]
+
+---
+
+* Description: Free Processing
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| achSuspenseHoldIndicator| ACH suspense hold indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    HOLD   |   Hold        |    Available     | Optional     | Allowed |    NA |
+| achSuspenseReleaseIndicator| ACH suspense release indicator        |    DIVERT_TO_CARS   |   Divert To Cars        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    HOLD_30_DAYS   |   Hold 30 Days        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    RELEASE_FUNDING   |   Release Funding        |    Available     | Optional     | Allowed |    NA |
+| agentBankSplitIndicator| Indicates if Bank Client is considered an agent relationship to FDCS        |    AGENT   |   Agent        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    BANK   |   Bank        |    Available     | Optional     | Allowed |    NA |
+| bankwireBbkText| Bankwire beneficiary BBK Text        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| bankwireBnfText| Bankwire beneficiary BNF Text        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| bankwireObiText| Bankwire beneficiary OBI Text        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| chargebacksBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit        |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| chargebacksFundingCategoryCode| Funding Category Code        |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+| chargebacksFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| chargebacksFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+| convenienceFeeCode| Convenience fee code to indicate the ABA or DDA to be charged        |    ABA_DDA_3   |   Aba Dda 3        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    ABA_DDA_5   |   Aba Dda 5        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    None   |   None        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    ABA_DDA_2   |   Aba Dda 2        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    ABA_DDA_1   |   Aba Dda 1        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    ABA_DDA_4   |   Aba Dda 4        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit  |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingDivertCode| Funding Divert Code        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+| depositsBankSequenceNumber| Funding Bank Sequence |  REMIT | Remit |  Available  | Optional | Allowed |  NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| depositsFundingCategoryCode| Funding Category Code        |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+| depositsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|       |       |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|       |       |    ICE   |   Ice        |    Available     | Optional     | Allowed |    NA |
+| depositsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+| discountsBankSequenceNumber| Funding Bank Sequence  |  REMIT   |   Remit  | Available | Optional | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| discountsFundingCategoryCode| Funding Category Code        |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+| discountsFundingDivertCode| Funding Divert Code        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|                           |                            |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+| discountsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+| feesBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit  |    Available   |  Optional | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| feesFundingCategoryCode| Funding Category Code        |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+| feesFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|                      |                            |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| feesFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+| financialAdjustmentsBankSequenceNumber| Funding Bank Sequence  |    REMIT   |   Remit  |  Available |  Optional  | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| financialAdjustmentsFundingCategoryCode| Funding Category Code        |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+| financialAdjustmentsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+| financialAdjustmentsFundingCategoryCode| Funding Category Code        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| financialAdjustmentsFundingRollupCode   |Indicates how the transactions will be combined on DDA statement |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+| funding30DayOverrideDate| Funding 30 day daily override date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| funding30DayOverrideIndicator| Funding 30 day override indicator        |    NOT_OVERRIDE   |   Not Override        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    OVERRIDE   |   Override        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    NOT_USED   |   Not Used        |    Available     | Optional     | Allowed |    NA |
+| fundingAchDelayDays| Retention period for deposits and daily discount before releasing them for ACH processing        |    STRING - Digits only - no decimal (max length - 2, min - 1)   |   String - Digits Only - No Decimal (Max Length: 2, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingBankCode| Funding Bank Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| fundingCurrencyCode| Funding Currency Code        |    QATARI_RIAL   |   Qatari Rial        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ISRAELI_NEW_SHEKEL   |   Israeli New Shekel        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CFA_FRANC_BEAC   |   Cfa Franc Beac        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UNITED_STATES_DOLLAR   |   United States Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CONGOLESE_FRANC   |   Congolese Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MALAYSIAN_RINGGIT   |   Malaysian Ringgit        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MAURITIAN_RUPEE   |   Mauritian Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MOROCCAN_DIRHAM   |   Moroccan Dirham        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ARUBAN_FLORIN   |   Aruban Florin        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PERUVIAN_SOL   |   Peruvian Sol        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ST_HELENA_POUND   |   St Helena Pound        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BURUNDI_FRANC   |   Burundi Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BRUNEI_DOLLAR   |   Brunei Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    COMOROS_FRANC   |   Comoros Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LAO_KIP   |   Lao Kip        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    JAMAICAN_DOLLAR   |   Jamaican Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    JAPANESE_YEN   |   Japanese Yen        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOUTH_KOREAN_WON   |   South Korean Won        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    KUWAITI_DINAR   |   Kuwaiti Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NICARAGUAN_CORDOBA   |   Nicaraguan Cordoba        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PARAGUAYAN_GUARANI   |   Paraguayan Guarani        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    KYRGYZSTAN_SOM   |   Kyrgyzstan Som        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GUINEAN_FRANC   |   Guinean Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    POUND_STERLING   |   Pound Sterling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SINGAPORE_DOLLAR   |   Singapore Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DJIBOUTIAN_FRANC   |   Djiboutian Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CROTIAN_KUNA   |   Crotian Kuna        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    YEMENI_RIAL   |   Yemeni Rial        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MALAWIAN_KWACHA   |   Malawian Kwacha        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ZIMBABWE_DOLLAR   |   Zimbabwe Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NORWEGIAN_KRONE   |   Norwegian Krone        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ALBANIAN_LEK   |   Albanian Lek        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BARBADOS_DOLLAR   |   Barbados Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UGANDAN_SHILLING   |   Ugandan Shilling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CHINESE_YUAN   |   Chinese Yuan        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DOMINCAN_PESO   |   Domincan Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ETHIOPIAN_BIRR   |   Ethiopian Birr        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    AZERBAIJANI_MANAT   |   Azerbaijani Manat        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TANZANIAN_SHILLING   |   Tanzanian Shilling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOUTH_SUDANESE_POUNT   |   South Sudanese Pount        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOMALI_SHILLING   |   Somali Shilling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GUANESE_DOLLAR   |   Guanese Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    HONG_KONG_DOLLAR   |   Hong Kong Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SIERRA_LEONEAN_LEONE   |   Sierra Leonean Leone        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    INDOSEIAN_RUPIAH   |   Indoseian Rupiah        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MOLDOVAN_LEU   |   Moldovan Leu        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BANGLADESHI_TAKA   |   Bangladeshi Taka        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BOLIVIANO   |   Boliviano        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ARMENIAN_DRAM   |   Armenian Dram        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CFP_FRANC   |   Cfp Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FIJI_DOLLAR   |   Fiji Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    HUNGARIAN_FORINT   |   Hungarian Forint        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    INDIAN_RUPEE   |   Indian Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LEBANEESE_POUNT   |   Lebaneese Pount        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LESHTHO_LOTI   |   Leshtho Loti        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PAPUA_NEW_GUINEAN_KINA   |   Papua New Guinean Kina        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MEXICAN_PESO   |   Mexican Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GUINEA_BISSAU_PESO   |   Guinea Bissau Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NEW_TAIWAN_DOLLAR   |   New Taiwan Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TURKISH_LIRA   |   Turkish Lira        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ANGOLAN_KWANZA   |   Angolan Kwanza        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EURO   |   Euro        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CAMBODIAN_FRANC   |   Cambodian Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LIBERIAN_DOLLAR   |   Liberian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UKRANIAN_HRYVNIA   |   Ukranian Hryvnia        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CAYMAN_ISLANDS_DOLLAR   |   Cayman Islands Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MAURITANIAN_OUGUIYA   |   Mauritanian Ouguiya        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    KENYAN_SHILLING   |   Kenyan Shilling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SWEDISH_KRONA   |   Swedish Krona        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BULGARIAN_LEV   |   Bulgarian Lev        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GEORGIAN_LARI   |   Georgian Lari        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    THAI_BAHT   |   Thai Baht        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    VANUATU_VATU   |   Vanuatu Vatu        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SERBIAN_DINAR   |   Serbian Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BERMUDIAN_DOLLAR   |   Bermudian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    URUGUAYAN_PESO   |   Uruguayan Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DANISH_KRONE   |   Danish Krone        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LIBYAN_DINAR   |   Libyan Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    VIETNAMESE_DONG   |   Vietnamese Dong        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ERITREAN_NAFKA   |   Eritrean Nafka        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NIGERIAN_NAIRA   |   Nigerian Naira        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MACEDONIAN_DENAR   |   Macedonian Denar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CHILEAN_PESO   |   Chilean Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    KAZAKHSTANI_TENGE   |   Kazakhstani Tenge        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BAHRANI_DINAR   |   Bahrani Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EL_SALVADORE_COLON   |   El Salvadore Colon        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    POLISH_ZLOTY   |   Polish Zloty        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ZAMBIAN_KWACHA   |   Zambian Kwacha        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MACANESE_PATACA   |   Macanese Pataca        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BOTSWANA_PULA   |   Botswana Pula        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TONGAN_PAANGA   |   Tongan Paanga        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOUTH_AFRICAN_RAND   |   South African Rand        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MYANMAR_KYAT   |   Myanmar Kyat        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    COSTA_RICAN_COLON   |   Costa Rican Colon        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GHANAIAN_CEDI   |   Ghanaian Cedi        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOLOMON_ISLANDS_DOLLAR   |   Solomon Islands Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MOZQAMBICAN_METICAL   |   Mozqambican Metical        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MALAGASY_ARIARY   |   Malagasy Ariary        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    JORDANIAN_DINAR   |   Jordanian Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SWAZI_LILANGENI   |   Swazi Lilangeni        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CZECH_KORUNA   |   Czech Koruna        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SWISS_FRANC   |   Swiss Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    RWANDA_FRANC   |   Rwanda Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NEW_RUBLE   |   New Ruble        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PAKASTANI_RUPEE   |   Pakastani Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SRI_LANKA_RUPEE   |   Sri Lanka Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    HAITIAN_GOURDE   |   Haitian Gourde        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ICELANDIC_KRONA   |   Icelandic Krona        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GAMBIAN_DALASI   |   Gambian Dalasi        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CAPE_VERDE_ESCUDO   |   Cape Verde Escudo        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BELIZE_DOLLAR   |   Belize Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    IRAQI_DINAR   |   Iraqi Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TAJIKISTANI_SOMONI   |   Tajikistani Somoni        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ROMANIAN_LEU   |   Romanian Leu        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BELARUSSIAN_RUBLE   |   Belarussian Ruble        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BRAZILIAN_REAL   |   Brazilian Real        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    VENEZLA_BOLIVAR_SOBERANO   |   Venezla Bolivar Soberano        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PHILIPPINE_PESO   |   Philippine Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    OMANI_RIAL   |   Omani Rial        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GUATEMALAN_QUETZAL   |   Guatemalan Quetzal        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MALDIVIAN_RUFIYAA   |   Maldivian Rufiyaa        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EAST_CARIBBEAN_DOLLAR   |   East Caribbean Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SURINAMESE_DOLLAR   |   Surinamese Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CFA_FRANC_BCEAO   |   Cfa Franc Bceao        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CONVERTIBLE_MARK   |   Convertible Mark        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NTHLNDS_ANTILIES_GUILDER   |   Nthlnds Antilies Guilder        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NAMIBIAN_DOLLAR   |   Namibian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ALGERIAN_DINAR   |   Algerian Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UZBEKISTAN_SUM   |   Uzbekistan Sum        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SAO_TOME_PRINCIPE_DOBRA   |   Sao Tome Principe Dobra        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GIBRALTAR_POUND   |   Gibraltar Pound        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    OFFSHORE_REMNIBI   |   Offshore Remnibi        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BHUTANESE_NGULTRUM   |   Bhutanese Ngultrum        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BAHAMIAN_DOLLAR   |   Bahamian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    AUSTRALIAN_DOLLAR   |   Australian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ESTONIAN_KROON   |   Estonian Kroon        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    AFGHAN_AFGHANI   |   Afghan Afghani        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FALKLAND_ISLAND_POUND   |   Falkland Island Pound        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MONGOLIAN_TOGROG   |   Mongolian Togrog        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TUNISIAN_DINAR   |   Tunisian Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SEYCHELLES_RUPEE   |   Seychelles Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TRINADAD_+_TOBAGO_DOLLAR   |   Trinadad + Tobago Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ARGENTINIAN_PESO   |   Argentinian Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CANADIAN_DOLLAR   |   Canadian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PANAMANIAN_BALBOA   |   Panamanian Balboa        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NEW_ZEALAND_DOLLAR   |   New Zealand Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    COLOMBIAN_PESO   |   Colombian Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SAMOAN_TALA   |   Samoan Tala        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EGYPTIAN_POUND   |   Egyptian Pound        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    HONDURAN_LEMPIRA   |   Honduran Lempira        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NEPALESE_RUPEE   |   Nepalese Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UNT_ARAB_EMERATES_DIRHAM   |   Unt Arab Emerates Dirham        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SAUDI_RIYAL   |   Saudi Riyal        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TURKMENISTANI_MANAT   |   Turkmenistani Manat        |    Available     | Optional     | Allowed |    NA |
+| fundingDailyOverrideDate| Funding Daily Override Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| fundingDailyOverrideIndicator| Funding Override Indicator        |    OVERRIDE   |   Override        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NOT_OVERRIDE   |   Not Override        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NOT_USED   |   Not Used        |    Available     | Optional     | Allowed |    NA |
+| fundingExclude30DayLimitAmount| Merchant funding exclusion monthly sales limit amount        |    STRING - Digits only - no decimal (max length - 9, min - 1)   |   String - Digits Only - No Decimal (Max Length: 9, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingExcludeCode| Merchant funding exclusion code        |    DIVERT   |   Divert        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+| fundingExcludeDailyLimitAmount| Merchant funding exclusion daily sales limit amount        |    STRING - Digits only - no decimal (max length - 9, min - 1)   |   String - Digits Only - No Decimal (Max Length: 9, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingMethodCode| Funding method code Code determining how funds will be settled        |    CHK_TO_MAIN_BLK_LVL   |   Chk To Main Blk Lvl        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_CHAIN_AUTO_NEG   |   Bnkwire Chain Auto Neg        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SPLIT_OUTLET_BNKWIRE_ACH   |   Split Outlet Bnkwire Ach        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ACH_BANK   |   Ach Bank        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    AGENT_BANK_SPLIT_FUNDING   |   Agent Bank Split Funding        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ACH_MER_BLK_CHAIN   |   Ach Mer Blk Chain        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SPLIT_CHAIN_BNKWIRE_ACH   |   Split Chain Bnkwire Ach        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_AGENT_AUTO_NEG   |   Bnkwire Agent Auto Neg        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_OUTLET   |   Bnkwire Outlet        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_BANK   |   Bnkwire Bank        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ACH_OUTLET   |   Ach Outlet        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BY_CHK_TO_OUTLET   |   By Chk To Outlet        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_MER_BLK_CHAIN   |   Bnkwire Mer Blk Chain        |    Available     | Optional     | Allowed |    NA |
+|            |         |    BANKWIRE_OUTLET_ACH   |   Bankwire Outlet ACH    |    Available     | Optional     | Allowed |    NA   |
+| fundingNotifyContactName| Funding notification contact name        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| fundingNotifyFaxNumber| Funding notification contact name        |    STRING containing digits only (max - 15, min - 10)   |   String Containing Digits Only (Max - 15, Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| fundingNotifyIndicator| Funding notification indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|       |      |    HIERARCHY   |   Hierarchy        |    Available     | Optional     | Allowed |    NA    |
+| fundingNotifyMethodCode| Funding notification method code        |    NOT_USED   |   Not Used        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TELEPHONE   |   Telephone        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MAIL   |   Mail        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EMAIL   |   Email        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FAX   |   Fax        |    Available     | Optional     | Allowed |    NA |
+| fundingNotifyPhoneNumber| Funding notification phone number        |    STRING containing digits only (max - 15, min - 10)   |   String Containing Digits Only (Max - 15, Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| fundingRollupCode| Indicates how the funding transactions will be combined on DDA statement        |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    VIA_CATGRY   |   Via Catgry        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| fundingRppChangeDate| Merchant funding revolving payment plan change date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| fundingRppDelayDays| Revolving payment plan delay days        |    STRING - Digits only - no decimal (max length - 2, min - 1)   |   String - Digits Only - No Decimal (Max Length: 2, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingRppMinimumAmount| Revolving payment plan minimum dollar amount        |    STRING - Digits only - no decimal (max length - 9, min - 1)   |   String - Digits Only - No Decimal (Max Length: 9, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingRppMinimumReserveAmount| Revolving payment plan minimum reserve amount        |    STRING - Digits only - no decimal (max length - 9, min - 1)   |   String - Digits Only - No Decimal (Max Length: 9, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingRppPercent| Revolving payment plan percent        |    STRING - Digits only - no decimal (max length - 3, min - 1)   |   String - Digits Only - No Decimal (Max Length: 3, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingRunCode| Merchant Funding Run        |    FUNDING_RUN6     |   Funding Run6        |    Available     | Optional     | Allowed |    NA |
+|                     |                       |                     |   Funding Runs        |    Available     | Optional     | Allowed |    NA |
+|                     |                       |                     |   Funding Run4        |    Available     | Optional     | Allowed |    NA |
+|                     |                       |                     |   Funding Run1        |    Available     | Optional     | Allowed |    NA |
+|                     |                       |                     |   Funding Run2        |    Available     | Optional     | Allowed |    NA |
+|                     |                       |                     |   Funding Run3        |    Available     | Optional     | Allowed |    NA |
+| interchangeAssessmentsBankSequenceNumber| Funding Bank Sequence  |    REMIT   |   Remit  |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| interchangeAssessmentsFundingCategoryCode | Funding Category Code |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+| interchangeAssessmentsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|                                        |                            |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| interchangeAssessmentsFundingRollupCode | Indicates how the transactions will be combined on DDA statement |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+| nonBankcardAdjustmentsBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit |    Available | Optional | Allowed |  NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| nonBankcardAdjustmentsFundingCategoryCode | Funding Category Code |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+| nonBankcardAdjustmentsFundingDivertCode   | Funding Divert Code  |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+| nonBankcardAdjustmentsFundingRollupCode   | Indicates how the transactions will be combined on DDA statement |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+| ptsLimitsIndicator                        | PTS Limits Indicator  |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| reversalsBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit  |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| reversalsFundingCategoryCode| Funding Category Code        |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+| reversalsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| reversalsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+| settleTimeframeCode| Settlement Timeframe Code        |    BACS_SUPER   |   Bacs Super        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BACS_OR_NA   |   Bacs Or Na        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FASTER_PYMNT_METHOD   |   Faster Pymnt Method        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TWO_DAY_HOLD   |   Two Day Hold        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ZERO_DAY_HOLD   |   Zero Day Hold        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ONE_DAY_HOLD   |   One Day Hold        |    Available     | Optional     | Allowed |    NA |
+|             |          |    DEFERRED   |   Deferred        |    Available     | Optional     | Allowed |    NA |
+| temporary30DayLimitAmount| Temporary monthly limit amount        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| temporaryDailyLimitAmount| Temporary Daily Limit Amount        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| temporaryFromDate| Temporary From Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| temporaryToDate| Temporary To Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| achSuspenseHoldIndicator| ACH suspense hold indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    HOLD   |   Hold        |    Available     | Optional     | Allowed |    NA    |
+| achSuspenseReleaseIndicator| ACH suspense release indicator        |    DIVERT_TO_CARS   |   Divert To Cars        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    HOLD_30_DAYS   |   Hold 30 Days        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    RELEASE_FUNDING   |   Release Funding        |    Available     | Optional     | Allowed |    NA |
+| agentBankSplitIndicator| Indicates if Bank Client is considered an agent relationship to FDCS        |    AGENT   |   Agent        |    Available     | Optional     | Allowed |    NA |
+|       |                       |    BANK   |   Bank        |    Available     | Optional     | Allowed |    NA |
+| bankwireBbkText| Bankwire beneficiary BBK Text        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| bankwireBnfText| Bankwire beneficiary BNF Text        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| bankwireObiText| Bankwire beneficiary OBI Text        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| chargebacksBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit        |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| chargebacksFundingCategoryCode| Funding Category Code        |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+| chargebacksFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|                               |                              |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| chargebacksFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+| convenienceFeeCode| Convenience fee code to indicate the ABA or DDA to be charged        |    ABA_DDA_3   |   Aba Dda 3        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    ABA_DDA_5   |   Aba Dda 5        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    None   |   None        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    ABA_DDA_2   |   Aba Dda 2        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    ABA_DDA_1   |   Aba Dda 1        |    Available     | Optional     | Allowed |    NA |
+|                             |                                                                         |    ABA_DDA_4   |   Aba Dda 4        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit  |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingCategoryCode| Funding Category Code        |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingDivertCode| Funding Divert Code        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+| depositAdjustmentsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+| depositsBankSequenceNumber| Funding Bank Sequence |  REMIT | Remit |  Available  | Optional | Allowed |  NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| depositsFundingCategoryCode| Funding Category Code        |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                            |                              |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+| depositsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|               |          |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|       |       |    ICE   |   Ice        |    Available     | Optional     | Allowed |    NA |
+| depositsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                          |                                                                         |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+| discountsBankSequenceNumber| Funding Bank Sequence  |  REMIT   |   Remit  |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| discountsFundingCategoryCode| Funding Category Code        |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                             |                              |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+| discountsFundingDivertCode| Funding Divert Code        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|                           |                            |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+| discountsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                           |                                                                         |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+| feesBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit  |    Available   |  Optional | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| feesFundingCategoryCode| Funding Category Code        |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+| feesFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|                      |                            |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| feesFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                      |                                                                         |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+| financialAdjustmentsBankSequenceNumber| Funding Bank Sequence  |    REMIT   |   Remit  |  Available |  Optional  | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| financialAdjustmentsFundingCategoryCode| Funding Category Code        |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+| financialAdjustmentsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+| financialAdjustmentsFundingCategoryCode| Funding Category Code        |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| financialAdjustmentsFundingRollupCode   |Indicates how the transactions will be combined on DDA statement |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+| funding30DayOverrideDate| Funding 30 day daily override date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| funding30DayOverrideIndicator| Funding 30 day override indicator        |    NOT_OVERRIDE   |   Not Override        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    OVERRIDE   |   Override        |    Available     | Optional     | Allowed |    NA |
+|                                            |                                  |    NOT_USED   |   Not Used        |    Available     | Optional     | Allowed |    NA |
+| fundingAchDelayDays| Retention period for deposits and daily discount before releasing them for ACH processing        |    STRING - Digits only - no decimal (max length - 2, min - 1)   |   String - Digits Only - No Decimal (Max Length: 2, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingBankCode| Funding Bank Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| fundingCurrencyCode| Funding Currency Code        |    QATARI_RIAL   |   Qatari Rial        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ISRAELI_NEW_SHEKEL   |   Israeli New Shekel        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CFA_FRANC_BEAC   |   Cfa Franc Beac        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UNITED_STATES_DOLLAR   |   United States Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CONGOLESE_FRANC   |   Congolese Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MALAYSIAN_RINGGIT   |   Malaysian Ringgit        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MAURITIAN_RUPEE   |   Mauritian Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MOROCCAN_DIRHAM   |   Moroccan Dirham        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ARUBAN_FLORIN   |   Aruban Florin        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PERUVIAN_SOL   |   Peruvian Sol        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ST_HELENA_POUND   |   St Helena Pound        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BURUNDI_FRANC   |   Burundi Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BRUNEI_DOLLAR   |   Brunei Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    COMOROS_FRANC   |   Comoros Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LAO_KIP   |   Lao Kip        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    JAMAICAN_DOLLAR   |   Jamaican Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    JAPANESE_YEN   |   Japanese Yen        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOUTH_KOREAN_WON   |   South Korean Won        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    KUWAITI_DINAR   |   Kuwaiti Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NICARAGUAN_CORDOBA   |   Nicaraguan Cordoba        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PARAGUAYAN_GUARANI   |   Paraguayan Guarani        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    KYRGYZSTAN_SOM   |   Kyrgyzstan Som        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GUINEAN_FRANC   |   Guinean Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    POUND_STERLING   |   Pound Sterling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SINGAPORE_DOLLAR   |   Singapore Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DJIBOUTIAN_FRANC   |   Djiboutian Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CROTIAN_KUNA   |   Crotian Kuna        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    YEMENI_RIAL   |   Yemeni Rial        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MALAWIAN_KWACHA   |   Malawian Kwacha        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ZIMBABWE_DOLLAR   |   Zimbabwe Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NORWEGIAN_KRONE   |   Norwegian Krone        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ALBANIAN_LEK   |   Albanian Lek        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BARBADOS_DOLLAR   |   Barbados Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UGANDAN_SHILLING   |   Ugandan Shilling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CHINESE_YUAN   |   Chinese Yuan        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DOMINCAN_PESO   |   Domincan Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ETHIOPIAN_BIRR   |   Ethiopian Birr        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    AZERBAIJANI_MANAT   |   Azerbaijani Manat        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TANZANIAN_SHILLING   |   Tanzanian Shilling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOUTH_SUDANESE_POUNT   |   South Sudanese Pount        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOMALI_SHILLING   |   Somali Shilling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GUANESE_DOLLAR   |   Guanese Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    HONG_KONG_DOLLAR   |   Hong Kong Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SIERRA_LEONEAN_LEONE   |   Sierra Leonean Leone        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    INDOSEIAN_RUPIAH   |   Indoseian Rupiah        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MOLDOVAN_LEU   |   Moldovan Leu        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BANGLADESHI_TAKA   |   Bangladeshi Taka        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BOLIVIANO   |   Boliviano        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ARMENIAN_DRAM   |   Armenian Dram        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CFP_FRANC   |   Cfp Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FIJI_DOLLAR   |   Fiji Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    HUNGARIAN_FORINT   |   Hungarian Forint        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    INDIAN_RUPEE   |   Indian Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LEBANEESE_POUNT   |   Lebaneese Pount        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LESHTHO_LOTI   |   Leshtho Loti        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PAPUA_NEW_GUINEAN_KINA   |   Papua New Guinean Kina        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MEXICAN_PESO   |   Mexican Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GUINEA_BISSAU_PESO   |   Guinea Bissau Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NEW_TAIWAN_DOLLAR   |   New Taiwan Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TURKISH_LIRA   |   Turkish Lira        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ANGOLAN_KWANZA   |   Angolan Kwanza        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EURO   |   Euro        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CAMBODIAN_FRANC   |   Cambodian Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LIBERIAN_DOLLAR   |   Liberian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UKRANIAN_HRYVNIA   |   Ukranian Hryvnia        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CAYMAN_ISLANDS_DOLLAR   |   Cayman Islands Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MAURITANIAN_OUGUIYA   |   Mauritanian Ouguiya        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    KENYAN_SHILLING   |   Kenyan Shilling        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SWEDISH_KRONA   |   Swedish Krona        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BULGARIAN_LEV   |   Bulgarian Lev        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GEORGIAN_LARI   |   Georgian Lari        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    THAI_BAHT   |   Thai Baht        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    VANUATU_VATU   |   Vanuatu Vatu        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SERBIAN_DINAR   |   Serbian Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BERMUDIAN_DOLLAR   |   Bermudian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    URUGUAYAN_PESO   |   Uruguayan Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DANISH_KRONE   |   Danish Krone        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    LIBYAN_DINAR   |   Libyan Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    VIETNAMESE_DONG   |   Vietnamese Dong        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ERITREAN_NAFKA   |   Eritrean Nafka        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NIGERIAN_NAIRA   |   Nigerian Naira        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MACEDONIAN_DENAR   |   Macedonian Denar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CHILEAN_PESO   |   Chilean Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    KAZAKHSTANI_TENGE   |   Kazakhstani Tenge        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BAHRANI_DINAR   |   Bahrani Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EL_SALVADORE_COLON   |   El Salvadore Colon        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    POLISH_ZLOTY   |   Polish Zloty        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ZAMBIAN_KWACHA   |   Zambian Kwacha        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MACANESE_PATACA   |   Macanese Pataca        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BOTSWANA_PULA   |   Botswana Pula        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TONGAN_PAANGA   |   Tongan Paanga        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOUTH_AFRICAN_RAND   |   South African Rand        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MYANMAR_KYAT   |   Myanmar Kyat        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    COSTA_RICAN_COLON   |   Costa Rican Colon        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GHANAIAN_CEDI   |   Ghanaian Cedi        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SOLOMON_ISLANDS_DOLLAR   |   Solomon Islands Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MOZQAMBICAN_METICAL   |   Mozqambican Metical        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MALAGASY_ARIARY   |   Malagasy Ariary        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    JORDANIAN_DINAR   |   Jordanian Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SWAZI_LILANGENI   |   Swazi Lilangeni        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CZECH_KORUNA   |   Czech Koruna        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SWISS_FRANC   |   Swiss Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    RWANDA_FRANC   |   Rwanda Franc        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NEW_RUBLE   |   New Ruble        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PAKASTANI_RUPEE   |   Pakastani Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SRI_LANKA_RUPEE   |   Sri Lanka Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    HAITIAN_GOURDE   |   Haitian Gourde        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ICELANDIC_KRONA   |   Icelandic Krona        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GAMBIAN_DALASI   |   Gambian Dalasi        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CAPE_VERDE_ESCUDO   |   Cape Verde Escudo        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BELIZE_DOLLAR   |   Belize Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    IRAQI_DINAR   |   Iraqi Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TAJIKISTANI_SOMONI   |   Tajikistani Somoni        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ROMANIAN_LEU   |   Romanian Leu        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BELARUSSIAN_RUBLE   |   Belarussian Ruble        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BRAZILIAN_REAL   |   Brazilian Real        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    VENEZLA_BOLIVAR_SOBERANO   |   Venezla Bolivar Soberano        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PHILIPPINE_PESO   |   Philippine Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    OMANI_RIAL   |   Omani Rial        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GUATEMALAN_QUETZAL   |   Guatemalan Quetzal        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MALDIVIAN_RUFIYAA   |   Maldivian Rufiyaa        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EAST_CARIBBEAN_DOLLAR   |   East Caribbean Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SURINAMESE_DOLLAR   |   Surinamese Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CFA_FRANC_BCEAO   |   Cfa Franc Bceao        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CONVERTIBLE_MARK   |   Convertible Mark        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NTHLNDS_ANTILIES_GUILDER   |   Nthlnds Antilies Guilder        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NAMIBIAN_DOLLAR   |   Namibian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ALGERIAN_DINAR   |   Algerian Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UZBEKISTAN_SUM   |   Uzbekistan Sum        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SAO_TOME_PRINCIPE_DOBRA   |   Sao Tome Principe Dobra        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    GIBRALTAR_POUND   |   Gibraltar Pound        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    OFFSHORE_REMNIBI   |   Offshore Remnibi        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BHUTANESE_NGULTRUM   |   Bhutanese Ngultrum        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BAHAMIAN_DOLLAR   |   Bahamian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    AUSTRALIAN_DOLLAR   |   Australian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ESTONIAN_KROON   |   Estonian Kroon        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    AFGHAN_AFGHANI   |   Afghan Afghani        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FALKLAND_ISLAND_POUND   |   Falkland Island Pound        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MONGOLIAN_TOGROG   |   Mongolian Togrog        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TUNISIAN_DINAR   |   Tunisian Dinar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SEYCHELLES_RUPEE   |   Seychelles Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TRINADAD_+_TOBAGO_DOLLAR   |   Trinadad + Tobago Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ARGENTINIAN_PESO   |   Argentinian Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CANADIAN_DOLLAR   |   Canadian Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    PANAMANIAN_BALBOA   |   Panamanian Balboa        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NEW_ZEALAND_DOLLAR   |   New Zealand Dollar        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    COLOMBIAN_PESO   |   Colombian Peso        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SAMOAN_TALA   |   Samoan Tala        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EGYPTIAN_POUND   |   Egyptian Pound        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    HONDURAN_LEMPIRA   |   Honduran Lempira        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NEPALESE_RUPEE   |   Nepalese Rupee        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    UNT_ARAB_EMERATES_DIRHAM   |   Unt Arab Emerates Dirham        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SAUDI_RIYAL   |   Saudi Riyal        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TURKMENISTANI_MANAT   |   Turkmenistani Manat        |    Available     | Optional     | Allowed |    NA |
+| fundingDailyOverrideDate| Funding Daily Override Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| fundingDailyOverrideIndicator| Funding Override Indicator        |    OVERRIDE   |   Override        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NOT_OVERRIDE   |   Not Override        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NOT_USED   |   Not Used        |    Available     | Optional     | Allowed |    NA |
+| fundingExclude30DayLimitAmount| Merchant funding exclusion monthly sales limit amount        |    STRING - Digits only - no decimal (max length - 9, min - 1)   |   String - Digits Only - No Decimal (Max Length: 9, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingExcludeCode| Merchant funding exclusion code        |    DIVERT   |   Divert        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+| fundingExcludeDailyLimitAmount| Merchant funding exclusion daily sales limit amount        |    STRING - Digits only - no decimal (max length - 9, min - 1)   |   String - Digits Only - No Decimal (Max Length: 9, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingMethodCode| Funding method code Code determining how funds will be settled        |    CHK_TO_MAIN_BLK_LVL   |   Chk To Main Blk Lvl        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_CHAIN_AUTO_NEG   |   Bnkwire Chain Auto Neg        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SPLIT_OUTLET_BNKWIRE_ACH   |   Split Outlet Bnkwire Ach        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ACH_BANK   |   Ach Bank        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    AGENT_BANK_SPLIT_FUNDING   |   Agent Bank Split Funding        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ACH_MER_BLK_CHAIN   |   Ach Mer Blk Chain        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    SPLIT_CHAIN_BNKWIRE_ACH   |   Split Chain Bnkwire Ach        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_AGENT_AUTO_NEG   |   Bnkwire Agent Auto Neg        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_OUTLET   |   Bnkwire Outlet        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_BANK   |   Bnkwire Bank        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ACH_OUTLET   |   Ach Outlet        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BY_CHK_TO_OUTLET   |   By Chk To Outlet        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BNKWIRE_MER_BLK_CHAIN   |   Bnkwire Mer Blk Chain        |    Available     | Optional     | Allowed |    NA |
+|            |         |    BANKWIRE_OUTLET_ACH   |   Bankwire Outlet ACH    |    Available     | Optional     | Allowed |    NA   |
+| fundingNotifyContactName| Funding notification contact name        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| fundingNotifyFaxNumber| Funding notification contact name        |    STRING containing digits only (max - 15, min - 10)   |   String Containing Digits Only (Max - 15, Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| fundingNotifyIndicator| Funding notification indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|       |      |    HIERARCHY   |   Hierarchy        |    Available     | Optional     | Allowed |    NA    |
+| fundingNotifyMethodCode| Funding notification method code        |    NOT_USED   |   Not Used        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TELEPHONE   |   Telephone        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    MAIL   |   Mail        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EMAIL   |   Email        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FAX   |   Fax        |    Available     | Optional     | Allowed |    NA |
+| fundingNotifyPhoneNumber| Funding notification phone number        |    STRING containing digits only (max - 15, min - 10)   |   String Containing Digits Only (Max - 15, Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| fundingRollupCode| Indicates how the funding transactions will be combined on DDA statement        |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    VIA_CATGRY   |   Via Catgry        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| fundingRppChangeDate| Merchant funding revolving payment plan change date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| fundingRppDelayDays| Revolving payment plan delay days        |    STRING - Digits only - no decimal (max length - 2, min - 1)   |   String - Digits Only - No Decimal (Max Length: 2, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingRppMinimumAmount| Revolving payment plan minimum dollar amount        |    STRING - Digits only - no decimal (max length - 9, min - 1)   |   String - Digits Only - No Decimal (Max Length: 9, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingRppMinimumReserveAmount| Revolving payment plan minimum reserve amount        |    STRING - Digits only - no decimal (max length - 9, min - 1)   |   String - Digits Only - No Decimal (Max Length: 9, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingRppPercent| Revolving payment plan percent        |    STRING - Digits only - no decimal (max length - 3, min - 1)   |   String - Digits Only - No Decimal (Max Length: 3, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| fundingRunCode| Merchant Funding Run        |    FUNDING_RUN6   |   Funding Run6        |    Available     | Optional     | Allowed |    NA |
+|                     |                       |                     |   Funding Runs        |    Available     | Optional     | Allowed |    NA |
+|                     |                       |                    |   Funding Run4        |    Available     | Optional     | Allowed |    NA |
+|                     |                      |                      |   Funding Run1        |    Available     | Optional     | Allowed |    NA |
+|                     |                      |                      |   Funding Run2        |    Available     | Optional     | Allowed |    NA |
+|                     |                      |                      |   Funding Run3        |    Available     | Optional     | Allowed |    NA |
+| interchangeAssessmentsBankSequenceNumber| Funding Bank Sequence  |    REMIT   |   Remit  |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |  
+| interchangeAssessmentsFundingCategoryCode | Funding Category Code |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+| interchangeAssessmentsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|                                        |                            |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| interchangeAssessmentsFundingRollupCode | Indicates how the transactions will be combined on DDA statement |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+| nonBankcardAdjustmentsBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit |    Available | Optional | Allowed |  NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| nonBankcardAdjustmentsFundingCategoryCode | Funding Category Code |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+| nonBankcardAdjustmentsFundingDivertCode   | Funding Divert Code  |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+| nonBankcardAdjustmentsFundingRollupCode   | Indicates how the transactions will be combined on DDA statement |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+| ptsLimitsIndicator                        | PTS Limits Indicator  |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| reversalsBankSequenceNumber| Funding Bank Sequence |    REMIT   |   Remit  |    Available     | Optional     | Allowed |    NA |
+|       |      |    DDA1   |   DDA#1   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA2   |   DDA#2   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA3   |   DDA#3   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA4   |   DDA#4   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA5   |   DDA#5   |    Available     | Optional     | Allowed |  NA |
+|       |      |    DDA9   |   DDA#9   |    Available     | Optional     | Allowed |  NA |
+| reversalsFundingCategoryCode| Funding Category Code        |    REVERSALS   |   Reversals        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    INTERCHANGE_ASSESSMENTS   |   Interchange Assessments        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FEES   |   Fees        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NON_BANKCARD_ADJUSTMENTS   |   Non Bankcard Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FINANCIAL_ADJUSTMENTS   |   Financial Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEPOSITS   |   Deposits        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEPOSIT_ADJUSTMENTS   |   Deposit Adjustments        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DISCOUNTS   |   Discounts        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    CHARGEBACKS   |   Chargebacks        |    Available     | Optional     | Allowed |    NA |
+| reversalsFundingDivertCode| Funding Divert Code        |    CARS   |   Cars        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+| reversalsFundingRollupCode| Indicates how the transactions will be combined on DDA statement        |    VIA_CATEGORY   |   Via Category        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    EACH_TRANSFER   |   Each Transfer        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEBIT_CREDIT   |   Debit Credit        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NET_FEE_TRANS   |   Net Fee Trans        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    NET_ROLLUP   |   Net Rollup        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    DEPOSIT_BATCH   |   Deposit Batch        |    Available     | Optional     | Allowed |    NA |
+| settleTimeframeCode| Settlement Timeframe Code        |    BACS_SUPER   |   Bacs Super        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    BACS_OR_NA   |   Bacs Or Na        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    FASTER_PYMNT_METHOD   |   Faster Pymnt Method        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    TWO_DAY_HOLD   |   Two Day Hold        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ZERO_DAY_HOLD   |   Zero Day Hold        |    Available     | Optional     | Allowed |    NA |
+|                     |                                            |    ONE_DAY_HOLD   |   One Day Hold        |    Available     | Optional     | Allowed |    NA |
+|             |          |    DEFERRED   |   Deferred        |    Available     | Optional     | Allowed |    NA |
+| temporary30DayLimitAmount| Temporary monthly limit amount        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| temporaryDailyLimitAmount| Temporary Daily Limit Amount        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| temporaryFromDate| Temporary From Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| temporaryToDate| Temporary To Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
