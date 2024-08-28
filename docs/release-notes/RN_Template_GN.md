@@ -3227,3 +3227,1477 @@ titles: UMM, North, GMA
 
 <!-- type: tab-end -->
 
+### globalCurrencySolutions
+
+---
+
+tags: [globalCurrencySolutions]
+
+---
+
+* Description: Global Currency Solutions
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringSubType1| Offering Sub Type        |    NORTH_RATES_PLUS_DCCLUS_DCC   |   North Rates Plus Dcclus Dcc        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EXCEPTION_RATE_MCPE_MCP   |   Exception Rate Mcpe Mcp        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    VI/MC_RATE_MCPP   |   Vi/Mc Rate Mcpp        |    Available     | Optional     | Allowed |    NA |
+| offeringSubType2| Globally Used For All North Backend Sales Channels        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| offeringType| Offering Type        |    PRISMATIC   |   Prismatic        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringSubType1| Offering Sub Type        |    NORTH_RATES_PLUS_DCCLUS_DCC   |   North Rates Plus Dcclus Dcc        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EXCEPTION_RATE_MCPE_MCP   |   Exception Rate Mcpe Mcp        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    VI/MC_RATE_MCPP   |   Vi/Mc Rate Mcpp        |    Available     | Optional     | Allowed |    NA |
+| offeringSubType2| Globally Used For All North Backend Sales Channels        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| offeringType| Offering Type        |    PRISMATIC   |   Prismatic        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### highRiskMonitoring
+
+---
+
+tags: [highRiskMonitoring]
+
+---
+
+* Description: High Risk Monitoring
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| contractDate| Contract Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| offeringType| Offering Type        |    MSB   |   Msb        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CNP_PHARMACY   |   Cnp Pharmacy        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CNP_TOBACCO_VAPE   |   Cnp Tobacco Vape        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    SOCIAL_GAMING   |   Social Gaming        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ONLINE_FIREARMS   |   Online Firearms        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    SKILLED_GAMES   |   Skilled Games        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    BINGO   |   Bingo        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NFT   |   Nft        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CRYPTOCURRENCY   |   Cryptocurrency        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    HIGH_RISK   |   High Risk        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NUTRACEUTICALS   |   Nutraceuticals        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    LOTTERY   |   Lottery        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    GAMBLING   |   Gambling        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CBD_CANNABIS   |   Cbd Cannabis        |    Available     | Optional     | Allowed |    NA |
+| status| Program Status        |    NOT_Optional   |   Not Optional        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEREGISTERED   |   Deregistered        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    COMPLETE_REGISTER   |   Complete Register        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    PENDING_REGISTER   |   Pending Register        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| contractDate| Contract Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| offeringType| Offering Type        |    MSB   |   Msb        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CNP_PHARMACY   |   Cnp Pharmacy        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CNP_TOBACCO_VAPE   |   Cnp Tobacco Vape        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    SOCIAL_GAMING   |   Social Gaming        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ONLINE_FIREARMS   |   Online Firearms        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    SKILLED_GAMES   |   Skilled Games        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    BINGO   |   Bingo        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NFT   |   Nft        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CRYPTOCURRENCY   |   Cryptocurrency        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    HIGH_RISK   |   High Risk        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NUTRACEUTICALS   |   Nutraceuticals        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    LOTTERY   |   Lottery        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    GAMBLING   |   Gambling        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    CBD_CANNABIS   |   Cbd Cannabis        |    Available     | Optional     | Allowed |    NA |
+| status| Program Status        |    NOT_Optional   |   Not Optional        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    DEREGISTERED   |   Deregistered        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    COMPLETE_REGISTER   |   Complete Register        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    PENDING_REGISTER   |   Pending Register        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### inHouseAuthConfig
+
+---
+
+tags: [inHouseAuthConfig]
+
+---
+
+* Description: InHouse Auth Configuration
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| inHouseAuthCaptureCode| InHouse Authorization Capture Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| inHouseBankCode| InHouse Bank Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| inHouseNonMerchantCode| InHouse NonMerchant Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| inHouseAuthCaptureCode| InHouse Authorization Capture Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| inHouseBankCode| InHouse Bank Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| inHouseNonMerchantCode| InHouse NonMerchant Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### indemnification
+
+---
+
+tags: [indemnification]
+
+---
+
+* Description: Indemnification
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| indemnificationDate| Indemnification Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| indemnificationIndicator| Indemnification Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| indemnificationPercent| Indemnification Risk Ratio Percentage        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| riskOwnerCode| Risk Owner Code        |    FISERV   |   Fiserv        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    BANK   |   Bank        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    AGENT   |   Agent        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ALLIANCE   |   Alliance        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| indemnificationDate| Indemnification Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| indemnificationIndicator| Indemnification Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| indemnificationPercent| Indemnification Risk Ratio Percentage        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| riskOwnerCode| Risk Owner Code        |    FISERV   |   Fiserv        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    BANK   |   Bank        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    AGENT   |   Agent        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ALLIANCE   |   Alliance        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### independentSoftwareVendor
+
+---
+
+tags: [independentSoftwareVendor]
+
+---
+
+* Description: Independent Software Vendor (Isv) Global Indicator
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type        |    BYPASS_CLOVER_ISV   |   Bypass Clover Isv        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type        |    BYPASS_CLOVER_ISV   |   Bypass Clover Isv        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### internalItUse
+
+---
+
+tags: [internalItUse]
+
+---
+
+* Description: Internal It Use - Trigger Feeds And Save Data
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| discoverTrigger| Registration Merchant Feed To Discover        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| spomiTrigger| Sponsored Merchant Feed To Amex        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    REPROCESS   |   Reprocess        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| discoverTrigger| Registration Merchant Feed To Discover        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| spomiTrigger| Sponsored Merchant Feed To Amex        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    REPROCESS   |   Reprocess        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### iolCanadianVatRegNumber
+
+---
+
+tags: [iolCanadianVatRegNumber]
+
+---
+
+* Description: Iol Canadian Vat Reg Number
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| canadianVatRegNumber| Canadian Vat Registration Number        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| canadianVatRegNumber| Canadian Vat Registration Number        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### irsSupplementalInformation
+
+---
+
+tags: [irsSupplementalInformation]
+
+---
+
+* Description: Irs Supplemental Information
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| econsentDate| Econsent Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| econsentIndicator| Econsent Indicator        |    OWNERSHIP_CHANGE   |   Ownership Change        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ECONSENT_GIVEN   |   Econsent Given        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ECONSENT_REVOKED   |   Econsent Revoked        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    PENDING_STATUS   |   Pending Status        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EMAIL_DELIVERY_FAILED   |   Email Delivery Failed        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    STATUS_CHANGE   |   Status Change        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ONLY_EMAIL_ACTIVATED   |   Only Email Activated        |    Available     | Optional     | Allowed |    NA |
+| primaryEmailIndicator| Primary Email Indicator        |    USE_ALTERNATE_EMAIL   |   Use Alternate Email        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    USE_PRIMARY_EMAIL   |   Use Primary Email        |    Available     | Optional     | Allowed |    NA |
+| requestGuid| Request Guid        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| userProvidedEconsentEmail| User Provided Econsent Email        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| econsentDate| Econsent Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| econsentIndicator| Econsent Indicator        |    OWNERSHIP_CHANGE   |   Ownership Change        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ECONSENT_GIVEN   |   Econsent Given        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ECONSENT_REVOKED   |   Econsent Revoked        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    PENDING_STATUS   |   Pending Status        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    EMAIL_DELIVERY_FAILED   |   Email Delivery Failed        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    STATUS_CHANGE   |   Status Change        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    ONLY_EMAIL_ACTIVATED   |   Only Email Activated        |    Available     | Optional     | Allowed |    NA |
+| primaryEmailIndicator| Primary Email Indicator        |    USE_ALTERNATE_EMAIL   |   Use Alternate Email        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    USE_PRIMARY_EMAIL   |   Use Primary Email        |    Available     | Optional     | Allowed |    NA |
+| requestGuid| Request Guid        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| userProvidedEconsentEmail| User Provided Econsent Email        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### isoServices
+
+---
+
+tags: [isoServices]
+
+---
+
+* Description: Iso Services
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| isoIdAmex| Iso Id Amex        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdDscv| Iso Id Discover        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdMc| Iso Id Mc        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdVi| Iso Id Vi        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| serviceProvider| Service Provider        |    APERIA   |   Aperia        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    WELLS   |   Wells        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    MARKETPLACE   |   Marketplace        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FD_DIRECT   |   Fd Direct        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| isoIdAmex| Iso Id Amex        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdDscv| Iso Id Discover        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdMc| Iso Id Mc        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| isoIdVi| Iso Id Vi        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| serviceProvider| Service Provider        |    APERIA   |   Aperia        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    WELLS   |   Wells        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    MARKETPLACE   |   Marketplace        |    Available     | Optional     | Allowed |    NA |
+|                                           |                       |    FD_DIRECT   |   Fd Direct        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### keyReferenceNumber
+
+---
+
+tags: [keyReferenceNumber]
+
+---
+
+* Description: Key Reference Number
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| keyReferenceNumber| Credit Only Key Reference Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| tbd| Tbd        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| keyReferenceNumber| Credit Only Key Reference Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| tbd| Tbd        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantCountryOfOrigin
+
+---
+
+tags: [merchantCountryOfOrigin]
+
+---
+
+* Description: Merchant Country Of Origin
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| countryOfOrigin| Country Of Origin        |    GMB   |   Gmb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UZB   |   Uzb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WLF   |   Wlf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WSM   |   Wsm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HRV   |   Hrv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GLP   |   Glp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HKG   |   Hkg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HTI   |   Hti        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GAB   |   Gab        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SLV   |   Slv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MYT   |   Myt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HMD   |   Hmd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GHA   |   Gha        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KIR   |   Kir        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DEU   |   Deu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PSE   |   Pse        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GGY   |   Ggy        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SRB   |   Srb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SGS   |   Sgs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CIV   |   Civ        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CXR   |   Cxr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CHL   |   Chl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TCD   |   Tcd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LKA   |   Lka        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CAN   |   Can        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COM   |   Com        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BLR   |   Blr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DMA   |   Dma        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ATA   |   Ata        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ZAR   |   Zar        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TWN   |   Twn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FLK   |   Flk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ECU   |   Ecu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IMN   |   Imn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TZA   |   Tza        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LBR   |   Lbr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IOT   |   Iot        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BRA   |   Bra        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BTN   |   Btn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BEL   |   Bel        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AZE   |   Aze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AGO   |   Ago        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ASM   |   Asm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DZA   |   Dza        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRO   |   Fro        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NLD   |   Nld        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AFG   |   Afg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CHN   |   Chn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FIN   |   Fin        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRA   |   Fra        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LTU   |   Ltu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CMR   |   Cmr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LBN   |   Lbn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    JOR   |   Jor        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AUT   |   Aut        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KAZ   |   Kaz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KGZ   |   Kgz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TKL   |   Tkl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUN   |   Tun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TKM   |   Tkm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TCA   |   Tca        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MKD   |   Mkd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALA   |   Ala        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PRI   |   Pri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NAM   |   Nam        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NRU   |   Nru        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TJK   |   Tjk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GNB   |   Gnb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOM   |   Som        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RWA   |   Rwa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SHN   |   Shn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KNA   |   Kna        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SPM   |   Spm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    POL   |   Pol        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAN   |   Pan        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMR   |   Smr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEN   |   Sen        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LBY   |   Lby        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MCO   |   Mco        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNE   |   Mne        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VAT   |   Vat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SLE   |   Sle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAR   |   Mar        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IDN   |   Idn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IRL   |   Irl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ISR   |   Isr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ITA   |   Ita        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KEN   |   Ken        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KOR   |   Kor        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KWT   |   Kwt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LSO   |   Lso        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SVN   |   Svn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VNM   |   Vnm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TGO   |   Tgo        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TTO   |   Tto        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RUS   |   Rus        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CAF   |   Caf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UKR   |   Ukr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ZWE   |   Zwe        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SUR   |   Sur        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUR   |   Tur        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BLM   |   Blm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAF   |   Maf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VCT   |   Vct        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SAU   |   Sau        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SGP   |   Sgp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SVK   |   Svk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ZAF   |   Zaf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BRB   |   Brb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TON   |   Ton        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SYC   |   Syc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GBR   |   Gbr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUV   |   Tuv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SJM   |   Sjm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EGY   |   Egy        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    JEY   |   Jey        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VIR   |   Vir        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BFA   |   Bfa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NIC   |   Nic        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PNG   |   Png        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ARE   |   Are        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VUT   |   Vut        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAC   |   Mac        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MLT   |   Mlt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GIN   |   Gin        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    JAM   |   Jam        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    JPN   |   Jpn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ABW   |   Abw        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UMI   |   Umi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NER   |   Ner        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NIU   |   Niu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NFK   |   Nfk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNP   |   Mnp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FSM   |   Fsm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAK   |   Pak        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PHL   |   Phl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QAT   |   Qat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ROU   |   Rou        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MUS   |   Mus        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IND   |   Ind        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IRQ   |   Irq        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SXM   |   Sxm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PCN   |   Pcn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LAO   |   Lao        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LVA   |   Lva        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LIE   |   Lie        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDG   |   Mdg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MYS   |   Mys        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDV   |   Mdv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GUM   |   Gum        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDA   |   Mda        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MSR   |   Msr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OMN   |   Omn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NPL   |   Npl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ANT   |   Ant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CUW   |   Cuw        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOR   |   Nor        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MHL   |   Mhl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COG   |   Cog        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GRD   |   Grd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GUY   |   Guy        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HND   |   Hnd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GNQ   |   Gnq        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ETH   |   Eth        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ERI   |   Eri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FJI   |   Fji        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PYF   |   Pyf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COL   |   Col        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PLW   |   Plw        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CRI   |   Cri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EST   |   Est        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DJI   |   Dji        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NCL   |   Ncl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GEO   |   Geo        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GIB   |   Gib        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GRC   |   Grc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GTM   |   Gtm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HUN   |   Hun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LUX   |   Lux        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    URY   |   Ury        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VEN   |   Ven        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YEM   |   Yem        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ZMB   |   Zmb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QZZ   |   Qzz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TMP   |   Tmp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GUF   |   Guf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ESH   |   Esh        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PRY   |   Pry        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PER   |   Per        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BEN   |   Ben        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BGR   |   Bgr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AIA   |   Aia        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USA   |   Usa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MWI   |   Mwi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MLI   |   Mli        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTQ   |   Mtq        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MRT   |   Mrt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MEX   |   Mex        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MOZ   |   Moz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BES   |   Bes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NZL   |   Nzl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NGA   |   Nga        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DOM   |   Dom        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNG   |   Mng        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DNK   |   Dnk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PRT   |   Prt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    REU   |   Reu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ISL   |   Isl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LCA   |   Lca        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    STP   |   Stp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ESP   |   Esp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SSD   |   Ssd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GRL   |   Grl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SWZ   |   Swz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SWE   |   Swe        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CHE   |   Che        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    THA   |   Tha        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CYM   |   Cym        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CCK   |   Cck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CUB   |   Cub        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALB   |   Alb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AND   |   And        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ATG   |   Atg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AUS   |   Aus        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BHR   |   Bhr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ARM   |   Arm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BMU   |   Bmu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BWA   |   Bwa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BLZ   |   Blz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SLB   |   Slb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KHM   |   Khm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CPV   |   Cpv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ATF   |   Atf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UGA   |   Uga        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COK   |   Cok        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BHS   |   Bhs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CYP   |   Cyp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MMR   |   Mmr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BDI   |   Bdi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CZE   |   Cze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ARG   |   Arg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BGD   |   Bgd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BOL   |   Bol        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BIH   |   Bih        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BVT   |   Bvt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VGB   |   Vgb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BRN   |   Brn        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| countryOfOrigin| Country Of Origin        |    GMB   |   Gmb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UZB   |   Uzb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WLF   |   Wlf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WSM   |   Wsm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HRV   |   Hrv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GLP   |   Glp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HKG   |   Hkg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HTI   |   Hti        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GAB   |   Gab        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SLV   |   Slv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MYT   |   Myt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HMD   |   Hmd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GHA   |   Gha        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KIR   |   Kir        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DEU   |   Deu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PSE   |   Pse        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GGY   |   Ggy        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SRB   |   Srb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SGS   |   Sgs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CIV   |   Civ        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CXR   |   Cxr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CHL   |   Chl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TCD   |   Tcd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LKA   |   Lka        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CAN   |   Can        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COM   |   Com        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BLR   |   Blr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DMA   |   Dma        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ATA   |   Ata        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ZAR   |   Zar        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TWN   |   Twn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FLK   |   Flk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ECU   |   Ecu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IMN   |   Imn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TZA   |   Tza        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LBR   |   Lbr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IOT   |   Iot        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BRA   |   Bra        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BTN   |   Btn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BEL   |   Bel        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AZE   |   Aze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AGO   |   Ago        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ASM   |   Asm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DZA   |   Dza        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRO   |   Fro        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NLD   |   Nld        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AFG   |   Afg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CHN   |   Chn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FIN   |   Fin        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRA   |   Fra        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LTU   |   Ltu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CMR   |   Cmr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LBN   |   Lbn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    JOR   |   Jor        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AUT   |   Aut        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KAZ   |   Kaz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KGZ   |   Kgz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TKL   |   Tkl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUN   |   Tun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TKM   |   Tkm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TCA   |   Tca        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MKD   |   Mkd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALA   |   Ala        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PRI   |   Pri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NAM   |   Nam        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NRU   |   Nru        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TJK   |   Tjk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GNB   |   Gnb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOM   |   Som        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RWA   |   Rwa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SHN   |   Shn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KNA   |   Kna        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SPM   |   Spm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    POL   |   Pol        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAN   |   Pan        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMR   |   Smr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEN   |   Sen        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LBY   |   Lby        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MCO   |   Mco        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNE   |   Mne        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VAT   |   Vat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SLE   |   Sle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAR   |   Mar        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IDN   |   Idn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IRL   |   Irl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ISR   |   Isr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ITA   |   Ita        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KEN   |   Ken        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KOR   |   Kor        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KWT   |   Kwt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LSO   |   Lso        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SVN   |   Svn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VNM   |   Vnm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TGO   |   Tgo        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TTO   |   Tto        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RUS   |   Rus        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CAF   |   Caf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UKR   |   Ukr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ZWE   |   Zwe        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SUR   |   Sur        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUR   |   Tur        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BLM   |   Blm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAF   |   Maf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VCT   |   Vct        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SAU   |   Sau        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SGP   |   Sgp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SVK   |   Svk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ZAF   |   Zaf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BRB   |   Brb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TON   |   Ton        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SYC   |   Syc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GBR   |   Gbr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUV   |   Tuv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SJM   |   Sjm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EGY   |   Egy        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    JEY   |   Jey        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VIR   |   Vir        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BFA   |   Bfa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NIC   |   Nic        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PNG   |   Png        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ARE   |   Are        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VUT   |   Vut        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAC   |   Mac        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MLT   |   Mlt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GIN   |   Gin        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    JAM   |   Jam        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    JPN   |   Jpn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ABW   |   Abw        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UMI   |   Umi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NER   |   Ner        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NIU   |   Niu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NFK   |   Nfk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNP   |   Mnp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FSM   |   Fsm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAK   |   Pak        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PHL   |   Phl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QAT   |   Qat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ROU   |   Rou        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MUS   |   Mus        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IND   |   Ind        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    IRQ   |   Irq        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SXM   |   Sxm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PCN   |   Pcn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LAO   |   Lao        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LVA   |   Lva        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LIE   |   Lie        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDG   |   Mdg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MYS   |   Mys        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDV   |   Mdv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GUM   |   Gum        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDA   |   Mda        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MSR   |   Msr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OMN   |   Omn        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NPL   |   Npl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ANT   |   Ant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CUW   |   Cuw        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOR   |   Nor        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MHL   |   Mhl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COG   |   Cog        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GRD   |   Grd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GUY   |   Guy        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HND   |   Hnd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GNQ   |   Gnq        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ETH   |   Eth        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ERI   |   Eri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FJI   |   Fji        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PYF   |   Pyf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COL   |   Col        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PLW   |   Plw        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CRI   |   Cri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EST   |   Est        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DJI   |   Dji        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NCL   |   Ncl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GEO   |   Geo        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GIB   |   Gib        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GRC   |   Grc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GTM   |   Gtm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    HUN   |   Hun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LUX   |   Lux        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    URY   |   Ury        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VEN   |   Ven        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YEM   |   Yem        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ZMB   |   Zmb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QZZ   |   Qzz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TMP   |   Tmp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GUF   |   Guf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ESH   |   Esh        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PRY   |   Pry        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PER   |   Per        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BEN   |   Ben        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BGR   |   Bgr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AIA   |   Aia        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    USA   |   Usa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MWI   |   Mwi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MLI   |   Mli        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTQ   |   Mtq        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MRT   |   Mrt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MEX   |   Mex        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MOZ   |   Moz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BES   |   Bes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NZL   |   Nzl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NGA   |   Nga        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DOM   |   Dom        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNG   |   Mng        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DNK   |   Dnk        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PRT   |   Prt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    REU   |   Reu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ISL   |   Isl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    LCA   |   Lca        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    STP   |   Stp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ESP   |   Esp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SSD   |   Ssd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GRL   |   Grl        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SWZ   |   Swz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SWE   |   Swe        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CHE   |   Che        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    THA   |   Tha        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CYM   |   Cym        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CCK   |   Cck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CUB   |   Cub        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALB   |   Alb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AND   |   And        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ATG   |   Atg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AUS   |   Aus        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BHR   |   Bhr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ARM   |   Arm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BMU   |   Bmu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BWA   |   Bwa        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BLZ   |   Blz        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SLB   |   Slb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    KHM   |   Khm        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CPV   |   Cpv        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ATF   |   Atf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    UGA   |   Uga        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COK   |   Cok        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BHS   |   Bhs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CYP   |   Cyp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MMR   |   Mmr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BDI   |   Bdi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CZE   |   Cze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ARG   |   Arg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BGD   |   Bgd        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BOL   |   Bol        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BIH   |   Bih        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BVT   |   Bvt        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VGB   |   Vgb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BRN   |   Brn        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantFraudAndSecurity
+
+---
+
+tags: [merchantFraudAndSecurity]
+
+---
+
+* Description: Merchant Fraud And Security
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| afdsMerchantAuthBlockStatus| Afds Merchant Auth Block Status        |    AFDS_AUTH_BLOCK   |   Afds Auth Block        |    Available     | Optional     | Allowed |    NA |
+|          -                 |                 -                      |    AFDS_AUTH_UNBLOCK   |   Afds Auth Unblock        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| afdsMerchantAuthBlockStatus| Afds Merchant Auth Block Status        |    AFDS_AUTH_BLOCK   |   Afds Auth Block        |    Available     | Optional     | Allowed |    NA |
+|          -                 |                 -                      |    AFDS_AUTH_UNBLOCK   |   Afds Auth Unblock        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantFrontEnds
+
+---
+
+tags: [merchantFrontEnds]
+
+---
+
+* Description: Merchant Front Ends
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| authNetworkCode1| Name Of The Network        |    WALMART_BEST_PRICE   |   Walmart Best Price        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VITAL   |   Vital        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOUTH   |   South        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARDNET   |   Cardnet        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COMPASS   |   Compass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NASHVILLE   |   Nashville        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDI   |   Mdi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAPER   |   Paper        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELECHECK   |   Telecheck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FDR   |   Fdr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELEMONEY   |   Telemoney        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAPP   |   Mapp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NDC   |   Ndc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BUYPASS   |   Buypass        |    Available     | Optional     | Allowed |    NA |
+| authNetworkCode2      | Name Of The Secondary Network        |    NDC   |   Ndc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAPER   |   Paper        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COMPASS   |   Compass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELECHECK   |   Telecheck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAPP   |   Mapp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FDR   |   Fdr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BUYPASS   |   Buypass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELEMONEY   |   Telemoney        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOUTH   |   South        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WALMART_BEST_PRICE   |   Walmart Best Price        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NASHVILLE   |   Nashville        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VITAL   |   Vital        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARDNET   |   Cardnet        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDI   |   Mdi        |    Available     | Optional     | Allowed |    NA |
+| authNetworkSecurityCode1| Code Which Can Be Used To Determine The Front End Network        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| authNetworkSecurityCode2| Code which is being used to determine the front end network         |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| authNetworkCode1| Name Of The Network        |    WALMART_BEST_PRICE   |   Walmart Best Price        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VITAL   |   Vital        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOUTH   |   South        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARDNET   |   Cardnet        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COMPASS   |   Compass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NASHVILLE   |   Nashville        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDI   |   Mdi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAPER   |   Paper        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELECHECK   |   Telecheck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FDR   |   Fdr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELEMONEY   |   Telemoney        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAPP   |   Mapp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NDC   |   Ndc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BUYPASS   |   Buypass        |    Available     | Optional     | Allowed |    NA |
+| authNetworkCode2      | Name Of The Secondary Network        |    NDC   |   Ndc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PAPER   |   Paper        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    COMPASS   |   Compass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELECHECK   |   Telecheck        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MAPP   |   Mapp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FDR   |   Fdr        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BUYPASS   |   Buypass        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TELEMONEY   |   Telemoney        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SOUTH   |   South        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WALMART_BEST_PRICE   |   Walmart Best Price        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NASHVILLE   |   Nashville        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    VITAL   |   Vital        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARDNET   |   Cardnet        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MDI   |   Mdi        |    Available     | Optional     | Allowed |    NA |
+| authNetworkSecurityCode1| Code Which Can Be Used To Determine The Front End Network        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| authNetworkSecurityCode2| Code which is being used to determine the front end network         |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantLiteConfig
+
+---
+
+tags: [merchantLiteConfig]
+
+---
+
+* Description: Merchant Lite Configuration
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| merchantLiteAuthLimitAmount  | Merchant Lite Auth Limit Amount                   |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| merchantLiteCreditLimitAmount| Merchant Lite Credit Limit Amount                 |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| merchantLiteSalesLimitAmount | Merchant Lite Sales Limit Amount                  |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| merchantLiteAuthLimitAmount  | Merchant Lite Auth Limit Amount                   |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| merchantLiteCreditLimitAmount| Merchant Lite Credit Limit Amount                 |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+| merchantLiteSalesLimitAmount | Merchant Lite Sales Limit Amount                  |    STRING - Digits only - no decimal (max length - 5, min - 1)   |   String - Digits Only - No Decimal (Max Length: 5, Min Length: 1)        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantMunicipality
+
+---
+
+tags: [merchantMunicipality]
+
+---
+
+* Description: Merchant Municipality
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| municipalityTaxInd| Municipality Tax Indicator        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| municipilatityCode| Municipality Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| municipalityTaxInd| Municipality Tax Indicator        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| municipilatityCode| Municipality Code        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab-end -->
+
+### merchantPortfolioType
+
+---
+
+tags: [merchantPortfolioType]
+
+---
+
+* Description: Merchant Portfolio Type
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| byTransactionCount| Transaction Count Portfolio Size        |    MIDMARKET   |   Midmarket        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMB   |   Smb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NATIONAL   |   National        |    Available     | Optional     | Allowed |    NA |
+| offeringType| Offering Type        |    NATIONAL   |   National        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMB   |   Smb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MIDMARKET   |   Midmarket        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| byTransactionCount| Transaction Count Portfolio Size        |    MIDMARKET   |   Midmarket        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMB   |   Smb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NATIONAL   |   National        |    Available     | Optional     | Allowed |    NA |
+| offeringType| Offering Type        |    NATIONAL   |   National        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SMB   |   Smb        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MIDMARKET   |   Midmarket        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### merchantPricingStructure
+
+---
+
+tags: [merchantPricingStructure]
+
+---
+
+* Description: Merchant Pricing Structure
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+|          -            |                 -                    |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+|          -            |                 -                    |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### miniPromoForStationOutage
+
+---
+
+tags: [miniPromoForStationOutage]
+
+---
+
+* Description: Mini Promo For Station Outage
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| contractDate| Contract Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| contractDate| Contract Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+### miscReporting
+
+---
+
+tags: [miscReporting]
+
+---
+
+* Description: MISC
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| enhancedReportingIndicator| Enhanced Reporting Indicator        |    ALL_TRANS_FUNDED_CHG_FEE   |   All Trans Funded Chg Fee        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BAI2_PINNACLE   |   Bai2 Pinnacle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PINNACLE   |   Pinnacle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MERCHANT_LOCATION_SUMM_J   |   Merchant Location Summ J        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_REP   |   All Trans Settled Rep        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_CHG_FEE   |   All Trans Settled Chg Fee        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_I   |   All Trans Settled I        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_E   |   Only Trans Funded E        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BAI2   |   Bai2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_REP   |   Only Trans Funded Rep        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EDI CONF   |   Edi Conf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_AUTOBILLBK_SYS   |   Not Autobillbk Sys        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_F   |   All Trans Settled F        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MERCHANT_LOCATION_SUMM_G   |   Merchant Location Summ G        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_H   |   Only Trans Funded H        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EDI_CONF_PINNACLE   |   Edi Conf Pinnacle        |    Available     | Optional     | Allowed |    NA |
+| farsFiscalDate        | Financial Account Reporting System Fiscal Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| farsMediaTypeCode     | Financial Activity Reporting System Media Type Code        |    TAPE_REEL_16100_BPI   |   Tape Reel 16100 Bpi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CATRIDGE_COMP   |   Catridge Comp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARTRIDGE_NON_COMP   |   Cartridge Non Comp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TAPE_REEL_3250_BPI   |   Tape Reel 3250 Bpi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|farsReportFrequencyCode| Financial Activity Reporting System Report Frequency Code        |    MNTH_LAST_SAT   |   Mnth Last Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_MON   |   Wkly 1St 3Rd Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_THU   |   Wkly Tue Thu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_SAT   |   Wkly Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_FRI   |   Wkly Wed Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE   |   Wkly Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEMIMNTH_LAST_BUSS_DAY   |   Semimnth Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SUN_2ND_LAST_WEEK   |   Sun 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_FRI   |   Wkly Tue Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_SAT   |   Wkly Tue Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUE_2ND_LAST_WEEK   |   Tue 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_TUE   |   Mnth Last Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_WED   |   Mnth Last Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_WED   |   Wkly 1St 3Rd Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QTRLY_LAST_BUSS_DAY   |   Qtrly Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MON_2ND_LAST_WEEK   |   Mon 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DLY   |   Dly        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_TUE   |   Wkly 1St 3Rd Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_SUN   |   Wkly 1St 3Rd Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_FARS_ENTITLED   |   Not Fars Entitled        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_THURS   |   Wkly Thurs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_SUN   |   Wkly Wed Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTHLY_LAST_BUSS_DAY   |   Mthly Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    28_DAYS_CYCLE   |   28 Days Cycle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SAT_2ND_LAST_WEEK   |   Sat 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_THURS   |   Mnth Last Thurs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTHLY_LAST_CAL_DAY   |   Mthly Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON_TUE   |   Wkly Mon Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QTRLY_LAST_CAL_DAY   |   Qtrly Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_FRI_SUN   |   Wkly Fri Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON   |   Wkly Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    28_35_28_DAYS_CYCLE   |   28 35 28 Days Cycle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRI_2ND_LAST_WEEK   |   Fri 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WED_2ND_LAST_WEEK   |   Wed 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_SUN   |   Mnth Last Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FLEX_DAYS   |   Flex Days        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_FRI   |   Wkly 1St 3Rd Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED   |   Wkly Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_MON   |   Mnth Last Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON_WED   |   Wkly Mon Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_SUN   |   Wkly Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEMIMNTH_LAST_CAL_DAY   |   Semimnth Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_SAT   |   Wkly Wed Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_SUN   |   Wkly Tue Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_THU_SUN   |   Wkly Thu Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_SAT   |   Wkly 1St 3Rd Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    THU_2ND_LAST_WEEK   |   Thu 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_FRI   |   Mnth Last Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_FRI   |   Wkly Fri        |    Available     | Optional     | Allowed |    NA |  
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| enhancedReportingIndicator| Enhanced Reporting Indicator        |    ALL_TRANS_FUNDED_CHG_FEE   |   All Trans Funded Chg Fee        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BAI2_PINNACLE   |   Bai2 Pinnacle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PINNACLE   |   Pinnacle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MERCHANT_LOCATION_SUMM_J   |   Merchant Location Summ J        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_REP   |   All Trans Settled Rep        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_CHG_FEE   |   All Trans Settled Chg Fee        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_I   |   All Trans Settled I        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_E   |   Only Trans Funded E        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BAI2   |   Bai2        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_REP   |   Only Trans Funded Rep        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EDI CONF   |   Edi Conf        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_AUTOBILLBK_SYS   |   Not Autobillbk Sys        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ALL_TRANS_SETTLED_F   |   All Trans Settled F        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MERCHANT_LOCATION_SUMM_G   |   Merchant Location Summ G        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    ONLY_TRANS_FUNDED_H   |   Only Trans Funded H        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    EDI_CONF_PINNACLE   |   Edi Conf Pinnacle        |    Available     | Optional     | Allowed |    NA |
+| farsFiscalDate        | Financial Account Reporting System Fiscal Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |
+| farsMediaTypeCode     | Financial Activity Reporting System Media Type Code        |    TAPE_REEL_16100_BPI   |   Tape Reel 16100 Bpi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CATRIDGE_COMP   |   Catridge Comp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CARTRIDGE_NON_COMP   |   Cartridge Non Comp        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TAPE_REEL_3250_BPI   |   Tape Reel 3250 Bpi        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |
+|farsReportFrequencyCode| Financial Activity Reporting System Report Frequency Code        |    MNTH_LAST_SAT   |   Mnth Last Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_MON   |   Wkly 1St 3Rd Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_THU   |   Wkly Tue Thu        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_SAT   |   Wkly Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_FRI   |   Wkly Wed Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE   |   Wkly Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEMIMNTH_LAST_BUSS_DAY   |   Semimnth Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SUN_2ND_LAST_WEEK   |   Sun 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_FRI   |   Wkly Tue Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_SAT   |   Wkly Tue Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    TUE_2ND_LAST_WEEK   |   Tue 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_TUE   |   Mnth Last Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_WED   |   Mnth Last Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_WED   |   Wkly 1St 3Rd Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QTRLY_LAST_BUSS_DAY   |   Qtrly Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MON_2ND_LAST_WEEK   |   Mon 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DLY   |   Dly        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_TUE   |   Wkly 1St 3Rd Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_SUN   |   Wkly 1St 3Rd Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NOT_FARS_ENTITLED   |   Not Fars Entitled        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_THURS   |   Wkly Thurs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_SUN   |   Wkly Wed Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTHLY_LAST_BUSS_DAY   |   Mthly Last Buss Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    28_DAYS_CYCLE   |   28 Days Cycle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SAT_2ND_LAST_WEEK   |   Sat 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_THURS   |   Mnth Last Thurs        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MTHLY_LAST_CAL_DAY   |   Mthly Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON_TUE   |   Wkly Mon Tue        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    QTRLY_LAST_CAL_DAY   |   Qtrly Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_FRI_SUN   |   Wkly Fri Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON   |   Wkly Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    28_35_28_DAYS_CYCLE   |   28 35 28 Days Cycle        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FRI_2ND_LAST_WEEK   |   Fri 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WED_2ND_LAST_WEEK   |   Wed 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_SUN   |   Mnth Last Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FLEX_DAYS   |   Flex Days        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_FRI   |   Wkly 1St 3Rd Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED   |   Wkly Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_MON   |   Mnth Last Mon        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_MON_WED   |   Wkly Mon Wed        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_SUN   |   Wkly Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SEMIMNTH_LAST_CAL_DAY   |   Semimnth Last Cal Day        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_WED_SAT   |   Wkly Wed Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_TUE_SUN   |   Wkly Tue Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_THU_SUN   |   Wkly Thu Sun        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_1ST_3RD_SAT   |   Wkly 1St 3Rd Sat        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    THU_2ND_LAST_WEEK   |   Thu 2Nd Last Week        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    MNTH_LAST_FRI   |   Mnth Last Fri        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WKLY_FRI   |   Wkly Fri        |    Available     | Optional     | Allowed |    NA |  
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
