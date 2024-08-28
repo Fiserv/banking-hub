@@ -4699,6 +4699,373 @@ titles: UMM, North, GMA
 
 <!-- type: tab-end -->
 
+### miscellaneous
+
+---
+
+tags: [miscellaneous]
+
+---
+
+* Description: miscellaneous
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| SECURITY_EMAIL| Security contact email        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| accountingUnitCode| Accounting Unit Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| aggregatorMerchantIndicator| Aggregator Merchant Indicator        |    NOT_AN_AGGREGATOR   |   Not An Aggregator        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PSP_CHARITABLE_MERCHANT   |   Psp Charitable Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PSP_SELECTIVE_ACCEPTANCE   |   Psp Selective Acceptance        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CHARITABLE_MERCHANT   |   Charitable Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SELECTIVE_ACCEPTANCE   |   Selective Acceptance        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PSP_MERCHANT   |   Psp Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GOVT_AND_EDU_PAYMENT_PROGRAM   |   Govt And Edu Payment Program        |    Available     | Optional     | Allowed |    NA |
+| arpCode| ARP Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| bankingCategoryCode| Banking Category Code        |    OTHER_SILVER   |   Other Silver        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BBG_SILVER   |   Bbg Silver        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WHOLESALE_BRONZE   |   Wholesale Bronze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RETAIL_SILVER   |   Retail Silver        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER_BRONZE   |   Other Bronze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BBG   |   Bbg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER_GOLD   |   Other Gold        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WHOLESALE_GOLD   |   Wholesale Gold        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RETAIL_GOLD   |   Retail Gold        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RETAIL   |   Retail        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WHOLESALE   |   Wholesale        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WHOLESALE_SILVER   |   Wholesale Silver        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BBG_BRONZE   |   Bbg Bronze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BBG_GOLD   |   Bbg Gold        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RETAIL_BRONZE   |   Retail Bronze        |    Available     | Optional     | Allowed |    NA |
+|  -  |    -    |    NONE   |   Blank Value        |    Available     | Optional     | Allowed |    NA |
+| branchDepositorIndicator| Branch Depositor Indicator  |    YES   |   Yes  |  Available | Optional | Allowed | NA |
+|   -  |   -   |    NO   |   No        |    Available     | Optional     | Allowed |  NA |
+|   -  |   -   |    NONE   |   None    |    Available     | Optional     | Allowed |  NA |
+| branchLongNumber| Branch Long Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| branchShortNumber| Branch Short Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| caseManagementIndicator| Case Management Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+| cashManagementIndicator| Cash Management Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| cmsServiceCodes| CMS Service Codes        |       |           |    Available     | Optional     | Allowed |    NA |
+| descriptorEntitledIndicator| Descriptor Entitled Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| domesticForeignIndicator| DomesticForeignIndicator        |    DOM_MASTER_DESCRIPTION   |   Dom Master Description        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DOM_FGN_INTERCHANGE_DESC   |   Dom Fgn Interchange Desc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FGN_MASTER_DESCRIPTION   |   Fgn Master Description        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AAFES_NAVY_MASTER_DESC   |   Aafes Navy Master Desc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AAFES_NAVY_USENEW_DESC   |   Aafes Navy Usenew Desc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DOM_FGN_USENEW_DESC   |   Dom Fgn Usenew Desc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FGN_USENEW_DESCRIPTION   |   Fgn Usenew Description        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DOM_USENEW_DESCRIPTION   |   Dom Usenew Description        |    Available     | Optional     | Allowed |    NA |
+|   -    |    -    |    DOM_USENEW_DESCRIPTION   |   Dom Usenew Description   |    Available  | Optional  | Allowed |  NA |
+|   -    |    -    |    DOM_FGN_ALT_DESC   |   Dom FGN ALT Description   |    Available  | Optional  | Allowed |  NA |
+|   -    |    -    |    DOM_FGN_DBA_DESC   |   Dom FGN DBA Description   |    Available  | Optional  | Allowed |  NA |
+| emailtypecode| Type of Email Address        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| emvIndicator| EMV Chip Enabled Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|             |                                   |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+| faxIndicator| Fax Indicator        |    EIDS_EMAIL   |   Eids Email        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    INFO_FAX   |   Info Fax        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    FAX   |   Fax        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    CM_ALERT   |   Cm Alert        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    EIDS   |   Eids        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    PC_TO_PC   |   Pc To Pc        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    MAIL   |   Mail        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    EIDS_AUTOFAX   |   Eids Autofax        |    Available     | Optional     | Allowed |    NA |
+| fireSafetyActIndicator| Fire Safety Act Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |  
+|             |                      |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|             |              |    NONE   |   Blank Value        |    Available     | Optional     | Allowed |    NA    |  
+| imprintersCount| Imprinter Quantity Bill Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |  
+| internetCode| Internet Code        |    INTERNET_MERCHANT   |   Internet Merchant        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    FISERV_GATEWAY   |   Fiserv Gateway        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    DIAL_SOLUTION   |   Dial Solution        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    LEASED_LINE   |   Leased Line        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    CERT_GATEWAY   |   Cert Gateway        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    NON_PARTICIPANT   |   Non Participant        |    Available     | Optional     | Allowed |    NA |
+|       |         |    NONE   |   None        |    Available     | Optional     | Allowed |    NA    | 
+| leaseCompanyCode| Lease Company Code   |    CIT   |   CIT    |    Available     | Optional     | Allowed |    NA   |
+|    |   |    FDLS   |   FDLS    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    3RD_PARTY   |   3RD_PARTY    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    NORTHERN   |   NORTHERN    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    LADCO   |   LADCO    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    NONE   |   Blank Value    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    NOT_SPECIFIED   |   Not Specified    |    Available     | Optional     | Allowed |   NA  |
+| loyaltyProcessingCode| Loyalty Processing Code |    NO   |   No   |    Available     | Optional     | Allowed |  NA |  
+|                    |            |    YES   |   Yes       |    Available     | Optional     | Allowed |    NA |  
+|                    |            |    NOT_SPECIFIED   |   Not Specified        |    Available     | Optional     | Allowed |    NA |  
+| ncptAmount| Anticipated Mc/Visa® net contribution per transaction        |       |           |    Available     | Optional     | Allowed |    NA |  
+| nrptAmount| Anticipated Mc/Visa® net revenue percentage        |       |           |    Available     | Optional     | Allowed |    NA |  
+| oilTradeClassCode| Class of Trade code for specific client usage        |    YES, NO   |   Yes, No        |    Available     | Optional     | Allowed |    NA |  
+| paymentEssentialsCode| Payment essentials bundle code        |    BUNDLE8   |   Bundle8        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_1   |   Wells Bundle 1        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE9   |   Bundle9        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE6   |   Bundle6        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE1   |   Bundle1        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE14   |   Bundle14        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE3   |   Bundle3        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_4   |   Wells Bundle 4        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE18   |   Bundle18        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_5   |   Wells Bundle 5        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE11   |   Bundle11        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE16   |   Bundle16        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE12   |   Bundle12        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_2   |   Wells Bundle 2        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE7   |   Bundle7        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE19   |   Bundle19        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE13   |   Bundle13        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE10   |   Bundle10        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE2   |   Bundle2        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_6   |   Wells Bundle 6        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE20   |   Bundle20        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_3   |   Wells Bundle 3        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE5   |   Bundle5        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE17   |   Bundle17        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE15   |   Bundle15        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE4   |   Bundle4        |    Available     | Optional     | Allowed |    NA |  
+| rawDataAddendumIndicator| Raw Data Addendum Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |  
+| rejectNotifyCode| Reject Notification Code        |    OUTLET_DBA_ADDR   |   Outlet Dba Addr        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    OUTLET_BILLTO_ADDR   |   Outlet Billto Addr        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    CHAIN_BILLTO_ADDR   |   Chain Billto Addr        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    CHAIN_DBA_ADDR   |   Chain Dba Addr        |    Available     | Optional     | Allowed |    NA |  
+| restaurantGroupCode| Restaurant Group Code        |    NOT_MEMBER   |   Not Member        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    SIG_Optional   |   Sig Optional        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    GOLDEN_RETRIEVER   |   Golden Retriever        |    Available     | Optional     | Allowed |    NA |  
+| revenueBookedDate| Revenue Booked Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |  
+| specialNationalAccountIndicator| Special National Account Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |  
+| techEmail| Tech Email        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |  
+| volumeTierIndicator| Volume Tier Indicator        |    STRING - Alphanumeric   |   String - Alphanumeric        |    Available     | Optional     | Allowed |    NA |  
+| volumeTierInterchangeFeeIndicator| Volume Tier Interchange Fee Indicator        |    TIER_10   |   Tier 10        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_17   |   Tier 17        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_04   |   Tier 04        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_41   |   Tier 41        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    MP   |   Mp        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_09   |   Tier 09        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    NOT_PARTICIPATING   |   Not Participating        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_18   |   Tier 18        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_22   |   Tier 22        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_33   |   Tier 33        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_20   |   Tier 20        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_11   |   Tier 11        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_30   |   Tier 30        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_19   |   Tier 19        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_08   |   Tier 08        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_01   |   Tier 01        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_39   |   Tier 39        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_21   |   Tier 21        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_13   |   Tier 13        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_23   |   Tier 23        |    Available     | Optional     | Allowed |    NA |  
+| xrefIndicator| Xref Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| doNotChargeVee | Do Not Charge Vee for Omnipay  |    STRING   |   String   |    Available     | Optional | Allowed |    NA |
+| online | Online Indicator for Omnipay Merchant |    NO   |   No  |    Available     | Optional     | Allowed |    NA |
+|  -  |  -  |  YES   |   Yes  |  Available | Optional | Allowed |    NA  |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| SECURITY_EMAIL| Security contact email        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| accountingUnitCode| Accounting Unit Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| aggregatorMerchantIndicator| Aggregator Merchant Indicator        |    NOT_AN_AGGREGATOR   |   Not An Aggregator        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PSP_CHARITABLE_MERCHANT   |   Psp Charitable Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PSP_SELECTIVE_ACCEPTANCE   |   Psp Selective Acceptance        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    CHARITABLE_MERCHANT   |   Charitable Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    SELECTIVE_ACCEPTANCE   |   Selective Acceptance        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    PSP_MERCHANT   |   Psp Merchant        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    GOVT_AND_EDU_PAYMENT_PROGRAM   |   Govt And Edu Payment Program        |    Available     | Optional     | Allowed |    NA |
+| arpCode| ARP Code        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| bankingCategoryCode| Banking Category Code        |    OTHER_SILVER   |   Other Silver        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER   |   Other        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BBG_SILVER   |   Bbg Silver        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WHOLESALE_BRONZE   |   Wholesale Bronze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RETAIL_SILVER   |   Retail Silver        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER_BRONZE   |   Other Bronze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BBG   |   Bbg        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    OTHER_GOLD   |   Other Gold        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WHOLESALE_GOLD   |   Wholesale Gold        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RETAIL_GOLD   |   Retail Gold        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RETAIL   |   Retail        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WHOLESALE   |   Wholesale        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    WHOLESALE_SILVER   |   Wholesale Silver        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BBG_BRONZE   |   Bbg Bronze        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    BBG_GOLD   |   Bbg Gold        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    RETAIL_BRONZE   |   Retail Bronze        |    Available     | Optional     | Allowed |    NA |
+|  -  |    -    |    NONE   |   Blank Value        |    Available     | Optional     | Allowed |    NA |
+| branchDepositorIndicator| Branch Depositor Indicator  |    YES   |   Yes  |  Available | Optional | Allowed | NA |
+|   -  |   -   |    NO   |   No        |    Available     | Optional     | Allowed |  NA |
+|   -  |   -   |    NONE   |   None    |    Available     | Optional     | Allowed |  NA |
+| branchLongNumber| Branch Long Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| branchShortNumber| Branch Short Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |
+| caseManagementIndicator| Case Management Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+| cashManagementIndicator| Cash Management Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| cmsServiceCodes| CMS Service Codes        |       |           |    Available     | Optional     | Allowed |    NA |
+| descriptorEntitledIndicator| Descriptor Entitled Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+| domesticForeignIndicator| DomesticForeignIndicator        |    DOM_MASTER_DESCRIPTION   |   Dom Master Description        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DOM_FGN_INTERCHANGE_DESC   |   Dom Fgn Interchange Desc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FGN_MASTER_DESCRIPTION   |   Fgn Master Description        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AAFES_NAVY_MASTER_DESC   |   Aafes Navy Master Desc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    AAFES_NAVY_USENEW_DESC   |   Aafes Navy Usenew Desc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    DOM_FGN_USENEW_DESC   |   Dom Fgn Usenew Desc        |    Available     | Optional     | Allowed |    NA |
+|          -            |                 -                    |    FGN_USENEW_DESCRIPTION   |   Fgn Usenew Description        |    Available     | Optional     | Allowed |    NA |
+|   -    |    -    |    DOM_USENEW_DESCRIPTION   |   Dom Usenew Description   |    Available  | Optional  | Allowed |  NA |
+|   -    |    -    |    DOM_FGN_ALT_DESC   |   Dom FGN ALT Description   |    Available  | Optional  | Allowed |  NA |
+|   -    |    -    |    DOM_FGN_DBA_DESC   |   Dom FGN DBA Description   |    Available  | Optional  | Allowed |  NA |
+| emailtypecode| Type of Email Address        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| emvIndicator| EMV Chip Enabled Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|             |                                   |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+| faxIndicator| Fax Indicator        |    EIDS_EMAIL   |   Eids Email        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    INFO_FAX   |   Info Fax        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    FAX   |   Fax        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    CM_ALERT   |   Cm Alert        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    EIDS   |   Eids        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    PC_TO_PC   |   Pc To Pc        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    MAIL   |   Mail        |    Available     | Optional     | Allowed |    NA |
+|             |                      |    EIDS_AUTOFAX   |   Eids Autofax        |    Available     | Optional     | Allowed |    NA |
+| fireSafetyActIndicator| Fire Safety Act Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |  
+|             |                      |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+|             |              |    NONE   |   Blank Value        |    Available     | Optional     | Allowed |    NA    |  
+| imprintersCount| Imprinter Quantity Bill Number        |    STRING containing digits only   |   String Containing Digits Only        |    Available     | Optional     | Allowed |    NA |  
+| internetCode| Internet Code        |    INTERNET_MERCHANT   |   Internet Merchant        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    FISERV_GATEWAY   |   Fiserv Gateway        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    DIAL_SOLUTION   |   Dial Solution        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    LEASED_LINE   |   Leased Line        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    CERT_GATEWAY   |   Cert Gateway        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    NON_PARTICIPANT   |   Non Participant        |    Available     | Optional     | Allowed |    NA |
+|       |         |    NONE   |   None        |    Available     | Optional     | Allowed |    NA    |  
+| leaseCompanyCode| Lease Company Code   |    CIT   |   CIT    |    Available     | Optional     | Allowed |    NA   |
+|    |   |    FDLS   |   FDLS    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    3RD_PARTY   |   3RD_PARTY    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    NORTHERN   |   NORTHERN    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    LADCO   |   LADCO    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    NONE   |   Blank Value    |    Available     | Optional     | Allowed |   NA  |
+|    |   |    NOT_SPECIFIED   |   Not Specified    |    Available     | Optional     | Allowed |   NA  | 
+| loyaltyProcessingCode| Loyalty Processing Code |    NO   |   No   |    Available     | Optional     | Allowed |  NA |  
+|                    |            |    YES   |   Yes       |    Available     | Optional     | Allowed |    NA |  
+|                    |            |    NOT_SPECIFIED   |   Not Specified        |    Available     | Optional     | Allowed |    NA |  
+| ncptAmount| Anticipated Mc/Visa® net contribution per transaction        |       |           |    Available     | Optional     | Allowed |    NA |  
+| nrptAmount| Anticipated Mc/Visa® net revenue percentage        |       |           |    Available     | Optional     | Allowed |    NA |  
+| oilTradeClassCode| Class of Trade code for specific client usage        |    YES, NO   |   Yes, No        |    Available     | Optional     | Allowed |    NA |  
+| paymentEssentialsCode| Payment essentials bundle code        |    BUNDLE8   |   Bundle8        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_1   |   Wells Bundle 1        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE9   |   Bundle9        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE6   |   Bundle6        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE1   |   Bundle1        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE14   |   Bundle14        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE3   |   Bundle3        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_4   |   Wells Bundle 4        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE18   |   Bundle18        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_5   |   Wells Bundle 5        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE11   |   Bundle11        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE16   |   Bundle16        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE12   |   Bundle12        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_2   |   Wells Bundle 2        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE7   |   Bundle7        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE19   |   Bundle19        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE13   |   Bundle13        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE10   |   Bundle10        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE2   |   Bundle2        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_6   |   Wells Bundle 6        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE20   |   Bundle20        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    NONE   |   None        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    WELLS_BUNDLE_3   |   Wells Bundle 3        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE5   |   Bundle5        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE17   |   Bundle17        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE15   |   Bundle15        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    BUNDLE4   |   Bundle4        |    Available     | Optional     | Allowed |    NA |  
+| rawDataAddendumIndicator| Raw Data Addendum Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |  
+| rejectNotifyCode| Reject Notification Code        |    OUTLET_DBA_ADDR   |   Outlet Dba Addr        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    OUTLET_BILLTO_ADDR   |   Outlet Billto Addr        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    CHAIN_BILLTO_ADDR   |   Chain Billto Addr        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    CHAIN_DBA_ADDR   |   Chain Dba Addr        |    Available     | Optional     | Allowed |    NA |  
+| restaurantGroupCode| Restaurant Group Code        |    NOT_MEMBER   |   Not Member        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    SIG_Optional   |   Sig Optional        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    GOLDEN_RETRIEVER   |   Golden Retriever        |    Available     | Optional     | Allowed |    NA |  
+| revenueBookedDate| Revenue Booked Date        |    STRING (max/min length - 10)   |   String (Max/Min Length: 10)        |    Available     | Optional     | Allowed |    NA |  
+| specialNationalAccountIndicator| Special National Account Indicator        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |  
+| techEmail| Tech Email        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |  
+| volumeTierIndicator| Volume Tier Indicator        |    STRING - Alphanumeric   |   String - Alphanumeric        |    Available     | Optional     | Allowed |    NA |  
+| volumeTierInterchangeFeeIndicator| Volume Tier Interchange Fee Indicator        |    TIER_10   |   Tier 10        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_17   |   Tier 17        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_04   |   Tier 04        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_41   |   Tier 41        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    MP   |   Mp        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_09   |   Tier 09        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    NOT_PARTICIPATING   |   Not Participating        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_18   |   Tier 18        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_22   |   Tier 22        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_33   |   Tier 33        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_20   |   Tier 20        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_11   |   Tier 11        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_30   |   Tier 30        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_19   |   Tier 19        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_08   |   Tier 08        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_01   |   Tier 01        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_39   |   Tier 39        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_21   |   Tier 21        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_13   |   Tier 13        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    TIER_23   |   Tier 23        |    Available     | Optional     | Allowed |    NA |  
+| xrefIndicator| Xref Indicator        |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |  
+|                    |                                       |    NO   |   No        |    Available     | Optional     | Allowed |    NA |  
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| doNotChargeVee| Do Not Charge Vee for Omnipay        |    STRING   |   String        |    Available     | Optional     | Allowed |    NA |
+| online| Online Indicator for Omnipay Merchant        |    NO   |   No        |    Available     | Optional     | Allowed |    NA |
+|                    |                                       |    YES   |   Yes        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab-end -->
+
+### modelAfterMerchant
+
+---
+
+tags: [modelAfterMerchant]
+
+---
+
+* Description: Model After Merchant For Boarding Usage
+
+* List of Attributes:
+
+<!-- type: tab 
+titles: UMM, North, GMA 
+-->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type        |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute                    | Description                                       | Values        | Value Description                                         | Inquiry  | Create   | Update   |  Delete  |
+|:-----------------------------|:--------------------------------------------------|:--------------|:----------------------------------------------------------|:--------:|:--------:|:--------:|:--------:|
+| offeringType| Offering Type        |    STANDARD_OFFERING   |   Standard Offering        |    Available     | Optional     | Allowed |    NA |
+
+<!-- type: tab -->
+
+| Attribute | Description | Values | Value Description | Inquiry  | Create | Update |  Delete  |
+|:---------|:------------|:--------------|:------------|:--------:|:------:|:------:|:--------:|
+| NA | NA  | NA | NA |  NA  |  NA  |  NA  | NA |
+
+<!-- type: tab-end -->
+
+
 
 
 
