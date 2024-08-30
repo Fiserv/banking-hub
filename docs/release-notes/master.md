@@ -86,7 +86,6 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | 
 | --- | ----------- | 
-| Add Transfer-Teller | We added the Add Transfer-Teller API that provides Teller capabilities for performing funds transfer. This API operation supports a one-time transfer of funds, including the FROM and TO accounts, descriptions, and returns balances for each of the accounts.| <!-- ESF-606 -->
 | Add Credit-DDA_Teller | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`| 
 | Add Debit-DDA_Teller | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`|
 | Add Transfer | As part of the enhancement, we added a new value in `AcctType` field (CLA) that enables transfers from commercial loans to checking and savings accounts.<br>**Impacted Fields:**<br> `XferInfo/FromAcctRef/AcctKeys/AcctType`<br>`XferStatusRec/XferKeys/AcctKeys/AcctType`|
