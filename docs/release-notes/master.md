@@ -19,8 +19,8 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
 | CERT Deployment      | 2 August, 2024 - 20 August, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
-| PROD Deployment      | 21 August, 2024 - 29 August, 2024 | ![Rescheduled](https://github.com/user-attachments/assets/12aa3056-9179-4822-adda-bf740bab64d5)<br>*To early September |
-| General Availability (GA) | 29 August, 2024	             | ![Not-Applicable](https://github.com/user-attachments/assets/8e6f7b1e-7b0d-4682-a650-b3a3ddb981b8) |
+| PROD Deployment      | 21 August, 2024 - 29 August, 2024 | ![Rescheduled](https://github.com/user-attachments/assets/12aa3056-9179-4822-adda-bf740bab64d5)<br><span style="font-size: small; color: gray; font-style: italic;">(Planned for early September)</span> |
+| General Availability (GA) | 29 August, 2024	             | ![Not-Applicable](https://github.com/user-attachments/assets/085eb2f4-5bd5-48c9-9547-43df39274b3a) |
 
 <!-- type: tab -->
 
@@ -133,6 +133,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="/api/?type=post&path=/acctholdservice/stophold/accountHolds" title="Click to open">Add Account Hold </a> | Previously, the API generated an internal server error when the `AcctType` field value is "CDA" and the `AcctKeys` aggreagte (AcctHoldInfo/OtherAcctRef/AcctKeys) is sent as blank. Now, users can expect valid error message as "Other Account reference not found" in the response.| CERT | <!-- FETP-3392 -->
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> | We resolved the issue with the `IssueDt` and `ExpDt` fields, where the API returned incorrect dates for driver license in the response message. <br> **Impacted Fields:** <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssueDt`<br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/ExpDt`| CERT |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty</a> | We resolved an issue with the `DueAmt` field to populate with correct calculations in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/PmtCompositeAmt/CurAmt/Amt`| CERT |
@@ -183,6 +184,11 @@ titles: Premier, Precision, Signature, Cleartouch
 <!-- type: tab -->
 
 ## 2024_Q3.2
+
+### Enhancements
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer-Teller</a> | We added the Add Transfer-Teller API that provides Teller capabilities for performing funds transfer. This API operation supports a one-time transfer of funds, including the FROM and TO accounts, descriptions, and returns balances for each of the accounts.| CERT | <!-- ESF-606 -->
 
 ### Fixed
 | API Name | Description | Environment Availability |
