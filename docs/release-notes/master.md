@@ -39,6 +39,9 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch 
 -->
 
+
+
+
 ## 2024_Q3.2
 
 ### Enhancements
@@ -52,6 +55,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue where all name field values were displayed in the upper case. Now,  you can change the configuration settings  as per the casing preferences. <br>**Impacted Field:** <br> `PersonPartyInfo/PersonData/PersonName/FullName` <br>`PersonPartyInfo/PersonData/PersonName/FamilyName` <br> `PersonPartyInfo/PersonData/PersonName/GivenName` <br> `PersonPartyInfo/PersonData/PersonName/MiddleName` <br>`PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/Name` <br>`OrgPartyInfo/OrgData/OrgName/LegalName`| CERT | <!-- FETP-2550/ESFACYC-11012 -->
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where the value of the `ImmigrationStat` field was automatically set to “0” in the code, when the value of the `ImmigrationStat` field is set to “National”, “Citizen”, “ResidentAlien” or “NonResidentAlien” in the request message. <br>**Impacted Field:** <br> `PersonPartyInfo/ImmigrationStat`| CERT | <!-- ESFACYC-10981 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue related to the `NameFormat` field where the default value was not added in the OrgParty aggregate when the field value is not provided in the request. The default values are, <br> <li> for PersonParty = None </li> <li> for OrgParty = NonPersonal </li> **Impacted Fields:** <br> `PersonPartyInfo/PersonData/PersonName/NameFormat` <br> `OrgPartyInfo/OrgData/OrgName/NameFormat`| CERT | <!-- ESFACYC-11344 -->
