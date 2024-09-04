@@ -91,7 +91,7 @@ titles: Premier, Precision, Signature, Cleartouch
 <!-- type: tab -->
 
 ### Enhancements
-| API Name | Description | 
+| API Name | Description |  
 | --- | ----------- | 
 | Add Credit-DDA_Teller | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`| 
 | Add Debit-DDA_Teller | We added the following new fields so that a teller or supervisor can override the transaction when required:<br>`OvrdExceptionData`<br>`OvrdExceptionData/OverrideException`<br> `OvrdExceptionData/OverrideException/SubjectRole`|
