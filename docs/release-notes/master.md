@@ -140,6 +140,13 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
+## 2024_Q3.3
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open"> Add Party </a> | We resolved the issue where the service accepted only "yyyy-MM-ddTHH:mm:ss.SSS" format for all fields with data type as "DateTime". Now, the service supports the following formats: <ul> <li>yyyy-MM-dd</li><li>yyyy-MM-ddTHH:mm</li><li>yyyy-MM-ddTHH:mm:ss.SSS</li><li>yyyy-MM-ddTHH:mm:ss.SSS±HH:m</li></ul> **Impacted Fields:** <br>`PersonPartyInfo/LastContactDt`<br> `PersonPartyInfo/PersonData/Contact/PostAddr/TimeFrame/StartDt` <br>`PersonPartyInfo/PersonData/Contact/PostAddr/TimeFrame/EndDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/Employment/TimeFrame/StartDt` <br> `OrgPartyInfo/LastContactDt` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/TimeFrame/StartDt` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/TimeFrame/EndDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` | CERT | <!-- FETP-4033 -->
+
 ## 2024_Q3.2
 
 ### Enhancements
