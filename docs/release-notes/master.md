@@ -145,6 +145,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party </a> | We resolved the issue where the work foreign phone number was retrieved with an incorrect phone type. <br> **Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PhoneType` <br> `PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PhoneType` | CERT | <!-- FETP-3575 -->
 | <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open"> Add Party </a> | We resolved the issue where the service accepted only "yyyy-MM-ddTHH:mm:ss.SSS" format for all fields with data type as "DateTime". Now, the service supports the following formats: <ul> <li>yyyy-MM-dd</li><li>yyyy-MM-ddTHH:mm</li><li>yyyy-MM-ddTHH:mm:ss.SSS</li><li>yyyy-MM-ddTHH:mm:ss.SSS±HH:m</li></ul> **Impacted Fields:** <br>`PersonPartyInfo/LastContactDt`<br> `PersonPartyInfo/PersonData/Contact/PostAddr/TimeFrame/StartDt` <br>`PersonPartyInfo/PersonData/Contact/PostAddr/TimeFrame/EndDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/Employment/TimeFrame/StartDt` <br> `OrgPartyInfo/LastContactDt` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/TimeFrame/StartDt` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/TimeFrame/EndDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` | CERT | <!-- FETP-4033 -->
 
 ## 2024_Q3.2
