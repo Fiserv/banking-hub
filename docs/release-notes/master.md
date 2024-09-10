@@ -158,6 +158,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open"> Add Party </a> | We resolved an issue where the `OEDCode` field was implemented incorrectly. <br> **Impacted Fields:** <br> `PersonPartyInfo/OEDCode` <br> `OrgPartyInfo/OEDCode` | CERT | <!-- FETP-3394 -->
 | <a href="../api/?type=post&path=/addrservice/partyacctsvc/address/secured" title="Click to open">Get Address</a> | We resolved the issue where the API did not retrieve the correct value for the `CountryCodeSource` field even when the value was set in the Add Address and Update Address API. | CERT | <!-- FETP-2509 -->
 | <a href="../api/?type=post&path=/acctholdservice/stophold/accountHolds" title="Click to open">Add Account Hold </a> | Previously, the API generated an internal server error when the `AcctType` field value is "CDA" and the `AcctKeys` aggreagte (AcctHoldInfo/OtherAcctRef/AcctKeys) is sent as blank. Now, users can expect valid error message as "Other Account reference not found" in the response.| CERT | <!-- FETP-3392 -->
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
