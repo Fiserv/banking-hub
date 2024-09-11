@@ -5,7 +5,7 @@ V 11.0.0
 <summary><b style="font-size: 20px; color: #ff6600;">Release Schedule </b> </summary>
 <!-- 
 type: tab 
-titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
+titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3, 2024_Q4.1
 -->
 
 |        Activity      |  Planned Schedule  |	  Status    |
@@ -29,6 +29,14 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 | CERT Deployment      | 2 September, 2024 - 13 September, 2024 | ![In Progress](https://github.com/user-attachments/assets/b37c5e62-abf8-40b2-97d3-2cb12bb2e788) |
 | PROD Deployment      | 17 September, 2024 - 20 September, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | General Availability (GA) | 26 September, 2024	               | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
+
+<!-- type: tab -->
+
+|        Activity      |  Planned Schedule            |	  Status    |
+| -------------- |----------------------------|---------|
+| CERT Deployment      | 2 October, 2024 - 9 October, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc)|
+| PROD Deployment      | 21 October, 2024 - 25 October, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| General Availability (GA) | 31 October, 2024	              | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
 
 <!-- type: tab-end -->
 
