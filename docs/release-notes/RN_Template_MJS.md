@@ -5,9 +5,66 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA 
 -->
  April 12, 2025
-
- ### New in Premier
+ <!-- display of the adding JIRA IDs  -->
+  ### New in Premier
 ## 2024_Q3.2
+_Specimen 1_
+### Enhancements
+With this release, the following enhancements are made to improvise the user experience. 
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+|General | We updated the postman collection for Premier core in the <a href="../docs/?path=docs/resources/resources.md">Resources</a>.| PROD|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-DDA, Get Account Details-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT <br> <span style="color: orange;">FETP-2313</span>  |
+
+
+### Fixed
+With this release, the following issues are resolved. 
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT <br> ESFATIG-2836 | <!-- ESFATIG-2836 -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where `IRSNameControl` field was not added for the primary PersonParty or OrgParty even when the `LegalName` field is provided in the request. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/LegalName`| CERT <br> FETP-2543 | <!-- ESFACYC-11280/FETP-2543 -->
+
+
+_Specimen 2_
+### Enhancements
+With this release, the following enhancements are made to improvise the user experience. 
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+|General | We updated the postman collection for Premier core in the <a href="../docs/?path=docs/resources/resources.md">Resources</a>.| PROD|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-DDA, Get Account Details-SDA</a> | **FETP-2313** <br>We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
+
+
+### Fixed
+With this release, the following issues are resolved. 
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | **ESFATIG-2836** <br> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |**FETP-2543** <br> We resolved the issue where `IRSNameControl` field was not added for the primary PersonParty or OrgParty even when the `LegalName` field is provided in the request. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/LegalName`| CERT | <!-- ESFACYC-11280/FETP-2543 -->
+<!-- <!-- display of the landing content and breaking change at line 20  -->
+
+_Specimen 3_
+### Enhancements
+With this release, the following enhancements are made to improvise the user experience. 
+| API Name | Description | Environment Availability |  JIRA Reference Number |
+| -------- | ----------- | ------------------------ | -----------------------|
+|General | We updated the postman collection for Premier core in the <a href="../docs/?path=docs/resources/resources.md">Resources</a>.| PROD| - |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-DDA, Get Account Details-SDA</a> | We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |FETP-2313 |
+
+
+### Fixed
+With this release, the following issues are resolved. 
+| API Name | Description | Environment Availability |  JIRA Reference Number |
+| -------- | ----------- | ------------------------ | -----------------------|
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT |ESFATIG-2836 | <!-- ESFATIG-2836 -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |We resolved the issue where `IRSNameControl` field was not added for the primary PersonParty or OrgParty even when the `LegalName` field is provided in the request. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/LegalName`| CERT | FETP-2543 |<!-- ESFACYC-11280/FETP-2543 -->
+
+
+
+
+ 
+<!-- display of the landing content and breaking change at line 20 
+### New in Premier
+## 2024_Q3.2 
 
 ### Enhancements
 With this release, the following enhancements are made to improvise the user experience. 
@@ -17,22 +74,16 @@ With this release, the following enhancements are made to improvise the user exp
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-DDA, Get Account Details-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account-DDA, Update Account-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open"> Add ePreference, </a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences" title="Click to open"> Update ePreference,</a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Delete ePreference</a> | We added a new field `OvrdAutoAckInd` to override the warnings that are returned in the response by the core while performing add, update and delete of an ePreference record under these APIs.| CERT |<!-- ESF-1769, ESFACYC-9557, ESFACYC-9558, ESFACYC-7461 & ESFACYC-1110 -->
-|<a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open"> Get ePreference, </a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences" title="Click to open"> Update ePreference,</a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Delete ePreference</a> | We resolved an issue for the `DocGroupName` field where the default value as zero (0) was not returned while retrieving the ePreference record for an account.<details><summary>**Field Name Change/Integration Update/API Modification** </summary> Previously, the API was returning *No record found* error when account was not enrolled for eStatements. After this fix, the API returns successful response with single record having default `DocGroupName` value in the response.</details> | CERT |<!-- ESF-1692/ESFACYC-8243 --> 
+<!--|<a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open"> Get ePreference, </a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences" title="Click to open"> Update ePreference,</a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Delete ePreference</a> | We resolved an issue for the `DocGroupName` field where the default value as zero (0) was not returned while retrieving the ePreference record for an account.<details><summary>**Field Name Change/Integration Update/API Modification** </summary> Previously, the API was returning *No record found* error when account was not enrolled for eStatements. After this fix, the API returns successful response with single record having default `DocGroupName` value in the response.</details> | CERT |<!-- ESF-1692/ESFACYC-8243 --> 
 
 
-### Fixed
+<!--### Fixed
 With this release, the following issues are resolved. 
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where `IRSNameControl` field was not added for the primary PersonParty or OrgParty even when the `LegalName` field is provided in the request. <br>**Impacted Field:** <br> `PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/LegalName`| CERT | <!-- ESFACYC-11280 -->
-
-
-
-
-
-
-
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where `IRSNameControl` field was not added for the primary PersonParty or OrgParty even when the `LegalName` field is provided in the request. <br>**Impacted Field:** <br> `PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/LegalName`| CERT | <!-- ESFACYC-11280 
+-->
 
 <!-- | API Name/Core | Description |
 | --- | ----------- |

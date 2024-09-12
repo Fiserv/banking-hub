@@ -5,7 +5,7 @@ V 11.0.0
 <summary><b style="font-size: 20px; color: #ff6600;">Release Schedule </b> </summary>
 <!-- 
 type: tab 
-titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
+titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3, 2024_Q4.1
 -->
 
 |        Activity      |  Planned Schedule  |	  Status    |
@@ -29,6 +29,14 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 | CERT Deployment      | 2 September, 2024 - 13 September, 2024 | ![In Progress](https://github.com/user-attachments/assets/b37c5e62-abf8-40b2-97d3-2cb12bb2e788) |
 | PROD Deployment      | 17 September, 2024 - 20 September, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | General Availability (GA) | 26 September, 2024	               | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
+
+<!-- type: tab -->
+
+|        Activity      |  Planned Schedule            |	  Status    |
+| -------------- |----------------------------|---------|
+| CERT Deployment      | 2 October, 2024 - 9 October, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc)|
+| PROD Deployment      | 21 October, 2024 - 25 October, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| General Availability (GA) | 31 October, 2024	              | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
 
 <!-- type: tab-end -->
 
@@ -75,8 +83,8 @@ titles: Premier, Precision, Signature, Cleartouch
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 |General | We updated the postman collection for Premier core in the <a href="../docs/?path=docs/resources/resources.md">Resources</a>.| PROD|
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-DDA, Get Account Details-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
-| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account-DDA, Update Account-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-DDA, Get Account Details-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| PROD |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account-DDA, Update Account-SDA</a> |We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| PROD |
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open"> Add ePreference, </a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences" title="Click to open"> Update ePreference,</a> <a href="../api/?type=put&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Delete ePreference</a> | We added a new field `OvrdAutoAckInd` to override the warnings that are returned in the response by the core while performing add, update and delete of an ePreference record under these APIs.| CERT |<!-- ESF-1769, ESFACYC-9557, ESFACYC-9558, ESFACYC-7461 & ESFACYC-1110 -->
 
 ### Fixed
@@ -104,11 +112,11 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByAcct</a> |We resolved an issue where the API returned the value for `PhoneType` field in lower case. Now, the `PhoneType` field value is retrieved correctly as per the configurations.<br>**Impacted Fields:** <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/PhoneType` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | PROD | <!-- ESFATIG-2262 -->
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByAcct</a> | We resolved the issue related to `IssuedIdentId` field where the API was setting the value of this field automatically. Now, the API updates the value of `IssuedIdentId` field from the request.  <br>  **Impacted Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br>`PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br>`OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId` | CERT |<!-- ESFACYC-6744, ESFACYC-6718 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details</a> | We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly. | CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open"> Add Account-SDA, Add Account-DDA, Add Account-CDA, Add Account-LOAN</a> | We fixed the issue where the TaxReportingOwner was incorrectly being assigned to the first Party, regardless of the indicator provided in the request. Now, the TaxReportingOwner is correctly assigned to the appropriate Party. <br>  **Impacted Field:** <br> `PartyAcctRelInfo/TaxReportingOwnerInd`| CERT |
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByTaxId</a> | We fixed the issue where the API was displaying a Null Pointer Exception error in the response when a null value is sent in the `AddrType` field. <br>  **Impacted Field:** <br> `DepositAcctInfo/PostAddr/AddrType`| CERT |
-| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account</a> |We fixed the issue where the API was displaying a Null Pointer Exception error when a null or blank value is sent in the `OvrdAutoAckInd` field. <br>  **Impacted Field:** <br> `OvrdAutoAckInd`| CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-LOAN</a> |We updated the API to correctly return the response in the `NoticeOption` field when the `NoticeType` value is PmtChgNotice.<br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/NoticeData/NoticeOption`| CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-LOAN</a> |We updated the API to correctly return the response in the `NoticeOption` field when the `NoticeType` value is HUdNotice.<br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/NoticeData/NoticeOption`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open"> Add Account-SDA, Add Account-DDA, Add Account-CDA, Add Account-LOAN</a> | We fixed the issue where the TaxReportingOwner was incorrectly being assigned to the first Party, regardless of the indicator provided in the request. Now, the TaxReportingOwner is correctly assigned to the appropriate Party. <br>  **Impacted Field:** <br> `PartyAcctRelInfo/TaxReportingOwnerInd`| PROD |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByTaxId</a> | We fixed the issue where the API was displaying a Null Pointer Exception error in the response when a null value is sent in the `AddrType` field. <br>  **Impacted Field:** <br> `DepositAcctInfo/PostAddr/AddrType`| PROD |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open"> Update Account</a> |We fixed the issue where the API was displaying a Null Pointer Exception error when a null or blank value is sent in the `OvrdAutoAckInd` field. <br>  **Impacted Field:** <br> `OvrdAutoAckInd`| PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-LOAN</a> |We updated the API to correctly return the response in the `NoticeOption` field when the `NoticeType` value is PmtChgNotice.<br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/NoticeData/NoticeOption`| PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-LOAN</a> |We updated the API to correctly return the response in the `NoticeOption` field when the `NoticeType` value is HUdNotice.<br>  **Impacted Field:** <br> `AcctRec/LoanAcctInfo/NoticeData/NoticeOption`| PROD |
 
 
 ## 2024_Q3.1
@@ -140,6 +148,14 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
+## 2024_Q3.3
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party </a> | We resolved the issue where the work foreign phone number was retrieved with an incorrect phone type. <br> **Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PhoneNum/PhoneType` <br> `PartyRec/OrgPartyInfo/OrgData/Contact/PhoneNum/PhoneType` | CERT | <!-- FETP-3575 -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open"> Add Party </a> | We resolved the issue where the service accepted only "yyyy-MM-ddTHH:mm:ss.SSS" format for all fields with data type as "DateTime". Now, the service supports the following formats: <ul> <li>yyyy-MM-dd</li><li>yyyy-MM-ddTHH:mm</li><li>yyyy-MM-ddTHH:mm:ss.SSS</li><li>yyyy-MM-ddTHH:mm:ss.SSS±HH:m</li></ul> **Impacted Fields:** <br>`PersonPartyInfo/LastContactDt`<br> `PersonPartyInfo/PersonData/Contact/PostAddr/TimeFrame/StartDt` <br>`PersonPartyInfo/PersonData/Contact/PostAddr/TimeFrame/EndDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/Employment/TimeFrame/StartDt` <br> `OrgPartyInfo/LastContactDt` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/TimeFrame/StartDt` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/TimeFrame/EndDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` | CERT | <!-- FETP-4033 -->
+
 ## 2024_Q3.2
 
 ### Enhancements
@@ -151,6 +167,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open"> Add Party </a> | We resolved an issue where the `OEDCode` field was implemented incorrectly. <br> **Impacted Fields:** <br> `PersonPartyInfo/OEDCode` <br> `OrgPartyInfo/OEDCode` | CERT | <!-- FETP-3394 -->
 | <a href="../api/?type=post&path=/addrservice/partyacctsvc/address/secured" title="Click to open">Get Address</a> | We resolved the issue where the API did not retrieve the correct value for the `CountryCodeSource` field even when the value was set in the Add Address and Update Address API. | CERT | <!-- FETP-2509 -->
 | <a href="../api/?type=post&path=/acctholdservice/stophold/accountHolds" title="Click to open">Add Account Hold </a> | Previously, the API generated an internal server error when the `AcctType` field value is "CDA" and the `AcctKeys` aggreagte (AcctHoldInfo/OtherAcctRef/AcctKeys) is sent as blank. Now, users can expect valid error message as "Other Account reference not found" in the response.| CERT | <!-- FETP-3392 -->
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
@@ -176,6 +193,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open"> Get Product Specifications-Deposits </a> | We resolved the issue with the `MaxContributionAmt` field to retrieve the correct value at the time of inquiry about the details of a retirement product. | CERT | <!-- FETP-3389 -->
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open"> Update Party </a> | We resolved the issue where user was unable to remove a documented or non-documented source of identification. To remove an identification, the user must take care of the following: <br> <ul><li>Include the identification id that is to be removed (the value of the `IssuedIdentId` field from "1" to "4") </li> <li>Set the value of all the dates to "0000-12-31"</li><li>Set all other properties to blank</li></ul> <br> **Impacted Fields:** <br>`PersonPartyInfo/PersonData/IssuedIdent` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/ExpDt` <br> `PersonPartyInfo/PersonData/IssuedIdent/NextIdentVerifyDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/IssueDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/ExpDt` <br> `PersonPartyInfo/PersonData/NonDocIssuedIdent/NextIdentVerifyDt` <br> `OrgPartyInfo/OrgData/IssuedIdent` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/ExpDt` <br> `OrgPartyInfo/OrgData/IssuedIdent/NextIdentVerifyDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/IssueDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/ExpDt` <br> `OrgPartyInfo/OrgData/NonDocIssuedIdent/NextIdentVerifyDt` | CERT | <!-- ESFACYC-10813/ESFPAN-1184/FETP-3390 -->
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-SDA</a> | We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for SDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8813 -->
