@@ -76,6 +76,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue where errors were returned when value of `AddrUse` field is "Tax" while updating the secondary addresses. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/Contact/PostAddr/AddrUse` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/AddrType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/AddrUse` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/AddrType`| CERT | <!-- FETP-2556,ESFACYC-10411 -->
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue where the alternate names were not getting updated as per the request.  <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/PersonName/FullName`<br> `PersonPartyInfo/PersonData/PersonName/FamilyName`<br>`PersonPartyInfo/PersonData/PersonName/GivenName`<br>`PersonPartyInfo/PersonData/PersonName/MiddleName`<br>`PersonPartyInfo/PersonData/PersonName/NameFormat`<br>`OrgPartyInfo/OrgData/OrgName/NameIdent`<br>`OrgPartyInfo/OrgData/OrgName/Name`<br>`OrgPartyInfo/OrgData/OrgName/NameFormat` | CERT | <!-- FETP-2555,ESFACYC-10490,FETP-2564,ESFACYC-11319 -->
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a>, <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved the issue where the errors were returned in the response for foreign code or exemption code, when the `ForeignTaxData` aggregate was sent in the request.  <br>**Impacted Fields:** <br> `PersonPartyInfo/TaxDataInfo/ForeignTaxData/TaxRate`<br>`PersonPartyInfo/TaxDataInfo/ForeignTaxData/ExemptionCode`<br>`PersonPartyInfo/TaxDataInfo/ForeignTaxData/ForeignTaxForms`<br>`PersonPartyInfo/TaxDataInfo/OtherTaxIdent`<br>`OrgPartyInfo/TaxDataInfo/ForeignTaxData/TaxRate`<br>`OrgPartyInfo/TaxDataInfo/ForeignTaxData/ExemptionCode`<br>`OrgPartyInfo/TaxDataInfo/ForeignTaxData/ForeignTaxForms`<br>`OrgPartyInfo/TaxDataInfo/OtherTaxIdent`| CERT | <!-- FETP-1875,FETP-3599,ESFACYC-11371,FETP-2123,ESFACYC-9176 & FETP-3403,ESFACYC-10857,ESFPAN-3976,ESFACYC-8478-->
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN </a> | We resolved the issue where the value "0" was passed in the resquest regardless of any valid value provided in the `RestrictionReasonCode` field. Now, the expected value is passed in the request. <br> **Impacted Field:** <br> `LoanAcctInfo/PmtPostingRestrictions/RestrictionReasonCode` | CERT | <!-- ESFPAN-2643/ESFAMAX-10124/FETP-3420, Moved from Q3.1 to Q3.3-->
 
 ## 2024_Q3.2
 
@@ -133,7 +134,6 @@ titles: Premier, Precision, Signature, Cleartouch
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | Previously, the API failed to modify the secondary address details when both primary and secondary addresses were modified at the same time. Now, this issue is resolved and both the addresses can be modified successfully. | CERT | <!-- ESFPAN-4053 -->
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN </a> | We resolved the issue where the value "0" was passed in the resquest regardless of any valid value provided in the `RestrictionReasonCode` field. Now, the expected value is passed in the request. <br> **Impacted Field:** <br> `LoanAcctInfo/PmtPostingRestrictions/RestrictionReasonCode` | CERT | <!-- ESFPAN-2643, ESFAMAX-10124 -->
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByTaxId </a> | Previously, when the client sends maximum record limit (MaxRecLimit) in the request with value more than the number of records linked to the tax ident, the API failed with an error as "Internal Server Error".  To resolve this issue, we fixed the `MaxRecLimit` field and now, the API retreives the data successfully.| CERT | <!-- ESFPAN-2681 -->
 | <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | Previously, the escrow expiry date was sent in an incorrect format as "MMddyyyy.juliandate". We updated the date format as "MM/DD/YYYY".<br>**Impacted Field:** <br> `EscrowInfo/EscrowExpDt`| PROD |
 |<a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |We updated the field `OvrdAutoAckInd` to override the warnings that are returned in the response while performing Add Party operation. Now, the user can add a party successfully, when 'OvrdAutoAckInd' field value is set to true.| CERT |
@@ -148,7 +148,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q3.3
+## 2024_Q3.3 <!-- Precision -->
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -188,7 +188,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q3.2
+## 2024_Q3.2 <!-- Signature -->
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -221,7 +221,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q3.2
+## 2024_Q3.2 <!-- Cleartouch -->
 
 ### Enhancements
 | API Name | Description | Environment Availability |
