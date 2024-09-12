@@ -31,7 +31,7 @@ titles: Downloads, Guidelines
 > [Download Postman Collection for DNA Core](https://github.com/user-attachments/files/16346980/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip)
 
 <!-- theme: info -->  
-> [Download Postman Collection for Identity](https://github.com/user-attachments/files/16974785/Download.Postman.Collection.for.Identity.zip)
+> [Download Postman Collection for Identity Domain](https://github.com/user-attachments/files/16974785/Download.Postman.Collection.for.Identity.zip)
 
 
 
