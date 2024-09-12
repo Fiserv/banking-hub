@@ -8,6 +8,23 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
  <!-- display of the adding JIRA IDs  -->
   ### New in Premier
 ## 2024_Q3.2
+_Approved by Rahul_
+### Enhancements
+With this release, the following enhancements are made to improvise the user experience. 
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+|General | We updated the postman collection for Premier core in the <a href="../docs/?path=docs/resources/resources.md">Resources</a>.| PROD|
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open"> Get Account Details-DDA, Get Account Details-SDA</a> | <br> -:<span style="font-size: small; color: gray; font-style: italic;">-: FETP-2313-:</span>-: <br> We added the following fields to support the integration with a financial literacy feature. <br>  `DepositAcctInfo/FinancialLiteracy` <br>`DepositAcctInfo/FinancialLiteracy/IsRoundUp` <br>`DepositAcctInfo/FinancialLiteracy/IsFunding` <br>| CERT |
+
+
+### Fixed
+With this release, the following issues are resolved. 
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | **ESFATIG-2836** <br> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> |**FETP-2543** <br> We resolved the issue where `IRSNameControl` field was not added for the primary PersonParty or OrgParty even when the `LegalName` field is provided in the request. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/PersonName/LegalName` <br> `OrgPartyInfo/OrgData/OrgName/LegalName`| CERT | <!-- ESFACYC-11280/FETP-2543 -->
+<!-- <!-- display of the landing content and breaking change at line 20  -->
+
 _Specimen 1_
 ### Enhancements
 With this release, the following enhancements are made to improvise the user experience. 
