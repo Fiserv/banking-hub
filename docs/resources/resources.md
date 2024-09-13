@@ -12,7 +12,7 @@ titles: Downloads, Guidelines
 # Postman Collection
 
 <!-- theme: info -->  
-> [Download Postman Collection for Finxact Core (v1.23)](https://github.com/Fiserv/banking-hub/files/14632440/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_new.zip)
+> ![Finxact](https://github.com/user-attachments/assets/275fa312-e85c-47d4-870b-995bf3bdcbe3) [Download Postman Collection for Finxact Core (v1.23)](https://github.com/Fiserv/banking-hub/files/14632440/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_new.zip)
 
 
 <!-- theme: info -->  
@@ -20,18 +20,19 @@ titles: Downloads, Guidelines
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for Precision Core](https://github.com/user-attachments/files/16746724/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.zip)
+> ![Precision](https://github.com/user-attachments/assets/6fc330da-341f-4cfe-8826-52b964b6d946)
+ [Download Postman Collection for Precision Core](https://github.com/user-attachments/files/16746724/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.zip)
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/12516540/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
+> ![Signature](https://github.com/user-attachments/assets/11a70edb-4e4f-4fd9-8587-0220f5ee6905) [Download Postman Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/12516540/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for DNA Core](https://github.com/user-attachments/files/16346980/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip)
+> ![DNA](https://github.com/user-attachments/assets/c3396334-43d2-45d7-bffe-3919384081fe) [Download Postman Collection for DNA Core](https://github.com/user-attachments/files/16346980/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip)
 
 <!-- theme: info -->  
-> [Download Postman Collection for Identity Domain](https://github.com/user-attachments/files/16974785/Download.Postman.Collection.for.Identity.zip)
+> ![Onboard Advisor](https://github.com/user-attachments/assets/ad6d882e-5bc8-4383-a512-8dbca3f6a18f) [Download Postman Collection for Identity Domain](https://github.com/user-attachments/files/16974785/Download.Postman.Collection.for.Identity.zip)
 
 
 
