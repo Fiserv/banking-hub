@@ -16,7 +16,7 @@ titles: Downloads, Guidelines
 
 
 <!-- theme: info -->  
-> [Download Postman Collection for Premier Core](https://github.com/user-attachments/files/16746722/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.zip)
+> ![Premier](https://github.com/user-attachments/assets/57350ca2-1c4f-4eae-ae03-9e9c2408112f) [Download Postman Collection for Premier Core](https://github.com/user-attachments/files/16746722/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.zip)
 
 
 <!-- theme: info -->  
