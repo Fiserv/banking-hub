@@ -10,33 +10,33 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3, 2024_Q4.1
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | 8 July, 2024 - 12 July, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
-| PROD Deployment      | 15 July, 2024 - 25 July, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
-| General Availability (GA) | 25 July, 2024	          | ![Available](https://github.com/user-attachments/assets/fe369b6c-5b0a-4cdd-bd48-27ecbc38ba59) |
+| CERT Deployment      | July 8, 2024 - July 12, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
+| PROD Deployment      | July 15, 2024 - July 25, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
+| General Availability (GA) | July 25, 2024	          | ![Available](https://github.com/user-attachments/assets/fe369b6c-5b0a-4cdd-bd48-27ecbc38ba59) |
 
 <!-- type: tab -->
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | 2 August, 2024 - 20 August, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
-| PROD Deployment      | 21 August, 2024 - 29 August, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1)<br><span style="font-size: small; color: gray; font-style: italic;">(Completed on 5 September, 2024)</span> |
-| General Availability (GA) | 29 August, 2024	             | ![Not-Applicable](https://github.com/user-attachments/assets/085eb2f4-5bd5-48c9-9547-43df39274b3a) |
+| CERT Deployment      | August 2, 2024 - August 20, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
+| PROD Deployment      | August 21, 2024 - August 29, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1)<br><span style="font-size: small; color: gray; font-style: italic;">(Completed on September 5, 2024)</span> |
+| General Availability (GA) | August 29, 2024	             | ![Available](https://github.com/user-attachments/assets/fe369b6c-5b0a-4cdd-bd48-27ecbc38ba59) <br><span style="font-size: small; color: gray; font-style: italic;">(September 5, 2024)</span> |
 
 <!-- type: tab -->
 
 |        Activity      |  Planned Schedule            |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | 2 September, 2024 - 13 September, 2024 | ![In Progress](https://github.com/user-attachments/assets/b37c5e62-abf8-40b2-97d3-2cb12bb2e788) |
-| PROD Deployment      | 17 September, 2024 - 20 September, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
-| General Availability (GA) | 26 September, 2024	               | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
+| CERT Deployment      | September 2, 2024 - September 13, 2024 | ![In Progress](https://github.com/user-attachments/assets/b37c5e62-abf8-40b2-97d3-2cb12bb2e788) |
+| PROD Deployment      | September 17, 2024 - September 20, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| General Availability (GA) | September 26, 2024	               | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
 
 <!-- type: tab -->
 
 |        Activity      |  Planned Schedule            |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | 2 October, 2024 - 9 October, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc)|
-| PROD Deployment      | 21 October, 2024 - 25 October, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
-| General Availability (GA) | 31 October, 2024	              | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
+| CERT Deployment      | October 2, 2024 - October 9, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc)|
+| PROD Deployment      | October 21, 2024 - October 25, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| General Availability (GA) | October 31, 2024	              | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
 
 <!-- type: tab-end -->
 
@@ -57,7 +57,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a>, <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a>| We resolved the error that occured when a secondary address with the `AddrUse` field was set to "Tax". <br> **Impacted Fields:** <br>`PersonPartyInfo/PersonData/Contact/PostAddr/AddrUse` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/AddrType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/AddrUse` <br>`OrgPartyInfo/OrgData/Contact/PostAddr/AddrType` | CERT | <!-- FETP-2664/ESFACYC-11428 (Add Party) & FETP-2556/ESFACYC-10411 (Update Party) -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a>, <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a>| We resolved the error that occurred when a secondary address with the `AddrUse` field was set to "Tax". <br> **Impacted Fields:** <br>`PersonPartyInfo/PersonData/Contact/PostAddr/AddrUse` <br> `PersonPartyInfo/PersonData/Contact/PostAddr/AddrType` <br> `OrgPartyInfo/OrgData/Contact/PostAddr/AddrUse` <br>`OrgPartyInfo/OrgData/Contact/PostAddr/AddrType` | CERT | <!-- FETP-2664/ESFACYC-11428 (Add Party) & FETP-2556/ESFACYC-10411 (Update Party) -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Acccount Details-LOAN</a> | We resolved the issue where the `NAICS` value was retrieved two times in the response message. Now, the API retrieves only one `NAICS` value in the response message. <br> **Impacted Field:** <br> `AcctRec/DepositAcctInfo/NAICS` | CERT | <!-- FETP-2659 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Acccount Details-DDA</a> | We resolved the issue where multiple party to account relationship was not added. Now, the API can add multiple relationships between party and account. <br> **Impacted Fields:** <br> `PartyAcctRelInfo/PartyAcctRelData` <br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelType`<br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelOrder` | CERT |<!-- FETP-2691 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Acccount Details-CDA</a> | We resolved the issue where multiple party to account relationship was not added. Now, the API can add multiple relationships between party and account. <br> **Impacted Fields:** <br> `PartyAcctRelInfo/PartyAcctRelData` <br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelType`<br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelOrder` | CERT |<!-- FETP-2114 -->
@@ -117,7 +117,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open">Update Party</a> | We resolved the issue related to the `IssuedIdentId` field where the API was setting the value of this field automatically. Now, the API updates the value of `IssuedIdentId` field from the request. <br>**Impacted Fields:** <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentType` <br> `PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentId` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentType` <br> `OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentId`| CERT | <!-- ESFACYC-6964 -->
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences/secured" title="Click to open">Get ePreference</a> | We resolved the issue where the already deleted ePreference record was getting assigned to the next ePreference record exist in the response. Now, the ePreferenceIdent details of the deleted record are not returned in the response and the user can retrieve the information successfully. | CERT | <!-- ESFACYC-9451 --> 
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Add ePreference</a> | We resolved the issue, related to incorrect error message display when an invalid account type was sent in the request. Now, the correct message, "Provider implementation not supported." is displayed when an invalid account type is sent in the request. | CERT | <!-- ESFACYC-9436 --> 
-| <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Add ePreference</a> | We resolved the issue where the first ePreference record with `ePreferenceIdent` as zero (0) was not getting created and ePreference addenda records having `ePreferenceIdent` as one (1) and greater were created. Now, you can create the first ePreference record with `ePreferenceIdent` as zero (0) while setting up ePreference for the first time for DDA, SDA and CDA accounts. | CERT | <!-- ESFACYC-10642, ESFACYC-10643, ESFACYC-10645 --> 
+| <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Add ePreference</a> | We resolved the issue where the first ePreference record with `ePreferenceIdent` as zero (0) was not getting created and ePreference addenda records having `ePreferenceIdent` as one (1) and greater were created. Now, you can create the first ePreference record with `ePreferenceIdent` as zero (0) while setting up ePreference for the first time for DDA, SDA and CDA accounts. | CERT | <!-- ESFACYC-10642,  ESFACYC-10643, ESFACYC-10645 --> 
 | <a href="../api/?type=post&path=/epreferenceservice/epreference/ePreferences" title="Click to open">Add ePreference</a> | We resolved the issue where a new ePreference record for LOAN account having `DocGroupName` field value that is greater than zero (0) was not getting created.| CERT | <!-- ESFACYC-10644, ESFACYC-10752 --> 
 | <a href="../api/?type=post&path=/stopchkservice/stophold/stopChecks" title="Click to open">Add Stop Check</a> | We resolved the error "**Stop Pay Date Date Cannot be a Future Date**" that occured while adding a stop check instruction in the request with no value set for the stop check date. <br> **Impacted Fields:** <br> `StopChkInfo/OrigDt` <br> `StopChkInfo/StopChkDt` | PROD | <!-- ESFATIG-2708 --> 
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByTaxId</a> | We resolved the issue where the API retrieved incorrect response for the `PreferredPhone` field and did not match the Premier navigator response.<br>**Impacted Fields:** <br> `PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum` <br> `PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum` | PROD | <!-- ESFATIG-2238 -->
