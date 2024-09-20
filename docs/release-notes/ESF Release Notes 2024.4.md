@@ -5,7 +5,7 @@ V 11.0.0
 <summary><b style="font-size: 20px; color: #ff6600;">Release Schedule </b> </summary>
 <!-- 
 type: tab 
-titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
+titles: 2024_Q4.1, 2024_Q4.2
 -->
 
 |        Activity      |  Planned Schedule  |	  Status    |
@@ -21,16 +21,6 @@ titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
 | CERT Deployment      | November 4, 2024 - November 6, 2024   | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | PROD Deployment      | November 14, 2024 - November 18, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | General Availability (GA) | November 21, 2024	               | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
-    
-<!-- type: tab -->
-
-|        Activity      |  Planned Schedule  |	  Status    |
-| -------------- |----------------------------|---------|
-| CERT Deployment      | To Be Decided | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
-| PROD Deployment      | To Be Decided | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
-| General Availability (GA) | To Be Decided | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
-
-<!-- type: tab-end -->
 
 </details>
 
