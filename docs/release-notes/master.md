@@ -46,6 +46,11 @@ titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3, 2024_Q4.1
 type: tab 
 titles: Premier, Precision, Signature, Cleartouch 
 -->
+## 2024_Q4.1
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> | We resolved the issue where the `NAICS` field was retrieved twice in a different casing format instead of once in the response message. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/NAICS` <br> `PartyRec/OrgPartyInfo/NAICS`| CERT | <!-- FETP-4507 -->
 
 
 ## 2024_Q3.3
