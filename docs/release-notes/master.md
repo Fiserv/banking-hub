@@ -10,6 +10,7 @@ titles: Premier, Precision, Signature, Cleartouch
   
 | API Name | Description | 
 | -------- | ----------- |
+| Get Party |We resolved the issue where the `NAICS` field was retrieved twice in a different casing format instead of once in the response message. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/NAICS` <br> `PartyRec/OrgPartyInfo/NAICS` |<!-- FETP-4507 -->
 | Add Account-LOAN |We resolved an issue where the values of the `MinPmtChange` and `MaxPmtChange` fields were sent incorrectly through the request message. <br> **Impacted Fields:** <br> `LoanAcctInfo/PmtTermReview/MinPmtChange ` <br> `LoanAcctInfo/PmtTermReview/MaxPmtChange ` |
 | Add Account-LOAN |We resolved the issue where the value of the `RecurInterval` field was always sent as "1" to service provider when the `PmtTermRecurType` field was set to "Yearly" and the `RecurInterval` field was set to any value.  <br>**Impacted Field:** <br>`LoanAcctInfo/PmtTermReview/RecurInterval` |
 | Add Account-LOAN |We resolved the issue with the `RecurStartDate` field, which was sent incorrectly to the service provider. <br>**Impacted Field:** <br> `LoanAcctInfo/PmtSched/RecurModel/RecurRule/RecurStartDate`|
