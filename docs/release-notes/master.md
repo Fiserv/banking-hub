@@ -5,7 +5,7 @@ V 11.0.0
 <summary><b style="font-size: 20px; color: #ff6600;">Release Schedule </b> </summary>
 <!-- 
 type: tab 
-titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3, 2024_Q4.1
+titles: 2024_Q3.1, 2024_Q3.2, 2024_Q3.3
 -->
 
 |        Activity      |  Planned Schedule  |	  Status    |
