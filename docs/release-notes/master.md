@@ -143,7 +143,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q3.3 <!-- Precision -->
+## 2024_Q3.3
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -183,7 +183,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q3.2 <!-- Signature -->
+## 2024_Q3.2 
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -216,7 +216,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q3.2 <!-- Cleartouch -->
+## 2024_Q3.2
 
 ### Enhancements
 | API Name | Description | Environment Availability |
