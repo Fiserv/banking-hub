@@ -35,8 +35,6 @@ titles: Premier, Precision, Signature, Cleartouch
 | Get Account Details-LOAN | We fixed the issue where `InitialAmount` field was not getting populated when Revolving Loan Code value was either 1 (Credit Limit) or 2 (Advance Limit) in the AcctInq-LOAN API.<br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/InitialAmount/Amt`|  
 |Get Account Details| We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly. |
 |Get Account Transaction History-WithAMS2.0 | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending' and 'Posted'. |
-| Get Party Account Relationship-ByParty |We resolved an issue where the API returned the value for `PhoneType` field in lower case. Now, the `PhoneType` field value is retrieved correctly as per the configurations.<br>**Impacted Fields:** <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PhoneNum/PhoneType` <br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PhoneNum/PhoneType` | <!-- ESFACYC-9726, ESFATIG-2209, FETP-3406, Moved from Active to here as it was not deployed on shared environment -->
-
 
 ### Enhancements
 | API Name | Description | 
