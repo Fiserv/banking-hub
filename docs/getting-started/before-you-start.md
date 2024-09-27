@@ -50,7 +50,7 @@ Perform the following steps to create a workspace on Fiserv Developer Studio:
     <!-- theme: info -->
     > #### Note
     >
-    > Currently, only one workspace can be created for Banking Hub. Also, the Trial Plan is available only for a shared Premier Sandbox Environment.
+    > Currently, one workspace can be created for Banking Hub. Also, the Trial Plan is available only for a shared Premier Test Environment.
     
     ![image](https://user-images.githubusercontent.com/81968767/220959037-4fb7f53e-4655-4086-a0a2-8994ee505cb0.png)
 
