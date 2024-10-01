@@ -10,8 +10,6 @@ titles: Premier, Precision, Signature, Cleartouch
   
 | API Name | Description | 
 | -------- | ----------- |
-| Get Account Details - LOAN | We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate. <br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| <!-- FETP-1851 , FETP-2160 -->
-| Update Account Details - LOAN | We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate. <br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| <!-- FETP-1851 , FETP-2160 -->
 | Add Account-LOAN |We resolved an issue where the values of the `MinPmtChange` and `MaxPmtChange` fields were sent incorrectly through the request message. <br> **Impacted Fields:** <br> `LoanAcctInfo/PmtTermReview/MinPmtChange ` <br> `LoanAcctInfo/PmtTermReview/MaxPmtChange ` |
 | Add Account-LOAN |We resolved the issue where the value of the `RecurInterval` field was always sent as "1" to service provider when the `PmtTermRecurType` field was set to "Yearly" and the `RecurInterval` field was set to any value.  <br>**Impacted Field:** <br>`LoanAcctInfo/PmtTermReview/RecurInterval` |
 | Add Account-LOAN |We resolved the issue with the `RecurStartDate` field, which was sent incorrectly to the service provider. <br>**Impacted Field:** <br> `LoanAcctInfo/PmtSched/RecurModel/RecurRule/RecurStartDate`|
@@ -38,6 +36,8 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | 
 | --- | ----------- |
+| Get Account Details - LOAN | We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate. <br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| <!-- FETP-1851 , FETP-2160 -->
+| Update Account Details - LOAN | We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate. <br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| <!-- FETP-1851 , FETP-2160 -->
 | Get Account Details-LOAN | Estimated revenue code for the community reinvestment act for small business or small farm is now available as single-digit numeric code.<br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| 
 | Get Account Details-LOAN</a>, Get Account Details-LOAN_INET | Accrual method field now uses the original interest method instead of the current interest method. This accrues the interest correctly.<br>**Impacted Field:** <br> `AcctRec/LoanAcctInfo/IntRateData/AccrualMethod`| 
 | Add Escrow | We added a new field `DataLength` under the `ClientDefinedData` aggregate in the request message, to improve the API workflow.<br>**Impacted Field:**<br> `EscrowInfo/ClientDefinedData/DataLength`| 
