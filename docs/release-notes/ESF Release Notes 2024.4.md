@@ -39,8 +39,6 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch 
 -->
 
-## 2024_Q4.1
-
 ### What's New
 Information is not available at the moment. Stay tuned for the updates.
 
