@@ -5,11 +5,6 @@
 <!-- theme: info -->  
 > [Download API Specifications](https://github.com/Fiserv/banking-hub/files/15398141/esf-service-swagger-release-11.0.0.2024.2.zip)
 
-## Postman Collection
-
-<!-- theme: info -->  
-> [Download Postman Collection for DNA Core](https://github.com/Fiserv/banking-hub/files/14461530/EFX.Collection.for.DS.zip)
-
 
 <!--
 
