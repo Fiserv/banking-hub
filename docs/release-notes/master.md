@@ -235,6 +235,14 @@ titles: Premier, Precision, Signature, Cleartouch
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
 
+## 2024_Q3.2
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open"> Update Party</a> | We resolved an issue that occurred while updating the marital status to "NotApplicable".<br>**Impacted Field:**<br> `PersonPartyInfo/MaritalStat`| PROD | <!-- ESFACYC-5767 -->
+
+
 ## 2024_Q3.1
 
 ### Fixed
