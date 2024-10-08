@@ -116,7 +116,6 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description |
 | --- | ----------- |
-| Update Party | We resolved an issue that occurred while updating the marital status to "NotApplicable".<br>**Impacted Field:**<br> `PersonPartyInfo/MaritalStat`| 
 | Update Party | We resolved an issue that occurred while updating the gender status to "Unknown".<br>**Impacted Field:**<br> `PersonPartyInfo/Gender`| 
 | Update Party| We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
 
