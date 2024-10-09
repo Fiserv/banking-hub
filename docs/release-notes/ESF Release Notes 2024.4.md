@@ -47,7 +47,7 @@ Information is not available at the moment. Stay tuned for the updates.
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> | We resolved the issue where the `NAICS` field was retrieved twice in a different casing format instead of once in the response message. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/NAICS` <br> `PartyRec/OrgPartyInfo/NAICS` | CERT | --> <!-- FETP-4507-moved from Preview to Active on 30 sept 24, as confirmed by Aknit -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> | We resolved the issue where the `NAICS` field was retrieved twice in a different casing format instead of once in the response message. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/NAICS` <br> `PartyRec/OrgPartyInfo/NAICS` | PROD | --> <!-- FETP-4507-moved from Preview to Active on 30 sept 24, as confirmed by Aknit -->
 
 <!-- type: tab -->
 
