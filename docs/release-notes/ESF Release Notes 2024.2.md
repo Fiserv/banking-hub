@@ -15,8 +15,6 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 |<a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-WithAMS2.0</a> | We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending" and 'Posted'. | CERT |
 |<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the `HomeMortgageDisclosure` aggregate was not mapped correctly. Now, the aggregate is mapped correctly and the values can be retrieved using the Get Account Details-LOAN API successfully. <br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/CensusTract` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/MSACode`| CERT |
 |<a href="../api/?type=post&path=/collateralservice/collateral/collateral" title="Click to open">Add Collateral</a> | We updated the enum value of the `PartyCollateralRelType` field from "Signer/Owner" to "OwnerSigner". <br> **Impacted Field:** <br> `PartyCollateralRelInfo/PartyCollateralRelType`| PROD |
-|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We resolved an issue where the attributes of the `EscrowCtrlData` aggregate were not mapped correctly but the loan account was created successfully. Now, the arrtributes are mapped correctly and can be retrieved using the Get Account Details API successfully.<br> **Impacted Fields:** <br> `LoanAcctInfo/EscrowCtrlData` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurType` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/RecurInterval` <br> `LoanAcctInfo/EscrowCtrlData/RecurRule/LeadDays` <br> `LoanAcctInfo/EscrowCtrlData/NextAnalysisDt` | CERT |
-|<a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | We added two new fields `County` and `StateProv` in the `MortgageReportingData` aggregate to add county and state province codes for Federal Housing Authority (FHA) and Federal Home Loan Bank (FHLB) reporting.<br> **Impacted Fields:** <br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County`<br> `LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/StateProv` <br><br> The following fields will deprecate in the future because the above added fields make usage of these fields obsolete: <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/County` <br> `LoanAcctInfo/HomeMortgageDisclosure/PostAddr/StateProv` | CERT |
 | <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a>| We resolved the issue of incorrect error message generation when the account number sent in the request is not as per the numeric format. | PROD | <!-- ESFPAN-3409 -->
 | <a href="../api/?type=post&path=/escrowservice/lending/escrow" title="Click to open">Add Escrow</a> | We resolved the issue to accept additional values (other than "Insurance", "Taxes" or "Other") of the `EscrowCategory` field in the request message. Now, the API converts the additional value as "Other" before it sends to service provider.<br>**Impacted Field:** <br> `EscrowInfo/EscrowCategory` | PROD | <!-- ESFPAN-3380 -->
 
@@ -57,7 +55,6 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved an issue that occured while creating a party where the given month in the issued and expiration date for Drivers License (DL) information defaults to "01" (January). Now, the value of the month remains same as the users provide in the request. | CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | Previously, while adding the benficiary (secondary customer) to an account, the details provided in the request were not added with the provider. We resolved this issue and now users can add and retrieve beneficiary details using Get Account API. | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account</a> | We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. | CERT |
 
@@ -94,11 +91,6 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 
 <!-- type: tab -->
 ## 2024_Q2.3 
-
-### Enhancements
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account - LOAN</a> | Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”. <br>  **Implemented Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -145,7 +137,6 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty_INET</a> | For imporvised Single Sign On (SSO) processes and consistancy in API performace, we updated the account number format with required leading zeros (0), if the length of the account number is less than 10 digits. <br>**Impacted Field:**<br> `PartyAcctRelRec/PartyAcctRelKeys/AcctKeys/AcctId`| PROD |<!--  ESFACYC-9148 -->
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-ByParty_INET</a> | We added a new field `ClosedDt` under the `AcctSummInfo` aggregate in the response message for the accounts having the `AcctDtlStatus` field value as "Closed", to improve the API workflow. <br>**Impacted Field:**<br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/ClosedDt` | PROD |<!-- ESFACYC-4911 -->
-| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History</a> | We fixed the issue where the API was returning the pending transactions on each response in pagination logic. Now, the pending transactions are returned against the prior/initial request at once.| CERT |
 
 ### Fixed
 | API Name | Description | Environment Availability |
