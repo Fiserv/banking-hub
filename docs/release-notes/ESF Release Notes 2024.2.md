@@ -55,7 +55,6 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | We resolved an issue that occured while creating a party where the given month in the issued and expiration date for Drivers License (DL) information defaults to "01" (January). Now, the value of the month remains same as the users provide in the request. | CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account</a> | Previously, while adding the benficiary (secondary customer) to an account, the details provided in the request were not added with the provider. We resolved this issue and now users can add and retrieve beneficiary details using Get Account API. | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account</a> | We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. | CERT |
 
