@@ -51,7 +51,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> |  <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-4507</span> We resolved the issue where the `NAICS` field was retrieved twice in a different casing format instead of once in the response message. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/NAICS` <br> `PartyRec/OrgPartyInfo/NAICS` | CERT | <!-- FETP-4507-moved from Preview to Active on 30 sept 24, as confirmed by Aknit & 10-09-24-marked as PROD as confirmed by Kavita -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> |  <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-4507</span> We resolved the issue where the `NAICS` field was retrieved twice in a different casing format instead of once in the response message. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/NAICS` <br> `PartyRec/OrgPartyInfo/NAICS` | PROD | <!-- FETP-4507-moved from Preview to Active on 30 sept 24, as confirmed by Aknit & 10-09-24-marked as PROD as confirmed by Kavita -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2655</span> We resolved an issue where the values of the `MinPmtChange` and `MaxPmtChange` fields were sent incorrectly through the request message. <br><br>**Impacted Fields:**<br>`LoanAcctInfo/PmtTermReview/MinPmtChange`<br>`LoanAcctInfo/PmtTermReview/MaxPmtChange` | CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2654</span> We resolved the issue where the value of the `RecurInterval` field was always sent as "1" to service provider when the `PmtTermRecurType` field was set to "Yearly" and the `RecurInterval` field was set to any value.  <br><br>**Impacted Field:**<br>`LoanAcctInfo/PmtTermReview/RecurInterval` | CERT |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2661</span> We resolved the issue with the `RecurStartDate` field, which was sent incorrectly to the service provider. <br><br>**Impacted Field:**<br>`LoanAcctInfo/PmtSched/RecurModel/RecurRule/RecurStartDate` | CERT |
@@ -75,10 +75,14 @@ titles: Premier, Precision, Signature, Cleartouch
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3533</span> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836/FETP-3533, Moved from Q3.3 to Q4.1 -->
+
 <!-- type: tab -->
 
-### What's New
-Information is not available at the moment. Stay tuned for the updates.
+## 2024_Q4.1
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties" title="Click to open">Add Party</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2487</span>We fixed the issue in `ShortName` field where its value was not saved in accordance with the maximum supported length of 18 characters. Now the field value is saved correctly when the client provides a `ShortName` field value with up to 18 characters is length. <br> **Impacted Fields:** <br> `PersonPartyInfo/ShortName` <br> `OrgPartyInfo/ShortName`| CERT | <!-- FETP-2487, Moved from Q3.3 to Q4.1 -->
 
 <!-- type: tab -->
 
