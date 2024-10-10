@@ -216,11 +216,6 @@ titles: Premier, Precision, Signature, Cleartouch
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer-Teller</a> | We added the Add Transfer-Teller API that provides Teller capabilities for performing funds transfer. This API operation supports a one-time transfer of funds, including the FROM and TO accounts, descriptions, and returns balances for each of the accounts.| CERT | <!-- ESF-606 -->
 
-### Fixed
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836 -->
-
 ## 2024_Q3.2
 
 ### Fixed
