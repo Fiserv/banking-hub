@@ -95,7 +95,10 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-### What's New
-Information is not available at the moment. Stay tuned for the updates. Added test line GN
+## 2024_Q4.1
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3533</span> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836/FETP-3533, Moved from Q3.3 to Q4.1 -->
 
 <!-- type: tab-end -->
