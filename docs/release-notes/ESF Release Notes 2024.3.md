@@ -181,11 +181,6 @@ titles: Premier, Precision, Signature, Cleartouch
 <!-- type: tab -->
 
 ## 2024_Q3.3
-### Enhancements
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| PROD | <!-- FETP-1822, Moved from Q3.1 to Q3.3 -->
-
 
 ### Fixed
 | API Name | Description | Environment Availability |
