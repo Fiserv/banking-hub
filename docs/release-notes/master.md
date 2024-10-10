@@ -68,8 +68,8 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | We resolved an issue where the users were not able to make payment for loan from another loan account.  | CERT | <!-- ESFAUTO-5574, FETP-2521, Moved from Q3.3 to Q4.1 -->
-| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty </a> | We updated the value of the consumer credit card identifier (applicable only when the value of the `AcctType` field is "CCA", which is Credit Card Account) in the response to match the value of the card service provider. <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctKeys/CardKeys/CardId` | CERT | <!-- ESFAUTO-5842/ESFATIG-2956, Moved from Q3.3 to Q4.1 -->
+| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2521</span> We resolved an issue where the users were not able to make payment for loan from another loan account.  | CERT | <!-- ESFAUTO-5574, FETP-2521, Moved from Q3.3 to Q4.1 -->
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty </a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2387</span> We updated the value of the consumer credit card identifier (applicable only when the value of the `AcctType` field is "CCA", which is Credit Card Account) in the response to match the value of the card service provider. <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctKeys/CardKeys/CardId` | CERT | <!-- ESFAUTO-5842/ESFATIG-2956/FETP-2387, Moved from Q3.3 to Q4.1 -->
 
 
 <!-- type: tab -->
