@@ -10,7 +10,7 @@ titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | October 10, 2024 - October 15, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
+| CERT Deployment      | October 10, 2024 - October 15, 2024 |  ![In Progress](https://github.com/user-attachments/assets/4c06d246-df65-49f9-abb7-60bdc2b8958b) |
 | PROD Deployment      | October 24, 2024 - October 25, 2024 | ![Not-Started](https://github.com/user-attachments/assets/e75f3245-255d-436c-963a-b72c034036dc) |
 | General Availability (GA) | October 31, 2024	             | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
 
@@ -39,15 +39,13 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch 
 -->
 
-### What's New
-Information is not available at the moment. Stay tuned for the updates.
-
-<!--
+## 2024_Q4.1
 
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> |  <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-4507</span> We resolved the issue where the `NAICS` field was retrieved twice in a different casing format instead of once in the response message. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/NAICS` <br> `PartyRec/OrgPartyInfo/NAICS` | PROD | --> <!-- FETP-4507-moved from Preview to Active on 30 sept 24, as confirmed by Aknit & 10-09-24-marked as PROD as confirmed by Kavita -->
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open"> Get Party</a> |  <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-4507</span> We resolved the issue where the `NAICS` field was retrieved twice in a different casing format instead of once in the response message. <br>**Impacted Fields:** <br> `PartyRec/PersonPartyInfo/NAICS` <br> `PartyRec/OrgPartyInfo/NAICS` | CERT | <!-- FETP-4507-moved from Preview to Active on 30 sept 24, as confirmed by Aknit & 10-09-24-marked as PROD as confirmed by Kavita -->
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2655</span> We resolved an issue where the values of the `MinPmtChange` and `MaxPmtChange` fields were sent incorrectly through the request message. <br><br>**Impacted Fields:**<br>`LoanAcctInfo/PmtTermReview/MinPmtChange`<br>`LoanAcctInfo/PmtTermReview/MaxPmtChange` | CERT |
 
 <!-- type: tab -->
 
