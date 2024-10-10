@@ -206,7 +206,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer-Teller</a> | We added the Add Transfer-Teller API that provides Teller capabilities for performing funds transfer. This API operation supports a one-time transfer of funds, including the FROM and TO accounts, descriptions, and returns balances for each of the accounts.| CERT | <!-- ESF-606 -->
+| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer-Teller</a> | We added the Add Transfer-Teller API that provides Teller capabilities for performing funds transfer. This API operation supports a one-time transfer of funds, including the FROM and TO accounts, descriptions, and returns balances for each of the accounts.| PROD | <!-- ESF-606,FETP-1767 -->
 
 ## 2024_Q3.2
 
