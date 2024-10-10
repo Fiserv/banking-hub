@@ -62,7 +62,8 @@ titles: Premier, Precision, Signature, Cleartouch
 <!-- type: tab -->
 
 ### What's New
-Information is not available at the moment. Stay tuned for the updates. Added one line.
+Information is not available at the moment. Stay tuned for the updates. 
+
 
 <!-- type: tab -->
 
@@ -72,6 +73,6 @@ Information is not available at the moment. Stay tuned for the updates.
 <!-- type: tab -->
 
 ### What's New
-Information is not available at the moment. Stay tuned for the updates.
+Information is not available at the moment. Stay tuned for the updates. Added test line GN
 
 <!-- type: tab-end -->
