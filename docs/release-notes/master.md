@@ -39,7 +39,7 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch 
 -->
 
-## 2024_Q4.1
+## 2024_Q4.1 <!-- Premier -->
 
 ### Enhancements
 
@@ -47,7 +47,7 @@ titles: Premier, Precision, Signature, Cleartouch
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2160</span> We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br>**Impacted Field**:<br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode` | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2159</span> We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br>**Impacted Field**:<br>`LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode` | CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-1822</span> Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
+
 
 ### Fixed
 | API Name | Description | Environment Availability |
@@ -69,7 +69,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q4.1
+## 2024_Q4.1  <!-- Precision -->
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
@@ -86,7 +86,14 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q4.1
+## 2024_Q4.1  <!-- Signature -->
+
+### Enhancements
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-1822</span> Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT | <!--  Moved from Q3.3 to Q4.1 -->
+
+
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
@@ -101,9 +108,10 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3533</span> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836/FETP-3533, Moved from Q3.3 to Q4.1 -->
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-SDA</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2700</span> We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for SDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8813/FETP-2700, Moved from Q3.3 to Q4.1 -->
 
+
 <!-- type: tab -->
 
-## 2024_Q4.1
+## 2024_Q4.1  <!-- CT -->
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
