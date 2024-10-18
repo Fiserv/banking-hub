@@ -99,7 +99,6 @@ titles: Premier, Precision, Signature, Cleartouch, DNA
 ### Fixed
 | API Name | Description | Environment Availability |
 | --- | ----------- | ------------------ |
-| <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History</a></a> | Previously, ESF was not converting the transaction date and time properly after receiving from the provider.  We resolved the issue and now posted date and transaction date is mapped correctly with date and timestamp. <br> **Impacted Fields:** <br> `AcctTrnRec/AcctTrnInfo/PostedDt` <br> `AcctTrnRec/AcctTrnInfo/TrnDt` | CERT |
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History</a>| Effective date of account transaction now returns correctly in the response for INET integrations. <br> **Impacted Fields:** <br> `AcctTrnRec/AcctTrnInfo/EffDt` <br> `AcctTrnRec/AcctTrnInfo/TrnDt` <br> `AcctTrnRec/AcctTrnInfo/PostedDt` | PROD |
 
 <!--type: tab-->
