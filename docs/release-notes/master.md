@@ -39,7 +39,7 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch 
 -->
 
-## 2024_Q4.1 <!-- Premier -->
+## 2024_Q4.1
 
 ### Enhancements
 
@@ -74,7 +74,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q4.1  <!-- Precision -->
+## 2024_Q4.1
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
@@ -91,7 +91,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q4.1  <!-- Signature -->
+## 2024_Q4.1
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -115,7 +115,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q4.1  <!-- CT -->
+## 2024_Q4.1
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
