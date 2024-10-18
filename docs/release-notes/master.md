@@ -2,7 +2,7 @@
 V 11.0.0
 
 <details open>
-<summary><b style="font-size: 20px; color: #ff6600;">Release Schedule </b> </summary>
+<summary><b style="font-size: 20px; color: #ff6600;">Release Schedule </b> </summary> 
 <!-- 
 type: tab 
 titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
