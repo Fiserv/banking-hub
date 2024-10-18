@@ -39,7 +39,7 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch 
 -->
 
-## 2024_Q4.1
+## 2024_Q4.1 <!-- Premier -->
 
 ### Enhancements
 
@@ -47,11 +47,12 @@ titles: Premier, Precision, Signature, Cleartouch
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2160</span> We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br>**Impacted Field**:<br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode` | CERT |
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2159</span> We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br>**Impacted Field**:<br>`LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode` | CERT |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-1822</span> Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT |
+
 
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured">Get Party</a> | We resolved the issue in the `EnumDesc` fields, where values configured for one "OrganizationId" were getting assigned to the value set for another "OrganizationId". <br> **Impacted Fields:** <br> `PartyRec/PersonPartyInfo/RelationshipMgr/RelationshipMgrIdentEnumDesc` <br> `PartyRec/OrgPartyInfo/RelationshipMgr/RelationshipMgrIdentEnumDesc` <br> `PartyRec/PersonPartyInfo/OEDCodeEnumDesc` <br> `PartyRec/OrgPartyInfo/OEDCodeEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentTypeEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentTypeEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuerEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuerEnumDesc` <br> `PartyRec/PersonPartyInfo/OriginatingBranchEnumDesc` <br> `PartyRec/OrgPartyInfo/OriginatingBranchEnumDesc` <br> `PartyRec/PersonPartyInfo/ResponsibleBranchEnumDesc` <br> `PartyRec/OrgPartyInfo/ResponsibleBranchEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/AddrUseEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/AddrUseEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc` | CERT |
 | <a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a> |  <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2563</span> We resolved the issue with the ` ExternalInd ` field where the correct value was not rendered in the response message. <Br> **Impacted Field**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd | CERT | <!-- <!-- FETP-2563 CERT as on 16 Oct 24. -->
 | <a href="../api/?type=put&path=/beneficiaryservice/partyacctsvc/beneficiaries" title="Click to open"> Update Beneficiary</a> |  <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3801</span> We resolved the error returned in the response when the 'AddressIdent' field value exceeds five digits in the request. | CERT | <!-- <!-- FETP-3801 CERT as on 16 Oct 24. -->
 | <a href="../api/?type=put&path=/collateralservice/collateral/collateral" title="Click to open">Update Collateral</a> |  <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2608</span> We resolved an issue where the existing collateral name and account relationship are deleted when the Update Collateral service operation is executed. | CERT | <!-- FETP-2608, FETP-4950-CERT as on 15 Oct 24. -->
@@ -66,10 +67,14 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-DDA</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-4609</span> We fixed the issue where the users were unable to update the secondary name identifier (`NameIdent`) for the mailing address of an account.<br>**Impacted Field:** <br>`DepositAcctInfo/PostAddr/NameIdent` | CERT |
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3533</span> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836/FETP-3533, Moved from Q3.3 to Q4.1 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN </a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3420</span> We resolved the issue where the value "0" was passed in the resquest regardless of any valid value provided in the `RestrictionReasonCode` field. Now, the expected value is passed in the request. <br> **Impacted Field:** <br> `LoanAcctInfo/PmtPostingRestrictions/RestrictionReasonCode` | CERT | <!-- ESFPAN-2643/ESFAMAX-10124/FETP-3420, Moved from Q3.3 to Q4.1 -->
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-SDA</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-4748</span>We resolved the issue where the user was unable to add multiple relationships to the account.<br>**Impacted Fields:**<br>-`PartyAcctRelInfo/PartyAcctRelData`<br>-`PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelType`<br>-`PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelOrder` | CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-DDA</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-4951</span>We resolved the issue where the `OverdraftEnrollOptDt` field was not retrieved in the response message.<br>**Impacted Field:**<br>`AcctRec/DepositAcctInfo/OverdraftData/OverdraftEnrollOptDt` | CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-5311</span>We added the `FeeEarningData` aggregate in the response message. <br>**Impacted Aggregate:**<br>`LoanAcctInfo/Fee/FeeEarningData` | CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-5313</span>We resolved the issue where the value of the `BalPercent` field was not retrieved correctly in the response message. <br>**Impacted Field:**<br>`AcctRec/LoanAcctInfo/Fee/BalPercent` | CERT |
 
 <!-- type: tab -->
 
-## 2024_Q4.1
+## 2024_Q4.1  <!-- Precision -->
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
@@ -86,7 +91,14 @@ titles: Premier, Precision, Signature, Cleartouch
 
 <!-- type: tab -->
 
-## 2024_Q4.1
+## 2024_Q4.1  <!-- Signature -->
+
+### Enhancements
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-1822</span> Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT | <!--  Moved from Q3.3 to Q4.1 -->
+
+
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
@@ -97,13 +109,13 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/partyservice/parties/parties/secured" title="Click to open">Get Party</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3388</span> We resolved the issue where the `ApartmentNum`, `ApartmentNumType `, and `HouseNum` fields retrieved the incorrect value in the response message. We also updated the code to resolve the retrieval issue of an extra field `HouseName`, which was not supposed to be returned in the response message. <br> **Impacted Fields:** <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/HouseNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNum` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/ApartmentNumType` <br>`PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/HouseNum`| CERT | <!-- FETP-3388, Moved from Q3.3 to Q4.1 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-1998</span> We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly.  | CERT |  <!-- ESFAMAX-6751/FETP-1998, Moved from Q3.3 to Q4.1 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-DDA</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3413</span> We resolved the issue where the API failed to generate correct beneficiary code while account creation. <br> **Impacted Field:** <br> `PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelType` | CERT | <!-- ESFATIG-2444/FETP-3413, Moved from Q3.3 to Q4.1 -->
-| <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open"> Get Product Specifications-Deposits </a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3389</span> We resolved the issue with the `MaxContributionAmt` field to retrieve the correct value at the time of inquiry about the details of a retirement product. | CERT | <!-- FETP-3389, Moved from Q3.3 to Q4.1 -->
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3533</span> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836/FETP-3533, Moved from Q3.3 to Q4.1 -->
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-SDA</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2700</span> We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for SDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8813/FETP-2700, Moved from Q3.3 to Q4.1 -->
 
+
 <!-- type: tab -->
 
-## 2024_Q4.1
+## 2024_Q4.1  <!-- CT -->
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
