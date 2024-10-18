@@ -122,6 +122,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description |
 | --- | ----------- |
+| Get Account Transaction History | Previously, ESF was not converting the transaction date and time properly after receiving from the provider.  We resolved the issue and now posted date and transaction date is mapped correctly with date and timestamp. <br> **Impacted Fields:** <br> `AcctTrnRec/AcctTrnInfo/PostedDt` <br> `AcctTrnRec/AcctTrnInfo/TrnDt` |  <!-- ESFAMAX-6557/FETP-2305, As it is rolled back, hence moved from Q1 Active to here -->
 | Update Party |<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2819</span>  We resolved an issue that occurred while updating the gender status to "Unknown".<br>**Impacted Field:**<br> `PersonPartyInfo/Gender`| 
 | Update Party| <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2818</span> We resolved an issue that occurred while updating the race status to "Other", "NativeAmerican" or "NativeAlaskan".<br>**Impacted Field:**<br> `PersonPartyInfo/Race`|
 | Add Transfer |<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2349</span>  We enhanced the ability of the API to allow transfers from commercial loans (CLA) to checking and savings account. <br>  **Impacted Fields:** <br> `XferInfo/FromAcctRef/AcctKeys/AcctType` <br> `XferStatusRec/XferKeys/AcctKeys/AcctType` | <!-- FETP-2349, As it is rolled back, hence moved from Active to here -->
