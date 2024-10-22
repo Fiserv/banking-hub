@@ -64,7 +64,6 @@ titles: Premier, Precision, Signature, Cleartouch
 | Add Account Hold |<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;"></span> We resolved the internal server error in the response when the `HoldType` field is passed with one of the valid value "Caution". Now users can add hold on the account successfully.|
 | Add Account-CDA |<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;"></span>  We resolved the datatype mismatch error with the `ClientDefinedData` aggregate when the region code is passed as client defined field udi-1.<br>**Impacted Fields:** <br> `DepositAcctInfo/ClientDefinedData/DataClassType` <br>`DepositAcctInfo/ClientDefinedData/DataIdent`<Br>`DepositAcctInfo/ClientDefinedData/DataType`<br>`DepositAcctInfo/ClientDefinedData/Value`|
 | Add Account | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2302</span> Previously, while adding the benficiary (secondary customer) to an account, the details provided in the request were not added with the provider. We resolved this issue and now users can add and retrieve beneficiary details using Get Account API. |
-| Update Account | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2507</span> We resolved an issue where the nickname provided in the request was not updating for a loan account. Now, users can update the nickname successfully. |
 
 ### Enhancements
 | API Name | Description | 
