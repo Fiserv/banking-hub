@@ -30,6 +30,7 @@ titles: Premier, Precision, Signature, Cleartouch
 |Get Account Details|<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2200 </span> We updated the enumeration description call to accurately assign the enumeration description to the appropriate organization ID. Previously, there were some instances where the enumeration description was not assigned correctly. |
 |Get Account Transaction History-WithAMS2.0 |<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2408</span> We fixed the issue to successfully retrieve transactions from Premier that are present between 'Pending' and 'Posted'. |
 |Get Account Details (All Account Types) | We updated the API to correctly display the product description in the API response message. Previously, the `Desc` field was displaying incorrect description. <br>  **Impacted Field:** <br> `AcctRec/DepositAcctInfo/Desc`| <!-- FETP-2660 -->
+|Add Account-DDA|<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block"> <span style=" color: #ff6600; font-style: normal;">Breaking Change - Updated Status Code Service </span> FETP-2858 </span> We updated the sever status description for the “1090-Invalid Value” error code. This update applies when the invalid input is sent in the `RelationshipMgrIdent` field. <br>**Impacted Field:**<br>`DepositAcctInfo/RelationshipMgr/RelationshipMgrIdent`|
 
 ### Enhancements
 | API Name | Description | 
