@@ -133,8 +133,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/cardservice/cards/cards/secured" title="Click to open">Get Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2773</span> We fixed the API so that the following fields are not truncated in the response and ensure that they match the value of the `CardId` field sent in the request when the `CardSeqNum` field is not provided:<br>`CardRec/CardKeys/CardId`
-<br>`CardRec/CardKeys/CardSeqNum`| PROD | <!-- FETP-2773 -->
+| <a href="../api/?type=post&path=/cardservice/cards/cards/secured" title="Click to open">Get Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2773</span> We fixed the API so that the following fields are not truncated in the response and ensure that they match the value of the `CardId` field sent in the request when the `CardSeqNum` field is not provided:<br>`CardRec/CardKeys/CardId`<br>`CardRec/CardKeys/CardSeqNum`| PROD | <!-- FETP-2773 -->
 
 <!-- type: tab -->
 
