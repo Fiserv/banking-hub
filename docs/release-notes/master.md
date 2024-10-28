@@ -129,6 +129,12 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3533</span> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836/FETP-3533, Moved from Q3.3 to Q4.1 -->
 | <a href="../api/?type=post&path=/prodspecservice/servicing/prodspec/secured" title="Click to open">Get Product Specifications-SDA</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2700</span> We resolved the issue where the `RetentionOption` and `TranHistoryOption` fields were mapped incorrectly in the response for SDA account type. <br> **Impacted Fields:** <br> `ProdSpecRec/DepositProdSpecInfo/RetentionOption` <br> `ProdSpecRec/DepositProdSpecInfo/TranHistoryOption` | CERT | <!-- ESFABUS-8813/FETP-2700, Moved from Q3.3 to Q4.1 -->
 
+## 2024_Q4.1
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/cardservice/cards/cards/secured" title="Click to open">Get Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2773</span> We fixed the API so that the following fields are not truncated in the response and ensure that they match the value of the `CardId` field sent in the request when the `CardSeqNum` field is not provided:<br>`CardRec/CardKeys/CardId`
+<br>`CardRec/CardKeys/CardSeqNum`| PROD | <!-- FETP-2773 -->
 
 <!-- type: tab -->
 
