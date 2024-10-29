@@ -133,6 +133,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+|<a href="../api/?type=put&path=/partyservice/parties/parties" title="Click to open"> Update Party </a>|<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3387</span>  We resolved the issue with data identifier that was unable to correctly update the following properties in the address of a party: <ul><li> Attention (ATTN) </li> <li>In care of (IN CARE OF)</li><li>Miscellaneous line (MISC)</li><li>Non-descriptive line (NONE)</li></ul> | PROD | <!-- added on 29 oct -->
 | <a href="../api/?type=post&path=/cardservice/cards/cards/secured" title="Click to open">Get Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2773</span> We fixed the API so that the following fields are not truncated in the response and ensure that they match the value of the `CardId` field sent in the request when the `CardSeqNum` field is not provided:<br>`CardRec/CardKeys/CardId`<br>`CardRec/CardKeys/CardSeqNum`| PROD | <!-- FETP-2773 -->
 
 <!-- type: tab -->
