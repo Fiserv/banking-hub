@@ -92,7 +92,6 @@ titles: Premier, Precision, Signature, Cleartouch
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/accttranservice/acctmgmt/acctTrn/secured" title="Click to open">Get Account Transaction History-Deposits</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2339</span>We resolved the issue with the `Desc` field where the second line of the description was getting truncated in the response. Now the users can expect complete description to be populated in the API response message. <br> **Impacted Field:** <br> `AcctTrnRec/AcctTrnInfo/Desc` | CERT | <!-- ESFAMAX-5212/FETP-2339, Moved from Q1 to Q4-->
-| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2521</span> We resolved an issue where the users were not able to make payment for loan from another loan account.  | CERT | <!-- ESFAUTO-5574, FETP-2521, Moved from Q3.3 to Q4.1 -->
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty </a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2387</span> We updated the value of the consumer credit card identifier (applicable only when the value of the `AcctType` field is "CCA", which is Credit Card Account) in the response to match the value of the card service provider. <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctKeys/CardKeys/CardId` | CERT | <!-- ESFAUTO-5842/ESFATIG-2956/FETP-2387, Moved from Q3.3 to Q4.1 -->
 
 ### Fixed
@@ -104,6 +103,11 @@ titles: Premier, Precision, Signature, Cleartouch
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3094</span> We resolved an issue with the `DueAmt` field to populate with correct calculations in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/PmtCompositeAmt/CurAmt/Amt`| CERT | <!-- FETP-3094, Moved from Q3.2 to Q3.3 -->
 | <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open"> Get Party Account Relationship-ByParty</a>  | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3098</span>We resolved an issue with the `DueDt` field to populate in the response message.<br>**Impacted Field:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/DuePmt/DueDt`| CERT | <!-- FETP-3098, Moved from Q3.2 to Q3.3 -->
 
+## 2024_Q4.1
+### Enhancements
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/xferservice/payments/transfers" title="Click to open">Add Transfer</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2521</span> We resolved an issue where the users were not able to make payment for loan from another loan account.  | PROD | <!-- ESFAUTO-5574, FETP-2521, Moved from Q3.3 to Q4.1 -->
 <!-- type: tab -->
 
 ## 2024_Q4.2
