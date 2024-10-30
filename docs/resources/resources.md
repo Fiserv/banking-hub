@@ -6,13 +6,16 @@ titles: Downloads, Guidelines
 # API Specifications
 
 <!-- theme: info -->  
-> [Download API Specifications (v11.0.0.2024.3.1)](https://github.com/user-attachments/files/16311754/esf-service-swagger-release-11.0.0.2024.3.1.zip)
+> [Download API Specifications (v11.0.0.2024.3.3)](https://github.com/user-attachments/files/17573728/esf-service-swagger-release-11.0.0.2024.3.3.zip)
+
 
 
 # Postman Collection
 
 <!-- theme: info -->  
-> ![Finxact](https://github.com/user-attachments/assets/275fa312-e85c-47d4-870b-995bf3bdcbe3) [Download Postman Collection for Finxact Core (v1.23)](https://github.com/Fiserv/banking-hub/files/14632440/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_new.zip)
+> ![Finxact](https://github.com/user-attachments/assets/275fa312-e85c-47d4-870b-995bf3bdcbe3) [Download Postman Collection for Finxact Core (v1.27)](https://github.com/user-attachments/files/17574029/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_v1.27.zip)
+
+
 
 
 <!-- theme: info -->  
@@ -37,6 +40,8 @@ titles: Downloads, Guidelines
 
 
 <!--
+Added new version of postman collection for Finxact and replaced the older one that is (https://github.com/Fiserv/bankinghub/files/14632440/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_new.zip)
+API Specification for Q3 last month added and replaced the older one that is (https://github.com/user-attachments/files/16311754/esf-service-swagger-release-11.0.0.2024.3.1.zip)
 Postman PRC old: https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip
 Postamn prm old: https://github.com/Fiserv/banking-hub/files/14979763/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.postman_collection.zip
 changed on 23 july for DNA postman collection(https://github.com/Fiserv/banking-hub/files/14461530/EFX.Collection.for.DS.zip) 
