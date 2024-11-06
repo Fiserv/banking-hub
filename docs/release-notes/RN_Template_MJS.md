@@ -10,21 +10,12 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
 ## 2024_Q3.2
 
 Specimen for Breaking change placement
-### Enhancements
-
-| API Name | Description | Environment Availability |
-| -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2160</span> We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br>**Impacted Field**:<br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode` | CERT |
-
-
-
 ### Fixed
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| Account Service -All types | <span style="font-size: small; color: gray; font-style: italic; display: block; position: relative;"><span style="color: #ff6600; font-style: normal; position: absolute; left: 0;"></span><span style="position: absolute; right: 0;">FETP-5901</span></span><br>We upgraded the Java Springboot framework version to resolve the reported vulnerability issues associated with Copy left jars and Jakarta jars.  | CERT |
-
-
-
+| <a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a> |  <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">Backward-compatible changes (2) Code Other Non Breaking</span><br> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Field**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Description**: <br>description of why was this change and what impact does it have. |  PROD <br><span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2563 | <!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
+|  <a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a><br> <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2563</span> |  We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Fields**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Details**: <br> description of why was this change and what impact does it have. | PROD | <!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
+|  <a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a> <br> <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">Backward-compatible changes<br> (2) Code Other Non Breaking</span> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2563</span> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Field**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Details**: <br> description of why was this change and what impact does it have. | PROD | <!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
 
 
 _Approved by Rahul_
