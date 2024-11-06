@@ -28,7 +28,7 @@ titles: Downloads, Guidelines
 
 
 <!-- theme: info -->  
-> ![Signature](https://github.com/user-attachments/assets/11a70edb-4e4f-4fd9-8587-0220f5ee6905) [Download Postman Collection for Signature Core](https://github.com/Fiserv/banking-hub/files/12516540/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
+> ![Signature](https://github.com/user-attachments/assets/11a70edb-4e4f-4fd9-8587-0220f5ee6905) [Download Postman Collection for Signature Core](../assets/ResourcesDownloads/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
 
 
 <!-- theme: info -->  
@@ -36,58 +36,6 @@ titles: Downloads, Guidelines
 
 <!-- theme: info -->  
 > ![Onboard Advisor](https://github.com/user-attachments/assets/ad6d882e-5bc8-4383-a512-8dbca3f6a18f) [Download Postman Collection for Identity Domain](https://github.com/user-attachments/files/16974785/Download.Postman.Collection.for.Identity.zip)
-
-
-
-<!--
-Added new version of postman collection for Finxact and replaced the older one that is (https://github.com/Fiserv/bankinghub/files/14632440/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_new.zip)
-API Specification for Q3 last month added and replaced the older one that is (https://github.com/user-attachments/files/16311754/esf-service-swagger-release-11.0.0.2024.3.1.zip)
-Postman PRC old: https://github.com/Fiserv/banking-hub/files/14896028/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.postman_collection.zip
-Postamn prm old: https://github.com/Fiserv/banking-hub/files/14979763/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.postman_collection.zip
-changed on 23 july for DNA postman collection(https://github.com/Fiserv/banking-hub/files/14461530/EFX.Collection.for.DS.zip) 
-APi Spec of q2 [Download API Specifications (v11.0.0.2024.2)](https://github.com/Fiserv/banking-hub/files/15398141/esf-service-swagger-release-11.0.0.2024.2.zip)
-changed on 15 april (this link is to the old file, updated file is linked above):(https://github.com/Fiserv/banking-hub/files/14896029/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.postman_collection.zip)
-changed on 7 april (this link is to the old file, updated file is linked above): (https://github.com/Fiserv/banking-hub/files/14125603/Premier.-.Trial.Plan.Postman.Collection.zip)
-
-FNX with credentials: https://github.com/Fiserv/banking-hub/files/14585882/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip
-Added DNA on 14 March 24 -- https://github.com/Fiserv/banking-hub/files/14447763/EFX.Collection_DNA.zip
-
-changed on 13 march: [Banking Hub - Finxact - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/14585882/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
-(https://github.com/Fiserv/banking-hub/files/13785041/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
-
-[Banking Hub - Finxact - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/13785041/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
-
-Premier core old: https://github.com/Fiserv/banking-hub/files/13785021/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
-
-Finxact Core (v1.21)](https://github.com/Fiserv/banking-hub/files/12461848/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
-
-[Banking Hub - Premier - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/13785021/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip)
-
-Premier old: https://github.com/Fiserv/banking-hub/files/11728540/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
-[Banking Hub - Finxact - Trial Plan Postman Collection.zip](https://github.com/Fiserv/banking-hub/files/12461848/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip)
-
-FNX postman old:   https://github.com/Fiserv/banking-hub/files/12359747/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection.zip
-## API Specifications
-
-  [![downoad-icon-BH]][BH]  
-
-## Postman Collection
-
-  [![downoad-icon-PRM]][PRM]      [![downoad-icon-SIG]][SIG]  
-
-
-[downoad-icon-PRM]: https://github.com/Fiserv/banking-hub/assets/81968767/934da291-c743-41cb-9325-16cf2c8d7bda
-[PRM]: https://github.com/Fiserv/banking-hub/files/11728540/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection.zip
-
-
-[downoad-icon-SIG]: https://github.com/Fiserv/banking-hub/assets/81968767/b4c09878-6e73-4e9e-9171-74bcd3e4f8b6
-[SIG]: https://github.com/Fiserv/banking-hub/files/11710490/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip
-
-
-[downoad-icon-BH]: https://github.com/Fiserv/banking-hub/assets/81968767/4c31d642-7574-413e-b02e-32f7ad1ae504
-[BH]: https://github.com/Fiserv/banking-hub/files/11222397/esf-service-swagger-release-11.0.0.2023.1.zip
-
--->
 
 <!-- type: tab -->
 
@@ -192,20 +140,20 @@ Following are the examples of business-critical attributes:
     - selectivePayloadGenerateDPoP
 
 <!-- theme: info --> 
-> Download [pom.xml](https://github.com/Fiserv/banking-hub/files/13915765/PoM.xml.zip "download") 
+> Download [pom.xml](../assets/DPoPGuidelinesResources/PoM.xml.zip "download") 
 
 <!-- theme: info --> 
-> Download [DPoPGenerator](https://github.com/Fiserv/banking-hub/files/13915803/DPoPGenerator.zip "download")
+> Download [DPoPGenerator](../assets/DPoPGuidelinesResources/DPoPGenerator.zip "download")
 
 ## Step 5 - Generate and Use DPoP Token for Token API Call
 Consumer should generate the DPoP token for the token API call using the library created in the previous step (pass the token API URL and HTTP method and other required attributes for the library)
 
 <!-- theme: info --> 
-> Download [Request Response 1](https://github.com/Fiserv/banking-hub/files/13901969/Request-Response-1.zip "download")
+> Download [Request Response 1](../assets/DPoPGuidelinesResources/Request-Response-1.zip "download")
 
 ## Step 6 - Generate and Use DPoP Token for Functional API Call
 Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes required for signing
-> Download [Request Response 2](https://github.com/Fiserv/banking-hub/files/13915815/Request-Response-2.zip "download")
+> Download [Request Response 2](../assets/DPoPGuidelinesResources/Request-Response-2.zip "download")
 <!-- theme: info -->
 > #### Note
 > 
