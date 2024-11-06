@@ -8,6 +8,27 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA
  <!-- display of the adding JIRA IDs  -->
   ### New in Premier
 ## 2024_Q3.2
+
+
+### Enhancements
+
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2160</span> We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br>**Impacted Field**:<br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode` | CERT |
+| <a href="../api/?type=put&path=/acctservice/acctmgmt/accounts" title="Click to open">Update Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2159</span> We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br>**Impacted Field**:<br>`LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode` | CERT |
+| <a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship-By Acct | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-1852 & FETP-2314 </span> We enhanced the service to retrieve the portfolio sequence number of the party in the `AcctIdentValue` field of the response where the `AcctIdentType` value is set to "PortSequence" in the response. <br>**Impacted Fields**:<br>`PartyAcctRelRec/PartyAcctRelKeys/AcctKeys/AcctIdent` <br> `PartyAcctRelRec/PartyAcctRelKeys/AcctKeys/AcctIdent/AcctIdentType` <br> `PartyAcctRelRec/PartyAcctRelKeys/AcctKeys/AcctIdent/AcctIdentValue`| CERT | <!-- FETP-1852 & FETP-2314- -->
+|<a href="../api/?type=post&path=/partyacctrelservice/partyacctrel/partyacctrel/secured" title="Click to open">Get Party Account Relationship</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-1879 & FETP-2071 </span> We enhanced the service and added the optional field `OwnerPercent` to the request so that, </li> <li>Users can retain or update the ownership percentage of a party for the account.</li><li>If the `OwnerPercent` field is not included in the request, the existing value of the beneficial owner percentage is retained.</li></ul>**Impacted Field**:<br>`PartyAcctRelInfo/OwnerPercent`| CERT | <!-- FETP-1879 & FETP-2071 -->
+
+
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| Account Service -All types | <span style="font-size: small; color: gray; font-style: italic; display: block; position: relative;"><span style="color: #ff6600; font-style: normal; position: absolute; left: 0;"></span><span style="position: absolute; right: 0;">FETP-5901</span></span><br>We upgraded the Java Springboot framework version to resolve the reported vulnerability issues associated with Copy left jars and Jakarta jars.  | CERT |
+| <a href="../api/?type=post&path=/partyservice/parties/parties/secured">Get Party</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2205</span> We resolved the issue in the `EnumDesc` fields, where values configured for one "OrganizationId" were getting assigned to the value set for another "OrganizationId". <br> **Impacted Fields:** <br> `PartyRec/PersonPartyInfo/RelationshipMgr/RelationshipMgrIdentEnumDesc` <br> `PartyRec/OrgPartyInfo/RelationshipMgr/RelationshipMgrIdentEnumDesc` <br> `PartyRec/PersonPartyInfo/OEDCodeEnumDesc` <br> `PartyRec/OrgPartyInfo/OEDCodeEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuedIdentTypeEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuedIdentTypeEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/IssuedIdent/IssuerEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/IssuedIdent/IssuerEnumDesc` <br> `PartyRec/PersonPartyInfo/OriginatingBranchEnumDesc` <br> `PartyRec/OrgPartyInfo/OriginatingBranchEnumDesc` <br> `PartyRec/PersonPartyInfo/ResponsibleBranchEnumDesc` <br> `PartyRec/OrgPartyInfo/ResponsibleBranchEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/AddrUseEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/AddrUseEnumDesc` <br> `PartyRec/PersonPartyInfo/PersonData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc` <br> `PartyRec/OrgPartyInfo/OrgData/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc` | CERT |
+
+
+
+
 _Approved by Rahul_
 ### Enhancements
 With this release, the following enhancements are made to improvise the user experience. 
