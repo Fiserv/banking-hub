@@ -5,10 +5,8 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA 
 -->
  April 12, 2025
- <!-- display of the adding JIRA IDs  -->
   ### New in Premier
 ## 2024_Q3.2
-
 Specimen for Breaking change placement
 ### Fixed
 | API Name | Description | Environment Availability |
