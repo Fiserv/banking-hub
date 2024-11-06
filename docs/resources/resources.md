@@ -28,7 +28,8 @@ titles: Downloads, Guidelines
 
 
 <!-- theme: info -->  
-> ![Signature](https://github.com/user-attachments/assets/11a70edb-4e4f-4fd9-8587-0220f5ee6905) [Download Postman Collection for Signature Core](../assets/ResourcesDownloads/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
+> ![Signature](https://github.com/user-attachments/assets/11a70edb-4e4f-4fd9-8587-0220f5ee6905) [Download Postman Collection for Signature Core](https://github.com/user-attachments/files/17646268/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
+
 
 
 <!-- theme: info -->  
