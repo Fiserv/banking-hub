@@ -5,9 +5,17 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA 
 -->
  April 12, 2025
- <!-- display of the adding JIRA IDs  -->
   ### New in Premier
 ## 2024_Q3.2
+Specimen for Breaking change placement
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a> |<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">Backward-compatible changes (2) Code Other Non Breaking</span><br> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Field**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Description**: <br>Description of why was this change and what impact does it have.|PROD <br><span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2563 | <!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
+|  <a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a><br> <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2563</span> | <span style="font-size: small; color: orange; font-style: italic; text-align: right; display: block;">Backward-compatible changes (2) Code Other Non Breaking</span><br> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Fields**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Details**: <br> Description of why was this change and what impact does it have. | PROD | <!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
+|  <a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a> <br> <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">Backward-compatible changes<br> (2) Code Other Non Breaking</span> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2563</span> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Field**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Details**: <br> Description of why was this change and what impact does it have. | PROD | <!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
+
+
 _Approved by Rahul_
 ### Enhancements
 With this release, the following enhancements are made to improvise the user experience. 
