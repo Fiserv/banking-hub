@@ -141,20 +141,23 @@ Following are the examples of business-critical attributes:
     - selectivePayloadGenerateDPoP
 
 <!-- theme: info --> 
-> Download [pom.xml](../assets/DPoPGuidelinesResources/PoM.xml.zip "download") 
+> Download [pom.xml](https://github.com/user-attachments/files/17684790/PoM.xml.zip)
+
 
 <!-- theme: info --> 
-> Download [DPoPGenerator](../assets/DPoPGuidelinesResources/DPoPGenerator.zip "download")
+> Download [DPoPGenerator](https://github.com/user-attachments/files/17684794/DPoPGenerator.zip)
 
 ## Step 5 - Generate and Use DPoP Token for Token API Call
 Consumer should generate the DPoP token for the token API call using the library created in the previous step (pass the token API URL and HTTP method and other required attributes for the library)
 
 <!-- theme: info --> 
-> Download [Request Response 1](../assets/DPoPGuidelinesResources/Request-Response-1.zip "download")
+> Download [Request Response 1](https://github.com/user-attachments/files/17684798/Request-Response-1.zip)
+
 
 ## Step 6 - Generate and Use DPoP Token for Functional API Call
 Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes required for signing
-> Download [Request Response 2](../assets/DPoPGuidelinesResources/Request-Response-2.zip "download")
+> Download [Request Response 2](https://github.com/user-attachments/files/17684801/Request-Response-2.zip)
+
 <!-- theme: info -->
 > #### Note
 > 
