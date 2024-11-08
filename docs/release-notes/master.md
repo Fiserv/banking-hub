@@ -98,7 +98,6 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | 
 | --- | ----------- | 
-| Get Party Account Relationship-ByParty |<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3623</span> We added the new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit account, savings account, certificate of deposit account, loan account and safe deposit box account. The valid values of this field are "Eligible", "NotEligible" or "NotApplicable".  <br> **Impacted Field:** <br> `PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/FederalInsuranceEligibility` | <!-- FETP-1881/FETP-3623 -->
 | Add Transfer | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2349</span> As part of the enhancement, we added a new value in `AcctType` field (CLA) that enables transfers from commercial loans to checking and savings accounts.<br>**Impacted Fields:**<br> `XferInfo/FromAcctRef/AcctKeys/AcctType`<br>`XferStatusRec/XferKeys/AcctKeys/AcctType`|
 
 ### Fixed
