@@ -119,6 +119,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
+|<a href="../api/?type=put&path=/debitservice/payments/debits" title="Click to open">Reverse Debit</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2774</span> We resolved an issue where incorrect date formatting caused service failures. | CERT | <!-- FETP-2774 -->
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-1822</span> Previously, the API returned an error message “Invalid Float Extension Code” when the `OEDCode` field value was set to “MainShareHolder” or “RelInterest”. We updated the API to successfully set these values without any error message”.<br>  **Impacted Field:** <br> `LoanAcctInfo/OEDCode`| CERT | <!--  Moved from Q3.3 to Q4.1 -->
 
 
