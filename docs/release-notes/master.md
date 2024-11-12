@@ -36,7 +36,7 @@ titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
 
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch 
+titles: Premier, Precision, Signature, Cleartouch, DNA
 -->
 
 ## 2024_Q4.2
@@ -178,4 +178,12 @@ titles: Premier, Precision, Signature, Cleartouch
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/documentservice/document/document/secured/list" title="Click to open">Get Document List</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-3533</span> Organizations can now automatically add the “Institution Number” condition to retrieve a document list from Director. For configuration, organizations may require some special settings in the service. | CERT | <!-- ESFATIG-2836/FETP-3533, Moved from Q3.3 to Q4.1 -->
 
+<!-- type: tab -->
+
+## 2024_Q4.1
+### Enhancements
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-DDA_SDA_CDA</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">REQUEST-26134</span> We added a new field `FederalInsuranceEligibility` in the response to retrieve the details of the demand deposit account. The valid values of this field are "Eligible" and "NotEligible". <br>**Impacted Field:** <br> `AcctRec/DepositAcctInfo/FederalInsuranceEligibility`| PROD |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">REQUEST-26134</span> We added a new field `FederalInsuranceEligibility` in the response to retrieve the details of the loan account. The valid values of this field is "NotApplicable". <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/FederalInsuranceEligibility` | PROD |
 <!-- type: tab-end -->
