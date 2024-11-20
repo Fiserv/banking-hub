@@ -63,8 +63,7 @@ titles: Premier, Precision, Signature, Cleartouch
 
 ### Fixed
 | API Name | Description | 
-| --- | ----------- | 
-|Get Party Account Relationship-ByParty|<span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6387</span>We resolved the issue where the service operation failed whenever `FederalInsuranceEligibility` field was empty.<br> **Impacted Fields:** <br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/FederalInsuranceEligibility`| <!-- FETP-6387 -->
+| -------- | ----------- | 
 |Get Safe Deposit Box Inventory|<span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6465</span>We resolved the issue where the service operation failed whenever `FederalInsuranceEligibility` field was empty.<br> **Impacted Fields:** <br>`SafeDepositBoxRec/SafeDepositBoxInfo/FederalInsuranceEligibility`| <!-- FETP-6465 -->
 |Get Party|<span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6015</span> We resolved the issue where the `OtherTaxIdent` field that added zeroes to the left when the foreign tax number had less than nine digits in length.<br> **Impacted Fields:** <br>`PartyRec/PersonPartyInfo/TaxDataInfo/OtherTaxIdent`<br>`PartyRec/OrgPartyInfo/TaxDataInfo/OtherTaxIdent`|
 | Cancel Stop Check | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-4924</span> We resolved the issue that prevented the cancellation of a stop check instruction when the value of the `ReasonCode` field was not provided in the request. <br> **Impacted Field:** <br> `StopChkKeys/ReasonCode` | <!-- FETP-4924 -->
