@@ -20,7 +20,7 @@ titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
 | -------------- |----------------------------|---------|
 | CERT Deployment      | November 4, 2024 - November 14, 2024   | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
 | PROD Deployment      | November 14, 2024 - November 18, 2024 | ![Done](https://github.com/user-attachments/assets/4b33bfc3-7017-49d1-af32-d7ba7d57e6c1) |
-| General Availability (GA) | November 21, 2024	               | ![Awaited](https://github.com/user-attachments/assets/c32700c4-6c84-49ba-b318-930a98b6fe64) |
+| General Availability (GA) | November 21, 2024	               | ![Available](https://github.com/user-attachments/assets/fe369b6c-5b0a-4cdd-bd48-27ecbc38ba59) |
 
 <!-- type: tab -->
 
