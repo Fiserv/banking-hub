@@ -88,6 +88,7 @@ titles: Premier, Precision, Signature, Cleartouch
 ### Enhancements
 | API Name | Description | 
 | --- | ----------- | 
+| Get Account Transaction History | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5305</span> As part of the enhancement, we added a new field `ImageInd` (image indicator) that indicates if there is an image associated with the transaction. <br>**Implemented Field:** <br> `AcctTrnRec/AcctTrnInfo/ImageInd`| <!--FETP-5305-->
 | Add Transfer | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-2349</span> As part of the enhancement, we added a new value in `AcctType` field (CLA) that enables transfers from commercial loans to checking and savings accounts.<br>**Impacted Fields:**<br> `XferInfo/FromAcctRef/AcctKeys/AcctType`<br>`XferStatusRec/XferKeys/AcctKeys/AcctType`|
 
 ### Fixed
