@@ -36,7 +36,7 @@ titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
 
 <!-- 
 type: tab 
-titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact-EPOC
+titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact, Finxact-EPOC
 -->
 
 ## 2024_Q4.2
@@ -144,6 +144,10 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact-EPOC
 
 ## 2024_Q4.2
 
+### What's New
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| General | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5977</span>We added the following API endpoints:<ul><li><a href="../api/?type=post&path=/accounts/reinvestment" title="Click to open">Add Reinvestment</a></li><li><a href="../api/?type=put&path=/accounts/reinvestment" title="Click to open">Update Reinvestment Instruction</a></li><li><a href="../api/?type=post&path=/accounts/reinvestment/secured" title="Click to open">Get Reinvestment Instruction</a></li><li><a href="../api/?type=put&path=/accounts/reinvestment/secured" title="Click to open">Delete Reinvestment Instruction</a></li></ul>| PROD |
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
@@ -218,10 +222,18 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact-EPOC
 <!-- type: tab -->
 
 ## 2024_Q4.2
+### Fixed
+| API Name | Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| All Services | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5031</span> We upgraded the service operations to support Finxact provider v1.29. | PROD |
+
+<!-- type: tab -->
+
+## 2024_Q4.2
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/cardtokenservice/mss/cards/token" title="Click to open">Add Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6058</span></span>We updated the service operation to format postal code values as per the below regional standards before it processes the cardholder records:<br><ul><li>US postal code is formatted to numeric standards</li><li>Non-US postal code is formatted to alphanumeric standards</li></ul>**Impacted Field:**<br>`CardTokenInfo/PostAddr/PostalCode` | CERT |
+| <a href="../api/?type=post&path=/cardtokenservice/mss/cards/token" title="Click to open">Add Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6058</span>We updated the service operation to format postal code values as per the below regional standards before it processes the cardholder records:<br><ul><li>US postal code is formatted to numeric standards</li><li>Non-US postal code is formatted to alphanumeric standards</li></ul>**Impacted Field:**<br>`CardTokenInfo/PostAddr/PostalCode` | CERT |
 | <a href="../api/?type=post&path=/cardtokenservice/mss/cards/token/secured" title="Click to open"> Get Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6058</span></span>We updated the service operation to format postal code values as per the below regional standards before it processes the cardholder records:<br><ul><li>US postal code is formatted to numeric standards</li><li>Non-US postal code is formatted to alphanumeric standards</li></ul>**Impacted Field:**<br>`CardTokenRec/CardTokenInfo/PostAddr/PostalCode` | CERT |
 | <a href="../api/?type=post&path=/cardtokenservice/mss/cards/token" title="Click to open">Add Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-4367</span></span>We updated the `GenerateCardOrder` field to provide an option to generate a card mailer and pin mailer record for card replacement process. <br>**Impacted Field:**<br>`CardTokenInfo/GenerateCardOrder`  | CERT |
 | <a href="../api/?type=post&path=/cardtokenservice/mss/cards/token" title="Click to open">Add Card</a> | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-3961</span></span>We updated the service operation to apply default product defined limits like POS and ATM to the newly created cardholder record. | CERT |
