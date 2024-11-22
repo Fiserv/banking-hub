@@ -153,7 +153,7 @@ Backward-incompatible changes are modifications in a service operation that can 
 | 12 | **Updated Infrastructure**| Update in the infrastructure, such as redis implementation, deployment platform changes or database changes.| Global|
 | 13 | **Updated Service Configuration**| Update in the service configuration that requires pre-installations in Developer Studio. Additional steps are required to consume the service.| Service Operation|
 | 14 | **Updated Status Code Global**| Update to the correlation between a status code and the reporting HTTP status that may affect one or many service operations.| Global|
-| 15 | **Updated Status Code Service**| Update to the exception handling values HTTP status and status code for a particular service outcome. This update is localized to a single service provider operation.| Service Operation  |
+| 15 | **Updated Status Code Service**| Update to the exception handling values, HTTP status and status code for a particular service outcome. This update is localized to a single service provider operation.| Service Operation  |
 
 <!-- type: tab-end -->
 
