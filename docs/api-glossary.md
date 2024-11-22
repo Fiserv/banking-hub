@@ -134,7 +134,7 @@ titles: General Terms, Acronyms , Account Types, Legacy Service Name, Backward-i
 
 <!-- type: tab -->
 
-Backward-incompatible changes are modifications in a service operation that can potentially disrupt existing functionality for the users or dependent systems. Identifying and handling these changes is essential to ensure a smooth transition and maintain system stability. 
+Backward-incompatible changes are modifications in a service operation that may potentially disrupt existing functionality for the users or dependent systems. Identifying and handling these changes is essential to ensure a smooth transition and maintain system stability. 
 <br>The following are the backward-incompatible change types that developer portal supports:
 
 | **Code** |**Change Type** | **Description**   | **Scope**          |
