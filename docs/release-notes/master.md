@@ -147,7 +147,7 @@ titles: Premier, Precision, Signature, Cleartouch, DNA, Finxact-EPOC
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | We added the following API endpoints:<ul><li><a href="../api/?type=post&path=/accounts/reinvestment" title="Click to open">Add Reinvestment</a></li><li><a href="../api/?type=put&path=/accounts/reinvestment" title="Click to open">Update Reinvestment Instruction</a></li><li><a href="../api/?type=post&path=/accounts/reinvestment/secured" title="Click to open">Get Reinvestment Instruction</a></li><li><a href="../api/?type=put&path=/accounts/reinvestment/secured" title="Click to open">Delete Reinvestment Instruction</a></li></ul>| PROD |
+| General | <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5977</span>We added the following API endpoints:<ul><li><a href="../api/?type=post&path=/accounts/reinvestment" title="Click to open">Add Reinvestment</a></li><li><a href="../api/?type=put&path=/accounts/reinvestment" title="Click to open">Update Reinvestment Instruction</a></li><li><a href="../api/?type=post&path=/accounts/reinvestment/secured" title="Click to open">Get Reinvestment Instruction</a></li><li><a href="../api/?type=put&path=/accounts/reinvestment/secured" title="Click to open">Delete Reinvestment Instruction</a></li></ul>| PROD |
 ### Enhancements
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
