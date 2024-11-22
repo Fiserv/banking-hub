@@ -147,7 +147,7 @@ Backward-incompatible changes are modifications in a service operation that can 
 | 06 | **Updated Core Connectors**| Update in provider connectors or shared libraries.| Global|
 | 07 | **Updated Data Format**| Update in the data format of the field. <br> For example, the phone format is updated from “4077883302” to “+1-407-788-3302”.| Service Operation|
 | 08 | **Updated Data Type**| Update in the data type or length of a field. <br> For example, data type updated from integer to decimal or vice-versa, or update from ExtendedEnum or OpenEnum to ClosedEnum. | Service Operation |
-| 09 | **Updated Element From Option To Required** | Update in the usage of the field from optional to required that may require additional development.| Service Operation|
+| 09 | **Updated Element From Optional To Required** | Update in the usage of the field from optional to required that may require additional development.| Service Operation|
 | 10 | **Updated Element Occurrence**| Update in the maximum occurrence of the field or aggregate from single to repeating.| Service Operation|
 | 11 | **Updated Framework**| Update in the framework clients or libraries.| Global|
 | 12 | **Updated Infrastructure**| Update in the infrastructure, such as redis implementation, deployment platform changes or database changes.| Global|
