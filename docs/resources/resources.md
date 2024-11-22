@@ -13,7 +13,8 @@ titles: Downloads, Guidelines
 # Postman Collection
 
 <!-- theme: info -->  
-> ![Finxact](https://github.com/user-attachments/assets/275fa312-e85c-47d4-870b-995bf3bdcbe3) [Download Postman Collection for Finxact Core (v1.27)](https://github.com/user-attachments/files/17574029/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_v1.27.zip)
+> ![Finxact](https://github.com/user-attachments/assets/275fa312-e85c-47d4-870b-995bf3bdcbe3) [Download Postman Collection for Finxact Core (v1.29)](https://github.com/user-attachments/files/17860295/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_v1.29.postman_collection.zip)
+
 
 
 
