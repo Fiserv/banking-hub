@@ -89,22 +89,22 @@ Following are the examples of business-critical attributes:
     - selectivePayloadGenerateDPoP
 
 <!-- theme: info --> 
-> Download [pom.xml](../assets/DPoPGuidelinesResources/PoM.xml.zip "download") 
+> Download [pom.xml](download/assets/DPoPGuidelinesResources/PoM.xml.zip "download") 
 
 <!-- theme: info --> 
-> Download [DPoPGenerator](../assets/DPoPGuidelinesResources/DPoPGenerator.zip "download")
+> Download [DPoPGenerator](download/assets/DPoPGuidelinesResources/DPoPGenerator.zip "download")
 
 ## Step 5 - Generate and Use DPoP Token for Token API Call
 Consumer should generate the DPoP token for the token API call using the library created in the previous step (pass the token API URL and HTTP method and other required attributes for the library)
 
 <!-- theme: info --> 
-> Download [Request Response 1](../assets/DPoPGuidelinesResources/Request-Response-1.zip "download")
+> Download [Request Response 1](download/assets/DPoPGuidelinesResources/Request-Response-1.zip "download")
 
 ## Step 6 - Generate and Use DPoP Token for Functional API Call
 Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes are required for signing
 
 <!-- theme: info --> 
-> Download [Request Response 2](../assets/DPoPGuidelinesResources/Request-Response-2.zip "download")
+> Download [Request Response 2](download/assets/DPoPGuidelinesResources/Request-Response-2.zip "download")
 
 # Debugging DPoP Errors
 Error codes help you to debug errors related to your DPoP implementation and provide initial guidance to resolve issues in your code. For example, if you receive an error code 1002- Invalid DPoP, then make sure the public key you are using and the one sent to Fiserv are the same. 
