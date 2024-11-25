@@ -21,7 +21,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Premier APIs. When you select '**Premier**' from the dropdown, the API Explorer dynamically displays only Premier APIs. The '**11.0.0 (latest)**' continues to display all APIs including Premier.<br> ![PRM](https://github.com/Fiserv/banking-hub/assets/85101648/c63bc13d-7bc3-45a4-895d-7efecd2330d2) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select Premier APIs. When you select '**Premier**' from the dropdown, the API Explorer dynamically displays only Premier APIs. The '**11.0.0 (latest)**' continues to display all APIs including Premier.<br>![PRM](/assets/images/PRM-Dropdown.png)| PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -53,7 +53,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Precision APIs. When you select '**Precision**' from the dropdown, the API Explorer dynamically displays only Precision APIs. The '**11.0.0 (latest)**' continues to display all APIs including Precision.<br> ![PRC](https://github.com/Fiserv/banking-hub/assets/85101648/a63a05d6-42f3-4210-ab93-21a7f5d690f7) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select Precision APIs. When you select '**Precision**' from the dropdown, the API Explorer dynamically displays only Precision APIs. The '**11.0.0 (latest)**' continues to display all APIs including Precision.<br> ![PRC](/assets/images/PRC-Dropdown.png) | PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -94,7 +94,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature.<br> ![SIG](https://github.com/Fiserv/banking-hub/assets/85101648/a3d0e4a8-803b-483f-989c-a24f3d2b208d) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select Signature APIs. When you select '**Signature**' from the dropdown, the API Explorer dynamically displays only Signature APIs. The '**11.0.0 (latest)**' continues to display all APIs including Signature.<br>![SIG](/assets/images/SIG-Dropdown.png) | PROD |
 
 ### Enhancements
 | API Name | Description | Environment Availability |
@@ -135,7 +135,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Cleartouch APIs. When you select '**Cleartouch**' from the dropdown, the API Explorer dynamically displays only Cleartouch APIs. The '**11.0.0 (latest)**' continues to display all APIs including Cleartouch.<br> ![CT](https://github.com/Fiserv/banking-hub/assets/85101648/ea3f536b-ea28-4b62-8922-a80f63513797) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select Cleartouch APIs. When you select '**Cleartouch**' from the dropdown, the API Explorer dynamically displays only Cleartouch APIs. The '**11.0.0 (latest)**' continues to display all APIs including Cleartouch.<br>![CT](/assets/images/CT-Dropdown.png) | PROD |
 
 <!-- type: tab -->
 
@@ -144,7 +144,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Finxact APIs. When you select '**Finxact**' from the dropdown, the API Explorer dynamically displays only Finxact APIs. The '**11.0.0 (latest)**' continues to display all APIs including Finxact.<br> ![FNX](https://github.com/Fiserv/banking-hub/assets/85101648/8f432b34-2f1c-49a7-acd3-371bc270d5fd) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select Finxact APIs. When you select '**Finxact**' from the dropdown, the API Explorer dynamically displays only Finxact APIs. The '**11.0.0 (latest)**' continues to display all APIs including Finxact.<br>![FNX](/assets/images/FNX-Dropdown.png) | PROD |
 
 <!-- type: tab -->
 
@@ -153,7 +153,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select Onboard Advisor APIs. When you select '**Onboard Advisor**' from the dropdown, the API Explorer dynamically displays only Onboard Advisor APIs. The '**11.0.0 (latest)**' continues to display all APIs including Onboard Advisor.<br> ![OBA](https://github.com/Fiserv/banking-hub/assets/85101648/a136320b-ce3c-4d04-ae95-0362547a0998) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select Onboard Advisor APIs. When you select '**Onboard Advisor**' from the dropdown, the API Explorer dynamically displays only Onboard Advisor APIs. The '**11.0.0 (latest)**' continues to display all APIs including Onboard Advisor.<br> ![ONBOARD-ADV](/assets/images/ONBOARD-ADV-Dropdown.png) | PROD |
 
 <!-- type: tab -->
 
@@ -162,7 +162,7 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select DNA APIs. When you select '**DNA**' from the dropdown, the API Explorer dynamically displays only DNA APIs. The '**11.0.0 (latest)**' continues to display all APIs including DNA.<br> ![DNA](https://github.com/Fiserv/banking-hub/assets/85101648/5762e478-3e1a-4a0f-bf27-6524bcb4a457) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select DNA APIs. When you select '**DNA**' from the dropdown, the API Explorer dynamically displays only DNA APIs. The '**11.0.0 (latest)**' continues to display all APIs including DNA.<br>![DNA](/assets/images/DNA-Dropdown.png) | PROD |
 
 <!-- type: tab -->
 
@@ -171,6 +171,6 @@ titles: Premier, Precision, Signature, Cleartouch, Finxact, Onboard Advisor, DNA
 ### What's New
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| General | In the API Explorer, we enabled a dropdown to select EPOC APIs. When you select '**EPOC**' from the dropdown, the API Explorer dynamically displays only EPOC APIs. The '**11.0.0 (latest)**' continues to display all APIs including EPOC.<br> ![EPOC](https://github.com/Fiserv/banking-hub/assets/85101648/d57e2906-d3c6-471b-98fd-463c5408427d) | PROD |
+| General | In the API Explorer, we enabled a dropdown to select EPOC APIs. When you select '**EPOC**' from the dropdown, the API Explorer dynamically displays only EPOC APIs. The '**11.0.0 (latest)**' continues to display all APIs including EPOC.<br>![EPOC](/assets/images/EPOC-Dropdown.png)  | PROD |
 
 <!-- type: tab-end -->
