@@ -10,25 +10,25 @@ titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | October 10, 2024 - October 16, 2024 | ![Done](/assets/images/Done.svg) |
-| PROD Deployment      | October 24, 2024 - October 25, 2024 | ![Done](/assets/images/Done.svg) |
-| General Availability (GA) | October 31, 2024	             | ![Available](/assets/images/Available.svg) |
+| CERT Deployment      | October 10, 2024 - October 16, 2024 | ![Done](https://github.com/user-attachments/assets/fbeabe6c-061e-49ff-8c3b-e31286999b2a) |
+| PROD Deployment      | October 24, 2024 - October 25, 2024 | ![Done](https://github.com/user-attachments/assets/fbeabe6c-061e-49ff-8c3b-e31286999b2a) |
+| General Availability (GA) | October 31, 2024	             | ![Available](https://github.com/user-attachments/assets/886c1111-6587-46e2-9b86-e2c77635cb00) |
 
 <!-- type: tab -->
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | November 4, 2024 - November 14, 2024   | ![Done](/assets/images/Done.svg) |
-| PROD Deployment      | November 14, 2024 - November 18, 2024 | ![Done](/assets/images/Done.svg) |
-| General Availability (GA) | November 21, 2024	               | ![Available](/assets/images/Available.svg) |
+| CERT Deployment      | November 4, 2024 - November 14, 2024   | ![Done](https://github.com/user-attachments/assets/fbeabe6c-061e-49ff-8c3b-e31286999b2a) |
+| PROD Deployment      | November 14, 2024 - November 18, 2024 | ![Done](https://github.com/user-attachments/assets/fbeabe6c-061e-49ff-8c3b-e31286999b2a) |
+| General Availability (GA) | November 21, 2024	               | ![Available](https://github.com/user-attachments/assets/886c1111-6587-46e2-9b86-e2c77635cb00) |
 
 <!-- type: tab -->
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | December 9, 2024 - December 12, 2024 | ![Not-Started](/assets/images/Not-Started.svg) |
-| PROD Deployment      | January 7, 2025 - January 10, 2025 | ![Not-Started](/assets/images/Not-Started.svg) |
-| General Availability (GA) | January 10, 2025 | ![Awaited](/assets/images/Awaited.svg) |
+| CERT Deployment      | December 9, 2024 - December 12, 2024 | ![Not-Started](https://github.com/user-attachments/assets/7e09bde0-0c58-4f8b-ba6b-18e1c7d401ef) |
+| PROD Deployment      | January 7, 2025 - January 10, 2025 | ![Not-Started](https://github.com/user-attachments/assets/7e09bde0-0c58-4f8b-ba6b-18e1c7d401ef) |
+| General Availability (GA) | January 10, 2025 | ![Awaited](https://github.com/user-attachments/assets/523e4680-8fdd-4039-9ccb-6ca830ff9849) |
 
 <!-- type: tab-end -->
 
