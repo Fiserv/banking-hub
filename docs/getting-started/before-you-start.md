@@ -52,7 +52,7 @@ Perform the following steps to create a workspace on Fiserv Developer Studio:
     >
     > Currently, one workspace can be created for Banking Hub. Also, the Trial Plan is available only for a shared Premier Test Environment.
     
-    ![image](https://user-images.githubusercontent.com/81968767/220959037-4fb7f53e-4655-4086-a0a2-8994ee505cb0.png)
+    ![image](/assets/images/BeforeYouStart_Image_1.png)
 
 Every workspace has following three sections:
 
@@ -66,7 +66,7 @@ Every workspace has following three sections:
     * API secret: _Alphanumeric value of the API secret. API secret is used as password while generating the access token_
     * Host URL: _Host URL path to send API requests_
 
-    ![image](https://github.com/Fiserv/banking-hub/assets/85101648/afd91e3b-9541-41e5-9c3e-dd595b6fcc2a)
+    ![image](/assets/images/BeforeYouStart_Image_2.png)
 
 
  * **Settings**: Used to modify or delete the workspace
@@ -93,7 +93,7 @@ Use the API mentioned below to generate an access token using Postman.
 |---------------------|----------------------------------------------------------|---------------|
 |     ``Authorization`` |    <p>Base64 encoded string representing your username and password values, appended to the text Basic as follows: </p> <p> <code> Basic <Base64 encoded username and password> </code></p> <p> **Important:** In Postman, use the **Authorization** tab to enter Username and Password values and set authentication type to **Basic Auth**. Use your **API key** as username and **API secret** as password. </p>                      |     Required    |
 
-![image](https://user-images.githubusercontent.com/81968767/220961162-0931a990-f69a-4be7-a6bb-ab847f9464b2.png)
+![image](/assets/images/BeforeYouStart_Image_3.png)
 
 
 ### Request Body
@@ -102,7 +102,7 @@ From the Body tab, select the **x-www-form-urlencoded** radio button and enter t
 
 ``grant_type = client_credentials``
 
-![image](https://user-images.githubusercontent.com/81968767/220961197-8e76ec1f-b291-4dfd-8287-c4a83b4ecf40.png)
+![image](/assets/images/BeforeYouStart_Image_4.png)
 
 ### Response
 
