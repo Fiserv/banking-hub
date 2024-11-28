@@ -72,7 +72,7 @@ Every workspace has following three sections:
  * **Settings**: Used to modify or delete the workspace
 
 <kbd>
-    <img src="https://github.com/Fiserv/banking-hub/assets/85101648/a64bb3e0-c9f1-471a-b2a2-1e9e14731c60.gif" />
+    <img src="/assets/images/BeforeYouStart_Gif_1.gif" />
 </kbd>
               
 
@@ -123,5 +123,5 @@ From the Body tab, select the **x-www-form-urlencoded** radio button and enter t
 
 
 <kbd>
-    <img src="https://user-images.githubusercontent.com/85101648/221878635-c859cc8d-98a3-47a3-8e57-2299af44b26e.gif" />
+    <img src="/assets/images/BeforeYouStart_Gif_1.gif" />
 </kbd>
