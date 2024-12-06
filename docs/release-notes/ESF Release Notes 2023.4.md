@@ -10,6 +10,7 @@ titles: Premier, Precision, Signature, Cleartouch
   
 | API Name | Description | 
 | -------- | ----------- |
+|Update Account - LOAN| <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6385</span> We resolved the issue where the value of the `Nickname` field was incorrectly updated on the Loan account. <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/Nickname`| <!--FETP-6385-->
 |Get Account Details - LOAN| <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6064</span> We resolved the issue where the value of the `CountryCode` field was incorrectly retrieved in the response message. <br> **Impacted Field:** <br> `AcctRec/LoanAcctInfo/PostAddr/CountryCode/CountryCodeValue`| <!--FETP-6064-->
 |Add Collateral| <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6713</span> We resolved the “Data Type Mismatch error” that occurred when the `AppraiserIdent` field was sent in the request.<br> **Impacted Field:** <br> `CollateralInfo/AppraisalData/AppraisalHistory/AppraiserIdent`| <!--Cyclones-->
 |Add Collateral| <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-6901</span> We resolved the issue with the `AppraiserIdent` field where the value was set as an incremental sequence number instead of the value sent in the request. <br> **Impacted Field:** <br> `CollateralInfo/AppraisalData/AppraisalHistory/AppraiserIdent`| <!--Cyclones-->
