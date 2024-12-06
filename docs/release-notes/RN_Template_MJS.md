@@ -1,3 +1,42 @@
+
+
+The following table lists the standard status codes:
+
+|     Error   Code             |     Error   Description                 |     Error Reason            |     
+|------------------------------|-----------------------------------------|------------------------------|
+|     1001   – Invalid DPoP    |     Expired DPoP Token                  |If the time difference between the 'issued at' timestamp and the current timestamp is more than 60 seconds.|
+|     1002   – Invalid DPoP    |     Public Key Mismatch                 |If the combination of Public & Private key for applications (Integration and Certification) is mismatched.|
+|     1003   – Invalid DPoP    |     Invalid HTTP method                 |If the signing method does not match the API call method.
+|     1004   – Invalid DPoP    |     Invalid URL                         |
+|     1005   – Invalid DPoP    |     Invalid Header                      |
+|     1006   – Invalid DPoP    |     Invalid Request Body                |
+|     1007   – Invalid DPoP    |     Invalid Selective Payload           |
+|     1008   – Invalid DPoP    |     Invalid Form URL encoded            |
+|     1009   – Invalid DPoP    |     NoSuchAlgorithmException            |
+|     1010   – Invalid DPoP    |     InvalidKeySpecException             |
+|     1011   – Invalid DPoP    |     Error generating JWK Thumbprint     |
+|     1012   – Invalid DPoP    |     Unknown Error in Java Callout       |
+|     1099   – Invalid DPoP    |     Unexpected generic error on APIM    |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Release Notes
 
 <!-- 
