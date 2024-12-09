@@ -18,6 +18,11 @@ jobs:
       with:
         node-version: '16'
 
+    - name: Get changed file
+      id: changes
+      run: |
+        echo "::set-output name=file::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '.yaml')"
+
     - name: Install dependencies
       run: npm install
 
@@ -25,3 +30,4 @@ jobs:
       run: node sync-yaml-files.js
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CHANGED_FILE: ${{ steps.changes.outputs.file }}
