@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 
 const baseDir = './reference';
-const changedFilePath = process.env.CHANGED_FILE;
+const changedFiles = fs.readFileSync('changed_files.txt', 'utf8').split('\n').filter(Boolean);
 
-if (!changedFilePath) {
-  console.error('No changed file detected.');
+if (changedFiles.length === 0) {
+  console.error('No changed files detected.');
   process.exit(1);
 }
 
@@ -23,12 +23,15 @@ function findFiles(dir, fileList = []) {
 }
 
 const allFiles = findFiles(baseDir);
-const fileName = path.basename(changedFilePath);
-const fileContent = fs.readFileSync(changedFilePath, 'utf8');
 
-allFiles.forEach(targetPath => {
-  if (path.basename(targetPath) === fileName && targetPath !== changedFilePath) {
-    fs.writeFileSync(targetPath, fileContent, 'utf8');
-    console.log(`Synced ${changedFilePath} to ${targetPath}`);
-  }
+changedFiles.forEach(changedFilePath => {
+  const fileName = path.basename(changedFilePath);
+  const fileContent = fs.readFileSync(changedFilePath, 'utf8');
+
+  allFiles.forEach(targetPath => {
+    if (path.basename(targetPath) === fileName && targetPath !== changedFilePath) {
+      fs.writeFileSync(targetPath, fileContent, 'utf8');
+      console.log(`Synced ${changedFilePath} to ${targetPath}`);
+    }
+  });
 });
