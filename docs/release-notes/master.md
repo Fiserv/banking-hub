@@ -26,7 +26,7 @@ titles: 2024_Q4.1, 2024_Q4.2, 2024_Q4.3
 
 |        Activity      |  Planned Schedule  |	  Status    |
 | -------------- |----------------------------|---------|
-| CERT Deployment      | December 9, 2024 - December 12, 2024 | ![Not-Started](https://github.com/user-attachments/assets/7e09bde0-0c58-4f8b-ba6b-18e1c7d401ef) |
+| CERT Deployment      | December 9, 2024 - December 12, 2024 | ![In-Progress](https://github.com/user-attachments/assets/fd975750-fbbe-47c8-999b-20eb8a4faf17) |
 | PROD Deployment      | January 7, 2025 - January 10, 2025 | ![Not-Started](https://github.com/user-attachments/assets/7e09bde0-0c58-4f8b-ba6b-18e1c7d401ef) |
 | General Availability (GA) | January 10, 2025 | ![Awaited](https://github.com/user-attachments/assets/523e4680-8fdd-4039-9ccb-6ca830ff9849) |
 
