@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const baseDir = './reference';
+const changedFilePath = process.env.CHANGED_FILE;
 
 function findFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
@@ -17,14 +18,12 @@ function findFiles(dir, fileList = []) {
 }
 
 const allFiles = findFiles(baseDir);
+const fileName = path.basename(changedFilePath);
+const fileContent = fs.readFileSync(changedFilePath, 'utf8');
 
-allFiles.forEach(filePath => {
-  const fileName = path.basename(filePath);
-  const fileContent = fs.readFileSync(filePath, 'utf8');
-  allFiles.forEach(targetPath => {
-    if (path.basename(targetPath) === fileName && targetPath !== filePath) {
-      fs.writeFileSync(targetPath, fileContent, 'utf8');
-      console.log(`Synced ${filePath} to ${targetPath}`);
-    }
-  });
+allFiles.forEach(targetPath => {
+  if (path.basename(targetPath) === fileName && targetPath !== changedFilePath) {
+    fs.writeFileSync(targetPath, fileContent, 'utf8');
+    console.log(`Synced ${changedFilePath} to ${targetPath}`);
+  }
 });
