@@ -2,36 +2,47 @@ const fs = require('fs');
 const path = require('path');
 
 const baseDir = './reference';
-const changedFiles = fs.readFileSync('changed_files.txt', 'utf8').split('\n').filter(Boolean);
+const folderNames = ['Premier', 'Precision', 'Signature', 'Cleartouch'];
 
-if (changedFiles.length === 0) {
-  console.error('No changed files detected.');
-  process.exit(1);
-}
-
-function findFiles(dir, fileList = []) {
+function findYamlFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
+
   files.forEach(file => {
     const filePath = path.join(dir, file);
-    if (fs.statSync(filePath).isDirectory()) {
-      findFiles(filePath, fileList);
+    const stat = fs.statSync(filePath);
+
+    if (stat.isDirectory()) {
+      findYamlFiles(filePath, fileList);
     } else if (file.endsWith('.yaml')) {
       fileList.push(filePath);
     }
   });
+
   return fileList;
 }
 
-const allFiles = findFiles(baseDir);
+function syncFiles(fileList) {
+  fileList.forEach(file => {
+    const relativePath = path.relative(baseDir, file);
+    let targetDir;
 
-changedFiles.forEach(changedFilePath => {
-  const fileName = path.basename(changedFilePath);
-  const fileContent = fs.readFileSync(changedFilePath, 'utf8');
+    folderNames.forEach(folder => {
+      if (relativePath.includes(folder)) {
+        targetDir = relativePath.replace(folder, '11.0.0');
+      } else if (relativePath.includes('11.0.0')) {
+        targetDir = relativePath.replace('11.0.0', folder);
+      }
+    });
 
-  allFiles.forEach(targetPath => {
-    if (path.basename(targetPath) === fileName && targetPath !== changedFilePath) {
-      fs.writeFileSync(targetPath, fileContent, 'utf8');
-      console.log(`Synced ${changedFilePath} to ${targetPath}`);
+    if (targetDir) {
+      const targetFile = path.join(baseDir, targetDir);
+
+      fs.mkdirSync(path.dirname(targetFile), { recursive: true });
+      fs.copyFileSync(file, targetFile);
+      console.log(`${file} was copied to ${targetFile}`);
     }
   });
-});
+}
+
+const yamlFiles = findYamlFiles(baseDir);
+syncFiles(yamlFiles);
