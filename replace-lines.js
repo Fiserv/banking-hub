@@ -8,7 +8,7 @@ const linesToFind = [
 ];
 
 const linesToReplace = [
-  'OvrdAutoAckInd:',
+  '         OvrdAutoAckInd:',
   '          type: boolean',
   '          description: |-',
   '            Value to indicate that the system should auto-acknowledge the exceptions. If this value is set to true then, the exceptions that cannot be overridden are returned in the Status aggregate of the response message.'
