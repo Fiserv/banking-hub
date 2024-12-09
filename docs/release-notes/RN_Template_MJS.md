@@ -37,7 +37,7 @@ The following table lists the standard status codes:
 
 
 
-# Release Notes
+<!-- # Release Notes
 
 <!-- 
 type: tab 
@@ -197,7 +197,7 @@ With this release, the following issues are resolved.
 |[Add Account-LOAN-INET](https://google.com "View Link")| We resolved an issue where loan accounts were successfully created when the value of the *RateChangeRecurType* field was quarterly which was not specified in the enum values. We have added the **Quarterly** value as an enum value. <br> <br>**Impacted Field**:<br>`LoanAcctInfo/RateChangeData/RateChangeRecurType`|
 | [Update Party](https://google.com "View Link")  | While modifying the **Gender** field from existing value or some other allowed value to **Unknown**, the request was not returning the *Gender* field's changed value in the response. To resolve this issue, we updated the gender value **Unknown** in the *XrefTable List_Gender_Rule.* </li> <br><br>**Impacted Field(s)**:<br>`PersonPartyInfo/Gender`|
 |[Get Party Account Relationship-ByParty](https://google.com "View Link") |We resolved the issue in the **PartyAcctRelDesc** field (PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc) where numeric value was getting assigned instead of the description from Premier Relationship Specifications. <br><br>**Impacted Field(s)**:<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc` <br> <br>We resolved the issue in the EnumDesc fields where the value set for one tenant on Premier was getting assigned to the value set for another tenant on Premier. <br><br>**Impacted Field(s)**:<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyAcctRelData/PartyAcctRelDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/CountryCode/CountryCodeValueEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/IssuedIdent/IssuedIdentTypeEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/PersonPartyListInfo/Contact/PostAddr/AddrUseEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/PartyRef/OrgPartyListInfo/Contact/PostAddr/AddrUseEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/Desc`<br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/AcctDtlStatusEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/OriginatingBranchEnumDesc`<br>`PartyAcctRelRec/PartyAcctRelInfo/AcctRef/AcctSummInfo/RelationshipMgr/RelationshipMgrIdentEnumDesc`|
-
+ -->
 
 ### Known Issues
 | API Name | Description |
