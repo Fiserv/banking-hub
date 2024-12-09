@@ -4,6 +4,11 @@ const path = require('path');
 const baseDir = './reference';
 const changedFilePath = process.env.CHANGED_FILE;
 
+if (!changedFilePath) {
+  console.error('No changed file detected.');
+  process.exit(1);
+}
+
 function findFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
   files.forEach(file => {
