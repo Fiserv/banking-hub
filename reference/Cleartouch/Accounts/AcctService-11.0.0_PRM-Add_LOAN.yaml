@@ -1,0 +1,3035 @@
+---
+openapi: 3.0.1
+info:
+  title: Account Service
+  description: The account service helps to create and manage product accounts serviced by the financial institutions. It is also used to retrieve information about the existing accounts and maintain information of new accounts.
+  version: 11.0.0_PRM-Add_LOAN
+servers:
+- url: /
+paths:
+  /acctservice/acctmgmt/accounts:
+    post:
+      tags:
+      - Add Account
+      summary: Add Account.
+      description: "Add Account API creates a new Loan Account (LOAN) and relates it to one or more parties. Party can be person party (retail) or organization party (business).<br>For Premier, it is required to associate the new loan account with the portfolio account and Line of Credit (which can be created using Add Credit Line API). If an existing portfolio account and Line of Credit (LOC) is not provided in the request, then this API creates a new portfolio account and LOC account and associates the newly created loan account to the portfolio and LOC.<br>Product Type defaults on the core, determines which fields are required to be provided to create an account. <br> <br> To download the API Specifications and Postman Collection, click <a href=\"../docs/?path=docs/resources/resources.md\" title=\"Click to open\">Resources</a>."
+      operationId: addAccount
+      parameters:
+      - name: EFXHeader
+        in: header
+        description: EFX Header is a common and required component for all API calls, it contains client-related parameters. Please note that the header parameters should be sent as a JSON object under the EFXHeader parameter. To view the list of header parameters, <a href="../docs?path=docs/api-ref-EFX-header.md" title="Click to open"> click here.</a>
+        required: true
+        schema:
+          $ref: '#/components/schemas/EFXHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addAccountRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addAccountResponse'
+        default:
+          description: To view the complete list of response codes, <a href="../docs/?path=docs/response-codes.md" title="Click to open">click here.</a>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addAccountResponse'
+      x-default-example: Premier
+      x-group-name: Account Service
+      x-proxy-name: Add Account
+      x-child-product-name: Accounts
+      x-core: Premier-LOAN
+components:
+  schemas:
+    addAccountRequest:
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: |-
+            Value to indicate that the system should auto-acknowledge the exceptions. If this value is set to true then, the exceptions that cannot be overridden are returned in the Status aggregate of the response message.
+        PartyAcctRelInfo:
+          type: array
+          description: "Details of a relationship between party and account.\n\n**Note:** *Required field*\n\n\n\nRequired to be provided to create a relationship between party(s) and new loan account.\n\nOne PartyAcctRelInfo aggregate should be provided for each party associated to the account. Each party can have more than one relationship to the account. \n\nIf party has more than one relationship to the account \"PartyAcctRelData\" aggregate should be provided multiple times within the \"PartyAcctRelInfo\" aggregate. \n\nFor example, Party can have power of attorney relationship to the account and a trustee relationship to the account."
+          items:
+            $ref: '#/components/schemas/addAccountRequest_PartyAcctRelInfo'
+        LoanAcctInfo:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo'
+    addAccountResponse:
+      required:
+      - AcctStatusRec
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        AcctStatusRec:
+          $ref: '#/components/schemas/addAccountResponse_AcctStatusRec'
+    EFXHeader:
+      required:
+      - OrganizationId
+      type: string
+      properties:
+        OrganizationId:
+          type: string
+        TrnId:
+          maxLength: 36
+          type: string
+        VendorId:
+          type: string
+          description: An identifier, supplied by Fiserv, that represents the vendor using  this API service.
+        Context:
+          $ref: '#/components/schemas/Context'
+      example: '{ "TrnId": "f262cfa4-9da4-4a10-b48c-2e947ce3e66c", "OrganizationId": "PRMOrg10", "VendorId": "112233", "Context":{ "Channel": "WEB" } }'
+    Context:
+      type: object
+      properties:
+        ClientAppName:
+          maxLength: 40
+          type: string
+          description: Client Application Name of the application making the service request (e.g. Architect, Commercial Center, etc.).
+        Channel:
+          type: string
+          description: Indicates the channel used by the client application.
+        ClientDateTime:
+          type: string
+          description: Client date and time as reported by the client application that is making the service request.
+          format: date-time
+        ClientTerminalSeqNum:
+          maxLength: 36
+          type: string
+          description: Also known as Trace Number or Sequence in some systems. Used to allow the client terminal to set a unique identifier for the transaction. When used by a Network defined transaction the value of this identifier is typically set to narrow character of 12.
+        OriginatorType:
+          type: integer
+          description: "\"The type of organization that the originator represents. This is usually a coded value representing the industry that the organization operates in. It contains the SIC code. For ISO 8583 (DE18) the element is restricted to narrow character of maximum length of 4.\nOriginator Type codes that apply to financialinstitutions are:\n  6010 - Financial institution—bank, savings and loan (S and L), or credit union  \n  6011 - Financial institution—ATM \n  6012 - Financial institution—merchandise sale \n  6999 - Financial\ninstitution—home banking\""
+          format: int64
+        TerminalIdent:
+          maxLength: 36
+          type: string
+          description: Unique code identifying a terminal at the card acceptor locatio (such as terminal code or terminal number of ATM). See For ISO 8583 (DE41) the element is restricted to a narrow character with maximum length of 8.
+        TerminalAddr1:
+          maxLength: 64
+          type: string
+        TerminalAddr2:
+          maxLength: 64
+          type: string
+        TerminalAddr3:
+          maxLength: 64
+          type: string
+        TerminalAddr4:
+          maxLength: 64
+          type: string
+        TerminalCity:
+          maxLength: 32
+          type: string
+        TerminalCounty:
+          maxLength: 32
+          type: string
+        TerminalStateProv:
+          maxLength: 32
+          type: string
+          description: State Province. ISO 3166-2:US codes.
+        TerminalPostalCode:
+          maxLength: 11
+          type: string
+          description: Postal Code is ZipCode in the US.
+        TerminalCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - ISO3166Numeric
+          - ISO3166Alpha3
+        TerminalCountryCodeValue:
+          maxLength: 80
+          type: string
+        PhoneType:
+          type: string
+        PhoneNum:
+          type: string
+        PhoneExchange:
+          type: string
+        TerminalOwnerName:
+          maxLength: 40
+          type: string
+          description: Name of the owner or operator of the terminal.  For ISO 8583 (DE43) the element is restricted to C-15.
+        SystTraceAuditNum:
+          maxLength: 36
+          type: string
+          description: Number assigned by the transaction originator to assist in identifying a transaction uniquely. The trace number remains unchanged for all messages throughout the life of a transaction. This number is not a terminal receipt number. The originating processor increments the trace number by one for each transaction sent to the switch. For ISO 8583 (DE11) the element is restricted to NC-6
+        NetworkIdent:
+          maxLength: 80
+          type: string
+          description: Identifies the interchange network for the transaction. The transaction is applied to the specified network settlement counts and balances. For ISO 8583 (DE62) the element is restricted to NC-6
+        NetworkRefIdent:
+          maxLength: 36
+          type: string
+          description: Document reference supplied by the system retaining the original source document and used to assist in locating that document. The acquirer of a transaction assigns this number. The issuer processor must retain it in the event that a chargeback is submitted for the transaction. For ISO 8583 (DE37) the element is restricted to C-12
+        AcquirerIdent:
+          maxLength: 36
+          type: string
+          description: Identifies the acquirer of the authorization or financial transaction. It is a mandatory element in all authorization and financial messages and does not change throughout the life of a transaction. EPOC considers the acquirer as the terminal owner for reporting purposes. For ISO 8583 (DE32) the element is restricted to C-12
+        AcquirerCountryCodeSource:
+          type: string
+          description: Country code source.ISO3166-Numeric, ISO3166-Alpha-3
+          enum:
+          - US
+          - IND
+        AcquirerCountryCodeValue:
+          type: string
+        MerchNum:
+          maxLength: 23
+          type: string
+          description: Merchant Number. For ISO 8583 (DE42) the element is restricted to C-15
+        SettlementDate:
+          type: string
+          description: This is the date on which the transaction will be settled. Used by ISO 8583 (DE63)
+          format: date
+        SettlementIdent:
+          maxLength: 36
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        BusinessApplIdent:
+          type: string
+          description: This is the identification of the settlement account in which the transaction will be settled.
+        BranchIdent:
+          maxLength: 22
+          type: string
+        TellerIdent:
+          type: string
+        TillIdent:
+          type: string
+        AMPMCode:
+          type: string
+          enum:
+          - AM
+          - PM
+        ReentryType:
+          type: string
+          enum:
+          - Manual
+          - Auto
+    OvrdExceptionDataType:
+      title: OvrdExceptionDataType
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: Flag to indicate if the exceptions should be auto-acknowledged by the system. If this value is set to True, then any exception that can be overridden will be automatically acknowledged by the system and exceptions that cannot be overridden will be returned in the Status aggregate of the response message.
+      description: Details of the exceptions that can be manually acknowledged by the client.
+    StatusType:
+      title: StatusType
+      required:
+      - Severity
+      - StatusCode
+      - StatusDesc
+      - SvcProviderName
+      type: object
+      properties:
+        Id:
+          type: string
+          description: Status identification number.
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              -  Cleartouch
+              -  DNA
+              -  Precision
+              -  Premier
+              -  Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: Server status code of the service provider's application.
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag to indicate whether the exception can be overridden by resubmitting the request message.
+        SubjectRole:
+          type: string
+          description: Authorization level required to override, such as Teller and Supervisor.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+        ContentHTML:
+          type: string
+          description: Response status in HTML format. This parameter returns only in some cases.
+        AdditionalStatus:
+          type: array
+          description: Details of the additional status of the response message. This aggregate can appear once for each additional status that the server is expected to provide.
+          items:
+            $ref: '#/components/schemas/AdditionalStatusType'
+      description: Details of the API response messages.
+    SeverityType:
+      title: SeverityType
+      type: string
+      description: Severity type of the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section for more information.
+      enum:
+      - Error
+      - Warning
+      - Info
+    SubjectElementType:
+      title: SubjectElementType
+      type: object
+      properties:
+        Path:
+          type: string
+          description: Path of the element (in XPath absolute notation format) where the error occurred.  If the error occurred at the top-level element, then name of the element is returned in the response.
+        ServerPath:
+          maxLength: 256
+          type: string
+          description: Server Path is the Service Provider’s identification of the field in their schema, such as an XPath, field ID, or field name that is associated with the ServerStatusCode. If this element is set, it must be returned in the ServerPath element of the OvrdExceptionData aggregate if the exception is being overridden.
+        Value:
+          maxLength: 256
+          type: string
+          description: Human readable information of the EFX data value of the element to be overridden. This value should not be provided for the fields that cannot be represented as a string, for example, binary data.
+      description: Information about the subject element
+    AdditionalStatusType:
+      title: AdditionalStatusType
+      type: object
+      properties:
+        StatusCode:
+          maxLength: 20
+          type: string
+          description: EFX Standard Status code that indicates the result of API response. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> section to view the list of all possible status codes.
+        StatusDesc:
+          maxLength: 255
+          type: string
+          description: Brief information about the EFX status code. Refer to the <a href="../docs?path=docs/response-codes.md">Response Codes</a> for more information.
+        Severity:
+          $ref: '#/components/schemas/SeverityType'
+        SvcProviderName:
+          maxLength: 1024
+          type: string
+          description: |-
+            Name of a service provider. Possible values are:
+              - Cleartouch
+              - DNA
+              - Precision
+              - Premier
+              - Signature
+        ServerStatusCode:
+          maxLength: 20
+          type: string
+          description: 'Server status code of the service provider''s application.  '
+        ServerStatusDesc:
+          maxLength: 255
+          type: string
+          description: Description of the server status code of the service provider's application.
+        OvrdExceptionInd:
+          type: boolean
+          description: Flag that indicates whether the exception can be overridden by resubmitting the request message.
+        SubjectElement:
+          type: array
+          description: Information about the elements that caused the status.
+          items:
+            $ref: '#/components/schemas/SubjectElementType'
+    addAccountRequest_PartyRef_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of a party record.
+
+            **Note:** *Required field*
+      description: Unique information to identify the party record.
+    addAccountRequest_PartyRef:
+      required:
+      - PartyKeys
+      type: object
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addAccountRequest_PartyRef_PartyKeys'
+      description: |-
+        Reference details of a party that is part of the relationship with the account.
+
+        **Note:** *Required field*
+    addAccountRequest_PartyAcctRelData:
+      required:
+      - PartyAcctRelType
+      properties:
+        PartyAcctRelType:
+          type: string
+          description: |+
+            Type of party relationship to account.
+
+
+
+            **Note:** Value "Trustree" is interchangeable with "Fiduciary".
+
+            Additional values may be client-defined.
+
+          enum:
+          - Owner
+          - Signer
+          - OwnerSigner
+          - JointTenancy
+          - Executor
+          - Trustee
+          - Borrower
+          - CoBorrower
+          - Custodian
+          - DoingBusinessAs
+          - Fiduciary
+        PartyAcctRelOrder:
+          type: string
+          description: |-
+            Relationship order of party with an account in case of JointTenancy or JointTenantsInComman.
+
+            **Note:** *Required field*
+
+
+
+            Parties with the "First", "Second" and "Third" order are considered as main names on the account. Only one Party can have "First" or "Second" or "Third" relationship order on the account.
+
+            "Other" relationship order is commonly used for relationships other than OwnerSigner, Signer and Owner.
+
+            Party can have more than one "Other" relationship orders on the account.
+
+
+
+            Dependent on the mailing name option parameter set up at the Financial Institution, first, second or third names can be used for inquiry and for any account-related mailing purpose.
+
+            If Financial Institution uses mailing name option as Y, which means that account can have different names for mailing purposes, those names (up to 3) can be provided in postal address aggregate.
+          enum:
+          - First
+          - Second
+          - Third
+          - Other
+    addAccountRequest_PartyAcctRelInfo:
+      properties:
+        PartyRef:
+          $ref: '#/components/schemas/addAccountRequest_PartyRef'
+        PartyAcctRelData:
+          type: array
+          description: |-
+            Details of the relationship of the party to the account.
+
+            **Note:** *Required field*
+          items:
+            $ref: '#/components/schemas/addAccountRequest_PartyAcctRelData'
+        OwnerInd:
+          type: boolean
+          description: |-
+            Value to indicate the party is the primary owner of the account.
+
+            **Note:** "PartyAcctRelOrder" is a new data element in ESF to identify first three names displayed on the account.
+
+            This element is available for clients using this service in ESF release prior to 9.2, but will be deprecated in the future.
+        TaxReportingOwnerInd:
+          type: boolean
+          description: |-
+            Value to indicate if the party has tax responsibility on the account.
+
+            **Note:** At least one tax relationship is required to create an account and, there cannot be more than one tax relationships associated to an account. If primary tax reporting indicator is not provided, by default, first party will be considered as tax reporting owner.
+    addAccountRequest_LoanAcctInfo_AcctPref:
+      type: object
+      properties:
+        Language:
+          maxLength: 17
+          type: string
+          description: 'Preferred language to provide the account-related information. '
+      description: Preferences to define the default settings such as language and region for an account.
+    addAccountRequest_LoanAcctInfo_AcctIdent:
+      properties:
+        AcctIdentType:
+          type: string
+          description: "Type of account identifiers.\n\n\n\n**Note:** Values for this field refers to: \n\n- \"AcctNum\" refers to account number \n\n- \"PORT\" refers to a portfolio account \n\n- \"CLOC\" refers to a credit line account\n\n\n\nAccount number to be used for the account must be obtained prior to opening of the new account. If not provided, Premier generate account number for the new account. The length of the account number depends on the value set up at \"Account Number Length Option\" at the financial institution level.\n\nPremier requires \"Portfolio\"  and \"Credit Line\" accounts in order to open a loan account. Both share the same number, if an invalid Portfolio and/or Credit Line account number is sent in request then Premier returns an 'Account Number Not on File' error.\n\n\n\nLoan Account, if opned:  \n\n- For a customer who has a portfolio and a credit line linked to the portfolio, both portfolio and credit line number can be provided in the request. In case both are sent but the portfolio account is not the same as the credit line account, then ESF link the new loan account to existing portfolio account that is sent in the request (assumes precedence) and the credit line already associated to the portfolio account shall be linked to the Loan account. Therefore calling application must therefore ensure that the correct portfolio account is sent in request and that it is already linked to a credit line, as ESF does not create a new Portfolio or CreditLine in this case\n\n- For a customer who has only a porfolio account, portfolio number can be provided without credit line number. In this case, ESF use existing porfolio number to create a new credit line and link new loan account to existing portflio and newly created credit line. If the portfolio acount is already linked to a credit line, then the credit line account number should be sent in the request, instead of the portfolio account number\n\n- For a customer who does not have a porfolio and credit line , ESF will create a new portfolio account and a new credit line during loan account opening workflow\n\n\n\nIf only credit line account is provided in request, then the loan account would be linked to the existing credit line sent in request and the portfolio account that is already associated to the credit line shall be linked to the Loan (by default in Premier).\n\nOnly one credit line can be associated to a portfolio, therefore if portfolio already has a existing credit line and credit line is not provided in the request when opening loan account, ESF will attempt to create new credit line, relate it to portfolio and request will fail. \n\nHowever portfolio and a credit line can have multiple loan accounts linked to it."
+          enum:
+          - AcctNum
+          - PORT
+          - CLOC
+        AcctIdentValue:
+          maxLength: 36
+          type: string
+          description: |-
+            Account identification value.
+
+            **Note:** Account number length depends on the value set up at account number length option at the financial institution level.
+    addAccountRequest_LoanAcctInfo_InitialAmount_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+      description: Details of currency code.
+    addAccountRequest_LoanAcctInfo_InitialAmount:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** *Required field*
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: |-
+        Details of the initial amount or face amount of the loan account.
+
+        **Note:** *Required field*
+    addAccountRequest_LoanAcctInfo_DateData:
+      properties:
+        DateType:
+          type: string
+          description: |-
+            Values that  indicate the type of date contained in the "DateValue" field.
+
+
+
+            **Note:** Value of "Contract" refers to original note date as defined on loan contract.
+          enum:
+          - Contract
+        DateValue:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Value of the date.
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+    addAccountRequest_LoanAcctInfo_RelationshipMgr:
+      required:
+      - RelationshipMgrIdent
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: "Unique identifier of a relationship manager.\n\n**Note:** Refers to a responsibility code.  If invalid relationship manager identifier is provided, Premier accepts invalid value and does not display any error.\n\nValues are user-defined. "
+        RelationshipRole:
+          type: string
+          description: |-
+            Role of a relationship manager.
+
+            **Note:** Values for this field refers to:
+
+            - Officer: Responsibility Code
+
+            - Second Officer: Opened by Responsibility Code
+
+            - Referral Officer: Referral Responsibility Code
+          enum:
+          - Officer
+          - SecondOfficer
+          - ReferralOfficer
+    addAccountRequest_LoanAcctInfo_ClientDefinedData:
+      required:
+      - DataIdent
+      properties:
+        DataIdent:
+          maxLength: 36
+          type: string
+          description: Unique data identifier to identify the client-defined data item.
+        DataType:
+          type: string
+          description: "Type of client defined data. \n\n"
+          enum:
+          - Alpha
+          - Currency
+          - CurrencySymbol
+          - Date
+          - Numeric
+          - NumericSymbol
+          - Rate
+          - RateSymbol
+        Value:
+          maxLength: 256
+          type: string
+          description: Value of the client-defined data item.
+        DataLength:
+          type: integer
+          description: Length of the client defined data.
+          format: int64
+        ExpDt:
+          type: string
+          description: "Date after which client-defined data item expires.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description of client defined data.
+        RequiredFlag:
+          type: boolean
+          description: Value to indicate the client-defined data is mandatory.
+    addAccountRequest_LoanAcctInfo_AcctStmtData_StmtTimeFrame:
+      properties:
+        RecurType:
+          type: string
+          description: "Recurrence type indicates the pattern of recurrence. \n\n**Note:** Value \"TwiceMonthly\" in Premier indicates monthly twice.\n\nAssessment days are based upon the day of the Date Next Charge as follows: 1st and 16th or 16th and 1st; 2nd and 17th or 17th and 2nd; 3rd and 18th or 18th and 3rd; etc. If the Date Next Charge is either the 15th or the last day of the month, charges are assessed on the 15th and end-of-month (EOM).\n\n"
+          enum:
+          - None
+          - Monthly
+          - Quarterly
+          - SemiYearly
+          - Yearly
+          - Weekly
+          - BiWeekly
+          - BiMonthly
+          - TwiceMonthly
+          - Maturity
+        RecurInterval:
+          type: integer
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle \n\nThe default value is set to 1.\n\n**Note:** Value for this field is expected to be: \n\n- blank, if \"RecurType\" is \"None\"\n\n- For all other values of \"RecurType\", preferred value is  1\n\nA blank or any other value will be treated as 1 and the translation to Premier will be based on the RecurType value."
+          format: int64
+        DayOfMonth:
+          type: string
+          description: Numeric value representing the day of the month of occurrence.
+    addAccountRequest_LoanAcctInfo_AcctStmtData:
+      type: object
+      properties:
+        StmtTimeFrame:
+          type: array
+          description: Time frame details for the account statement.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AcctStmtData_StmtTimeFrame'
+        StmtPrepCode:
+          type: string
+          description: |-
+            Statement preparation code that indicates the individual statement prints for the account.
+
+            **Note:** This field indicates that the billing statement are produced for the account.
+        CombinedStmtIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of a combined statement.
+        CombinedStmtCode:
+          type: string
+          description: Code for combined statement of primary and secondary accounts.
+          enum:
+          - DoNotCombine
+          - SecondaryDDA
+          - SecondarySDA
+        StmtFormat:
+          type: string
+          description: Format to identify the statement detail, balance options, daily summary and other values.
+        StmtGroup:
+          type: string
+          description: |-
+            Statement group that indicates we can add relationship to accounts to all other accounts that are attached to the portfolio.
+
+            **Note:** This field indicates combined statement relationship.
+      description: Details of the account statement processing data.
+    addAccountRequest_LoanAcctInfo_NoticeData:
+      properties:
+        NoticeType:
+          type: string
+          description: |-
+            Type of notice.
+
+
+
+
+
+            **Note:** Values listed represents the following fields:
+
+            - "RegularNotice" represents Premier field "Notification Option"
+
+            - "HUDNotice" represents Premier field "HUD/SCRA Notice Option"
+
+            - "RateChangeNotice" represents Premier field "Rate Change Notification Override"
+
+            - "PmtChgNotice" represents Premier field "Payment Change Notice Override"
+
+            - "BalanceOnReceipt" represents Premier field "Receipt Balance Override"
+
+            - "MaturityNoticeOverride" represents Premier field "Maturity Notice Override"
+
+            - "AutoPmtNotice" represents Premier field "Auto Payment Billing Notice Override"
+
+            - "PastDueNotice1" represents Premier field "First Past Due Notice Days Override"
+
+            - "PastDueNotice 2" represents Premier field "Second Past Due Notice Days Override"
+
+            - "PastDueNoticeGuarantor" represents "Co-signer/Guarantor Past Due Message Override"
+          enum:
+          - RegularNotice
+          - PastDueNotice
+          - MaturityNotice
+          - HUDNotice
+          - RateChangeNotice
+          - PmtChgNotice
+          - BalanceOnReceipt
+          - AutoPmtNotice
+          - PastDueNotice1
+          - PastDueNotice2
+          - PastDueNoticeGuarantor
+        NoticeOption:
+          type: string
+          description: "Option for account notice. \n\n\n\n**Note:** Value for this field may vary depending upon the NoticeType. \n\nFor any Premier value not defined in ESF, Premier value is expected to be sent."
+          enum:
+          - NoNotice
+          - GenerateNotice
+          - NoOverride
+        LeadDays:
+          type: integer
+          description: "Number of days prior to the event to do a review.\n\n**Note:** Applicable to the following Premier fields:\n\n\"First Past Due Notice Days Override\" and \"Second Past Du Notice Days Override\". "
+          format: int64
+        NoticeRemarks:
+          maxLength: 50
+          type: string
+          description: "User-defined text to appear on a user-defined notice. \n\n**Note:** Applicable to the following Premier fields:\n\n\"First Past Due Notice Days Override\", \"Second Past Due Notice Days Override\", \n\n\"Co-signer/Guarantor Past Due Message Override\"."
+    addAccountRequest_LoanAcctInfo_IntRateData:
+      type: object
+      properties:
+        BasedOnCode:
+          type: string
+          description: |-
+            Based on code is the source of interest rate which can be used alone or with additional factors that, when combined, calculate an interest rate.
+
+            **Note:** Refers to rate index.
+        AccrualMethod:
+          type: string
+          description: "Method of interest accrual.\n\n**Note:** Combination of accrual method value and daily accrual value determines the method of  Interest accrual on the account. "
+          enum:
+          - None
+          - PrincipalAndInterest
+          - PrincipalPlusInterest
+          - Amortized
+          - Rule78th
+          - NegativeAmortization
+          - Simple
+          - AddOn
+        AccrualCode:
+          type: string
+          description: "Code to indicate additional accrual method instructions for the account.\n\n\n\n**Note:** This field indicates the interest earning calculation for loans with one of the accrual methods listed below:\n\n- PrincipalAndInterest\n\n- PrincipalPlusInterest \n\n- AddOn\n\n\n\nValues for this field indicates: \n\n- \"0\" applies to AddOn method that indicates 365/360 accrual accounting. The interest rate is multiplied by the principal and divided by 360 to determine the daily earnings\n\n- \"1\" applies to AddOn method that indicates actuarial interest. The interest rate is multiplied by the principal and divided by the number of The interest rate is multiplied by the principal and divided by 360 to determine the daily earnings\n\n- \"2\" applies to PrincipalAndInterest and PrincipalPlusInterest methods \n\nFor \"PrincipalAndInterest\" and \"PrincipalPlusInterest\" with \"DailyAccrual Actual365\"  indicates 30/365 accrual accounting. The interest rate is multiplied by the principal and divided by 365 to determine the daily earnings\n\nFor \"PrincipalAndInterest\" and \"PrincipalPlusInterest\" with \"DailyAccrual Actual360\" interest rate is multiplied by the principal and divided by 360 to determine the daily earnings."
+        DailyAccrual:
+          type: string
+          description: |-
+            Value that indicates how interest is accrued on daily basis.
+
+            **Note:** *Required field*
+
+
+
+            This field in combination of "AccrualMethod" field to determine the method of interest accrual on the account.
+          enum:
+          - Actual360
+          - Actual365
+          - Standard360
+        MinimumInterest:
+          type: number
+          description: |-
+            Minimum interest amount that must be repaid to the account before a payoff occurs.
+
+            **Note:** Appliacble to loan products which earn a minimum amount of interest.
+      description: |-
+        Details of the interest rate processing for the account.
+
+        **Note:** *Required field*
+    addAccountRequest_LoanAcctInfo_MaturityIntCalcData:
+      type: object
+      properties:
+        MaturityIntRateType:
+          type: string
+          description: |-
+            Type of interest rate applicable to accrue interest after maturity.
+
+            **Note:** Refers to maturity rate option. This field indicates how the maturity interest rate affects the interest rate of matured loans after a note is matured for more than the Maturity Interest Interval. Interest is earned at the new rate effective as of the Maturity Date.
+
+            Applicable to accrual methods PrincipalAndInterest and PrincipalPlusInterest.
+          enum:
+          - CurrentRate
+          - RateAdjuster
+          - RatePlusAdjuster
+          - RatePlusAdjusterPct
+          - RateAdjusterOverrideFloorCeiling
+          - RatePlusAdjusterOverrideFloorCeiling
+          - RatePlusAdjusterPctOverrideFlorrCeiling
+        MaturityIntRate:
+          type: number
+          description: "Interest rate applicable at the time of maturity.\n\n**Note:** Based on the maturity interest rate type, maturity interest rate can be the loan's new interest rate, an adjuster that is automatically added to a loan's interest rate, or a percentage variance that is automatically added to a loan's interest rate. If rate does not change after maturity, this field should be left blank. "
+      description: |-
+        Details of the interest rate processing after account maturity.
+
+        **Note:** *Required field*
+    addAccountRequest_LoanAcctInfo_RateChangeData:
+      properties:
+        VarianceFactorType:
+          type: string
+          description: "Type of variance factor used to calculate interest rate. \n\nThis value is used in combination with the RateVariance, RateFactor and RateCalcMethod.\n\n**Note:** Refers to percent of \"Prime Code\" field."
+          enum:
+          - Variance
+          - Factor
+        RateFactor:
+          type: number
+          description: |-
+            Percentage of index rate used to calculate the rate changes.
+
+
+
+            **Note:** Refers to rate adjuster.
+
+            To be used when variance factor type is "Factor".
+        RateVariance:
+          type: number
+          description: |-
+            Percentage difference between interest rate and index rate to adjust the interest rate.
+
+            **Note:** Refers to rate adjuster.
+
+            To be used when variance factor type is "Variance".
+        RateVarianceTwo:
+          type: number
+          description: |-
+            Percentage value with which the interest rate varies from its related index rate.
+
+            **Note:** Refers to second rate adjuster that is used when variance factor type is "variance" and two variances are used.
+        FloorRate:
+          type: number
+          description: |-
+            Rate of interest finalized from the lower range of rates.
+
+            **Note:** Minimum rate of interest that a loan will earn. This rate can decrease below this level, but the earning rate remains at the floor rate.
+
+            Do not provide Floor Rate value if no minimum rate is set.
+        CeilingRate:
+          type: number
+          description: |-
+            Rate of interest finalized from the higher range of rates.
+
+            **Note:** Maximum rate of interest that a loan will earn. The rate can increase above this level, but the earning rate remains at the ceiling rate. Do not provide "CeilingRate" value if no maximum rate is set.
+        MaxRateChange:
+          type: number
+          description: |-
+            Maximum amount of interest rate that change per review period.
+
+            **Note:** Refers to rate change cap, the maximum rate change allowed during any single rate change period.
+
+            The rate will change up to the maximum rate change value but will not exceed it.
+
+            Floor and Ceiling Rates are still observed. The Maximum Rate Change cannot be used if the Rate Change Frequency is Daily, Manual or Maturity.
+        RoundingOption:
+          type: string
+          description: "Method of rounding when interest rate is adjusted. \n\n**Note:** Refers to rate rounding option override.\n\nCombination of \"Rounding Option\" and \"Rounding Factor\" determines how the \"BasedOnCode\" rate  is rounded before it is applied to a loan. \n\nValue of \"None\" refers to rate not rounded."
+          enum:
+          - NoOverride
+          - RoundUp
+          - RoundDown
+          - RoundNearest
+          - None
+        RoundingFactor:
+          type: string
+          description: "Rounding factor used in combination with \"RoundingOption\" to set interest rate rounding percentage.\n\n**Note:** Combination of \"Rounding Option\" and \"Rounding Factor\" determines how the \"BasedOnCode\" rate  is rounded before it is applied to a loan. \n\nNot applicable if \"RoundingOption\" is \"NoOverride\" or \"None\"."
+          enum:
+          - "0.2500"
+          - "0.1250"
+          - "0.1000"
+          - "0.0625"
+          - "0.0100"
+        RateChangeRecurType:
+          type: string
+          description: |-
+            Recurrency type to define the recurring change in interest rate.
+
+
+
+            **Note:** Refers to rate change frequency that indicates how often a loan is subject to an automatic interest rate change.
+
+            Value "None" refers to a manual rate change.
+          enum:
+          - None
+          - Once
+          - Daily
+          - Weekly
+          - BiWeekly
+          - Monthly
+          - Quarterly
+          - Yearly
+          - SemiYearly
+          - Maturity
+        RecurInterval:
+          type: integer
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle\n\nThe default value is set to 1.\n\n**Note:** Values for Premier: \n\n- Every 2 Years (7): Every two years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"2\"\n\n- Every 3 Years (8): Every three years,  it is expected a RecurType of \"Yearly\" and RecurInterval of  \"3\"\n\n- Every 4 Years (9): Every four years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"4\"\n\n- Every 5 Years (10): Every five years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"5\"\n\n- Every 6 Years (11): Every six years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"6\"\n\n- Every 7 Years (12): Every seven years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"7\"\n\n- Every 8 Years (13): Every eight years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"8\"\n\n- Every 9 Years (14): Every nine years, it is expected a RecurType of  \"Yearly\" and RecurInterval of  \"9\"\n\n- Every 10 Years (15): Every 10 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"10\"\n\n- Every 11 Years (16): Every 11 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"11\"\n\n- Every 12 Years (17): Every 12 years, it is expected a RecurType of \"Yearly\" and RecurInterval of  \"12\"\n\n- Every 13 Years (18): Every 13 years, it is expected a RecurType of \"Yearly\" and RecurInterval of \"13\"\n\n- Every 14 Years (19): Every 14 years, it is expected a RecurType of  \"Yearly\" and RecurInterval of \"14\"\n\n- Every 15 Years (20): Every 15 years, it is expected a RecurType of  \"Yearly\"  and RecurInterval of \"15\""
+          format: int64
+        DayOfMonth:
+          type: string
+          description: |-
+            Numeric value representing the day of the month of occurrence.
+
+            **Note:** Valid values are form 01 to 31, with 31 indicating month-end.
+          enum:
+          - 1 through 31
+        LeadDays:
+          type: integer
+          description: "Number of days prior to the event to do a review.\n\n**Note:** Refers to rate change forecast days, the number of days in advance of the next rate change date that a new interest rate is forecast and reported to the borrower. The \"Lead Days\" must be less than the number of days in the \"Rate Change Frequency\". \n\nFor monthly rate changes, the lead days must be from 0 to 28 days. For quarterly rate changes, the lead days must be from 0 to 89 days. For semi-annual rate changes, the lead days must be from 0 to 180 days. For annual rate changes, the lead days must be from 0 to 365 days. On the rate change lead date, a rate change notice is produced. If the value of the Rate Change Frequency is blank, and the Lead Days is blank, changes affect the loan immediately. If the Rate Change Frequency is blank, and the lead days are greater than zero, the lead days define the number of days that will pass before a new rate is actually implemented on the loan."
+          format: int64
+        NextRateChangeDt:
+          type: string
+          description: "Next date at which the interest rate is to be adjusted.\n\n\n\nFormat: mm/dd/yyyy \n\nExample: 11/20/2021\n\n**Note:** This date must be greater than or equal to the current date.\n\nFor \"AccrualMethodAmortized\" and \"NegativeAmortization\" loans rate changes are effective for the next full payment period following the rate change date."
+          format: date
+    addAccountRequest_LoanAcctInfo_RelationshipMgr_1:
+      required:
+      - RelationshipMgrIdent
+      properties:
+        RelationshipMgrIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of a relationship manager.
+
+            **Note:** This field is not applicable to the seasonal address type. Values in this field are user-defined.
+        RelationshipRole:
+          type: string
+          description: |-
+            Role of a relationship manager.
+
+            **Note:** Officer refers to responsibility code, whereas referral officer refers to referral responsibility code.
+          enum:
+          - Officer
+          - ReferralOfficer
+    addAccountRequest_LoanAcctInfo_CountryCode:
+      required:
+      - CountryCodeValue
+      type: object
+      properties:
+        CountryCodeSource:
+          type: string
+          description: Standard country code format.
+        CountryCodeValue:
+          type: string
+          description: |-
+            Country code value as per the country code format set in the CountryCodeSource field.
+
+            For example, as per IRS country codes, country code of Canada is CA.
+
+            **Note:** Values of this field are user-defined.
+      description: Country code details of the account holder.
+    addAccountRequest_LoanAcctInfo_TimeFrame:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+            **Note:** This field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year, therefore, only start month and start day is stored and year can be provided as 9999.
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+
+            **Note:** This field is applicable only if AddrType is seasonal. Seasonal address starts and ends on same start/end date every year, therefore, only start month and start day is stored and year can be provided as 9999.
+      description: Details of the time frame when the address is active.
+    addAccountRequest_LoanAcctInfo_PostAddr:
+      required:
+      - AddrType
+      properties:
+        OpenDt:
+          type: string
+          description: "Date on which the account record is created.\n\nFormat: mm/dd/yyyy \n\nExample: 11/20/2021\n\n**Note:** This field not applicable to seasonal address type."
+          format: date
+        RelationshipMgr:
+          type: array
+          description: Information about the financial institution officers who have management-related responsibilities of the account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_RelationshipMgr_1'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: "Branch that primarily created the account with the party.\n\n**Note:** \n\n- Refers to a branch region\n\n- Values are user defined\n\n- Not applicable to seasonal address type."
+        ResponsibleBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch responsible for the relationship.
+
+            **Note:** This field is not applicable for seasonal address type and refers to the accounting branch associated to the address record. Values of this field are user-defined.
+        NameIdent:
+          maxLength: 36
+          type: array
+          description: "Name identification value to identify the names related to the account address.\n\n**Note:** \n\n- Applicable if AddrType is secondary and AddrUse is mailing \n\n- Not applicable for seasonal address type\n\n- Only up to three name identifiers can be provided if financial institution is configured to use different Primary/Inquiry and Secondary/Mailing addresses and names. If provided for Primary/Inquiry address it will be ignored as name relationships for inquiry are established using information provided in PartyCardRelInfo\n\n- Only names that have a relationship to the safe deposit box or account portfolio can be associated to safe deposit box for mailing purpose\n\n"
+          items: {}
+        AddressIdent:
+          maxLength: 36
+          type: string
+          description: "Unique address identification value.\n\n**Note:** *Conditionally Required field*\n\n\n\nRefers to Address Id, shared by primary and seasonal as well as secondary and seasonal addresses. \n\nRequired to be provided if existing address is being added to the new account.\n\nDo not provide if new address is being created for account."
+        AddrUse:
+          type: string
+          description: |-
+            Usage of the address.
+
+            **Note:** *Required field*
+
+
+
+            AddrUse for primary and related seasonal address is 'Inquiry', whereas for secondary and related seasonal address is 'Mailing'.
+
+            Premier provides ability for an account to have different inquiry and mailing addresses.
+
+            - If "Mailing Name Option" parameter at financial institution is set to N, both inquiry and mailing addresses and names for the account are same, therefore primary/inquiry address information is supported
+
+            - If "Mailing Name Option" parameter at financial institution is set to Y, then account can have different Secondary/Mailing and Primary/Inquiry addresses where inquiry and mailing address can be provided in the request
+
+            Address Use for Seasonal Address Type is always the same as Primary or Secondary address.
+          enum:
+          - Inquiry
+          - Mailing
+        AddrFormatType:
+          type: string
+          description: |-
+            Type of address format.
+
+
+
+            **Note:** *Required field*
+
+
+
+            Label address format is supported.
+          enum:
+          - Label
+          - Parsed
+        Addr1:
+          maxLength: 64
+          type: string
+          description: |-
+            Address line 1.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            Required to be provided if a new address record is being created.
+
+            Depending upon on "Name and Address Length Option" defined under Miscellaneous specification in Premier, "Address Line 1" can be either 30 or 40 characters long.
+
+            Name and Address Length Option values available in Premier are:
+
+            - 0: names and addresses up to 30 characters in length can be entered
+
+            - 1: names and addresses up to 40 characters in length can be entered
+
+            - 2: names and addresses up to 30 characters are entered, and two address lines are available
+
+            - 3: names and addresses up to 40 characters are entered, and two address lines are available
+        Addr2:
+          maxLength: 64
+          type: string
+          description: "Address line 2. \n\nTo enter Addr2, Addr1 field must be provided.\n\n**Note:** Address Line 2 is supported if enabled under \"Address and Name Length Option\" in miscellaneous specification in Premier. Also defines the length of Address Line 2, which can be either 40 or 30 characters."
+        City:
+          maxLength: 32
+          type: string
+          description: |+
+            Name of the city.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            It is mandatory to provide this field if a new address record is to be created.
+
+            Field length is 20 characters long (including spaces). It is recommended for consumer to abbreviate the value sent in the EFX request to prevent truncation.
+
+            For example, city name "Rancho Santa Margarita" exceeds 20 characters and can be abbreviated to "Rancho S Margarita" to avoid truncation.
+
+            Total length of 40 characters is supported for City, StateProv and PostalCode (appended together) including spaces.
+
+        StateProv:
+          type: string
+          description: |-
+            State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            It is mandatory to provide this field if new address record is created and country is United States.
+        PostalCode:
+          maxLength: 11
+          type: string
+          description: |-
+            Postal code or zip code.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            It is required to provide this field if, a new address record is to be created with country as United States.
+
+
+
+            Postal Code provides information about the ZIP code if, address is from United States and, provides information about postal code if, address is not from United States.  This field provides the information in ZIP Code (5 Digit)-Additional Code (4 Digit) format. Additional code of four digits is optional and provides a more specific location within a given ZIP code. If additional code is not provided, it can be represented with value as '0000'. For example, 32714-1234 or 32714-0000.
+
+
+
+            Postal codes are string of characters for non-US addresses.
+        CountryCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CountryCode'
+        AddrType:
+          type: string
+          description: "Type of the address. \n\n\n\n**Note:** *Conditionally Required field*\n\n\n\nRequired to be provided if new or existing address is linked to the account.\n\nAccount can have one primary, one secondary and two seasonal addresses. \n\nHowever, seasonal address cannot exist as a single address record hence, it is always related to a primary/secondary address. Therefore, seasonal address always shares AddressIdent and AddrUse with primary or the secondary address.\n\nIn order to relate the primary/secondary address with seasonal address, present the seasonal address right after the primary/secondary address.\n\nIt is required to provide the TimeFrame for seasonal address."
+          enum:
+          - Primary
+          - Secondary
+          - Seasonal
+        TimeFrame:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_TimeFrame'
+        Retention:
+          type: boolean
+          description: |+
+            Value to indicate the address should be retained after its timeframe.
+
+            **Note:** Retention code indicates address record should be retained or can be deleted when no accounts, tax addenda, or any other relationships exist for the address record.
+
+            If during Account opening process, new address record is being created with retention code as true and account opening workflow fails due to an error, ESF will be unable to delete the address. If new address was created successfully prior to the error address record will remain on Premier system even though account will not be created.
+
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+        CensusBlock:
+          maxLength: 20
+          type: string
+          description: Census block number assigned by the U.S. postal service to uniquely identify each carrier delivery point.
+        ForeignFlag:
+          type: boolean
+          description: Value to indicate the given address is foreign address.
+        HandlingCode:
+          type: string
+          description: |-
+            Handling code to specify the handling process of the notification and statement forms.
+
+            **Note:** Values of this field are client-defined and indicate special routing information for customer correspondence.
+        HandlingCodeOption:
+          type: string
+          description: |+
+            Notification and statement forms handling option for the account.
+
+          enum:
+          - StatementsNoticesChecks
+          - Statements
+          - StatementsNotices
+          - StatementsChecks
+          - Notices
+          - NoticesChecks
+          - Checks
+          - DoNotPrint
+        MSACode:
+          type: integer
+          description: Code that identifies a metropolitan statistical area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+          format: int64
+    addAccountRequest_LoanAcctInfo_PrePayMaxAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: Maximum amount above which payments are subject to prepay fee.
+    addAccountRequest_LoanAcctInfo_CurAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+      description: Details of currency code.
+    addAccountRequest_LoanAcctInfo_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_CurCode'
+      description: Details of the currency amount.
+    addAccountRequest_LoanAcctInfo_MinCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: Details of minimum fee amount.
+    addAccountRequest_LoanAcctInfo_MaxCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: Details of maximum fee amount.
+    addAccountRequest_LoanAcctInfo_TimeFrame_1_RecurRule:
+      properties:
+        RecurType:
+          type: string
+          description: "Recurrence type indicates the pattern of recurrence. \n\n**Note:** \n\n- Premier value of \"Refund Purposes Only (9)\" translated into RecurType of \"Payoff\" indicates note origination fees are earned over the recurring charge period and refunded automatically at payoff (internal transaction code 84). Refund calculations begin on the note date and are calculated through the next recurring charge date. The note payoff amount is reduced by the amount of the refund. The refund through date and amount must be specified using the Date Next Recurring Charge and Recurring Charge Rate/Amount, respectively\n\n- Premier value of Twice Monthly (8) indicates twice monthly. Assessment days are based upon the day of the Date Next Charge as follows: 1st and 16th or 16th and 1st; 2nd and 17th or 17th and 2nd; 3rd and 18th or 18th and 3rd; etc. If the Date Next Charge is either the 15th or the last day of the month, charges are assessed on the 15th and end-of-month (EOM)"
+          enum:
+          - None
+          - Monthly
+          - Quarterly
+          - SemiYearly
+          - Yearly
+          - Weekly
+          - Daily
+          - TwiceMonthly
+          - Payoff
+          - Anniversary
+        RecurInterval:
+          type: integer
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle \n\nThe default value is set to 1.\n\n**Note:** \n\n- For Premier values of No Prepayment Prin Charge, No Unused Credit Charge, and No Recurring Charges, they are set to RecurType of None and RecurInterval is not set.\n\n- For all other Premier value RecurInterval will be set to 1."
+          format: int64
+        DayOfMonth:
+          type: string
+          description: Numeric value representing the day of the month of occurrence.
+        Occurrences:
+          type: integer
+          description: Occurrence of the recur rule.
+          format: int64
+    addAccountRequest_LoanAcctInfo_TimeFrame_1:
+      type: object
+      properties:
+        StartDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Start date and time value.
+
+            **Note:** Premier supports MMDDYYYY format.
+        EndDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            End date and time value.
+
+
+
+            **Note:** Premier supports MMDDYYYY format.
+        RecurRule:
+          type: array
+          description: Details of the recurrence rule.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_TimeFrame_1_RecurRule'
+      description: Details of the time frame when the address is active.
+    addAccountRequest_LoanAcctInfo_EarlyPayoffTable:
+      type: object
+      properties:
+        EarlyPayoffTierType:
+          type: string
+          description: Value that indicates the tier type is based on months or full payment is paid.
+          enum:
+          - Months
+      description: Details of the early payoff table to indicate whether the tier is based on months or full payment paid.
+    addAccountRequest_LoanAcctInfo_Fee:
+      required:
+      - FeeType
+      properties:
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of fee.
+        FeePlan:
+          maxLength: 80
+          type: string
+          description: |+
+            Fee plan identifies a group of fees related to a pricing plan.
+
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description of client defined data.
+        FeeType:
+          type: string
+          description: |-
+            Type of fee.
+
+            **Note:** For "Recurring" and "Payoff" charges, Premier supports multiple charges for the same fee type, whereas for "Prepayment" and "UnusedLimit" only one charge is supported.
+          enum:
+          - Recurring
+          - Prepayment
+          - UnusedLimit
+          - Payoff
+        FeeOption:
+          type: string
+          description: |+
+            Processing option for fee type.
+
+          enum:
+          - Charge
+          - Rebatable
+        FeeCalcOption:
+          type: string
+          description: Option for calculation of fee.
+          enum:
+          - FlatFee
+          - None
+          - NoAssess
+          - PctNoteAmt
+          - PctPrincipalBal
+          - PctAvgBal
+          - PctAvailBal
+          - PctAdvanceAmt
+          - PctUnusedAvailBal
+          - PctUnusedLimit
+          - UnusedLimit360
+          - UnusedLimit365
+          - CalcProgram
+          - PctNoteAmtPlusIns
+          - PctPrincNoteAmt
+          - PctSchedAmt
+          - PctPrincipalIntOldestPmtPastDue
+          - PctPrincipalIntEscrowOldestPmtPastDue
+          - PctPrincipalIntEscrowRecentPmtPastDue
+          - AddOnRule78
+          - PctPrincipalPmtFreq
+          - PctPrincipalBalOldestPmtPastDue
+          - PctPrincipalBalRecontPmtPastDue
+          - PctPrincipalIntRecentPmtPastDue
+          - PctMaxCredit365
+          - PctAvgPrincipalBal365
+          - PctAvgAvailBal365
+          - PctMaxCredit360
+          - PctAvgPrincipalBal360
+          - FlatFeeBalGT0
+          - FlatFeeAvgBalGT0
+          - PctAvgAvailBal360-Current
+          - PctAvgAvailBal365-Original
+          - PctAvgAvailBal360-Original
+          - BalanceinExcess365
+          - BalanceTotal365
+          - BalanceinExcess360
+          - BalanceTotal360
+          - PctBalanceinExcess
+          - PctBalanceTotal
+          - FlatFeeBalanceinExcess
+          - SBARecoupment
+          - SBACurtailment
+        FeeCalcBal:
+          type: string
+          description: Value that indicates on what balance the fee is calculated.
+        FeeAggregationOption:
+          type: string
+          description: Option that indicates how the fee amount is applied in the loan account.
+          enum:
+          - None
+          - FeeBal
+          - PrincipalBal
+        PrePayMaxAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PrePayMaxAmt'
+        PrePayBalPercent:
+          type: number
+          description: Percentage amount above which prepayments are subject to prepay fee.
+        FeeBillingOption:
+          type: string
+          description: Option for fee billing.
+          enum:
+          - Bill
+          - CompoundToBal
+        CurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt'
+        BalPercent:
+          type: number
+          description: Percentage balance to calculate the fee.
+        MinCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_MinCurAmt'
+        MaxCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_MaxCurAmt'
+        TimeFrame:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_TimeFrame_1'
+        EarlyPayoffMonthOption:
+          type: string
+          description: Early payoff month option that indicates the time period the payoff charge is effective.
+        EarlyPayoffMonths:
+          type: integer
+          description: Early payoff months that indicate the length of time for which the payoff fee can be charged.
+          format: int64
+        EarlyPayoffTable:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_EarlyPayoffTable'
+        ReportingOptionCode:
+          type: string
+          description: Code for reporting option
+    addAccountRequest_LoanAcctInfo_CreditRisk:
+      required:
+      - RiskCategory
+      properties:
+        RiskCategory:
+          type: string
+          description: "Type of credit risk category. \n\n**Note:** Values of this field are: \n\n- \"Credit Score\" refers to original credit score of the customer\n\n- \"RatingCode 1, RatingCode 2, and RatingCode 3\" are user-defined codes to evaluate the performance of a borrower in terms of collectability, timeliness of payment, or any other client-defined criteria. Any four-digit number is valid\n\n- \"Risk Score1 and Risk Score2\" are client-defined number that corresponds to risk sore of the customer. Maximum value is \"999\""
+          enum:
+          - RiskScore1
+          - RiskScore2
+          - CreditScore
+          - RatingCode1
+          - RatingCode2
+          - RatingCode3
+        InternalScore:
+          type: string
+          description: Internal credit risk rating to assess the credit risk of customer.
+    addAccountRequest_LoanAcctInfo_AcctMemoData:
+      properties:
+        AcctMemoIdent:
+          maxLength: 36
+          type: string
+          description: "Account memo identifier used to arrange multiple memos and warnings in a sequence.\n\n**Note:** \n\n- If AcctMemoType is \"Warning\" value of \"1\" is expected\n\n- If AcctMemoType is \"Teller\", three instances are expected starting with the value of 1"
+        AcctMemoType:
+          type: string
+          description: "Type of account memo. \n\n"
+          enum:
+          - Teller
+          - Warning
+        AcctMemoText:
+          maxLength: 255
+          type: string
+          description: Client-defined text for the account memo.
+    addAccountRequest_LoanAcctInfo_AddOnInterestAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_CurCode'
+      description: Details of the add-on interest amount.
+    addAccountRequest_LoanAcctInfo_ExpensesFinancedAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+      description: "Details of currency code.\n\n**Note:** Total of ExpenseFinanceAmt, FeesFinanceAmt and FeesPrepaidAmt should be equal to the itemized values in OriginationFee. "
+    addAccountRequest_LoanAcctInfo_ExpensesFinancedAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** Premier calculates expense finance amount automatically based on details provided in the OriginationFee.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_ExpensesFinancedAmt_CurCode'
+      description: "Details of expenses finance amount.\n\n**Note:** Total of ExpenseFinanceAmt, FeesFinanceAmt and FeesPrepaidAmt should be equal to the values itemized in OriginationFee. "
+    addAccountRequest_LoanAcctInfo_FeesFinancedAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** Premier calculates finance fee amount automatically based on details provided in the OriginationFee.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: "Details of the finance fee amount.\n\n**Note:** Total of ExpenseFinanceAmt, FeesFinanceAmt and FeesPrepaidAmt should be equal to the values itemized in OriginationFee. "
+    addAccountRequest_LoanAcctInfo_FeesPrepaidAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** Premier calculates finance fee amount automatically based on details provided in the OriginationFee.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_CurCode'
+      description: "Details of the prepaid fees amount.\n\n\n\n**Note:** Total of ExpenseFinanceAmt, FeesFinanceAmt and FeesPrepaidAmt should be equal to the values itemized in OriginationFee. "
+    addAccountRequest_LoanAcctInfo_DeferredFeesAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_CurCode'
+      description: |-
+        Details of the deferred fees amount.
+
+        **Note:** Premier will use this field only when the client enters the deferred fee from the summary.
+    addAccountRequest_LoanAcctInfo_CurAmt_1:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: Details of the currency amount.
+    addAccountRequest_LoanAcctInfo_OriginationFee:
+      required:
+      - CurAmt
+      properties:
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier of fee.
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description of client defined data.
+        FeeOptionInd:
+          type: boolean
+          description: "Value to indicate the loan fees are financed fee.\n\n**Note:** This field is set to \"True\" if the fee is financed else set to \"False\" if the fee is prepaid.\n\nBy default the field is set to \"False\"-Prepaid. "
+        FeeDeferralInd:
+          type: boolean
+          description: |+
+            Value to indicate the fee is deffered fee.
+
+        FeeReportableInd:
+          type: boolean
+          description: |+
+            Value to indicate the loan fees are added to reportable points.
+
+        FeeAPRCalcInd:
+          type: boolean
+          description: Value to indicate the loan fees are included in the APR calculation.
+        CurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_1'
+    addAccountRequest_LoanAcctInfo_Term:
+      required:
+      - TermUnits
+      type: object
+      properties:
+        Count:
+          type: integer
+          description: Number of occurrences with respect to the specified unit value.
+          format: int64
+        TermUnits:
+          type: string
+          description: "Units to define the term of the account. \n\n\n\n"
+          enum:
+          - Months
+      description: Term details for a deposit account.
+    addAccountRequest_LoanAcctInfo_DeferredFeeData:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        PriorEarningAmt:
+          type: number
+          description: Amount prior to deferred earnings that is applicable immediately to fee taken to earnings.
+        Rate:
+          type: number
+          description: Earning rate for the fee.
+      description: |-
+        Details of deferred fee data.
+
+        **Note:** Premier uses these values only when the client enters the deferred fee from fee details.
+    addAccountRequest_LoanAcctInfo_FeeCostData:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Cost amount for the fee.
+        PriorCostAmt:
+          type: number
+          description: Amount prior to deferred cost that is applicable to cost.
+        Rate:
+          type: number
+          description: Earning rate for the fee.
+      description: Cost details for the fee.
+    addAccountRequest_LoanAcctInfo_DeferredFee:
+      properties:
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identifier of fee.
+
+            **Note:** Premier support up to four refferal fee records.
+        Desc:
+          maxLength: 200
+          type: string
+          description: Description of client defined data.
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+        EarningMethod:
+          type: string
+          description: Earning method that determines the method of amortization for fee/costs.
+        Term:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_Term'
+        DeferredLoanBalance:
+          type: number
+          description: Balance of the deferred loan.
+        DeferredFeeData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DeferredFeeData'
+        FeeCostData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeeCostData'
+    addAccountRequest_LoanAcctInfo_PmtReserveAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_CurCode'
+      description: Details of the payment reserve amount.
+    addAccountRequest_LoanAcctInfo_FixedPremiumAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_CurCode'
+      description: Details of fixed premium amount.
+    addAccountRequest_LoanAcctInfo_MaxCoverageAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** Premier expects an integer value for this field.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: Details of the maximum balance of the note covered by the insurance.
+    addAccountRequest_LoanAcctInfo_Insurance:
+      properties:
+        InsuranceIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification for insurance record.
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: Unique identifier of a product to indicate the processing options of account.
+        InsuranceCompany:
+          type: string
+          description: Name of the insurance company.
+        InsuranceCalcOption:
+          type: string
+          description: Option for insurance calculation.
+          enum:
+          - None
+          - PctPrincipalBal
+          - PctPrincipalBalPlusInt
+          - PctMaximumCredit
+          - Fixed Premium
+          - PctAvgBal
+          - PctPmt
+          - PctTotalPmtPlusEscrow
+          - PctRemainingPmts
+          - PctAvgBalSimpleIns
+        RatePlan:
+          type: integer
+          description: |-
+            Interest rate plan to calculate simple insurance.
+
+            **Note:** The value for this option is tied to the correspondening insurance code number from the LAS insurance specifications.
+
+            Rate Plan is valid only if the Simple Insurance Method is [8] Remaining Payments x Monthly Rate (8). Indicates simple insurance is based on the remaining payments multiplied by the Accident &amp; Health Rate defined by the rate plan. The rate is annualized and divided by 1000.
+          format: int64
+        SingleRate:
+          type: number
+          description: Value of the single rate.
+        InsuranceStartDt:
+          type: string
+          description: "Starting date of the insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        InsuranceExpDt:
+          type: string
+          description: "Expiry date of the insurance.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Premier core supports MMDDYYYY format."
+          format: date
+        FixedPremiumAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FixedPremiumAmt'
+        MaxCoverageAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_MaxCoverageAmt'
+    addAccountRequest_LoanAcctInfo_InsuranceBillingFrequency:
+      type: object
+      properties:
+        RecurType:
+          type: string
+          description: "Type of recurrence. \n\n\n\n\n\n**Note:** \n\n- For ReccurType value is \"Daily\", then \"DayOfMonth\" is not expected and the mapping should be to AccuredDaily or 0\n\n- For all other values of ReccurType, value \"Monthly\" is expected in combination of DayOfMonth value from 1 to 31.\n\n"
+          enum:
+          - Daily
+          - Monthly
+        DayOfMonth:
+          type: string
+          description: Numeric value representing the day of the month of occurrence.
+      description: Details of the insurance billing frequency.
+    addAccountRequest_LoanAcctInfo_FixedPremiumAmt_1:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: Details of fixed premium amount.
+    addAccountRequest_LoanAcctInfo_SinglePremiumInsurance:
+      properties:
+        InsuranceIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification for insurance record.
+        InsuranceType:
+          type: string
+          description: Type of insurance.
+          enum:
+          - Life
+          - AccidentAndHealth
+          - Vehicle
+          - Homeowners
+          - Other
+        FixedPremiumAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FixedPremiumAmt_1'
+    addAccountRequest_LoanAcctInfo_InterestBilling_RecurModel_RecurRule:
+      properties:
+        RecurType:
+          type: string
+          description: "Recurrence type indicates the pattern of recurrence. \n\n**Note:** Applicable to Interest CurrIntMethod: 2 or 7\n\nFor Premier value \"Twice Monthly (8)\" indicates twice monthly. \n\nAssessment days are based upon the day of the Date Next Charge as follows: \n\n1st and 16th or 16th and 1st \n\n2nd and 17th or 17th and 2nd\n\n3rd and 18th or 18th and 3rd\n\nIf the Date Next Charge is either the 15th or the last day of the month, charges are assessed on the 15th and end-of-month (EOM)."
+          enum:
+          - None
+          - Monthly
+          - Quarterly
+          - SemiYearly
+          - Yearly
+          - Weekly
+          - BiWeekly
+          - BiMonthly
+          - TwiceMonthly
+          - Maturity
+        RecurInterval:
+          type: integer
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle \n\nThe default value is set to 1.\n\n**Note:** \n\n- For Premier value of \"None\", no RecurInterval is not expected\n\n- For all other Premier value RecurInterval  value of 1 is expected. If RecurInterval is blank or any other values it will treated as a 1."
+          format: int64
+        RecurStartDate:
+          type: string
+          description: "Starting date of the recurrence.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Premier core supports MMDDYYYY format."
+          format: date
+    addAccountRequest_LoanAcctInfo_InterestBilling_RecurModel:
+      type: object
+      properties:
+        RecurRule:
+          type: array
+          description: Details of the recurrence rule.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InterestBilling_RecurModel_RecurRule'
+      description: Details of recurring model that represents a time based recurring pattern.
+    addAccountRequest_LoanAcctInfo_InterestBilling:
+      type: object
+      properties:
+        RecurModel:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InterestBilling_RecurModel'
+        NextPmtDt:
+          type: string
+          description: "Date of next interest payment for the account.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+      description: Information related to billing of interest.
+    addAccountRequest_LoanAcctInfo_LoanBilling_FromAcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: |-
+            Unique identification number of an account record.
+
+            **Note:** Refers to charge account.
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+          enum:
+          - DDA
+          - SDA
+        FIIdentType:
+          type: string
+          description: |+
+            Identification type for the financial institution.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            This field is required to be provided for the billing methods listed below:
+
+            - ACHXferDDA
+
+            - ACHXferSDA
+
+            - ACHXferDDAStmt
+
+            - ACHXferSDAStmt
+
+          enum:
+          - RoutingNum
+        FIIdent:
+          maxLength: 34
+          type: string
+          description: |+
+            Unique identifier for a financial institute.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            This field is required to be provided for the billing methods listed below:
+
+            - ACHXferDDA
+
+            - ACHXferSDA
+
+            - ACHXferDDAStmt
+
+            - ACHXferSDAStmt
+
+      description: "Unique information to identify the checking or saving account that is debited automatically for payments.\n\n**Note:** This field is applicable for billing method listed below: \n\n- ACHXferDDA\n\n- ACHXferSDA\n\n- DirectDebitDDA\n\n- DirectDebitSDA\n\n- ACHXferDDAStmt\n\n- ACHXferSDAStmt\n\n- DirectDebitDDAStmt\n\n- DirectDebitSDAStmt"
+    addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+      description: Details of currency code.
+    addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Value of the automatic payment draft amount.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of automatic payment draft amount.
+    addAccountRequest_LoanAcctInfo_LoanBilling:
+      type: object
+      properties:
+        BillingMethod:
+          type: string
+          description: Method for billing of loan.
+          enum:
+          - None
+          - Coupon
+          - BillingNotice
+          - BillingByStmt
+          - ACHXferDDA
+          - ACHXferSDA
+          - DirectDebitDDA
+          - DirectDebitSDA
+          - ACHXferDDAStmt
+          - ACHXferSDAStmt
+          - DirectDebitDDAStmt
+          - DirectDebitSDAStmt
+        FromAcctKeys:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_FromAcctKeys'
+        ACHPayerId:
+          maxLength: 36
+          type: string
+          description: |+
+            Unique identifier for ACH payer.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            This field is required to be provided for the billing methods listed below:
+
+            - ACHXferDDA
+
+            - ACHXferSDA
+
+            - ACHXferDDAStmt
+
+            - ACHXferSDAStmt
+
+        Desc:
+          maxLength: 200
+          type: string
+          description: |+
+            Description of the ACH debits.
+
+            **Note:** Refers to ACH description.
+
+            Applicable for the billing methods listed below:
+
+            - ACHXferDDA
+
+            - ACHXferSDA
+
+            - ACHXferDDAStmt
+
+            - ACHXferSDAStmt
+
+        AutoPmtOption:
+          type: string
+          description: |-
+            Value to indicate the auto payment option is available and confirms if the fees or late fees are included.
+            
+            **Note:** Value 'AutoPmt' can be used in combination with the 'AutoPmtDraftAmt' field.
+          enum:
+          - None
+          - AutoPmt
+          - AutoPmtAndFees
+          - AutoPmtAndLateFees
+          - AutoPmtAndLateFeesAndFees
+        AutoPmtDraftAmtOption:
+          type: string
+          description: |- 
+            Value to indicate the automatic payment draft amount is added to the scheduled payment or it is an override to the existing scheduled payment.
+
+            **Note:** The following values indicate:
+            - AdditionalPmtAmt: Auto draft payment amount is added to the scheduled payment
+            - PmtAdd: Auto draft payment amount that overrides the existing scheduled payment
+          enum:
+            - AdditionalPmtAmt
+            - PmtAdd
+        AutoPmtDraftAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt'
+        NextAutoPmtDraftDt:
+          type: string
+          description: |-
+            Date on which the automatic payment draft is scheduled.
+
+            **Note:** This field refers to 'AutoPymtDraftDate'.
+          format: date
+      description: Information related to billing of loan.
+    addAccountRequest_LoanAcctInfo_RecurModel_RecurRule:
+      properties:
+        RecurType:
+          type: string
+          description: 'Recurrence type indicates the pattern of recurrence. '
+          enum:
+          - None
+          - Weekly
+          - Monthly
+          - Quarterly
+          - SemiYearly
+          - Yearly
+          - BiWeekly
+          - BiMonthly
+          - TwiceMonthly
+          - Maturity
+        RecurInterval:
+          type: string
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle \n\nThe default value is set to 1."
+          enum:
+          - "1"
+        DayOfMonth:
+          type: string
+          description: Numeric value representing the day of the month of occurrence.
+        RecurStartDate:
+          type: string
+          description: "Starting date of the recurrence.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        Occurrences:
+          type: integer
+          description: Occurrence
+          format: int64
+    addAccountRequest_LoanAcctInfo_RecurModel:
+      type: object
+      properties:
+        RecurRule:
+          type: array
+          description: Details of the recurrence rule.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_RecurModel_RecurRule'
+      description: Details of recurring model that represents a time based recurring pattern.
+    addAccountRequest_LoanAcctInfo_EscrowAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: Details of the interest bearing escrow amount.
+    addAccountRequest_LoanAcctInfo_OtherEscrowAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: Details of other escrow amount.
+    addAccountRequest_LoanAcctInfo_PmtSched:
+      properties:
+        PmtSchedIdent:
+          maxLength: 36
+          type: string
+          description: "Unique identifier of the payment schedule used to identify the payment schedule number in case of multiple schedules for a loan.\n\n**Note:** \n\n- For regular payment schedule:\n\nSet 1st occurrence 1 and increase each new occurrence by 1.\n\nPremier has payment schedule from 1-9. Any payment schedules that are greater than 9 will be ignored and not built.\n\n- For alternate payment schedule:\n\nSet 1st occurrence 1 and increase each new occurrence by 1.\n\nPremier has payment schedule from 1-24. Any payment schedules that are greater than 24 will be ignored and not built."
+        RecurModel:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_RecurModel'
+        NumberOfTimes:
+          type: integer
+          description: "Number of times the schedule plan repeats.\n\n**Note:** NumberOfTimes represents the number of alternate payment occurances that indicates how many years the payment schedule slot is used. \n\nThis field is applicable to alternate payment schedule.\n\nNumberOfTimes and/or PmtAmtOption are required to be provided for alternate payment schedule."
+          format: int64
+        PmtAmtOption:
+          type: string
+          description: |-
+            Option for payment amount.
+
+            **Note:** This field is applicable to alternate payment schedule and represents the alternate payment recalculation code that indicates how the payment amount is calculated.
+
+            NumberOfTimes and/or PmtAmtOption are required to be provided for alternate payment schedule.
+          enum:
+          - PrincipalOnly
+          - PrincipalAndInterest
+          - PrincipalPlusInterest -alt
+          - InterestOnly
+        SuppressNoticeInd:
+          type: boolean
+          description: |-
+            Value to indicate the notification for rate change is suppressed.
+
+            **Note:** This field is applicable to alternate payment schedule.
+        CurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CurAmt_1'
+        EscrowAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_EscrowAmt'
+        OtherEscrowAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_OtherEscrowAmt'
+    addAccountRequest_LoanAcctInfo_LateFee:
+      type: object
+      properties:
+        FeeCalcOption:
+          type: string
+          description: Option for calculation of fee.
+          enum:
+          - None
+          - PctPrincipalIntOldestPmtPastDue
+          - PctPricinpalIntEscrowOldestPmtPastDue
+          - PctPrincipalIntRecentPmtPastDue
+          - PctPrincipalIntEscrowRecentPmtPastDue
+          - AddOnRule78
+          - PctPrincipalPmtFreq
+          - PctPrincipalBalOldestPmtPastDue
+          - PctPrinciaplBalRecontPmtPastDue
+        BalPercent:
+          type: number
+          description: Percentage balance to calculate the fee.
+        GraceDays:
+          type: integer
+          description: Number of days by which a debtor or acceptor of a draft may exceed the due date before being in default.
+          format: int64
+        MinCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_MinCurAmt'
+        MaxCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_MaxCurAmt'
+      description: Details of late fee.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_CurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of the currency amount.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_MinCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of minimum fee amount.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_MaxCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of maximum fee amount.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_LowCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of the minimum amount range that contains the amount value and currency code information.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_HighCurAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: Amount in decimal format.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling_AutoPmtDraftAmt_CurCode'
+      description: Details of the maximum amount range that contains the amount value and currency code information.
+    addAccountRequest_LoanAcctInfo_DishonoredFee_FeeTier:
+      properties:
+        LowCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_LowCurAmt'
+        HighCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_HighCurAmt'
+        CurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_CurAmt'
+        BalPercent:
+          type: number
+          description: |+
+            Percentage value of the balance.
+
+    addAccountRequest_LoanAcctInfo_DishonoredFee:
+      type: object
+      properties:
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier for the fee.
+        FeeCalcOption:
+          type: string
+          description: Option for fee calaculation.
+          enum:
+          - NoAssess
+          - FlatFee
+          - Tiered
+          - PctReversalPmtAmt
+        CurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_CurAmt'
+        BalPercent:
+          type: number
+          description: |+
+            Percentage value of the balance.
+
+        MinCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_MinCurAmt'
+        MaxCurAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_MaxCurAmt'
+        FeeTier:
+          type: array
+          description: Tier details of the fee.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee_FeeTier'
+      description: Details of dishonered fee.
+    addAccountRequest_LoanAcctInfo_PmtRecalcTerm:
+      required:
+      - TermUnits
+      type: object
+      properties:
+        Count:
+          type: integer
+          description: Number of occurrences with respect to the specified unit value.
+          format: int64
+        TermUnits:
+          type: string
+          description: "Units to define the term of the account. \n\n\n\n"
+          enum:
+          - Months
+      description: |-
+        Details of the term that indicates the number of months used to recalculate the payment amount.
+
+        **Note:** This aggregate is required if payment recalculation method is RecalcTerm or RecalcTermLessPmt.
+    addAccountRequest_LoanAcctInfo_PmtTermReview:
+      properties:
+        MinPmtChange:
+          type: number
+          description: Minimum amount that payment can change per review period, before a payment change is allowed.
+        MaxPmtChange:
+          type: number
+          description: Maximum amount that the payment can change per review period.
+        PmtTermRecurType:
+          type: string
+          description: Recurrence type of payment term.
+          enum:
+          - None
+          - Monthly
+          - Quarterly
+          - Yearly
+          - SemiYearly
+          - PrincipalBal
+          - Rate
+          - PrincipalAdvance
+          - RateForecast
+          - BillingForecast
+        RecurInterval:
+          type: integer
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle \n\nThe default value is set to 1."
+          format: int64
+        LeadDays:
+          type: integer
+          description: Number of days prior to the event to do a review.
+          format: int64
+        PmtRecalcMethod:
+          type: string
+          description: "Method to recalculate the remaining payments in a schedule.\n\nFor example: \n\nPayments can be automatically recalculated using the number of payments in the remaining term, or using a defined number of months (specified in the Payment Recalculation Term).\n\n**Note:** Refers to payment recalculation code.\n\nValues indicates:\n\n- None: indicates payments are not automatically recalculated\n\n- RemainingTerm: indicates payments are recalculated using the remaining number of payments. The remaining schedule must only include level payments plus one balloon at maturity. Payments are automatically recalculated by amortizing the total outstanding balance and the number of remaining payments in the schedule\n\n- RecalcTerm: indicates payments are recalculated using the number of months defined in the payment recalculation term. Payments are automatically recalculated by amortizing the total outstanding balance and the recalculation term\n\n- RecalcTermLessPmt: indicates payments are recalculated using the number of months defined in the payment recalculation term and subtracting the number of months that have already passed in the schedule. Payments are automatically recalculated by amortizing the total outstanding balance and the calculated term\n\n- RemainingTermExclBalloon: indicates payments are recalculated using the remaining number of payments, minus the balloon payment. The remaining schedule must only include level payments and one balloon at maturity. Payments are automatically recalculated by amortizing the total outstanding balance (minus the balloon payment) and the remaining payments in the schedule (minus the balloon payment.)\n\n- AdjNumOfPmts: indicates payment amounts are not recalculated, but the number of remaining payments is recalculated. This maintains consistent payment amounts while recalculating a number of payments. The number of payments over the life of the loan is limited by the payment recalculation term.  Can only be used with Accrual Methods PrincipalAndInterest, PrincipalPlusInterest 1, 2 6 and 7 loans\n\n- Values 6 through 25: indicates payments are recalculated according to the method defined in the applicable payment recalculation specification\n\n"
+        PmtRecalcTerm:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtRecalcTerm'
+        NextPmtTermReviewDt:
+          type: string
+          description: "Date of next payment term review.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+    addAccountRequest_LoanAcctInfo_PmtPostingRestrictions:
+      type: object
+      properties:
+        RestrictionReasonCode:
+          type: string
+          description: "Code to specify the reason for payment posting restrictions.\n\n**Note:** This field indicates which restrictions are placed on payment transactions. For Interest Method 2 and 7 loans, the payment restriction code applies only to the principal schedule.\n\nPremier supports following values:\n\n- No Restrictions (0) \n\n- Zero Payment Tolerance (1)\n\n- Payment Increment (2)\n\n- Non-Post Regular Payment (3) \n\n- Non-Post All (9)"
+        RestrictionOvrdInd:
+          type: boolean
+          description: Flag that indicates to override posting payment restrictions.
+      description: Details of the restrictions related to payment posting.
+    addAccountRequest_LoanAcctInfo_AdvPostingRestrictions:
+      type: object
+      properties:
+        RestrictionOvrdInd:
+          type: boolean
+          description: Flag that indicates to override posting payment restrictions.
+        RestrictionPastDueDays:
+          type: integer
+          description: Number of days the loan needs be past due for a restriction to be placed on the loan advance transaction.
+          format: int64
+      description: Details of the posting advance restrictions.
+    addAccountRequest_LoanAcctInfo_EscrowCtrlData_RecurRule:
+      type: object
+      properties:
+        RecurType:
+          type: string
+          description: "Type of recurrence. \n\n\n\n\n\n**Note:** Refers to Escrow Change Frequency.\n\nFor Premier value of: \n\n- Every 2 Years (7): Every two years, it is expected a RecurType of Yearly and RecurInterval of 2\n\n- Every 3 Years (8): Every three years,  it is expected a RecurType of Yearly and RecurInterval of 3\n\n- Every 4 Years (9): Every four years, it is expected a RecurType of Yearly and RecurInterval of 4\n\n- Every 5 Years (10): Every five years, it is expected a RecurType of Yearly and RecurInterval of 5\n\n- Every 6 Years (11): Every six years, it is expected a RecurType of Yearly and RecurInterval of 6\n\n- Every 7 Years (12): Every seven years, it is expected a RecurType of Yearly and RecurInterval of 7\n\n- Every 8 Years (13): Every eight years, it is expected a RecurType of Yearly and RecurInterval of 8\n\n- Every 9 Years (14): Every nine years, it is expected a RecurType of Yearly and RecurInterval of 9\n\n\n\nFor RecurType of None or PmtRecalculation, RecurInterval should not be provided..\n\nFor any other Premier value, RecurInterval will be set to 1."
+          enum:
+          - None
+          - Quarterly
+          - SemiYearly
+          - Yearly
+          - PmtRecalculation
+        RecurInterval:
+          type: integer
+          description: "Recurrence interval between two successive occurrences of statement generation.\n\nFor example:\n\n- If Daily: Number of days between occurrences\n\n- If Weekly: Number of weeks between occurrences\n\n- If Monthly: Number of months between occurrences \n\n- If Yearly: Number of years between occurrences\n\n- If Cycle: Number of the designated cycle\n\nThe default value is set to 1."
+          format: int64
+        LeadDays:
+          type: integer
+          description: |-
+            Number of days prior to the event to do a review.
+
+            **Note:** Refers to escrow change forecast days.
+          format: int64
+      description: Details of the recurrence rule for balance analysis.
+    addAccountRequest_LoanAcctInfo_EscrowCtrlData:
+      type: object
+      properties:
+        RecurRule:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_EscrowCtrlData_RecurRule'
+        NextAnalysisDt:
+          type: string
+          description: "Date of next analysis.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Refers to next escrow change date."
+          format: date
+      description: Details of escrow control data that includes escrow analysis, overdraft escrow balance instructions and payment information for the interest bearing escrow and non-interest-interest bearing escrow balances.
+    addAccountRequest_LoanAcctInfo_DealerReserveAmt_CurCode:
+      required:
+      - CurCodeValue
+      type: object
+      properties:
+        CurCodeType:
+          type: string
+          description: "Standard ISO currency code format. \n\nRefer to the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\" target=\"_blank\" title=\"Click to open in a new tab\">ISO 4217 codes </a> to view the list of all currency codes."
+          enum:
+          - ISO4217-Alpha
+        CurCodeValue:
+          type: string
+          description: "Currency code value as per the ISO currency code format set in the CurCodeType field.\n\nFor example, currency code for the US Dollar in alpha and numeric formats are:\n\n- USD (in ISO4217-Alpha format) \n\n- 840 (in ISO4217-Numeric format)\n\nPresently only USD currency code is supported.\n\n"
+      description: Details of the currency code.
+    addAccountRequest_LoanAcctInfo_DealerReserveAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+
+            **Note:** On dealer loans, the original dealer reserve amount is the portion of the total interest that is shared with the dealer. If this amount is left blank, the field is calculated based upon the Dealer Reserve Rate.
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DealerReserveAmt_CurCode'
+      description: "Details of the dealer reserve amount.\n\nThis amount represents different values depending on the dealer reserve method for the loan: \n\n- As Collected/As Earned: Amount of reserve earned that is due to the dealer \n\n- Prepaid: Amount of the original prepaid reserve that has not yet been earned for the loan"
+    addAccountRequest_LoanAcctInfo_Dealer:
+      properties:
+        DealerIdent:
+          maxLength: 36
+          type: string
+          description: Unique identification of a dealer.
+        DealerReserveType:
+          type: string
+          description: |+
+            Type of dealer reserve.
+
+        DealerReserveRate:
+          type: number
+          description: Value of the annual percentage rate at which a dealer earns interest.
+        DealerReserveAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DealerReserveAmt'
+    addAccountRequest_LoanAcctInfo_LOCAdvance:
+      type: object
+      properties:
+        WaiveAdvanceFeeInd:
+          type: boolean
+          description: Value to indicate the loan fees assessed for overdraft and transfer advance transactions is waived.
+      description: Details of the Line of Credit (LOC) advance.
+    addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_MortgagePointsYTDAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: |-
+        Details of the dollar amount of mortgage points paid that is
+
+        reportable for the year.
+    addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_PostAddr:
+      required:
+      - AddrType
+      type: object
+      properties:
+        County:
+          maxLength: 32
+          type: string
+          description: Name of the country. \n\n\n **Note:** This field will be unimplemented in future release. It is recommended that consumers should use the following field:\n\n - LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>. \n\n\n **Note:** This field will be unimplemented in future release. It is recommended that consumers should use the following field:\n\n - LoanAcctInfo/HomeMortgageDisclosure/MortgageReportingData/County
+        AddrType:
+          type: string
+          description: "Type of the address. \n\n"
+          enum:
+          - Primary
+        CensusTract:
+          maxLength: 20
+          type: string
+          description: Census track number assigned by the U.S. Census Bureau to identify the geographic location.
+        MSACode:
+          type: integer
+          description: Code that identifies a metropolitan statistical area for postal delivery purposes. This code is defined by the U.S. Office of Management and Budget (OMB) and used by the U.S. Census Bureau and other federal government agencies for statistical purposes.
+          format: int64
+      description: Postal address details of the account holder.
+    addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_HAMPData_ForbearanceAmt:
+      type: object
+      properties:
+        Amt:
+          type: number
+          description: |-
+            Amount in decimal format.
+
+            Example: 10.00
+        CurCode:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount_CurCode'
+      description: "Details of the forbearance amount. \n\nThis value indicates the amount of mortgage which the lender allows to pause or reduce the payment for a certain period of time."
+    addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_HAMPData:
+      type: object
+      properties:
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: |-
+            Effective date of the Home Affordable Modification Program (HAMP).
+
+
+
+            Format: yyyy-MM-ddTHH:mm:ss.sss
+
+            Example: 2021-01-31T23:59:59.999
+        HAMPOption:
+          type: string
+          description: Option for Home Affordable Modification Program (HAMP).
+          enum:
+          - HAMP60month
+          - HAMPStandard
+          - 2
+          - "3"
+          - "4"
+        HAMPServicer:
+          type: string
+          description: Servicer of the Home Affordable Modification Program (HAMP).
+        ForbearanceAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_HAMPData_ForbearanceAmt'
+      description: Details of the Home Affordable Modification Program (HAMP).
+    addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_MortgageReportingData:
+      properties:
+        ReportingType:
+          type: string
+          description: "Type of reporting. \n\n\n **Note:** The following values refers to: \n\n - FHLB: Federal Home Loan Bank reporting \n\n - FHA:  Federal Housing Authority reporting"
+          enum:
+          - FHA
+          - FHLB
+        ReportingCode:
+          type: string
+          description: Code that indicates the reporting status of the loan to FHA or FHLB. \n\n\n **Note:** The reporting code that the Federal Housing Authority (FHA) assigns is for title I reporting of home improvement loans and code that the Federal Home Loan Bank (FHLB) assigns is for collateral reporting.
+        County:
+          maxLength: 32
+          type: string
+          description: Name of the country. \n\n\n **Note:** Use county name according to the Federal Home Loan Bank (FHLB) for collateral reporting and county code according to the Federal Housing Authority (FHA) to classify loans for FHA Title I and CRA reporting.
+        StateProv:
+          type: string
+          description: State province name as per <a href="https://en.wikipedia.org/wiki/ISO_3166-2:US" title="Click to open" target="_blank" >ISO 3166-2:US codes</a>. \n\n\n **Note:** Use state abbreviation according to the Federal Home Loan Banks (FHLB) for collateral reporting and state code according to the Federal Housing Authority (FHA) to classify loans for FHA Title I and CRA reporting.
+    addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_CRAData:
+      type: object
+      properties:
+        CRAReportingInd:
+          type: boolean
+          description: "Value to indicate whether the names on the note are predominately military personnel and their dependents."
+        CRALoanType:
+          type: string
+          description: "Type of loan for CRA reporting. \n\n\n**Note:** Only small business and small farm loans (type 1 and 2, respectively) are required reporting for CRA. Other CRA type codes (3-9) are available but not required."
+        CRARevenueCode:
+          type: string
+          description: Code to indicate the CRA revenue which is the gross annual revenue estimated for the small business or small firm receiving the borrowed funds.\n\n\n**Note:** For Premier, this code is a numeric single digit code. If any other value is passed in the request, Premiere uses "0" as the default value.
+        CRANewFunds:
+          type: number
+          description: Value of the CRA new funds.
+      description: Details of Community Reinvestment Act data.
+    addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure:
+      type: object
+      properties:
+        MortgageType:
+          type: string
+          description: Type of mortgage to indicate whether the loan originated, applied for, or purchased was conventional, government-guaranteed, or government-insured.\n\n\n**Note:** If the client does not pass any value, then PRM deafults the value to "Unclassified".
+          enum:
+          - Unclassified
+          - FHA_FmHA_VAFamily1_4
+          - OtherFamily1_4
+          - HomeImprovementFamily1_4
+          - MultiFamily
+          - FHA_FmHA_VA_NonOccupant
+          - Other_NonOccupant
+          - HomeImprovement_NonOccupant
+          - Undefined
+          - None
+        PropertyType:
+          type: string
+          description: |-
+            Type of property that indicates whether the loan or application was for manufactured housing, a multifamily dwelling, or a one-to-four-family dwelling other than manufactured housing.
+
+            **Note:** Value for this field is bank-defined.
+        ImprovementCode:
+          type: string
+          description: |-
+            Improvement code
+
+            **Note:** Value for this field is bank-defined.
+        MortgagePointsYTDAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_MortgagePointsYTDAmt'
+        PostAddr:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_PostAddr'
+        FHLBPledgeType:
+          type: string
+          description: Type of pledge assigned by Federal Home Loan Bank (FHLB) for collateral reporting.
+        HAMPData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_HAMPData'
+        FHACaseNumber:
+          maxLength: 13
+          type: string
+          description: Case number of Federal Housing Administration (FHA).
+        FHAADPCode:
+          type: string
+          description: ADP code of Federal Housing Administration (FHA).
+        MortgageReportingData:
+          type: array
+          description: Details of the mortgage reporting. \n\n\n **Note:** User need to create one aggregate to report FHA reporting codes and another to report FHLB reporting codes. Up to two aggregates are supported.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_MortgageReportingData'
+        FHAAcknowledgedDt:
+          type: string
+          description: "Date of acknowledgment from Federal Housing Administration (FHA).\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** Premier saves only month and year."
+          format: date
+        CRAData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure_CRAData'
+      description: Details of the Home Mortgage Disclosure Act data.
+    addAccountRequest_LoanAcctInfo_CreditBureauAcctData_PartyKeys:
+      type: object
+      properties:
+        PartyId:
+          maxLength: 36
+          type: string
+          description: "Unique identification number of a party record.\n\n**Note:** Parties with the Party Account Relationship Order of \"First\", \"Second\", and \"Third\" are considered to be main names on the account. Only one party can have \"First\" or \"Second\" or \"Third\" relationship order on the account. Therefore Party Account Relationship Order is required to be provided. \n\nTo send all 3 parties into the CreditBureauData then it has to be in sequence as below:\n\nIf client is sending the PartyId in repeating CreditBureauPartyData aggregate as sent in Party Account Relationship Order of \"First\", \"Second\", and \"Third\" then:\n\n- PartyId having PartyAcctRelOrder as \"First\" is sent in 1st instance of  LoanAcctInfo/CreditBureauAcctData/CreditBureauPartyData/PartyKeys/PartyId\n\n- PartyId having PartyAcctRelOrder as \"Second\" is sent in 2nd instance of  LoanAcctInfo/CreditBureauAcctData/CreditBureauPartyData/PartyKeys/PartyId\n\n- PartyId having PartyAcctRelOrder as \"Third\" is sent in 3rd instance of  LoanAcctInfo/CreditBureauAcctData/CreditBureauPartyData/PartyKeys/PartyId\n\n\n\nClient can send only party in the CreditBureauPartyData or he can send 2 parties in the CreditBureauData"
+      description: Unique information to identify the party record.
+    addAccountRequest_LoanAcctInfo_CreditBureauAcctData_CreditBureauPartyData:
+      required:
+      - PartyKeys
+      properties:
+        PartyKeys:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CreditBureauAcctData_PartyKeys'
+        ECOACode:
+          type: string
+          description: |-
+            Code for Equal Credit Opportunity Act.
+
+            **Note:** Financial institutions can have more supported values other than defined enum values.
+    addAccountRequest_LoanAcctInfo_CreditBureauAcctData:
+      type: object
+      properties:
+        BureauAcctType:
+          type: string
+          description: |-
+            Type of credit bureau account.
+
+            **Note:** Refers to credit bureau type code.
+
+            This field identifies specific types of accounts with specific purposes. The type code are defined in conjunction with credit bureau standards and can be established as per Credit Bureau Metro 2 format and Premier administrator program.
+        BureauStatus:
+          type: string
+          description: "Code that specify the account status to credit bureau.\n\n**Note:** Refers to credit bureau code. \n\nReporting code values are defined as per Credit Bureau Metro 2 format and Premier administrator program.\n\n"
+        CreditBureauPartyData:
+          type: array
+          description: Details of the credit bureau party.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CreditBureauAcctData_CreditBureauPartyData'
+      description: Information related to credit bureau.
+    addAccountRequest_LoanAcctInfo_StudentLoanData:
+      type: object
+      properties:
+        StudentTypeCode:
+          type: string
+          description: "Type of student loan.\n\n**Note:** \n\n- Values from 01-99 indicates the loan is the student loan.\n\n- Value 00 indicate the loan is not a student loan."
+        StudentLoanStatus:
+          type: string
+          description: |-
+            Code to specify borrower's academic status or loan status.
+
+            **Note:** The quarterly student loan report includes subtotals by Student Status codes. Values are 01-20.
+        StudentActionCode:
+          type: string
+          description: Code to specify the most recent special action taken on a student loan.
+        StudentActionDt:
+          type: string
+          description: "Date on which the action was taken on the student loan.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20"
+          format: date
+        OvrdRate:
+          type: number
+          description: Override rate for the student loan.
+      description: Details of the student loan data.
+    addAccountRequest_LoanAcctInfo_SBAData:
+      type: object
+      properties:
+        SBAStatus:
+          type: string
+          description: |-
+            Status of the SBA account.
+
+            **Note:** The field indicates whether a loan is deferred, in liquidation, paid, transferred, purchased or fully undisbursed. The Code is used for SBA Form 1052 reporting by LAS7114 program.
+          enum:
+          - Current
+          - Deferred
+          - InLiquidation
+          - PaidInFull
+          - Transferred
+          - PurchasedBySBA
+          - FullyDisbursed
+        GPNumber:
+          type: integer
+          description: SBA assigned group number for reporting.
+          format: int64
+      description: |-
+        Details of the SBA data.
+
+        **Note:** This aggregate is sent only for SBA accounts.
+    addAccountRequest_LoanAcctInfo:
+      type: object
+      properties:
+        AcctPref:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AcctPref'
+        AcctIdent:
+          type: array
+          description: "Unique identifier of an account record.\n\nOther account identifiers used as part of the account object key. "
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AcctIdent'
+        ProductIdent:
+          maxLength: 42
+          type: string
+          description: |-
+            Unique identifier of a product to indicate the processing options of account.
+
+            **Note:** *Required field*
+        AcctType:
+          type: string
+          description: |-
+            Type of an account.
+
+
+
+            For more information about account types, refer to the Account Types section in <a href="../docs?path=docs/api-glossary.md" target="_blank" title="Click to open in a new tab"> Glossary</a>.
+
+            **Note:** *Required field*
+          enum:
+          - LOAN
+        InitialAmount:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InitialAmount'
+        OpenDt:
+          type: string
+          description: "Date on which the loan record is created.\n\nFormat: Format: mm/dd/yyyy \n\nExample: 11/21/2021\n\n**Note:** *Required Field*\n\nOpen date is set up to Premier's current system date."
+          format: date
+        DateData:
+          type: array
+          description: Details to identify additional date types and values associated to the loan account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DateData'
+        RelationshipMgr:
+          type: array
+          description: Information about the financial institution officers who have management-related responsibilities of the account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_RelationshipMgr'
+        OriginatingBranch:
+          maxLength: 32
+          type: string
+          description: |-
+            Branch that primarily created the account with the party.
+
+            **Note:** *Required field*
+
+
+
+            Refers to the branch region. Values are user-defined.
+        ResponsibleBranch:
+          maxLength: 32
+          type: string
+          description: |+
+            Branch responsible for the relationship.
+
+            **Note:** This field is mapped to accounting branch in PRM, that is used to group accounts for reporting of similar account processing and integration into the general ledger.
+
+            In addition, the accounting branch can be used to group accounts for reporting.
+
+        NicknameOption:
+          type: string
+          description: 'Printing option for the account nickname. '
+          enum:
+          - Printed
+          - NotPrinted
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Name that customer can assign to the account for easy identification.
+        AcctTitleOption:
+          type: string
+          description: |+
+            Printing option for the account title.
+
+        AcctTitle:
+          maxLength: 255
+          type: string
+          description: "Title of account. This value is typically used to indicate the ownership or responsibility of account holder and manner in which the ownership or responsibility is assigned. \n\nFor example, John Doe CUSTODIAN."
+        HandlingCodeOption:
+          type: string
+          description: |+
+            Notification and statement forms handling option for the account.
+
+          enum:
+          - StatementsNoticesChecks
+          - Statements
+          - StatementsNotices
+          - StatementsChecks
+          - Notices
+          - NoticesChecks
+          - Checks
+          - DoNotPrint
+          - UsePortfolio
+        HandlingCode:
+          type: string
+          description: Handling code used for special routing of all correspondence involving the account.
+        OEDCode:
+          type: string
+          description: |-
+            Officer, employee, director code. This code is used to indicate if the party is an employee of the financial institution.
+
+            **Note:** Values are client-defined.
+        AccountingMethod:
+          type: string
+          description: 'Method to define which accounts are integrated into the general ledger. '
+          enum:
+          - Class
+          - CostCenter
+        ClassCode:
+          type: string
+          description: |-
+            Code to group accounts for the purpose of processing and reporting.
+
+            **Note:** Values are client-defined.
+        AcctTypeCode:
+          type: string
+          description: "Code to classify accounts for the purpose selection and totaling.\n\n**Note:** \"AccountingGroup\" to Premier is sent in the request, if \"ResponsibleBranch\" field is sent and \"AcctTypeCode\" is ignored.\n\nOnly one of the two fields should be sent in request.\n\nValues are client-defined. "
+        AcctOpenMethod:
+          type: string
+          description: |-
+            Method used to open the account.
+
+            **Note:** Additional values can be user-defined.
+          enum:
+          - InPerson
+          - Internet
+          - Mail
+          - Phone
+        ClientDefinedData:
+          type: array
+          description: Details of the client-defined data whose value, data type and definition are defined by the client or user.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_ClientDefinedData'
+        AcctStmtData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AcctStmtData'
+        NoticeData:
+          type: array
+          description: Details of account notice processing data.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_NoticeData'
+        Rate:
+          type: number
+          description: |-
+            Current interest rate for the account.
+
+            **Note:** Refers to a current rate over.
+
+            Format XXX.XXXXXX.
+        IntRateData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_IntRateData'
+        MaturityIntCalcData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_MaturityIntCalcData'
+        RateChangeData:
+          type: array
+          description: |-
+            Details of frequency for interest rate adjustment.
+
+            **Note:** *Required field*
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_RateChangeData'
+        PostAddr:
+          type: array
+          description: "Postal address details of the account holder.\n\n**Note:** Account can have one primary, one secondary and two seasonal addresses. \n\nHowever, seasonal address cannot exist as a single address record hence, it is always related to a primary/secondary address. Therefore, seasonal address always shares AddressIdent and AddrUse with primary or the secondary address.\n\nAddress Use for account having Primary address and related Seasonal address is \"Inquiry\"\n\nAddress Use for account haveing Secondary address and related Seasonal address is \"Mailing\".\n\nParameter \"Mailing Name Option\" set up at the Financial Institution determines if account can have different Primary/Inquiry and Secondary/Mailing addresses and names:\n\n- If Mailing Name Option parameter is set to N, Primary/Inquiry and Secondary/Mailing addresses are always the same, therefore only Primary Address type, Address Use as Inquiry information is expected to be provided\n\n- If Mailing Name Option parameter is set to Y, Inquiry and Mailing addresses and names can be different. In this case Secondary Address Type, Address Use as Mailing and Names can be provided\n\nWhen creating a new account, new account address(s) can be created or existing address(s) can be related to an account. \n\nIf existing address is being linked to account, AddressIdent including Address Type, Address Use and Address Format Type are required to be provided. \n\nIf new address is being created for the account, address details including Address Type, Address Use and Address Format Type is required to be provided. Addressident should not be provided.\n\nIf no Postal address aggregate is provided, ESF will user Tax Reporting Owner's Primary address to be Account  Primary\\Inquiry address."
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PostAddr'
+        Fee:
+          type: array
+          description: Details of recurring fee to identify the type and amount of fee charged.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_Fee'
+        CreditRisk:
+          type: array
+          description: Credit risk details related to the account.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CreditRisk'
+        RiskRanking:
+          type: string
+          description: "Ranking value to indicate the level of risk ranging from low to high.\n\n**Note:** Values of this field indicates:\n\n- \"Low\" indicates low risk customer\n\n- \"Medium\" indicates medium risk customer \n\n- \"High\" indicates high risk customer\n\n- \"None\" indicates no risk ranking is assigned to customer\n\nAny other additional value is user-defined."
+        ReportGroupCode:
+          type: string
+          description: |-
+            Client-defined code to group the accounts for reporting purposes.
+
+            **Note:** Values of this field are client-defined.
+        DocDistributionOption:
+          type: string
+          description: |-
+            Client defined method to indicate the document distribution method used for processing the notices and statement forms.
+
+
+
+            **Note:** Values of this field are client-defined.
+        NAICS:
+          maxLength: 6
+          type: string
+          description: Six-digit North American Industry Classification System (NAICS) code used to indicate the type of customer based upon standard government definitions.
+        CostCenter:
+          type: string
+          description: "Cost center where activity of this account is reported. \n\n**Note:** Values of this field are client-defined."
+        AcctMemoData:
+          type: array
+          description: Details of the important alerts set to an account to view during account inquiry.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AcctMemoData'
+        CallReportCode:
+          type: string
+          description: The three-digit purpose code used to group notes for call reporting.
+        CommitmentIdent:
+          maxLength: 36
+          type: string
+          description: Unique identifier for the commitment associated to the loan.
+        AddOnInterestAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AddOnInterestAmt'
+        ExpensesFinancedAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_ExpensesFinancedAmt'
+        FeesFinancedAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeesFinancedAmt'
+        FeesPrepaidAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_FeesPrepaidAmt'
+        DeferredFeesAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DeferredFeesAmt'
+        OriginationFee:
+          type: array
+          description: 'Details of origination fee amount. '
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_OriginationFee'
+        DeferredFee:
+          type: array
+          description: Details of the deferred fees amount.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DeferredFee'
+        PmtReserveOption:
+          type: string
+          description: |-
+            Option that indicates whether the payment reserve amount should be subtracted or not from the available credit amount.
+
+            **Note:** Applicable to Interest Method 1 and 6.
+          enum:
+          - SubstractFromAvail
+          - DoNotSubstractFromAvail
+        PmtReserveAmt:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtReserveAmt'
+        PmtReserveProcOption:
+          type: string
+          description: Processing option for payment reserve that indicates how loan payments are processed if there is a payment reserve.
+          enum:
+          - PmtReserve
+          - PmtReserveAndOtherEscrow
+          - OtherEscrow
+          - OtherEscrowAndPmtReserve
+        OriginationDt:
+          type: string
+          description: "Date of original loan note.\n\n\n\nFormat: yyyy-mm-dd \n\nExample: 2021-11-20\n\n**Note:** *Required field*"
+          format: date
+        ReportPurposeCode:
+          type: string
+          description: "The three-digit report purpose code used to group notes for call reporting.\n\n**Note:** *Required field*\n\n\n\nThis field is used to integrate note to the general ledger. "
+        SecuredLoanInd:
+          type: boolean
+          description: Value to indicate the loan is secured.
+        CollateralCode:
+          type: string
+          description: |-
+            Code that identifies the collateral.
+
+            **Note:** *Conditionally Required field*
+
+
+
+            Required to be provided for secured loans.
+
+            Values are client-defined.
+        LTVPct:
+          type: number
+          description: "Loan-To-Value percentage used with the collateral balance code field to calculate the collateral-required amount for a loan. \n\n\n\n**Note:** Refers to Required Pledge LTV.\n\nIf Loan-To-Value percentage is defined at the account level, then it overrides any collateral level pledge rules.\n\nThis field can be defaulted from product specifications."
+        RevolvingLoanInd:
+          type: boolean
+          description: "Value to indicate the amount is available for loan disbursement.\n\n**Note:** This field is mapped to original maximum credit code. \n\nEither \"RevelovingLoanCode\" or \"RevolvingLoanInd\" is sent in the request, not both.\n\nIf both are sent, \"RevolvingLoanCode\" takes the precedence."
+        RevolvingLoanCode:
+          type: string
+          description: "Code that indicates the amount available for loan disbursement.\_\n\n**Note:** This field is mapped to original maximum credit code. \n\nEither \"RevelovingLoanCode\" or \"RevolvingLoanInd\" is sent in the request, not both.\n\nIf both are sent, \"RevolvingLoanCode\" takes the precedence."
+          enum:
+          - SingleAdvance
+          - CreditLimit
+          - AdvanceLimit
+        Insurance:
+          type: array
+          description: Details of insurance on loan.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_Insurance'
+        IncCreditLineLifeCalcInd:
+          type: boolean
+          description: Value to indicate the loans are included in the calculations and billing of line credit life insurance.
+        InsuranceBillingFrequency:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InsuranceBillingFrequency'
+        SinglePremiumInsurance:
+          type: array
+          description: Details of single premium insurance.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_SinglePremiumInsurance'
+        InterestBilling:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_InterestBilling'
+        LoanBilling:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LoanBilling'
+        PmtSched:
+          type: array
+          description: "Details of payment schedule.\n\n**Note:** *Required field*\n\n\n\nPremier supports two types of payment schedules - Regular and Alternate Payment schedules.\n\nFor amortized loans only regular payment is created where as alternate payment schedules are only allowed for LoanAcctInfo/IntRateData/AccrualMethod = \"PrincipalAndInterest\" and DailyAccrual = \"Actual365\" or \"Actual360. Although this trigger off to allow alternate payment schedule, it is applicable only if PmtAmtOption (alternate payment recalculation code) or NumberOfTimes (number of alternate payment occurances) are provided in the request.\n\nAlternate payment schedules are allowed does not mean they are required. \n\nThe alternate payment schedule is an override for the regular payment schedule."
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtSched'
+        LateFee:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LateFee'
+        DishonoredFee:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_DishonoredFee'
+        PmtTermReview:
+          type: array
+          description: 'Information about how the payment amount and term of the loan is changed and reviewed. '
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtTermReview'
+        WriteDownCode:
+          type: string
+          description: Code that indicates reduction in the assest value.
+        PmtPostingRestrictions:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_PmtPostingRestrictions'
+        AdvPostingRestrictions:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_AdvPostingRestrictions'
+        EscrowCtrlData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_EscrowCtrlData'
+        Dealer:
+          type: array
+          description: Details of the dealer associated with loan.
+          items:
+            $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_Dealer'
+        LOCAdvance:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_LOCAdvance'
+        IncYearEndReportCode:
+          type: string
+          description: |-
+            Code to report loan interest that includes in year end.
+
+            **Note:** This field by default is assigned through product specifications.
+          enum:
+          - ReportToBorrower
+          - "1098"
+          - 1098NoticeOnly
+          - 1098E
+          - NoReport
+        RecourseCode:
+          type: string
+          description: |-
+            Recourse code that indicates the endorser/guarantor legal obligations for the loan
+
+            **Note:** For indirect loans, the Recourse Code indicates the type of recourse that the financial institution has on the loan.
+        HomeMortgageDisclosure:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_HomeMortgageDisclosure'
+        CreditBureauAcctData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_CreditBureauAcctData'
+        StudentLoanData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_StudentLoanData'
+        SBAData:
+          $ref: '#/components/schemas/addAccountRequest_LoanAcctInfo_SBAData'
+      description: Details of the loan account.
+    addAccountResponse_AcctStatusRec_AcctKeys:
+      required:
+      - AcctId
+      type: object
+      properties:
+        AcctId:
+          maxLength: 36
+          type: string
+          description: Unique identification number of an account record.
+      description: Unique information to identify the account record.
+    addAccountResponse_AcctStatusRec_AcctStatus:
+      required:
+      - AcctStatusCode
+      type: object
+      properties:
+        AcctStatusCode:
+          type: string
+          description: Status code of an account.
+        EffDt:
+          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          type: string
+          description: "Effective date and time when the account status is changed. \n\n\n\nFormat: yyyy-MM-ddTHH:mm:ss.sss\n\nExample: 2021-01-31T23:59:59.999"
+      description: Status details of the account.
+    addAccountResponse_AcctStatusRec:
+      required:
+      - AcctKeys
+      - AcctStatus
+      type: object
+      properties:
+        AcctKeys:
+          $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctKeys'
+        AcctStatus:
+          $ref: '#/components/schemas/addAccountResponse_AcctStatusRec_AcctStatus'
+      description: Details of the account status record in response to the add operation.
