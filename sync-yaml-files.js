@@ -2,9 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 const baseDir = './reference';
-const targetDirs = [
-  '11.0.0/Accounts'
-];
 
 function findFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
@@ -23,10 +20,9 @@ const allFiles = findFiles(baseDir);
 
 allFiles.forEach(filePath => {
   const fileName = path.basename(filePath);
-  targetDirs.forEach(targetDir => {
-    const targetPath = path.join(baseDir, targetDir, fileName);
-    if (fs.existsSync(targetPath) && targetPath !== filePath) {
-      const fileContent = fs.readFileSync(filePath, 'utf8');
+  const fileContent = fs.readFileSync(filePath, 'utf8');
+  allFiles.forEach(targetPath => {
+    if (path.basename(targetPath) === fileName && targetPath !== filePath) {
       fs.writeFileSync(targetPath, fileContent, 'utf8');
       console.log(`Synced ${filePath} to ${targetPath}`);
     }
