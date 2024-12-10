@@ -171,7 +171,7 @@ Consumer should generate new DPoP token using the library for the functional API
 # Debugging DPoP Errors
 Error codes help you to debug errors related to your DPoP implementation and provide initial guidance to resolve issues in your code. For example, if you receive an error code 1002- Invalid DPoP, then make sure the public key you are using and the one sent to Fiserv are the same. 
 
-The following table lists the standard error codes and their descriptions:
+The following table lists the standard error codes along with the descriptions and possible reasons. 
 
 |     Error   Code             |     Error   Description                 |
 |------------------------------|-----------------------------------------|
