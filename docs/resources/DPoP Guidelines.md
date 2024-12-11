@@ -154,3 +154,4 @@ The following table lists the standard error codes along with the descriptions a
 - This mechanism enables the identification of replay attacks involving access and refresh tokens.
 - Given that DPoP functions at the application layer, using asymmetric cryptography and lightweight JSON Web Tokens, it becomes easily accessible to developers.
 - Eliminates the need to manage certificates in the mTLS setup,streamlining the process and reducing administrative burdens.
+
