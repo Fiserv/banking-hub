@@ -174,14 +174,14 @@ Error codes help you to debug errors related to your DPoP implementation and pro
 The following table lists the standard error codes along with the descriptions and possible reasons. 
 |     Error   Code             |     Short   Description                 | Possible Error Reason |
 |------------------------------|-----------------------------------------|-----------------------------------------|
-| 1001   – Invalid DPoP | Expired DPoP Token while token generation| Time difference between the 'issued at' timestamp and the current timestamp is more than 60 seconds.|
+| 1001   – Invalid DPoP | Expired DPoP Token| Time difference between the 'issued at' timestamp and the current timestamp is more than 60 seconds.|
 | 1002   – Invalid DPoP | Public Key Mismatch | Combination mismatch of the public/private key used as compared to the key configured at Fiserv for applications.|
-| 1003   – Invalid DPoP | Invalid HTTP method | Difference between the HTTP method used for sign-in and the HTTP method sent in the API call.|
-| 1004   – Invalid DPoP | Invalid URL | Difference between the HTTP URL used for sign-in and the URL sent in the API call.|
-| 1005   – Invalid DPoP | Invalid Header | Difference between the request headers used in sign-in and the request headers sent in the API call. <br>Note: Currently, header in JSON format is not supported and should be excluded at the time of token generation.|
-| 1006   – Invalid DPoP | Invalid Request Body| Difference between the request body used in sign-in and the request body sent in the API call.|
-| 1007   – Invalid DPoP | Invalid Selective Payload| Difference between the parameters within the request body used for sign-in and the parameters sent in the API call.|
-| 1008   – Invalid DPoP | Invalid Form URL encoded| Difference between the form parameters within the body used for sign-in and the parameters sent in the API call.|
+| 1003   – Invalid DPoP | Invalid HTTP method | Difference between the HTTP method used for signing and the HTTP method sent in the API call.|
+| 1004   – Invalid DPoP | Invalid URL | Difference between the HTTP URL used for signing and the URL sent in the API call.|
+| 1005   – Invalid DPoP | Invalid Header | Difference between the request headers used in signing and the request headers sent in the API call. <br>Note: Currently, the header in JSON format is not supported and should be excluded at the time of token generation.|
+| 1006   – Invalid DPoP | Invalid Request Body| Difference between the request body used in signing and the request body sent in the API call.|
+| 1007   – Invalid DPoP | Invalid Selective Payload| Difference between the parameters within the request body used for signing and the parameters sent in the API call.|
+| 1008   – Invalid DPoP | Invalid Form URL encoded| Difference between the form parameters within the body used for signing and the parameters sent in the API call.|
 | 1009   – Invalid DPoP | NoSuchAlgorithmException| Unavailability of the requested cryptographic algorithm in the environment.|
 | 1010   – Invalid DPoP | InvalidKeySpecException| Incorrect construction of the public key specification created with the extraction of JWK (JSON Web Key) variables (modules & exponent).|
 | 1011   – Invalid DPoP | Error generating JWK Thumbprint| Issue in the JWK (JSON Web Key) algorithm specified in the variable {kty}.|
@@ -197,7 +197,7 @@ The following table lists the standard error codes along with the descriptions a
 | 1021   – Invalid DPoP | Invalid key| Invalid public-private key pair at the time of JWT (JSON Web Token) generation. |
 | 1022   – Invalid DPoP | Invalid arguments| Illegal mandatory parts (header, payload and signature) of the token.  |
 | 1023   – Invalid DPoP | Invalid state exception | Null value of the public and/or private key at the time of token generation. |
-| 1024   – Invalid DPoP | The algorithm doesn't match with the one defined in JWT token's header.| |
+| 1024   – Invalid DPoP | Algorithm mismatch|Mismatch of the token generation algorithm with t he algorithm defined in the JWT's (JSON Web Token) header functional call. |
 | 1025   – Invalid DPoP | SignatureVerificationException | Validation failure of signature. |
 | 1026   – Invalid DPoP | Null JWT | Null value of the JWT (JSON Web Token). |
 | 1027   – Invalid DPoP | Empty JWT | Empty value of the JWT (JSON Web Token). |
