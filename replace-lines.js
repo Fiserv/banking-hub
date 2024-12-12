@@ -42,5 +42,5 @@ function processYamlFiles(directoryPath) {
 }
 
 // Replace 'your-directory-path' with the path to your directory containing .yaml files
-const directoryPath = './reference/Premier/Servicing';
+const directoryPath = './reference/Premier/Transactions';
 processYamlFiles(directoryPath);
