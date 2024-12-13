@@ -1,18 +1,23 @@
-_Specimen for documentation Fixes (Code changes Vs Non Code changes)_
+_Specimen for documentation Fixes (Code changes & Non Code changes)_
 Ask by Rahul-Should be a separation or a category denoting code changes & noncode changes (mostly documentation-mapping sheet changes) in release notes. we need to thnik how to add and represent in existing release notes format.
 
 <br>Specimen 1<br>
 ### Fixed
-| API Name <br> <span style="color: green;"> Code Change/Non Code Change | Description | Environment Availability |
-| --------  | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> <br> <span style="color: green;">Specimen content for code/non code change. | <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style=" color: #ff6600; font-style: normal; position: absolute; left: 0;">[*Backward-incompatible change - Updated Data Format (07)*](?path=docs/backward-incompatible-change-glossary.md "Click to open") </span><span style="position: absolute; right: 0;">FETP-1212 </span></span><br>We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br> **Impacted Field:** <br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| CERT |
+| API Name | Non Code Change | Description | Environment Availability |
+| -------- | ------------------------------------------------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="color: green;">Specimen content for code/non code change. | <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style=" color: #ff6600; font-style: normal; position: absolute; left: 0;">[*Backward-incompatible change - Updated Data Format (07)*](?path=docs/backward-incompatible-change-glossary.md "Click to open") </span><span style="position: absolute; right: 0;">FETP-1212 </span></span><br>We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br> **Impacted Field:** <br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| CERT |
 
+<br>Specimen 2<br>
+### Fixed
+| API Name |  Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> <br> <span style="color: green; font-style: small">Specimen content for code/non code change. | <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style=" color: #ff6600; font-style: normal; position: absolute; left: 0;">[*Backward-incompatible change - Updated Data Format (07)*](?path=docs/backward-incompatible-change-glossary.md "Click to open") </span><span style="position: absolute; right: 0;">FETP-1212 </span></span><br>We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br> **Impacted Field:** <br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| CERT |
 
-Specimen 2
+<br>Specimen 3<br>
 #### Fixed Documentation
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style=" color: #ff6600; font-style: normal; position: absolute; left: 0;">[*Backward-incompatible change - Updated Data Format (07)*](?path=docs/backward-incompatible-change-glossary.md "Click to open") </span><span style="position: absolute; right: 0;">FETP-1212 </span></span><br><span style="color: green;">Specimen content for code/non code changes <br> **Impacted Field:** <br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style=" color: #ff6600; font-style: normal; position: absolute; left: 0;">[*Backward-incompatible change - Updated Data Format (07)*](?path=docs/backward-incompatible-change-glossary.md "Click to open") </span><span style="position: absolute; right: 0;"> FETP-1212 </span></span><br><span style="color: green;"> Specimen content for code/non code changes <br> **Impacted Field:** <br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| CERT |
 
 
 
