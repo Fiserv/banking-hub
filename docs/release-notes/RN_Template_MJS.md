@@ -1,5 +1,32 @@
+_Specimen for documentation Fixes (Code changes & Non Code changes)_
+Ask by Rahul-Should be a separation or a category denoting code changes & noncode changes (mostly documentation-mapping sheet changes) in release notes. we need to thnik how to add and represent in existing release notes format.
+
+<br>Specimen 1<br>
+### Fixed
+| API Name |  Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a>, <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> <br> <span style="color: dark gray; font-size: small;"> Specimen content for code/non code change.| <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style="font-size: small; color: dark gray; font-style: italics; position: absolute; right: 0;">Backward-incompatible change: Updated Enumerations </span><span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5946</span></span>We resolved the issue where the enumeration values “Rate” and “RateForecast” (as provided in the Add Account-LOAN service operation) for the `PmtTermRecurType` field were retrieved incorrectly in the Get Account Details-LOAN service operation. <br>**Impacted Field:**<br>`LoanAcctInfo/PmtTermReview/PmtTermRecurType` | CERT |
+
+<br>Specimen 2<br>
+### Fixed
+| API Name | Non Code Change | Description | Environment Availability |
+| -------- | ------------------------------------------------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a>, <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> |<span style="color: dark gray; font-size: small;"> Specimen content for non code change.Specimen content for non code change. Specimen content for non code change.| <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style="font-size:small; color: dark gray; font-style: italics; position: absolute; right: 0;">Backward-incompatible change: Updated Enumerations </span><span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5946</span></span>We resolved the issue where the enumeration values “Rate” and “RateForecast” (as provided in the Add Account-LOAN service operation) for the `PmtTermRecurType` field were retrieved incorrectly in the Get Account Details-LOAN service operation. <br>**Impacted Field:**<br>`LoanAcctInfo/PmtTermReview/PmtTermRecurType` | CERT |
 
 
+<br>Specimen 3<br>
+#### Fixed Documentation
+| API Name |  Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a>, <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a>| <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style="font-size: small; color: dark gray; font-style: italics; position: absolute; right: 0;">Backward-incompatible change: Updated Enumerations </span><span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5946</span></span>We resolved the issue where the enumeration values “Rate” and “RateForecast” (as provided in the Add Account-LOAN service operation) for the `PmtTermRecurType` field were retrieved incorrectly in the Get Account Details-LOAN service operation.<br> <span style="color: dark gray; font-size: small;"> **Code Change Details:** Specimen content for code/non code change. Specimen content for code/non code change. Specimen content for code/non code change. <br>**Impacted Field:**<br>`LoanAcctInfo/PmtTermReview/PmtTermRecurType` | CERT |
+
+
+
+
+
+
+
+<!--_following specimen was created for Veneela (SME-DPoP Error codes & their possible reasons). The format was approved by her on 6/12/24 in a teams call with team, ESF TWs._
 The following table lists the standard status codes:
 
 |     Error   Code             |     Error   Description                 |     Error Reason            |     
@@ -16,33 +43,15 @@ The following table lists the standard status codes:
 |     1010   – Invalid DPoP    |     InvalidKeySpecException             |
 |     1011   – Invalid DPoP    |     Error generating JWK Thumbprint     |
 |     1012   – Invalid DPoP    |     Unknown Error in Java Callout       |
-|     1099   – Invalid DPoP    |     Unexpected generic error on APIM    |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+|     1099   – Invalid DPoP    |     Unexpected generic error on APIM    |-->
 
 
 <!-- # Release Notes
 
-<!-- 
+
 type: tab 
 titles: Premier, Precision, Signature, Cleartouch, Finxact, DNA 
--->
+
  April 12, 2025
   ### New in Premier
 ## 2024_Q3.2
@@ -51,8 +60,8 @@ Specimen for Breaking change placement
 | API Name | Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
 | <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> | <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style=" color: #ff6600; font-style: normal; position: absolute; left: 0;">[*Backward-incompatible change - Updated Data Format (07)*](?path=docs/backward-incompatible-change-glossary.md "Click to open") </span><span style="position: absolute; right: 0;">FETP-1212 </span></span><br>We updated the `CRARevenueCode` field to accept a single-digit numeric code for estimated revenue under the Community Reinvestment Act for small businesses or small farms aggregate.<br> **Impacted Field:** <br>`AcctRec/LoanAcctInfo/HomeMortgageDisclosure/CRAData/CRARevenueCode`| CERT |
-|<a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a>|<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">Backward-compatible changes (1) Code Other Non Breaking</span><br> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Field**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Description**: <br>Description of why was this change and what impact does it have.|PROD <br><span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-2563 |<!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
-|<a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a><br> <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-2563</span> | <span style="font-size: small; color: orange; font-style: italic; text-align: right; display: block;">Backward-compatible changes (1) Code Other Non Breaking</span><br> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Fields**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Details**: <br> Description of why was this change and what impact does it have. | PROD | <!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
+|<a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a>|<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">Backward-compatible changes (1) Code Other Non Breaking</span><br> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Field**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Description**: <br>Description of why was this change and what impact does it have.|PROD <br><span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-2563 |<!-- FETP-2563 PROD as on 25 Oct 24. -->
+<!--|<a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a><br> <span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-2563</span> | <span style="font-size: small; color: orange; font-style: italic; text-align: right; display: block;">Backward-compatible changes (1) Code Other Non Breaking</span><br> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Fields**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Details**: <br> Description of why was this change and what impact does it have. | PROD | <!--  FETP-2563 PROD as on 25 Oct 24. 
 |<a href="../api/?type=post&path=/collateralservice/collateral/collateral/secured" title="Click to open"> Get Collateral</a> <br> <span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">Backward-compatible changes<br> (1) Code Other Non Breaking</span>|<span style="font-size: small; color: gray; font-style: italic; text-align: right; display: block;">FETP-2563</span> We resolved the issue with the ` ExternalInd ` field where the correct value was not retrieved in the response message. <Br> **Impacted Field**: <br> CollateralRec/CollateralInfo/DepositAcctCollateralData/ExternalInd <br> **Impact Details**: <br> Description of why was this change and what impact does it have.| PROD | <!-- <!-- FETP-2563 PROD as on 25 Oct 24. -->
 
 
