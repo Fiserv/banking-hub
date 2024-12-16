@@ -3,10 +3,12 @@ const path = require('path');
 
 // Define the lines to find and replace
 const linesToFind = [
+  '          description: |-',
   '            Value to indicate that the system should auto-acknowledge the exceptions. If this value is set to true then, the exceptions that cannot be overridden are returned in the Status aggregate of the response message.'
 ];
 
 const linesToReplace = [
+  '          description: |-',
   '            Value to indicate that the system should auto-acknowledge the exceptions. If this value is set to "true", then the exceptions that cannot be overridden are returned in the Status aggregate of the response message.'
 ];
 
@@ -41,5 +43,5 @@ function processYamlFiles(directoryPath) {
 }
 
 // Replace 'your-directory-path' with the path to your directory containing .yaml files
-const directoryPath = './reference/Premier/Accountholder';
+const directoryPath = './reference/11.0.0/Transfers';
 processYamlFiles(directoryPath);
