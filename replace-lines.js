@@ -45,5 +45,5 @@ function processYamlFiles(directoryPath) {
 }
 
 // Replace 'your-directory-path' with the path to your directory containing .yaml files
-const directoryPath = './reference/Signature/Transfers';
+const directoryPath = './reference/Cleartouch/Accountholder';
 processYamlFiles(directoryPath);
