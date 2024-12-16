@@ -24,16 +24,16 @@ DPoP (for Demonstration of Proof-of-Possession) is an application-level mechanis
 
 ## How to Setup DPoP Mechanism
 To implement the DPoP Security, follow the listed steps:
-1.	Generate the Public/Private Key Pair
-2.	Onboard the Consumer
-3.	Select the style for signing the DPoP Token
-4.	Create DPoP Generator Library on Consumer side
-5.	Generate and use DPoP Token for Token API Call
-6.	Generate and use DPoP Token for Functional API Call
+1.	Generate the Public/Private Key Pair.
+2.	Onboard the Consumer.
+3.	Select the style for signing the DPoP Token.
+4.	Create DPoP Generator Library on Consumer side.
+5.	Generate and use DPoP Token for Token API Call.
+6.	Generate and use DPoP Token for Functional API Call.
 
 ## Step 1 - Generate Public/Private Key Pair
-1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL<br>
-2. (Optional Step) - Reference commands to generate an RSA Public/Private Key Pair using OpenSSL <br>
+1. Generate an RSA Public/Private Key Pair using any cryptography & SSL/TLS toolkit that is compatible with OpenSSL.<br>
+2. (Optional Step) - Reference commands to generate an RSA Public/Private Key Pair using OpenSSL. <br>
 
 `openssl genrsa -out private_key.pem 4096` <br>
 `openssl rsa -pubout -in private_key.pem -out public_key.pem`<br>
@@ -45,20 +45,20 @@ To implement the DPoP Security, follow the listed steps:
 >
 > 
 ## Step 2 - Onboard the Consumer
-  1. Register consumer with public key through AppMarket from Fiserv
-  2. AppMarket stores and returns the consumer key and shares with the consumer <br>
+  1. Register consumer with public key through AppMarket from Fiserv.
+  2. AppMarket stores and returns the consumer key and shares with the consumer. <br>
  ![image](https://github.com/Fiserv/banking-hub/assets/135122880/912df1f0-3b80-4e06-8e36-09de51e9466a)
 
 ## Step 3 - Select the Style to Sign in DPoP Token
 ### Step 3.1 - Sign in with DPoP Token
-- **HTTP Method (GET, POST and so on)** of the corresponding API call in which DPoP token is passed
-- **URL of the API call** (including the query parameters) in which DPoP token is passed
+- **HTTP Method (GET, POST and so on)** of the corresponding API call in which DPoP token is passed.
+- **URL of the API call** (including the query parameters) in which DPoP token is passed.
     
 ### Step 3.2 - Use Request Data for Data Integrity   
-- **ReqHeaderMap** - Map created with business-critical request headers and its value that are required to be validated by the APIM security framework <br>
-- **FormParamMap** - Map created with form URL encoded key-value that are required to be validated by the APIM security framework <br>
-- **Payload** - JSON string of the request body that is required to be validated by APIM security framework<br>
-If case payload size is larger than **100 KB**, use **SelectivePayloadMap**. This map is created with business-critical attributes of the request payload, which are required to be validated by the APIM security framework <br>
+- **ReqHeaderMap** - Map created with business-critical request headers and its value that are required to be validated by the APIM security framework. <br>
+- **FormParamMap** - Map created with form URL encoded key-value that are required to be validated by the APIM security framework. <br>
+- **Payload** - JSON string of the request body that is required to be validated by APIM security framework.<br>
+If case payload size is larger than **100 KB**, use **SelectivePayloadMap**. This map is created with business-critical attributes of the request payload, which are required to be validated by the APIM security framework. <br>
 
 Following are the examples of business-critical attributes:
 - accountNumber
@@ -78,10 +78,10 @@ Following are the examples of business-critical attributes:
 |For Form Params|sample-formparam: value-can-be-any-string|`EFXFormParam: {"OrganizationId":"DemoOrgId", "TrnId":"3dab21d2-2ab7"}`|  
 
 ## Step 4 - Create DPoP Generator Library on Consumer Side
-1. Use the below JAVA code (DPoPGenerator.java) to create the library or use below code as a reference in consumer existing code
+1. Use the below JAVA code (DPoPGenerator.java) to create the library or use below code as a reference in consumer existing code.
 2. Update the following details in the JAVA code (DPoPGenerator.java):<br>
-  a. Replace with your private/public key pair (String privateKey, String publicKey)<br>
-  b. Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod)<br>
+  a. Replace with your private/public key pair (String privateKey, String publicKey).<br>
+  b. Replace with your HTTP method (GET, POST and so on) and URL (String URL, String httpMethod).<br>
   c. Enable one or more of the following functions based on the selection in the step 3.2 and replace with actual values:<br>
     - noPayloadGenerateDPoP
     - requestBodyPayloadGenerateDPoP (includes request headers)
@@ -95,13 +95,13 @@ Following are the examples of business-critical attributes:
 > Download [DPoPGenerator](download/assets/DPoPGuidelinesResources/DPoPGenerator.zip "download")
 
 ## Step 5 - Generate and Use DPoP Token for Token API Call
-Consumer should generate the DPoP token for the token API call using the library created in the previous step (pass the token API URL and HTTP method and other required attributes for the library)
+Consumer should generate the DPoP token for the token API call using the library created in the previous step (pass the token API URL and HTTP method and other required attributes for the library).
 
 <!-- theme: info --> 
 > Download [Request Response 1](download/assets/DPoPGuidelinesResources/Request-Response-1.zip "download")
 
 ## Step 6 - Generate and Use DPoP Token for Functional API Call
-Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes are required for signing
+Consumer should generate new DPoP token using the library for the functional API call by passing the functional API URL, the http method and other attributes are required for signing.
 
 <!-- theme: info --> 
 > Download [Request Response 2](download/assets/DPoPGuidelinesResources/Request-Response-2.zip "download")
@@ -109,23 +109,39 @@ Consumer should generate new DPoP token using the library for the functional API
 # Debugging DPoP Errors
 Error codes help you to debug errors related to your DPoP implementation and provide initial guidance to resolve issues in your code. For example, if you receive an error code 1002- Invalid DPoP, then make sure the public key you are using and the one sent to Fiserv are the same. 
 
-The following table lists the standard status codes:
-
-|     Error   Code             |     Error   Description                 |
-|------------------------------|-----------------------------------------|
-|     1001   – Invalid DPoP    |     Expired DPoP Token                  |
-|     1002   – Invalid DPoP    |     Public Key Mismatch                 |
-|     1003   – Invalid DPoP    |     Invalid HTTP method                 |
-|     1004   – Invalid DPoP    |     Invalid URL                         |
-|     1005   – Invalid DPoP    |     Invalid Header                      |
-|     1006   – Invalid DPoP    |     Invalid Request Body                |
-|     1007   – Invalid DPoP    |     Invalid Selective Payload           |
-|     1008   – Invalid DPoP    |     Invalid Form URL encoded            |
-|     1009   – Invalid DPoP    |     NoSuchAlgorithmException            |
-|     1010   – Invalid DPoP    |     InvalidKeySpecException             |
-|     1011   – Invalid DPoP    |     Error generating JWK Thumbprint     |
-|     1012   – Invalid DPoP    |     Unknown Error in Java Callout       |
-|     1099   – Invalid DPoP    |     Unexpected generic error on APIM    |
+The following table lists the standard error codes along with the descriptions and possible reasons. 
+|     Error   Code             |     Short   Description                 | Possible Error Reason |
+|------------------------------|-----------------------------------------|-----------------------------------------|
+| 1001   – Invalid DPoP | Expired DPoP Token while token generation| Time difference between the 'issued at' timestamp and the current timestamp is more than 60 seconds.|
+| 1002   – Invalid DPoP | Public Key Mismatch | Combination mismatch of the public/private key used as compared to the key configured at Fiserv for applications.|
+| 1003   – Invalid DPoP | Invalid HTTP method | Difference between the HTTP method used for sign-in and the HTTP method sent in the API call.|
+| 1004   – Invalid DPoP | Invalid URL | Difference between the HTTP URL used for sign-in and the URL sent in the API call.|
+| 1005   – Invalid DPoP | Invalid Header | Difference between the request headers used in sign-in and the request headers sent in the API call. <br>Note: Currently, header in JSON format is not supported and should be excluded at the time of token generation.|
+| 1006   – Invalid DPoP | Invalid Request Body| Difference between the request body used in sign-in and the request body sent in the API call.|
+| 1007   – Invalid DPoP | Invalid Selective Payload| Difference between the parameters within the request body used for sign-in and the parameters sent in the API call.|
+| 1008   – Invalid DPoP | Invalid Form URL encoded| Difference between the form parameters within the body used for sign-in and the parameters sent in the API call.|
+| 1009   – Invalid DPoP | NoSuchAlgorithmException| Unavailability of the requested cryptographic algorithm in the environment.|
+| 1010   – Invalid DPoP | InvalidKeySpecException| Incorrect construction of the public key specification created with the extraction of JWK (JSON Web Key) variables (modules & exponent).|
+| 1011   – Invalid DPoP | Error generating JWK Thumbprint| Issue in the JWK (JSON Web Key) algorithm specified in the variable {kty}.|
+| 1012   – Invalid DPoP | Unknown Error in Java Callout | Generic error when decoding token.|
+| 1013   – Invalid DPoP | Non-numeric date value in the claim `iat`| Claim `iat` is typecast as a string. |
+| 1014   – Invalid DPoP | Missing or incorrect JWK format| Missing or incorrect format of the JWK (JSON Web Key) in the header. |
+| 1015   – Invalid DPoP | Verification failure of decoded JWT | Validation failure of the decoded JWT (JSON Web Token). |
+| 1016   – Invalid DPoP | Missing mandatory part of token| Missing one of the three mandatory parts of the token: header, payload and signature. |
+| 1017   – Invalid DPoP | Incorrect format of token parts| Incorrect encoded format (not in base64EncodedString format) of the token’s mandatory parts: header, payload and signature. 
+| 1018   – Invalid DPoP | Algorithm mismatch | Mismatch of the token generation algorithm with the algorithm defined in the JWT's (JSON Web Token) header functional call.|
+| 1019   – Invalid DPoP | Claim value mismatch| Claim values do not match the required values as per the JWT (JSON Web Token) standard. |
+| 1020   – Invalid DPoP | Invalid signature| Invalid signature (mandatory token part) in DPoP token generation. |
+| 1021   – Invalid DPoP | Invalid key| Invalid public-private key pair at the time of JWT (JSON Web Token) generation. |
+| 1022   – Invalid DPoP | Invalid arguments| Illegal mandatory parts (header, payload and signature) of the token.  |
+| 1023   – Invalid DPoP | Invalid state exception | Null value of the public and/or private key at the time of token generation. |
+| 1024   – Invalid DPoP | The algorithm doesn't match with the one defined in JWT token's header.| |
+| 1025   – Invalid DPoP | SignatureVerificationException | Validation failure of signature. |
+| 1026   – Invalid DPoP | Null JWT | Null value of the JWT (JSON Web Token). |
+| 1027   – Invalid DPoP | Empty JWT | Empty value of the JWT (JSON Web Token). |
+| 1028   – Invalid DPoP | Invalid JWT format | Invalid JSON format of some JWT (JSON Web Token) parts. |
+| 1029   – Invalid DPoP | Query string decoding failure | Invalid characters in the URL query string.|
+| 1099   – Invalid DPoP | Unexpected generic error on APIM | Invalid selective payload.|
 
 <!-- theme: info -->
 > #### Note
@@ -134,7 +150,8 @@ The following table lists the standard status codes:
 >
 > 
 # Benefits to Fiserv
-- Using DPoP has helped Fiserv prevent unauthorized or illegitimate parties from using leaked or stolen access tokens
-- This mechanism enables the identification of replay attacks involving access and refresh tokens
-- Given that DPoP functions at the application layer, using asymmetric cryptography and lightweight JSON Web Tokens, it becomes easily accessible to developers
-- Eliminates the need to manage certificates in the mTLS setup,streamlining the process and reducing administrative burdens
+- Using DPoP has helped Fiserv prevent unauthorized or illegitimate parties from using leaked or stolen access tokens.
+- This mechanism enables the identification of replay attacks involving access and refresh tokens.
+- Given that DPoP functions at the application layer, using asymmetric cryptography and lightweight JSON Web Tokens, it becomes easily accessible to developers.
+- Eliminates the need to manage certificates in the mTLS setup,streamlining the process and reducing administrative burdens.
+
