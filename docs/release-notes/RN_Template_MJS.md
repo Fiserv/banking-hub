@@ -1,11 +1,19 @@
 _Specimen for documentation Fixes (Code changes & Non Code changes)_
 Ask by Rahul-Should be a separation or a category denoting code changes & noncode changes (mostly documentation-mapping sheet changes) in release notes. we need to thnik how to add and represent in existing release notes format.
 
-<br>Specimen 1<br>
+<br>Specimen 1 <br>
 ### Fixed
 | API Name |  Description | Environment Availability |
 | -------- | ----------- | ------------------------ |
-| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a>, <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> <br> <span style="color: dark gray; font-size: small;"> Specimen content for code/non code change.| <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style="font-size: small; color: dark gray; font-style: italics; position: absolute; right: 0;">Backward-incompatible change: Updated Enumerations </span><span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5946</span></span>We resolved the issue where the enumeration values “Rate” and “RateForecast” (as provided in the Add Account-LOAN service operation) for the `PmtTermRecurType` field were retrieved incorrectly in the Get Account Details-LOAN service operation. <br>**Impacted Field:**<br>`LoanAcctInfo/PmtTermReview/PmtTermRecurType` | CERT |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a>, <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a> <br> <span style="color: dark gray; font-size: small;"> Document Update| <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style="font-size: small; color: dark gray; font-style: italics; position: absolute; right: 0;">Backward-incompatible change: Updated Enumerations </span><span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">FETP-5946</span></span>We resolved the issue where the enumeration values “Rate” and “RateForecast” (as provided in the Add Account-LOAN service operation) for the `PmtTermRecurType` field were retrieved incorrectly in the Get Account Details-LOAN service operation. <br>**Impacted Field:**<br>`LoanAcctInfo/PmtTermReview/PmtTermRecurType` | CERT |
+
+<br>Specimen 2 <br>
+### Fixed
+| API Name |  Description | Environment Availability |
+| -------- | ----------- | ------------------------ |
+| <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts" title="Click to open">Add Account-LOAN</a>, <a href="../api/?type=post&path=/acctservice/acctmgmt/accounts/secured" title="Click to open">Get Account Details-LOAN</a>| <span style="color: gray; font-style: italic; display: block; position: relative;"> <span style="font-size: small; color: dark gray; font-style: italics; position: absolute; right: 0;">Backward-incompatible change: Updated Enumerations </span><span style="font-size: small; color: gray; font-style: italic; text-align: left; display: block;">Document Update-FETP-5946</span></span>We resolved the issue where the enumeration values “Rate” and “RateForecast” (as provided in the Add Account-LOAN service operation) for the `PmtTermRecurType` field were retrieved incorrectly in the Get Account Details-LOAN service operation. <br>**Impacted Field:**<br>`LoanAcctInfo/PmtTermReview/PmtTermRecurType` | CERT |
+
+
 
 <br>Specimen 2<br>
 ### Fixed
