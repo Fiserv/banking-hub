@@ -167,38 +167,38 @@ Consumer should generate new DPoP token using the library for the functional API
 Error codes help you to debug errors related to your DPoP implementation and provide initial guidance to resolve issues in your code. For example, if you receive an error code 1002- Invalid DPoP, then make sure the public key you are using and the one sent to Fiserv are the same. 
 
 The following table lists the standard error codes along with the descriptions and possible reasons. 
-|     Error   Code             |     Short   Description                 | Possible Error Reason |
-|------------------------------|-----------------------------------------|-----------------------------------------|
-| 1001   – <br> Invalid DPoP | Expired DPoP Token| Time difference between the 'issued at' timestamp and the current timestamp is more than 60 seconds even if the same token is reused.|
-| 1002   – <br> Invalid DPoP | Public Key Mismatch | Combination mismatch of the public/private key used as compared to the key configured at Fiserv for application.|
-| 1003   – <br> Invalid DPoP | Invalid HTTP method | Difference between the HTTP method used for signing and the HTTP method sent in the API call.|
-| 1004  – <br> Invalid DPoP | Invalid URL | Difference between the HTTP URL used for signing and the URL sent in the API call.|
-| 1005  – <br> Invalid DPoP | Invalid Header | Difference between the request headers used in signing and the request headers sent in the API call. <br> **Note:** Currently, the header in JSON format is not supported and should be excluded at the time of  DPoP token generation.|
-| 1006  – <br> Invalid DPoP | Invalid Request Body| Difference between the request body used in signing and the request body sent in the API call.|
-| 1007   – <br> Invalid DPoP | Invalid Selective Payload| Difference between the parameters within the request body used for signing and the parameters sent in the API call.|
-| 1008   – <br>  Invalid DPoP | Invalid form URL encoded parameters| Difference between the form parameters within the body used for signing and the parameters sent in the API call. <br> **Note:** Currently, the FormParam in JSON format is not supported and should be excluded at the time of DPoP token generation.|
-| 1009  – <br>  Invalid DPoP | No Such Algorithm Exception| Unavailability of the requested cryptographic algorithm in the environment.|
-| 1010  – <br> Invalid DPoP | Invalid KeySpec Exception| Incorrect construction of the public key specification created with the extraction of JWK (JSON Web Key) variables (modules & exponent).|
-| 1011   – <br> Invalid DPoP | Error generating JWK Thumbprint| Issue in the JWK (JSON Web Key) algorithm specified in the variable {kty}.|
-| 1012   – <br> Invalid DPoP | Unknown Error in Java Callout | Generic error when decoding the token.|
-| 1013  – <br> Invalid DPoP | Non-numeric date value in the claim `iat`| Claim `iat` is typecast as a string. |
-| 1014  – <br> Invalid DPoP | Missing or incorrect JWK format| Missing or incorrect format of the JWK (JSON Web Key) in the header claims. |
-| 1015   – <br> Invalid DPoP | Verification failure of decoded JWT | Validation failure of the decoded JWT (JSON Web Token). |
-| 1016  – <br> Invalid DPoP | Missing mandatory part of token| Missing one of the three mandatory parts of the token: header, payload and signature. |
-| 1017  – <br> Invalid DPoP | Incorrect format of token parts| Incorrect encoded format (not in `base64EncodedString` format) of the token’s mandatory parts: header, payload and signature. 
-| 1018  – <br> Invalid DPoP | Algorithm mismatch | Mismatch of the token generation algorithm with the algorithm defined in the JWT's (JSON Web Token) header functional call.|
-| 1019   – <br> Invalid DPoP | Claim value mismatch| Claim values do not match the required values as per the JWT (JSON Web Token) standard. |
-| 1020   – <br> Invalid DPoP | Invalid signature| Invalid signature (mandatory token part) in DPoP token generation. |
-| 1021   – <br> Invalid DPoP | Invalid key| Invalid public-private key pair at the time of JWT (JSON Web Token) generation. |
-| 1022   – <br> Invalid DPoP | Invalid arguments| Illegal mandatory parts (header, payload and signature) of the token.  |
-| 1023  – <br> Invalid DPoP | Invalid state exception | Null value of the public and/or private key at the time of token generation. |
-| 1024  – <br> Invalid DPoP | Algorithm mismatch| Mismatch of the token generation algorithm with the algorithm defined in the JWT's (JSON Web Token) header functional call. |
-| 1025   – <br> Invalid DPoP | Signature Verification Exception | Validation failure of signature. |
-| 1026   – <br> Invalid DPoP | Null JWT | Null value of the JWT (JSON Web Token). |
-| 1027   – <br> Invalid DPoP | Empty JWT | Empty value of the JWT (JSON Web Token). |
-| 1028   – <br> Invalid DPoP | Invalid JWT format | Invalid JSON format of some JWT (JSON Web Token) parts. |
-| 1029   – <br> Invalid DPoP | Query string decoding failure | Invalid characters in the URL query string.|
-| 1099   – <br> Invalid DPoP | Unexpected generic error on APIM | Unexpected generic error on API Gateway.|
+|     Error   Code             |     Short   Description                 | 
+|------------------------------|-----------------------------------------|
+| 1001   – <br> Invalid DPoP | Expired DPoP Token| 
+| 1002   – <br> Invalid DPoP | Public Key Mismatch |
+| 1003   – <br> Invalid DPoP | Invalid HTTP method | 
+| 1004  – <br> Invalid DPoP | Invalid URL | 
+| 1005  – <br> Invalid DPoP | Invalid Header | 
+| 1006  – <br> Invalid DPoP | Invalid Request Body| 
+| 1007   – <br> Invalid DPoP | Invalid Selective Payload| 
+| 1008   – <br>  Invalid DPoP | Invalid form URL encoded parameters|
+| 1009  – <br>  Invalid DPoP | No Such Algorithm Exception|
+| 1010  – <br> Invalid DPoP | Invalid KeySpec Exception| 
+| 1011   – <br> Invalid DPoP | Error generating JWK Thumbprint| 
+| 1012   – <br> Invalid DPoP | Unknown Error in Java Callout | 
+| 1013  – <br> Invalid DPoP | Non-numeric date value in the claim `iat`| 
+| 1014  – <br> Invalid DPoP | Missing or incorrect JWK format| 
+| 1015   – <br> Invalid DPoP | Verification failure of decoded JWT |
+| 1016  – <br> Invalid DPoP | Missing mandatory part of token| 
+| 1017  – <br> Invalid DPoP | Incorrect format of token parts| 
+| 1018  – <br> Invalid DPoP | Algorithm mismatch | 
+| 1019   – <br> Invalid DPoP | Claim value mismatch| 
+| 1020   – <br> Invalid DPoP | Invalid signature| 
+| 1021   – <br> Invalid DPoP | Invalid key| 
+| 1022   – <br> Invalid DPoP | Invalid arguments| 
+| 1023  – <br> Invalid DPoP | Invalid state exception | 
+| 1024  – <br> Invalid DPoP | Algorithm mismatch| 
+| 1025   – <br> Invalid DPoP | Signature Verification Exception | 
+| 1026   – <br> Invalid DPoP | Null JWT | 
+| 1027   – <br> Invalid DPoP | Empty JWT | 
+| 1028   – <br> Invalid DPoP | Invalid JWT format | 
+| 1029   – <br> Invalid DPoP | Query string decoding failure | 
+| 1099   – <br> Invalid DPoP | Unexpected generic error on APIM | 
 
 
 <!-- theme: info -->
