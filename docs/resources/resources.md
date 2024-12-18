@@ -6,8 +6,7 @@ titles: Downloads, Guidelines
 # API Specifications
 
 <!-- theme: info -->  
-> [Download API Specifications (v11.0.0.2024.3.3)](https://github.com/user-attachments/files/17573728/esf-service-swagger-release-11.0.0.2024.3.3.zip)
-
+> [Download API Specifications (v11.0.0.2024.3.3)](download/assets/ResourcesDownloads/esf-service-swagger-release-11.0.0.2024.3.3.zip "download")
 
 
 # Postman Collection
