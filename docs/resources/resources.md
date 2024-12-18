@@ -13,15 +13,15 @@ titles: Downloads, Guidelines
 # Postman Collection
 
 <!-- theme: info -->  
-> ![Finxact](/assets/images/Finxact-e8e8e8.svg) [Download Postman Collection for Finxact Core (v1.29)](https://github.com/user-attachments/files/17860295/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_v1.29.postman_collection.zip)
+> ![Finxact](/assets/images/Finxact-e8e8e8.svg) [Download Postman Collection for Finxact Core (v1.29)](download/assets/ResourcesDownloads/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_v1.29.postman_collection.zip "download")
 
 
 <!-- theme: info -->  
-> ![Premier](/assets/images/Premier-e8e8e8.svg) [Download Postman Collection for Premier Core](https://github.com/user-attachments/files/16746722/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.zip)
+> ![Premier](/assets/images/Premier-e8e8e8.svg) [Download Postman Collection for Premier Core](download/assets/ResourcesDownloads/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.zip "download")
 
 
 <!-- theme: info -->  
-> ![Precision](/assets/images/Precision-e8e8e8.svg) [Download Postman Collection for Precision Core](https://github.com/user-attachments/files/16746724/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.zip)
+> ![Precision](/assets/images/Precision-e8e8e8.svg) [Download Postman Collection for Precision Core](download/assets/ResourcesDownloads/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.zip "download")
 
 
 <!-- theme: info -->  
@@ -29,11 +29,11 @@ titles: Downloads, Guidelines
 
 
 <!-- theme: info -->  
-> ![DNA](/assets/images/DNA-e8e8e8.svg) [Download Postman Collection for DNA Core](https://github.com/user-attachments/files/16346980/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip)
+> ![DNA](/assets/images/DNA-e8e8e8.svg) [Download Postman Collection for DNA Core](download/assets/ResourcesDownloads/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip "download")
 
 
 <!-- theme: info -->  
-> ![Onboard-Advisor](/assets/images/OnboardAdvisor-e8e8e8.svg) [Download Postman Collection for Identity Domain](https://github.com/user-attachments/files/16974785/Download.Postman.Collection.for.Identity.zip)
+> ![Onboard-Advisor](/assets/images/OnboardAdvisor-e8e8e8.svg) [Download Postman Collection for Identity Domain](download/assets/ResourcesDownloads/Download.Postman.Collection.for.Identity.zip "download")
 
 <!-- type: tab -->
 
