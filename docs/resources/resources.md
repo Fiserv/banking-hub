@@ -13,31 +13,27 @@ titles: Downloads, Guidelines
 # Postman Collection
 
 <!-- theme: info -->  
-> ![Finxact](https://github.com/user-attachments/assets/275fa312-e85c-47d4-870b-995bf3bdcbe3) [Download Postman Collection for Finxact Core (v1.29)](https://github.com/user-attachments/files/17860295/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_v1.29.postman_collection.zip)
-
-
-
+> ![Finxact](/assets/images/Finxact-e8e8e8.svg) [Download Postman Collection for Finxact Core (v1.29)](download/assets/ResourcesDownloads/Banking.Hub.-.Finxact.-.Trial.Plan.Postman.Collection_v1.29.postman_collection.zip "download")
 
 
 <!-- theme: info -->  
-> ![Premier](https://github.com/user-attachments/assets/57350ca2-1c4f-4eae-ae03-9e9c2408112f) [Download Postman Collection for Premier Core](https://github.com/user-attachments/files/16746722/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.zip)
+> ![Premier](/assets/images/Premier-e8e8e8.svg) [Download Postman Collection for Premier Core](download/assets/ResourcesDownloads/Banking.Hub.-.Premier.-.Trial.Plan.Postman.Collection_V1.zip "download")
 
 
 <!-- theme: info -->  
-> ![Precision](https://github.com/user-attachments/assets/6fc330da-341f-4cfe-8826-52b964b6d946)
- [Download Postman Collection for Precision Core](https://github.com/user-attachments/files/16746724/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.zip)
+> ![Precision](/assets/images/Precision-e8e8e8.svg) [Download Postman Collection for Precision Core](download/assets/ResourcesDownloads/Banking.Hub.-.Precision-.Trial.Plan.Postman.Collection.zip "download")
 
 
 <!-- theme: info -->  
-> ![Signature](https://github.com/user-attachments/assets/11a70edb-4e4f-4fd9-8587-0220f5ee6905) [Download Postman Collection for Signature Core](https://github.com/user-attachments/files/17646268/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip)
-
+> ![Signature](/assets/images/Signature-e8e8e8.svg) [Download Postman Collection for Signature Core](download/assets/ResourcesDownloads/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip "download")
 
 
 <!-- theme: info -->  
-> ![DNA](https://github.com/user-attachments/assets/c3396334-43d2-45d7-bffe-3919384081fe) [Download Postman Collection for DNA Core](https://github.com/user-attachments/files/16346980/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip)
+> ![DNA](/assets/images/DNA-e8e8e8.svg) [Download Postman Collection for DNA Core](download/assets/ResourcesDownloads/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip "download")
+
 
 <!-- theme: info -->  
-> ![Onboard Advisor](https://github.com/user-attachments/assets/ad6d882e-5bc8-4383-a512-8dbca3f6a18f) [Download Postman Collection for Identity Domain](https://github.com/user-attachments/files/16974785/Download.Postman.Collection.for.Identity.zip)
+> ![Onboard-Advisor](/assets/images/OnboardAdvisor-e8e8e8.svg) [Download Postman Collection for Identity Domain](download/assets/ResourcesDownloads/Download.Postman.Collection.for.Identity.zip "download")
 
 <!-- type: tab -->
 
