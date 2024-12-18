@@ -26,6 +26,8 @@ titles: Downloads, Guidelines
 <!-- theme: info -->  
 > ![Signature](/assets/images/Signature-e8e8e8.svg) [Download Postman Collection for Signature Core](download/assets/ResourcesDownloads/Banking.Hub.-.Signature.-.Trial.Plan.Postman.Collection.zip "download")
 
+![Cleartouch](/assets/images/Cleartouch-e8e8e8.svg) [Download Postman Collection for Cleartouch Core](download/assets/ResourcesDownloads/Cleartouch-Trial.Plan.Postman.Collection_V1.postman_collection.zip "download")
+
 
 <!-- theme: info -->  
 > ![DNA](/assets/images/DNA-e8e8e8.svg) [Download Postman Collection for DNA Core](download/assets/ResourcesDownloads/Banking.Hub.-.DNA.-.Trial.Plan.Postman.Collection.zip "download")
