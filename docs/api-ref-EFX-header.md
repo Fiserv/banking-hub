@@ -18,7 +18,7 @@ EFXHeader is a mandatory parameter that needs to be sent in the request message 
 
 > #### Note
 >
-> The following sample EFX header is applicable only for Teller Sign On service:
+> The following sample EFX header is applicable only for teller based service implementations:
 > ```
 > "EFXHeader": {
 >   "OrganizationId": "999990301",
@@ -48,7 +48,7 @@ List of parameters that can be sent under the EFXHeader:
 | Context  | Additional information related to the specific channels. | object  | Optional |
 | Context.ClientAppName| Name of the client application that is used to send the service request, such as Architect, Commercial Center and others. <br><b>Note:</b> ‘Context.ClientAppName’ can be an alphanumeric value in combination of upper case (A-Z) or lower case (a-z) with digits (0-9), hyphen and underscore. <br>For example, App1, SecondApp_2, Fintech-App | string| Optional|
 | Context.Channel|Name of channel used by the client application, such as, Online, Branch, Phone, EFT and Teller. <br><b>Note:</b> ‘Context.Channel’ can be an alphanumeric value in combination of upper case (A-Z) or lower case (a-z) with digits (0-9), hyphen and underscore. <br>For example, Channel-1, OtherChannel_2, Teller |string | Optional|
-| Context.isOverridden|Flag to indicate the sender has overridden the previous exception. |boolean | Optional|
+| Context.isOverridden|Value to indicate the sender has overridden the previous exception. |boolean | Optional|
 | Context.TrnIdent| Client-defined unique identification value of the transaction.  <br>Also known as 'TraceNumber' or 'Sequence' in some systems. When used by a network defined transaction, the value of this identifier is typically set to narrow character of 12. | string | Optional|
 | Context.ClientDateTime| Client date and time as reported by the client application while sending the service request. <br><br> *Format: YYYY-MM-DD* <br> *Example: 2022-12-31* |string | Optional|
 | Context.ClientTerminalSeqNum| Sequence number of the client terminal. <br><br> *maxLength: 36*|string | Optional|
@@ -84,13 +84,13 @@ List of parameters that can be sent under the EFXHeader:
 | Context.AMPMCode| Transaction Posting Code. <br> Valid values are: <br> <ul><li>AM</li> <li>PM</li></ul>| string| Optional|
 | Context.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul>| string| Optional|
 | Context.GroupIdent| Identifier of the group transactions.| string| Optional|
-| Context.AdditionalSettings|Additional information required to successfully process the transaction. <br> <b>Note:</b> Required for Cleartouch core APIs.| object| Optional|
+| Context.AdditionalSettings|Additional information required to successfully process the transaction. <br> <b>Note:</b> Required for Cleartouch services.| object| Optional|
 | Context.TellerTrnData| Details of the teller transaction.| object| Optional|
-| Context.TellerTrnData.BranchIdent| Identifier of the branch. <br> <b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
+| Context.TellerTrnData.BranchIdent| Identifier of the branch. <br> <b>Note:</b> Applicable only for teller based service implementations.| string| Optional|
 | Context.TellerTrnData.TellerIdent| Identifier of the teller.| string| Optional|
-| Context.TellerTrnData.TillIdent| Identifier of the till. <br> <b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
-| Context.TellerTrnData.AMPMCode| Transaction posting code. <br>Valid values are: <br> <ul><li>AM</li> <li>PM</li></ul><b>Note:</b> Applicable only for Teller Sign On. | string| Optional|
-| Context.TellerTrnData.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul><b>Note:</b> Applicable only for Teller Sign On.| string| Optional|
+| Context.TellerTrnData.TillIdent| Identifier of the till. <br> <b>Note:</b> Applicable only for teller based service implementations.| string| Optional|
+| Context.TellerTrnData.AMPMCode| Transaction posting code. <br>Valid values are: <br> <ul><li>AM</li> <li>PM</li></ul><b>Note:</b> Applicable only for teller based service implementations. | string| Optional|
+| Context.TellerTrnData.ReentryType| Type of re-entry. <br> Valid values are: <ul><li>Manual</li><li>Auto</li></ul><b>Note:</b> Applicable only for teller based service implementations.| string| Optional|
 | Context.TellerTrnData.TrnConductorData| Details of the data element that identifies the transaction conductor at the teller line.| object| Optional Repeating|
 | Context.TellerTrnData.TrnConductorData.TrnConductorIdent| Identifier of the person conducting the transaction.| string| Optional|
 | Context.TellerTrnData.TrnConductorData.NoConductorReason| Reason used when a conductor cannot be identified.<br> Valid values are: <ul><li>ArmoredCarSvc</li> <li>MailDeposit</li> <li>NightDeposit</li> <li>ATM</li> <li>AggregatedTransaction</li> <li>CourierSvc</li></ul>| enum| Optional|
