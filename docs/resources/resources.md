@@ -207,7 +207,7 @@ The following table lists the standard error codes along with the descriptions a
 <!-- theme: info -->
 > #### Note
 > 
-> If you are unable to  resolve the issue after reviewing above listed descriptions and possible reasons of the errors generated, please reach out to Fiserv contact person for further assistance.
+> If you are unable to resolve the issue after reviewing above listed descriptions of the errors generated, please reach out to Fiserv contact person for further assistance.
  
 # Benefits to Consumers
 - Using DPoP helps the clients to prevent unauthorized or illegitimate parties from using leaked or stolen access tokens.
