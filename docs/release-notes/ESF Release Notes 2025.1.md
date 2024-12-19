@@ -39,18 +39,22 @@ type: tab
 titles: Premier, Precision, Signature, Cleartouch
 -->
 
-### Coming Soon.
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
 
-### Coming Soon.
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
 
-### Coming Soon.
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab -->
 
-### Coming Soon.
+<p style="font-size: 24px; font-weight: bold;">What's New </p>
+Information is not available at the moment. Stay tuned for the updates.
 
 <!-- type: tab-end -->
