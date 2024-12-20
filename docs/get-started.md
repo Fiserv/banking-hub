@@ -17,13 +17,7 @@ Before you start integration, it is important to register on the Fiserv Develope
 
 -->
 
-[![Video Thumbnail]][Video1]  
-
-[Video]: ../assets/images/Before-You-Start-Page-Video.mp4
-[Video Thumbnail]: https://user-images.githubusercontent.com/81968767/232030323-bbde320a-2bf5-4e21-97c0-8fe1a8895913.png
-
-[Video1]: ../assets/images/Before-You-Start-Page-Video1.mp4
-
+[![Video Thumbnail](https://user-images.githubusercontent.com/81968767/232030323-bbde320a-2bf5-4e21-97c0-8fe1a8895913.png)](../assets/images/Before-You-Start-Page-Video1.mp4){:target="_blank"} 
 
 ## Register on Fiserv Developer Studio
 This section describes the process to create an account and workspace on Fiserv Developer Studio to obtain credentials for sandbox testing.
